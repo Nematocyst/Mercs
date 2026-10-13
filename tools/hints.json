@@ -1,6 +1,25 @@
 {
   "code": [],
-  "long_tables": [],
-  "word_tables": [["B52E", 5], ["B562", 5]],
-  "ptr_tables": []
+  "long_tables": [
+    [
+      "1435A",
+      292
+    ]
+  ],
+  "word_tables": [
+    [
+      "B52E",
+      5
+    ],
+    [
+      "B562",
+      5
+    ]
+  ],
+  "ptr_tables": [
+    [
+      "147EA",
+      34
+    ]
+  ]
 }

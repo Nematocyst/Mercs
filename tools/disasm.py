@@ -198,7 +198,7 @@ class Rom:
                 t = struct.unpack('>I', self.d[a + 4 * k:a + 4 * k + 4])[0]
             else:
                 t = a + struct.unpack('>h', self.d[a + 2 * k:a + 2 * k + 2])[0]
-            if kind == 'p':
+            if kind == 'p' or not self.plausible(t):    # data or an unused slot
                 self.refs.add(t)
             else:
                 self.calls.add(t)
