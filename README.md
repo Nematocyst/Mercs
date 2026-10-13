@@ -201,3 +201,13 @@ The `Ending*` names are medium-low confidence: they rest on the graph, not on a 
 
 Object handlers are labelled `ObjType_xx` after their type number (the index in `ObjectTypeTable`; a word
 `Obj_Type` of `$04` is type 1). Only `ObjType_01_Player` has a verified role so far.
+
+### Object type catalog
+
+`tools/emu/spawn_types.py` restores a Mission 1 snapshot for each object type, places that type on a free
+`Objects_A` slot next to the player, runs 45 frames and compares the frame with a run without it.
+`tools/emu/objtypes.tsv` lists, per handler, the changed pixels and bounding box: 101 of the 274 handlers
+draw something on their own; the rest are children, spawners, triggers or effects that need a parent.
+Size classes: type `01` (player) and `44` reload the whole screen; `1B`, `A0`, `C3`, `D5`, `AB`, `F7` change
+6,000-10,000 pixels (large objects); most others are 16x16 sprites. Contact sheets are not committed (they are
+game art); rerun the script to regenerate them. Only `ObjType_01_Player` and `ObjType_05_Crate` are named so far.

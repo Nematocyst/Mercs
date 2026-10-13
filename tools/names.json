@@ -99,7 +99,8 @@
     "Camera_Follow": "medium-low - compares Obj_Y with Camera_Y and Camera_Bounds",
     "Object_CollideStandard": "medium - hitbox, then Collision_HitPlayer and Collision_FindHit_E1C0",
     "ObjType_xx": "generated - handler names from the type number (index in ObjectTypeTable); handlers shared by several types keep the lowest number",
-    "ObjType_01_Player": "high - Objects_A[0] has type $04 (= index 1) and is the only object that follows pad 1 (diffed with and without input)"
+    "ObjType_01_Player": "high - Objects_A[0] has type $04 (= index 1) and is the only object that follows pad 1 (diffed with and without input)",
+    "ObjType_05_Crate": "medium - spawned alone it draws a small wooden crate like the ones along the Mission 1 road (tools/emu/spawn_types.py)"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -189,5 +190,6 @@
   "00DC6A": "Camera_Follow",
   "01C9C2": "Object_CollideStandard",
   "FFFFC646": "Camera_Bounds",
-  "00CD78": "ObjType_01_Player"
+  "00CD78": "ObjType_01_Player",
+  "00F844": "ObjType_05_Crate"
 }

@@ -22214,7 +22214,7 @@ loc_00F81A:
 	subq.b	#$1,d1
 	bne.b	loc_00F81A
 	rts
-ObjType_05:
+ObjType_05_Crate:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F84A:
 	bne.b	loc_00F86C
@@ -28563,7 +28563,7 @@ ObjType_00:
 	rts
 ObjectTypeTable:
 	dc.l	ObjType_00,ObjType_01_Player,ObjType_02,ObjType_03
-	dc.l	ObjType_04,ObjType_05,ObjType_06,ObjType_07
+	dc.l	ObjType_04,ObjType_05_Crate,ObjType_06,ObjType_07
 	dc.l	ObjType_08,ObjType_09,ObjType_0A,ObjType_0B
 	dc.l	ObjType_0C,ObjType_0D,ObjType_0E,ObjType_0F
 	dc.l	ObjType_10,ObjType_11,ObjType_12,ObjType_13
