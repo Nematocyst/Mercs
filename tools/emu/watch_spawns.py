@@ -105,6 +105,10 @@ for fr in range(frames):
     if god:                                   # never hit: a nonzero Player_Invuln_Timer suppresses Collision_HitPlayer
         g.env._ram[0xC5C2 ^ 1] = 0x40; g.env._ram[0xC5C3 ^ 1] = 0
     stt = g.w(0xFFFE04)
+    if os.environ.get('RAM_RANGE'):               # RAM_RANGE=from,to,step: dump RAM + screenshot (for diffing around events)
+        lo, hi, stp = map(int, os.environ['RAM_RANGE'].split(','))
+        if lo <= fr < hi and fr % stp == 0:
+            open(os.path.join(out, 'ram_%05d.bin' % fr), 'wb').write(bytes(g.env._ram)); g.save_png(os.path.join(out, 'rs_%05d.png' % fr))
     if original and stt != 0x0C:                  # between missions: tap Start on every screen
         if stt in (0x04, 0x14) and had_play:
             break
