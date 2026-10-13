@@ -16,41 +16,80 @@ VDP_Control	equ	$C00004
 
 ; ---- Work RAM ----
 ram_FF0000	equ	$FF0000
+ram_FF0020	equ	$FF0020
 ram_FF00B4	equ	$FF00B4
+ram_FF0280	equ	$FF0280
+ram_FF04A0	equ	$FF04A0
 ram_FF0800	equ	$FF0800
+ram_FF0B80	equ	$FF0B80
+ram_FF1B20	equ	$FF1B20
+ram_FF1B60	equ	$FF1B60
+ram_FF1D80	equ	$FF1D80
+ram_FF1EA0	equ	$FF1EA0
+ram_FF2140	equ	$FF2140
 ram_FF2A00	equ	$FF2A00
+ram_FF2D20	equ	$FF2D20
+ram_FF3000	equ	$FF3000
+ram_FF32A0	equ	$FF32A0
+ram_FF3700	equ	$FF3700
+ram_FF3B00	equ	$FF3B00
+ram_FF4180	equ	$FF4180
+ram_FF4860	equ	$FF4860
+ram_FF4980	equ	$FF4980
+ram_FF4DE0	equ	$FF4DE0
+ram_FF4E80	equ	$FF4E80
+ram_FF5180	equ	$FF5180
+ram_FF5280	equ	$FF5280
 ram_FF5400	equ	$FF5400
+ram_FF5860	equ	$FF5860
+ram_FF58C0	equ	$FF58C0
 ram_FF5A60	equ	$FF5A60
 ram_FF5C00	equ	$FF5C00
 ram_FF5C01	equ	$FF5C01
+ram_FF5D40	equ	$FF5D40
+ram_FF5F80	equ	$FF5F80
 ram_FF5FFF	equ	$FF5FFF
 ram_FF6000	equ	$FF6000
+ram_FF6060	equ	$FF6060
 ram_FF6300	equ	$FF6300
+ram_FF63A0	equ	$FF63A0
 ram_FF6492	equ	$FF6492
 ram_FF6494	equ	$FF6494
+ram_FF64C0	equ	$FF64C0
 ram_FF6510	equ	$FF6510
 ram_FF6582	equ	$FF6582
 ram_FF66C2	equ	$FF66C2
 ram_FF689E	equ	$FF689E
 ram_FF6910	equ	$FF6910
 ram_FF691E	equ	$FF691E
+ram_FF6AA0	equ	$FF6AA0
+ram_FF6D20	equ	$FF6D20
 ram_FF7000	equ	$FF7000
+ram_FF81A0	equ	$FF81A0
+ram_FF89A0	equ	$FF89A0
+ram_FF8B00	equ	$FF8B00
+ram_FF8C40	equ	$FF8C40
+ram_FF8CA0	equ	$FF8CA0
+ram_FF8CE0	equ	$FF8CE0
+ram_FF8D20	equ	$FF8D20
 ram_FFB800	equ	$FFB800
 ram_FFC206	equ	$FFC206
 ram_FFC208	equ	$FFC208
+ram_FFC20C	equ	$FFC20C
 ram_FFFE00	equ	$FFFE00
 ram_8000	equ	$FFFF8000
 ram_880C	equ	$FFFF880C
+ram_8D20	equ	$FFFF8D20
 ram_9300	equ	$FFFF9300
 ram_9E00	equ	$FFFF9E00
 ram_A000	equ	$FFFFA000
 ram_A08C	equ	$FFFFA08C
 ram_A128	equ	$FFFFA128
-ram_A12E	equ	$FFFFA12E
 ram_A132	equ	$FFFFA132
 ram_A18A	equ	$FFFFA18A
 ram_A1C0	equ	$FFFFA1C0
 ram_A280	equ	$FFFFA280
+ram_A2E0	equ	$FFFFA2E0
 ram_A31E	equ	$FFFFA31E
 ram_A320	equ	$FFFFA320
 ram_A328	equ	$FFFFA328
@@ -65,14 +104,14 @@ ram_A70A	equ	$FFFFA70A
 ram_A710	equ	$FFFFA710
 ram_A78E	equ	$FFFFA78E
 ram_A7A8	equ	$FFFFA7A8
-ram_A810	equ	$FFFFA810
-ram_A814	equ	$FFFFA814
+ram_A860	equ	$FFFFA860
 ram_A88A	equ	$FFFFA88A
 ram_A89A	equ	$FFFFA89A
 ram_A916	equ	$FFFFA916
 ram_A928	equ	$FFFFA928
 ram_A980	equ	$FFFFA980
 ram_A98C	equ	$FFFFA98C
+ram_A99C	equ	$FFFFA99C
 ram_AA9E	equ	$FFFFAA9E
 ram_AAA8	equ	$FFFFAAA8
 ram_AB1C	equ	$FFFFAB1C
@@ -82,7 +121,10 @@ ram_AD20	equ	$FFFFAD20
 ram_B000	equ	$FFFFB000
 ram_B00A	equ	$FFFFB00A
 ram_B0C0	equ	$FFFFB0C0
+ram_B500	equ	$FFFFB500
 ram_BB00	equ	$FFFFBB00
+ram_BE00	equ	$FFFFBE00
+ram_BFA0	equ	$FFFFBFA0
 ram_C000	equ	$FFFFC000
 ram_C0E0	equ	$FFFFC0E0
 ram_C100	equ	$FFFFC100
@@ -275,7 +317,6 @@ ram_C622	equ	$FFFFC622
 ram_C624	equ	$FFFFC624
 ram_C625	equ	$FFFFC625
 ram_C626	equ	$FFFFC626
-ram_C627	equ	$FFFFC627
 ram_C628	equ	$FFFFC628
 ram_C62A	equ	$FFFFC62A
 ram_C62C	equ	$FFFFC62C
@@ -295,11 +336,11 @@ ram_C64C	equ	$FFFFC64C
 ram_C64E	equ	$FFFFC64E
 ram_C652	equ	$FFFFC652
 ram_C654	equ	$FFFFC654
-ram_C656	equ	$FFFFC656
 ram_C65A	equ	$FFFFC65A
 ram_C65C	equ	$FFFFC65C
 ram_C65E	equ	$FFFFC65E
 ram_C667	equ	$FFFFC667
+ram_C668	equ	$FFFFC668
 ram_C669	equ	$FFFFC669
 ram_C66D	equ	$FFFFC66D
 ram_C66F	equ	$FFFFC66F
@@ -308,14 +349,12 @@ ram_C677	equ	$FFFFC677
 ram_C678	equ	$FFFFC678
 ram_C679	equ	$FFFFC679
 ram_C67A	equ	$FFFFC67A
-ram_C67B	equ	$FFFFC67B
 ram_C67C	equ	$FFFFC67C
 ram_C67D	equ	$FFFFC67D
 ram_C680	equ	$FFFFC680
 ram_C688	equ	$FFFFC688
 ram_C68A	equ	$FFFFC68A
 ram_C68C	equ	$FFFFC68C
-ram_C68D	equ	$FFFFC68D
 ram_C68E	equ	$FFFFC68E
 ram_C68F	equ	$FFFFC68F
 ram_C693	equ	$FFFFC693
@@ -350,7 +389,6 @@ ram_CC00	equ	$FFFFCC00
 ram_CE00	equ	$FFFFCE00
 ram_D000	equ	$FFFFD000
 ram_D010	equ	$FFFFD010
-ram_D020	equ	$FFFFD020
 ram_D060	equ	$FFFFD060
 ram_D070	equ	$FFFFD070
 ram_D100	equ	$FFFFD100
@@ -429,16 +467,13 @@ ram_E6C8	equ	$FFFFE6C8
 ram_E700	equ	$FFFFE700
 ram_E704	equ	$FFFFE704
 ram_E708	equ	$FFFFE708
-ram_E740	equ	$FFFFE740
 ram_E76C	equ	$FFFFE76C
-ram_E780	equ	$FFFFE780
 ram_E800	equ	$FFFFE800
 ram_E802	equ	$FFFFE802
 ram_E840	equ	$FFFFE840
 ram_E880	equ	$FFFFE880
 ram_E900	equ	$FFFFE900
 ram_E940	equ	$FFFFE940
-ram_EA00	equ	$FFFFEA00
 ram_EA80	equ	$FFFFEA80
 ram_EBC0	equ	$FFFFEBC0
 Objects_B	equ	$FFFFED00
@@ -552,62 +587,100 @@ sub_000206:
 	rte
 EntryPoint:
 	tst.l	(HW_Port12_Ctrl_W).l
+loc_00020E:
 	bne.b	loc_000216
+loc_000210:
 	tst.w	(HW_Expansion_Ctrl_W).l
 loc_000216:
 	bne.b	loc_000294
+loc_000218:
 	lea	dat_000296(pc),a5
+loc_00021C:
 	movem.w	(a5)+,d5-d7
+loc_000220:
 	movem.l	(a5)+,a0-a4
+loc_000224:
 	move.b	-$10FF(a1),d0
+loc_000228:
 	andi.b	#$F,d0
+loc_00022C:
 	beq.b	loc_000236
 	move.l	#$53454741,$2F00(a1)
 loc_000236:
 	move.w	(a4),d0
+loc_000238:
 	moveq	#$0,d0
+loc_00023A:
 	movea.l	d0,a6
+loc_00023C:
 	move	a6,usp
+loc_00023E:
 	moveq	#$17,d1
 loc_000240:
 	move.b	(a5)+,d5
+loc_000242:
 	move.w	d5,(a4)
+loc_000244:
 	add.w	d7,d5
+loc_000246:
 	dbra	d1,loc_000240
+loc_00024A:
 	move.l	(a5)+,(a4)
+loc_00024C:
 	move.w	d0,(a3)
+loc_00024E:
 	move.w	d7,(a1)
+loc_000250:
 	move.w	d7,(a2)
 loc_000252:
 	btst.l	d0,(a1)
+loc_000254:
 	bne.b	loc_000252
+loc_000256:
 	moveq	#$25,d2
 loc_000258:
 	move.b	(a5)+,(a0)+
+loc_00025A:
 	dbra	d2,loc_000258
+loc_00025E:
 	move.w	d0,(a2)
+loc_000260:
 	move.w	d0,(a1)
+loc_000262:
 	move.w	d7,(a2)
 loc_000264:
 	move.l	d0,-(a6)
+loc_000266:
 	dbra	d6,loc_000264
+loc_00026A:
 	move.l	(a5)+,(a4)
+loc_00026C:
 	move.l	(a5)+,(a4)
+loc_00026E:
 	moveq	#$1F,d3
 loc_000270:
 	move.l	d0,(a3)
+loc_000272:
 	dbra	d3,loc_000270
+loc_000276:
 	move.l	(a5)+,(a4)
+loc_000278:
 	moveq	#$13,d4
 loc_00027A:
 	move.l	d0,(a3)
+loc_00027C:
 	dbra	d4,loc_00027A
+loc_000280:
 	moveq	#$3,d5
 loc_000282:
 	move.b	(a5)+,$11(a3)
+loc_000286:
 	dbra	d5,loc_000282
+loc_00028A:
 	move.w	d0,(a2)
+loc_00028C:
 	movem.l	(a6),d0-d7/a0-a6
+loc_000290:
 	move.w	#$2700,sr
 loc_000294:
 	bra.b	loc_000302
@@ -622,24 +695,41 @@ dat_000296:
 	dc.b	$DF,$FF
 loc_000302:
 	tst.w	(VDP_Control).l
+loc_000308:
 	move.w	#$2700,sr
+loc_00030C:
 	jsr	(sub_009FF6).l
+loc_000312:
 	move.w	#$2000,sr
+loc_000316:
 	movea.l	#$1A4,a0
+loc_00031C:
 	move.l	(a0),d1
+loc_00031E:
 	addq.l	#$1,d1
+loc_000320:
 	movea.l	#$200,a0
+loc_000326:
 	sub.l	a0,d1
+loc_000328:
 	asr.l	#$1,d1
+loc_00032A:
 	move.w	d1,d2
+loc_00032C:
 	subq.w	#$1,d2
+loc_00032E:
 	swap	d1
+loc_000330:
 	moveq	#$0,d0
 loc_000332:
 	add.w	(a0)+,d0
+loc_000334:
 	dbra	d2,loc_000332
+loc_000338:
 	dbra	d1,loc_000332
+loc_00033C:
 	cmp.w	($18E).w,d0
+loc_000340:
 	beq.b	loc_000356
 loc_000342:
 	move.l	#$C0000000,(VDP_Control).l
@@ -647,51 +737,83 @@ loc_000342:
 	bra.b	loc_000342
 loc_000356:
 	btst.b	#$6,(HW_Expansion_Ctrl).l
+loc_00035E:
 	bne.w	loc_0003A8
+loc_000362:
 	lea	(ram_FFFE00).l,a6
+loc_000368:
 	moveq	#$0,d7
+loc_00036A:
 	move.w	#$7F,d6
 loc_00036E:
 	move.l	d7,(a6)+
+loc_000370:
 	dbra	d6,loc_00036E
+loc_000374:
 	move.w	#$2,(ram_FE82).w
+loc_00037A:
 	clr.w	(ram_FE84).w
+loc_00037E:
 	move.b	#$2,(ram_FE81).w
+loc_000384:
 	lea	(ram_FE96).w,a1
+loc_000388:
 	lea	(dat_00044C).l,a2
+loc_00038E:
 	moveq	#$6,d7
 loc_000390:
 	move.l	(a2)+,(a1)+
+loc_000392:
 	dbra	d7,loc_000390
+loc_000396:
 	lea	(ram_FEBA).w,a1
+loc_00039A:
 	lea	(dat_00044C).l,a2
+loc_0003A0:
 	moveq	#$6,d7
 loc_0003A2:
 	move.l	(a2)+,(a1)+
+loc_0003A4:
 	dbra	d7,loc_0003A2
 loc_0003A8:
 	move.w	(VDP_Control).l,d0
+loc_0003AE:
 	btst.b	#$1,d0
+loc_0003B2:
 	bne.b	loc_0003A8
+loc_0003B4:
 	lea	(ram_FF0000).l,a6
+loc_0003BA:
 	moveq	#$0,d7
+loc_0003BC:
 	move.w	#$3F7F,d6
 loc_0003C0:
 	move.l	d7,(a6)+
+loc_0003C2:
 	dbra	d6,loc_0003C0
+loc_0003C6:
 	move.b	(HW_Version).l,(Hardware_Version).w
+loc_0003CE:
 	move.w	#$2700,sr
+loc_0003D2:
 	jsr	(InitIOPorts).l
+loc_0003D8:
 	jsr	(sub_009FF6).l
+loc_0003DE:
 	jsr	(InitVDP).l
+loc_0003E4:
 	move.w	#$2000,sr
+loc_0003E8:
 	move.w	#$4,(Game_State).w
 MainLoop:
 	move.w	(Game_State).w,d0
+loc_0003F2:
 	lea	(loc_0003FC).l,a1
+loc_0003F8:
 	movea.l	(a1,d0.w),a1
 loc_0003FC:
 	jsr	(a1)
+loc_0003FE:
 	bra.b	MainLoop
 GameStateTable:
 	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,sub_000650
@@ -705,76 +827,133 @@ dat_00044C:
 	dc.b	$00,$02,$00,$00,$00,$01,$00,$00
 GameState_SegaLogo:
 	move.w	#$2700,sr
+loc_00046C:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_000470:
 	andi.b	#$BF,d0
+loc_000474:
 	move.w	d0,(VDP_Control).l
+loc_00047A:
 	jsr	(sub_009ED0).l
+loc_000480:
 	clr.b	(ram_FE80).w
+loc_000484:
 	move.l	#$40200000,(VDP_Control).l
+loc_00048E:
 	lea	(dat_0DD000).l,a0
+loc_000494:
 	jsr	(sub_00A218).l
+loc_00049A:
 	lea	(dat_000610).l,a1
+loc_0004A0:
 	lea	(ram_FF0800).l,a2
+loc_0004A6:
 	move.w	#$F,d0
 loc_0004AA:
 	move.l	(a1)+,(a2)+
+loc_0004AC:
 	dbra	d0,loc_0004AA
+loc_0004B0:
 	move.w	#$800,d0
+loc_0004B4:
 	move.w	#$20,d1
+loc_0004B8:
 	move.l	#$FF0800,d2
+loc_0004BE:
 	jsr	(sub_0085FE).l
+loc_0004C4:
 	lea	(dat_0DD33C).l,a1
+loc_0004CA:
 	move.l	#$461C0003,d0
+loc_0004D0:
 	moveq	#$B,d1
+loc_0004D2:
 	moveq	#$3,d2
+loc_0004D4:
 	jsr	(sub_00A11A).l
+loc_0004DA:
 	moveq	#$0,d0
+loc_0004DC:
 	jsr	(sub_008508).l
+loc_0004E2:
 	move.b	#$1,(ram_C5A0).w
+loc_0004E8:
 	move.w	#$28,(ram_C30E).w
+loc_0004EE:
 	move.w	#$12C,(ram_C304).w
+loc_0004F4:
 	btst.b	#$7,(Hardware_Version).w
+loc_0004FA:
 	bne.b	loc_000502
 	move.w	#$1C4,(Objects_A).w
 loc_000502:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_000506:
 	ori.b	#$40,d0
+loc_00050A:
 	move.w	d0,(VDP_Control).l
 loc_000510:
 	jsr	(sub_0084CA).l
+loc_000516:
 	jsr	(ObjectUpdate).l
+loc_00051C:
 	jsr	(sub_014056).l
+loc_000522:
 	bsr.w	sub_00426C
+loc_000526:
 	jsr	(sub_000558).l
+loc_00052C:
 	tst.w	(ram_C304).w
+loc_000530:
 	beq.w	loc_00053C
+loc_000534:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00053A:
 	beq.b	loc_000510
 loc_00053C:
 	move.b	(Joy2_Held).w,d0
+loc_000540:
 	cmpi.b	#$76,d0
+loc_000544:
 	bne.b	loc_00054A
 	st.b	(ram_FE58).w
 loc_00054A:
 	move.w	#$14,(Game_NextState).w
+loc_000550:
 	move.w	#$8,(Game_State).w
+loc_000556:
 	rts
 sub_000558:
 	subq.w	#$1,(ram_C310).w
+loc_00055C:
 	bpl.b	loc_00058C
+loc_00055E:
 	move.w	#$3,(ram_C310).w
+loc_000564:
 	move.w	(ram_C30E).w,d0
+loc_000568:
 	bmi.b	loc_00058C
+loc_00056A:
 	subq.w	#$2,(ram_C30E).w
+loc_00056E:
 	lea	(dat_00058E).l,a0
+loc_000574:
 	lea	(ram_C704).w,a1
+loc_000578:
 	adda.w	d0,a0
+loc_00057A:
 	move.l	(a0)+,(a1)+
+loc_00057C:
 	move.l	(a0)+,(a1)+
+loc_00057E:
 	move.l	(a0)+,(a1)+
+loc_000580:
 	move.l	(a0)+,(a1)+
+loc_000582:
 	move.l	(a0)+,(a1)+
+loc_000584:
 	move.w	(a0)+,(a1)+
+loc_000586:
 	bset.b	#$0,(ram_C59A).w
 loc_00058C:
 	rts
@@ -786,20 +965,28 @@ dat_00058E:
 	dc.b	$0E,$20,$0E,$00,$0C,$00,$0A,$00,$08,$00,$06,$00
 sub_0005CC:
 	bset.b	#$0,$2(a0)
+loc_0005D2:
 	bne.b	loc_0005EE
+loc_0005D4:
 	move.l	#$5F0,$14(a0)
+loc_0005DC:
 	move.w	#$143,$4(a0)
+loc_0005E2:
 	move.w	#$E0,$8(a0)
+loc_0005E8:
 	move.b	#$80,$22(a0)
 loc_0005EE:
 	rts
 	dc.b	$00,$00,$00,$00,$00,$04,$00,$40,$00,$F0
 loc_0005FA:
 	tst.w	(ram_C304).w
+loc_0005FE:
 	beq.w	loc_000606
+loc_000602:
 	subq.w	#$1,(ram_C304).w
 loc_000606:
 	jsr	(sub_003522).l
+loc_00060C:
 	bra.w	loc_0033E8
 dat_000610:
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$FF,$FF,$FF
@@ -957,212 +1144,481 @@ dat_00083E:
 	dc.b	$55,$4E,$44,$20,$20,$20,$20,$31,$00,$00
 sub_00085A:
 	move.w	#$2700,sr
+loc_00085E:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_000862:
 	andi.b	#$BF,d0
+loc_000866:
 	move.w	d0,(VDP_Control).l
+loc_00086C:
 	jsr	(sub_009EF0).l
+loc_000872:
 	move.w	#$178,d0
+loc_000876:
 	jsr	(sub_008508).l
+loc_00087C:
 	move.b	#$1,(ram_C5A0).w
+loc_000882:
 	move.l	#$62E00002,(VDP_Control).l
+loc_00088C:
 	lea	(dat_0582AC).l,a0
+loc_000892:
 	jsr	(sub_00A218).l
+loc_000898:
 	move.w	#$20,d0
+loc_00089C:
 	move.w	#$10,d1
+loc_0008A0:
 	move.l	#$FF0020,d2
+loc_0008A6:
 	jsr	(sub_0085FE).l
+loc_0008AC:
 	bsr.w	sub_000BA2
+loc_0008B0:
 	move.w	#$160,(Objects_A).w
+loc_0008B6:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_0008BA:
 	ori.b	#$40,d0
+loc_0008BE:
 	move.w	d0,(VDP_Control).l
 loc_0008C4:
 	jsr	(sub_0084CA).l
+loc_0008CA:
 	jsr	(ObjectUpdate).l
+loc_0008D0:
 	jsr	(sub_014056).l
+loc_0008D6:
 	jsr	(sub_00426C).l
+loc_0008DC:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_0008E2:
 	bne.b	loc_0008F0
+loc_0008E4:
 	btst.b	#$1,(Flags_C61C).w
+loc_0008EA:
 	bne.b	loc_0008F0
+loc_0008EC:
 	bra.w	loc_0008C4
 loc_0008F0:
 	movem.l	d0/a1,-(a7)
+loc_0008F4:
 	moveq	#-$20,d0
+loc_0008F6:
 	jsr	(sub_00A068).l
+loc_0008FC:
 	movem.l	(a7)+,d0/a1
+loc_000900:
 	move.w	#$38,(Game_NextState).w
+loc_000906:
 	move.w	#$8,(Game_State).w
+loc_00090C:
 	rts
 sub_00090E:
 	bset.b	#$0,$2(a0)
+loc_000914:
 	bne.b	loc_000936
+loc_000916:
 	move.l	#$E3C,$14(a0)
+loc_00091E:
 	move.w	#$98,$4(a0)
+loc_000924:
 	move.w	#$B0,$8(a0)
+loc_00092A:
 	move.b	#$1,(ram_C667).w
+loc_000930:
 	move.b	#$1,(ram_C669).w
 loc_000936:
 	move.b	(Joy1_Pressed).w,d6
+loc_00093A:
 	beq.w	loc_0007EA
+loc_00093E:
 	bset.b	#$0,(Flags_C5AF).w
+loc_000944:
 	bsr.w	sub_000A9C
+loc_000948:
 	move.w	$28(a0),d0
+loc_00094C:
 	move.w	dat_000956(pc,d0.w),d0
+loc_000950:
 	lea	dat_000956(pc,d0.w),a1
+loc_000954:
 	jmp	(a1)
 dat_000956:
 	dc.b	$00,$0E,$00,$4C,$00,$92,$00,$CE,$00,$EC
-	dc.b	$01,$12,$01,$38,$10,$06,$02,$00,$00,$0C,$67,$00,$FE,$7E,$08,$78
-	dc.b	$00,$02,$C3,$56
+	dc.b	$01,$12,$01,$38
+loc_000964:
+	move.b	d6,d0
+loc_000966:
+	andi.b	#$C,d0
+loc_00096A:
+	beq.w	loc_0007EA
+loc_00096E:
+	bchg.b	#$2,(Flags_C356).w
 sub_000974:
 	bsr.w	sub_000B7C
+loc_000978:
 	lea	(dat_000D40).l,a1
+loc_00097E:
 	moveq	#$0,d0
+loc_000980:
 	move.b	(Flags_C356).w,d0
+loc_000984:
 	lsr.w	#$1,d0
+loc_000986:
 	bsr.w	sub_000B54
+loc_00098A:
 	moveq	#$0,d0
+loc_00098C:
 	move.b	(Flags_C356).w,d0
+loc_000990:
 	lea	($D6C).l,a2
+loc_000996:
 	movem.w	(a2,d0.w),d1/a2
+loc_00099C:
 	bsr.w	sub_0009D4
+loc_0009A0:
 	rts
-	dc.b	$70,$00,$10,$38,$C3,$56,$45,$F9,$00,$00,$0D,$6C,$4C,$B2
-	dc.b	$04,$02,$00,$00,$08,$06,$00,$03,$66,$08,$08,$06,$00,$02,$66,$0E
-	dc.b	$4E,$75,$54,$52,$B2,$52,$64,$0C,$42,$52,$60,$00,$00,$08,$55,$52
-	dc.b	$64,$02,$34,$81
+loc_0009A2:
+	moveq	#$0,d0
+loc_0009A4:
+	move.b	(Flags_C356).w,d0
+loc_0009A8:
+	lea	($D6C).l,a2
+loc_0009AE:
+	movem.w	(a2,d0.w),d1/a2
+loc_0009B4:
+	btst.b	#$3,d6
+loc_0009B8:
+	bne.b	loc_0009C2
+loc_0009BA:
+	btst.b	#$2,d6
+loc_0009BE:
+	bne.b	loc_0009CE
+loc_0009C0:
+	rts
+loc_0009C2:
+	addq.w	#$2,(a2)
+loc_0009C4:
+	cmp.w	(a2),d1
+loc_0009C6:
+	bcc.b	sub_0009D4
+loc_0009C8:
+	clr.w	(a2)
+loc_0009CA:
+	bra.w	sub_0009D4
+loc_0009CE:
+	subq.w	#$2,(a2)
+loc_0009D0:
+	bcc.b	sub_0009D4
+loc_0009D2:
+	move.w	d1,(a2)
 sub_0009D4:
 	lsr.w	#$1,d0
+loc_0009D6:
 	move.w	dat_0009E4(pc,d0.w),d0
+loc_0009DA:
 	lea	dat_0009E4(pc,d0.w),a1
+loc_0009DE:
 	move.w	(a2),d0
+loc_0009E0:
 	bra.w	sub_000B54
 dat_0009E4:
-	dc.b	$03,$66,$03,$74,$45,$F8,$FE,$42,$30,$12,$08,$06
-	dc.b	$00,$03,$66,$08,$08,$06,$00,$02,$66,$10,$4E,$75,$54,$40,$0C,$40
-	dc.b	$00,$0A,$63,$02,$70,$00,$60,$00,$00,$08,$55,$40,$64,$02,$70,$0A
-	dc.b	$34,$80
+	dc.b	$03,$66,$03,$74
+loc_0009E8:
+	lea	(ram_FE42).w,a2
+loc_0009EC:
+	move.w	(a2),d0
+loc_0009EE:
+	btst.b	#$3,d6
+loc_0009F2:
+	bne.b	loc_0009FC
+loc_0009F4:
+	btst.b	#$2,d6
+loc_0009F8:
+	bne.b	loc_000A0A
+loc_0009FA:
+	rts
+loc_0009FC:
+	addq.w	#$2,d0
+loc_0009FE:
+	cmpi.w	#$A,d0
+loc_000A02:
+	bls.b	loc_000A06
+	moveq	#$0,d0
+loc_000A06:
+	bra.w	loc_000A10
+loc_000A0A:
+	subq.w	#$2,d0
+loc_000A0C:
+	bcc.b	loc_000A10
+	moveq	#$A,d0
+loc_000A10:
+	move.w	d0,(a2)
 sub_000A12:
 	lea	(dat_000D74).l,a1
+loc_000A18:
 	move.w	(a1,d0.w),d0
+loc_000A1C:
 	lea	(a1,d0.w),a6
+loc_000A20:
 	bra.w	sub_0087C6
 	dc.b	$10,$06,$02,$00,$00,$0C,$67,$06,$08,$78,$00,$01
 	dc.b	$FE,$81
 sub_000A32:
 	moveq	#$0,d0
+loc_000A34:
 	move.b	(ram_FE81).w,d0
+loc_000A38:
 	lea	(dat_000D62).l,a1
+loc_000A3E:
 	bra.w	sub_000B54
 	dc.b	$43,$F8,$C6,$66,$45,$F9,$00,$00,$0D,$F8,$61,$00,$00,$94
 	dc.b	$43,$F8,$C6,$66,$70,$21,$72,$34,$61,$00,$00,$BE,$43,$F8,$C6,$67
-	dc.b	$45,$F8,$A9,$1C,$60,$00,$00,$A4,$43,$F8,$C6,$68,$45,$F9,$00,$00
-	dc.b	$0E,$1A,$61,$00,$00,$6E,$43,$F8,$C6,$68,$70,$21,$72,$34,$61,$00
-	dc.b	$00,$98,$43,$F8,$C6,$69,$45,$F8,$A9,$9C,$60,$00,$00,$7E,$02,$06
-	dc.b	$00,$F0,$67,$06,$08,$F8,$00,$01,$C6,$1C,$4E,$75
+	dc.b	$45,$F8,$A9,$1C,$60,$00,$00,$A4
+loc_000A68:
+	lea	(ram_C668).w,a1
+loc_000A6C:
+	lea	(dat_000E1A).l,a2
+loc_000A72:
+	bsr.w	sub_000AE2
+loc_000A76:
+	lea	(ram_C668).w,a1
+loc_000A7A:
+	moveq	#$21,d0
+loc_000A7C:
+	moveq	#$34,d1
+loc_000A7E:
+	bsr.w	sub_000B18
+	lea	(ram_C669).w,a1
+	lea	(ram_A99C).w,a2
+	bra.w	loc_000B0A
+loc_000A8E:
+	andi.b	#$F0,d6
+loc_000A92:
+	beq.b	loc_000A9A
+loc_000A94:
+	bset.b	#$1,(Flags_C61C).w
+loc_000A9A:
+	rts
 sub_000A9C:
 	move.w	$28(a0),d1
+loc_000AA0:
 	btst.b	#$0,d6
+loc_000AA4:
 	bne.b	loc_000AAE
+loc_000AA6:
 	btst.b	#$1,d6
+loc_000AAA:
 	bne.b	loc_000ABA
+loc_000AAC:
 	rts
 loc_000AAE:
 	subq.w	#$2,d1
+loc_000AB0:
 	bcc.b	loc_000AC4
+loc_000AB2:
 	move.w	#$C,d1
+loc_000AB6:
 	bra.w	loc_000AC4
 loc_000ABA:
 	addq.w	#$2,d1
+loc_000ABC:
 	cmpi.w	#$E,d1
+loc_000AC0:
 	bcs.b	loc_000AC4
+loc_000AC2:
 	moveq	#$0,d1
 loc_000AC4:
 	move.w	d1,$28(a0)
+loc_000AC8:
 	move.w	dat_000AD0(pc,d1.w),$8(a0)
+loc_000ACE:
 	rts
 dat_000AD0:
-	dc.b	$00,$B0,$00,$C0,$00,$D0,$00,$F0,$01,$10,$01,$18,$01,$30,$58,$4F
-	dc.b	$4E,$75,$10,$38,$C3,$01,$08,$00,$00,$04,$66,$16,$02,$00,$00,$60
-	dc.b	$67,$00,$FC,$F8,$70,$00,$10,$11,$10,$32,$00,$00,$4E,$F9,$00,$00
-	dc.b	$A0,$68,$70,$E1,$4E,$F9,$00,$00,$A0,$68,$70,$02,$36,$3C,$05,$18
-	dc.b	$7C,$00,$78,$01,$60,$00,$7F,$26,$1E,$06,$02,$07,$00,$0C,$67,$00
-	dc.b	$FF,$BE,$74,$00,$14,$11,$16,$29,$00,$01,$78,$00,$52,$44,$08,$06
-	dc.b	$00,$02,$66,$10,$C7,$04,$52,$42,$B4,$40,$63,$04,$74,$00,$76,$01
-	dc.b	$60,$00,$00,$0C,$87,$04,$53,$42,$64,$04,$34,$00,$36,$01,$12,$C2
-	dc.b	$12,$83,$4E,$75
+	dc.b	$00,$B0,$00,$C0,$00,$D0,$00,$F0,$01,$10,$01,$18,$01,$30
+loc_000ADE:
+	addq.w	#$4,a7
+loc_000AE0:
+	rts
+sub_000AE2:
+	move.b	(Joy1_Pressed).w,d0
+loc_000AE6:
+	btst.b	#$4,d0
+loc_000AEA:
+	bne.b	loc_000B02
+loc_000AEC:
+	andi.b	#$60,d0
+loc_000AF0:
+	beq.w	loc_0007EA
+loc_000AF4:
+	moveq	#$0,d0
+loc_000AF6:
+	move.b	(a1),d0
+loc_000AF8:
+	move.b	(a2,d0.w),d0
+loc_000AFC:
+	jmp	(sub_00A068).l
+loc_000B02:
+	moveq	#-$1F,d0
+	jmp	(sub_00A068).l
+loc_000B0A:
+	moveq	#$2,d0
+	move.w	#$518,d3
+	moveq	#$0,d6
+	moveq	#$1,d4
+	bra.w	loc_008A3C
+sub_000B18:
+	move.b	d6,d7
+loc_000B1A:
+	andi.b	#$C,d7
+loc_000B1E:
+	beq.w	loc_000ADE
+	moveq	#$0,d2
+	move.b	(a1),d2
+	move.b	$1(a1),d3
+	moveq	#$0,d4
+	addq.w	#$1,d4
+	btst.b	#$2,d6
+	bne.b	loc_000B44
+	abcd	d4,d3
+	addq.w	#$1,d2
+	cmp.w	d0,d2
+	bls.b	loc_000B40
+	moveq	#$0,d2
+	moveq	#$1,d3
+loc_000B40:
+	bra.w	loc_000B4E
+loc_000B44:
+	sbcd	d4,d3
+	subq.w	#$1,d2
+	bcc.b	loc_000B4E
+	move.w	d0,d2
+	move.w	d1,d3
+loc_000B4E:
+	move.b	d2,(a1)+
+	move.b	d3,(a1)
+	rts
 sub_000B54:
 	moveq	#$0,d2
+loc_000B56:
 	move.w	(a1)+,d7
 loc_000B58:
 	move.w	#$2000,d1
+loc_000B5C:
 	cmp.w	d0,d2
+loc_000B5E:
 	bne.b	loc_000B62
+loc_000B60:
 	moveq	#$0,d1
 loc_000B62:
 	movea.w	(a1)+,a2
+loc_000B64:
 	move.w	(a1)+,d6
 loc_000B66:
 	move.w	(a2),d3
+loc_000B68:
 	andi.w	#$9FFF,d3
+loc_000B6C:
 	or.w	d1,d3
+loc_000B6E:
 	move.w	d3,(a2)+
+loc_000B70:
 	dbra	d6,loc_000B66
+loc_000B74:
 	addq.w	#$2,d2
+loc_000B76:
 	dbra	d7,loc_000B58
+loc_000B7A:
 	rts
 sub_000B7C:
 	moveq	#$0,d0
+loc_000B7E:
 	tst.b	(Flags_C356).w
+loc_000B82:
 	beq.b	loc_000B86
+loc_000B84:
 	moveq	#$4,d0
 loc_000B86:
 	movea.l	dat_000B9A(pc,d0.w),a1
+loc_000B8A:
 	lea	(ram_A41C).w,a2
+loc_000B8E:
 	move.w	#$2517,d1
+loc_000B92:
 	moveq	#$0,d6
+loc_000B94:
 	bsr.w	sub_0087E2
+loc_000B98:
 	rts
 dat_000B9A:
 	dc.b	$00,$00,$0C,$DE,$00,$00
 	dc.b	$0C,$F2
 sub_000BA2:
 	lea	(ram_A000).w,a6
+loc_000BA6:
 	moveq	#$0,d7
+loc_000BA8:
 	move.w	#$3FF,d6
 loc_000BAC:
 	move.l	d7,(a6)+
+loc_000BAE:
 	dbra	d6,loc_000BAC
+loc_000BB2:
 	lea	(dat_000C38).l,a6
+loc_000BB8:
 	bsr.w	sub_0087C6
+loc_000BBC:
 	lea	(dat_000CB6).l,a6
+loc_000BC2:
 	bsr.w	sub_0087C6
+loc_000BC6:
 	lea	(dat_000D12).l,a6
+loc_000BCC:
 	bsr.w	sub_0087C6
+loc_000BD0:
 	bsr.w	sub_000974
+loc_000BD4:
 	move.w	(ram_FE42).w,d0
+loc_000BD8:
 	bsr.w	sub_000A12
+loc_000BDC:
 	bsr.w	sub_000A32
+loc_000BE0:
 	bset.b	#$0,(Flags_C5AF).w
+loc_000BE6:
 	rts
 loc_000BE8:
 	bsr.w	sub_003522
+loc_000BEC:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_000BF2:
 	beq.b	loc_000C36
+loc_000BF4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000BFC:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_000C04:
 	bne.b	loc_000BFC
+loc_000C06:
 	lea	(VDP_Control).l,a6
+loc_000C0C:
 	move.w	#$9300,(a6)
+loc_000C10:
 	move.w	#$9408,(a6)
+loc_000C14:
 	move.w	#$9500,(a6)
+loc_000C18:
 	move.w	#$96D0,(a6)
+loc_000C1C:
 	move.w	#$977F,(a6)
+loc_000C20:
 	move.w	#$4000,(a6)
+loc_000C24:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_000C2A:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_000C2E:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_000C36:
 	rts
@@ -1208,47 +1664,81 @@ dat_000D74:
 	dc.b	$20,$20,$20,$20,$00,$00,$4D,$45,$47,$41,$20,$43,$52,$41,$53,$48
 	dc.b	$20,$20,$20,$20,$20,$20,$00,$00,$81,$82,$83,$84,$85,$86,$87,$88
 	dc.b	$89,$8A,$8B,$8C,$8D,$8E,$8F,$90,$91,$92,$93,$94,$95,$96,$97,$98
-	dc.b	$99,$9A,$9B,$9C,$9D,$9E,$9F,$A0,$A1,$A2,$B1,$B2,$B3,$B4,$B5,$B6
+	dc.b	$99,$9A,$9B,$9C,$9D,$9E,$9F,$A0,$A1,$A2
+dat_000E1A:
+	dc.b	$B1,$B2,$B3,$B4,$B5,$B6
 	dc.b	$B7,$B8,$B9,$BA,$BB,$BC,$BD,$BE,$BF,$C0,$C1,$C2,$C3,$C4,$C5,$C6
 	dc.b	$C7,$C8,$C9,$CB,$CC,$CD,$CE,$CF,$D0,$D1,$D2,$D3,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$00,$F8
 GameState_Title:
 	move.w	#$2700,sr
+loc_000E4A:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_000E4E:
 	andi.b	#$BF,d0
+loc_000E52:
 	move.w	d0,(VDP_Control).l
+loc_000E58:
 	jsr	(sub_009ED0).l
+loc_000E5E:
 	moveq	#$18,d0
+loc_000E60:
 	jsr	(sub_008508).l
+loc_000E66:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000E6E:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_000E76:
 	bne.b	loc_000E6E
+loc_000E78:
 	lea	(VDP_Control).l,a6
+loc_000E7E:
 	move.w	#$93B0,(a6)
+loc_000E82:
 	move.w	#$9432,(a6)
+loc_000E86:
 	move.w	#$9500,(a6)
+loc_000E8A:
 	move.w	#$9680,(a6)
+loc_000E8E:
 	move.w	#$977F,(a6)
+loc_000E92:
 	move.w	#$4000,(a6)
+loc_000E96:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_000E9C:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_000EA0:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_000EA8:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000EB0:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_000EB8:
 	bne.b	loc_000EB0
+loc_000EBA:
 	lea	(VDP_Control).l,a6
+loc_000EC0:
 	move.w	#$93C0,(a6)
+loc_000EC4:
 	move.w	#$9402,(a6)
+loc_000EC8:
 	move.w	#$9570,(a6)
+loc_000ECC:
 	move.w	#$96D1,(a6)
+loc_000ED0:
 	move.w	#$977F,(a6)
+loc_000ED4:
 	move.w	#$62E0,(a6)
+loc_000ED8:
 	move.w	#$82,(DMA_Trigger_Word).w
+loc_000EDE:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_000EE2:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_000EEA:
 	btst.b	#$7,(Hardware_Version).w
+loc_000EF0:
 	bne.b	loc_000F0C
 	lea	(dat_0E12AA).l,a1
 	move.l	#$420E0003,d0
@@ -1258,60 +1748,101 @@ loc_000EB0:
 	bra.w	loc_000F22
 loc_000F0C:
 	lea	(dat_0E14E6).l,a1
+loc_000F12:
 	move.l	#$420E0003,d0
+loc_000F18:
 	moveq	#$19,d1
+loc_000F1A:
 	moveq	#$9,d2
+loc_000F1C:
 	jsr	(sub_00A11A).l
 loc_000F22:
 	move.b	#$1,(ram_C5A0).w
+loc_000F28:
 	lea	(dat_0FE45A).l,a1
+loc_000F2E:
 	lea	(ram_D000).w,a2
+loc_000F32:
 	move.w	#$B,d0
 loc_000F36:
 	move.l	(a1)+,(a2)+
+loc_000F38:
 	dbra	d0,loc_000F36
+loc_000F3C:
 	lea	(ram_A000).w,a6
+loc_000F40:
 	moveq	#$0,d7
+loc_000F42:
 	move.w	#$3FF,d6
 loc_000F46:
 	move.l	d7,(a6)+
+loc_000F48:
 	dbra	d6,loc_000F46
+loc_000F4C:
 	tst.b	(ram_FE80).w
+loc_000F50:
 	beq.b	loc_000F7E
+loc_000F52:
 	move.b	#$1,(Timer_C605).w
+loc_000F58:
 	move.w	#$18,(ram_C602).w
+loc_000F5E:
 	move.w	#$168,d0
+loc_000F62:
 	jsr	(sub_008508).l
+loc_000F68:
 	lea	(dat_0E0EEA).l,a1
+loc_000F6E:
 	move.l	#$61140003,d0
+loc_000F74:
 	moveq	#$13,d1
+loc_000F76:
 	moveq	#$17,d2
+loc_000F78:
 	jsr	(sub_00A11A).l
 loc_000F7E:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_000F82:
 	ori.b	#$40,d0
+loc_000F86:
 	move.w	d0,(VDP_Control).l
 loc_000F8C:
 	jsr	(sub_0084CA).l
+loc_000F92:
 	jsr	(ObjectUpdate).l
+loc_000F98:
 	jsr	(sub_014056).l
+loc_000F9E:
 	bsr.b	sub_001002
+loc_000FA0:
 	btst.b	#$1,(Flags_C61C).w
+loc_000FA6:
 	bne.b	loc_000FF6
+loc_000FA8:
 	btst.b	#$0,(Flags_C61C).w
+loc_000FAE:
 	bne.b	loc_000FE0
+loc_000FB0:
 	jsr	(sub_00426C).l
+loc_000FB6:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_000FBC:
 	bne.b	loc_000FC2
+loc_000FBE:
 	bra.w	loc_000F8C
 loc_000FC2:
 	move.w	#$38,(Game_NextState).w
 loc_000FC8:
 	movem.l	d0/a1,-(a7)
+loc_000FCC:
 	moveq	#-$20,d0
+loc_000FCE:
 	jsr	(sub_00A068).l
+loc_000FD4:
 	movem.l	(a7)+,d0/a1
+loc_000FD8:
 	move.w	#$8,(Game_State).w
+loc_000FDE:
 	rts
 loc_000FE0:
 	st.b	(ram_C344).w
@@ -1321,107 +1852,114 @@ loc_000FE0:
 	bra.b	loc_000FC8
 loc_000FF6:
 	st.b	(ram_FE80).w
+loc_000FFA:
 	move.w	#$14,(Game_NextState).w
+loc_001000:
 	bra.b	loc_000FC8
 sub_001002:
 	move.w	(ram_C602).w,d0
+loc_001006:
 	cmpi.w	#$14,d0
+loc_00100A:
 	bhi.b	loc_00101A
+loc_00100C:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_001012:
 	beq.b	loc_00101A
+loc_001014:
 	bset.b	#$1,(Flags_C61C).w
 loc_00101A:
 	jmp	loc_00101E(pc,d0.w)
 loc_00101E:
 	bra.w	loc_001042
-	bra.w	loc_00105C
-	bra.w	loc_001070
-	bra.w	loc_00108A
-	bra.w	loc_001098
-	bra.w	loc_0010C6
+	dc.b	$60,$00,$00,$38,$60,$00,$00,$48,$60,$00,$00,$5E,$60,$00
+	dc.b	$00,$68,$60,$00,$00,$92
+loc_001036:
 	bra.w	loc_0010E0
+loc_00103A:
 	bra.w	loc_00113C
+loc_00103E:
 	bra.w	loc_001164
 loc_001042:
 	lea	(ram_D000).w,a1
+loc_001046:
 	bsr.w	sub_0086E2
+loc_00104A:
 	tst.w	d7
+loc_00104C:
 	beq.b	loc_001088
 	move.w	#$4,(ram_C602).w
 	move.b	#$8,(Timer_C605).w
 	rts
-loc_00105C:
-	subq.b	#$1,(Timer_C605).w
-	bne.b	loc_001088
-	move.w	#$8,(ram_C602).w
-	bset.b	#$0,(ram_C604).w
-	rts
-loc_001070:
-	lea	(ram_D010).w,a1
-	bsr.w	sub_0086E2
-	tst.w	d7
-	beq.b	loc_001088
-	move.w	#$C,(ram_C602).w
-	move.b	#$40,(Timer_C605).w
+	dc.b	$53,$38,$C6,$05
+	dc.b	$66,$26,$31,$FC,$00,$08,$C6,$02,$08,$F8,$00,$00,$C6,$04,$4E,$75
+	dc.b	$43,$F8,$D0,$10,$61,$00,$76,$6C,$4A,$47,$67,$0C,$31,$FC,$00,$0C
+	dc.b	$C6,$02,$11,$FC,$00,$40,$C6,$05
 loc_001088:
 	rts
-loc_00108A:
-	subq.b	#$1,(Timer_C605).w
-	bne.b	loc_001088
-	move.w	#$10,(ram_C602).w
-	rts
-loc_001098:
-	lea	(ram_D020).w,a1
-	bsr.w	sub_0086E2
-	tst.w	d7
-	beq.b	loc_001088
-	lea	(dat_0FF71C).l,a1
-	lea	(ram_C700).w,a2
-	move.w	#$7,d0
-loc_0010B2:
-	move.l	(a1)+,(a2)+
-	dbra	d0,loc_0010B2
-	move.w	#$14,(ram_C602).w
-	move.b	#$20,(Timer_C605).w
-	rts
-loc_0010C6:
-	subq.b	#$1,(Timer_C605).w
-	bne.b	loc_001088
-	move.w	#$18,(ram_C602).w
-	bset.b	#$1,(ram_C604).w
-	move.b	#$10,(Timer_C605).w
-	rts
+	dc.b	$53,$38,$C6,$05,$66,$F8
+	dc.b	$31,$FC,$00,$10,$C6,$02,$4E,$75,$43,$F8,$D0,$20,$61,$00,$76,$44
+	dc.b	$4A,$47,$67,$E4,$43,$F9,$00,$0F,$F7,$1C,$45,$F8,$C7,$00,$30,$3C
+	dc.b	$00,$07,$24,$D9,$51,$C8,$FF,$FC,$31,$FC,$00,$14,$C6,$02,$11,$FC
+	dc.b	$00,$20,$C6,$05,$4E,$75,$53,$38,$C6,$05,$66,$BC,$31,$FC,$00,$18
+	dc.b	$C6,$02,$08,$F8,$00,$01,$C6,$04,$11,$FC,$00,$10,$C6,$05,$4E,$75
 loc_0010E0:
 	subq.b	#$1,(Timer_C605).w
+loc_0010E4:
 	bne.b	loc_00113A
+loc_0010E6:
 	move.w	#$1C,(ram_C602).w
+loc_0010EC:
 	lea	(dat_001354).l,a1
+loc_0010F2:
 	lea	(ram_A916).w,a2
+loc_0010F6:
 	move.w	#$4517,d1
+loc_0010FA:
 	moveq	#$0,d6
+loc_0010FC:
 	bsr.w	sub_0087E2
+loc_001100:
 	lea	(dat_001368).l,a1
+loc_001106:
 	lea	(ram_AB1C).w,a2
+loc_00110A:
 	move.w	#$4517,d1
+loc_00110E:
 	moveq	#$0,d6
+loc_001110:
 	bsr.w	sub_0087E2
+loc_001114:
 	lea	(dat_001376).l,a1
+loc_00111A:
 	lea	(ram_AC0C).w,a2
+loc_00111E:
 	move.w	#$4517,d1
+loc_001122:
 	moveq	#$0,d6
+loc_001124:
 	bsr.w	sub_0087E2
+loc_001128:
 	move.b	#$20,(Timer_C605).w
+loc_00112E:
 	move.w	#$100,(Timer_C606).w
+loc_001134:
 	bset.b	#$2,(ram_C604).w
 loc_00113A:
 	rts
 loc_00113C:
 	subq.w	#$1,(Timer_C606).w
+loc_001140:
 	beq.b	loc_00115C
+loc_001142:
 	subq.b	#$1,(Timer_C605).w
+loc_001146:
 	bne.b	loc_00115A
+loc_001148:
 	move.w	#$20,(ram_C602).w
+loc_00114E:
 	move.b	#$20,(Timer_C605).w
+loc_001154:
 	bset.b	#$3,(ram_C604).w
 loc_00115A:
 	rts
@@ -1430,6 +1968,7 @@ loc_00115C:
 	rts
 loc_001164:
 	subq.b	#$1,(Timer_C605).w
+loc_001168:
 	bne.b	loc_00117C
 	move.w	#$1C,(ram_C602).w
 	move.b	#$20,(Timer_C605).w
@@ -1438,14 +1977,21 @@ loc_00117C:
 	rts
 loc_00117E:
 	bsr.w	sub_003522
+loc_001182:
 	bsr.w	sub_001198
+loc_001186:
 	bsr.w	sub_00120C
+loc_00118A:
 	bsr.w	sub_00124C
+loc_00118E:
 	bsr.w	sub_001298
+loc_001192:
 	bsr.w	sub_0012F4
+loc_001196:
 	rts
 sub_001198:
 	bclr.b	#$0,(ram_C604).w
+loc_00119E:
 	beq.w	loc_00120A
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0011AA:
@@ -1475,6 +2021,7 @@ loc_00120A:
 	rts
 sub_00120C:
 	bclr.b	#$1,(ram_C604).w
+loc_001212:
 	beq.b	loc_00124A
 	btst.b	#$7,(Hardware_Version).w
 	bne.b	loc_001234
@@ -1494,50 +2041,81 @@ loc_00124A:
 	rts
 sub_00124C:
 	bclr.b	#$2,(ram_C604).w
+loc_001252:
 	beq.b	loc_001296
+loc_001254:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00125C:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001264:
 	bne.b	loc_00125C
+loc_001266:
 	lea	(VDP_Control).l,a6
+loc_00126C:
 	move.w	#$9300,(a6)
+loc_001270:
 	move.w	#$9404,(a6)
+loc_001274:
 	move.w	#$9500,(a6)
+loc_001278:
 	move.w	#$96D4,(a6)
+loc_00127C:
 	move.w	#$977F,(a6)
+loc_001280:
 	move.w	#$4800,(a6)
+loc_001284:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_00128A:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00128E:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001296:
 	rts
 sub_001298:
 	bclr.b	#$3,(ram_C604).w
+loc_00129E:
 	beq.b	loc_0012F2
+loc_0012A0:
 	lea	(ram_A916).w,a6
+loc_0012A4:
 	moveq	#$0,d7
+loc_0012A6:
 	move.w	#$8,d6
 loc_0012AA:
 	move.l	d7,(a6)+
+loc_0012AC:
 	dbra	d6,loc_0012AA
+loc_0012B0:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0012B8:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_0012C0:
 	bne.b	loc_0012B8
+loc_0012C2:
 	lea	(VDP_Control).l,a6
+loc_0012C8:
 	move.w	#$9300,(a6)
+loc_0012CC:
 	move.w	#$9404,(a6)
+loc_0012D0:
 	move.w	#$9500,(a6)
+loc_0012D4:
 	move.w	#$96D4,(a6)
+loc_0012D8:
 	move.w	#$977F,(a6)
+loc_0012DC:
 	move.w	#$4800,(a6)
+loc_0012E0:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0012E6:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0012EA:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0012F2:
 	rts
 sub_0012F4:
 	bclr.b	#$4,(ram_C604).w
+loc_0012FA:
 	beq.b	loc_001352
 	lea	(dat_001354).l,a1
 	lea	(ram_A916).w,a2
@@ -1572,162 +2150,299 @@ dat_001376:
 	dc.b	$39,$31,$00,$00
 GameState_Gameplay:
 	move.w	#$2700,sr
+loc_001398:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_00139C:
 	andi.b	#$BF,d0
+loc_0013A0:
 	move.w	d0,(VDP_Control).l
+loc_0013A6:
 	jsr	(sub_009EE0).l
+loc_0013AC:
 	tst.b	(ram_C354).w
+loc_0013B0:
 	bne.b	loc_0013B6
+loc_0013B2:
 	bsr.w	sub_0016FA
 loc_0013B6:
 	move.b	#$1,(ram_C5A0).w
+loc_0013BC:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0013C4:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_0013CC:
 	bne.b	loc_0013C4
+loc_0013CE:
 	lea	(VDP_Control).l,a6
+loc_0013D4:
 	move.w	#$93C0,(a6)
+loc_0013D8:
 	move.w	#$945D,(a6)
+loc_0013DC:
 	move.w	#$9500,(a6)
+loc_0013E0:
 	move.w	#$9680,(a6)
+loc_0013E4:
 	move.w	#$977F,(a6)
+loc_0013E8:
 	move.w	#$4000,(a6)
+loc_0013EC:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_0013F2:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0013F6:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0013FE:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001406:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00140E:
 	bne.b	loc_001406
+loc_001410:
 	lea	(VDP_Control).l,a6
+loc_001416:
 	move.w	#$9300,(a6)
+loc_00141A:
 	move.w	#$9401,(a6)
+loc_00141E:
 	move.w	#$9500,(a6)
+loc_001422:
 	move.w	#$96DF,(a6)
+loc_001426:
 	move.w	#$977F,(a6)
+loc_00142A:
 	move.w	#$5E00,(a6)
+loc_00142E:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_001434:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001438:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_001440:
 	move.l	#$72800003,(VDP_Control).l
+loc_00144A:
 	lea	(dat_0591E0).l,a0
+loc_001450:
 	jsr	(sub_00A218).l
+loc_001456:
 	move.l	#$7B400003,(VDP_Control).l
+loc_001460:
 	lea	(dat_059D34).l,a0
+loc_001466:
 	jsr	(sub_00A218).l
+loc_00146C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001474:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00147C:
 	bne.b	loc_001474
+loc_00147E:
 	lea	(VDP_Control).l,a6
+loc_001484:
 	move.w	#$9390,(a6)
+loc_001488:
 	move.w	#$9400,(a6)
+loc_00148C:
 	move.w	#$95F2,(a6)
+loc_001490:
 	move.w	#$9627,(a6)
+loc_001494:
 	move.w	#$9706,(a6)
+loc_001498:
 	move.w	#$5200,(a6)
+loc_00149C:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0014A2:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0014A6:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0014AE:
 	bsr.w	sub_00178E
+loc_0014B2:
 	bsr.w	sub_0018D2
+loc_0014B6:
 	bsr.w	sub_00193C
+loc_0014BA:
 	bsr.w	sub_0023B0
+loc_0014BE:
 	lea	(dat_039136).l,a0
+loc_0014C4:
 	lea	(ram_A000).w,a4
+loc_0014C8:
 	jsr	(sub_00A22A).l
+loc_0014CE:
 	lea	(dat_03A692).l,a0
+loc_0014D4:
 	lea	(ram_A1C0).w,a4
+loc_0014D8:
 	jsr	(sub_00A22A).l
+loc_0014DE:
 	lea	(dat_03AAAC).l,a0
+loc_0014E4:
 	lea	(ram_A280).w,a4
+loc_0014E8:
 	jsr	(sub_00A22A).l
+loc_0014EE:
 	lea	(dat_03A710).l,a0
+loc_0014F4:
 	lea	(ram_AD20).w,a4
+loc_0014F8:
 	jsr	(sub_00A22A).l
+loc_0014FE:
 	lea	(dat_0817A0).l,a0
+loc_001504:
 	lea	(ram_B0C0).w,a4
+loc_001508:
 	jsr	(sub_00A22A).l
+loc_00150E:
 	tst.b	(Flags_C356).w
+loc_001512:
 	beq.b	loc_00153C
+loc_001514:
 	lea	(dat_03B45A).l,a0
+loc_00151A:
 	lea	(ram_BB00).w,a4
+loc_00151E:
 	jsr	(sub_00A22A).l
+loc_001524:
 	lea	(dat_03AF96).l,a0
+loc_00152A:
 	lea	(ram_FF5A60).l,a4
+loc_001530:
 	jsr	(sub_00A22A).l
+loc_001536:
 	jsr	(sub_00B72A).l
 loc_00153C:
 	bsr.w	sub_0019D4
+loc_001540:
 	move.w	#$4,(Objects_A).w
+loc_001546:
 	move.w	#$8,(ram_E080).w
+loc_00154C:
 	move.w	#$10,(ram_E0C0).w
+loc_001552:
 	cmpi.w	#$5,(ram_C328).w
+loc_001558:
 	bhi.b	loc_001560
+loc_00155A:
 	move.w	#$48,(ram_E040).w
 loc_001560:
 	move.b	#$10,(ram_C61E).w
+loc_001566:
 	st.b	(ram_C6B4).w
+loc_00156A:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_00156E:
 	ori.b	#$40,d0
+loc_001572:
 	move.w	d0,(VDP_Control).l
+loc_001578:
 	lea	(dat_00239E).l,a1
+loc_00157E:
 	move.w	(ram_C328).w,d1
+loc_001582:
 	move.b	(a1,d1.w),d0
+loc_001586:
 	jsr	(sub_00A068).l
 loc_00158C:
 	cmpi.w	#$18,(Game_State).w
+loc_001592:
 	beq.w	loc_00193A
+loc_001596:
 	jsr	(sub_0084CA).l
 sub_00159C:
 	move.w	#$2700,sr
+loc_0015A0:
 	jsr	(sub_00B490).l
+loc_0015A6:
 	jsr	(sub_0091AC).l
+loc_0015AC:
 	jsr	(sub_00BFCE).l
+loc_0015B2:
 	jsr	(ObjectUpdate).l
+loc_0015B8:
 	jsr	(sub_00A0C6).l
+loc_0015BE:
 	jsr	(sub_014056).l
+loc_0015C4:
 	bsr.w	sub_001648
+loc_0015C8:
 	btst.b	#$0,(ram_C693).w
+loc_0015CE:
 	beq.b	loc_0015D6
+loc_0015D0:
 	bset.b	#$6,(Flags_C61C).w
 loc_0015D6:
 	jsr	(sub_00A4D4).l
+loc_0015DC:
 	jsr	(sub_00A56E).l
+loc_0015E2:
 	jsr	(sub_00A606).l
+loc_0015E8:
 	jsr	(sub_00A694).l
+loc_0015EE:
 	jsr	(sub_00A836).l
+loc_0015F4:
 	jsr	(sub_00AC0C).l
+loc_0015FA:
 	jsr	(sub_007E3E).l
+loc_001600:
 	jsr	(sub_009736).l
+loc_001606:
 	jsr	(sub_009B2A).l
+loc_00160C:
 	jsr	(sub_009480).l
+loc_001612:
 	jsr	(sub_0095F6).l
+loc_001618:
 	jsr	(sub_009334).l
+loc_00161E:
 	jsr	(sub_009016).l
+loc_001624:
 	jsr	(sub_008EA2).l
+loc_00162A:
 	jsr	(sub_0084E2).l
+loc_001630:
 	jsr	(sub_00426C).l
+loc_001636:
 	move.w	#$2000,sr
+loc_00163A:
 	cmpi.w	#$18,(Game_State).w
+loc_001640:
 	beq.w	loc_00193A
+loc_001644:
 	bra.w	loc_00158C
 sub_001648:
 	move.b	(Flags_C61C).w,d0
+loc_00164C:
 	beq.b	loc_001682
+loc_00164E:
 	move.b	d0,d1
+loc_001650:
 	andi.b	#$8F,d0
+loc_001654:
 	beq.b	loc_001682
+loc_001656:
 	st.b	(ram_C6B4).w
+loc_00165A:
 	btst.b	#$0,d1
+loc_00165E:
 	bne.w	loc_0016A8
+loc_001662:
 	btst.b	#$2,d1
+loc_001666:
 	bne.w	loc_0016BE
+loc_00166A:
 	btst.b	#$3,d1
+loc_00166E:
 	bne.w	loc_0016E6
+loc_001672:
 	btst.b	#$7,d1
+loc_001676:
 	bne.w	loc_001688
+loc_00167A:
 	btst.b	#$1,d1
+loc_00167E:
 	bne.w	loc_001684
 loc_001682:
 	rts
@@ -1737,19 +2452,29 @@ loc_001688:
 	move.w	#$C,(Game_NextState).w
 loc_00168E:
 	movem.l	d0/a1,-(a7)
+loc_001692:
 	moveq	#-$20,d0
+loc_001694:
 	jsr	(sub_00A068).l
+loc_00169A:
 	movem.l	(a7)+,d0/a1
+loc_00169E:
 	move.w	#$8,(Game_State).w
+loc_0016A4:
 	addq.w	#$4,a7
+loc_0016A6:
 	rts
 loc_0016A8:
 	move.l	(ram_C332).w,d0
+loc_0016AC:
 	cmp.l	(ram_FE50).w,d0
+loc_0016B0:
 	bls.b	loc_0016B6
+loc_0016B2:
 	move.l	d0,(ram_FE50).w
 loc_0016B6:
 	move.w	#$3C,(Game_NextState).w
+loc_0016BC:
 	bra.b	loc_00168E
 loc_0016BE:
 	move.w	#$20,(Game_NextState).w
@@ -1768,28 +2493,45 @@ loc_0016DA:
 	bra.b	loc_00168E
 loc_0016E6:
 	move.w	#$2C,(Game_NextState).w
+loc_0016EC:
 	tst.b	(Flags_C356).w
+loc_0016F0:
 	beq.b	loc_0016F8
+loc_0016F2:
 	move.w	#$40,(Game_NextState).w
 loc_0016F8:
 	bra.b	loc_00168E
 sub_0016FA:
 	st.b	(ram_C354).w
+loc_0016FE:
 	move.w	#$3,(ram_C350).w
+loc_001704:
 	move.w	#$20,(ram_C348).w
+loc_00170A:
 	move.w	(ram_FE44).w,d0
+loc_00170E:
 	add.w	d0,d0
+loc_001710:
 	move.w	dat_00173E(pc,d0.w),(ram_C342).w
+loc_001716:
 	clr.l	(ram_FE50).w
+loc_00171A:
 	tst.b	(Flags_C356).w
+loc_00171E:
 	beq.b	loc_00173C
+loc_001720:
 	move.w	#$1,(ram_C350).w
+loc_001726:
 	lea	(dat_001748).l,a1
+loc_00172C:
 	lea	(ram_C370).w,a2
+loc_001730:
 	move.w	a2,(ram_C3D0).w
+loc_001734:
 	moveq	#$22,d7
 loc_001736:
 	move.w	(a1)+,(a2)+
+loc_001738:
 	dbra	d7,loc_001736
 loc_00173C:
 	rts
@@ -1804,364 +2546,634 @@ dat_001748:
 	dc.b	$00,$00,$00,$00,$00,$20,$00,$00,$00,$02,$00,$00,$00,$00
 sub_00178E:
 	move.w	(ram_C328).w,d0
+loc_001792:
 	lsl.w	#$2,d0
+loc_001794:
 	lea	(dat_0023D6).l,a6
+loc_00179A:
 	movea.l	(a6,d0.w),a6
+loc_00179E:
 	move.w	(a6)+,d0
+loc_0017A0:
 	jsr	(sub_008508).l
+loc_0017A6:
 	move.w	(a6)+,(ram_C50E).w
+loc_0017AA:
 	move.w	(a6)+,(ram_C520).w
+loc_0017AE:
 	move.w	(a6)+,(ram_C554).w
+loc_0017B2:
 	move.w	(a6)+,(ram_C566).w
+loc_0017B6:
 	move.w	(a6)+,(ram_C504).w
+loc_0017BA:
 	move.w	(a6)+,(Camera_Y).w
+loc_0017BE:
 	move.w	(a6)+,(ram_C54A).w
+loc_0017C2:
 	move.w	(a6)+,(ram_C55C).w
+loc_0017C6:
 	move.l	(a6)+,(ram_C5B0).w
+loc_0017CA:
 	move.l	(a6)+,(ram_C5B4).w
+loc_0017CE:
 	move.w	(a6)+,(ram_E004).w
+loc_0017D2:
 	move.w	(a6)+,(ram_E008).w
+loc_0017D6:
 	movea.l	(a6)+,a1
+loc_0017D8:
 	cmpi.w	#$44,(Game_State).w
+loc_0017DE:
 	beq.b	loc_00181C
+loc_0017E0:
 	moveq	#$0,d0
+loc_0017E2:
 	tst.b	(Flags_C356).w
+loc_0017E6:
 	beq.b	loc_001804
+loc_0017E8:
 	cmpi.w	#$3,(ram_FE44).w
+loc_0017EE:
 	beq.b	loc_0017FA
+loc_0017F0:
 	addq.w	#$1,a1
+loc_0017F2:
 	move.b	(a1)+,d0
+loc_0017F4:
 	bmi.b	loc_00181C
+loc_0017F6:
 	bra.w	loc_001808
 loc_0017FA:
 	move.b	(a1)+,d0
+loc_0017FC:
 	addq.w	#$1,a1
+loc_0017FE:
 	bmi.b	loc_00181C
+loc_001800:
 	bra.w	loc_001808
 loc_001804:
 	move.w	(a1)+,d0
+loc_001806:
 	bmi.b	loc_00181C
 loc_001808:
 	movea.w	(a1)+,a5
+loc_00180A:
 	move.w	(a1)+,$8(a5)
+loc_00180E:
 	move.w	(a1)+,$4(a5)
+loc_001812:
 	jsr	(sub_00ABF4).l
+loc_001818:
 	dbra	d0,loc_001808
 loc_00181C:
 	move.l	(a6)+,(ram_C5AA).w
+loc_001820:
 	move.w	(a6)+,(ram_C52E).w
+loc_001824:
 	move.w	(a6)+,(ram_C530).w
+loc_001828:
 	move.w	(a6)+,d0
+loc_00182A:
 	move.w	d0,(ram_C536).w
+loc_00182E:
 	addi.w	#$140,d0
+loc_001832:
 	move.w	d0,(ram_C58E).w
+loc_001836:
 	move.w	(a6)+,d0
+loc_001838:
 	move.w	d0,(ram_C53A).w
+loc_00183C:
 	addi.w	#$E0,d0
+loc_001840:
 	move.w	d0,(ram_C590).w
+loc_001844:
 	move.w	(a6)+,(ram_C57C).w
+loc_001848:
 	move.w	(a6)+,(ram_C57E).w
+loc_00184C:
 	move.w	(a6)+,(ram_C532).w
+loc_001850:
 	move.w	(a6)+,(ram_C578).w
+loc_001854:
 	move.w	(a6)+,(ram_C534).w
+loc_001858:
 	move.w	(a6)+,(ram_C57A).w
+loc_00185C:
 	move.b	(a6)+,d0
+loc_00185E:
 	move.b	(a6)+,(ram_C5AE).w
+loc_001862:
 	moveq	#$0,d0
+loc_001864:
 	move.w	(ram_C504).w,d0
+loc_001868:
 	divu.w	#$140,d0
+loc_00186C:
 	move.l	d0,(ram_C50C).w
+loc_001870:
 	moveq	#$0,d0
+loc_001872:
 	move.w	(Camera_Y).w,d0
+loc_001876:
 	divu.w	#$E0,d0
+loc_00187A:
 	move.l	d0,(ram_C51E).w
+loc_00187E:
 	movea.l	(a6)+,a0
+loc_001880:
 	lea	(ram_A000).w,a4
+loc_001884:
 	moveq	#$1,d0
+loc_001886:
 	jsr	(sub_00855A).l
+loc_00188C:
 	lea	(ram_A000).w,a0
+loc_001890:
 	lea	(ram_8000).w,a4
+loc_001894:
 	moveq	#$2,d0
+loc_001896:
 	jsr	(sub_008524).l
+loc_00189C:
 	movea.l	(a6)+,a0
+loc_00189E:
 	lea	(ram_FF0000).l,a4
+loc_0018A4:
 	moveq	#$1,d0
+loc_0018A6:
 	jsr	(sub_008524).l
+loc_0018AC:
 	movea.l	(a6)+,a0
+loc_0018AE:
 	lea	(ram_FF2A00).l,a4
+loc_0018B4:
 	moveq	#$1,d0
+loc_0018B6:
 	jsr	(sub_008524).l
+loc_0018BC:
 	move.l	(a6)+,d0
+loc_0018BE:
 	beq.w	loc_00193A
+loc_0018C2:
 	movea.l	d0,a0
+loc_0018C4:
 	lea	(ram_FF5400).l,a4
+loc_0018CA:
 	moveq	#$1,d0
+loc_0018CC:
 	jmp	(sub_008524).l
 sub_0018D2:
 	lea	(ram_A000).w,a1
+loc_0018D6:
 	movea.l	(ram_C5B0).w,a2
+loc_0018DA:
 	lea	(ram_8000).w,a3
+loc_0018DE:
 	moveq	#$F,d0
+loc_0018E0:
 	moveq	#$7,d1
+loc_0018E2:
 	move.w	(ram_C532).w,d3
+loc_0018E6:
 	jsr	(sub_00A19C).l
+loc_0018EC:
 	lea	(ram_A000).w,a1
+loc_0018F0:
 	move.w	#$3FF,d0
+loc_0018F4:
 	bsr.w	sub_0019AC
+loc_0018F8:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001900:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001908:
 	bne.b	loc_001900
+loc_00190A:
 	lea	(VDP_Control).l,a6
+loc_001910:
 	move.w	#$9300,(a6)
+loc_001914:
 	move.w	#$9408,(a6)
+loc_001918:
 	move.w	#$9500,(a6)
+loc_00191C:
 	move.w	#$96D0,(a6)
+loc_001920:
 	move.w	#$977F,(a6)
+loc_001924:
 	move.w	#$4000,(a6)
+loc_001928:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_00192E:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001932:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00193A:
 	rts
 sub_00193C:
 	tst.b	(ram_C5AE).w
+loc_001940:
 	bne.b	loc_0019AA
+loc_001942:
 	lea	(ram_A000).w,a1
+loc_001946:
 	movea.l	(ram_C5B4).w,a2
+loc_00194A:
 	lea	(ram_8000).w,a3
+loc_00194E:
 	moveq	#$F,d0
+loc_001950:
 	moveq	#$7,d1
+loc_001952:
 	move.w	(ram_C578).w,d3
+loc_001956:
 	jsr	(sub_00A19C).l
+loc_00195C:
 	lea	(ram_A000).w,a1
+loc_001960:
 	move.w	#$3FF,d0
+loc_001964:
 	bsr.w	sub_0019C0
+loc_001968:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001970:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001978:
 	bne.b	loc_001970
+loc_00197A:
 	lea	(VDP_Control).l,a6
+loc_001980:
 	move.w	#$9300,(a6)
+loc_001984:
 	move.w	#$9408,(a6)
+loc_001988:
 	move.w	#$9500,(a6)
+loc_00198C:
 	move.w	#$96D0,(a6)
+loc_001990:
 	move.w	#$977F,(a6)
+loc_001994:
 	move.w	#$6000,(a6)
+loc_001998:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_00199E:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0019A2:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0019AA:
 	rts
 sub_0019AC:
 	movea.l	a1,a2
+loc_0019AE:
 	move.l	#$9BFF9BFF,d2
 loc_0019B4:
 	move.l	(a1),d1
+loc_0019B6:
 	and.l	d2,d1
+loc_0019B8:
 	move.l	d1,(a1)+
+loc_0019BA:
 	dbra	d0,loc_0019B4
+loc_0019BE:
 	rts
 sub_0019C0:
 	movea.l	a1,a2
+loc_0019C2:
 	move.l	#$FBFFFBFF,d2
 loc_0019C8:
 	move.l	(a1),d1
+loc_0019CA:
 	and.l	d2,d1
+loc_0019CC:
 	move.l	d1,(a1)+
+loc_0019CE:
 	dbra	d0,loc_0019C8
+loc_0019D2:
 	rts
 sub_0019D4:
 	move.w	#$918F,(VDP_Control).l
+loc_0019DC:
 	lea	(dat_0594EA).l,a1
+loc_0019E2:
 	move.l	#$503C0003,d0
+loc_0019E8:
 	moveq	#$9,d1
+loc_0019EA:
 	moveq	#$1B,d2
+loc_0019EC:
 	jsr	(sub_00A11A).l
+loc_0019F2:
 	bsr.w	sub_001A02
+loc_0019F6:
 	bset.b	#$7,(Flags_C5AF).w
+loc_0019FC:
 	bsr.w	sub_001DBE
+loc_001A00:
 	rts
 sub_001A02:
 	bsr.w	sub_0080A4
+loc_001A06:
 	bsr.w	sub_007EDE
+loc_001A0A:
 	bsr.w	sub_007F26
+loc_001A0E:
 	bsr.w	sub_007F3C
+loc_001A12:
 	move.w	(ram_C348).w,d0
+loc_001A16:
 	move.w	(ram_C34A).w,d1
+loc_001A1A:
 	bra.w	sub_008150
 	dc.b	$4A,$78
 	dc.b	$C3,$44,$66,$0E,$31,$F8,$FE,$60,$FE,$44,$31,$F8,$FE,$62,$FE,$42
 	dc.b	$4E,$75,$31,$FC,$00,$01,$FE,$44,$42,$78,$FE,$42,$4E,$75
 loc_001A3E:
 	bsr.w	sub_003442
+loc_001A42:
 	bsr.w	sub_003522
+loc_001A46:
 	bsr.w	sub_001AB8
+loc_001A4A:
 	bsr.w	sub_001B2C
+loc_001A4E:
 	bsr.w	sub_001CD0
+loc_001A52:
 	bsr.w	sub_001CAA
+loc_001A56:
 	bsr.w	sub_001D16
+loc_001A5A:
 	bsr.w	sub_001D72
+loc_001A5E:
 	bsr.w	sub_001B56
+loc_001A62:
 	bsr.w	sub_001B60
+loc_001A66:
 	bsr.w	sub_001B7E
+loc_001A6A:
 	bsr.w	sub_001BB8
+loc_001A6E:
 	bsr.w	sub_001C04
+loc_001A72:
 	bsr.w	sub_001C20
+loc_001A76:
 	bsr.w	sub_001DBE
+loc_001A7A:
 	jsr	(sub_016164).l
+loc_001A80:
 	jsr	(sub_0161A6).l
+loc_001A86:
 	jsr	(sub_01623C).l
+loc_001A8C:
 	bsr.w	sub_001C8A
+loc_001A90:
 	bsr.w	sub_001CEA
+loc_001A94:
 	bsr.w	sub_001E1C
+loc_001A98:
 	bsr.w	sub_001E6A
+loc_001A9C:
 	tst.b	(Flags_C356).w
+loc_001AA0:
 	beq.b	loc_001AB6
+loc_001AA2:
 	bsr.w	sub_001E8A
+loc_001AA6:
 	bsr.w	sub_001FBC
+loc_001AAA:
 	bsr.w	sub_00225A
+loc_001AAE:
 	bsr.w	sub_0022C0
+loc_001AB2:
 	bsr.w	sub_002350
 loc_001AB6:
 	rts
 sub_001AB8:
 	bclr.b	#$0,(ram_C526).w
+loc_001ABE:
 	beq.b	loc_001AD6
+loc_001AC0:
 	move.w	(ram_C524).w,d0
+loc_001AC4:
 	lea	(ram_C800).w,a1
+loc_001AC8:
 	move.w	#$3,d1
+loc_001ACC:
 	move.w	#$1F,d2
+loc_001AD0:
 	jsr	(sub_00A118).l
 loc_001AD6:
 	bclr.b	#$0,(ram_C52C).w
+loc_001ADC:
 	beq.w	loc_001AF2
+loc_001AE0:
 	move.w	(ram_C528).w,d0
+loc_001AE4:
 	move.w	#$100,d1
+loc_001AE8:
 	move.w	#$C900,d2
+loc_001AEC:
 	jsr	(sub_0085FE).l
 loc_001AF2:
 	bclr.b	#$0,(ram_C56C).w
+loc_001AF8:
 	beq.b	loc_001B10
+loc_001AFA:
 	move.w	(ram_C56A).w,d0
+loc_001AFE:
 	lea	(ram_CB00).w,a1
+loc_001B02:
 	move.w	#$3,d1
+loc_001B06:
 	move.w	#$1F,d2
+loc_001B0A:
 	jsr	(sub_00A118).l
 loc_001B10:
 	bclr.b	#$0,(ram_C572).w
+loc_001B16:
 	beq.w	loc_00193A
+loc_001B1A:
 	move.w	(ram_C56E).w,d0
+loc_001B1E:
 	move.w	#$100,d1
+loc_001B22:
 	move.w	#$CC00,d2
+loc_001B26:
 	jmp	(sub_0085FE).l
 sub_001B2C:
 	move.b	(ram_C598).w,d5
+loc_001B30:
 	beq.b	loc_001B54
+loc_001B32:
 	moveq	#$3,d7
+loc_001B34:
 	lea	(ram_DA20).w,a1
 loc_001B38:
 	lsr.b	#$1,d5
+loc_001B3A:
 	bcc.b	loc_001B4A
+loc_001B3C:
 	move.w	(a1)+,d0
+loc_001B3E:
 	move.w	(a1)+,d1
+loc_001B40:
 	move.l	(a1)+,d2
+loc_001B42:
 	jsr	(sub_00866C).l
+loc_001B48:
 	bra.b	loc_001B4C
 loc_001B4A:
 	addq.w	#$8,a1
 loc_001B4C:
 	dbra	d7,loc_001B38
+loc_001B50:
 	clr.w	(ram_C598).w
 loc_001B54:
 	rts
 sub_001B56:
 	lea	(ram_D070).w,a1
+loc_001B5A:
 	jmp	(loc_016168).l
 sub_001B60:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_001B66:
 	beq.b	loc_001B7C
+loc_001B68:
 	lea	(ram_D800).w,a1
+loc_001B6C:
 	move.l	#$52400003,d0
+loc_001B72:
 	moveq	#$3,d1
+loc_001B74:
 	moveq	#$1,d2
+loc_001B76:
 	jsr	(sub_00A11A).l
 loc_001B7C:
 	rts
 sub_001B7E:
 	bclr.b	#$1,(Flags_C5AF).w
+loc_001B84:
 	beq.b	loc_001BA0
+loc_001B86:
 	tst.b	(Flags_C356).w
+loc_001B8A:
 	bne.b	loc_001BA2
+loc_001B8C:
 	lea	(ram_D810).w,a1
+loc_001B90:
 	move.l	#$56400003,d0
+loc_001B96:
 	moveq	#$5,d1
+loc_001B98:
 	moveq	#$1,d2
+loc_001B9A:
 	jsr	(sub_00A11A).l
 loc_001BA0:
 	rts
 loc_001BA2:
 	lea	(ram_D810).w,a1
+loc_001BA6:
 	move.l	#$56C40003,d0
+loc_001BAC:
 	moveq	#$2,d1
+loc_001BAE:
 	moveq	#$0,d2
+loc_001BB0:
 	jsr	(sub_00A11A).l
+loc_001BB6:
 	rts
 sub_001BB8:
 	bclr.b	#$2,(Flags_C5AF).w
+loc_001BBE:
 	beq.b	loc_001C02
+loc_001BC0:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001BC8:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001BD0:
 	bne.b	loc_001BC8
+loc_001BD2:
 	lea	(VDP_Control).l,a6
+loc_001BD8:
 	move.w	#$9307,(a6)
+loc_001BDC:
 	move.w	#$9400,(a6)
+loc_001BE0:
 	move.w	#$9514,(a6)
+loc_001BE4:
 	move.w	#$96EC,(a6)
+loc_001BE8:
 	move.w	#$977F,(a6)
+loc_001BEC:
 	move.w	#$54C0,(a6)
+loc_001BF0:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_001BF6:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001BFA:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001C02:
 	rts
 sub_001C04:
 	bclr.b	#$3,(Flags_C5AF).w
+loc_001C0A:
 	beq.b	loc_001C1E
+loc_001C0C:
 	move.l	#$5A420003,(VDP_Control).l
+loc_001C16:
 	move.l	(ram_D838).w,(VDP_Data).l
 loc_001C1E:
 	rts
 sub_001C20:
 	bclr.b	#$4,(Flags_C5AF).w
+loc_001C26:
 	beq.b	loc_001C3E
+loc_001C28:
 	move.w	#$D83E,d0
+loc_001C2C:
 	move.w	#$8,d1
+loc_001C30:
 	move.w	#$1,d2
+loc_001C34:
 	lea	(ram_D83C).w,a1
+loc_001C38:
 	jsr	(sub_00A118).l
 loc_001C3E:
 	bclr.b	#$5,(Flags_C5AF).w
+loc_001C44:
 	beq.b	loc_001C88
+loc_001C46:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001C4E:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001C56:
 	bne.b	loc_001C4E
+loc_001C58:
 	lea	(VDP_Control).l,a6
+loc_001C5E:
 	move.w	#$9310,(a6)
+loc_001C62:
 	move.w	#$9400,(a6)
+loc_001C66:
 	move.w	#$9530,(a6)
+loc_001C6A:
 	move.w	#$96EC,(a6)
+loc_001C6E:
 	move.w	#$977F,(a6)
+loc_001C72:
 	move.w	#$4C20,(a6)
+loc_001C76:
 	move.w	#$82,(DMA_Trigger_Word).w
+loc_001C7C:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001C80:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001C88:
 	rts
 sub_001C8A:
 	bclr.b	#$6,(Flags_C5AF).w
+loc_001C90:
 	beq.b	loc_001CA8
 	move.w	#$DBBE,d0
 	move.w	#$7,d1
@@ -2172,12 +3184,19 @@ loc_001CA8:
 	rts
 sub_001CAA:
 	btst.b	#$0,(ram_C5DC).w
+loc_001CB0:
 	beq.b	loc_001CC8
+loc_001CB2:
 	tst.b	(ram_C5CA).w
+loc_001CB6:
 	bne.b	loc_001CCA
+loc_001CB8:
 	move.w	(ram_C5DE).w,d0
+loc_001CBC:
 	move.w	(ram_C5E8).w,d1
+loc_001CC0:
 	move.l	(ram_C5E2).w,d2
+loc_001CC4:
 	bsr.w	sub_00866C
 loc_001CC8:
 	rts
@@ -2185,28 +3204,45 @@ loc_001CCA:
 	jmp	(sub_0161A6).l
 sub_001CD0:
 	bclr.b	#$1,(ram_C5DC).w
+loc_001CD6:
 	beq.b	loc_001CE8
+loc_001CD8:
 	move.w	(ram_C638).w,d0
+loc_001CDC:
 	move.w	(ram_C63A).w,d1
+loc_001CE0:
 	move.l	(ram_C63C).w,d2
+loc_001CE4:
 	bsr.w	sub_00866C
 loc_001CE8:
 	rts
 sub_001CEA:
 	lea	(ram_C5FA).w,a4
+loc_001CEE:
 	tst.l	(a4)
+loc_001CF0:
 	beq.b	loc_001D14
 loc_001CF2:
 	moveq	#$0,d0
+loc_001CF4:
 	move.b	(a4)+,d0
+loc_001CF6:
 	beq.b	loc_001D10
+loc_001CF8:
 	lea	(ram_D8A0).w,a5
+loc_001CFC:
 	lea	-$C(a5,d0.w),a5
+loc_001D00:
 	movea.l	(a5)+,a1
+loc_001D02:
 	move.w	(a5)+,d0
+loc_001D04:
 	move.w	(a5)+,d1
+loc_001D06:
 	move.w	(a5)+,d2
+loc_001D08:
 	jsr	(sub_00A150).l
+loc_001D0E:
 	bra.b	loc_001CF2
 loc_001D10:
 	clr.l	(ram_C5FA).w
@@ -2214,31 +3250,47 @@ loc_001D14:
 	rts
 sub_001D16:
 	bclr.b	#$0,(ram_C5FE).w
+loc_001D1C:
 	beq.b	loc_001D70
 loc_001D1E:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001D26:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001D2E:
 	bne.b	loc_001D26
+loc_001D30:
 	lea	(VDP_Control).l,a6
+loc_001D36:
 	move.w	#$8F01,(a6)
+loc_001D3A:
 	move.w	#$93FF,(a6)
+loc_001D3E:
 	move.w	#$940F,(a6)
+loc_001D42:
 	move.w	#$9780,(a6)
+loc_001D46:
 	move.w	#$6000,(a6)
+loc_001D4A:
 	move.w	#$83,(a6)
+loc_001D4E:
 	move.w	#$0,(VDP_Data).l
 loc_001D56:
 	move.w	(a6),d7
+loc_001D58:
 	andi.w	#$2,d7
+loc_001D5C:
 	bne.b	loc_001D56
+loc_001D5E:
 	move.w	#$8F02,(DMA_Trigger_Word).w
+loc_001D64:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001D68:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001D70:
 	rts
 sub_001D72:
 	bclr.b	#$2,(ram_C5DC).w
+loc_001D78:
 	beq.b	loc_001DBC
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001D82:
@@ -2258,14 +3310,23 @@ loc_001DBC:
 	rts
 sub_001DBE:
 	bclr.b	#$7,(Flags_C5AF).w
+loc_001DC4:
 	beq.b	loc_001DE2
+loc_001DC6:
 	move.w	(ram_C352).w,d0
+loc_001DCA:
 	lsr.w	#$1,d0
+loc_001DCC:
 	move.w	dat_001DE4(pc,d0.w),d1
+loc_001DD0:
 	lea	dat_001DE4(pc,d1.w),a0
+loc_001DD4:
 	move.w	#$B500,d0
+loc_001DD8:
 	move.w	(a0)+,d1
+loc_001DDA:
 	move.l	(a0)+,d2
+loc_001DDC:
 	jsr	(sub_0085FE).l
 loc_001DE2:
 	rts
@@ -2276,6 +3337,7 @@ dat_001DE4:
 	dc.b	$00,$60,$00,$FF,$A1,$C0,$03,$40,$00,$FF,$B0,$C0
 sub_001E1C:
 	bclr.b	#$1,(ram_C679).w
+loc_001E22:
 	beq.b	loc_001E68
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001E2C:
@@ -2296,127 +3358,221 @@ loc_001E68:
 	rts
 sub_001E6A:
 	bclr.b	#$0,(ram_C693).w
+loc_001E70:
 	beq.b	loc_001E88
+loc_001E72:
 	move.l	#$75000002,(VDP_Control).l
+loc_001E7C:
 	lea	(dat_057D28).l,a0
+loc_001E82:
 	jsr	(sub_00A218).l
 loc_001E88:
 	rts
 sub_001E8A:
 	bclr.b	#$0,(ram_C5C8).w
+loc_001E90:
 	beq.w	loc_00193A
 loc_001E94:
 	move.w	#$9180,(VDP_Control).l
+loc_001E9C:
 	tst.b	(ram_C644).w
+loc_001EA0:
 	beq.b	loc_001EB2
 	move.w	#$8230,(VDP_Control).l
 	move.w	#$8407,(VDP_Control).l
 loc_001EB2:
 	move.l	#$4D400002,(VDP_Control).l
+loc_001EBC:
 	lea	(dat_0E4550).l,a0
+loc_001EC2:
 	jsr	(sub_00A218).l
+loc_001EC8:
 	move.l	#$53400002,(VDP_Control).l
+loc_001ED2:
 	lea	(dat_0E4632).l,a0
+loc_001ED8:
 	jsr	(sub_00A218).l
+loc_001EDE:
 	move.l	#$62E00002,(VDP_Control).l
+loc_001EE8:
 	lea	(dat_0582AC).l,a0
+loc_001EEE:
 	jsr	(sub_00A218).l
+loc_001EF4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001EFC:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001F04:
 	bne.b	loc_001EFC
+loc_001F06:
 	lea	(VDP_Control).l,a6
+loc_001F0C:
 	move.w	#$9350,(a6)
+loc_001F10:
 	move.w	#$9400,(a6)
+loc_001F14:
 	move.w	#$95D0,(a6)
+loc_001F18:
 	move.w	#$96AC,(a6)
+loc_001F1C:
 	move.w	#$977F,(a6)
+loc_001F20:
 	move.w	#$5C00,(a6)
+loc_001F24:
 	move.w	#$82,(DMA_Trigger_Word).w
+loc_001F2A:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001F2E:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_001F36:
 	move.l	#$5CA00002,(VDP_Control).l
+loc_001F40:
 	lea	(dat_0E4538).l,a0
+loc_001F46:
 	jsr	(sub_00A218).l
+loc_001F4C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001F54:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001F5C:
 	bne.b	loc_001F54
+loc_001F5E:
 	lea	(VDP_Control).l,a6
+loc_001F64:
 	move.w	#$9300,(a6)
+loc_001F68:
 	move.w	#$9408,(a6)
+loc_001F6C:
 	move.w	#$9500,(a6)
+loc_001F70:
 	move.w	#$96B0,(a6)
+loc_001F74:
 	move.w	#$977F,(a6)
+loc_001F78:
 	move.w	#$5000,(a6)
+loc_001F7C:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_001F82:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_001F86:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_001F8E:
 	lea	(VDP_Control).l,a6
+loc_001F94:
 	lea	(VDP_Data).l,a1
+loc_001F9A:
 	move.w	(a6),d0
+loc_001F9C:
 	move.w	#$8F02,(a6)
+loc_001FA0:
 	lea	(ram_FF7000).l,a2
+loc_001FA6:
 	move.w	#$2000,(a6)
+loc_001FAA:
 	move.w	#$3,(a6)
+loc_001FAE:
 	move.w	#$7FF,d7
 loc_001FB2:
 	move.w	(a1),(a2)+
+loc_001FB4:
 	dbra	d7,loc_001FB2
+loc_001FB8:
 	bra.w	loc_001D1E
 sub_001FBC:
 	bclr.b	#$1,(ram_C5C8).w
+loc_001FC2:
 	beq.w	loc_00193A
+loc_001FC6:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001FCE:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_001FD6:
 	bne.b	loc_001FCE
+loc_001FD8:
 	lea	(VDP_Control).l,a6
+loc_001FDE:
 	move.w	#$8F01,(a6)
+loc_001FE2:
 	move.w	#$93FF,(a6)
+loc_001FE6:
 	move.w	#$940F,(a6)
+loc_001FEA:
 	move.w	#$9780,(a6)
+loc_001FEE:
 	move.w	#$5000,(a6)
+loc_001FF2:
 	move.w	#$83,(a6)
+loc_001FF6:
 	move.w	#$0,(VDP_Data).l
 loc_001FFE:
 	move.w	(a6),d7
+loc_002000:
 	andi.w	#$2,d7
+loc_002004:
 	bne.b	loc_001FFE
+loc_002006:
 	move.w	#$8F02,(DMA_Trigger_Word).w
+loc_00200C:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_002010:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_002018:
 	move.w	#$918F,(VDP_Control).l
+loc_002020:
 	tst.b	(ram_C644).w
+loc_002024:
 	beq.b	loc_002036
 	move.w	#$8238,(VDP_Control).l
 	move.w	#$8406,(VDP_Control).l
 loc_002036:
 	lea	(dat_0594EA).l,a1
+loc_00203C:
 	move.l	#$503C0003,d0
+loc_002042:
 	moveq	#$9,d1
+loc_002044:
 	moveq	#$1B,d2
+loc_002046:
 	jsr	(sub_00A11A).l
+loc_00204C:
 	bsr.w	sub_003442
+loc_002050:
 	bsr.w	sub_001A02
+loc_002054:
 	move.l	#$4D200002,(VDP_Control).l
+loc_00205E:
 	lea	(dat_03937A).l,a0
+loc_002064:
 	jsr	(sub_00A218).l
+loc_00206A:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002072:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00207A:
 	bne.b	loc_002072
+loc_00207C:
 	lea	(VDP_Control).l,a6
+loc_002082:
 	move.w	#$9320,(a6)
+loc_002086:
 	move.w	#$9400,(a6)
+loc_00208A:
 	move.w	#$9590,(a6)
+loc_00208E:
 	move.w	#$96FF,(a6)
+loc_002092:
 	move.w	#$9702,(a6)
+loc_002096:
 	move.w	#$5FA0,(a6)
+loc_00209A:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0020A0:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0020A4:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0020AC:
 	btst.b	#$4,(Flags_C61C).w
+loc_0020B2:
 	beq.w	loc_0020FE
 	cmpi.w	#$9,(ram_C328).w
 	beq.w	loc_0020E4
@@ -2433,21 +3589,33 @@ loc_0020E4:
 	bra.w	loc_002114
 loc_0020FE:
 	move.l	#$6D200001,(VDP_Control).l
+loc_002108:
 	lea	(dat_03C4C0).l,a0
+loc_00210E:
 	jsr	(sub_00A218).l
 loc_002114:
 	lea	(VDP_Control).l,a6
+loc_00211A:
 	lea	(VDP_Data).l,a1
+loc_002120:
 	move.w	(a6),d0
+loc_002122:
 	move.w	#$8F02,(a6)
+loc_002126:
 	lea	(ram_FF7000).l,a2
+loc_00212C:
 	move.w	#$6000,(a6)
+loc_002130:
 	move.w	#$3,(a6)
+loc_002134:
 	move.w	#$7FF,d7
 loc_002138:
 	move.w	(a2)+,(a1)
+loc_00213A:
 	dbra	d7,loc_002138
+loc_00213E:
 	tst.b	(ram_C6BB).w
+loc_002142:
 	beq.w	loc_00193A
 	move.w	(ram_C6B8).w,d0
 	andi.b	#$7F,d0
@@ -2495,6 +3663,7 @@ loc_00222E:
 	jmp	(sub_00A218).l
 sub_00225A:
 	bclr.b	#$2,(ram_C5C8).w
+loc_002260:
 	beq.w	loc_00193A
 	move.l	#$40200000,(VDP_Control).l
 	lea	(dat_086C92).l,a0
@@ -2511,64 +3680,110 @@ sub_00225A:
 	bra.w	loc_001E94
 sub_0022C0:
 	bclr.b	#$7,(ram_C5C8).w
+loc_0022C6:
 	beq.w	loc_00193A
+loc_0022CA:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0022D2:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_0022DA:
 	bne.b	loc_0022D2
+loc_0022DC:
 	lea	(VDP_Control).l,a6
+loc_0022E2:
 	move.w	#$9300,(a6)
+loc_0022E6:
 	move.w	#$9408,(a6)
+loc_0022EA:
 	move.w	#$9500,(a6)
+loc_0022EE:
 	move.w	#$96B0,(a6)
+loc_0022F2:
 	move.w	#$977F,(a6)
+loc_0022F6:
 	move.w	#$5000,(a6)
+loc_0022FA:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_002300:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_002304:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00230C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002314:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00231C:
 	bne.b	loc_002314
+loc_00231E:
 	lea	(VDP_Control).l,a6
+loc_002324:
 	move.w	#$9350,(a6)
+loc_002328:
 	move.w	#$9400,(a6)
+loc_00232C:
 	move.w	#$95D0,(a6)
+loc_002330:
 	move.w	#$96AC,(a6)
+loc_002334:
 	move.w	#$977F,(a6)
+loc_002338:
 	move.w	#$5C00,(a6)
+loc_00233C:
 	move.w	#$82,(DMA_Trigger_Word).w
+loc_002342:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_002346:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00234E:
 	rts
 sub_002350:
 	bclr.b	#$6,(ram_C5C8).w
+loc_002356:
 	beq.w	loc_00193A
+loc_00235A:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002362:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00236A:
 	bne.b	loc_002362
+loc_00236C:
 	lea	(VDP_Control).l,a6
+loc_002372:
 	move.w	#$9300,(a6)
+loc_002376:
 	move.w	#$9402,(a6)
+loc_00237A:
 	move.w	#$9500,(a6)
+loc_00237E:
 	move.w	#$96AE,(a6)
+loc_002382:
 	move.w	#$977F,(a6)
+loc_002386:
 	move.w	#$7D40,(a6)
+loc_00238A:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_002390:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_002394:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00239C:
 	rts
 dat_00239E:
 	dc.b	$82,$83
 	dc.b	$84,$85,$86,$87,$8A,$93,$94,$95,$96,$97,$98,$99,$9A,$9A,$A2,$87
 sub_0023B0:
 	tst.b	(Flags_C356).w
+loc_0023B4:
 	beq.w	loc_00193A
+loc_0023B8:
 	move.w	(ram_C328).w,d0
+loc_0023BC:
 	subq.w	#$7,d0
+loc_0023BE:
 	bcs.w	loc_00193A
+loc_0023C2:
 	move.b	dat_0023CA(pc,d0.w),(ram_C3C7).w
+loc_0023C8:
 	rts
 dat_0023CA:
 	dc.b	$00,$00,$02,$04,$06,$06
@@ -3211,82 +4426,133 @@ dat_00333C:
 	dc.b	$00,$16,$00,$18,$00,$1A,$00,$1C,$00,$1E,$00,$00,$00,$20
 VInt:
 	bsr.b	VInt_Handler
+loc_003360:
 	rte
 VInt_Handler:
 	move.w	#$2700,sr
+loc_003366:
 	movem.l	d0-d7/a0-a6,-(a7)
+loc_00336A:
 	btst.b	#$6,(Hardware_Version).w
+loc_003370:
 	beq.b	loc_00337A
 	move.w	#$6EE,d0
 loc_003376:
 	dbra	d0,loc_003376
 loc_00337A:
 	addq.w	#$1,(VBlank_Counter).w
+loc_00337E:
 	move.w	(VDP_Control).l,(VDP_Status_Copy).w
+loc_003386:
 	move.w	(Game_State).w,d0
+loc_00338A:
 	jsr	VInt_StateTable(pc,d0.w)
+loc_00338E:
 	movem.l	(a7)+,d0-d7/a0-a6
+loc_003392:
 	move.w	#$2000,sr
+loc_003396:
 	rts
 VInt_StateTable:
 	bra.w	loc_003440
+loc_00339C:
 	bra.w	loc_0005FA
+loc_0033A0:
 	bra.w	loc_0043C2
+loc_0033A4:
 	bra.w	loc_001A3E
 	bra.w	loc_0007EC
+loc_0033AC:
 	bra.w	loc_00117E
 	bra.w	loc_002D2A
+loc_0033B4:
 	bra.w	loc_000BE8
 	bra.w	loc_003204
 	bra.w	loc_0045DE
+loc_0033C0:
 	bra.w	loc_004D2E
+loc_0033C4:
 	bra.w	loc_0055FE
 	bra.w	loc_005B9E
+loc_0033CC:
 	bra.w	loc_006222
+loc_0033D0:
 	bra.w	loc_0065DA
+loc_0033D4:
 	bra.w	loc_00696C
+loc_0033D8:
 	bra.w	loc_006F4A
 	bra.w	loc_007248
+loc_0033E0:
 	bra.w	loc_007B1A
 	bra.w	loc_006B6E
 loc_0033E8:
 	bclr.b	#$0,(ram_C59A).w
+loc_0033EE:
 	beq.w	loc_003440
+loc_0033F2:
 	btst.b	#$3,($C00005).l
+loc_0033FA:
 	beq.w	loc_003440
+loc_0033FE:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_003406:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00340E:
 	bne.b	loc_003406
+loc_003410:
 	lea	(VDP_Control).l,a6
+loc_003416:
 	move.w	#$9340,(a6)
+loc_00341A:
 	move.w	#$9400,(a6)
+loc_00341E:
 	move.w	#$9580,(a6)
+loc_003422:
 	move.w	#$96E3,(a6)
+loc_003426:
 	move.w	#$977F,(a6)
+loc_00342A:
 	move.w	#$C000,(a6)
+loc_00342E:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_003434:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_003438:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_003440:
 	rts
 sub_003442:
 	tst.b	(ram_C644).w
+loc_003446:
 	bne.b	loc_00347E
+loc_003448:
 	move.l	#$40000010,(VDP_Control).l
+loc_003452:
 	move.w	(ram_C522).w,(VDP_Data).l
+loc_00345A:
 	move.w	(ram_C568).w,(VDP_Data).l
+loc_003462:
 	move.l	#$50000003,(VDP_Control).l
+loc_00346C:
 	move.w	(ram_C510).w,(VDP_Data).l
+loc_003474:
 	move.w	(ram_C556).w,(VDP_Data).l
+loc_00347C:
 	rts
 loc_00347E:
 	move.l	#$40000010,(VDP_Control).l
+loc_003488:
 	move.w	(ram_C568).w,(VDP_Data).l
+loc_003490:
 	move.w	(ram_C522).w,(VDP_Data).l
+loc_003498:
 	move.l	#$50000003,(VDP_Control).l
+loc_0034A2:
 	move.w	(ram_C556).w,(VDP_Data).l
+loc_0034AA:
 	move.w	(ram_C510).w,(VDP_Data).l
+loc_0034B2:
 	rts
 sub_0034B4:
 	move.w	#$100,(Z80_Bus_Request).l
@@ -3311,23 +4577,37 @@ loc_0034BC:
 	dc.b	$C3,$26
 sub_003522:
 	cmpi.w	#$18,(Game_State).w
+loc_003528:
 	beq.b	loc_003530
+loc_00352A:
 	jsr	(ReadJoypads).l
 loc_003530:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_003538:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_003540:
 	bne.b	loc_003538
+loc_003542:
 	lea	(VDP_Control).l,a6
+loc_003548:
 	move.w	#$9340,(a6)
+loc_00354C:
 	move.w	#$9401,(a6)
+loc_003550:
 	move.w	#$9580,(a6)
+loc_003554:
 	move.w	#$96E8,(a6)
+loc_003558:
 	move.w	#$977F,(a6)
+loc_00355C:
 	move.w	#$7000,(a6)
+loc_003560:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_003566:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00356A:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_003572:
 	bra.w	loc_0033E8
 HInt:
 	movem.l	d0-d7/a0-a6,-(a7)
@@ -3344,62 +4624,273 @@ loc_003586:
 	dc.b	$00,$03
 GameState_Transition:
 	clr.w	(Flags_C61C).w
+loc_0035C6:
 	bset.b	#$0,(Flags_C61C).w
+loc_0035CC:
 	bsr.w	sub_0084CA
+loc_0035D0:
 	move.b	#$6,(Timer_C5A4).w
+loc_0035D6:
 	clr.w	(ram_C5A6).w
+loc_0035DA:
 	move.b	#$1,(ram_C59E).w
+loc_0035E0:
 	move.w	(Game_NextState).w,d0
 loc_0035E4:
 	jmp	loc_0035E4(pc,d0.w)
-	dc.b	$60,$00,$00,$4A,$60,$00,$00,$46
-	dc.b	$60,$00,$03,$E6,$60,$00,$00,$56,$60,$00,$03,$80,$60,$00,$03,$B6
-	dc.b	$60,$00,$01,$0C,$60,$00,$02,$D0,$60,$00,$03,$18,$60,$00,$02,$62
-	dc.b	$60,$00,$01,$C0,$60,$00,$01,$5C,$60,$00,$01,$0E,$60,$00,$00,$2E
-	dc.b	$60,$00,$00,$2A,$60,$00,$00,$7C,$60,$00,$03,$76,$60,$00,$00,$20
-	dc.b	$60,$00,$00,$1A,$08,$F8,$00,$01,$C6,$1C,$61,$00,$4E,$8E,$4A,$38
-	dc.b	$C5,$9E,$66,$F6,$31,$F8,$C5,$A2,$FE,$04,$4E,$75,$60,$E6,$41,$F9
-	dc.b	$00,$0D,$D3,$9C,$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00,$A2,$2A
-	dc.b	$08,$38,$00,$07,$FE,$48,$67,$14,$41,$F9,$00,$05,$85,$54,$49,$F8
-	dc.b	$A8,$60,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$00,$26,$41,$F9,$00,$08
-	dc.b	$47,$2A,$49,$F9,$00,$FF,$30,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9
-	dc.b	$00,$0E,$AB,$2E,$49,$F9,$00,$FF,$32,$A0,$4E,$B9,$00,$00,$A2,$2A
-	dc.b	$60,$92,$41,$F9,$00,$0E,$19,$A4,$49,$F9,$00,$FF,$00,$00,$4E,$B9
-	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$0E,$16,$EE,$49,$F9,$00,$FF,$1B,$60
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$81,$A8,$49,$F9,$00,$FF
-	dc.b	$21,$40,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$81,$1C,$49,$F9
-	dc.b	$00,$FF,$63,$A0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$7D,$28
-	dc.b	$49,$F8,$B5,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$AB,$B2
-	dc.b	$49,$F8,$B5,$00,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FF,$28,$43,$F9
-	dc.b	$00,$05,$7D,$08,$45,$F9,$00,$FF,$00,$20,$30,$3C,$00,$07,$24,$D9
-	dc.b	$51,$C8,$FF,$FC,$60,$00,$FF,$0E,$41,$F9,$00,$0E,$68,$3E,$49,$F9
-	dc.b	$00,$FF,$00,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$78,$E4
-	dc.b	$49,$F9,$00,$FF,$1D,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E
-	dc.b	$79,$38,$49,$F9,$00,$FF,$1E,$A0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9
-	dc.b	$00,$03,$93,$7A,$49,$F8,$8D,$20,$4E,$B9,$00,$00,$A2,$2A,$60,$00
-	dc.b	$FE,$C4,$4D,$F9,$00,$FF,$00,$00,$7E,$00,$3C,$3C,$00,$07,$2C,$C7
+loc_0035E8:
+	bra.w	loc_003634
+	dc.b	$60,$00,$00,$46
+loc_0035F0:
+	bra.w	loc_0039D8
+	dc.b	$60,$00,$00,$56
+loc_0035F8:
+	bra.w	loc_00397A
+	dc.b	$60,$00,$03,$B6
+loc_003600:
+	bra.w	loc_00370E
+	dc.b	$60,$00,$02,$D0,$60,$00,$03,$18
+loc_00360C:
+	bra.w	loc_003870
+loc_003610:
+	bra.w	loc_0037D2
+	dc.b	$60,$00,$01,$5C
+loc_003618:
+	bra.w	loc_003728
+loc_00361C:
+	bra.w	loc_00364C
+loc_003620:
+	bra.w	loc_00364C
+loc_003624:
+	bra.w	loc_0036A2
+	dc.b	$60,$00,$03,$76
+loc_00362C:
+	bra.w	loc_00364E
+	dc.b	$60,$00,$00,$1A
+loc_003634:
+	bset.b	#$1,(Flags_C61C).w
+loc_00363A:
+	bsr.w	sub_0084CA
+loc_00363E:
+	tst.b	(ram_C59E).w
+loc_003642:
+	bne.b	loc_00363A
+loc_003644:
+	move.w	(Game_NextState).w,(Game_State).w
+loc_00364A:
+	rts
+loc_00364C:
+	bra.b	loc_003634
+loc_00364E:
+	lea	(dat_0DD39C).l,a0
+loc_003654:
+	lea	(ram_FF0000).l,a4
+loc_00365A:
+	jsr	(sub_00A22A).l
+loc_003660:
+	btst.b	#$7,(Hardware_Version).w
+loc_003666:
+	beq.b	loc_00367C
+loc_003668:
+	lea	(dat_058554).l,a0
+loc_00366E:
+	lea	(ram_A860).w,a4
+loc_003672:
+	jsr	(sub_00A22A).l
+loc_003678:
+	bra.w	loc_0036A0
+loc_00367C:
+	lea	(dat_08472A).l,a0
+	lea	(ram_FF3000).l,a4
+	jsr	(sub_00A22A).l
+	lea	(dat_0EAB2E).l,a0
+	lea	(ram_FF32A0).l,a4
+	jsr	(sub_00A22A).l
+loc_0036A0:
+	bra.b	loc_003634
+loc_0036A2:
+	lea	(dat_0E19A4).l,a0
+loc_0036A8:
+	lea	(ram_FF0000).l,a4
+loc_0036AE:
+	jsr	(sub_00A22A).l
+loc_0036B4:
+	lea	(dat_0E16EE).l,a0
+loc_0036BA:
+	lea	(ram_FF1B60).l,a4
+loc_0036C0:
+	jsr	(sub_00A22A).l
+loc_0036C6:
+	lea	(dat_0E81A8).l,a0
+loc_0036CC:
+	lea	(ram_FF2140).l,a4
+loc_0036D2:
+	jsr	(sub_00A22A).l
+loc_0036D8:
+	lea	(dat_0E811C).l,a0
+loc_0036DE:
+	lea	(ram_FF63A0).l,a4
+loc_0036E4:
+	jsr	(sub_00A22A).l
+loc_0036EA:
+	lea	(dat_057D28).l,a0
+loc_0036F0:
+	lea	(ram_B500).w,a4
+loc_0036F4:
+	jsr	(sub_00A22A).l
+loc_0036FA:
+	lea	(dat_0EABB2).l,a0
+loc_003700:
+	lea	(ram_B500).w,a4
+loc_003704:
+	jsr	(sub_00A22A).l
+loc_00370A:
+	bra.w	loc_003634
+loc_00370E:
+	lea	(dat_057D08).l,a1
+loc_003714:
+	lea	(ram_FF0020).l,a2
+loc_00371A:
+	move.w	#$7,d0
+loc_00371E:
+	move.l	(a1)+,(a2)+
+loc_003720:
+	dbra	d0,loc_00371E
+loc_003724:
+	bra.w	loc_003634
+loc_003728:
+	lea	(dat_0E683E).l,a0
+loc_00372E:
+	lea	(ram_FF0000).l,a4
+loc_003734:
+	jsr	(sub_00A22A).l
+loc_00373A:
+	lea	(dat_0E78E4).l,a0
+loc_003740:
+	lea	(ram_FF1D80).l,a4
+loc_003746:
+	jsr	(sub_00A22A).l
+loc_00374C:
+	lea	(dat_0E7938).l,a0
+loc_003752:
+	lea	(ram_FF1EA0).l,a4
+loc_003758:
+	jsr	(sub_00A22A).l
+loc_00375E:
+	lea	(dat_03937A).l,a0
+loc_003764:
+	lea	(ram_8D20).w,a4
+loc_003768:
+	jsr	(sub_00A22A).l
+loc_00376E:
+	bra.w	loc_003634
+	dc.b	$4D,$F9,$00,$FF,$00,$00,$7E,$00,$3C,$3C,$00,$07,$2C,$C7
 	dc.b	$51,$CE,$FF,$FC,$43,$F9,$00,$05,$EB,$B8,$45,$F9,$00,$FF,$00,$20
 	dc.b	$30,$3C,$03,$6F,$24,$D9,$51,$C8,$FF,$FC,$41,$F9,$00,$0E,$41,$56
 	dc.b	$49,$F9,$00,$FF,$0D,$E0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E
 	dc.b	$3D,$7C,$49,$F9,$00,$FF,$12,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9
 	dc.b	$00,$05,$89,$FA,$49,$F8,$B0,$C0,$4E,$B9,$00,$00,$A2,$2A,$60,$00
-	dc.b	$FE,$64,$4D,$F9,$00,$FF,$00,$00,$7E,$00,$3C,$3C,$00,$07,$2C,$C7
-	dc.b	$51,$CE,$FF,$FC,$41,$F9,$00,$07,$F5,$B8,$49,$F9,$00,$FF,$00,$20
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$08,$20,$40,$49,$F9,$00,$FF
-	dc.b	$04,$A0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$2F,$84,$49,$F9
-	dc.b	$00,$FF,$52,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0E,$2C,$4A
-	dc.b	$49,$F9,$00,$FF,$64,$C0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05
-	dc.b	$85,$54,$49,$F8,$A8,$60,$4E,$B9,$00,$00,$A2,$2A,$08,$38,$00,$07
-	dc.b	$FE,$48,$66,$12,$41,$F9,$00,$08,$47,$2A,$49,$F9,$00,$FF,$6A,$A0
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$43,$F9,$00,$02,$E0,$00,$45,$F9,$00,$FF
-	dc.b	$02,$80,$30,$3C,$00,$0F,$24,$D9,$51,$C8,$FF,$FC,$60,$00,$FD,$C6
-	dc.b	$41,$F9,$00,$0E,$19,$A4,$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00
-	dc.b	$A2,$2A,$41,$F9,$00,$0E,$16,$EE,$49,$F9,$00,$FF,$1B,$60,$4E,$B9
-	dc.b	$00,$00,$A2,$2A,$43,$F9,$00,$FF,$21,$40,$32,$3C,$AA,$AA,$30,$3C
-	dc.b	$00,$0F,$32,$C1,$51,$C8,$FF,$FC,$41,$F9,$00,$08,$47,$2A,$49,$F9
-	dc.b	$00,$FF,$6A,$A0,$4E,$B9,$00,$00,$A2,$2A,$08,$38,$00,$07,$FE,$48
-	dc.b	$67,$10,$41,$F9,$00,$05,$82,$AC,$49,$F8,$A2,$E0,$4E,$B9,$00,$00
-	dc.b	$A2,$2A,$60,$00,$FD,$60,$41,$F9,$00,$05,$91,$E0,$49,$F9,$00,$FF
+	dc.b	$FE,$64
+loc_0037D2:
+	lea	(ram_FF0000).l,a6
+loc_0037D8:
+	moveq	#$0,d7
+loc_0037DA:
+	move.w	#$7,d6
+loc_0037DE:
+	move.l	d7,(a6)+
+loc_0037E0:
+	dbra	d6,loc_0037DE
+loc_0037E4:
+	lea	(dat_07F5B8).l,a0
+loc_0037EA:
+	lea	(ram_FF0020).l,a4
+loc_0037F0:
+	jsr	(sub_00A22A).l
+loc_0037F6:
+	lea	(dat_082040).l,a0
+loc_0037FC:
+	lea	(ram_FF04A0).l,a4
+loc_003802:
+	jsr	(sub_00A22A).l
+loc_003808:
+	lea	(dat_0E2F84).l,a0
+loc_00380E:
+	lea	(ram_FF5280).l,a4
+loc_003814:
+	jsr	(sub_00A22A).l
+loc_00381A:
+	lea	(dat_0E2C4A).l,a0
+loc_003820:
+	lea	(ram_FF64C0).l,a4
+loc_003826:
+	jsr	(sub_00A22A).l
+loc_00382C:
+	lea	(dat_058554).l,a0
+loc_003832:
+	lea	(ram_A860).w,a4
+loc_003836:
+	jsr	(sub_00A22A).l
+loc_00383C:
+	btst.b	#$7,(Hardware_Version).w
+loc_003842:
+	bne.b	loc_003856
+	lea	(dat_08472A).l,a0
+	lea	(ram_FF6AA0).l,a4
+	jsr	(sub_00A22A).l
+loc_003856:
+	lea	(dat_02E000).l,a1
+loc_00385C:
+	lea	(ram_FF0280).l,a2
+loc_003862:
+	move.w	#$F,d0
+loc_003866:
+	move.l	(a1)+,(a2)+
+loc_003868:
+	dbra	d0,loc_003866
+loc_00386C:
+	bra.w	loc_003634
+loc_003870:
+	lea	(dat_0E19A4).l,a0
+loc_003876:
+	lea	(ram_FF0000).l,a4
+loc_00387C:
+	jsr	(sub_00A22A).l
+loc_003882:
+	lea	(dat_0E16EE).l,a0
+loc_003888:
+	lea	(ram_FF1B60).l,a4
+loc_00388E:
+	jsr	(sub_00A22A).l
+loc_003894:
+	lea	(ram_FF2140).l,a1
+loc_00389A:
+	move.w	#$AAAA,d1
+loc_00389E:
+	move.w	#$F,d0
+loc_0038A2:
+	move.w	d1,(a1)+
+loc_0038A4:
+	dbra	d0,loc_0038A2
+loc_0038A8:
+	lea	(dat_08472A).l,a0
+loc_0038AE:
+	lea	(ram_FF6AA0).l,a4
+loc_0038B4:
+	jsr	(sub_00A22A).l
+loc_0038BA:
+	btst.b	#$7,(Hardware_Version).w
+loc_0038C0:
+	beq.b	loc_0038D2
+loc_0038C2:
+	lea	(dat_0582AC).l,a0
+loc_0038C8:
+	lea	(ram_A2E0).w,a4
+loc_0038CC:
+	jsr	(sub_00A22A).l
+loc_0038D2:
+	bra.w	loc_003634
+	dc.b	$41,$F9,$00,$05,$91,$E0,$49,$F9,$00,$FF
 	dc.b	$75,$A0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$9D,$34,$49,$F9
 	dc.b	$00,$FF,$7E,$60,$4E,$B9,$00,$00,$A2,$2A,$43,$F9,$00,$05,$99,$4A
 	dc.b	$45,$F8,$8C,$40,$30,$3C,$00,$17,$24,$D9,$51,$C8,$FF,$FC,$41,$F9
@@ -3409,43 +4900,182 @@ loc_0035E4:
 	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$05,$82,$AC,$49,$F8,$A2,$E0,$4E,$B9
 	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$08,$47,$2A,$49,$F9,$00,$FF,$30,$00
 	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$89,$FA,$49,$F8,$B0,$C0
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FC,$BC,$41,$F9,$00,$0D,$D3,$9C
-	dc.b	$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05
-	dc.b	$82,$AC,$49,$F8,$A2,$E0,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FC,$96
+	dc.b	$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FC,$BC
+loc_00397A:
+	lea	(dat_0DD39C).l,a0
+loc_003980:
+	lea	(ram_FF0000).l,a4
+loc_003986:
+	jsr	(sub_00A22A).l
+loc_00398C:
+	lea	(dat_0582AC).l,a0
+loc_003992:
+	lea	(ram_A2E0).w,a4
+loc_003996:
+	jsr	(sub_00A22A).l
+loc_00399C:
+	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$05,$85,$54,$49,$F8,$A8,$60,$4E,$B9,$00,$00,$A2,$2A
 	dc.b	$60,$00,$00,$CE,$30,$38,$FE,$46,$43,$F9,$00,$00,$43,$EA,$08,$38
 	dc.b	$00,$06,$FE,$48,$67,$06,$43,$F9,$00,$00,$43,$FC,$43,$F1,$00,$00
-	dc.b	$21,$D9,$FE,$5A,$31,$D9,$C3,$28,$41,$F9,$00,$03,$C4,$C0,$49,$F9
-	dc.b	$00,$FF,$6D,$20,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$99,$AA
-	dc.b	$49,$F9,$00,$FF,$60,$60,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05
-	dc.b	$9B,$B8,$49,$F9,$00,$FF,$89,$A0,$4E,$B9,$00,$00,$A2,$2A,$41,$F9
-	dc.b	$00,$03,$92,$08,$49,$F9,$00,$FF,$8B,$00,$4E,$B9,$00,$00,$A2,$2A
-	dc.b	$43,$F9,$00,$05,$99,$4A,$45,$F9,$00,$FF,$8C,$40,$30,$3C,$00,$17
-	dc.b	$24,$D9,$51,$C8,$FF,$FC,$41,$F9,$00,$05,$9D,$BA,$49,$F9,$00,$FF
-	dc.b	$8C,$A0,$4E,$B9,$00,$00,$A2,$2A,$43,$F9,$00,$02,$E0,$00,$45,$F9
-	dc.b	$00,$FF,$8C,$E0,$30,$3C,$00,$0F,$24,$D9,$51,$C8,$FF,$FC,$41,$F9
-	dc.b	$00,$03,$93,$7A,$49,$F9,$00,$FF,$8D,$20,$4E,$B9,$00,$00,$A2,$2A
-	dc.b	$41,$F9,$00,$09,$9A,$C0,$49,$F9,$00,$FF,$81,$A0,$4E,$BA,$67,$AC
-	dc.b	$43,$F9,$00,$05,$FF,$20,$45,$F8,$BF,$A0,$30,$3C,$00,$07,$24,$D9
-	dc.b	$51,$C8,$FF,$FC,$30,$38,$C3,$28,$E5,$48,$4E,$FB,$00,$02,$60,$00
-	dc.b	$00,$66,$60,$00,$00,$BE,$60,$00,$01,$18,$60,$00,$01,$96,$60,$00
-	dc.b	$01,$CC,$60,$00,$02,$28,$60,$00,$02,$94,$60,$00,$03,$28,$60,$00
-	dc.b	$03,$70,$60,$00,$03,$EE,$60,$00,$04,$5A,$60,$00,$04,$7E,$60,$00
+	dc.b	$21,$D9,$FE,$5A,$31,$D9,$C3,$28
+loc_0039D8:
+	lea	(dat_03C4C0).l,a0
+loc_0039DE:
+	lea	(ram_FF6D20).l,a4
+loc_0039E4:
+	jsr	(sub_00A22A).l
+loc_0039EA:
+	lea	(dat_0599AA).l,a0
+loc_0039F0:
+	lea	(ram_FF6060).l,a4
+loc_0039F6:
+	jsr	(sub_00A22A).l
+loc_0039FC:
+	lea	(dat_059BB8).l,a0
+loc_003A02:
+	lea	(ram_FF89A0).l,a4
+loc_003A08:
+	jsr	(sub_00A22A).l
+loc_003A0E:
+	lea	(dat_039208).l,a0
+loc_003A14:
+	lea	(ram_FF8B00).l,a4
+loc_003A1A:
+	jsr	(sub_00A22A).l
+loc_003A20:
+	lea	(dat_05994A).l,a1
+loc_003A26:
+	lea	(ram_FF8C40).l,a2
+loc_003A2C:
+	move.w	#$17,d0
+loc_003A30:
+	move.l	(a1)+,(a2)+
+loc_003A32:
+	dbra	d0,loc_003A30
+loc_003A36:
+	lea	(dat_059DBA).l,a0
+loc_003A3C:
+	lea	(ram_FF8CA0).l,a4
+loc_003A42:
+	jsr	(sub_00A22A).l
+loc_003A48:
+	lea	(dat_02E000).l,a1
+loc_003A4E:
+	lea	(ram_FF8CE0).l,a2
+loc_003A54:
+	move.w	#$F,d0
+loc_003A58:
+	move.l	(a1)+,(a2)+
+loc_003A5A:
+	dbra	d0,loc_003A58
+loc_003A5E:
+	lea	(dat_03937A).l,a0
+loc_003A64:
+	lea	(ram_FF8D20).l,a4
+loc_003A6A:
+	jsr	(sub_00A22A).l
+loc_003A70:
+	lea	(dat_099AC0).l,a0
+loc_003A76:
+	lea	(ram_FF81A0).l,a4
+loc_003A7C:
+	jsr	sub_00A22A(pc)
+loc_003A80:
+	lea	(dat_05FF20).l,a1
+loc_003A86:
+	lea	(ram_BFA0).w,a2
+loc_003A8A:
+	move.w	#$7,d0
+loc_003A8E:
+	move.l	(a1)+,(a2)+
+loc_003A90:
+	dbra	d0,loc_003A8E
+loc_003A94:
+	move.w	(ram_C328).w,d0
+loc_003A98:
+	lsl.w	#$2,d0
+loc_003A9A:
+	jmp	loc_003A9E(pc,d0.w)
+loc_003A9E:
+	bra.w	loc_003B06
+loc_003AA2:
+	bra.w	loc_003B62
+	dc.b	$60,$00,$01,$18,$60,$00,$01,$96,$60,$00
+	dc.b	$01,$CC,$60,$00,$02,$28,$60,$00,$02,$94
+loc_003ABA:
+	bra.w	loc_003DE4
+loc_003ABE:
+	bra.w	loc_003E30
+	dc.b	$60,$00,$03,$EE,$60,$00,$04,$5A,$60,$00,$04,$7E,$60,$00
 	dc.b	$04,$FC,$60,$00,$05,$EA,$60,$00,$06,$9E,$60,$00,$07,$1C,$60,$00
 	dc.b	$07,$40,$60,$00,$03,$12,$60,$00,$03,$A2,$60,$00,$04,$0E,$60,$00
 	dc.b	$04,$44,$60,$00,$04,$C2,$60,$00,$05,$8C,$60,$00,$06,$64,$60,$00
-	dc.b	$06,$BE,$60,$00,$06,$F4,$41,$F9,$00,$05,$9D,$CE,$49,$F9,$00,$FF
-	dc.b	$00,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$F9,$78,$49,$F9
-	dc.b	$00,$FF,$48,$60,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$FA,$2E
-	dc.b	$49,$F9,$00,$FF,$49,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$02
-	dc.b	$E0,$40,$49,$F9,$00,$FF,$51,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9
-	dc.b	$00,$05,$FE,$2E,$49,$F8,$BE,$00,$4E,$B9,$00,$00,$A2,$2A,$60,$00
-	dc.b	$FA,$D4,$41,$F9,$00,$07,$6E,$DA,$49,$F9,$00,$FF,$00,$00,$4E,$B9
-	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$05,$FF,$D2,$49,$F9,$00,$FF,$1B,$20
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$06,$0D,$BA,$49,$F9,$00,$FF
-	dc.b	$2D,$20,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$06,$24,$F8,$49,$F9
-	dc.b	$00,$FF,$5F,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$61,$DE
-	dc.b	$49,$F9,$00,$FF,$58,$C0,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FA,$76
+	dc.b	$06,$BE,$60,$00,$06,$F4
+loc_003B06:
+	lea	(dat_059DCE).l,a0
+loc_003B0C:
+	lea	(ram_FF0000).l,a4
+loc_003B12:
+	jsr	(sub_00A22A).l
+loc_003B18:
+	lea	(dat_05F978).l,a0
+loc_003B1E:
+	lea	(ram_FF4860).l,a4
+loc_003B24:
+	jsr	(sub_00A22A).l
+loc_003B2A:
+	lea	(dat_05FA2E).l,a0
+loc_003B30:
+	lea	(ram_FF4980).l,a4
+loc_003B36:
+	jsr	(sub_00A22A).l
+loc_003B3C:
+	lea	(dat_02E040).l,a0
+loc_003B42:
+	lea	(ram_FF5180).l,a4
+loc_003B48:
+	jsr	(sub_00A22A).l
+loc_003B4E:
+	lea	(dat_05FE2E).l,a0
+loc_003B54:
+	lea	(ram_BE00).w,a4
+loc_003B58:
+	jsr	(sub_00A22A).l
+loc_003B5E:
+	bra.w	loc_003634
+loc_003B62:
+	lea	(dat_076EDA).l,a0
+loc_003B68:
+	lea	(ram_FF0000).l,a4
+loc_003B6E:
+	jsr	(sub_00A22A).l
+loc_003B74:
+	lea	(dat_05FFD2).l,a0
+loc_003B7A:
+	lea	(ram_FF1B20).l,a4
+loc_003B80:
+	jsr	(sub_00A22A).l
+loc_003B86:
+	lea	(dat_060DBA).l,a0
+loc_003B8C:
+	lea	(ram_FF2D20).l,a4
+loc_003B92:
+	jsr	(sub_00A22A).l
+loc_003B98:
+	lea	(dat_0624F8).l,a0
+loc_003B9E:
+	lea	(ram_FF5F80).l,a4
+loc_003BA4:
+	jsr	(sub_00A22A).l
+loc_003BAA:
+	lea	(dat_0A61DE).l,a0
+loc_003BB0:
+	lea	(ram_FF58C0).l,a4
+loc_003BB6:
+	jsr	(sub_00A22A).l
+loc_003BBC:
+	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$06,$5A,$CC,$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00
 	dc.b	$A2,$2A,$41,$F9,$00,$09,$A2,$0C,$49,$F9,$00,$FF,$2F,$A0,$4E,$B9
 	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$09,$AB,$78,$49,$F9,$00,$FF,$34,$80
@@ -3480,20 +5110,78 @@ loc_0035E4:
 	dc.b	$69,$20,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$08,$17,$A0,$49,$F9
 	dc.b	$00,$FF,$6C,$C0,$4E,$B9,$00,$00,$A2,$2A,$43,$F9,$00,$09,$C4,$96
 	dc.b	$45,$F9,$00,$FF,$82,$40,$30,$3C,$00,$0F,$24,$D9,$51,$C8,$FF,$FC
-	dc.b	$60,$00,$F8,$52,$41,$F9,$00,$02,$E0,$40,$49,$F9,$00,$FF,$51,$80
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$D1,$24,$49,$F9,$00,$FF
-	dc.b	$00,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$9D,$CE,$49,$F9
-	dc.b	$00,$FF,$0B,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$D0,$00
-	dc.b	$49,$F9,$00,$FF,$4D,$E0,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$F8,$06
-	dc.b	$41,$F9,$00,$0A,$1A,$FE,$49,$F9,$00,$FF,$4E,$80,$4E,$B9,$00,$00
-	dc.b	$A2,$2A,$41,$F9,$00,$09,$A2,$0C,$49,$F9,$00,$FF,$58,$60,$4E,$B9
-	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$09,$9E,$1E,$49,$F9,$00,$FF,$5D,$40
-	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$09,$B7,$E4,$49,$F9,$00,$FF
-	dc.b	$3B,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$09,$BA,$88,$49,$F9
-	dc.b	$00,$FF,$41,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$DA,$06
-	dc.b	$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A
-	dc.b	$D9,$50,$49,$F9,$00,$FF,$37,$00,$4E,$B9,$00,$00,$A2,$2A,$60,$00
-	dc.b	$F7,$84,$41,$F9,$00,$0A,$65,$E8,$49,$F9,$00,$FF,$57,$80,$4E,$B9
+	dc.b	$60,$00,$F8,$52
+loc_003DE4:
+	lea	(dat_02E040).l,a0
+loc_003DEA:
+	lea	(ram_FF5180).l,a4
+loc_003DF0:
+	jsr	(sub_00A22A).l
+loc_003DF6:
+	lea	(dat_0AD124).l,a0
+loc_003DFC:
+	lea	(ram_FF0000).l,a4
+loc_003E02:
+	jsr	(sub_00A22A).l
+loc_003E08:
+	lea	(dat_059DCE).l,a0
+loc_003E0E:
+	lea	(ram_FF0B80).l,a4
+loc_003E14:
+	jsr	(sub_00A22A).l
+loc_003E1A:
+	lea	(dat_0AD000).l,a0
+loc_003E20:
+	lea	(ram_FF4DE0).l,a4
+loc_003E26:
+	jsr	(sub_00A22A).l
+loc_003E2C:
+	bra.w	loc_003634
+loc_003E30:
+	lea	(dat_0A1AFE).l,a0
+loc_003E36:
+	lea	(ram_FF4E80).l,a4
+loc_003E3C:
+	jsr	(sub_00A22A).l
+loc_003E42:
+	lea	(dat_09A20C).l,a0
+loc_003E48:
+	lea	(ram_FF5860).l,a4
+loc_003E4E:
+	jsr	(sub_00A22A).l
+loc_003E54:
+	lea	(dat_099E1E).l,a0
+loc_003E5A:
+	lea	(ram_FF5D40).l,a4
+loc_003E60:
+	jsr	(sub_00A22A).l
+loc_003E66:
+	lea	(dat_09B7E4).l,a0
+loc_003E6C:
+	lea	(ram_FF3B00).l,a4
+loc_003E72:
+	jsr	(sub_00A22A).l
+loc_003E78:
+	lea	(dat_09BA88).l,a0
+loc_003E7E:
+	lea	(ram_FF4180).l,a4
+loc_003E84:
+	jsr	(sub_00A22A).l
+loc_003E8A:
+	lea	(dat_0ADA06).l,a0
+loc_003E90:
+	lea	(ram_FF0000).l,a4
+loc_003E96:
+	jsr	(sub_00A22A).l
+loc_003E9C:
+	lea	(dat_0AD950).l,a0
+loc_003EA2:
+	lea	(ram_FF3700).l,a4
+loc_003EA8:
+	jsr	(sub_00A22A).l
+loc_003EAE:
+	bra.w	loc_003634
+	dc.b	$41,$F9,$00,$0A,$65,$E8,$49,$F9,$00,$FF,$57,$80,$4E,$B9
 	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$0A,$28,$FE,$49,$F9,$00,$FF,$5C,$00
 	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$19,$AA,$49,$F9,$00,$FF
 	dc.b	$4E,$80,$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$09,$9E,$1E,$49,$F9
@@ -3555,134 +5243,223 @@ loc_0035E4:
 	dc.b	$4B,$60,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$F3,$CA
 sub_00426C:
 	tst.b	(ram_C5A0).w
+loc_004270:
 	beq.b	loc_0042A0
+loc_004272:
 	moveq	#$6,d0
 loc_004274:
 	lea	(ram_C780).w,a1
+loc_004278:
 	lea	(ram_C700).w,a2
+loc_00427C:
 	moveq	#$3F,d1
+loc_00427E:
 	bsr.b	sub_0042A2
+loc_004280:
 	bset.b	#$0,(ram_C59A).w
+loc_004286:
 	jsr	(sub_0084CA).l
+loc_00428C:
 	move.w	#$8000,d3
 loc_004290:
 	dbra	d3,loc_004290
+loc_004294:
 	dbra	d0,loc_004274
+loc_004298:
 	clr.b	(ram_C5A0).w
+loc_00429C:
 	clr.b	(ram_C6B4).w
 loc_0042A0:
 	rts
 sub_0042A2:
 	move.b	(a2),d2
+loc_0042A4:
 	addq.b	#$2,d2
+loc_0042A6:
 	move.b	(a1)+,d4
+loc_0042A8:
 	cmp.b	d4,d2
+loc_0042AA:
 	bcs.b	loc_0042AE
+loc_0042AC:
 	move.b	d4,d2
 loc_0042AE:
 	move.b	d2,(a2)+
+loc_0042B0:
 	move.b	(a2),d2
+loc_0042B2:
 	move.b	d2,d4
+loc_0042B4:
 	andi.b	#$E0,d2
+loc_0042B8:
 	addi.b	#$20,d2
+loc_0042BC:
 	move.b	(a1)+,d5
+loc_0042BE:
 	move.b	d5,d6
+loc_0042C0:
 	andi.b	#$E0,d5
+loc_0042C4:
 	cmp.b	d5,d2
+loc_0042C6:
 	bcs.b	loc_0042CA
+loc_0042C8:
 	move.b	d5,d2
 loc_0042CA:
 	andi.b	#$E,d4
+loc_0042CE:
 	addq.b	#$2,d4
+loc_0042D0:
 	andi.b	#$E,d6
+loc_0042D4:
 	cmp.b	d6,d4
+loc_0042D6:
 	bcs.b	loc_0042DA
+loc_0042D8:
 	move.b	d6,d4
 loc_0042DA:
 	or.b	d4,d2
+loc_0042DC:
 	move.b	d2,(a2)+
+loc_0042DE:
 	dbra	d1,sub_0042A2
+loc_0042E2:
 	rts
 sub_0042E4:
 	subq.w	#$1,(ram_C5A6).w
+loc_0042E8:
 	bpl.b	loc_004308
+loc_0042EA:
 	move.w	#$2,(ram_C5A6).w
+loc_0042F0:
 	movea.w	(ram_C688).w,a2
+loc_0042F4:
 	lea	$80(a2),a1
+loc_0042F8:
 	move.w	(ram_C68A).w,d1
+loc_0042FC:
 	bsr.b	sub_0042A2
+loc_0042FE:
 	bset.b	#$0,(ram_C59A).w
+loc_004304:
 	subq.b	#$1,(Timer_C5A4).w
 loc_004308:
 	rts
 loc_00430A:
 	subq.w	#$1,(ram_C5A6).w
+loc_00430E:
 	bpl.w	loc_004370
+loc_004312:
 	move.w	#$2,(ram_C5A6).w
+loc_004318:
 	lea	(ram_C700).w,a2
+loc_00431C:
 	moveq	#$3F,d1
+loc_00431E:
 	bsr.w	sub_004372
+loc_004322:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00432A:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_004332:
 	bne.b	loc_00432A
+loc_004334:
 	lea	(VDP_Control).l,a6
+loc_00433A:
 	move.w	#$9340,(a6)
+loc_00433E:
 	move.w	#$9400,(a6)
+loc_004342:
 	move.w	#$9580,(a6)
+loc_004346:
 	move.w	#$96E3,(a6)
+loc_00434A:
 	move.w	#$977F,(a6)
+loc_00434E:
 	move.w	#$C000,(a6)
+loc_004352:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_004358:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00435C:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_004364:
 	subq.b	#$1,(Timer_C5A4).w
+loc_004368:
 	bpl.b	loc_004370
+loc_00436A:
 	move.b	#$0,(ram_C59E).w
 loc_004370:
 	rts
 sub_004372:
 	move.b	(a2),d2
+loc_004374:
 	subq.b	#$2,d2
+loc_004376:
 	bcc.b	loc_00437A
+loc_004378:
 	moveq	#$0,d2
 loc_00437A:
 	move.b	d2,(a2)+
+loc_00437C:
 	move.b	(a2),d2
+loc_00437E:
 	move.b	d2,d4
+loc_004380:
 	andi.b	#$E0,d2
+loc_004384:
 	subi.b	#$20,d2
+loc_004388:
 	bcc.b	loc_00438C
+loc_00438A:
 	moveq	#$0,d2
 loc_00438C:
 	andi.b	#$E,d4
+loc_004390:
 	subq.b	#$2,d4
+loc_004392:
 	bcc.b	loc_004396
+loc_004394:
 	moveq	#$0,d4
 loc_004396:
 	or.b	d4,d2
+loc_004398:
 	move.b	d2,(a2)+
+loc_00439A:
 	dbra	d1,sub_004372
+loc_00439E:
 	rts
 sub_0043A0:
 	subq.w	#$1,(ram_C5A6).w
+loc_0043A4:
 	bpl.b	loc_0043C0
+loc_0043A6:
 	move.w	#$2,(ram_C5A6).w
+loc_0043AC:
 	movea.w	(ram_C688).w,a2
+loc_0043B0:
 	move.w	(ram_C68A).w,d1
+loc_0043B4:
 	bsr.b	sub_004372
+loc_0043B6:
 	bset.b	#$0,(ram_C59A).w
+loc_0043BC:
 	subq.b	#$1,(Timer_C5A4).w
 loc_0043C0:
 	rts
 loc_0043C2:
 	bclr.b	#$0,(Flags_C61C).w
+loc_0043C8:
 	beq.b	loc_0043D6
+loc_0043CA:
 	move.w	#$8174,(VDP_Control).l
+loc_0043D2:
 	move.w	#$2000,sr
 loc_0043D6:
 	bclr.b	#$1,(Flags_C61C).w
+loc_0043DC:
 	beq.b	loc_0043E6
+loc_0043DE:
 	move.w	#$8154,(VDP_Control).l
 loc_0043E6:
 	bra.w	loc_00430A
@@ -3905,138 +5682,212 @@ dat_0048FA:
 	dc.b	$0A,$25,$4C,$4D,$4E,$4F,$1F,$5B,$5C,$0C,$19,$26,$FE,$00
 GameState_Intro:
 	move.w	#$2700,sr
+loc_004952:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_004956:
 	andi.b	#$BF,d0
+loc_00495A:
 	move.w	d0,(VDP_Control).l
+loc_004960:
 	jsr	(sub_009EE0).l
+loc_004966:
 	move.w	#$E8,d0
+loc_00496A:
 	jsr	(sub_008508).l
+loc_004970:
 	move.b	#$1,(ram_C5A0).w
+loc_004976:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00497E:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_004986:
 	bne.b	loc_00497E
+loc_004988:
 	lea	(VDP_Control).l,a6
+loc_00498E:
 	move.w	#$93F0,(a6)
+loc_004992:
 	move.w	#$945F,(a6)
+loc_004996:
 	move.w	#$9500,(a6)
+loc_00499A:
 	move.w	#$9680,(a6)
+loc_00499E:
 	move.w	#$977F,(a6)
+loc_0049A2:
 	move.w	#$4000,(a6)
+loc_0049A6:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_0049AC:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0049B0:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0049B8:
 	bsr.w	sub_004BFA
+loc_0049BC:
 	lea	(dat_0FE438).l,a1
+loc_0049C2:
 	lea	(ram_D000).w,a2
+loc_0049C6:
 	move.w	#$3,d0
 loc_0049CA:
 	move.l	(a1)+,(a2)+
+loc_0049CC:
 	dbra	d0,loc_0049CA
+loc_0049D0:
 	move.w	#$F4,(Objects_A).w
+loc_0049D6:
 	move.w	#$F8,(ram_E080).w
+loc_0049DC:
 	move.w	#$F0,(Timer_C606).w
+loc_0049E2:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_0049E6:
 	ori.b	#$40,d0
+loc_0049EA:
 	move.w	d0,(VDP_Control).l
+loc_0049F0:
 	movem.l	d0/a1,-(a7)
+loc_0049F4:
 	moveq	#-$7F,d0
+loc_0049F6:
 	jsr	(sub_00A068).l
+loc_0049FC:
 	movem.l	(a7)+,d0/a1
 loc_004A00:
 	jsr	(sub_0084CA).l
+loc_004A06:
 	jsr	(ObjectUpdate).l
+loc_004A0C:
 	jsr	(sub_014056).l
+loc_004A12:
 	bsr.w	sub_004B36
+loc_004A16:
 	jsr	(sub_00426C).l
+loc_004A1C:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_004A22:
 	bne.b	loc_004A28
+loc_004A24:
 	bra.w	loc_004A00
 loc_004A28:
 	movem.l	d0/a1,-(a7)
+loc_004A2C:
 	moveq	#-$20,d0
+loc_004A2E:
 	jsr	(sub_00A068).l
+loc_004A34:
 	movem.l	(a7)+,d0/a1
+loc_004A38:
 	move.w	#$1,(ram_C3B6).w
+loc_004A3E:
 	move.w	#$C,(Game_NextState).w
+loc_004A44:
 	move.w	#$8,(Game_State).w
+loc_004A4A:
 	rts
 sub_004A4C:
 	bset.b	#$0,$2(a0)
+loc_004A52:
 	bne.b	loc_004A82
+loc_004A54:
 	move.w	#$1A0,$4(a0)
+loc_004A5A:
 	move.w	#$87,$8(a0)
+loc_004A60:
 	move.b	#$20,$22(a0)
+loc_004A66:
 	move.l	#$FFFF8000,$C(a0)
+loc_004A6E:
 	move.l	#$1800,$10(a0)
+loc_004A76:
 	move.w	#$70,d0
+loc_004A7A:
 	jsr	(sub_00D96C).l
+loc_004A80:
 	rts
 loc_004A82:
 	jsr	(sub_014248).l
+loc_004A88:
 	move.w	$28(a0),d0
+loc_004A8C:
 	jmp	loc_004A90(pc,d0.w)
 loc_004A90:
 	bra.w	loc_004AA4
+loc_004A94:
 	bra.w	loc_004ABE
+loc_004A98:
 	bra.w	loc_004AD6
-	bra.w	loc_004AEA
-	bra.w	loc_004B08
+	dc.b	$60,$00,$00,$4C
+	dc.b	$60,$00,$00,$66
 loc_004AA4:
 	cmpi.w	#$118,$4(a0)
+loc_004AAA:
 	bcc.b	loc_004ABC
+loc_004AAC:
 	addq.w	#$4,$28(a0)
+loc_004AB0:
 	clr.l	$C(a0)
+loc_004AB4:
 	move.l	#$4000,$10(a0)
 loc_004ABC:
 	rts
 loc_004ABE:
 	cmpi.w	#$D0,$8(a0)
+loc_004AC4:
 	bcs.b	loc_004AD4
+loc_004AC6:
 	addq.w	#$4,$28(a0)
+loc_004ACA:
 	clr.l	$10(a0)
+loc_004ACE:
 	move.w	#$200,$2C(a0)
 loc_004AD4:
 	rts
 loc_004AD6:
 	subq.w	#$1,$2C(a0)
+loc_004ADA:
 	bpl.b	loc_004AE8
 	addq.w	#$4,$28(a0)
 	move.l	#$FFFFC000,$10(a0)
 loc_004AE8:
 	rts
-loc_004AEA:
-	cmpi.w	#$A0,$8(a0)
-	bcc.b	loc_004B06
-	addq.w	#$4,$28(a0)
-	move.l	#$FFFF8000,$C(a0)
-	move.l	#$FFFFE800,$10(a0)
-loc_004B06:
-	rts
-loc_004B08:
-	rts
+	dc.b	$0C,$68,$00,$A0,$00,$08
+	dc.b	$64,$14,$58,$68,$00,$28,$21,$7C,$FF,$FF,$80,$00,$00,$0C,$21,$7C
+	dc.b	$FF,$FF,$E8,$00,$00,$10,$4E,$75,$4E,$75
 sub_004B0A:
 	bset.b	#$0,$2(a0)
+loc_004B10:
 	bne.b	loc_004B30
+loc_004B12:
 	move.w	#$120,$4(a0)
+loc_004B18:
 	move.w	#$98,$8(a0)
+loc_004B1E:
 	move.b	#$20,$22(a0)
+loc_004B24:
 	move.w	#$78,d0
+loc_004B28:
 	jsr	(sub_00D96C).l
+loc_004B2E:
 	rts
 loc_004B30:
 	jmp	(sub_014248).l
 sub_004B36:
 	lea	(ram_D000).w,a1
+loc_004B3A:
 	bsr.w	sub_0086E2
+loc_004B3E:
 	move.w	(ram_C602).w,d0
+loc_004B42:
 	jmp	loc_004B46(pc,d0.w)
 loc_004B46:
 	bra.w	loc_004B52
-	bra.w	loc_004B8A
-	bra.w	loc_004BE8
+	dc.b	$60,$00,$00,$3E,$60,$00
+	dc.b	$00,$98
 loc_004B52:
 	subq.w	#$1,(Timer_C606).w
+loc_004B56:
 	bpl.b	loc_004B80
 	addq.b	#$4,(ram_C5BF).w
 	cmpi.b	#$18,(ram_C5BF).w
@@ -4052,127 +5903,160 @@ loc_004B80:
 loc_004B82:
 	bset.b	#$7,(Joy1_Pressed).w
 	rts
-loc_004B8A:
-	bsr.w	sub_0043A0
-	bpl.b	loc_004BE6
-	addq.w	#$4,(ram_C602).w
-	btst.b	#$7,(Hardware_Version).w
-	beq.b	loc_004BB4
-	lea	($4D7A).l,a1
-	moveq	#$0,d0
-	move.b	(ram_C5BF).w,d0
-	movea.l	(a1,d0.w),a1
-	bsr.w	sub_004CDA
-	bra.w	loc_004BC8
-loc_004BB4:
-	lea	(dat_00502E).l,a1
-	moveq	#$0,d0
-	move.b	(ram_C5BF).w,d0
-	movea.l	(a1,d0.w),a1
-	bsr.w	sub_004D0C
-loc_004BC8:
-	move.b	#$6,(Timer_C5A4).w
-	clr.w	(ram_C5A6).w
-	lea	(ram_C740).w,a1
-	move.w	a1,(ram_C688).w
-	move.w	#$F,(ram_C68A).w
-	bset.b	#$0,(Flags_C5AF).w
-loc_004BE6:
-	rts
-loc_004BE8:
-	bsr.w	sub_0042E4
-	bpl.b	loc_004BF8
-	clr.w	(ram_C602).w
-	move.w	#$F0,(Timer_C606).w
-loc_004BF8:
-	rts
+	dc.b	$61,$00,$F8,$14,$6A,$56
+	dc.b	$58,$78,$C6,$02,$08,$38,$00,$07,$FE,$48,$67,$18,$43,$F9,$00,$00
+	dc.b	$4D,$7A,$70,$00,$10,$38,$C5,$BF,$22,$71,$00,$00,$61,$00,$01,$2C
+	dc.b	$60,$00,$00,$16,$43,$F9,$00,$00,$50,$2E,$70,$00,$10,$38,$C5,$BF
+	dc.b	$22,$71,$00,$00,$61,$00,$01,$46,$11,$FC,$00,$06,$C5,$A4,$42,$78
+	dc.b	$C5,$A6,$43,$F8,$C7,$40,$31,$C9,$C6,$88,$31,$FC,$00,$0F,$C6,$8A
+	dc.b	$08,$F8,$00,$00,$C5,$AF,$4E,$75,$61,$00,$F6,$FA,$6A,$0A,$42,$78
+	dc.b	$C6,$02,$31,$FC,$00,$F0,$C6,$06,$4E,$75
 sub_004BFA:
 	lea	(ram_B000).w,a1
+loc_004BFE:
 	move.w	#$810A,d1
+loc_004C02:
 	move.w	#$7FF,d0
 loc_004C06:
 	move.w	d1,(a1)+
+loc_004C08:
 	dbra	d0,loc_004C06
+loc_004C0C:
 	lea	(ram_B00A).w,a1
+loc_004C10:
 	moveq	#$0,d0
+loc_004C12:
 	moveq	#$E,d1
+loc_004C14:
 	moveq	#$11,d6
 loc_004C16:
 	move.w	d1,d7
+loc_004C18:
 	movea.l	a1,a2
 loc_004C1A:
 	move.l	d0,(a2)+
+loc_004C1C:
 	dbra	d7,loc_004C1A
+loc_004C20:
 	lea	$80(a1),a1
+loc_004C24:
 	dbra	d6,loc_004C16
+loc_004C28:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_004C30:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_004C38:
 	bne.b	loc_004C30
+loc_004C3A:
 	lea	(VDP_Control).l,a6
+loc_004C40:
 	move.w	#$9300,(a6)
+loc_004C44:
 	move.w	#$9408,(a6)
+loc_004C48:
 	move.w	#$9500,(a6)
+loc_004C4C:
 	move.w	#$96D8,(a6)
+loc_004C50:
 	move.w	#$977F,(a6)
+loc_004C54:
 	move.w	#$6000,(a6)
+loc_004C58:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_004C5E:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_004C62:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_004C6A:
 	lea	(ram_A000).w,a6
+loc_004C6E:
 	moveq	#$0,d7
+loc_004C70:
 	move.w	#$3FF,d6
 loc_004C74:
 	move.l	d7,(a6)+
+loc_004C76:
 	dbra	d6,loc_004C74
+loc_004C7A:
 	lea	(ram_FF0000).l,a1
+loc_004C80:
 	lea	(dat_0E2B86).l,a0
+loc_004C86:
 	move.w	#$8000,d0
+loc_004C8A:
 	jsr	(sub_00A388).l
+loc_004C90:
 	lea	(ram_FF00B4).l,a1
+loc_004C96:
 	lea	(ram_A18A).w,a2
+loc_004C9A:
 	moveq	#$1D,d0
+loc_004C9C:
 	moveq	#$11,d1
+loc_004C9E:
 	bsr.w	sub_008BCE
+loc_004CA2:
 	btst.b	#$7,(Hardware_Version).w
+loc_004CA8:
 	beq.b	loc_004CC8
+loc_004CAA:
 	lea	(ram_A980).w,a6
+loc_004CAE:
 	moveq	#$0,d7
+loc_004CB0:
 	move.w	#$19C,d6
 loc_004CB4:
 	move.l	d7,(a6)+
+loc_004CB6:
 	dbra	d6,loc_004CB4
+loc_004CBA:
 	lea	(dat_004D92).l,a1
+loc_004CC0:
 	bsr.w	sub_004CDA
+loc_004CC4:
 	bra.w	loc_004CD2
 loc_004CC8:
 	lea	(dat_005046).l,a1
 	bsr.w	sub_004D0C
 loc_004CD2:
 	bset.b	#$0,(Flags_C5AF).w
+loc_004CD8:
 	rts
 sub_004CDA:
 	lea	(ram_A98C).w,a2
+loc_004CDE:
 	move.w	#$C000,d1
+loc_004CE2:
 	moveq	#$3,d6
 loc_004CE4:
 	movea.l	a2,a3
+loc_004CE6:
 	moveq	#$1B,d7
 loc_004CE8:
 	moveq	#$0,d0
+loc_004CEA:
 	move.b	(a1)+,d0
+loc_004CEC:
 	cmpi.b	#$20,d0
+loc_004CF0:
 	bne.b	loc_004CF6
+loc_004CF2:
 	moveq	#$0,d0
+loc_004CF4:
 	bra.b	loc_004CFA
 loc_004CF6:
 	addi.w	#$4E8,d0
 loc_004CFA:
 	or.w	d1,d0
+loc_004CFC:
 	move.w	d0,(a3)+
+loc_004CFE:
 	dbra	d7,loc_004CE8
+loc_004D02:
 	lea	$100(a2),a2
+loc_004D06:
 	dbra	d6,loc_004CE4
+loc_004D0A:
 	rts
 sub_004D0C:
 	lea	(ram_A980).w,a6
@@ -4187,21 +6071,35 @@ loc_004D16:
 	jmp	(sub_0089A6).l
 loc_004D2E:
 	bsr.w	sub_003522
+loc_004D32:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_004D38:
 	beq.b	loc_004D7C
+loc_004D3A:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_004D42:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_004D4A:
 	bne.b	loc_004D42
+loc_004D4C:
 	lea	(VDP_Control).l,a6
+loc_004D52:
 	move.w	#$9300,(a6)
+loc_004D56:
 	move.w	#$9408,(a6)
+loc_004D5A:
 	move.w	#$9500,(a6)
+loc_004D5E:
 	move.w	#$96D0,(a6)
+loc_004D62:
 	move.w	#$977F,(a6)
+loc_004D66:
 	move.w	#$4000,(a6)
+loc_004D6A:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_004D70:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_004D74:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_004D7C:
 	rts
@@ -4250,9 +6148,7 @@ dat_004D92:
 	dc.b	$20,$4D,$45,$52,$43,$53,$3B,$20,$20,$20,$59,$4F,$55,$52,$20,$4D
 	dc.b	$49,$53,$53,$49,$4F,$4E,$20,$41,$57,$41,$49,$54,$53,$3D,$20,$20
 	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-dat_00502E:
-	dc.b	$20,$20
+	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
 	dc.b	$20,$20,$00,$00,$50,$72,$00,$00,$50,$9C,$00,$00,$50,$C2,$00,$00
 	dc.b	$50,$D8,$00,$00,$50,$FA
 dat_005046:
@@ -4270,56 +6166,101 @@ dat_005046:
 	dc.b	$8D,$1F,$8E,$8F,$FF,$0A,$0E,$26,$FE,$00,$00,$FE
 sub_0050FC:
 	move.w	#$2700,sr
+loc_005100:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_005104:
 	andi.b	#$BF,d0
+loc_005108:
 	move.w	d0,(VDP_Control).l
+loc_00510E:
 	jsr	(sub_009EF0).l
+loc_005114:
 	move.w	#$F0,d0
+loc_005118:
 	jsr	(sub_008508).l
+loc_00511E:
 	move.b	#$1,(ram_C5A0).w
+loc_005124:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00512C:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_005134:
 	bne.b	loc_00512C
+loc_005136:
 	lea	(VDP_Control).l,a6
+loc_00513C:
 	move.w	#$93F0,(a6)
+loc_005140:
 	move.w	#$945F,(a6)
+loc_005144:
 	move.w	#$9500,(a6)
+loc_005148:
 	move.w	#$9680,(a6)
+loc_00514C:
 	move.w	#$977F,(a6)
+loc_005150:
 	move.w	#$4000,(a6)
+loc_005154:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_00515A:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00515E:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_005166:
 	bsr.w	sub_0054F8
+loc_00516A:
 	lea	(dat_0FE308).l,a1
+loc_005170:
 	lea	(ram_D000).w,a2
+loc_005174:
 	move.w	#$3,d0
 loc_005178:
 	move.l	(a1)+,(a2)+
+loc_00517A:
 	dbra	d0,loc_005178
+loc_00517E:
 	move.w	#$FC,(Objects_A).w
+loc_005184:
 	move.w	#$100,(ram_E080).w
+loc_00518A:
 	move.w	#$104,(ram_E0C0).w
+loc_005190:
 	move.w	#$108,(ram_E100).w
+loc_005196:
 	move.w	#$104,(ram_E140).w
+loc_00519C:
 	move.w	#$4,(ram_E16C).w
+loc_0051A2:
 	move.w	#$108,(ram_E180).w
+loc_0051A8:
 	move.w	#$4,(ram_E1AC).w
+loc_0051AE:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_0051B2:
 	ori.b	#$40,d0
+loc_0051B6:
 	move.w	d0,(VDP_Control).l
+loc_0051BC:
 	movem.l	d0/a1,-(a7)
+loc_0051C0:
 	moveq	#-$74,d0
+loc_0051C2:
 	jsr	(sub_00A068).l
+loc_0051C8:
 	movem.l	(a7)+,d0/a1
 loc_0051CC:
 	jsr	(sub_0084CA).l
+loc_0051D2:
 	jsr	(ObjectUpdate).l
+loc_0051D8:
 	jsr	(sub_014056).l
+loc_0051DE:
 	jsr	(sub_00426C).l
+loc_0051E4:
 	btst.b	#$1,(Flags_C61C).w
+loc_0051EA:
 	bne.b	loc_0051F0
+loc_0051EC:
 	bra.w	loc_0051CC
 loc_0051F0:
 	movem.l	d0/a1,-(a7)
@@ -4331,310 +6272,408 @@ loc_0051F0:
 	rts
 sub_00520E:
 	bset.b	#$0,$2(a0)
+loc_005214:
 	bne.b	loc_00523C
+loc_005216:
 	move.w	#$11A,$4(a0)
+loc_00521C:
 	move.w	#$140,$8(a0)
+loc_005222:
 	move.l	#$34722,$14(a0)
+loc_00522A:
 	move.b	#$40,$22(a0)
+loc_005230:
 	clr.b	$3F(a0)
+loc_005234:
 	move.w	#$40,$2C(a0)
+loc_00523A:
 	rts
 loc_00523C:
 	move.w	$38(a0),d0
+loc_005240:
 	jmp	loc_005244(pc,d0.w)
 loc_005244:
 	bra.w	loc_00527C
+loc_005248:
 	bra.w	loc_0052A2
+loc_00524C:
 	bra.w	loc_0052CE
+loc_005250:
 	bra.w	loc_0052F8
+loc_005254:
 	bra.w	loc_005322
+loc_005258:
 	bra.w	loc_005334
+loc_00525C:
 	bra.w	loc_00534A
-	bra.w	loc_005356
-	bra.w	loc_00534A
-	bra.w	loc_005372
-	bra.w	loc_00534A
-	bra.w	loc_0053B0
-	bra.w	loc_00534A
-	bra.w	loc_0053FA
+	dc.b	$60,$00,$00,$F4,$60,$00,$00,$E4,$60,$00,$01,$08,$60,$00,$00,$DC
+	dc.b	$60,$00,$01,$3E,$60,$00,$00,$D4,$60,$00,$01,$80
 loc_00527C:
 	subq.w	#$1,$2C(a0)
+loc_005280:
 	bpl.b	loc_0052A0
+loc_005282:
 	addq.w	#$4,$38(a0)
+loc_005286:
 	move.l	#$FFFF8000,$10(a0)
+loc_00528E:
 	move.b	#$18,$20(a0)
+loc_005294:
 	jsr	(sub_00D9EA).l
+loc_00529A:
 	bclr.b	#$4,$2(a0)
 loc_0052A0:
 	rts
 loc_0052A2:
 	jsr	(sub_014248).l
+loc_0052A8:
 	cmpi.w	#$E0,$8(a0)
+loc_0052AE:
 	bcc.b	loc_0052CC
+loc_0052B0:
 	addq.w	#$4,$38(a0)
+loc_0052B4:
 	move.b	#$6,(Timer_C5A4).w
+loc_0052BA:
 	clr.w	(ram_C5A6).w
+loc_0052BE:
 	lea	(ram_C740).w,a1
+loc_0052C2:
 	move.w	a1,(ram_C688).w
+loc_0052C6:
 	move.w	#$F,(ram_C68A).w
 loc_0052CC:
 	rts
 loc_0052CE:
 	jsr	(sub_014248).l
+loc_0052D4:
 	bsr.w	sub_0043A0
+loc_0052D8:
 	bpl.b	loc_0052F6
+loc_0052DA:
 	addq.w	#$4,$38(a0)
+loc_0052DE:
 	clr.l	$10(a0)
+loc_0052E2:
 	move.l	#$E3BEE,$14(a0)
+loc_0052EA:
 	move.w	#$40,$2C(a0)
+loc_0052F0:
 	bset.b	#$2,$2(a0)
 loc_0052F6:
 	rts
 loc_0052F8:
 	subq.w	#$1,$2C(a0)
+loc_0052FC:
 	bpl.b	loc_005320
+loc_0052FE:
 	addq.w	#$4,$38(a0)
+loc_005302:
 	move.b	#$6,(Timer_C5A4).w
+loc_005308:
 	clr.w	(ram_C5A6).w
+loc_00530C:
 	lea	(ram_C740).w,a1
+loc_005310:
 	move.w	a1,(ram_C688).w
+loc_005314:
 	move.w	#$F,(ram_C68A).w
+loc_00531A:
 	bclr.b	#$2,$2(a0)
 loc_005320:
 	rts
 loc_005322:
 	bsr.w	sub_0042E4
+loc_005326:
 	bpl.b	loc_005332
+loc_005328:
 	addq.w	#$4,$38(a0)
+loc_00532C:
 	move.w	#$20,$2C(a0)
 loc_005332:
 	rts
 loc_005334:
 	subq.w	#$1,$2C(a0)
+loc_005338:
 	bpl.b	loc_005348
+loc_00533A:
 	addq.w	#$4,$38(a0)
+loc_00533E:
 	st.b	(ram_C614).w
+loc_005342:
 	move.w	#$40,$2C(a0)
 loc_005348:
 	rts
 loc_00534A:
 	subq.w	#$1,$2C(a0)
+loc_00534E:
 	bpl.b	loc_005354
 	addq.w	#$4,$38(a0)
 loc_005354:
 	rts
-loc_005356:
-	lea	(ram_D000).w,a1
-	bsr.w	sub_0086E2
-	tst.w	d7
-	beq.b	loc_005370
-	addq.w	#$4,$38(a0)
-	move.w	#$10,$2C(a0)
-	st.b	(ram_C604).w
-loc_005370:
-	rts
-loc_005372:
-	move.w	#$F0,$2C(a0)
-	btst.b	#$7,(Hardware_Version).w
-	beq.b	loc_005396
-	lea	(dat_005652).l,a6
-loc_005386:
-	bsr.w	sub_0087C6
-loc_00538A:
-	addq.w	#$4,$38(a0)
-	bset.b	#$0,(Flags_C5AF).w
-	rts
-loc_005396:
-	lea	(dat_005746).l,a1
-	lea	(ram_A814).w,a2
-	move.l	#$E355E355,d1
-	moveq	#$0,d6
-	jsr	(sub_0089A6).l
-	bra.b	loc_00538A
-loc_0053B0:
-	move.w	#$240,$2C(a0)
-	btst.b	#$7,(Hardware_Version).w
-	beq.b	loc_0053C6
-	lea	(dat_0056CC).l,a6
-	bra.b	loc_005386
-loc_0053C6:
-	lea	(ram_A810).w,a1
-	moveq	#$0,d0
-	moveq	#$F,d7
-loc_0053CE:
-	movea.l	a1,a2
-	moveq	#$B,d6
-loc_0053D2:
-	move.l	d0,(a2)+
-	dbra	d6,loc_0053D2
-	lea	$80(a1),a1
-	dbra	d7,loc_0053CE
-	lea	(dat_005764).l,a1
-	lea	(ram_A814).w,a2
-	move.l	#$E355E355,d1
-	moveq	#$0,d6
-	jsr	(sub_0089A6).l
-	bra.b	loc_00538A
-loc_0053FA:
-	bset.b	#$1,(Flags_C61C).w
-	rts
+	dc.b	$43,$F8,$D0,$00,$61,$00,$33,$86,$4A,$47
+	dc.b	$67,$0E,$58,$68,$00,$38,$31,$7C,$00,$10,$00,$2C,$50,$F8,$C6,$04
+	dc.b	$4E,$75,$31,$7C,$00,$F0,$00,$2C,$08,$38,$00,$07,$FE,$48,$67,$16
+	dc.b	$4D,$F9,$00,$00,$56,$52,$61,$00,$34,$3E,$58,$68,$00,$38,$08,$F8
+	dc.b	$00,$00,$C5,$AF,$4E,$75,$43,$F9,$00,$00,$57,$46,$45,$F8,$A8,$14
+	dc.b	$22,$3C,$E3,$55,$E3,$55,$7C,$00,$4E,$B9,$00,$00,$89,$A6,$60,$DA
+	dc.b	$31,$7C,$02,$40,$00,$2C,$08,$38,$00,$07,$FE,$48,$67,$08,$4D,$F9
+	dc.b	$00,$00,$56,$CC,$60,$C0,$43,$F8,$A8,$10,$70,$00,$7E,$0F,$24,$49
+	dc.b	$7C,$0B,$24,$C0,$51,$CE,$FF,$FC,$43,$E9,$00,$80,$51,$CF,$FF,$F0
+	dc.b	$43,$F9,$00,$00,$57,$64,$45,$F8,$A8,$14,$22,$3C,$E3,$55,$E3,$55
+	dc.b	$7C,$00,$4E,$B9,$00,$00,$89,$A6,$60,$90,$08,$F8,$00,$01,$C6,$1C
+	dc.b	$4E,$75
 sub_005402:
 	bset.b	#$0,$2(a0)
+loc_005408:
 	bne.b	loc_005418
+loc_00540A:
 	move.l	#$34408,$14(a0)
+loc_005412:
 	move.b	#$40,$22(a0)
 loc_005418:
 	tst.b	(ram_C604).w
+loc_00541C:
 	bne.b	loc_005440
+loc_00541E:
 	bchg.b	#$2,$2(a0)
+loc_005424:
 	btst.b	#$2,(ram_E002).w
+loc_00542A:
 	beq.b	loc_005432
+loc_00542C:
 	bset.b	#$2,$2(a0)
 loc_005432:
 	move.w	(ram_E004).w,$4(a0)
+loc_005438:
 	move.w	(ram_E008).w,$8(a0)
+loc_00543E:
 	rts
 loc_005440:
 	bclr.b	#$2,$2(a0)
 	rts
 sub_005448:
 	bset.b	#$0,$2(a0)
+loc_00544E:
 	bne.b	loc_00546A
+loc_005450:
 	move.w	$2C(a0),d0
+loc_005454:
 	lea	dat_0054AE(pc,d0.w),a1
+loc_005458:
 	move.w	(a1)+,$4(a0)
+loc_00545C:
 	move.w	(a1)+,$8(a0)
+loc_005460:
 	move.l	#$E3BCA,$14(a0)
+loc_005468:
 	rts
 loc_00546A:
 	move.w	$28(a0),d0
+loc_00546E:
 	jmp	loc_005472(pc,d0.w)
 loc_005472:
 	bra.w	loc_00547E
-	bra.w	loc_005498
-	bra.w	loc_0054AC
+	dc.b	$60,$00,$00,$20,$60,$00,$00,$30
 loc_00547E:
 	tst.b	(ram_C614).w
+loc_005482:
 	beq.b	loc_005496
 	addq.w	#$4,$28(a0)
 	move.w	#$10,$2C(a0)
 	move.l	#$E3BD4,$14(a0)
 loc_005496:
 	rts
-loc_005498:
-	subq.w	#$1,$2C(a0)
-	bpl.b	loc_0054AA
-	addq.w	#$4,$28(a0)
-	move.l	#$E3BDE,$14(a0)
-loc_0054AA:
-	rts
-loc_0054AC:
-	rts
+	dc.b	$53,$68,$00,$2C,$6A,$0C,$58,$68
+	dc.b	$00,$28,$21,$7C,$00,$0E,$3B,$DE,$00,$14,$4E,$75,$4E,$75
 dat_0054AE:
 	dc.b	$00,$F8
 	dc.b	$01,$50,$01,$38,$01,$48
 sub_0054B6:
 	bset.b	#$0,$2(a0)
+loc_0054BC:
 	bne.b	loc_0054E2
+loc_0054BE:
 	move.w	$2C(a0),d0
+loc_0054C2:
 	lea	dat_0054AE(pc,d0.w),a1
+loc_0054C6:
 	move.w	(a1)+,$4(a0)
+loc_0054CA:
 	move.w	(a1)+,$8(a0)
+loc_0054CE:
 	addq.w	#$3,$8(a0)
+loc_0054D2:
 	move.l	#$34408,$14(a0)
+loc_0054DA:
 	move.b	#$40,$22(a0)
+loc_0054E0:
 	rts
 loc_0054E2:
 	tst.b	(ram_C604).w
+loc_0054E6:
 	bne.b	loc_0054F0
+loc_0054E8:
 	bchg.b	#$2,$2(a0)
+loc_0054EE:
 	rts
 loc_0054F0:
 	bclr.b	#$2,$2(a0)
 	rts
 sub_0054F8:
 	lea	(dat_0576F2).l,a0
+loc_0054FE:
 	lea	(ram_A000).w,a4
+loc_005502:
 	moveq	#$1,d0
+loc_005504:
 	jsr	(sub_00855A).l
+loc_00550A:
 	lea	(ram_A000).w,a0
+loc_00550E:
 	lea	(ram_8000).w,a4
+loc_005512:
 	moveq	#$2,d0
+loc_005514:
 	jsr	(sub_008524).l
+loc_00551A:
 	lea	(dat_0E3C2C).l,a0
+loc_005520:
 	lea	(ram_A000).w,a4
+loc_005524:
 	moveq	#$1,d0
+loc_005526:
 	jsr	(sub_00855A).l
+loc_00552C:
 	lea	(ram_A000).w,a0
+loc_005530:
 	lea	(ram_9300).w,a4
+loc_005534:
 	moveq	#$2,d0
+loc_005536:
 	jsr	(sub_008524).l
+loc_00553C:
 	lea	(dat_0E3BF8).l,a0
+loc_005542:
 	lea	(ram_FF0000).l,a4
+loc_005548:
 	moveq	#$1,d0
+loc_00554A:
 	jsr	(sub_008524).l
+loc_005550:
 	lea	(dat_057C76).l,a0
+loc_005556:
 	lea	(ram_FF2A00).l,a4
+loc_00555C:
 	moveq	#$1,d0
+loc_00555E:
 	jsr	(sub_008524).l
+loc_005564:
 	lea	(ram_A000).w,a1
+loc_005568:
 	lea	(ram_FF2A00).l,a2
+loc_00556E:
 	lea	(ram_8000).w,a3
+loc_005572:
 	moveq	#$F,d0
+loc_005574:
 	moveq	#$7,d1
+loc_005576:
 	move.w	#$1E,d3
+loc_00557A:
 	jsr	(sub_00A19C).l
+loc_005580:
 	lea	(ram_A000).w,a1
+loc_005584:
 	move.w	#$3FF,d0
+loc_005588:
 	bsr.w	sub_0019C0
+loc_00558C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_005594:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00559C:
 	bne.b	loc_005594
+loc_00559E:
 	lea	(VDP_Control).l,a6
+loc_0055A4:
 	move.w	#$9300,(a6)
+loc_0055A8:
 	move.w	#$9408,(a6)
+loc_0055AC:
 	move.w	#$9500,(a6)
+loc_0055B0:
 	move.w	#$96D0,(a6)
+loc_0055B4:
 	move.w	#$977F,(a6)
+loc_0055B8:
 	move.w	#$6000,(a6)
+loc_0055BC:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0055C2:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0055C6:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0055CE:
 	lea	(ram_A000).w,a1
+loc_0055D2:
 	lea	(ram_FF0000).l,a2
+loc_0055D8:
 	lea	(ram_8000).w,a3
+loc_0055DC:
 	moveq	#$F,d0
+loc_0055DE:
 	moveq	#$7,d1
+loc_0055E0:
 	move.w	#$A,d3
+loc_0055E4:
 	jsr	(sub_00A19C).l
+loc_0055EA:
 	lea	(ram_A000).w,a1
+loc_0055EE:
 	move.w	#$3FF,d0
+loc_0055F2:
 	bsr.w	sub_0019C0
+loc_0055F6:
 	bset.b	#$0,(Flags_C5AF).w
+loc_0055FC:
 	rts
 loc_0055FE:
 	bsr.w	sub_003522
+loc_005602:
 	bsr.w	sub_001B2C
+loc_005606:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_00560C:
 	beq.b	loc_005650
+loc_00560E:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_005616:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00561E:
 	bne.b	loc_005616
+loc_005620:
 	lea	(VDP_Control).l,a6
+loc_005626:
 	move.w	#$9300,(a6)
+loc_00562A:
 	move.w	#$9408,(a6)
+loc_00562E:
 	move.w	#$9500,(a6)
+loc_005632:
 	move.w	#$96D0,(a6)
+loc_005636:
 	move.w	#$977F,(a6)
+loc_00563A:
 	move.w	#$4000,(a6)
+loc_00563E:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_005644:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_005648:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_005650:
 	rts
-dat_005652:
 	dc.b	$00,$03,$E5,$43,$00,$00,$00,$00,$88,$02,$00,$00,$56,$74
 	dc.b	$A8,$14,$00,$00,$56,$8A,$A9,$94,$00,$00,$56,$A0,$AB,$14,$00,$00
 	dc.b	$56,$B6,$AC,$94,$20,$49,$4E,$20,$4D,$41,$52,$43,$48,$20,$4F,$46
@@ -4642,9 +6681,7 @@ dat_005652:
 	dc.b	$52,$4D,$45,$52,$20,$50,$52,$45,$53,$49,$44,$45,$4E,$54,$00,$00
 	dc.b	$57,$41,$53,$20,$52,$45,$53,$43,$55,$45,$44,$20,$42,$59,$20,$54
 	dc.b	$48,$45,$20,$20,$00,$00,$4D,$45,$52,$43,$53,$5B,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$00,$00
-dat_0056CC:
-	dc.b	$00,$03,$E5,$43
+	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$00,$00,$00,$03,$E5,$43
 	dc.b	$00,$00,$00,$00,$88,$02,$00,$00,$56,$EE,$A8,$14,$00,$00,$57,$04
 	dc.b	$A9,$94,$00,$00,$57,$1A,$AB,$14,$00,$00,$57,$30,$AC,$94,$20,$48
 	dc.b	$4F,$57,$45,$56,$45,$52,$5C,$4E,$4F,$20,$4F,$46,$46,$49,$43,$49
@@ -4652,13 +6689,9 @@ dat_0056CC:
 	dc.b	$20,$41,$20,$4D,$45,$52,$43,$53,$00,$00,$4F,$50,$45,$52,$41,$54
 	dc.b	$49,$4F,$4E,$20,$57,$49,$4C,$4C,$20,$45,$56,$45,$52,$20,$00,$00
 	dc.b	$42,$45,$20,$52,$45,$47,$49,$53,$54,$45,$52,$45,$44,$5B,$20,$20
-	dc.b	$20,$20,$20,$20,$00,$00
-dat_005746:
-	dc.b	$3E,$3F,$43,$43,$5D,$44,$5E,$25,$FF,$77
+	dc.b	$20,$20,$20,$20,$00,$00,$3E,$3F,$43,$43,$5D,$44,$5E,$25,$FF,$77
 	dc.b	$78,$50,$4C,$4D,$4E,$4F,$5B,$5C,$09,$FF,$1D,$1C,$26,$FF,$0A,$05
-	dc.b	$0A,$25,$FE,$00
-dat_005764:
-	dc.b	$28,$34,$30,$45,$30,$39,$3D,$2C,$13,$19,$FF,$1C
+	dc.b	$0A,$25,$FE,$00,$28,$34,$30,$45,$30,$39,$3D,$2C,$13,$19,$FF,$1C
 	dc.b	$08,$14,$5F,$60,$15,$25,$61,$62,$63,$FF,$64,$13,$15,$65,$66,$AE
 	dc.b	$09,$1D,$12,$02,$FF,$23,$01,$1E,$03,$26,$FE,$00
 sub_00578C:
@@ -4758,45 +6791,69 @@ sub_00592C:
 	rts
 sub_00592E:
 	bset.b	#$0,$2(a0)
+loc_005934:
 	bne.b	loc_005950
+loc_005936:
 	ori.b	#$24,$2(a0)
+loc_00593C:
 	move.w	#$41,$4(a0)
+loc_005942:
 	move.w	#$110,$8(a0)
+loc_005948:
 	move.w	#$40,$2C(a0)
+loc_00594E:
 	rts
 loc_005950:
 	btst.b	#$3,(Flags_C61C).w
+loc_005956:
 	bne.b	loc_005984
+loc_005958:
 	cmpi.w	#$320,(ram_C522).w
+loc_00595E:
 	bcs.b	loc_005966
+loc_005960:
 	bset.b	#$3,(Flags_C61C).w
 loc_005966:
 	move.l	#$1900,d0
+loc_00596C:
 	btst.b	#$5,(Joy1_Held).w
+loc_005972:
 	beq.b	loc_00597A
+loc_005974:
 	move.l	#$20000,d0
 loc_00597A:
 	add.l	d0,$30(a0)
+loc_00597E:
 	move.w	$30(a0),(ram_C522).w
 loc_005984:
 	subq.w	#$1,$2C(a0)
+loc_005988:
 	bne.b	loc_00599E
+loc_00598A:
 	move.w	(RNG_Seed).w,d0
+loc_00598E:
 	andi.w	#$F0,d0
+loc_005992:
 	bne.b	loc_005996
+loc_005994:
 	moveq	#$10,d0
 loc_005996:
 	move.w	d0,$2C(a0)
+loc_00599A:
 	bsr.w	sub_0059A0
 loc_00599E:
 	rts
 sub_0059A0:
 	lea	(ram_E080).w,a1
+loc_0059A4:
 	moveq	#$3,d7
 loc_0059A6:
 	tst.w	(a1)
+loc_0059A8:
 	beq.b	loc_0059B0
+loc_0059AA:
 	dbra	d7,loc_0059A6
+loc_0059AE:
 	rts
 loc_0059B0:
 	move.w	#$114,(a1)
@@ -4807,23 +6864,34 @@ loc_0059B0:
 	rts
 sub_0059D0:
 	bset.b	#$0,$2(a0)
+loc_0059D6:
 	bne.b	loc_005A00
+loc_0059D8:
 	ori.b	#$20,$2(a0)
+loc_0059DE:
 	move.w	#$110,$4(a0)
+loc_0059E4:
 	move.w	#$100,$8(a0)
+loc_0059EA:
 	move.l	#$E44C0,$14(a0)
+loc_0059F2:
 	move.b	#$20,$22(a0)
+loc_0059F8:
 	move.w	#$2,$2C(a0)
+loc_0059FE:
 	rts
 loc_005A00:
 	bsr.w	sub_005A48
+loc_005A04:
 	move.w	$28(a0),d0
+loc_005A08:
 	jmp	loc_005A0C(pc,d0.w)
 loc_005A0C:
 	bra.w	loc_005A14
-	bra.w	loc_005A38
+	dc.b	$60,$00,$00,$26
 loc_005A14:
 	btst.b	#$3,(Flags_C61C).w
+loc_005A1A:
 	beq.b	loc_005A36
 	addq.w	#$4,$28(a0)
 	move.w	#$FFFF,$C(a0)
@@ -4833,19 +6901,21 @@ loc_005A14:
 	movem.l	(a7)+,d0/a1
 loc_005A36:
 	rts
-loc_005A38:
-	cmpi.w	#$10,$4(a0)
-	bcc.b	loc_005A46
-	bset.b	#$1,(Flags_C61C).w
-loc_005A46:
-	rts
+	dc.b	$0C,$68,$00,$10,$00,$04,$64,$06
+	dc.b	$08,$F8,$00,$01,$C6,$1C,$4E,$75
 sub_005A48:
 	subq.w	#$1,$2C(a0)
+loc_005A4C:
 	bne.b	loc_005A6C
+loc_005A4E:
 	move.w	#$2,$2C(a0)
+loc_005A54:
 	move.l	#$E44C0,$14(a0)
+loc_005A5C:
 	bchg.b	#$0,$2A(a0)
+loc_005A62:
 	bne.b	loc_005A6C
+loc_005A64:
 	move.l	#$E44EE,$14(a0)
 loc_005A6C:
 	rts
@@ -4967,98 +7037,172 @@ dat_005BBC:
 	dc.b	$00,$00,$53,$45,$47,$41,$00,$00
 sub_005D48:
 	move.w	#$2700,sr
+loc_005D4C:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_005D50:
 	andi.b	#$BF,d0
+loc_005D54:
 	move.w	d0,(VDP_Control).l
+loc_005D5A:
 	jsr	(sub_009EF0).l
+loc_005D60:
 	move.w	#$170,d0
+loc_005D64:
 	jsr	(sub_008508).l
+loc_005D6A:
 	move.b	#$1,(ram_C5A0).w
+loc_005D70:
 	move.w	#$0,d0
+loc_005D74:
 	move.w	#$1190,d1
+loc_005D78:
 	move.l	#$FF0000,d2
+loc_005D7E:
 	jsr	(sub_0085FE).l
+loc_005D84:
 	move.w	#$8D20,d0
+loc_005D88:
 	move.w	#$13F0,d1
+loc_005D8C:
 	move.l	#$8D20,d2
+loc_005D92:
 	jsr	(sub_0085FE).l
+loc_005D98:
 	move.l	#$70C00002,(VDP_Control).l
+loc_005DA2:
 	lea	(dat_0589FA).l,a0
+loc_005DA8:
 	jsr	(sub_00A218).l
+loc_005DAE:
 	move.l	#$6CC00001,(VDP_Control).l
+loc_005DB8:
 	lea	(dat_0817A0).l,a0
+loc_005DBE:
 	jsr	(sub_00A218).l
+loc_005DC4:
 	bsr.w	sub_005E12
+loc_005DC8:
 	move.w	#$154,(ram_E080).w
+loc_005DCE:
 	bsr.w	sub_0061D4
+loc_005DD2:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_005DD6:
 	ori.b	#$40,d0
+loc_005DDA:
 	move.w	d0,(VDP_Control).l
 loc_005DE0:
 	jsr	(sub_0084CA).l
+loc_005DE6:
 	jsr	(ObjectUpdate).l
+loc_005DEC:
 	jsr	(sub_014056).l
+loc_005DF2:
 	jsr	(sub_00426C).l
+loc_005DF8:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_005DFE:
 	bne.b	loc_005E04
+loc_005E00:
 	bra.w	loc_005DE0
 loc_005E04:
 	move.w	#$C,(Game_NextState).w
+loc_005E0A:
 	move.w	#$8,(Game_State).w
+loc_005E10:
 	rts
 sub_005E12:
 	lea	(dat_0E7C4C).l,a0
+loc_005E18:
 	lea	(ram_A000).w,a4
+loc_005E1C:
 	moveq	#$1,d0
+loc_005E1E:
 	jsr	(sub_00855A).l
+loc_005E24:
 	lea	(ram_A000).w,a0
+loc_005E28:
 	lea	(ram_8000).w,a4
+loc_005E2C:
 	moveq	#$2,d0
+loc_005E2E:
 	jsr	(sub_008524).l
+loc_005E34:
 	lea	(dat_0E7C04).l,a0
+loc_005E3A:
 	lea	(ram_FF2A00).l,a4
+loc_005E40:
 	moveq	#$1,d0
+loc_005E42:
 	jsr	(sub_008524).l
+loc_005E48:
 	lea	(ram_B000).w,a1
+loc_005E4C:
 	lea	(ram_FF2A00).l,a2
+loc_005E52:
 	lea	(ram_8000).w,a3
+loc_005E56:
 	moveq	#$F,d0
+loc_005E58:
 	moveq	#$7,d1
+loc_005E5A:
 	move.w	#$A,d3
+loc_005E5E:
 	jsr	(sub_00A19C).l
+loc_005E64:
 	lea	(ram_A000).w,a6
+loc_005E68:
 	moveq	#$0,d7
+loc_005E6A:
 	move.w	#$3FF,d6
 loc_005E6E:
 	move.l	d7,(a6)+
+loc_005E70:
 	dbra	d6,loc_005E6E
+loc_005E74:
 	bset.b	#$0,(Flags_C5AF).w
+loc_005E7A:
 	rts
 sub_005E7C:
 	bset.b	#$0,$2(a0)
+loc_005E82:
 	bne.b	loc_005EB0
+loc_005E84:
 	ori.b	#$4,$2(a0)
+loc_005E8A:
 	move.l	#$E8094,$14(a0)
+loc_005E92:
 	move.b	#$2,$1D(a0)
+loc_005E98:
 	move.b	#$10,$2F(a0)
+loc_005E9E:
 	bsr.w	sub_00605E
+loc_005EA2:
 	cmpi.w	#$7,(ram_C328).w
+loc_005EA8:
 	bne.b	loc_005EB0
+loc_005EAA:
 	move.w	#$C,$28(a0)
 loc_005EB0:
 	bsr.w	sub_006024
+loc_005EB4:
 	move.w	$28(a0),d0
+loc_005EB8:
 	jmp	loc_005EBC(pc,d0.w)
 loc_005EBC:
 	bra.w	loc_005ED4
-	bra.w	loc_005F2E
-	bra.w	loc_005F70
+	dc.b	$60,$00,$00,$6C,$60,$00,$00,$AA
+loc_005EC8:
 	bra.w	loc_005FB6
+loc_005ECC:
 	bra.w	loc_00600E
+loc_005ED0:
 	bra.w	loc_006022
 loc_005ED4:
 	subq.b	#$1,$2F(a0)
+loc_005ED8:
 	bmi.b	loc_005EDC
+loc_005EDA:
 	rts
 loc_005EDC:
 	andi.b	#$FB,$2(a0)
@@ -5083,96 +7227,99 @@ loc_005F18:
 	lea	$40(a2),a2
 	dbra	d7,loc_005F18
 	rts
-loc_005F2E:
-	subq.b	#$1,$2F(a0)
-	bmi.b	loc_005F36
-	rts
-loc_005F36:
-	move.b	#$80,$2F(a0)
-	addq.w	#$4,$28(a0)
-	bset.b	#$1,(Flags_C5AF).w
-	lea	(dat_0062BC).l,a6
-	bsr.w	sub_0087C6
-	moveq	#$2,d0
-	move.l	#$25862586,d3
-	moveq	#$0,d6
-	move.w	(ram_C328).w,d1
-	subq.w	#$7,d1
-	move.w	d1,(ram_C618).w
-	lea	(ram_C619).w,a1
-	lea	(ram_A12E).w,a2
-	bra.w	sub_008B32
-loc_005F70:
-	subq.b	#$1,$2F(a0)
-	bmi.b	loc_005F78
-	rts
-loc_005F78:
-	addq.w	#$4,$28(a0)
-	move.b	#$1F,$2F(a0)
-	move.l	$30(a0),d0
-	sub.l	$4(a0),d0
-	asr.l	#$5,d0
-	move.l	d0,$C(a0)
-	move.l	$34(a0),d0
-	sub.l	$8(a0),d0
-	asr.l	#$5,d0
-	move.l	d0,$10(a0)
-	bset.b	#$1,(Flags_C5AF).w
-	lea	(ram_A000).w,a6
-	moveq	#$0,d7
-	move.w	#$1FF,d6
-loc_005FAE:
-	move.l	d7,(a6)+
-	dbra	d6,loc_005FAE
-	rts
+	dc.b	$53,$28
+	dc.b	$00,$2F,$6B,$02,$4E,$75,$11,$7C,$00,$80,$00,$2F,$58,$68,$00,$28
+	dc.b	$08,$F8,$00,$01,$C5,$AF,$4D,$F9,$00,$00,$62,$BC,$61,$00,$28,$78
+	dc.b	$70,$02,$26,$3C,$25,$86,$25,$86,$7C,$00,$32,$38,$C3,$28,$5F,$41
+	dc.b	$31,$C1,$C6,$18,$43,$F8,$C6,$19,$45,$F8,$A1,$2E,$60,$00,$2B,$C4
+	dc.b	$53,$28,$00,$2F,$6B,$02,$4E,$75,$58,$68,$00,$28,$11,$7C,$00,$1F
+	dc.b	$00,$2F,$20,$28,$00,$30,$90,$A8,$00,$04,$EA,$80,$21,$40,$00,$0C
+	dc.b	$20,$28,$00,$34,$90,$A8,$00,$08,$EA,$80,$21,$40,$00,$10,$08,$F8
+	dc.b	$00,$01,$C5,$AF,$4D,$F8,$A0,$00,$7E,$00,$3C,$3C,$01,$FF,$2C,$C7
+	dc.b	$51,$CE,$FF,$FC,$4E,$75
 loc_005FB6:
 	subq.b	#$1,$2F(a0)
+loc_005FBA:
 	bmi.b	loc_005FBE
+loc_005FBC:
 	rts
 loc_005FBE:
 	addq.w	#$4,$28(a0)
+loc_005FC2:
 	move.b	#$FF,$2F(a0)
+loc_005FC8:
 	bset.b	#$1,(Flags_C5AF).w
+loc_005FCE:
 	clr.l	$C(a0)
+loc_005FD2:
 	clr.l	$10(a0)
+loc_005FD6:
 	lea	(dat_0062F4).l,a1
+loc_005FDC:
 	move.w	(ram_C328).w,d0
+loc_005FE0:
 	add.w	d0,d0
+loc_005FE2:
 	move.w	-$E(a1,d0.w),d0
+loc_005FE6:
 	lea	(a1,d0.w),a6
+loc_005FEA:
 	bsr.w	sub_0087C6
+loc_005FEE:
 	moveq	#$2,d0
+loc_005FF0:
 	move.l	#$25862586,d3
+loc_005FF6:
 	moveq	#$0,d6
+loc_005FF8:
 	move.w	(ram_C328).w,d1
+loc_005FFC:
 	subq.w	#$6,d1
+loc_005FFE:
 	move.w	d1,(ram_C618).w
+loc_006002:
 	lea	(ram_C619).w,a1
+loc_006006:
 	lea	(ram_A132).w,a2
+loc_00600A:
 	bra.w	sub_008B32
 loc_00600E:
 	subq.b	#$1,$2F(a0)
+loc_006012:
 	beq.b	loc_006016
+loc_006014:
 	rts
 loc_006016:
 	addq.w	#$4,$28(a0)
+loc_00601A:
 	bset.b	#$7,(Joy1_Pressed).w
+loc_006020:
 	rts
 loc_006022:
 	rts
 sub_006024:
 	subq.b	#$1,$1D(a0)
+loc_006028:
 	bne.b	loc_006050
+loc_00602A:
 	move.b	#$6,$1D(a0)
+loc_006030:
 	moveq	#$0,d0
+loc_006032:
 	move.b	$1C(a0),d0
+loc_006036:
 	addq.w	#$2,d0
+loc_006038:
 	cmpi.w	#$C,d0
+loc_00603C:
 	bcs.b	loc_006040
+loc_00603E:
 	moveq	#$0,d0
 loc_006040:
 	move.b	d0,$1C(a0)
+loc_006044:
 	move.w	dat_006052(pc,d0.w),(ram_C718).w
+loc_00604A:
 	bset.b	#$0,(ram_C59A).w
 loc_006050:
 	rts
@@ -5180,20 +7327,31 @@ dat_006052:
 	dc.b	$00,$00,$08,$42,$08,$42,$04,$0E,$04,$0E,$04,$0E
 sub_00605E:
 	move.w	(ram_C328).w,d0
+loc_006062:
 	cmpi.w	#$7,d0
+loc_006066:
 	bne.b	loc_006074
+loc_006068:
 	moveq	#$0,d0
+loc_00606A:
 	andi.b	#$FB,$2(a0)
+loc_006070:
 	bra.w	loc_006078
 loc_006074:
 	subq.w	#$7,d0
+loc_006076:
 	lsl.w	#$2,d0
 loc_006078:
 	lea	dat_00608E(pc,d0.w),a1
+loc_00607C:
 	move.w	(a1)+,$4(a0)
+loc_006080:
 	move.w	(a1)+,$8(a0)
+loc_006084:
 	move.w	(a1)+,$30(a0)
+loc_006088:
 	move.w	(a1)+,$34(a0)
+loc_00608C:
 	rts
 dat_00608E:
 	dc.b	$01,$78
@@ -5202,11 +7360,17 @@ dat_00608E:
 	dc.b	$01,$08
 sub_0060B2:
 	bset.b	#$0,$2(a0)
+loc_0060B8:
 	bne.b	loc_0060D2
+loc_0060BA:
 	ori.b	#$8,$2(a0)
+loc_0060C0:
 	move.b	#$40,$22(a0)
+loc_0060C6:
 	move.w	#$B0,d0
+loc_0060CA:
 	jsr	(sub_00D96C).l
+loc_0060D0:
 	rts
 loc_0060D2:
 	move.w	$8(a0),$26(a0)
@@ -5231,16 +7395,27 @@ loc_006110:
 	jmp	(sub_014248).l
 sub_006116:
 	bset.b	#$0,$2(a0)
+loc_00611C:
 	bne.b	loc_00614C
+loc_00611E:
 	ori.b	#$4,$2(a0)
+loc_006124:
 	move.b	#$60,$22(a0)
+loc_00612A:
 	move.w	$4(a0),$30(a0)
+loc_006130:
 	move.w	$8(a0),$34(a0)
+loc_006136:
 	move.w	#$B8,d0
+loc_00613A:
 	jsr	(sub_00D96C).l
+loc_006140:
 	move.w	$2C(a0),d0
+loc_006144:
 	add.w	d0,d0
+loc_006146:
 	move.w	d0,$38(a0)
+loc_00614A:
 	rts
 loc_00614C:
 	move.w	$28(a0),d0
@@ -5294,9 +7469,13 @@ loc_0061BC:
 	rts
 sub_0061D4:
 	lea	(dat_006440).l,a1
+loc_0061DA:
 	move.w	(ram_C328).w,d0
+loc_0061DE:
 	moveq	#$0,d3
+loc_0061E0:
 	move.b	-$7(a1,d0.w),d3
+loc_0061E4:
 	beq.b	loc_0061F8
 	lsl.w	#$2,d0
 	lea	(dat_0061FA).l,a3
@@ -5314,42 +7493,68 @@ dat_0061FA:
 	dc.b	$01,$1C
 loc_006222:
 	bsr.w	sub_003522
+loc_006226:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_00622C:
 	beq.b	loc_006270
+loc_00622E:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006236:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00623E:
 	bne.b	loc_006236
+loc_006240:
 	lea	(VDP_Control).l,a6
+loc_006246:
 	move.w	#$9300,(a6)
+loc_00624A:
 	move.w	#$9408,(a6)
+loc_00624E:
 	move.w	#$9500,(a6)
+loc_006252:
 	move.w	#$96D8,(a6)
+loc_006256:
 	move.w	#$977F,(a6)
+loc_00625A:
 	move.w	#$6000,(a6)
+loc_00625E:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_006264:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_006268:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006270:
 	bclr.b	#$1,(Flags_C5AF).w
+loc_006276:
 	beq.b	loc_0062BA
+loc_006278:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006280:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_006288:
 	bne.b	loc_006280
+loc_00628A:
 	lea	(VDP_Control).l,a6
+loc_006290:
 	move.w	#$9300,(a6)
+loc_006294:
 	move.w	#$9408,(a6)
+loc_006298:
 	move.w	#$9500,(a6)
+loc_00629C:
 	move.w	#$96D0,(a6)
+loc_0062A0:
 	move.w	#$977F,(a6)
+loc_0062A4:
 	move.w	#$4000,(a6)
+loc_0062A8:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0062AE:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0062B2:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0062BA:
 	rts
-dat_0062BC:
 	dc.b	$00,$01,$25,$86
 	dc.b	$00,$00,$00,$00,$88,$78,$00,$00,$62,$D2,$A1,$12,$00,$00,$62,$DA
 	dc.b	$A2,$92,$4D,$49,$53,$53,$49,$4F,$4E,$00,$43,$4F,$4D,$50,$4C,$45
@@ -5383,43 +7588,72 @@ dat_006440:
 	dc.b	$00,$00,$01,$03,$04,$05,$06,$08
 GameState_ModeSelect:
 	move.w	#$2700,sr
+loc_00644C:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006450:
 	andi.b	#$BF,d0
+loc_006454:
 	move.w	d0,(VDP_Control).l
+loc_00645A:
 	jsr	(sub_009EF0).l
+loc_006460:
 	move.w	#$178,d0
+loc_006464:
 	jsr	(sub_008508).l
+loc_00646A:
 	move.b	#$1,(ram_C5A0).w
+loc_006470:
 	move.l	#$62E00002,(VDP_Control).l
+loc_00647A:
 	lea	(dat_0582AC).l,a0
+loc_006480:
 	jsr	(sub_00A218).l
+loc_006486:
 	bsr.w	sub_0065B6
+loc_00648A:
 	move.w	#$15C,(Objects_A).w
+loc_006490:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006494:
 	ori.b	#$40,d0
+loc_006498:
 	move.w	d0,(VDP_Control).l
 loc_00649E:
 	jsr	(sub_0084CA).l
+loc_0064A4:
 	jsr	(ObjectUpdate).l
+loc_0064AA:
 	jsr	(sub_014056).l
+loc_0064B0:
 	jsr	(sub_00426C).l
+loc_0064B6:
 	tst.b	(ram_C604).w
+loc_0064BA:
 	bne.b	loc_0064C0
+loc_0064BC:
 	bra.w	loc_00649E
 loc_0064C0:
 	move.b	(Joy1_Held).w,d0
+loc_0064C4:
 	cmpi.b	#$F0,d0
+loc_0064C8:
 	bne.b	loc_0064CE
+loc_0064CA:
 	st.b	(ram_C3D5).w
 loc_0064CE:
 	bsr.w	sub_0064FC
+loc_0064D2:
 	move.w	(ram_E028).w,d0
+loc_0064D6:
 	move.w	dat_0064F0(pc,d0.w),(Game_NextState).w
+loc_0064DC:
 	tst.b	(ram_FE58).w
+loc_0064E0:
 	beq.b	loc_0064E8
 	move.w	dat_0064F6(pc,d0.w),(Game_NextState).w
 loc_0064E8:
 	move.w	#$8,(Game_State).w
+loc_0064EE:
 	rts
 dat_0064F0:
 	dc.b	$00,$28,$00,$48,$00,$1C
@@ -5427,56 +7661,91 @@ dat_0064F6:
 	dc.b	$00,$10,$00,$10,$00,$1C
 sub_0064FC:
 	move.w	(ram_FE82).w,d0
+loc_006500:
 	lsr.w	#$1,d0
+loc_006502:
 	move.w	(ram_FE84).w,d1
+loc_006506:
 	lsr.w	#$1,d1
+loc_006508:
 	tst.b	(Flags_C356).w
+loc_00650C:
 	beq.b	loc_006512
+loc_00650E:
 	addq.w	#$3,d1
+loc_006510:
 	move.w	d1,d0
 loc_006512:
 	move.w	d0,(ram_FE44).w
+loc_006516:
 	rts
 sub_006518:
 	bset.b	#$0,$2(a0)
+loc_00651E:
 	bne.b	loc_00652A
+loc_006520:
 	ori.b	#$24,$2(a0)
+loc_006526:
 	bra.w	loc_006594
 loc_00652A:
 	bsr.w	sub_006536
+loc_00652E:
 	bsr.w	sub_006560
+loc_006532:
 	bra.w	loc_006594
 sub_006536:
 	move.b	(Joy1_Pressed).w,d0
+loc_00653A:
 	beq.b	loc_006590
+loc_00653C:
 	andi.b	#$80,d0
+loc_006540:
 	beq.b	loc_00655E
+loc_006542:
 	st.b	(ram_C604).w
+loc_006546:
 	move.w	$28(a0),d0
+loc_00654A:
 	bne.b	loc_006554
+loc_00654C:
 	bclr.b	#$2,(Flags_C356).w
+loc_006552:
 	rts
 loc_006554:
 	subq.w	#$2,d0
+loc_006556:
 	bne.b	loc_00655E
+loc_006558:
 	bset.b	#$2,(Flags_C356).w
 loc_00655E:
 	rts
 sub_006560:
 	move.b	(Joy1_Pressed).w,d0
+loc_006564:
 	andi.b	#$3,d0
+loc_006568:
 	beq.b	loc_00658E
+loc_00656A:
 	move.w	$28(a0),d1
+loc_00656E:
 	andi.b	#$2,d0
+loc_006572:
 	bne.b	loc_006580
+loc_006574:
 	subq.w	#$2,d1
+loc_006576:
 	bcc.b	loc_00658A
+loc_006578:
 	move.w	#$4,d1
+loc_00657C:
 	bra.w	loc_00658A
 loc_006580:
 	addq.w	#$2,d1
+loc_006582:
 	cmpi.w	#$6,d1
+loc_006586:
 	bcs.b	loc_00658A
+loc_006588:
 	moveq	#$0,d1
 loc_00658A:
 	move.w	d1,$28(a0)
@@ -5484,43 +7753,68 @@ loc_00658E:
 	rts
 loc_006590:
 	addq.w	#$4,a7
+loc_006592:
 	rts
 loc_006594:
 	bset.b	#$0,(Flags_C5AF).w
+loc_00659A:
 	move.w	$28(a0),d0
+loc_00659E:
 	lea	(dat_0065A8).l,a1
+loc_0065A4:
 	bra.w	sub_000B54
 dat_0065A8:
 	dc.b	$00,$02,$A4,$18,$00,$0C,$A5,$18
 	dc.b	$00,$0C,$A6,$18,$00,$06
 sub_0065B6:
 	lea	(ram_A000).w,a6
+loc_0065BA:
 	moveq	#$0,d7
+loc_0065BC:
 	move.w	#$3FF,d6
 loc_0065C0:
 	move.l	d7,(a6)+
+loc_0065C2:
 	dbra	d6,loc_0065C0
+loc_0065C6:
 	lea	(dat_00662A).l,a6
+loc_0065CC:
 	jsr	(sub_0087C6).l
+loc_0065D2:
 	bset.b	#$0,(Flags_C5AF).w
+loc_0065D8:
 	rts
 loc_0065DA:
 	bsr.w	sub_003522
+loc_0065DE:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_0065E4:
 	beq.b	loc_006628
+loc_0065E6:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0065EE:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_0065F6:
 	bne.b	loc_0065EE
+loc_0065F8:
 	lea	(VDP_Control).l,a6
+loc_0065FE:
 	move.w	#$9300,(a6)
+loc_006602:
 	move.w	#$9408,(a6)
+loc_006606:
 	move.w	#$9500,(a6)
+loc_00660A:
 	move.w	#$96D0,(a6)
+loc_00660E:
 	move.w	#$977F,(a6)
+loc_006612:
 	move.w	#$4000,(a6)
+loc_006616:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_00661C:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_006620:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006628:
 	rts
@@ -5532,34 +7826,59 @@ dat_00662A:
 	dc.b	$45,$00,$4F,$50,$54,$49,$4F,$4E,$53,$00
 sub_00666A:
 	move.w	#$2700,sr
+loc_00666E:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006672:
 	andi.b	#$BF,d0
+loc_006676:
 	move.w	d0,(VDP_Control).l
+loc_00667C:
 	jsr	(sub_009EF0).l
+loc_006682:
 	move.w	#$D8,d0
+loc_006686:
 	jsr	(sub_008508).l
+loc_00668C:
 	move.b	#$1,(ram_C5A0).w
+loc_006692:
 	move.l	#$70C00002,(VDP_Control).l
+loc_00669C:
 	lea	(dat_0589FA).l,a0
+loc_0066A2:
 	jsr	(sub_00A218).l
+loc_0066A8:
 	moveq	#$0,d1
+loc_0066AA:
 	lea	(ram_FE96).w,a1
+loc_0066AE:
 	lea	(ram_FEB2).w,a2
+loc_0066B2:
 	tst.b	(Flags_C356).w
+loc_0066B6:
 	beq.b	loc_0066C0
+loc_0066B8:
 	lea	(ram_FEBA).w,a1
+loc_0066BC:
 	lea	(ram_FED6).w,a2
 loc_0066C0:
 	move.l	(ram_FE50).w,d0
+loc_0066C4:
 	moveq	#$6,d7
 loc_0066C6:
 	cmp.l	(a1),d0
+loc_0066C8:
 	bcc.b	loc_0066DA
+loc_0066CA:
 	addq.w	#$4,a1
+loc_0066CC:
 	addq.w	#$1,a2
+loc_0066CE:
 	addq.w	#$2,d1
+loc_0066D0:
 	dbra	d7,loc_0066C6
+loc_0066D4:
 	moveq	#-$1,d1
+loc_0066D6:
 	bra.w	loc_00670E
 loc_0066DA:
 	lea	(ram_FEAE).w,a3
@@ -5583,149 +7902,259 @@ loc_00670A:
 	st.b	(a2)
 loc_00670E:
 	move.w	d1,(ram_FE0A).w
+loc_006712:
 	bsr.w	sub_0067AE
+loc_006716:
 	lea	(dat_0FE0B0).l,a1
+loc_00671C:
 	lea	(ram_D000).w,a2
+loc_006720:
 	move.w	#$3,d0
 loc_006724:
 	move.l	(a1)+,(a2)+
+loc_006726:
 	dbra	d0,loc_006724
+loc_00672A:
 	lea	(dat_0FE000).l,a1
+loc_006730:
 	lea	(ram_D010).w,a2
+loc_006734:
 	move.w	#$3,d0
 loc_006738:
 	move.l	(a1)+,(a2)+
+loc_00673A:
 	dbra	d0,loc_006738
+loc_00673E:
 	move.w	#$200,(Timer_C606).w
+loc_006744:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006748:
 	ori.b	#$40,d0
+loc_00674C:
 	move.w	d0,(VDP_Control).l
+loc_006752:
 	movem.l	d0/a1,-(a7)
+loc_006756:
 	moveq	#-$6F,d0
+loc_006758:
 	jsr	(sub_00A068).l
+loc_00675E:
 	movem.l	(a7)+,d0/a1
 loc_006762:
 	jsr	(sub_0084CA).l
+loc_006768:
 	jsr	(ObjectUpdate).l
+loc_00676E:
 	jsr	(sub_014056).l
+loc_006774:
 	jsr	(sub_00426C).l
+loc_00677A:
 	lea	(ram_D000).w,a1
+loc_00677E:
 	jsr	(sub_0086E2).l
+loc_006784:
 	lea	(ram_D010).w,a1
+loc_006788:
 	jsr	(sub_0086E2).l
+loc_00678E:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_006794:
 	bne.b	loc_0067A0
+loc_006796:
 	subq.w	#$1,(Timer_C606).w
+loc_00679A:
 	beq.b	loc_0067A0
+loc_00679C:
 	bra.w	loc_006762
 loc_0067A0:
 	move.w	#$4,(Game_NextState).w
+loc_0067A6:
 	move.w	#$8,(Game_State).w
+loc_0067AC:
 	rts
 sub_0067AE:
 	lea	(ram_A000).w,a6
+loc_0067B2:
 	moveq	#$0,d7
+loc_0067B4:
 	move.w	#$3FF,d6
 loc_0067B8:
 	move.l	d7,(a6)+
+loc_0067BA:
 	dbra	d6,loc_0067B8
+loc_0067BE:
 	lea	(dat_0069BC).l,a6
+loc_0067C4:
 	bsr.w	sub_0087C6
+loc_0067C8:
 	lea	(dat_006A14).l,a6
+loc_0067CE:
 	bsr.w	sub_0087C6
+loc_0067D2:
 	lea	(dat_006A56).l,a6
+loc_0067D8:
 	lea	(ram_FEB2).w,a5
+loc_0067DC:
 	tst.b	(Flags_C356).w
+loc_0067E0:
 	beq.b	loc_0067E6
+loc_0067E2:
 	lea	(ram_FED6).w,a5
 loc_0067E6:
 	lea	(dat_006A92).l,a4
+loc_0067EC:
 	moveq	#$6,d7
 loc_0067EE:
 	movea.l	(a6)+,a1
+loc_0067F0:
 	movea.w	(a4)+,a2
+loc_0067F2:
 	move.l	a4,-(a7)
+loc_0067F4:
 	tst.b	(a5)+
+loc_0067F6:
 	beq.b	loc_006800
 	lea	(dat_006A8E).l,a1
 	subq.w	#$4,a6
 loc_006800:
 	move.l	#$5860586,d1
+loc_006806:
 	moveq	#$0,d6
+loc_006808:
 	bsr.w	sub_008878
+loc_00680C:
 	movea.l	(a7)+,a4
+loc_00680E:
 	dbra	d7,loc_0067EE
+loc_006812:
 	moveq	#$7,d0
+loc_006814:
 	move.l	#$25862586,d3
+loc_00681A:
 	moveq	#$0,d6
+loc_00681C:
 	lea	(ram_FE96).w,a1
+loc_006820:
 	tst.b	(Flags_C356).w
+loc_006824:
 	beq.b	loc_00682A
+loc_006826:
 	lea	(ram_FEBA).w,a1
 loc_00682A:
 	lea	(ram_A328).w,a2
+loc_00682E:
 	bsr.w	sub_008B32
+loc_006832:
 	moveq	#$7,d0
+loc_006834:
 	move.l	#$25862586,d3
+loc_00683A:
 	moveq	#$0,d6
+loc_00683C:
 	lea	(ram_FE9A).w,a1
+loc_006840:
 	tst.b	(Flags_C356).w
+loc_006844:
 	beq.b	loc_00684A
+loc_006846:
 	lea	(ram_FEBE).w,a1
 loc_00684A:
 	lea	(ram_A4A8).w,a2
+loc_00684E:
 	bsr.w	sub_008B32
+loc_006852:
 	moveq	#$7,d0
+loc_006854:
 	move.l	#$25862586,d3
+loc_00685A:
 	moveq	#$0,d6
+loc_00685C:
 	lea	(ram_FE9E).w,a1
+loc_006860:
 	tst.b	(Flags_C356).w
+loc_006864:
 	beq.b	loc_00686A
+loc_006866:
 	lea	(ram_FEC2).w,a1
 loc_00686A:
 	lea	(ram_A628).w,a2
+loc_00686E:
 	bsr.w	sub_008B32
+loc_006872:
 	moveq	#$7,d0
+loc_006874:
 	move.l	#$25862586,d3
+loc_00687A:
 	moveq	#$0,d6
+loc_00687C:
 	lea	(ram_FEA2).w,a1
+loc_006880:
 	tst.b	(Flags_C356).w
+loc_006884:
 	beq.b	loc_00688A
+loc_006886:
 	lea	(ram_FEC6).w,a1
 loc_00688A:
 	lea	(ram_A7A8).w,a2
+loc_00688E:
 	bsr.w	sub_008B32
+loc_006892:
 	moveq	#$7,d0
+loc_006894:
 	move.l	#$25862586,d3
+loc_00689A:
 	moveq	#$0,d6
+loc_00689C:
 	lea	(ram_FEA6).w,a1
+loc_0068A0:
 	tst.b	(Flags_C356).w
+loc_0068A4:
 	beq.b	loc_0068AA
+loc_0068A6:
 	lea	(ram_FECA).w,a1
 loc_0068AA:
 	lea	(ram_A928).w,a2
+loc_0068AE:
 	bsr.w	sub_008B32
+loc_0068B2:
 	moveq	#$7,d0
+loc_0068B4:
 	move.l	#$25862586,d3
+loc_0068BA:
 	moveq	#$0,d6
+loc_0068BC:
 	lea	(ram_FEAA).w,a1
+loc_0068C0:
 	tst.b	(Flags_C356).w
+loc_0068C4:
 	beq.b	loc_0068CA
+loc_0068C6:
 	lea	(ram_FECE).w,a1
 loc_0068CA:
 	lea	(ram_AAA8).w,a2
+loc_0068CE:
 	bsr.w	sub_008B32
+loc_0068D2:
 	moveq	#$7,d0
+loc_0068D4:
 	move.l	#$25862586,d3
+loc_0068DA:
 	moveq	#$0,d6
+loc_0068DC:
 	lea	(ram_FEAE).w,a1
+loc_0068E0:
 	tst.b	(Flags_C356).w
+loc_0068E4:
 	beq.b	loc_0068EA
+loc_0068E6:
 	lea	(ram_FED2).w,a1
 loc_0068EA:
 	lea	(ram_AC28).w,a2
+loc_0068EE:
 	bsr.w	sub_008B32
+loc_0068F2:
 	move.w	(ram_FE0A).w,d0
+loc_0068F6:
 	bmi.b	loc_006924
 	cmpi.w	#$C,d0
 	bhi.b	loc_006924
@@ -5744,6 +8173,7 @@ loc_006914:
 	dbra	d7,loc_006914
 loc_006924:
 	bset.b	#$0,(Flags_C5AF).w
+loc_00692A:
 	rts
 dat_00692C:
 	dc.b	$60,$00,$60,$00
@@ -5753,21 +8183,35 @@ dat_00692C:
 	dc.b	$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00
 loc_00696C:
 	bsr.w	sub_003522
+loc_006970:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_006976:
 	beq.b	loc_0069BA
+loc_006978:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006980:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_006988:
 	bne.b	loc_006980
+loc_00698A:
 	lea	(VDP_Control).l,a6
+loc_006990:
 	move.w	#$9300,(a6)
+loc_006994:
 	move.w	#$9408,(a6)
+loc_006998:
 	move.w	#$9500,(a6)
+loc_00699C:
 	move.w	#$96D0,(a6)
+loc_0069A0:
 	move.w	#$977F,(a6)
+loc_0069A4:
 	move.w	#$4000,(a6)
+loc_0069A8:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_0069AE:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0069B2:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0069BA:
 	rts
@@ -5882,50 +8326,89 @@ dat_006BBE:
 	dc.b	$59,$00
 sub_006BD2:
 	move.w	#$2700,sr
+loc_006BD6:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006BDA:
 	andi.b	#$BF,d0
+loc_006BDE:
 	move.w	d0,(VDP_Control).l
+loc_006BE4:
 	jsr	(sub_009EF0).l
+loc_006BEA:
 	move.w	#$1E0,d0
+loc_006BEE:
 	jsr	(sub_008508).l
+loc_006BF4:
 	move.b	#$1,(ram_C5A0).w
+loc_006BFA:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006C02:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_006C0A:
 	bne.b	loc_006C02
+loc_006C0C:
 	lea	(VDP_Control).l,a6
+loc_006C12:
 	move.w	#$9300,(a6)
+loc_006C16:
 	move.w	#$9460,(a6)
+loc_006C1A:
 	move.w	#$9500,(a6)
+loc_006C1E:
 	move.w	#$9680,(a6)
+loc_006C22:
 	move.w	#$977F,(a6)
+loc_006C26:
 	move.w	#$4000,(a6)
+loc_006C2A:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_006C30:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_006C34:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_006C3C:
 	bsr.w	sub_006ED2
+loc_006C40:
 	move.w	#$200,(Timer_C606).w
+loc_006C46:
 	lea	(dat_0FE438).l,a1
+loc_006C4C:
 	lea	(ram_D000).w,a2
+loc_006C50:
 	move.w	#$3,d0
 loc_006C54:
 	move.l	(a1)+,(a2)+
+loc_006C56:
 	dbra	d0,loc_006C54
+loc_006C5A:
 	move.w	#$1B4,(Objects_A).w
+loc_006C60:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_006C64:
 	ori.b	#$40,d0
+loc_006C68:
 	move.w	d0,(VDP_Control).l
+loc_006C6E:
 	movem.l	d0/a1,-(a7)
+loc_006C72:
 	moveq	#-$64,d0
+loc_006C74:
 	jsr	(sub_00A068).l
+loc_006C7A:
 	movem.l	(a7)+,d0/a1
 loc_006C7E:
 	jsr	(sub_0084CA).l
+loc_006C84:
 	jsr	(ObjectUpdate).l
+loc_006C8A:
 	jsr	(sub_014056).l
+loc_006C90:
 	jsr	(sub_00426C).l
+loc_006C96:
 	btst.b	#$0,(Flags_C61C).w
+loc_006C9C:
 	bne.b	loc_006CA2
+loc_006C9E:
 	bra.w	loc_006C7E
 loc_006CA2:
 	move.w	#$11,(ram_C328).w
@@ -5934,62 +8417,100 @@ loc_006CA2:
 	rts
 sub_006CB6:
 	bset.b	#$0,$2(a0)
+loc_006CBC:
 	bne.b	loc_006CE2
+loc_006CBE:
 	move.w	#$120,$4(a0)
+loc_006CC4:
 	move.w	#$88,$8(a0)
+loc_006CCA:
 	move.b	#$60,$22(a0)
+loc_006CD0:
 	move.w	#$78,d0
+loc_006CD4:
 	jsr	(sub_00D96C).l
+loc_006CDA:
 	move.b	#$40,$3E(a0)
+loc_006CE0:
 	rts
 loc_006CE2:
 	move.w	$28(a0),d0
+loc_006CE6:
 	jmp	loc_006CEA(pc,d0.w)
 loc_006CEA:
 	bra.w	loc_006CFA
+loc_006CEE:
 	bra.w	loc_006D4A
+loc_006CF2:
 	bra.w	loc_006D84
+loc_006CF6:
 	bra.w	loc_006DB6
 loc_006CFA:
 	lea	(ram_D000).w,a1
+loc_006CFE:
 	bsr.w	sub_0086E2
+loc_006D02:
 	jsr	(sub_014248).l
+loc_006D08:
 	subq.b	#$1,$3E(a0)
+loc_006D0C:
 	bne.b	loc_006D2C
+loc_006D0E:
 	move.w	$2C(a0),d0
+loc_006D12:
 	move.w	d0,d1
+loc_006D14:
 	lsr.w	#$2,d1
+loc_006D16:
 	move.b	dat_006D3E(pc,d1.w),$3E(a0)
+loc_006D1C:
 	addq.w	#$4,d0
+loc_006D1E:
 	cmpi.w	#$30,d0
+loc_006D22:
 	bcc.b	loc_006D2E
+loc_006D24:
 	move.w	d0,$2C(a0)
+loc_006D28:
 	bsr.w	sub_006DC6
 loc_006D2C:
 	rts
 loc_006D2E:
 	addq.w	#$4,$28(a0)
+loc_006D32:
 	move.b	#$40,$3E(a0)
+loc_006D38:
 	clr.w	$2C(a0)
+loc_006D3C:
 	rts
 dat_006D3E:
 	dc.b	$04,$04
 	dc.b	$04,$04,$06,$08,$10,$10,$10,$10,$10,$10
 loc_006D4A:
 	subq.b	#$1,$3E(a0)
+loc_006D4E:
 	bne.b	loc_006D70
+loc_006D50:
 	move.b	#$C,$3E(a0)
+loc_006D56:
 	move.w	$2C(a0),d0
+loc_006D5A:
 	addq.w	#$2,d0
+loc_006D5C:
 	cmpi.w	#$8,d0
+loc_006D60:
 	bcc.b	loc_006D72
+loc_006D62:
 	move.w	d0,$2C(a0)
+loc_006D66:
 	move.w	loc_006D7C(pc,d0.w),d0
+loc_006D6A:
 	jsr	(sub_008508).l
 loc_006D70:
 	rts
 loc_006D72:
 	addq.w	#$4,$28(a0)
+loc_006D76:
 	move.b	#$60,$3E(a0)
 loc_006D7C:
 	rts
@@ -5997,36 +8518,56 @@ loc_006D7C:
 	dc.b	$01,$F0,$01,$F8
 loc_006D84:
 	subq.b	#$1,$3E(a0)
+loc_006D88:
 	beq.b	loc_006D8C
+loc_006D8A:
 	rts
 loc_006D8C:
 	addq.w	#$4,$28(a0)
+loc_006D90:
 	move.w	#$200,$38(a0)
+loc_006D96:
 	lea	(ram_E6C0).w,a1
+loc_006D9A:
 	move.w	#$F,d7
+loc_006D9E:
 	move.w	#$1B8,d0
+loc_006DA2:
 	moveq	#$0,d1
 loc_006DA4:
 	move.w	d0,(a1)
+loc_006DA6:
 	move.w	d1,$2C(a1)
+loc_006DAA:
 	addq.w	#$8,d1
+loc_006DAC:
 	lea	$40(a1),a1
+loc_006DB0:
 	dbra	d7,loc_006DA4
+loc_006DB4:
 	rts
 loc_006DB6:
 	subq.w	#$1,$38(a0)
+loc_006DBA:
 	beq.b	loc_006DBE
+loc_006DBC:
 	rts
 loc_006DBE:
 	bset.b	#$0,(Flags_C61C).w
 	rts
 sub_006DC6:
 	movea.l	dat_006DDE(pc,d0.w),a1
+loc_006DCA:
 	lea	(ram_AA9E).w,a2
+loc_006DCE:
 	moveq	#$B,d0
+loc_006DD0:
 	moveq	#$6,d1
+loc_006DD2:
 	bsr.w	sub_008BCE
+loc_006DD6:
 	bset.b	#$0,(Flags_C5AF).w
+loc_006DDC:
 	rts
 dat_006DDE:
 	dc.b	$00,$0E
@@ -6035,20 +8576,33 @@ dat_006DDE:
 	dc.b	$A9,$DE,$00,$0E,$AA,$86,$00,$0E,$A9,$DE,$00,$0E,$AA,$86
 sub_006E0E:
 	bset.b	#$0,$2(a0)
+loc_006E14:
 	bne.b	loc_006E42
+loc_006E16:
 	move.b	#$E0,$22(a0)
+loc_006E1C:
 	move.w	#$60,$4(a0)
+loc_006E22:
 	move.w	#$F0,$8(a0)
+loc_006E28:
 	move.w	$2C(a0),d0
+loc_006E2C:
 	lea	dat_006E52(pc,d0.w),a1
+loc_006E30:
 	move.l	(a1)+,$14(a0)
+loc_006E34:
 	move.w	(a1)+,$30(a0)
+loc_006E38:
 	move.w	(a1)+,$8(a0)
+loc_006E3C:
 	move.w	#$4,$C(a0)
 loc_006E42:
 	move.w	$4(a0),d0
+loc_006E46:
 	cmp.w	$30(a0),d0
+loc_006E4A:
 	bcs.b	loc_006E50
+loc_006E4C:
 	clr.l	$C(a0)
 loc_006E50:
 	rts
@@ -6064,68 +8618,121 @@ dat_006E52:
 	dc.b	$01,$00
 sub_006ED2:
 	lea	(ram_A000).w,a6
+loc_006ED6:
 	moveq	#$0,d7
+loc_006ED8:
 	move.w	#$3FF,d6
 loc_006EDC:
 	move.l	d7,(a6)+
+loc_006EDE:
 	dbra	d6,loc_006EDC
+loc_006EE2:
 	lea	(ram_B000).w,a6
+loc_006EE6:
 	moveq	#$0,d7
+loc_006EE8:
 	move.w	#$3FF,d6
 loc_006EEC:
 	move.l	d7,(a6)+
+loc_006EEE:
 	dbra	d6,loc_006EEC
+loc_006EF2:
 	lea	(ram_FF0000).l,a1
+loc_006EF8:
 	lea	(dat_0EA2B0).l,a0
+loc_006EFE:
 	move.w	#$0,d0
+loc_006F02:
 	jsr	(sub_00A388).l
+loc_006F08:
 	lea	(ram_FF0000).l,a1
+loc_006F0E:
 	lea	(ram_B000).w,a2
+loc_006F12:
 	moveq	#$27,d0
+loc_006F14:
 	moveq	#$1B,d1
+loc_006F16:
 	bsr.w	sub_008BCE
+loc_006F1A:
 	lea	(ram_FF0000).l,a1
+loc_006F20:
 	lea	(dat_0EA544).l,a0
+loc_006F26:
 	move.w	#$A10A,d0
+loc_006F2A:
 	jsr	(sub_00A388).l
+loc_006F30:
 	lea	(ram_FF0000).l,a1
+loc_006F36:
 	lea	(ram_A38C).w,a2
+loc_006F3A:
 	moveq	#$1E,d0
+loc_006F3C:
 	moveq	#$14,d1
+loc_006F3E:
 	bsr.w	sub_008BCE
+loc_006F42:
 	bset.b	#$0,(Flags_C5AF).w
+loc_006F48:
 	rts
 loc_006F4A:
 	bsr.w	sub_003522
+loc_006F4E:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_006F54:
 	beq.w	loc_006FDC
+loc_006F58:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006F60:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_006F68:
 	bne.b	loc_006F60
+loc_006F6A:
 	lea	(VDP_Control).l,a6
+loc_006F70:
 	move.w	#$9300,(a6)
+loc_006F74:
 	move.w	#$9408,(a6)
+loc_006F78:
 	move.w	#$9500,(a6)
+loc_006F7C:
 	move.w	#$96D0,(a6)
+loc_006F80:
 	move.w	#$977F,(a6)
+loc_006F84:
 	move.w	#$4000,(a6)
+loc_006F88:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_006F8E:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_006F92:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_006F9A:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006FA2:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_006FAA:
 	bne.b	loc_006FA2
+loc_006FAC:
 	lea	(VDP_Control).l,a6
+loc_006FB2:
 	move.w	#$9300,(a6)
+loc_006FB6:
 	move.w	#$9408,(a6)
+loc_006FBA:
 	move.w	#$9500,(a6)
+loc_006FBE:
 	move.w	#$96D8,(a6)
+loc_006FC2:
 	move.w	#$977F,(a6)
+loc_006FC6:
 	move.w	#$6000,(a6)
+loc_006FCA:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_006FD0:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_006FD4:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006FDC:
 	rts
@@ -6287,9 +8894,13 @@ sub_007218:
 	rts
 sub_00722A:
 	move.w	$4(a0),d0
+loc_00722E:
 	tst.w	$C(a0)
+loc_007232:
 	bmi.b	loc_00723C
+loc_007234:
 	cmp.w	$30(a0),d0
+loc_007238:
 	bcc.b	loc_007242
 	rts
 loc_00723C:
@@ -6424,52 +9035,91 @@ dat_00725A:
 	dc.b	$00,$00,$05,$53,$20,$D8,$08,$00,$05,$55,$20,$D8
 sub_00798C:
 	move.w	#$2700,sr
+loc_007990:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_007994:
 	andi.b	#$BF,d0
+loc_007998:
 	move.w	d0,(VDP_Control).l
+loc_00799E:
 	jsr	(sub_009EE0).l
+loc_0079A4:
 	move.w	#$9030,(VDP_Control).l
+loc_0079AC:
 	move.w	#$8C00,(VDP_Control).l
+loc_0079B4:
 	move.w	#$218,d0
+loc_0079B8:
 	jsr	(sub_008508).l
+loc_0079BE:
 	move.b	#$1,(ram_C5A0).w
+loc_0079C4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0079CC:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_0079D4:
 	bne.b	loc_0079CC
+loc_0079D6:
 	lea	(VDP_Control).l,a6
+loc_0079DC:
 	move.w	#$9300,(a6)
+loc_0079E0:
 	move.w	#$945F,(a6)
+loc_0079E4:
 	move.w	#$9500,(a6)
+loc_0079E8:
 	move.w	#$9680,(a6)
+loc_0079EC:
 	move.w	#$977F,(a6)
+loc_0079F0:
 	move.w	#$4000,(a6)
+loc_0079F4:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_0079FA:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_0079FE:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_007A06:
 	bsr.w	sub_007AA6
+loc_007A0A:
 	move.w	#$E00,(Timer_C606).w
+loc_007A10:
 	move.b	#$30,(Timer_C605).w
+loc_007A16:
 	move.w	(VDP_Reg1_Shadow).w,d0
+loc_007A1A:
 	ori.b	#$40,d0
+loc_007A1E:
 	move.w	d0,(VDP_Control).l
 loc_007A24:
 	jsr	(sub_0084CA).l
+loc_007A2A:
 	addi.l	#$4000,(ram_C522).w
+loc_007A32:
 	bsr.w	sub_007A62
+loc_007A36:
 	jsr	(sub_00426C).l
+loc_007A3C:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_007A42:
 	bne.b	loc_007A4E
+loc_007A44:
 	subq.w	#$1,(Timer_C606).w
+loc_007A48:
 	beq.b	loc_007A4E
+loc_007A4A:
 	bra.w	loc_007A24
 loc_007A4E:
 	move.w	#$7,(ram_C328).w
+loc_007A54:
 	move.w	#$34,(Game_NextState).w
+loc_007A5A:
 	move.w	#$8,(Game_State).w
+loc_007A60:
 	rts
 sub_007A62:
 	subq.b	#$1,(Timer_C605).w
+loc_007A66:
 	bne.b	loc_007A9E
 	moveq	#$0,d0
 	move.b	(ram_C604).w,d0
@@ -6493,29 +9143,45 @@ dat_007AA0:
 	dc.b	$FF,$03,$80,$03,$0A,$03
 sub_007AA6:
 	lea	(ram_8000).w,a6
+loc_007AAA:
 	moveq	#$0,d7
+loc_007AAC:
 	move.w	#$7FF,d6
 loc_007AB0:
 	move.l	d7,(a6)+
+loc_007AB2:
 	dbra	d6,loc_007AB0
+loc_007AB6:
 	lea	(ram_A000).w,a6
+loc_007ABA:
 	moveq	#$0,d7
+loc_007ABC:
 	move.w	#$7FF,d6
 loc_007AC0:
 	move.l	d7,(a6)+
+loc_007AC2:
 	dbra	d6,loc_007AC0
+loc_007AC6:
 	lea	(dat_0E0EEA).l,a1
+loc_007ACC:
 	lea	(ram_A08C).w,a2
+loc_007AD0:
 	moveq	#$17,d7
 loc_007AD2:
 	moveq	#$13,d6
+loc_007AD4:
 	movea.l	a2,a3
 loc_007AD6:
 	move.w	(a1)+,(a3)+
+loc_007AD8:
 	dbra	d6,loc_007AD6
+loc_007ADC:
 	lea	$40(a2),a2
+loc_007AE0:
 	dbra	d7,loc_007AD2
+loc_007AE4:
 	btst.b	#$7,(Hardware_Version).w
+loc_007AEA:
 	bne.b	loc_007B08
 	lea	(dat_007D74).l,a1
 	lea	(ram_880C).w,a2
@@ -6525,42 +9191,71 @@ loc_007AD6:
 	bra.w	loc_007B12
 loc_007B08:
 	lea	(dat_007BB2).l,a6
+loc_007B0E:
 	bsr.w	sub_0087C6
 loc_007B12:
 	bset.b	#$0,(Flags_C5AF).w
+loc_007B18:
 	rts
 loc_007B1A:
 	bsr.w	sub_003522
+loc_007B1E:
 	bsr.w	sub_003442
+loc_007B22:
 	bclr.b	#$0,(Flags_C5AF).w
+loc_007B28:
 	beq.w	loc_007BB0
+loc_007B2C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007B34:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_007B3C:
 	bne.b	loc_007B34
+loc_007B3E:
 	lea	(VDP_Control).l,a6
+loc_007B44:
 	move.w	#$9300,(a6)
+loc_007B48:
 	move.w	#$9410,(a6)
+loc_007B4C:
 	move.w	#$9500,(a6)
+loc_007B50:
 	move.w	#$96C0,(a6)
+loc_007B54:
 	move.w	#$977F,(a6)
+loc_007B58:
 	move.w	#$4000,(a6)
+loc_007B5C:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_007B62:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_007B66:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_007B6E:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007B76:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_007B7E:
 	bne.b	loc_007B76
+loc_007B80:
 	lea	(VDP_Control).l,a6
+loc_007B86:
 	move.w	#$9300,(a6)
+loc_007B8A:
 	move.w	#$9410,(a6)
+loc_007B8E:
 	move.w	#$9500,(a6)
+loc_007B92:
 	move.w	#$96D0,(a6)
+loc_007B96:
 	move.w	#$977F,(a6)
+loc_007B9A:
 	move.w	#$6000,(a6)
+loc_007B9E:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_007BA4:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_007BA8:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_007BB0:
 	rts
@@ -6607,35 +9302,54 @@ dat_007D74:
 	dc.b	$AD,$0A,$0E,$14,$23,$01,$1C,$26,$FE,$00
 sub_007E0A:
 	bset.b	#$0,$2(a0)
+loc_007E10:
 	bne.b	loc_007E32
+loc_007E12:
 	move.l	#$7E34,$14(a0)
+loc_007E1A:
 	ori.b	#$2,$2(a0)
+loc_007E20:
 	move.b	#$C0,$22(a0)
+loc_007E26:
 	move.w	#$184,$4(a0)
+loc_007E2C:
 	move.w	#$F8,$8(a0)
 loc_007E32:
 	rts
 	dc.b	$00,$00,$00,$00,$E8,$0A,$06,$F0,$F0,$F8
 sub_007E3E:
 	tst.b	(ram_C5D1).w
+loc_007E42:
 	bne.b	loc_007E66
+loc_007E44:
 	bsr.w	sub_007ED6
+loc_007E48:
 	bsr.w	sub_007F1E
+loc_007E4C:
 	bsr.w	sub_00805E
+loc_007E50:
 	bsr.w	sub_0080BC
+loc_007E54:
 	bsr.w	sub_0081E0
+loc_007E58:
 	bsr.w	sub_008226
+loc_007E5C:
 	tst.b	(Flags_C356).w
+loc_007E60:
 	bne.b	loc_007E68
+loc_007E62:
 	bsr.w	sub_007F5C
 loc_007E66:
 	rts
 loc_007E68:
 	bsr.w	sub_007EAA
+loc_007E6C:
 	bsr.w	sub_007E72
+loc_007E70:
 	rts
 sub_007E72:
 	bclr.b	#$5,(Flags_C5C0).w
+loc_007E78:
 	beq.b	loc_007EA8
 	move.w	(ram_C3B6).w,d1
 	addq.w	#$1,d1
@@ -6653,37 +9367,59 @@ loc_007EA8:
 	rts
 sub_007EAA:
 	bclr.b	#$1,(Flags_C5C0).w
+loc_007EB0:
 	beq.b	loc_007ED4
+loc_007EB2:
 	moveq	#$0,d0
+loc_007EB4:
 	addq.w	#$1,d0
+loc_007EB6:
 	lea	(ram_C3C0).w,a1
+loc_007EBA:
 	lea	(ram_C6BE).w,a2
+loc_007EBE:
 	abcd	-(a2),-(a1)
+loc_007EC0:
 	abcd	-(a2),-(a1)
 sub_007EC2:
 	moveq	#$3,d0
+loc_007EC4:
 	moveq	#$1,d4
+loc_007EC6:
 	lea	(ram_D810).w,a2
+loc_007ECA:
 	bsr.w	sub_0089F2
+loc_007ECE:
 	bset.b	#$1,(Flags_C5AF).w
 loc_007ED4:
 	rts
 sub_007ED6:
 	btst.b	#$0,(Flags_C5C0).w
+loc_007EDC:
 	beq.b	loc_007F0A
 sub_007EDE:
 	moveq	#$2,d0
+loc_007EE0:
 	move.w	(ram_C328).w,d1
+loc_007EE4:
 	moveq	#$0,d2
+loc_007EE6:
 	move.b	dat_007F0C(pc,d1.w),d2
+loc_007EEA:
 	move.w	d2,(ram_C618).w
+loc_007EEE:
 	lea	(ram_C347).w,a1
+loc_007EF2:
 	tst.b	(ram_FE58).w
+loc_007EF6:
 	bne.b	loc_007EFC
+loc_007EF8:
 	lea	(ram_C619).w,a1
 loc_007EFC:
 	lea	(ram_D800).w,a2
+loc_007F00:
 	bsr.w	sub_008AD8
+loc_007F04:
 	bset.b	#$0,(Flags_C5AF).w
 loc_007F0A:
 	rts
@@ -6692,53 +9428,88 @@ dat_007F0C:
 	dc.b	$05,$06,$07,$01,$02,$03,$04,$05,$06,$07,$08,$08,$08,$00
 sub_007F1E:
 	bclr.b	#$2,(Flags_C5C0).w
+loc_007F24:
 	beq.b	loc_007F3A
 sub_007F26:
 	moveq	#$7,d0
+loc_007F28:
 	lea	(ram_C332).w,a1
+loc_007F2C:
 	lea	(ram_D828).w,a2
+loc_007F30:
 	bsr.w	sub_0089F2
+loc_007F34:
 	bset.b	#$2,(Flags_C5AF).w
 loc_007F3A:
 	rts
 sub_007F3C:
 	tst.b	(Flags_C356).w
+loc_007F40:
 	bne.w	loc_007FDC
+loc_007F44:
 	move.w	(ram_C328).w,d0
+loc_007F48:
 	add.w	d0,d0
+loc_007F4A:
 	move.w	dat_007FBE(pc,d0.w),(ram_C5BC).w
+loc_007F50:
 	move.b	#$3C,(ram_C5BF).w
+loc_007F56:
 	clr.b	(ram_C357).w
+loc_007F5A:
 	bra.b	loc_007FA6
 sub_007F5C:
 	tst.b	(ram_FE59).w
+loc_007F60:
 	bne.b	loc_007FBC
+loc_007F62:
 	tst.b	(ram_C357).w
+loc_007F66:
 	bne.b	loc_007FBC
+loc_007F68:
 	subq.b	#$1,(ram_C5BF).w
+loc_007F6C:
 	bne.b	loc_007FBC
+loc_007F6E:
 	move.b	#$3C,(ram_C5BF).w
+loc_007F74:
 	lea	(ram_C5BE).w,a1
+loc_007F78:
 	lea	(dat_008276).l,a2
+loc_007F7E:
 	moveq	#$0,d0
+loc_007F80:
 	addq.w	#$1,d0
+loc_007F82:
 	sbcd	-(a2),-(a1)
+loc_007F84:
 	sbcd	-(a2),-(a1)
+loc_007F86:
 	bcc.b	loc_007FA6
+loc_007F88:
 	st.b	(ram_C357).w
+loc_007F8C:
 	move.w	(ram_E020).w,(ram_C61A).w
+loc_007F92:
 	move.b	#$1C,(ram_C61A).w
+loc_007F98:
 	tst.b	(ram_C642).w
+loc_007F9C:
 	beq.b	loc_007FA2
 	bsr.w	sub_00B232
 loc_007FA2:
 	bra.w	sub_00B160
 loc_007FA6:
 	moveq	#$3,d0
+loc_007FA8:
 	moveq	#$1,d4
+loc_007FAA:
 	lea	(ram_C5BC).w,a1
+loc_007FAE:
 	lea	(ram_D810).w,a2
+loc_007FB2:
 	bsr.w	sub_008ADA
+loc_007FB6:
 	bset.b	#$1,(Flags_C5AF).w
 loc_007FBC:
 	rts
@@ -6748,39 +9519,67 @@ dat_007FBE:
 	dc.b	$03,$00,$02,$00,$02,$00,$03,$00,$02,$00,$02,$00
 loc_007FDC:
 	move.w	#$174,(ram_E040).w
+loc_007FE2:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007FEA:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_007FF2:
 	bne.b	loc_007FEA
+loc_007FF4:
 	lea	(VDP_Control).l,a6
+loc_007FFA:
 	move.w	#$9390,(a6)
+loc_007FFE:
 	move.w	#$9400,(a6)
+loc_008002:
 	move.w	#$955D,(a6)
+loc_008006:
 	move.w	#$96E8,(a6)
+loc_00800A:
 	move.w	#$9701,(a6)
+loc_00800E:
 	move.w	#$5E00,(a6)
+loc_008012:
 	move.w	#$83,(DMA_Trigger_Word).w
+loc_008018:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00801C:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_008024:
 	lea	(ram_C3BE).w,a1
+loc_008028:
 	bsr.w	sub_007EC2
+loc_00802C:
 	lea	(ram_D810).w,a1
+loc_008030:
 	move.l	#$56C40003,d0
+loc_008036:
 	moveq	#$2,d1
+loc_008038:
 	moveq	#$0,d2
+loc_00803A:
 	jsr	(sub_00A11A).l
+loc_008040:
 	move.l	#$55BE0003,(VDP_Control).l
+loc_00804A:
 	lea	(VDP_Data).l,a1
+loc_008050:
 	move.w	#$C465,d0
+loc_008054:
 	moveq	#$3,d7
 loc_008056:
 	move.w	d0,(a1)
+loc_008058:
 	dbra	d7,loc_008056
+loc_00805C:
 	rts
 sub_00805E:
 	bclr.b	#$3,(Flags_C5C0).w
+loc_008064:
 	beq.b	loc_0080BA
+loc_008066:
 	move.w	(ram_C5D6).w,d0
+loc_00806A:
 	beq.b	loc_008092
 	clr.w	(ram_C5D6).w
 	add.w	(ram_C346).w,d0
@@ -6794,24 +9593,37 @@ sub_00805E:
 	bra.w	loc_0080BA
 loc_008092:
 	moveq	#$0,d4
+loc_008094:
 	addq.w	#$1,d4
+loc_008096:
 	lea	(ram_C5DC).w,a1
+loc_00809A:
 	lea	(ram_C352).w,a2
+loc_00809E:
 	abcd	-(a1),-(a2)
+loc_0080A0:
 	clr.w	(ram_C5DA).w
 sub_0080A4:
 	moveq	#$2,d0
+loc_0080A6:
 	moveq	#$1,d4
+loc_0080A8:
 	lea	(ram_C351).w,a1
+loc_0080AC:
 	lea	(ram_D838).w,a2
+loc_0080B0:
 	bsr.w	sub_0089F4
+loc_0080B4:
 	bset.b	#$3,(Flags_C5AF).w
 loc_0080BA:
 	rts
 sub_0080BC:
 	btst.b	#$4,(Flags_C5C0).w
+loc_0080C2:
 	beq.w	loc_0081DE
+loc_0080C6:
 	move.w	(ram_C5D8).w,d0
+loc_0080CA:
 	beq.b	loc_0080FA
 	move.w	(ram_C34A).w,d1
 	add.w	d0,d1
@@ -6832,20 +9644,30 @@ loc_0080F2:
 	clr.w	(ram_C5D8).w
 loc_0080FA:
 	move.w	(ram_C5D2).w,d1
+loc_0080FE:
 	beq.w	loc_0081DE
+loc_008102:
 	move.w	(ram_C348).w,d0
+loc_008106:
 	addq.w	#$1,d0
+loc_008108:
 	bpl.b	loc_00810C
 	moveq	#$0,d0
 loc_00810C:
 	subq.w	#$1,d1
+loc_00810E:
 	move.w	d1,(ram_C5D2).w
+loc_008112:
 	beq.b	loc_008116
+loc_008114:
 	bpl.b	sub_008138
 loc_008116:
 	clr.w	(ram_C5D2).w
+loc_00811A:
 	bclr.b	#$4,(Flags_C5C0).w
+loc_008120:
 	cmpi.w	#$20,(Game_State).w
+loc_008126:
 	bne.b	sub_008138
 	movem.l	d0/a1,-(a7)
 	moveq	#-$38,d0
@@ -6853,44 +9675,70 @@ loc_008116:
 	movem.l	(a7)+,d0/a1
 sub_008138:
 	move.w	(ram_C34A).w,d1
+loc_00813C:
 	lea	(dat_008276).l,a1
+loc_008142:
 	move.w	(a1,d1.w),d3
+loc_008146:
 	cmp.w	d3,d0
+loc_008148:
 	bls.b	loc_00814C
 	move.w	d3,d0
 loc_00814C:
 	move.w	d0,(ram_C348).w
 sub_008150:
 	lea	(dat_008288).l,a1
+loc_008156:
 	lea	(ram_D83C).w,a2
+loc_00815A:
 	add.w	d1,d1
+loc_00815C:
 	movea.l	(a1,d1.w),a1
+loc_008160:
 	moveq	#$8,d7
 loc_008162:
 	move.w	(a1)+,(a2)+
+loc_008164:
 	dbra	d7,loc_008162
+loc_008168:
 	lea	(ram_D83C).w,a1
+loc_00816C:
 	move.w	#$C462,d6
+loc_008170:
 	move.w	#$C464,d7
+loc_008174:
 	move.w	d0,d2
+loc_008176:
 	lsr.w	#$3,d0
+loc_008178:
 	beq.b	loc_008180
 loc_00817A:
 	move.w	d6,(a1)+
+loc_00817C:
 	subq.w	#$1,d0
+loc_00817E:
 	bne.b	loc_00817A
 loc_008180:
 	andi.w	#$7,d2
+loc_008184:
 	beq.b	loc_0081C0
+loc_008186:
 	lsl.w	#$5,d2
+loc_008188:
 	lea	(dat_00832E).l,a2
+loc_00818E:
 	lea	(ram_D860).w,a3
+loc_008192:
 	lea	(a2,d2.w),a2
+loc_008196:
 	moveq	#$7,d7
 loc_008198:
 	move.l	(a2)+,(a3)+
+loc_00819A:
 	dbra	d7,loc_008198
+loc_00819E:
 	cmpi.w	#$C463,(a1)
+loc_0081A2:
 	bne.b	loc_0081B6
 	lea	(ram_D862).w,a2
 	moveq	#$7,d7
@@ -6901,22 +9749,31 @@ loc_0081AE:
 	dbra	d7,loc_0081AE
 loc_0081B6:
 	move.w	#$C461,(a1)
+loc_0081BA:
 	bset.b	#$5,(Flags_C5AF).w
 loc_0081C0:
 	lea	(ram_D83C).w,a2
+loc_0081C4:
 	lea	(ram_D84E).w,a3
+loc_0081C8:
 	moveq	#$8,d7
+loc_0081CA:
 	move.w	#$1000,d1
 loc_0081CE:
 	move.w	(a2)+,d0
+loc_0081D0:
 	eor.w	d1,d0
+loc_0081D2:
 	move.w	d0,(a3)+
+loc_0081D4:
 	dbra	d7,loc_0081CE
+loc_0081D8:
 	bset.b	#$4,(Flags_C5AF).w
 loc_0081DE:
 	rts
 sub_0081E0:
 	btst.b	#$6,(Flags_C5C0).w
+loc_0081E6:
 	beq.w	loc_008224
 	lea	(ram_D880).w,a1
 	lea	(ram_D890).w,a2
@@ -6944,6 +9801,7 @@ loc_008224:
 	rts
 sub_008226:
 	bclr.b	#$7,(Flags_C5C0).w
+loc_00822C:
 	beq.b	loc_008238
 	bsr.w	sub_00823A
 	bset.b	#$7,(Flags_C5AF).w
@@ -7033,40 +9891,63 @@ sub_008438:
 	bra.w	loc_008454
 sub_008444:
 	move.w	(ram_E004).w,d0
+loc_008448:
 	move.w	(ram_E008).w,d1
+loc_00844C:
 	sub.w	$4(a0),d0
+loc_008450:
 	sub.w	$8(a0),d1
 loc_008454:
 	moveq	#$0,d2
+loc_008456:
 	tst.w	d0
+loc_008458:
 	bpl.b	loc_008460
 	bset.b	#$0,d2
 	neg.w	d0
 loc_008460:
 	tst.w	d1
+loc_008462:
 	bpl.b	loc_00846A
 	bset.b	#$1,d2
 	neg.w	d1
 loc_00846A:
 	moveq	#$0,d3
+loc_00846C:
 	cmp.w	d1,d0
+loc_00846E:
 	beq.b	loc_00849A
+loc_008470:
 	bcc.b	loc_008478
+loc_008472:
 	exg	d0,d1
+loc_008474:
 	bset.b	#$2,d2
 loc_008478:
 	swap	d1
+loc_00847A:
 	clr.w	d1
+loc_00847C:
 	divu.w	d0,d1
+loc_00847E:
 	tst.w	d1
+loc_008480:
 	beq.b	loc_0084A2
+loc_008482:
 	cmpi.w	#$2000,d1
+loc_008486:
 	bcs.b	loc_0084A2
+loc_008488:
 	cmpi.w	#$6000,d1
+loc_00848C:
 	bcs.b	loc_0084A0
+loc_00848E:
 	cmpi.w	#$A000,d1
+loc_008492:
 	bcs.b	loc_00849E
+loc_008494:
 	cmpi.w	#$E000,d1
+loc_008498:
 	bcs.b	loc_00849C
 loc_00849A:
 	addq.w	#$1,d3
@@ -7078,134 +9959,213 @@ loc_0084A0:
 	addq.w	#$1,d3
 loc_0084A2:
 	btst.b	#$2,d2
+loc_0084A6:
 	beq.b	loc_0084AC
+loc_0084A8:
 	subq.w	#$8,d3
+loc_0084AA:
 	neg.w	d3
 loc_0084AC:
 	btst.b	#$1,d2
+loc_0084B0:
 	beq.b	loc_0084B8
 	subi.w	#$20,d3
 	neg.w	d3
 loc_0084B8:
 	btst.b	#$0,d2
+loc_0084BC:
 	beq.b	loc_0084C4
 	subi.w	#$10,d3
 	neg.w	d3
 loc_0084C4:
 	andi.w	#$1F,d3
+loc_0084C8:
 	rts
 sub_0084CA:
 	btst.b	#$3,($C00005).l
+loc_0084D2:
 	bne.b	sub_0084CA
 loc_0084D4:
 	btst.b	#$3,($C00005).l
+loc_0084DC:
 	beq.b	loc_0084D4
+loc_0084DE:
 	jmp	(VInt_Handler).w
 sub_0084E2:
 	move.l	(RNG_Seed).w,d1
+loc_0084E6:
 	bne.b	loc_0084EE
+loc_0084E8:
 	move.l	#$2A6D365A,d1
 loc_0084EE:
 	move.l	d1,d0
+loc_0084F0:
 	asl.l	#$2,d1
+loc_0084F2:
 	add.l	d0,d1
+loc_0084F4:
 	asl.l	#$3,d1
+loc_0084F6:
 	add.l	d0,d1
+loc_0084F8:
 	move.w	d1,d0
+loc_0084FA:
 	swap	d1
+loc_0084FC:
 	add.w	d1,d0
+loc_0084FE:
 	move.w	d0,d1
+loc_008500:
 	swap	d1
+loc_008502:
 	move.l	d1,(RNG_Seed).w
+loc_008506:
 	rts
 sub_008508:
 	lea	(dat_0FE7A8).l,a1
+loc_00850E:
 	adda.w	d0,a1
+loc_008510:
 	movea.l	(a1)+,a2
+loc_008512:
 	movea.w	(a1)+,a3
+loc_008514:
 	move.w	(a1)+,d7
 loc_008516:
 	move.l	(a2)+,(a3)+
+loc_008518:
 	dbra	d7,loc_008516
+loc_00851C:
 	bset.b	#$0,(ram_C59A).w
+loc_008522:
 	rts
 sub_008524:
 	movea.l	a4,a1
+loc_008526:
 	clr.w	d1
 loc_008528:
 	clr.w	d2
+loc_00852A:
 	move.b	(a0)+,d2
+loc_00852C:
 	beq.b	loc_00854E
+loc_00852E:
 	bclr.b	#$7,d2
+loc_008532:
 	beq.b	loc_008540
+loc_008534:
 	subq.b	#$1,d2
 loc_008536:
 	move.b	(a0)+,(a1)
+loc_008538:
 	adda.w	d0,a1
+loc_00853A:
 	dbra	d2,loc_008536
+loc_00853E:
 	bra.b	loc_008528
 loc_008540:
 	subq.b	#$1,d2
+loc_008542:
 	move.b	(a0)+,d3
 loc_008544:
 	move.b	d3,(a1)
+loc_008546:
 	adda.w	d0,a1
+loc_008548:
 	dbra	d2,loc_008544
+loc_00854C:
 	bra.b	loc_008528
 loc_00854E:
 	movea.l	a4,a1
+loc_008550:
 	addq.w	#$1,d1
+loc_008552:
 	adda.w	d1,a1
+loc_008554:
 	cmp.w	d1,d0
+loc_008556:
 	bhi.b	loc_008528
+loc_008558:
 	rts
 sub_00855A:
 	clr.w	d2
+loc_00855C:
 	move.b	(a0)+,d2
+loc_00855E:
 	beq.b	loc_00857E
+loc_008560:
 	bclr.b	#$7,d2
+loc_008564:
 	beq.b	loc_008570
+loc_008566:
 	subq.b	#$1,d2
 loc_008568:
 	move.b	(a0)+,(a4)+
+loc_00856A:
 	dbra	d2,loc_008568
+loc_00856E:
 	bra.b	sub_00855A
 loc_008570:
 	subq.b	#$1,d2
+loc_008572:
 	move.b	(a0)+,d3
 loc_008574:
 	move.b	d3,(a4)+
+loc_008576:
 	addq.b	#$1,d3
+loc_008578:
 	dbra	d2,loc_008574
+loc_00857C:
 	bra.b	sub_00855A
 loc_00857E:
 	rts
 sub_008580:
 	cmp.b	$3E(a0),d0
+loc_008584:
 	beq.b	loc_00858C
+loc_008586:
 	move.b	d0,$3E(a0)
+loc_00858A:
 	bsr.b	sub_00858E
 loc_00858C:
 	rts
 sub_00858E:
 	moveq	#$0,d1
+loc_008590:
 	move.b	$3F(a0),d1
+loc_008594:
 	bset.b	d1,(ram_C598).w
+loc_008598:
 	lsl.w	#$2,d1
+loc_00859A:
 	move.w	d1,d2
+loc_00859C:
 	lsl.w	#$1,d1
+loc_00859E:
 	movea.l	dat_0085BE(pc,d2.w),a3
+loc_0085A2:
 	lea	(ram_DA20).w,a4
+loc_0085A6:
 	adda.w	d1,a4
+loc_0085A8:
 	move.l	(a3)+,(a4)+
+loc_0085AA:
 	movea.l	(a3)+,a5
+loc_0085AC:
 	lsl.w	#$2,d0
+loc_0085AE:
 	movea.l	-$4(a5,d0.w),a5
+loc_0085B2:
 	moveq	#$0,d0
+loc_0085B4:
 	move.w	(a5),d0
+loc_0085B6:
 	movea.l	(a3)+,a5
+loc_0085B8:
 	adda.l	d0,a5
+loc_0085BA:
 	move.l	a5,(a4)
+loc_0085BC:
 	rts
 dat_0085BE:
 	dc.b	$00,$00
@@ -7217,136 +10177,245 @@ sub_0085FE:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_008606:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00860E:
 	bne.b	loc_008606
+loc_008610:
 	lea	(VDP_Control).l,a2
+loc_008616:
 	move.w	d1,d3
+loc_008618:
 	lsl.l	#$8,d1
+loc_00861A:
 	move.w	d3,d1
+loc_00861C:
 	andi.l	#$FF00FF,d1
+loc_008622:
 	addi.l	#$94009300,d1
+loc_008628:
 	move.l	d1,(a2)
+loc_00862A:
 	lsr.w	#$1,d2
+loc_00862C:
 	move.w	d2,d3
+loc_00862E:
 	move.w	d3,d4
+loc_008630:
 	lsl.l	#$8,d3
+loc_008632:
 	move.w	d4,d3
+loc_008634:
 	andi.l	#$7F00FF,d3
+loc_00863A:
 	addi.l	#$96809500,d3
+loc_008640:
 	move.l	d3,(a2)
+loc_008642:
 	move.w	#$977F,(a2)
+loc_008646:
 	andi.l	#$FFFF,d0
+loc_00864C:
 	asl.l	#$2,d0
+loc_00864E:
 	lsr.w	#$2,d0
+loc_008650:
 	ori.l	#$804000,d0
+loc_008656:
 	move.w	d0,(a2)
+loc_008658:
 	swap	d0
+loc_00865A:
 	move.w	d0,(DMA_Trigger_Word).w
+loc_00865E:
 	move.w	(DMA_Trigger_Word).w,(a2)
+loc_008662:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00866A:
 	rts
 sub_00866C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_008674:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00867C:
 	bne.b	loc_008674
+loc_00867E:
 	lea	(VDP_Control).l,a2
+loc_008684:
 	move.w	d1,d3
+loc_008686:
 	lsl.l	#$8,d1
+loc_008688:
 	move.w	d3,d1
+loc_00868A:
 	andi.l	#$FF00FF,d1
+loc_008690:
 	addi.l	#$94009300,d1
+loc_008696:
 	move.l	d1,(a2)
+loc_008698:
 	lsr.l	#$1,d2
+loc_00869A:
 	move.w	d2,d3
+loc_00869C:
 	move.w	d3,d4
+loc_00869E:
 	lsl.l	#$8,d3
+loc_0086A0:
 	move.w	d4,d3
+loc_0086A2:
 	andi.l	#$FF00FF,d3
+loc_0086A8:
 	addi.l	#$96009500,d3
+loc_0086AE:
 	move.l	d3,(a2)
+loc_0086B0:
 	swap	d2
+loc_0086B2:
 	andi.w	#$FF,d2
+loc_0086B6:
 	addi.w	#$9700,d2
+loc_0086BA:
 	move.w	d2,(a2)
+loc_0086BC:
 	andi.l	#$FFFF,d0
+loc_0086C2:
 	asl.l	#$2,d0
+loc_0086C4:
 	lsr.w	#$2,d0
+loc_0086C6:
 	ori.l	#$804000,d0
+loc_0086CC:
 	move.w	d0,(a2)
+loc_0086CE:
 	swap	d0
+loc_0086D0:
 	move.w	d0,(DMA_Trigger_Word).w
+loc_0086D4:
 	move.w	(DMA_Trigger_Word).w,(a2)
+loc_0086D8:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0086E0:
 	rts
 sub_0086E2:
 	tst.b	(ram_C5D1).w
+loc_0086E6:
 	bne.w	loc_008E06
+loc_0086EA:
 	moveq	#$0,d7
+loc_0086EC:
 	tst.w	(a1)
+loc_0086EE:
 	beq.b	loc_008742
+loc_0086F0:
 	subq.w	#$1,$2(a1)
+loc_0086F4:
 	bne.b	loc_008742
+loc_0086F6:
 	move.w	$8(a1),d1
+loc_0086FA:
 	move.w	(a1),$2(a1)
+loc_0086FE:
 	move.w	$6(a1),d0
+loc_008702:
 	addq.w	#$1,d0
+loc_008704:
 	move.w	$4(a1),d2
+loc_008708:
 	cmp.w	d2,d0
+loc_00870A:
 	bcc.b	loc_008718
+loc_00870C:
 	subq.w	#$1,d2
+loc_00870E:
 	cmp.w	d2,d0
+loc_008710:
 	bne.b	loc_00871A
+loc_008712:
 	moveq	#$1,d7
+loc_008714:
 	bra.w	loc_00871A
 loc_008718:
 	clr.w	d0
 loc_00871A:
 	move.w	d0,$6(a1)
+loc_00871E:
 	beq.b	loc_00872C
+loc_008720:
 	moveq	#$0,d2
+loc_008722:
 	subq.w	#$1,d0
 loc_008724:
 	add.w	d1,d2
+loc_008726:
 	dbra	d0,loc_008724
+loc_00872A:
 	exg	d2,d0
 loc_00872C:
 	movea.l	$A(a1),a2
+loc_008730:
 	adda.w	d0,a2
+loc_008732:
 	movea.w	$E(a1),a3
 loc_008736:
 	move.w	(a2)+,(a3)+
+loc_008738:
 	subq.w	#$2,d1
+loc_00873A:
 	bne.b	loc_008736
+loc_00873C:
 	bset.b	#$0,(ram_C59A).w
 loc_008742:
 	rts
 sub_008744:
 	moveq	#$0,d0
+loc_008746:
 	moveq	#$0,d1
+loc_008748:
 	lea	(Joy1_Held).w,a1
+loc_00874C:
 	move.b	(a1),d0
+loc_00874E:
 	bsr.b	sub_008760
+loc_008750:
 	lea	(ram_C5A8).w,a2
+loc_008754:
 	move.b	(a2),d3
+loc_008756:
 	move.b	d1,(a2)+
+loc_008758:
 	eor.b	d1,d3
+loc_00875A:
 	and.b	d1,d3
+loc_00875C:
 	move.b	d3,(a2)+
+loc_00875E:
 	rts
 sub_008760:
 	move.b	d0,d1
+loc_008762:
 	andi.b	#$70,d0
+loc_008766:
 	beq.b	loc_00878C
+loc_008768:
 	cmpi.b	#$70,d0
+loc_00876C:
 	beq.b	loc_00878C
+loc_00876E:
 	move.w	(ram_FE42).w,d2
+loc_008772:
 	beq.b	loc_00878C
+loc_008774:
 	lsr.w	#$4,d0
+loc_008776:
 	lsl.w	#$1,d2
+loc_008778:
 	lea	(dat_00878E).l,a1
+loc_00877E:
 	movea.l	-$4(a1,d2.w),a1
+loc_008782:
 	move.b	(a1,d0.w),d3
+loc_008786:
 	andi.b	#$8F,d1
+loc_00878A:
 	or.b	d3,d1
 loc_00878C:
 	rts
@@ -7358,40 +10427,65 @@ dat_00878E:
 	dc.b	$10,$40,$50,$20,$30,$60
 sub_0087C6:
 	move.w	(a6)+,d7
+loc_0087C8:
 	move.w	(a6),d1
+loc_0087CA:
 	swap	d1
+loc_0087CC:
 	move.w	(a6)+,d1
+loc_0087CE:
 	move.w	(a6),d6
+loc_0087D0:
 	swap	d6
+loc_0087D2:
 	move.w	(a6)+,d6
+loc_0087D4:
 	movea.l	(a6)+,a5
 loc_0087D6:
 	movea.l	(a6)+,a1
+loc_0087D8:
 	movea.w	(a6)+,a2
+loc_0087DA:
 	jsr	(a5)
+loc_0087DC:
 	dbra	d7,loc_0087D6
+loc_0087E0:
 	rts
 sub_0087E2:
 	moveq	#$0,d0
+loc_0087E4:
 	move.b	(a1)+,d0
+loc_0087E6:
 	beq.w	loc_008E06
+loc_0087EA:
 	subi.b	#$2F,d0
+loc_0087EE:
 	bcc.b	loc_0087F2
+loc_0087F0:
 	move.w	d6,d0
 loc_0087F2:
 	add.w	d1,d0
+loc_0087F4:
 	move.w	d0,(a2)+
+loc_0087F6:
 	bra.w	sub_0087E2
-	dc.b	$36,$3C,$00,$40,$60,$00
-	dc.b	$00,$06
+loc_0087FA:
+	move.w	#$40,d3
+loc_0087FE:
+	bra.w	loc_008806
 sub_008802:
 	move.w	#$80,d3
+loc_008806:
 	lea	(dat_058956).l,a3
 loc_00880C:
 	moveq	#$0,d0
+loc_00880E:
 	move.b	(a1)+,d0
+loc_008810:
 	beq.w	loc_008E06
+loc_008814:
 	bsr.w	sub_008844
+loc_008818:
 	bra.b	loc_00880C
 	dc.b	$36,$3C,$00,$80,$47,$F9
 	dc.b	$00,$05,$89,$56,$70,$00,$10,$19,$66,$1A,$28,$78,$C3,$64,$5C,$4C
@@ -7399,68 +10493,110 @@ loc_00880C:
 	dc.b	$C3,$59,$4E,$75
 sub_008844:
 	subi.w	#$30,d0
+loc_008848:
 	bcc.b	loc_008852
+loc_00884A:
 	move.w	d6,(a2)+
+loc_00884C:
 	move.w	d6,-$2(a2,d3.w)
+loc_008850:
 	rts
 loc_008852:
 	cmpi.w	#$11,d0
+loc_008856:
 	bcs.b	loc_00885A
+loc_008858:
 	subq.w	#$7,d0
 loc_00885A:
 	lsl.w	#$2,d0
+loc_00885C:
 	move.w	(a3,d0.w),d2
+loc_008860:
 	add.w	d1,d2
+loc_008862:
 	move.w	d2,(a2)+
+loc_008864:
 	move.w	$2(a3,d0.w),d2
+loc_008868:
 	add.w	d1,d2
+loc_00886A:
 	move.w	d2,-$2(a2,d3.w)
+loc_00886E:
 	rts
 	dc.b	$36,$3C,$00,$40,$60,$00,$00,$06
 sub_008878:
 	move.w	#$80,d3
+loc_00887C:
 	lea	(dat_059060).l,a3
 loc_008882:
 	lea	(a2,d3.w),a4
+loc_008886:
 	moveq	#$0,d0
+loc_008888:
 	move.b	(a1)+,d0
+loc_00888A:
 	beq.w	loc_008E06
+loc_00888E:
 	subi.w	#$30,d0
+loc_008892:
 	bcc.b	loc_00889A
+loc_008894:
 	move.l	d6,(a2)+
+loc_008896:
 	move.l	d6,(a4)+
+loc_008898:
 	bra.b	loc_008882
 loc_00889A:
 	cmpi.w	#$11,d0
+loc_00889E:
 	bcs.b	loc_0088A2
+loc_0088A0:
 	subq.w	#$7,d0
 loc_0088A2:
 	lsl.w	#$3,d0
+loc_0088A4:
 	move.l	(a3,d0.w),d2
+loc_0088A8:
 	add.l	d1,d2
+loc_0088AA:
 	move.l	d2,(a2)+
+loc_0088AC:
 	move.l	$4(a3,d0.w),d2
+loc_0088B0:
 	add.l	d1,d2
+loc_0088B2:
 	move.l	d2,(a4)+
+loc_0088B4:
 	bra.w	loc_008882
 sub_0088B8:
 	bset.b	#$7,(ram_C5C8).w
+loc_0088BE:
 	lea	(ram_FF689E).l,a3
+loc_0088C4:
 	move.l	#$C46EC46E,d6
+loc_0088CA:
 	moveq	#$8,d7
 loc_0088CC:
 	moveq	#$A,d4
+loc_0088CE:
 	movea.l	a3,a2
 loc_0088D0:
 	move.l	d6,(a2)+
+loc_0088D2:
 	dbra	d4,loc_0088D0
+loc_0088D6:
 	lea	$80(a3),a3
+loc_0088DA:
 	dbra	d7,loc_0088CC
+loc_0088DE:
 	cmpi.b	#$FF,d0
+loc_0088E2:
 	beq.w	loc_008E06
+loc_0088E6:
 	lea	(ram_FF691E).l,a3
 loc_0088EC:
 	btst.b	#$7,(Hardware_Version).w
+loc_0088F2:
 	bne.w	loc_008954
 	lea	(dat_0427B6).l,a1
 	move.w	(a1,d0.w),d1
@@ -7503,34 +10639,51 @@ loc_008952:
 	rts
 loc_008954:
 	lea	(dat_042B5E).l,a1
+loc_00895A:
 	move.w	(a1,d0.w),d1
+loc_00895E:
 	lea	(a1,d1.w),a1
+loc_008962:
 	move.w	#$C517,d1
+loc_008966:
 	move.w	#$C46F,d6
 loc_00896A:
 	movea.l	a3,a2
+loc_00896C:
 	bsr.w	sub_008978
+loc_008970:
 	lea	$100(a3),a3
+loc_008974:
 	beq.b	loc_00896A
 loc_008976:
 	rts
 sub_008978:
 	moveq	#$0,d0
+loc_00897A:
 	move.b	(a1)+,d0
+loc_00897C:
 	beq.b	loc_008976
+loc_00897E:
 	cmpi.b	#$26,d0
+loc_008982:
 	beq.b	loc_008996
+loc_008984:
 	subi.b	#$2F,d0
+loc_008988:
 	bcc.b	loc_008990
+loc_00898A:
 	move.w	d6,d0
+loc_00898C:
 	bra.w	loc_008992
 loc_008990:
 	add.w	d1,d0
 loc_008992:
 	move.w	d0,(a2)+
+loc_008994:
 	bra.b	sub_008978
 loc_008996:
 	addq.w	#$4,a7
+loc_008998:
 	rts
 sub_00899A:
 	move.w	#$40,d3
@@ -7572,71 +10725,112 @@ sub_0089F2:
 	moveq	#$0,d4
 sub_0089F4:
 	move.w	#$C794,d6
+loc_0089F8:
 	move.w	#$C465,d7
+loc_0089FC:
 	btst.b	#$0,d0
+loc_008A00:
 	beq.b	loc_008A06
+loc_008A02:
 	move.b	(a1)+,d1
+loc_008A04:
 	bra.b	loc_008A14
 loc_008A06:
 	move.b	(a1)+,d1
+loc_008A08:
 	move.b	d1,d2
+loc_008A0A:
 	andi.w	#$F0,d1
+loc_008A0E:
 	lsr.w	#$4,d1
+loc_008A10:
 	bsr.b	sub_008A20
+loc_008A12:
 	move.b	d2,d1
 loc_008A14:
 	andi.w	#$F,d1
+loc_008A18:
 	bsr.b	sub_008A20
+loc_008A1A:
 	tst.w	d0
+loc_008A1C:
 	bne.b	loc_008A06
+loc_008A1E:
 	rts
 sub_008A20:
 	subq.w	#$1,d0
+loc_008A22:
 	tst.w	d1
+loc_008A24:
 	beq.b	loc_008A2E
 loc_008A26:
 	add.w	d6,d1
+loc_008A28:
 	move.w	d1,(a2)+
+loc_008A2A:
 	moveq	#$1,d4
+loc_008A2C:
 	rts
 loc_008A2E:
 	tst.w	d4
+loc_008A30:
 	bne.b	loc_008A26
+loc_008A32:
 	tst.w	d0
+loc_008A34:
 	beq.b	loc_008A26
+loc_008A36:
 	move.w	d7,(a2)+
+loc_008A38:
 	rts
 	dc.b	$78,$00
 loc_008A3C:
 	btst.b	#$0,d0
+loc_008A40:
 	beq.b	loc_008A46
 	move.b	(a1)+,d1
 	bra.b	loc_008A54
 loc_008A46:
 	move.b	(a1)+,d1
+loc_008A48:
 	move.b	d1,d2
+loc_008A4A:
 	andi.w	#$F0,d1
+loc_008A4E:
 	lsr.w	#$4,d1
+loc_008A50:
 	bsr.b	sub_008A60
+loc_008A52:
 	move.b	d2,d1
 loc_008A54:
 	andi.w	#$F,d1
+loc_008A58:
 	bsr.b	sub_008A60
+loc_008A5A:
 	tst.w	d0
+loc_008A5C:
 	bne.b	loc_008A46
+loc_008A5E:
 	rts
 sub_008A60:
 	subq.w	#$1,d0
+loc_008A62:
 	tst.w	d1
+loc_008A64:
 	bne.b	loc_008A6E
+loc_008A66:
 	tst.w	d4
+loc_008A68:
 	bne.b	loc_008A6E
 	tst.w	d0
 	bne.b	loc_008A76
 loc_008A6E:
 	add.w	d3,d1
+loc_008A70:
 	move.w	d1,(a2)+
+loc_008A72:
 	moveq	#$1,d4
+loc_008A74:
 	rts
 loc_008A76:
 	move.w	d6,(a2)+
@@ -7690,101 +10884,171 @@ sub_008AD8:
 	moveq	#$0,d4
 sub_008ADA:
 	move.l	#$C465C465,d7
+loc_008AE0:
 	lea	(dat_059190).l,a4
+loc_008AE6:
 	lsl.w	#$2,d0
+loc_008AE8:
 	movea.l	a2,a3
+loc_008AEA:
 	adda.w	d0,a3
+loc_008AEC:
 	btst.b	#$2,d0
+loc_008AF0:
 	beq.b	loc_008AF6
+loc_008AF2:
 	move.b	(a1)+,d1
+loc_008AF4:
 	bra.b	loc_008B04
 loc_008AF6:
 	move.b	(a1)+,d1
+loc_008AF8:
 	move.b	d1,d2
+loc_008AFA:
 	andi.w	#$F0,d1
+loc_008AFE:
 	lsr.w	#$1,d1
+loc_008B00:
 	bsr.b	sub_008B12
+loc_008B02:
 	move.b	d2,d1
 loc_008B04:
 	andi.w	#$F,d1
+loc_008B08:
 	lsl.w	#$3,d1
+loc_008B0A:
 	bsr.b	sub_008B12
+loc_008B0C:
 	tst.w	d0
+loc_008B0E:
 	bne.b	loc_008AF6
+loc_008B10:
 	rts
 sub_008B12:
 	subq.w	#$4,d0
+loc_008B14:
 	tst.w	d1
+loc_008B16:
 	beq.b	loc_008B24
 loc_008B18:
 	lea	(a4,d1.w),a5
+loc_008B1C:
 	move.l	(a5)+,(a2)+
+loc_008B1E:
 	move.l	(a5)+,(a3)+
+loc_008B20:
 	moveq	#$1,d4
+loc_008B22:
 	rts
 loc_008B24:
 	tst.w	d4
+loc_008B26:
 	bne.b	loc_008B18
+loc_008B28:
 	tst.w	d0
+loc_008B2A:
 	beq.b	loc_008B18
+loc_008B2C:
 	move.l	d7,(a2)+
+loc_008B2E:
 	move.l	d7,(a3)+
+loc_008B30:
 	rts
 sub_008B32:
 	moveq	#$0,d4
+loc_008B34:
 	lea	(dat_059060).l,a4
+loc_008B3A:
 	lea	$80(a2),a3
+loc_008B3E:
 	btst.b	#$2,d0
+loc_008B42:
 	beq.b	loc_008B48
+loc_008B44:
 	move.b	(a1)+,d1
+loc_008B46:
 	bra.b	loc_008B56
 loc_008B48:
 	move.b	(a1)+,d1
+loc_008B4A:
 	move.b	d1,d2
+loc_008B4C:
 	andi.w	#$F0,d1
+loc_008B50:
 	lsr.w	#$1,d1
+loc_008B52:
 	bsr.b	sub_008B64
+loc_008B54:
 	move.b	d2,d1
 loc_008B56:
 	andi.w	#$F,d1
+loc_008B5A:
 	lsl.w	#$3,d1
+loc_008B5C:
 	bsr.b	sub_008B64
+loc_008B5E:
 	tst.w	d0
+loc_008B60:
 	bne.b	loc_008B48
+loc_008B62:
 	rts
 sub_008B64:
 	subq.w	#$1,d0
+loc_008B66:
 	tst.w	d1
+loc_008B68:
 	bne.b	loc_008B72
+loc_008B6A:
 	tst.w	d4
+loc_008B6C:
 	bne.b	loc_008B72
+loc_008B6E:
 	tst.w	d0
+loc_008B70:
 	bne.b	loc_008B86
 loc_008B72:
 	lea	(a4,d1.w),a5
+loc_008B76:
 	move.l	(a5)+,d5
+loc_008B78:
 	add.l	d3,d5
+loc_008B7A:
 	move.l	d5,(a2)+
+loc_008B7C:
 	move.l	(a5)+,d5
+loc_008B7E:
 	add.l	d3,d5
+loc_008B80:
 	move.l	d5,(a3)+
+loc_008B82:
 	moveq	#$1,d4
+loc_008B84:
 	rts
 loc_008B86:
 	move.l	d6,(a2)+
+loc_008B88:
 	move.l	d6,(a3)+
+loc_008B8A:
 	rts
 sub_008B8C:
 	lea	(dat_040478).l,a1
+loc_008B92:
 	lsl.w	#$2,d0
+loc_008B94:
 	adda.w	d0,a1
+loc_008B96:
 	lea	(ram_C336).w,a2
+loc_008B9A:
 	moveq	#$4,d7
+loc_008B9C:
 	subq.w	#$1,d7
 loc_008B9E:
 	abcd	-(a1),-(a2)
+loc_008BA0:
 	dbra	d7,loc_008B9E
+loc_008BA4:
 	cmpi.l	#$9999999,(ram_C332).w
+loc_008BAC:
 	bls.b	loc_008BB6
 	move.l	#$9999999,(ram_C332).w
 loc_008BB6:
@@ -7793,29 +11057,43 @@ sub_008BB8:
 	move.w	(ram_C532).w,d6
 sub_008BBC:
 	move.w	d0,d7
+loc_008BBE:
 	movea.l	a2,a5
 loc_008BC0:
 	move.b	(a1)+,(a5)+
+loc_008BC2:
 	dbra	d7,loc_008BC0
+loc_008BC6:
 	adda.w	d6,a2
+loc_008BC8:
 	dbra	d1,sub_008BBC
+loc_008BCC:
 	rts
 sub_008BCE:
 	move.w	#$80,d6
 loc_008BD2:
 	move.w	d0,d7
+loc_008BD4:
 	movea.l	a2,a5
 loc_008BD6:
 	move.w	(a1)+,(a5)+
+loc_008BD8:
 	dbra	d7,loc_008BD6
+loc_008BDC:
 	adda.w	d6,a2
+loc_008BDE:
 	dbra	d1,loc_008BD2
+loc_008BE2:
 	rts
 sub_008BE4:
 	lea	(ram_C5FA).w,a4
+loc_008BE8:
 	lea	(ram_D8A0).w,a5
+loc_008BEC:
 	moveq	#$C,d7
+loc_008BEE:
 	tst.b	(a4)+
+loc_008BF0:
 	beq.b	loc_008C04
 	moveq	#$18,d7
 	tst.b	(a4)+
@@ -7828,31 +11106,51 @@ sub_008BE4:
 	bne.b	loc_008C0A
 loc_008C04:
 	move.b	d7,-(a4)
+loc_008C06:
 	lea	-$C(a5,d7.w),a5
 loc_008C0A:
 	rts
 sub_008C0C:
 	moveq	#$0,d0
+loc_008C0E:
 	moveq	#$0,d1
 sub_008C10:
 	jsr	(sub_008D0E).l
+loc_008C16:
 	bne.w	loc_008E06
+loc_008C1A:
 	movem.l	d2-d3,-(a7)
+loc_008C1E:
 	lea	(ram_D8E0).w,a3
+loc_008C22:
 	move.w	#$C000,d3
+loc_008C26:
 	move.l	(ram_C500).w,d4
+loc_008C2A:
 	move.l	(ram_C512).w,d5
+loc_008C2E:
 	jsr	(sub_00B404).l
+loc_008C34:
 	bsr.w	sub_008BE4
+loc_008C38:
 	move.l	(a3)+,(a5)+
+loc_008C3A:
 	move.w	d1,(a5)+
+loc_008C3C:
 	move.l	(a3)+,(a5)+
+loc_008C3E:
 	movem.l	(a7)+,d0-d1
+loc_008C42:
 	lea	(ram_FF0000).l,a2
+loc_008C48:
 	jsr	(sub_00B434).l
+loc_008C4E:
 	movea.l	(a3)+,a1
+loc_008C50:
 	move.w	(a3)+,d0
+loc_008C52:
 	move.w	(a3)+,d1
+loc_008C54:
 	bra.w	sub_008BB8
 	dc.b	$70,$00,$72,$00
 sub_008C5C:
@@ -7885,6 +11183,7 @@ sub_008C5C:
 	rts
 sub_008CC0:
 	jsr	(sub_008D0E).l
+loc_008CC6:
 	bne.w	loc_008E06
 	movem.l	d2-d3,-(a7)
 	lea	(ram_D8E0).w,a3
@@ -7907,19 +11206,33 @@ sub_008CC0:
 	rts
 sub_008D0E:
 	movem.l	d0-d1,-(a7)
+loc_008D12:
 	lea	(ram_D8E0).w,a2
+loc_008D16:
 	move.w	(a3)+,d0
+loc_008D18:
 	move.w	(a3)+,d1
+loc_008D1A:
 	movea.l	(a3)+,a1
+loc_008D1C:
 	movem.l	(a7),d5-d6
+loc_008D20:
 	swap	d6
+loc_008D22:
 	add.w	$8(a0),d6
+loc_008D26:
 	move.w	d6,d2
+loc_008D28:
 	subi.w	#$80,d2
+loc_008D2C:
 	bcc.b	loc_008D84
+loc_008D2E:
 	neg.w	d2
+loc_008D30:
 	move.w	d2,d3
+loc_008D32:
 	sub.w	d0,d3
+loc_008D34:
 	bcc.b	loc_008D78
 	andi.w	#$FFE0,d2
 	move.w	d2,d5
@@ -7946,40 +11259,67 @@ loc_008D5A:
 	clr.w	d1
 loc_008D6C:
 	movem.l	(a7)+,d2-d3
+loc_008D70:
 	add.l	d2,d0
+loc_008D72:
 	add.l	d3,d1
+loc_008D74:
 	moveq	#$0,d4
+loc_008D76:
 	rts
 loc_008D78:
 	movem.l	(a7)+,d0-d1
+loc_008D7C:
 	move.l	d0,d2
+loc_008D7E:
 	move.l	d0,d3
+loc_008D80:
 	moveq	#$1,d4
+loc_008D82:
 	rts
 loc_008D84:
 	add.w	d0,d2
+loc_008D86:
 	subi.w	#$E0,d2
+loc_008D8A:
 	bcc.b	loc_008DA6
+loc_008D8C:
 	move.l	(a1),(a2)+
+loc_008D8E:
 	move.w	d1,d3
+loc_008D90:
 	subq.w	#$1,d3
+loc_008D92:
 	move.w	d3,(a2)+
+loc_008D94:
 	move.w	d0,d3
+loc_008D96:
 	lsr.w	#$3,d3
+loc_008D98:
 	subq.w	#$1,d3
+loc_008D9A:
 	move.w	d3,(a2)+
 loc_008D9C:
 	bsr.w	sub_008DC6
+loc_008DA0:
 	moveq	#$0,d0
+loc_008DA2:
 	moveq	#$0,d1
+loc_008DA4:
 	bra.b	loc_008D6C
 loc_008DA6:
 	move.l	(a1),(a2)+
+loc_008DA8:
 	move.w	d1,d3
+loc_008DAA:
 	subq.w	#$1,d3
+loc_008DAC:
 	move.w	d3,(a2)+
+loc_008DAE:
 	move.w	#$15E,d2
+loc_008DB2:
 	sub.w	d6,d2
+loc_008DB4:
 	bls.w	loc_008D78
 	andi.w	#$FFE0,d2
 	lsr.w	#$3,d2
@@ -7989,26 +11329,45 @@ loc_008DA6:
 	bra.b	loc_008D9C
 sub_008DC6:
 	lsr.w	#$2,d1
+loc_008DC8:
 	subq.w	#$1,d1
+loc_008DCA:
 	lsr.w	#$5,d0
+loc_008DCC:
 	subq.w	#$1,d0
+loc_008DCE:
 	move.l	(a3)+,(a2)+
+loc_008DD0:
 	move.w	d1,(a2)+
+loc_008DD2:
 	move.w	d0,(a2)+
+loc_008DD4:
 	move.l	(a3)+,(a2)+
+loc_008DD6:
 	move.w	d1,(a2)+
+loc_008DD8:
 	move.w	d0,(a2)+
+loc_008DDA:
 	rts
 sub_008DDC:
 	moveq	#$0,d0
+loc_008DDE:
 	move.b	$18(a0),d0
+loc_008DE2:
 	lea	(dat_008E08).l,a1
+loc_008DE8:
 	movea.l	(a1,d0.w),a1
+loc_008DEC:
 	move.w	(a1)+,(ram_C638).w
+loc_008DF0:
 	move.w	(a1)+,(ram_C63A).w
+loc_008DF4:
 	move.l	(a1)+,(ram_C63C).w
+loc_008DF8:
 	move.w	(a1)+,d0
+loc_008DFA:
 	beq.b	loc_008E00
+loc_008DFC:
 	bsr.w	sub_008508
 loc_008E00:
 	bset.b	#$1,(ram_C5DC).w
@@ -8048,29 +11407,47 @@ dat_008E98:
 	dc.b	$00,$00
 sub_008EA2:
 	moveq	#$0,d1
+loc_008EA4:
 	move.w	(Camera_Y).w,d0
+loc_008EA8:
 	move.w	(ram_C328).w,d3
 sub_008EAC:
 	lsl.w	#$2,d3
+loc_008EAE:
 	movea.l	dat_008EF2(pc,d3.w),a1
 loc_008EB2:
 	move.w	(a1)+,d2
+loc_008EB4:
 	beq.b	loc_008EBE
+loc_008EB6:
 	cmp.w	d2,d0
+loc_008EB8:
 	bcc.b	loc_008EBE
+loc_008EBA:
 	addq.b	#$2,d1
+loc_008EBC:
 	bra.b	loc_008EB2
 loc_008EBE:
 	cmp.b	(ram_C643).w,d1
+loc_008EC2:
 	beq.b	loc_008EF0
+loc_008EC4:
 	move.b	d1,(ram_C643).w
+loc_008EC8:
 	lea	(dat_008F36).l,a1
+loc_008ECE:
 	movea.l	(a1,d3.w),a1
+loc_008ED2:
 	move.w	(a1,d1.w),d0
+loc_008ED6:
 	move.b	d0,(ram_C644).w
+loc_008EDA:
 	lea	(dat_008F7A).l,a2
+loc_008EE0:
 	lea	(a2,d0.w),a2
+loc_008EE4:
 	move.w	(a2)+,(VDP_Control).l
+loc_008EEA:
 	move.w	(a2)+,(VDP_Control).l
 loc_008EF0:
 	rts
@@ -8133,26 +11510,41 @@ dat_009010:
 	dc.b	$00,$00,$00,$04,$00,$00
 sub_009016:
 	moveq	#$0,d1
+loc_009018:
 	move.w	(Camera_Y).w,d0
+loc_00901C:
 	move.w	(ram_C328).w,d3
 sub_009020:
 	lsl.w	#$2,d3
+loc_009022:
 	movea.l	dat_009052(pc,d3.w),a1
 loc_009026:
 	move.w	(a1)+,d2
+loc_009028:
 	beq.b	loc_009032
+loc_00902A:
 	cmp.w	d2,d0
+loc_00902C:
 	bcc.b	loc_009032
+loc_00902E:
 	addq.b	#$2,d1
+loc_009030:
 	bra.b	loc_009026
 loc_009032:
 	cmp.b	(ram_C615).w,d1
+loc_009036:
 	beq.b	loc_009050
+loc_009038:
 	move.b	d1,(ram_C615).w
+loc_00903C:
 	lea	(dat_009096).l,a1
+loc_009042:
 	movea.l	(a1,d3.w),a1
+loc_009046:
 	move.w	(a1,d1.w),d0
+loc_00904A:
 	beq.b	loc_009050
+loc_00904C:
 	bsr.w	sub_008508
 loc_009050:
 	rts
@@ -8216,19 +11608,27 @@ dat_0091AA:
 	dc.b	$00,$00
 sub_0091AC:
 	moveq	#$0,d1
+loc_0091AE:
 	move.w	(Camera_Y).w,d0
+loc_0091B2:
 	move.w	(ram_C328).w,d3
+loc_0091B6:
 	lsl.w	#$2,d3
+loc_0091B8:
 	movea.l	dat_0091FC(pc,d3.w),a1
 loc_0091BC:
 	move.w	(a1)+,d2
+loc_0091BE:
 	beq.b	loc_0091C8
+loc_0091C0:
 	cmp.w	d2,d0
+loc_0091C2:
 	bcc.b	loc_0091C8
 	addq.b	#$2,d1
 	bra.b	loc_0091BC
 loc_0091C8:
 	cmp.b	(ram_C5FF).w,d1
+loc_0091CC:
 	beq.b	loc_0091F4
 	move.b	d1,(ram_C5FF).w
 	bclr.b	#$2,(Flags_C5EB).w
@@ -8302,28 +11702,47 @@ dat_009332:
 	dc.b	$00,$00
 sub_009334:
 	moveq	#$0,d1
+loc_009336:
 	move.w	(Camera_Y).w,d0
+loc_00933A:
 	move.w	(ram_C328).w,d3
+loc_00933E:
 	lsl.w	#$2,d3
+loc_009340:
 	movea.l	dat_009394(pc,d3.w),a1
 loc_009344:
 	move.w	(a1)+,d2
+loc_009346:
 	beq.b	loc_009350
+loc_009348:
 	cmp.w	d2,d0
+loc_00934A:
 	bcc.b	loc_009350
+loc_00934C:
 	addq.b	#$2,d1
+loc_00934E:
 	bra.b	loc_009344
 loc_009350:
 	cmp.b	(ram_C5EC).w,d1
+loc_009354:
 	beq.b	loc_00937C
+loc_009356:
 	move.b	d1,(ram_C5EC).w
+loc_00935A:
 	bset.b	#$1,(Flags_C5EB).w
+loc_009360:
 	lea	(dat_0093D8).l,a1
+loc_009366:
 	movea.l	(a1,d3.w),a1
+loc_00936A:
 	move.w	(a1,d1.w),d0
+loc_00936E:
 	beq.b	loc_009376
+loc_009370:
 	subq.w	#$1,d0
+loc_009372:
 	bne.b	loc_00937E
+loc_009374:
 	rts
 loc_009376:
 	bclr.b	#$1,(Flags_C5EB).w
@@ -8388,22 +11807,35 @@ dat_00947E:
 	dc.b	$00,$00
 sub_009480:
 	moveq	#$0,d1
+loc_009482:
 	move.w	(Camera_Y).w,d0
+loc_009486:
 	move.w	(ram_C328).w,d3
+loc_00948A:
 	lsl.w	#$2,d3
+loc_00948C:
 	movea.l	dat_0094B2(pc,d3.w),a1
 loc_009490:
 	move.w	(a1)+,d2
+loc_009492:
 	beq.b	loc_00949C
+loc_009494:
 	cmp.w	d2,d0
+loc_009496:
 	bcc.b	loc_00949C
+loc_009498:
 	addq.b	#$2,d1
+loc_00949A:
 	bra.b	loc_009490
 loc_00949C:
 	cmp.b	(ram_C5EA).w,d1
+loc_0094A0:
 	beq.b	loc_0094B0
+loc_0094A2:
 	move.b	d1,(ram_C5EA).w
+loc_0094A6:
 	movea.l	dat_0094F6(pc,d3.w),a1
+loc_0094AA:
 	move.w	(a1,d1.w),(ram_C536).w
 loc_0094B0:
 	rts
@@ -8433,19 +11865,27 @@ dat_0094F6:
 	dc.b	$00,$00,$00,$00,$00,$00
 sub_0095F6:
 	moveq	#$0,d1
+loc_0095F8:
 	move.w	(Camera_Y).w,d0
+loc_0095FC:
 	move.w	(ram_C328).w,d3
+loc_009600:
 	lsl.w	#$2,d3
+loc_009602:
 	movea.l	dat_009628(pc,d3.w),a1
 loc_009606:
 	move.w	(a1)+,d2
+loc_009608:
 	beq.b	loc_009612
+loc_00960A:
 	cmp.w	d2,d0
+loc_00960C:
 	bcc.b	loc_009612
 	addq.b	#$2,d1
 	bra.b	loc_009606
 loc_009612:
 	cmp.b	(ram_C645).w,d1
+loc_009616:
 	beq.b	loc_009626
 	move.b	d1,(ram_C645).w
 	movea.l	dat_00966C(pc,d3.w),a1
@@ -8475,36 +11915,63 @@ dat_00966C:
 	dc.b	$00,$00,$00,$00,$00,$00
 sub_009736:
 	btst.b	#$0,(ram_C5DC).w
+loc_00973C:
 	bne.w	loc_0097B8
+loc_009740:
 	moveq	#$0,d1
+loc_009742:
 	move.w	(Camera_Y).w,d0
+loc_009746:
 	move.w	(ram_C328).w,d3
+loc_00974A:
 	lsl.w	#$2,d3
+loc_00974C:
 	lea	(dat_0097F0).l,a1
+loc_009752:
 	movea.l	(a1,d3.w),a1
 loc_009756:
 	move.w	(a1)+,d2
+loc_009758:
 	beq.b	loc_009762
+loc_00975A:
 	cmp.w	d2,d0
+loc_00975C:
 	bcc.b	loc_009762
+loc_00975E:
 	addq.b	#$4,d1
+loc_009760:
 	bra.b	loc_009756
 loc_009762:
 	cmp.b	(ram_C5DD).w,d1
+loc_009766:
 	beq.b	loc_0097A6
+loc_009768:
 	move.b	d1,(ram_C5DD).w
+loc_00976C:
 	lea	(dat_009834).l,a1
+loc_009772:
 	movea.l	(a1,d3.w),a1
+loc_009776:
 	movea.l	-$4(a1,d1.w),a1
+loc_00977A:
 	lea	(ram_C5DE).w,a2
+loc_00977E:
 	move.w	(a1)+,d0
+loc_009780:
 	cmpi.w	#$FFFF,d0
+loc_009784:
 	beq.b	loc_0097A8
+loc_009786:
 	move.w	d0,(a2)+
+loc_009788:
 	move.w	(a1)+,(a2)+
+loc_00978A:
 	move.l	(a1)+,(a2)+
+loc_00978C:
 	move.w	#$100,(ram_C5E8).w
+loc_009792:
 	move.w	(a1)+,(a2)+
+loc_009794:
 	bne.b	loc_00979C
 	move.w	(ram_C5E0).w,(ram_C5E8).w
 loc_00979C:
@@ -8520,18 +11987,27 @@ loc_0097A8:
 	jmp	(loc_02164A).l
 loc_0097B8:
 	tst.b	(ram_C5CA).w
+loc_0097BC:
 	bne.b	loc_0097E6
+loc_0097BE:
 	subq.w	#$1,(ram_C5E6).w
+loc_0097C2:
 	bmi.b	loc_0097DE
+loc_0097C4:
 	bne.b	loc_0097CE
+loc_0097C6:
 	move.w	(ram_C5E0).w,(ram_C5E8).w
+loc_0097CC:
 	beq.b	loc_0097DE
 loc_0097CE:
 	addi.w	#$200,(ram_C5DE).w
+loc_0097D4:
 	addi.l	#$200,(ram_C5E2).w
+loc_0097DC:
 	rts
 loc_0097DE:
 	bclr.b	#$0,(ram_C5DC).w
+loc_0097E4:
 	rts
 loc_0097E6:
 	jsr	(sub_021668).l
@@ -8656,29 +12132,49 @@ dat_009B28:
 	dc.b	$00,$00
 sub_009B2A:
 	moveq	#$0,d1
+loc_009B2C:
 	move.w	(Camera_Y).w,d0
+loc_009B30:
 	move.w	(ram_C328).w,d3
+loc_009B34:
 	lsl.w	#$2,d3
+loc_009B36:
 	movea.l	dat_009B70(pc,d3.w),a1
 loc_009B3A:
 	move.w	(a1)+,d2
+loc_009B3C:
 	beq.b	loc_009B46
+loc_009B3E:
 	cmp.w	d2,d0
+loc_009B40:
 	bcc.b	loc_009B46
+loc_009B42:
 	addq.b	#$4,d1
+loc_009B44:
 	bra.b	loc_009B3A
 loc_009B46:
 	cmp.b	(ram_C624).w,d1
+loc_009B4A:
 	beq.b	loc_009B6E
+loc_009B4C:
 	move.b	d1,(ram_C624).w
+loc_009B50:
 	lea	(dat_009BB4).l,a1
+loc_009B56:
 	movea.l	(a1,d3.w),a1
+loc_009B5A:
 	movea.l	-$4(a1,d1.w),a1
+loc_009B5E:
 	move.w	(a1)+,d7
+loc_009B60:
 	beq.b	loc_009B6E
+loc_009B62:
 	movea.w	d7,a4
+loc_009B64:
 	movea.l	(a1)+,a0
+loc_009B66:
 	moveq	#$2,d0
+loc_009B68:
 	jsr	(sub_008524).l
 loc_009B6E:
 	rts
@@ -8754,81 +12250,139 @@ dat_009D94:
 	dc.b	$00,$00
 InitIOPorts:
 	moveq	#$40,d0
+loc_009D98:
 	move.b	d0,(HW_Port1_Ctrl).l
+loc_009D9E:
 	move.b	d0,(HW_Port2_Ctrl).l
+loc_009DA4:
 	move.b	d0,(HW_Expansion_Ctrl).l
+loc_009DAA:
 	rts
 ReadJoypads:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009DB4:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_009DBC:
 	bne.b	loc_009DB4
+loc_009DBE:
 	lea	(Joy1_Held).w,a0
+loc_009DC2:
 	lea	(HW_Port1_Data).l,a1
+loc_009DC8:
 	bsr.b	ReadJoypad_Port
+loc_009DCA:
 	addq.w	#$2,a1
 ReadJoypad_Port:
 	move.b	#$0,(a1)
+loc_009DD0:
 	nop
+loc_009DD2:
 	nop
+loc_009DD4:
 	move.b	(a1),d0
+loc_009DD6:
 	lsl.b	#$2,d0
+loc_009DD8:
 	andi.b	#$C0,d0
+loc_009DDC:
 	move.b	#$40,(a1)
+loc_009DE0:
 	nop
+loc_009DE2:
 	nop
+loc_009DE4:
 	move.b	(a1),d1
+loc_009DE6:
 	andi.b	#$3F,d1
+loc_009DEA:
 	or.b	d1,d0
+loc_009DEC:
 	not.b	d0
+loc_009DEE:
 	move.b	d0,d1
+loc_009DF0:
 	move.b	(a0),d2
+loc_009DF2:
 	eor.b	d2,d0
+loc_009DF4:
 	move.b	d1,(a0)+
+loc_009DF6:
 	and.b	d1,d0
+loc_009DF8:
 	move.b	d0,(a0)+
+loc_009DFA:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_009E02:
 	rts
 InitVDP:
 	lea	(VDP_Control).l,a0
+loc_009E0A:
 	tst.w	(a0)
+loc_009E0C:
 	lea	(VDP_Data).l,a1
+loc_009E12:
 	lea	(dat_009EAA).l,a2
+loc_009E18:
 	moveq	#$12,d7
 loc_009E1A:
 	move.w	(a2)+,(a0)
+loc_009E1C:
 	dbra	d7,loc_009E1A
+loc_009E20:
 	move.w	($9EAC).l,(VDP_Reg1_Shadow).w
+loc_009E28:
 	moveq	#$0,d0
+loc_009E2A:
 	move.l	#$C0000000,(VDP_Control).l
+loc_009E34:
 	move.w	#$3F,d7
 loc_009E38:
 	move.w	d0,(a1)
+loc_009E3A:
 	dbra	d7,loc_009E38
+loc_009E3E:
 	move.w	#$0,(ram_C500).w
+loc_009E44:
 	move.w	#$0,(ram_C546).w
+loc_009E4A:
 	move.w	#$0,(ram_C512).w
+loc_009E50:
 	move.w	#$0,(ram_C558).w
+loc_009E56:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009E5E:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_009E66:
 	bne.b	loc_009E5E
+loc_009E68:
 	lea	(VDP_Control).l,a6
+loc_009E6E:
 	move.w	#$8F01,(a6)
+loc_009E72:
 	move.w	#$93FF,(a6)
+loc_009E76:
 	move.w	#$94FF,(a6)
+loc_009E7A:
 	move.w	#$9780,(a6)
+loc_009E7E:
 	move.w	#$4000,(a6)
+loc_009E82:
 	move.w	#$80,(a6)
+loc_009E86:
 	move.w	#$0,(VDP_Data).l
 loc_009E8E:
 	move.w	(a6),d7
+loc_009E90:
 	andi.w	#$2,d7
+loc_009E94:
 	bne.b	loc_009E8E
+loc_009E96:
 	move.w	#$8F02,(DMA_Trigger_Word).w
+loc_009E9C:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_009EA0:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_009EA8:
 	rts
 dat_009EAA:
 	dc.b	$80,$04,$81,$14,$82,$30
@@ -8836,142 +12390,232 @@ dat_009EAA:
 	dc.b	$8B,$00,$8C,$81,$8D,$34,$8E,$00,$8F,$02,$90,$01,$91,$00,$92,$00
 sub_009ED0:
 	lea	(Joy1_Held).w,a6
+loc_009ED4:
 	moveq	#$0,d7
+loc_009ED6:
 	move.w	#$7F,d6
 loc_009EDA:
 	move.l	d7,(a6)+
+loc_009EDC:
 	dbra	d6,loc_009EDA
 sub_009EE0:
 	lea	(ram_C000).w,a6
+loc_009EE4:
 	moveq	#$0,d7
+loc_009EE6:
 	move.w	#$BF,d6
 loc_009EEA:
 	move.l	d7,(a6)+
+loc_009EEC:
 	dbra	d6,loc_009EEA
 sub_009EF0:
 	lea	(ram_C500).w,a6
+loc_009EF4:
 	moveq	#$0,d7
+loc_009EF6:
 	move.w	#$7F,d6
 loc_009EFA:
 	move.l	d7,(a6)+
+loc_009EFC:
 	dbra	d6,loc_009EFA
+loc_009F00:
 	lea	(ram_C900).w,a6
+loc_009F04:
 	moveq	#$0,d7
+loc_009F06:
 	move.w	#$3F,d6
 loc_009F0A:
 	move.l	d7,(a6)+
+loc_009F0C:
 	dbra	d6,loc_009F0A
+loc_009F10:
 	lea	(ram_D100).w,a6
+loc_009F14:
 	moveq	#$0,d7
+loc_009F16:
 	move.w	#$9F,d6
 loc_009F1A:
 	move.l	d7,(a6)+
+loc_009F1C:
 	dbra	d6,loc_009F1A
+loc_009F20:
 	lea	(ram_D900).w,a6
+loc_009F24:
 	moveq	#$0,d7
+loc_009F26:
 	move.w	#$3F,d6
 loc_009F2A:
 	move.l	d7,(a6)+
+loc_009F2C:
 	dbra	d6,loc_009F2A
+loc_009F30:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009F38:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_009F40:
 	bne.b	loc_009F38
+loc_009F42:
 	lea	(VDP_Control).l,a6
+loc_009F48:
 	move.w	#$8F01,(a6)
+loc_009F4C:
 	move.w	#$93FF,(a6)
+loc_009F50:
 	move.w	#$941F,(a6)
+loc_009F54:
 	move.w	#$9780,(a6)
+loc_009F58:
 	move.w	#$4000,(a6)
+loc_009F5C:
 	move.w	#$83,(a6)
+loc_009F60:
 	move.w	#$0,(VDP_Data).l
 loc_009F68:
 	move.w	(a6),d7
+loc_009F6A:
 	andi.w	#$2,d7
+loc_009F6E:
 	bne.b	loc_009F68
+loc_009F70:
 	move.w	#$8F02,(DMA_Trigger_Word).w
+loc_009F76:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_009F7A:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_009F82:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009F8A:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_009F92:
 	bne.b	loc_009F8A
+loc_009F94:
 	lea	(VDP_Control).l,a6
+loc_009F9A:
 	move.w	#$8F01,(a6)
+loc_009F9E:
 	move.w	#$937F,(a6)
+loc_009FA2:
 	move.w	#$9412,(a6)
+loc_009FA6:
 	move.w	#$9780,(a6)
+loc_009FAA:
 	move.w	#$6000,(a6)
+loc_009FAE:
 	move.w	#$83,(a6)
+loc_009FB2:
 	move.w	#$0,(VDP_Data).l
 loc_009FBA:
 	move.w	(a6),d7
+loc_009FBC:
 	andi.w	#$2,d7
+loc_009FC0:
 	bne.b	loc_009FBA
+loc_009FC2:
 	move.w	#$8F02,(DMA_Trigger_Word).w
+loc_009FC8:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_009FCC:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_009FD4:
 	jsr	(sub_003442).l
+loc_009FDA:
 	bsr.w	InitVDP
+loc_009FDE:
 	lea	(Objects_A).w,a6
+loc_009FE2:
 	moveq	#$0,d7
+loc_009FE4:
 	move.w	#$6FF,d6
 loc_009FE8:
 	move.l	d7,(a6)+
+loc_009FEA:
 	dbra	d6,loc_009FE8
+loc_009FEE:
 	tst.b	(ram_C3D2).w
+loc_009FF2:
 	bne.w	loc_009E02
 sub_009FF6:
 	lea	(Z80_Bus_Request).l,a4
+loc_009FFC:
 	move.w	#$100,(a4)
+loc_00A000:
 	move.w	#$100,$100(a4)
 loc_00A006:
 	btst.b	#$0,(a4)
+loc_00A00A:
 	bne.b	loc_00A006
+loc_00A00C:
 	lea	(Z80_RAM).l,a6
+loc_00A012:
 	lea	(dat_0FB75A).l,a5
+loc_00A018:
 	move.w	#$F4F,d0
 loc_00A01C:
 	move.b	(a5)+,(a6)+
+loc_00A01E:
 	dbra	d0,loc_00A01C
+loc_00A022:
 	lea	($A01000).l,a6
+loc_00A028:
 	lea	(dat_0FC6AA).l,a5
+loc_00A02E:
 	move.w	#$8F5,d0
 loc_00A032:
 	move.b	(a5)+,(a6)+
+loc_00A034:
 	dbra	d0,loc_00A032
+loc_00A038:
 	lea	($A01C00).l,a1
+loc_00A03E:
 	lea	(dat_00A05E).l,a2
+loc_00A044:
 	moveq	#$9,d7
 loc_00A046:
 	move.b	(a2)+,(a1)+
+loc_00A048:
 	dbra	d7,loc_00A046
+loc_00A04C:
 	move.w	#$0,$100(a4)
+loc_00A052:
 	move.w	#$0,(a4)
+loc_00A056:
 	move.w	#$100,$100(a4)
+loc_00A05C:
 	rts
 dat_00A05E:
 	dc.b	$0F,$00
 	dc.b	$00,$80,$B4,$00,$B0,$80,$00,$00
 sub_00A068:
 	lea	($A01C0A).l,a1
+loc_00A06E:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00A076:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00A07E:
 	bne.b	loc_00A076
+loc_00A080:
 	tst.b	d0
+loc_00A082:
 	bpl.b	loc_00A09E
+loc_00A084:
 	tst.b	(a1)+
+loc_00A086:
 	beq.b	loc_00A092
+loc_00A088:
 	tst.b	(a1)+
+loc_00A08A:
 	beq.b	loc_00A092
+loc_00A08C:
 	tst.b	(a1)+
+loc_00A08E:
 	beq.b	loc_00A092
+loc_00A090:
 	bra.b	loc_00A094
 loc_00A092:
 	move.b	d0,-(a1)
 loc_00A094:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00A09C:
 	rts
 loc_00A09E:
 	jmp	($CA).w
@@ -8979,36 +12623,61 @@ sub_00A0A2:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00A0AA:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00A0B2:
 	bne.b	loc_00A0AA
+loc_00A0B4:
 	lea	($A01C10).l,a1
+loc_00A0BA:
 	move.b	d0,(a1)
+loc_00A0BC:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_00A0C4:
 	rts
 sub_00A0C6:
 	tst.b	(ram_C5CD).w
+loc_00A0CA:
 	bne.b	loc_00A116
+loc_00A0CC:
 	tst.b	(Flags_C356).w
+loc_00A0D0:
 	bne.b	loc_00A116
+loc_00A0D2:
 	tst.b	(ram_C344).w
+loc_00A0D6:
 	bne.b	loc_00A116
+loc_00A0D8:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00A0DE:
 	beq.b	loc_00A116
+loc_00A0E0:
 	moveq	#$1,d0
+loc_00A0E2:
 	bsr.b	sub_00A0A2
+loc_00A0E4:
 	move.b	#$4,(ram_C3D6).w
+loc_00A0EA:
 	st.b	(ram_C6C9).w
 loc_00A0EE:
 	jsr	(sub_0084CA).l
+loc_00A0F4:
 	jsr	(sub_014056).l
+loc_00A0FA:
 	tst.b	(ram_C3D6).w
+loc_00A0FE:
 	beq.b	loc_00A106
+loc_00A100:
 	subq.b	#$1,(ram_C3D6).w
+loc_00A104:
 	bne.b	loc_00A0EE
 loc_00A106:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00A10C:
 	beq.b	loc_00A0EE
+loc_00A10E:
 	moveq	#-$80,d0
+loc_00A110:
 	bsr.b	sub_00A0A2
+loc_00A112:
 	clr.b	(ram_C6C9).w
 loc_00A116:
 	rts
@@ -9016,77 +12685,127 @@ sub_00A118:
 	bsr.b	sub_00A13E
 sub_00A11A:
 	move.l	#$800000,d7
+loc_00A120:
 	lea	(VDP_Control).l,a2
+loc_00A126:
 	lea	(VDP_Data).l,a3
 loc_00A12C:
 	move.l	d0,(a2)
+loc_00A12E:
 	move.w	d1,d4
 loc_00A130:
 	move.w	(a1)+,(a3)
+loc_00A132:
 	dbra	d4,loc_00A130
+loc_00A136:
 	add.l	d7,d0
+loc_00A138:
 	dbra	d2,loc_00A12C
+loc_00A13C:
 	rts
 sub_00A13E:
 	andi.l	#$FFFF,d0
+loc_00A144:
 	asl.l	#$2,d0
+loc_00A146:
 	lsr.w	#$2,d0
+loc_00A148:
 	ori.w	#$4000,d0
+loc_00A14C:
 	swap	d0
+loc_00A14E:
 	rts
 sub_00A150:
 	bsr.b	sub_00A13E
+loc_00A152:
 	lea	(VDP_Control).l,a2
+loc_00A158:
 	lea	(VDP_Data).l,a3
+loc_00A15E:
 	move.l	#$800000,d7
+loc_00A164:
 	move.l	#$EFFFFFFF,d6
+loc_00A16A:
 	move.w	#$80,d5
 loc_00A16E:
 	move.l	d0,(a2)
+loc_00A170:
 	move.w	d1,d4
+loc_00A172:
 	move.l	d0,d3
+loc_00A174:
 	swap	d3
 loc_00A176:
 	move.w	(a1)+,(a3)
+loc_00A178:
 	addq.w	#$2,d3
+loc_00A17A:
 	tst.b	d3
+loc_00A17C:
 	beq.b	loc_00A190
+loc_00A17E:
 	cmp.b	d5,d3
+loc_00A180:
 	beq.b	loc_00A190
+loc_00A182:
 	dbra	d4,loc_00A176
 loc_00A186:
 	add.l	d7,d0
+loc_00A188:
 	and.l	d6,d0
+loc_00A18A:
 	dbra	d2,loc_00A16E
+loc_00A18E:
 	rts
 loc_00A190:
 	sub.w	d5,d3
+loc_00A192:
 	dbra	d4,loc_00A198
+loc_00A196:
 	bra.b	loc_00A186
 loc_00A198:
 	move.w	d3,(a2)
+loc_00A19A:
 	bra.b	loc_00A176
 sub_00A19C:
 	move.w	d0,d7
+loc_00A19E:
 	movea.l	a2,a5
 loc_00A1A0:
 	moveq	#$0,d2
+loc_00A1A2:
 	move.b	(a5)+,d2
+loc_00A1A4:
 	lsl.w	#$5,d2
+loc_00A1A6:
 	lea	(a3,d2.w),a4
+loc_00A1AA:
 	move.l	(a4)+,(a1)
+loc_00A1AC:
 	move.l	(a4)+,$4(a1)
+loc_00A1B0:
 	move.l	(a4)+,$80(a1)
+loc_00A1B4:
 	move.l	(a4)+,$84(a1)
+loc_00A1B8:
 	move.l	(a4)+,$100(a1)
+loc_00A1BC:
 	move.l	(a4)+,$104(a1)
+loc_00A1C0:
 	move.l	(a4)+,$180(a1)
+loc_00A1C4:
 	move.l	(a4)+,$184(a1)
+loc_00A1C8:
 	addq.w	#$8,a1
+loc_00A1CA:
 	dbra	d7,loc_00A1A0
+loc_00A1CE:
 	lea	$180(a1),a1
+loc_00A1D2:
 	adda.w	d3,a2
+loc_00A1D4:
 	dbra	d1,sub_00A19C
+loc_00A1D8:
 	rts
 sub_00A1DA:
 	move.w	d0,d7
@@ -9112,289 +12831,517 @@ loc_00A1DE:
 	rts
 sub_00A218:
 	movem.l	d0-d7/a0-a1/a3-a5,-(a7)
-	lea	(dat_00A2D6).l,a3
+loc_00A21C:
+	lea	(loc_00A2D6).l,a3
+loc_00A222:
 	lea	(VDP_Data).l,a4
+loc_00A228:
 	bra.b	loc_00A232
 sub_00A22A:
 	movem.l	d0-d7/a0-a1/a3-a5,-(a7)
-	lea	dat_00A2EC(pc),a3
+loc_00A22E:
+	lea	loc_00A2EC(pc),a3
 loc_00A232:
 	lea	(ram_CE00).w,a1
+loc_00A236:
 	move.w	(a0)+,d2
+loc_00A238:
 	add.w	d2,d2
+loc_00A23A:
 	bcc.b	loc_00A240
+loc_00A23C:
 	adda.w	#$A,a3
 loc_00A240:
 	lsl.w	#$2,d2
+loc_00A242:
 	movea.w	d2,a5
+loc_00A244:
 	moveq	#$8,d3
+loc_00A246:
 	moveq	#$0,d2
+loc_00A248:
 	moveq	#$0,d4
+loc_00A24A:
 	bsr.w	sub_00A302
+loc_00A24E:
 	move.b	(a0)+,d5
+loc_00A250:
 	asl.w	#$8,d5
+loc_00A252:
 	move.b	(a0)+,d5
+loc_00A254:
 	moveq	#$10,d6
+loc_00A256:
 	bsr.b	sub_00A25E
+loc_00A258:
 	movem.l	(a7)+,d0-d7/a0-a1/a3-a5
+loc_00A25C:
 	rts
 sub_00A25E:
 	move.w	d6,d7
+loc_00A260:
 	subq.w	#$8,d7
+loc_00A262:
 	move.w	d5,d1
+loc_00A264:
 	lsr.w	d7,d1
+loc_00A266:
 	cmpi.b	#$FC,d1
+loc_00A26A:
 	bcc.b	loc_00A2AA
+loc_00A26C:
 	andi.w	#$FF,d1
+loc_00A270:
 	add.w	d1,d1
+loc_00A272:
 	move.b	(a1,d1.w),d0
+loc_00A276:
 	ext.w	d0
+loc_00A278:
 	sub.w	d0,d6
+loc_00A27A:
 	cmpi.w	#$9,d6
+loc_00A27E:
 	bcc.b	loc_00A286
+loc_00A280:
 	addq.w	#$8,d6
+loc_00A282:
 	asl.w	#$8,d5
+loc_00A284:
 	move.b	(a0)+,d5
 loc_00A286:
 	move.b	$1(a1,d1.w),d1
+loc_00A28A:
 	move.w	d1,d0
+loc_00A28C:
 	andi.w	#$F,d1
+loc_00A290:
 	andi.w	#$F0,d0
 loc_00A294:
 	lsr.w	#$4,d0
 loc_00A296:
 	lsl.l	#$4,d4
+loc_00A298:
 	or.b	d1,d4
+loc_00A29A:
 	subq.w	#$1,d3
+loc_00A29C:
 	bne.b	loc_00A2A4
+loc_00A29E:
 	jmp	(a3)
 sub_00A2A0:
 	moveq	#$0,d4
+loc_00A2A2:
 	moveq	#$8,d3
 loc_00A2A4:
 	dbra	d0,loc_00A296
+loc_00A2A8:
 	bra.b	sub_00A25E
 loc_00A2AA:
 	subq.w	#$6,d6
+loc_00A2AC:
 	cmpi.w	#$9,d6
+loc_00A2B0:
 	bcc.b	loc_00A2B8
+loc_00A2B2:
 	addq.w	#$8,d6
+loc_00A2B4:
 	asl.w	#$8,d5
+loc_00A2B6:
 	move.b	(a0)+,d5
 loc_00A2B8:
 	subq.w	#$7,d6
+loc_00A2BA:
 	move.w	d5,d1
+loc_00A2BC:
 	lsr.w	d6,d1
+loc_00A2BE:
 	move.w	d1,d0
+loc_00A2C0:
 	andi.w	#$F,d1
+loc_00A2C4:
 	andi.w	#$70,d0
+loc_00A2C8:
 	cmpi.w	#$9,d6
+loc_00A2CC:
 	bcc.b	loc_00A294
+loc_00A2CE:
 	addq.w	#$8,d6
+loc_00A2D0:
 	asl.w	#$8,d5
+loc_00A2D2:
 	move.b	(a0)+,d5
+loc_00A2D4:
 	bra.b	loc_00A294
-dat_00A2D6:
-	dc.b	$28,$84,$53,$4D,$38,$0D,$66,$C2,$4E,$75
-	dc.b	$B9,$82,$28,$82,$53,$4D,$38,$0D,$66,$B6,$4E,$75
-dat_00A2EC:
-	dc.b	$28,$C4,$53,$4D
-	dc.b	$38,$0D,$66,$AC,$4E,$75,$B9,$82,$28,$C2,$53,$4D,$38,$0D,$66,$A0
-	dc.b	$4E,$75
+loc_00A2D6:
+	move.l	d4,(a4)
+loc_00A2D8:
+	subq.w	#$1,a5
+loc_00A2DA:
+	move.w	a5,d4
+loc_00A2DC:
+	bne.b	sub_00A2A0
+loc_00A2DE:
+	rts
+loc_00A2E0:
+	eor.l	d4,d2
+loc_00A2E2:
+	move.l	d2,(a4)
+loc_00A2E4:
+	subq.w	#$1,a5
+loc_00A2E6:
+	move.w	a5,d4
+loc_00A2E8:
+	bne.b	sub_00A2A0
+loc_00A2EA:
+	rts
+loc_00A2EC:
+	move.l	d4,(a4)+
+loc_00A2EE:
+	subq.w	#$1,a5
+loc_00A2F0:
+	move.w	a5,d4
+loc_00A2F2:
+	bne.b	sub_00A2A0
+loc_00A2F4:
+	rts
+loc_00A2F6:
+	eor.l	d4,d2
+loc_00A2F8:
+	move.l	d2,(a4)+
+loc_00A2FA:
+	subq.w	#$1,a5
+loc_00A2FC:
+	move.w	a5,d4
+loc_00A2FE:
+	bne.b	sub_00A2A0
+loc_00A300:
+	rts
 sub_00A302:
 	move.b	(a0)+,d0
 loc_00A304:
 	cmpi.b	#$FF,d0
+loc_00A308:
 	bne.b	loc_00A30C
+loc_00A30A:
 	rts
 loc_00A30C:
 	move.w	d0,d7
 loc_00A30E:
 	move.b	(a0)+,d0
+loc_00A310:
 	cmpi.b	#$80,d0
+loc_00A314:
 	bcc.b	loc_00A304
+loc_00A316:
 	move.b	d0,d1
+loc_00A318:
 	andi.w	#$F,d7
+loc_00A31C:
 	andi.w	#$70,d1
+loc_00A320:
 	or.w	d1,d7
+loc_00A322:
 	andi.w	#$F,d0
+loc_00A326:
 	move.b	d0,d1
+loc_00A328:
 	lsl.w	#$8,d1
+loc_00A32A:
 	or.w	d1,d7
+loc_00A32C:
 	moveq	#$8,d1
+loc_00A32E:
 	sub.w	d0,d1
+loc_00A330:
 	bne.b	loc_00A33C
+loc_00A332:
 	move.b	(a0)+,d0
+loc_00A334:
 	add.w	d0,d0
+loc_00A336:
 	move.w	d7,(a1,d0.w)
+loc_00A33A:
 	bra.b	loc_00A30E
 loc_00A33C:
 	move.b	(a0)+,d0
+loc_00A33E:
 	lsl.w	d1,d0
+loc_00A340:
 	add.w	d0,d0
+loc_00A342:
 	moveq	#$1,d5
+loc_00A344:
 	lsl.w	d1,d5
+loc_00A346:
 	subq.w	#$1,d5
 loc_00A348:
 	move.w	d7,(a1,d0.w)
+loc_00A34C:
 	addq.w	#$2,d0
+loc_00A34E:
 	dbra	d5,loc_00A348
+loc_00A352:
 	bra.b	loc_00A30E
 	dc.b	$00,$01,$00,$03,$00,$07,$00,$0F,$00,$1F,$00,$3F
 	dc.b	$00,$7F,$00,$FF,$3E,$06,$9E,$40,$32,$05,$EE,$69,$D0,$40,$C2,$7B
 	dc.b	$00,$E2,$4E,$75,$61,$EE,$E2,$48
 sub_00A378:
 	sub.w	d0,d6
+loc_00A37A:
 	cmpi.w	#$9,d6
+loc_00A37E:
 	bcc.b	loc_00A386
+loc_00A380:
 	addq.w	#$8,d6
+loc_00A382:
 	asl.w	#$8,d5
+loc_00A384:
 	move.b	(a0)+,d5
 loc_00A386:
 	rts
 sub_00A388:
 	movem.l	d0-d7/a1-a5,-(a7)
+loc_00A38C:
 	movea.w	d0,a3
+loc_00A38E:
 	move.b	(a0)+,d0
+loc_00A390:
 	ext.w	d0
+loc_00A392:
 	movea.w	d0,a5
+loc_00A394:
 	move.b	(a0)+,d0
+loc_00A396:
 	ext.w	d0
+loc_00A398:
 	ext.l	d0
+loc_00A39A:
 	ror.l	#$1,d0
+loc_00A39C:
 	ror.w	#$1,d0
+loc_00A39E:
 	move.l	d0,d4
+loc_00A3A0:
 	movea.w	(a0)+,a2
+loc_00A3A2:
 	adda.w	a3,a2
+loc_00A3A4:
 	movea.w	(a0)+,a4
+loc_00A3A6:
 	adda.w	a3,a4
+loc_00A3A8:
 	move.b	(a0)+,d5
+loc_00A3AA:
 	asl.w	#$8,d5
+loc_00A3AC:
 	move.b	(a0)+,d5
+loc_00A3AE:
 	moveq	#$10,d6
 loc_00A3B0:
 	moveq	#$7,d0
+loc_00A3B2:
 	move.w	d6,d7
+loc_00A3B4:
 	sub.w	d0,d7
+loc_00A3B6:
 	move.w	d5,d1
+loc_00A3B8:
 	lsr.w	d7,d1
+loc_00A3BA:
 	andi.w	#$7F,d1
+loc_00A3BE:
 	move.w	d1,d2
+loc_00A3C0:
 	cmpi.w	#$40,d1
+loc_00A3C4:
 	bcc.b	loc_00A3CA
+loc_00A3C6:
 	moveq	#$6,d0
+loc_00A3C8:
 	lsr.w	#$1,d2
 loc_00A3CA:
 	bsr.w	sub_00A378
+loc_00A3CE:
 	andi.w	#$F,d2
+loc_00A3D2:
 	lsr.w	#$4,d1
+loc_00A3D4:
 	add.w	d1,d1
+loc_00A3D6:
 	jmp	loc_00A426(pc,d1.w)
 loc_00A3DA:
 	move.w	a2,(a1)+
+loc_00A3DC:
 	addq.w	#$1,a2
+loc_00A3DE:
 	dbra	d2,loc_00A3DA
+loc_00A3E2:
 	bra.b	loc_00A3B0
 loc_00A3E4:
 	move.w	a4,(a1)+
+loc_00A3E6:
 	dbra	d2,loc_00A3E4
+loc_00A3EA:
 	bra.b	loc_00A3B0
 loc_00A3EC:
 	bsr.w	sub_00A44E
 loc_00A3F0:
 	move.w	d1,(a1)+
+loc_00A3F2:
 	dbra	d2,loc_00A3F0
+loc_00A3F6:
 	bra.b	loc_00A3B0
 loc_00A3F8:
 	bsr.w	sub_00A44E
 loc_00A3FC:
 	move.w	d1,(a1)+
+loc_00A3FE:
 	addq.w	#$1,d1
+loc_00A400:
 	dbra	d2,loc_00A3FC
+loc_00A404:
 	bra.b	loc_00A3B0
 loc_00A406:
 	bsr.w	sub_00A44E
 loc_00A40A:
 	move.w	d1,(a1)+
+loc_00A40C:
 	subq.w	#$1,d1
+loc_00A40E:
 	dbra	d2,loc_00A40A
+loc_00A412:
 	bra.b	loc_00A3B0
 loc_00A414:
 	cmpi.w	#$F,d2
+loc_00A418:
 	beq.b	loc_00A436
 loc_00A41A:
 	bsr.w	sub_00A44E
+loc_00A41E:
 	move.w	d1,(a1)+
+loc_00A420:
 	dbra	d2,loc_00A41A
+loc_00A424:
 	bra.b	loc_00A3B0
 loc_00A426:
 	bra.b	loc_00A3DA
+loc_00A428:
 	bra.b	loc_00A3DA
+loc_00A42A:
 	bra.b	loc_00A3E4
+loc_00A42C:
 	bra.b	loc_00A3E4
+loc_00A42E:
 	bra.b	loc_00A3EC
+loc_00A430:
 	bra.b	loc_00A3F8
+loc_00A432:
 	bra.b	loc_00A406
+loc_00A434:
 	bra.b	loc_00A414
 loc_00A436:
 	subq.w	#$1,a0
+loc_00A438:
 	cmpi.w	#$10,d6
+loc_00A43C:
 	bne.b	loc_00A440
 	subq.w	#$1,a0
 loc_00A440:
 	move.w	a0,d0
+loc_00A442:
 	lsr.w	#$1,d0
+loc_00A444:
 	bcc.b	loc_00A448
+loc_00A446:
 	addq.w	#$1,a0
 loc_00A448:
 	movem.l	(a7)+,d0-d7/a1-a5
+loc_00A44C:
 	rts
 sub_00A44E:
 	move.w	a3,d3
+loc_00A450:
 	swap	d4
+loc_00A452:
 	bpl.b	loc_00A45E
+loc_00A454:
 	subq.w	#$1,d6
+loc_00A456:
 	btst.l	d6,d5
+loc_00A458:
 	beq.b	loc_00A45E
+loc_00A45A:
 	ori.w	#$1000,d3
 loc_00A45E:
 	swap	d4
+loc_00A460:
 	bpl.b	loc_00A46C
+loc_00A462:
 	subq.w	#$1,d6
+loc_00A464:
 	btst.l	d6,d5
+loc_00A466:
 	beq.b	loc_00A46C
+loc_00A468:
 	ori.w	#$800,d3
 loc_00A46C:
 	move.w	d5,d1
+loc_00A46E:
 	move.w	d6,d7
+loc_00A470:
 	sub.w	a5,d7
+loc_00A472:
 	bcc.b	loc_00A49C
+loc_00A474:
 	move.w	d7,d6
+loc_00A476:
 	addi.w	#$10,d6
+loc_00A47A:
 	neg.w	d7
+loc_00A47C:
 	lsl.w	d7,d1
+loc_00A47E:
 	move.b	(a0),d5
+loc_00A480:
 	rol.b	d7,d5
+loc_00A482:
 	add.w	d7,d7
+loc_00A484:
 	and.w	loc_00A4B2(pc,d7.w),d5
+loc_00A488:
 	add.w	d5,d1
 loc_00A48A:
 	move.w	a5,d0
+loc_00A48C:
 	add.w	d0,d0
+loc_00A48E:
 	and.w	loc_00A4B2(pc,d0.w),d1
+loc_00A492:
 	add.w	d3,d1
+loc_00A494:
 	move.b	(a0)+,d5
+loc_00A496:
 	lsl.w	#$8,d5
+loc_00A498:
 	move.b	(a0)+,d5
+loc_00A49A:
 	rts
 loc_00A49C:
 	beq.b	loc_00A4B0
+loc_00A49E:
 	lsr.w	d7,d1
+loc_00A4A0:
 	move.w	a5,d0
+loc_00A4A2:
 	add.w	d0,d0
+loc_00A4A4:
 	and.w	loc_00A4B2(pc,d0.w),d1
+loc_00A4A8:
 	add.w	d3,d1
+loc_00A4AA:
 	move.w	a5,d0
+loc_00A4AC:
 	bra.w	sub_00A378
 loc_00A4B0:
 	moveq	#$10,d6
@@ -9405,393 +13352,707 @@ loc_00A4B2:
 	dc.b	$7F,$FF,$FF,$FF
 sub_00A4D4:
 	move.l	(ram_C508).w,d0
+loc_00A4D8:
 	beq.w	loc_00A834
+loc_00A4DC:
 	move.l	(ram_C500).w,d1
+loc_00A4E0:
 	move.l	(ram_C504).w,d3
+loc_00A4E4:
 	move.l	d1,d2
+loc_00A4E6:
 	move.l	d3,d5
+loc_00A4E8:
 	add.l	d0,d1
+loc_00A4EA:
 	add.l	d0,d3
+loc_00A4EC:
 	bmi.w	loc_00A834
+loc_00A4F0:
 	tst.l	d0
+loc_00A4F2:
 	bmi.b	loc_00A4FC
+loc_00A4F4:
 	cmp.l	(ram_C536).w,d3
+loc_00A4F8:
 	bhi.w	loc_00A834
 loc_00A4FC:
 	tst.l	d0
+loc_00A4FE:
 	bpl.b	loc_00A508
+loc_00A500:
 	cmp.l	(ram_C53E).w,d3
+loc_00A504:
 	bcs.w	loc_00A834
 loc_00A508:
 	move.l	d1,(ram_C500).w
+loc_00A50C:
 	move.l	d3,(ram_C504).w
+loc_00A510:
 	bsr.w	sub_00A82E
+loc_00A514:
 	move.w	d4,(ram_C510).w
+loc_00A518:
 	swap	d3
+loc_00A51A:
 	moveq	#$0,d6
+loc_00A51C:
 	move.w	d3,d6
+loc_00A51E:
 	divu.w	#$140,d6
+loc_00A522:
 	move.l	d6,(ram_C50C).w
+loc_00A526:
 	swap	d1
+loc_00A528:
 	swap	d2
+loc_00A52A:
 	move.w	d2,d4
+loc_00A52C:
 	eor.w	d1,d2
+loc_00A52E:
 	andi.l	#$20,d2
+loc_00A534:
 	beq.w	loc_00A834
+loc_00A538:
 	move.w	(ram_C512).w,d6
+loc_00A53C:
 	move.w	(Camera_Y).w,d7
+loc_00A540:
 	lea	(ram_FF0000).l,a2
+loc_00A546:
 	lea	(ram_C800).w,a3
+loc_00A54A:
 	lea	(ram_C532).w,a1
+loc_00A54E:
 	bsr.w	sub_00A722
+loc_00A552:
 	addi.w	#$C000,d1
+loc_00A556:
 	move.w	d1,(ram_C524).w
+loc_00A55A:
 	lea	(ram_C800).w,a1
+loc_00A55E:
 	moveq	#$3F,d0
+loc_00A560:
 	jsr	(sub_0019AC).l
+loc_00A566:
 	bset.b	#$0,(ram_C526).w
+loc_00A56C:
 	rts
 sub_00A56E:
 	move.l	(ram_C51A).w,d0
+loc_00A572:
 	beq.w	loc_00A834
+loc_00A576:
 	move.l	(ram_C512).w,d1
+loc_00A57A:
 	move.l	(Camera_Y).w,d3
+loc_00A57E:
 	move.l	d1,d2
+loc_00A580:
 	move.l	d3,d5
+loc_00A582:
 	add.l	d0,d1
+loc_00A584:
 	add.l	d0,d3
+loc_00A586:
 	bmi.w	loc_00A834
+loc_00A58A:
 	tst.l	d0
+loc_00A58C:
 	bmi.b	loc_00A596
 	cmp.l	(ram_C53A).w,d3
 	bhi.w	loc_00A834
 loc_00A596:
 	tst.l	d0
+loc_00A598:
 	bpl.b	loc_00A5A2
+loc_00A59A:
 	cmp.l	(ram_C542).w,d3
+loc_00A59E:
 	bcs.w	loc_00A834
 loc_00A5A2:
 	move.l	d1,(ram_C512).w
+loc_00A5A6:
 	move.l	d3,(Camera_Y).w
+loc_00A5AA:
 	bsr.w	sub_00A824
+loc_00A5AE:
 	move.w	d4,(ram_C522).w
+loc_00A5B2:
 	swap	d3
+loc_00A5B4:
 	moveq	#$0,d6
+loc_00A5B6:
 	move.w	d3,d6
+loc_00A5B8:
 	divu.w	#$E0,d6
+loc_00A5BC:
 	move.l	d6,(ram_C51E).w
+loc_00A5C0:
 	swap	d1
+loc_00A5C2:
 	swap	d2
+loc_00A5C4:
 	move.w	d2,d4
+loc_00A5C6:
 	eor.w	d1,d2
+loc_00A5C8:
 	andi.l	#$20,d2
+loc_00A5CE:
 	beq.b	loc_00A604
+loc_00A5D0:
 	move.w	(ram_C500).w,d6
+loc_00A5D4:
 	move.w	(ram_C504).w,d7
+loc_00A5D8:
 	lea	(ram_FF0000).l,a2
+loc_00A5DE:
 	lea	(ram_C900).w,a3
+loc_00A5E2:
 	move.w	(ram_C532).w,d2
+loc_00A5E6:
 	bsr.w	sub_00A79E
+loc_00A5EA:
 	addi.w	#$C000,d1
+loc_00A5EE:
 	move.w	d1,(ram_C528).w
+loc_00A5F2:
 	lea	(ram_C900).w,a1
+loc_00A5F6:
 	moveq	#$7F,d0
+loc_00A5F8:
 	jsr	(sub_0019AC).l
+loc_00A5FE:
 	bset.b	#$0,(ram_C52C).w
 loc_00A604:
 	rts
 sub_00A606:
 	tst.b	(ram_C5AE).w
+loc_00A60A:
 	bne.w	loc_00A834
+loc_00A60E:
 	move.l	(ram_C54E).w,d0
+loc_00A612:
 	beq.w	loc_00A834
+loc_00A616:
 	move.l	(ram_C546).w,d1
+loc_00A61A:
 	move.l	(ram_C54A).w,d3
+loc_00A61E:
 	move.l	d1,d2
+loc_00A620:
 	move.l	d3,d5
+loc_00A622:
 	add.l	d0,d1
+loc_00A624:
 	add.l	d0,d3
+loc_00A626:
 	move.l	d1,(ram_C546).w
+loc_00A62A:
 	move.l	d3,(ram_C54A).w
+loc_00A62E:
 	btst.b	#$0,(Flags_C5EB).w
+loc_00A634:
 	bne.w	loc_00A834
+loc_00A638:
 	bsr.w	sub_00A82E
+loc_00A63C:
 	move.w	d4,(ram_C556).w
+loc_00A640:
 	swap	d3
+loc_00A642:
 	moveq	#$0,d6
+loc_00A644:
 	move.w	d3,d6
+loc_00A646:
 	divu.w	#$140,d6
+loc_00A64A:
 	move.l	d6,(ram_C552).w
+loc_00A64E:
 	swap	d1
+loc_00A650:
 	swap	d2
+loc_00A652:
 	move.w	d2,d4
+loc_00A654:
 	eor.w	d1,d2
+loc_00A656:
 	andi.l	#$20,d2
+loc_00A65C:
 	beq.b	loc_00A692
+loc_00A65E:
 	move.w	(ram_C558).w,d6
+loc_00A662:
 	move.w	(ram_C55C).w,d7
+loc_00A666:
 	lea	(ram_FF2A00).l,a2
+loc_00A66C:
 	lea	(ram_CB00).w,a3
+loc_00A670:
 	lea	(ram_C578).w,a1
+loc_00A674:
 	bsr.w	sub_00A722
+loc_00A678:
 	addi.w	#$E000,d1
+loc_00A67C:
 	move.w	d1,(ram_C56A).w
+loc_00A680:
 	lea	(ram_CB00).w,a1
+loc_00A684:
 	moveq	#$3F,d0
+loc_00A686:
 	jsr	(sub_0019C0).l
+loc_00A68C:
 	bset.b	#$0,(ram_C56C).w
 loc_00A692:
 	rts
 sub_00A694:
 	tst.b	(ram_C5AE).w
+loc_00A698:
 	bne.w	loc_00A834
+loc_00A69C:
 	move.l	(ram_C560).w,d0
+loc_00A6A0:
 	beq.w	loc_00A834
+loc_00A6A4:
 	move.l	(ram_C558).w,d1
+loc_00A6A8:
 	move.l	(ram_C55C).w,d3
+loc_00A6AC:
 	move.l	d1,d2
+loc_00A6AE:
 	move.l	d3,d5
+loc_00A6B0:
 	add.l	d0,d1
+loc_00A6B2:
 	add.l	d0,d3
+loc_00A6B4:
 	move.l	d1,(ram_C558).w
+loc_00A6B8:
 	move.l	d3,(ram_C55C).w
+loc_00A6BC:
 	btst.b	#$0,(Flags_C5EB).w
+loc_00A6C2:
 	bne.w	loc_00A834
+loc_00A6C6:
 	bsr.w	sub_00A824
+loc_00A6CA:
 	move.w	d4,(ram_C568).w
+loc_00A6CE:
 	swap	d3
+loc_00A6D0:
 	moveq	#$0,d6
+loc_00A6D2:
 	move.w	d3,d6
+loc_00A6D4:
 	divu.w	#$E0,d6
+loc_00A6D8:
 	move.l	d6,(ram_C564).w
+loc_00A6DC:
 	swap	d1
+loc_00A6DE:
 	swap	d2
+loc_00A6E0:
 	move.w	d2,d4
+loc_00A6E2:
 	eor.w	d1,d2
+loc_00A6E4:
 	andi.l	#$20,d2
+loc_00A6EA:
 	beq.b	loc_00A720
+loc_00A6EC:
 	move.w	(ram_C546).w,d6
+loc_00A6F0:
 	move.w	(ram_C54A).w,d7
+loc_00A6F4:
 	lea	(ram_FF2A00).l,a2
+loc_00A6FA:
 	lea	(ram_CC00).w,a3
+loc_00A6FE:
 	move.w	(ram_C578).w,d2
+loc_00A702:
 	bsr.w	sub_00A79E
+loc_00A706:
 	addi.w	#$E000,d1
+loc_00A70A:
 	move.w	d1,(ram_C56E).w
+loc_00A70E:
 	lea	(ram_CC00).w,a1
+loc_00A712:
 	moveq	#$7F,d0
+loc_00A714:
 	jsr	(sub_0019C0).l
+loc_00A71A:
 	bset.b	#$0,(ram_C572).w
 loc_00A720:
 	rts
 sub_00A722:
 	tst.l	d0
+loc_00A724:
 	bpl.b	loc_00A728
+loc_00A726:
 	move.w	d4,d1
 loc_00A728:
 	andi.w	#$1F0,d1
+loc_00A72C:
 	bne.b	loc_00A732
+loc_00A72E:
 	moveq	#$78,d1
+loc_00A730:
 	bra.b	loc_00A736
 loc_00A732:
 	lsr.w	#$2,d1
+loc_00A734:
 	subq.w	#$8,d1
 loc_00A736:
 	swap	d5
+loc_00A738:
 	tst.l	d0
+loc_00A73A:
 	bmi.b	loc_00A742
+loc_00A73C:
 	move.w	d3,d5
+loc_00A73E:
 	addi.w	#$200,d5
 loc_00A742:
 	andi.l	#$FFF0,d5
+loc_00A748:
 	beq.w	loc_00A834
+loc_00A74C:
 	lsr.w	#$5,d5
+loc_00A74E:
 	subq.w	#$1,d5
+loc_00A750:
 	lsr.w	#$5,d7
+loc_00A752:
 	moveq	#$8,d0
+loc_00A754:
 	lsr.w	#$5,d6
+loc_00A756:
 	andi.w	#$7,d6
+loc_00A75A:
 	beq.b	loc_00A764
+loc_00A75C:
 	exg	d0,d6
+loc_00A75E:
 	sub.w	d0,d6
+loc_00A760:
 	subq.w	#$1,d0
+loc_00A762:
 	add.w	d6,d7
 loc_00A764:
 	move.w	(a1)+,d2
+loc_00A766:
 	move.w	(a1)+,d6
+loc_00A768:
 	mulu.w	d2,d7
+loc_00A76A:
 	add.l	d7,d5
+loc_00A76C:
 	adda.l	d5,a2
+loc_00A76E:
 	lea	(ram_8000).w,a4
+loc_00A772:
 	moveq	#$7,d4
 loc_00A774:
 	moveq	#$0,d3
+loc_00A776:
 	move.b	(a2),d3
+loc_00A778:
 	lsl.w	#$5,d3
+loc_00A77A:
 	lea	(a4,d3.w),a5
+loc_00A77E:
 	move.l	(a5)+,(a3)+
+loc_00A780:
 	move.l	(a5)+,(a3)+
+loc_00A782:
 	move.l	(a5)+,(a3)+
+loc_00A784:
 	move.l	(a5)+,(a3)+
+loc_00A786:
 	move.l	(a5)+,(a3)+
+loc_00A788:
 	move.l	(a5)+,(a3)+
+loc_00A78A:
 	move.l	(a5)+,(a3)+
+loc_00A78C:
 	move.l	(a5)+,(a3)+
+loc_00A78E:
 	lea	(a2,d2.w),a2
+loc_00A792:
 	dbra	d0,loc_00A798
+loc_00A796:
 	suba.w	d6,a2
 loc_00A798:
 	dbra	d4,loc_00A774
+loc_00A79C:
 	rts
 sub_00A79E:
 	tst.l	d0
+loc_00A7A0:
 	bpl.b	loc_00A7A4
+loc_00A7A2:
 	move.w	d4,d1
 loc_00A7A4:
 	subi.w	#$20,d1
+loc_00A7A8:
 	andi.w	#$F0,d1
+loc_00A7AC:
 	lsl.w	#$4,d1
+loc_00A7AE:
 	swap	d5
+loc_00A7B0:
 	tst.l	d0
+loc_00A7B2:
 	bmi.b	loc_00A7BA
+loc_00A7B4:
 	move.w	d3,d5
+loc_00A7B6:
 	addi.w	#$100,d5
 loc_00A7BA:
 	andi.l	#$FFF0,d5
+loc_00A7C0:
 	beq.w	loc_00A834
+loc_00A7C4:
 	lsr.w	#$5,d5
+loc_00A7C6:
 	subq.w	#$1,d5
+loc_00A7C8:
 	beq.b	loc_00A7CC
+loc_00A7CA:
 	mulu.w	d2,d5
 loc_00A7CC:
 	lsr.w	#$5,d7
+loc_00A7CE:
 	move.w	#$10,d0
+loc_00A7D2:
 	lsr.w	#$5,d6
+loc_00A7D4:
 	andi.w	#$F,d6
+loc_00A7D8:
 	beq.b	loc_00A7E2
+loc_00A7DA:
 	exg	d0,d6
+loc_00A7DC:
 	sub.w	d0,d6
+loc_00A7DE:
 	subq.w	#$1,d0
+loc_00A7E0:
 	add.w	d6,d7
 loc_00A7E2:
 	add.w	d7,d5
+loc_00A7E4:
 	adda.l	d5,a2
+loc_00A7E6:
 	lea	(ram_8000).w,a4
+loc_00A7EA:
 	moveq	#$10,d6
+loc_00A7EC:
 	moveq	#$F,d7
 loc_00A7EE:
 	moveq	#$0,d3
+loc_00A7F0:
 	move.b	(a2)+,d3
+loc_00A7F2:
 	lsl.w	#$5,d3
+loc_00A7F4:
 	lea	(a4,d3.w),a5
+loc_00A7F8:
 	move.l	(a5)+,(a3)
+loc_00A7FA:
 	move.l	(a5)+,$4(a3)
+loc_00A7FE:
 	move.l	(a5)+,$80(a3)
+loc_00A802:
 	move.l	(a5)+,$84(a3)
+loc_00A806:
 	move.l	(a5)+,$100(a3)
+loc_00A80A:
 	move.l	(a5)+,$104(a3)
+loc_00A80E:
 	move.l	(a5)+,$180(a3)
+loc_00A812:
 	move.l	(a5)+,$184(a3)
+loc_00A816:
 	addq.w	#$8,a3
+loc_00A818:
 	dbra	d0,loc_00A81E
+loc_00A81C:
 	suba.w	d6,a2
 loc_00A81E:
 	dbra	d7,loc_00A7EE
+loc_00A822:
 	rts
 sub_00A824:
 	move.l	d1,d4
+loc_00A826:
 	neg.l	d4
+loc_00A828:
 	swap	d4
+loc_00A82A:
 	neg.w	d4
+loc_00A82C:
 	rts
 sub_00A82E:
 	move.l	d1,d4
+loc_00A830:
 	neg.l	d4
+loc_00A832:
 	swap	d4
 loc_00A834:
 	rts
 sub_00A836:
 	tst.b	(ram_C6B5).w
+loc_00A83A:
 	bne.w	loc_00AB9E
+loc_00A83E:
 	movea.l	(ram_C5AA).w,a0
+loc_00A842:
 	move.w	(ram_C50C).w,d2
+loc_00A846:
 	swap	d2
+loc_00A848:
 	move.w	(ram_C502).w,d2
+loc_00A84C:
 	move.w	(ram_C51E).w,d3
+loc_00A850:
 	swap	d3
+loc_00A852:
 	move.w	(ram_C514).w,d3
+loc_00A856:
 	move.w	(ram_C520).w,d1
+loc_00A85A:
 	lsl.w	#$2,d1
+loc_00A85C:
 	move.w	(ram_C50E).w,d0
+loc_00A860:
 	tst.l	(ram_C508).w
+loc_00A864:
 	beq.w	loc_00AA74
+loc_00A868:
 	bmi.b	loc_00A876
+loc_00A86A:
 	cmp.w	(ram_C52E).w,d0
+loc_00A86E:
 	beq.w	loc_00AA74
+loc_00A872:
 	addq.w	#$1,d0
+loc_00A874:
 	bra.b	loc_00A882
 loc_00A876:
 	tst.w	d0
+loc_00A878:
 	bne.b	loc_00A882
+loc_00A87A:
 	tst.w	(ram_C50C).w
+loc_00A87E:
 	beq.w	loc_00AA74
 loc_00A882:
 	lsl.w	#$2,d0
+loc_00A884:
 	lea	(a0,d1.w),a6
+loc_00A888:
 	move.w	(ram_C520).w,d6
+loc_00A88C:
 	beq.b	loc_00A896
+loc_00A88E:
 	subq.w	#$4,a6
+loc_00A890:
 	movea.l	(a6)+,a1
+loc_00A892:
 	movea.l	(a1,d0.w),a1
 loc_00A896:
 	movea.l	(a6)+,a2
+loc_00A898:
 	movea.l	(a2,d0.w),a2
+loc_00A89C:
 	cmp.w	(ram_C530).w,d6
+loc_00A8A0:
 	beq.b	loc_00A8B6
+loc_00A8A2:
 	movea.l	(a6)+,a3
+loc_00A8A4:
 	movea.l	(a3,d0.w),a3
+loc_00A8A8:
 	addq.b	#$1,d6
+loc_00A8AA:
 	cmp.w	(ram_C530).w,d6
+loc_00A8AE:
 	beq.b	loc_00A8B6
+loc_00A8B0:
 	movea.l	(a6)+,a4
+loc_00A8B2:
 	movea.l	(a4,d0.w),a4
 loc_00A8B6:
 	tst.w	(ram_C520).w
+loc_00A8BA:
 	beq.w	loc_00A926
+loc_00A8BE:
 	cmpi.l	#$400000,d3
+loc_00A8C4:
 	bcc.w	loc_00A926
+loc_00A8C8:
 	moveq	#$0,d7
+loc_00A8CA:
 	tst.b	(Flags_C356).w
+loc_00A8CE:
 	beq.b	loc_00A8EC
+loc_00A8D0:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00A8D6:
 	beq.b	loc_00A8E2
+loc_00A8D8:
 	addq.w	#$1,a1
+loc_00A8DA:
 	move.b	(a1)+,d7
+loc_00A8DC:
 	bmi.b	loc_00A926
+loc_00A8DE:
 	bra.w	loc_00A8F0
 loc_00A8E2:
 	move.b	(a1)+,d7
+loc_00A8E4:
 	addq.w	#$1,a1
+loc_00A8E6:
 	bmi.b	loc_00A926
+loc_00A8E8:
 	bra.w	loc_00A8F0
 loc_00A8EC:
 	move.w	(a1)+,d7
+loc_00A8EE:
 	bmi.b	loc_00A926
 loc_00A8F0:
 	movea.w	(a1)+,a5
+loc_00A8F2:
 	tst.w	(a5)
+loc_00A8F4:
 	bne.b	loc_00A91A
+loc_00A8F6:
 	moveq	#$0,d4
+loc_00A8F8:
 	move.w	(a1)+,d4
+loc_00A8FA:
 	swap	d4
+loc_00A8FC:
 	move.l	d3,d6
+loc_00A8FE:
 	addi.l	#$A00000,d6
+loc_00A904:
 	sub.l	d6,d4
+loc_00A906:
 	bcs.b	loc_00A91C
+loc_00A908:
 	addi.l	#$400000,d4
+loc_00A90E:
 	bsr.w	sub_00AB64
+loc_00A912:
 	bcs.b	loc_00A91E
+loc_00A914:
 	bsr.w	sub_00ABD6
+loc_00A918:
 	bra.b	loc_00A922
 loc_00A91A:
 	addq.w	#$2,a1
@@ -9803,39 +14064,65 @@ loc_00A922:
 	dbra	d7,loc_00A8F0
 loc_00A926:
 	exg	a2,a1
+loc_00A928:
 	moveq	#$0,d7
+loc_00A92A:
 	tst.b	(Flags_C356).w
+loc_00A92E:
 	beq.b	loc_00A94C
+loc_00A930:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00A936:
 	beq.b	loc_00A942
+loc_00A938:
 	addq.w	#$1,a1
+loc_00A93A:
 	move.b	(a1)+,d7
+loc_00A93C:
 	bmi.b	loc_00A986
+loc_00A93E:
 	bra.w	loc_00A950
 loc_00A942:
 	move.b	(a1)+,d7
+loc_00A944:
 	addq.w	#$1,a1
+loc_00A946:
 	bmi.b	loc_00A986
+loc_00A948:
 	bra.w	loc_00A950
 loc_00A94C:
 	move.w	(a1)+,d7
+loc_00A94E:
 	bmi.b	loc_00A986
 loc_00A950:
 	movea.w	(a1)+,a5
+loc_00A952:
 	tst.w	(a5)
+loc_00A954:
 	bne.b	loc_00A97A
+loc_00A956:
 	moveq	#$0,d4
+loc_00A958:
 	move.w	(a1)+,d4
+loc_00A95A:
 	swap	d4
+loc_00A95C:
 	sub.l	d3,d4
+loc_00A95E:
 	bcc.b	loc_00A968
+loc_00A960:
 	cmpi.l	#$FFC00000,d4
+loc_00A966:
 	bcs.b	loc_00A97C
 loc_00A968:
 	addi.l	#$800000,d4
+loc_00A96E:
 	bsr.w	sub_00AB64
+loc_00A972:
 	bcs.b	loc_00A97E
+loc_00A974:
 	bsr.w	sub_00ABD6
+loc_00A978:
 	bra.b	loc_00A982
 loc_00A97A:
 	addq.w	#$2,a1
@@ -9847,43 +14134,73 @@ loc_00A982:
 	dbra	d7,loc_00A950
 loc_00A986:
 	move.w	(ram_C530).w,d0
+loc_00A98A:
 	beq.w	loc_00AA74
+loc_00A98E:
 	cmp.w	(ram_C520).w,d0
+loc_00A992:
 	beq.w	loc_00AA74
+loc_00A996:
 	exg	a3,a1
+loc_00A998:
 	moveq	#$0,d7
+loc_00A99A:
 	tst.b	(Flags_C356).w
+loc_00A99E:
 	beq.b	loc_00A9BC
+loc_00A9A0:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00A9A6:
 	beq.b	loc_00A9B2
+loc_00A9A8:
 	addq.w	#$1,a1
+loc_00A9AA:
 	move.b	(a1)+,d7
+loc_00A9AC:
 	bmi.b	loc_00A9F6
+loc_00A9AE:
 	bra.w	loc_00A9C0
 loc_00A9B2:
 	move.b	(a1)+,d7
+loc_00A9B4:
 	addq.w	#$1,a1
+loc_00A9B6:
 	bmi.b	loc_00A9F6
+loc_00A9B8:
 	bra.w	loc_00A9C0
 loc_00A9BC:
 	move.w	(a1)+,d7
+loc_00A9BE:
 	bmi.b	loc_00A9F6
 loc_00A9C0:
 	movea.w	(a1)+,a5
+loc_00A9C2:
 	tst.w	(a5)
+loc_00A9C4:
 	bne.b	loc_00A9EA
+loc_00A9C6:
 	moveq	#$0,d4
+loc_00A9C8:
 	move.w	(a1)+,d4
+loc_00A9CA:
 	swap	d4
+loc_00A9CC:
 	sub.l	d3,d4
+loc_00A9CE:
 	bcs.b	loc_00A9D8
+loc_00A9D0:
 	cmpi.l	#$400000,d4
+loc_00A9D6:
 	bcc.b	loc_00A9EC
 loc_00A9D8:
 	addi.l	#$1600000,d4
+loc_00A9DE:
 	bsr.w	sub_00AB64
+loc_00A9E2:
 	bcs.b	loc_00A9EE
+loc_00A9E4:
 	bsr.w	sub_00ABD6
+loc_00A9E8:
 	bra.b	loc_00A9F2
 loc_00A9EA:
 	addq.w	#$2,a1
@@ -9895,16 +14212,27 @@ loc_00A9F2:
 	dbra	d7,loc_00A9C0
 loc_00A9F6:
 	cmpi.l	#$A00000,d3
+loc_00A9FC:
 	bcs.b	loc_00AA74
+loc_00A9FE:
 	move.w	(ram_C530).w,d0
+loc_00AA02:
 	subq.w	#$1,d0
+loc_00AA04:
 	cmp.w	(ram_C520).w,d0
+loc_00AA08:
 	bls.b	loc_00AA74
+loc_00AA0A:
 	exg	a4,a1
+loc_00AA0C:
 	moveq	#$0,d7
+loc_00AA0E:
 	tst.b	(Flags_C356).w
+loc_00AA12:
 	beq.b	loc_00AA30
+loc_00AA14:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00AA1A:
 	beq.b	loc_00AA26
 	addq.w	#$1,a1
 	move.b	(a1)+,d7
@@ -9912,11 +14240,14 @@ loc_00A9F6:
 	bra.w	loc_00AA34
 loc_00AA26:
 	move.b	(a1)+,d7
+loc_00AA28:
 	addq.w	#$1,a1
+loc_00AA2A:
 	bmi.b	loc_00AA74
 	bra.w	loc_00AA34
 loc_00AA30:
 	move.w	(a1)+,d7
+loc_00AA32:
 	bmi.b	loc_00AA74
 loc_00AA34:
 	movea.w	(a1)+,a5
@@ -9947,53 +14278,86 @@ loc_00AA70:
 	dbra	d7,loc_00AA34
 loc_00AA74:
 	move.w	(ram_C520).w,d0
+loc_00AA78:
 	tst.l	(ram_C51A).w
+loc_00AA7C:
 	beq.w	loc_00AB9E
+loc_00AA80:
 	bmi.b	loc_00AA8C
 	cmp.w	(ram_C530).w,d0
 	beq.w	loc_00AB9E
 	addq.w	#$4,d1
 loc_00AA8C:
 	tst.w	d0
+loc_00AA8E:
 	bne.b	loc_00AA98
 	tst.w	(ram_C51E).w
 	beq.w	loc_00AB9E
 loc_00AA98:
 	movea.l	(a0,d1.w),a0
+loc_00AA9C:
 	move.w	(ram_C50E).w,d0
+loc_00AAA0:
 	lsl.w	#$2,d0
+loc_00AAA2:
 	movea.l	(a0,d0.w),a1
+loc_00AAA6:
 	movea.l	$4(a0,d0.w),a2
+loc_00AAAA:
 	moveq	#$0,d7
+loc_00AAAC:
 	tst.b	(Flags_C356).w
+loc_00AAB0:
 	beq.b	loc_00AACE
+loc_00AAB2:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00AAB8:
 	beq.b	loc_00AAC4
+loc_00AABA:
 	addq.w	#$1,a1
+loc_00AABC:
 	move.b	(a1)+,d7
+loc_00AABE:
 	bmi.b	loc_00AB00
+loc_00AAC0:
 	bra.w	loc_00AAD2
 loc_00AAC4:
 	move.b	(a1)+,d7
+loc_00AAC6:
 	addq.w	#$1,a1
+loc_00AAC8:
 	bmi.b	loc_00AB00
+loc_00AACA:
 	bra.w	loc_00AAD2
 loc_00AACE:
 	move.w	(a1)+,d7
+loc_00AAD0:
 	bmi.b	loc_00AB00
 loc_00AAD2:
 	movea.w	(a1)+,a5
+loc_00AAD4:
 	tst.w	(a5)
+loc_00AAD6:
 	bne.b	loc_00AAF4
+loc_00AAD8:
 	bsr.w	sub_00ABA0
+loc_00AADC:
 	bcs.b	loc_00AAF6
+loc_00AADE:
 	moveq	#$0,d5
+loc_00AAE0:
 	move.w	(a1)+,d5
+loc_00AAE2:
 	swap	d5
+loc_00AAE4:
 	sub.l	d2,d5
+loc_00AAE6:
 	bcs.b	loc_00AAF8
+loc_00AAE8:
 	addi.l	#$800000,d5
+loc_00AAEE:
 	bsr.w	sub_00ABD6
+loc_00AAF2:
 	bra.b	loc_00AAFC
 loc_00AAF4:
 	addq.w	#$2,a1
@@ -10005,39 +14369,66 @@ loc_00AAFC:
 	dbra	d7,loc_00AAD2
 loc_00AB00:
 	move.w	(ram_C50E).w,d0
+loc_00AB04:
 	cmp.w	(ram_C52E).w,d0
+loc_00AB08:
 	beq.b	loc_00AB62
+loc_00AB0A:
 	exg	a2,a1
+loc_00AB0C:
 	moveq	#$0,d7
+loc_00AB0E:
 	tst.b	(Flags_C356).w
+loc_00AB12:
 	beq.b	loc_00AB30
+loc_00AB14:
 	cmpi.w	#$3,(ram_FE44).w
+loc_00AB1A:
 	beq.b	loc_00AB26
+loc_00AB1C:
 	addq.w	#$1,a1
+loc_00AB1E:
 	move.b	(a1)+,d7
+loc_00AB20:
 	bmi.b	loc_00AB62
 	bra.w	loc_00AB34
 loc_00AB26:
 	move.b	(a1)+,d7
+loc_00AB28:
 	addq.w	#$1,a1
+loc_00AB2A:
 	bmi.b	loc_00AB62
+loc_00AB2C:
 	bra.w	loc_00AB34
 loc_00AB30:
 	move.w	(a1)+,d7
+loc_00AB32:
 	bmi.b	loc_00AB62
 loc_00AB34:
 	movea.w	(a1)+,a5
+loc_00AB36:
 	tst.w	(a5)
+loc_00AB38:
 	bne.b	loc_00AB56
+loc_00AB3A:
 	bsr.w	sub_00ABA0
+loc_00AB3E:
 	bcs.b	loc_00AB58
+loc_00AB40:
 	moveq	#$0,d5
+loc_00AB42:
 	move.w	(a1)+,d5
+loc_00AB44:
 	swap	d5
+loc_00AB46:
 	sub.l	d2,d5
+loc_00AB48:
 	bcc.b	loc_00AB5A
+loc_00AB4A:
 	addi.l	#$1C00000,d5
+loc_00AB50:
 	bsr.w	sub_00ABD6
+loc_00AB54:
 	bra.b	loc_00AB5E
 loc_00AB56:
 	addq.w	#$2,a1
@@ -10051,21 +14442,35 @@ loc_00AB62:
 	rts
 sub_00AB64:
 	moveq	#$0,d5
+loc_00AB66:
 	move.w	(a1)+,d5
+loc_00AB68:
 	swap	d5
+loc_00AB6A:
 	tst.w	(ram_C508).w
+loc_00AB6E:
 	bmi.b	loc_00AB84
+loc_00AB70:
 	sub.l	d2,d5
+loc_00AB72:
 	bcs.b	loc_00AB98
+loc_00AB74:
 	cmpi.l	#$400000,d5
+loc_00AB7A:
 	bcc.b	loc_00AB9A
+loc_00AB7C:
 	addi.l	#$1C00000,d5
+loc_00AB82:
 	bra.b	loc_00AB96
 loc_00AB84:
 	sub.l	d2,d5
+loc_00AB86:
 	bcc.b	loc_00AB9A
+loc_00AB88:
 	cmpi.l	#$FFC00000,d5
+loc_00AB8E:
 	bcs.b	loc_00AB98
+loc_00AB90:
 	addi.l	#$800000,d5
 loc_00AB96:
 	moveq	#$0,d6
@@ -10077,9 +14482,13 @@ loc_00AB9E:
 	rts
 sub_00ABA0:
 	moveq	#$0,d4
+loc_00ABA2:
 	move.w	(a1)+,d4
+loc_00ABA4:
 	swap	d4
+loc_00ABA6:
 	tst.w	(ram_C51A).w
+loc_00ABAA:
 	bmi.b	loc_00ABC0
 	sub.l	d3,d4
 	bcs.b	loc_00ABD4
@@ -10089,9 +14498,13 @@ sub_00ABA0:
 	bra.b	loc_00ABD2
 loc_00ABC0:
 	sub.l	d3,d4
+loc_00ABC2:
 	bcc.b	loc_00AB9A
+loc_00ABC4:
 	cmpi.l	#$FFC00000,d4
+loc_00ABCA:
 	bcs.b	loc_00ABD4
+loc_00ABCC:
 	addi.l	#$800000,d4
 loc_00ABD2:
 	moveq	#$0,d6
@@ -10099,76 +14512,126 @@ loc_00ABD4:
 	rts
 sub_00ABD6:
 	moveq	#$0,d0
+loc_00ABD8:
 	move.b	$5(a1),d0
+loc_00ABDC:
 	beq.b	loc_00ABEC
+loc_00ABDE:
 	lea	(ram_D900).w,a6
+loc_00ABE2:
 	tst.b	(a6,d0.w)
+loc_00ABE6:
 	bne.b	loc_00AC08
+loc_00ABE8:
 	move.b	d0,(a6,d0.w)
 loc_00ABEC:
 	move.l	d4,$8(a5)
+loc_00ABF0:
 	move.l	d5,$4(a5)
 sub_00ABF4:
 	move.w	(a1)+,(a5)
+loc_00ABF6:
 	move.b	(a1)+,$18(a5)
+loc_00ABFA:
 	move.b	(a1)+,$19(a5)
+loc_00ABFE:
 	move.b	(a1)+,$1A(a5)
+loc_00AC02:
 	move.b	(a1)+,$1B(a5)
+loc_00AC06:
 	rts
 loc_00AC08:
 	addq.w	#$6,a1
+loc_00AC0A:
 	rts
 sub_00AC0C:
 	tst.b	(ram_C61B).w
+loc_00AC10:
 	bne.w	loc_00AB9E
+loc_00AC14:
 	lea	(dat_00AE0A).l,a3
+loc_00AC1A:
 	bsr.w	sub_00ADE0
+loc_00AC1E:
 	beq.b	loc_00AC30
+loc_00AC20:
 	andi.w	#$F,d1
+loc_00AC24:
 	bne.w	loc_00AB9E
+loc_00AC28:
 	lea	(dat_00AE8A).l,a3
+loc_00AC2E:
 	bra.b	loc_00AC3E
 loc_00AC30:
 	subq.b	#$1,(ram_C61E).w
+loc_00AC34:
 	bne.w	loc_00AB9E
+loc_00AC38:
 	move.b	#$10,(ram_C61E).w
 loc_00AC3E:
 	bsr.w	sub_00ACE4
+loc_00AC42:
 	tst.b	(ram_C68E).w
+loc_00AC46:
 	beq.b	loc_00AC4E
 	lea	(dat_00AE0A).l,a3
 loc_00AC4E:
 	move.w	(RNG_Seed).w,d0
+loc_00AC52:
 	andi.w	#$3C,d0
+loc_00AC56:
 	add.w	d0,d0
+loc_00AC58:
 	lea	$4(a3),a5
+loc_00AC5C:
 	lea	(a3,d0.w),a3
+loc_00AC60:
 	move.w	(a3),d0
+loc_00AC62:
 	move.w	$2(a3),d1
+loc_00AC66:
 	add.w	(ram_C504).w,d0
+loc_00AC6A:
 	add.w	(Camera_Y).w,d1
+loc_00AC6E:
 	bsr.w	sub_00B380
+loc_00AC72:
 	tst.w	d5
+loc_00AC74:
 	beq.b	loc_00AC86
+loc_00AC76:
 	move.w	(a5)+,d0
+loc_00AC78:
 	move.w	(a5),d1
+loc_00AC7A:
 	add.w	(ram_C504).w,d0
+loc_00AC7E:
 	add.w	(Camera_Y).w,d1
+loc_00AC82:
 	bsr.w	sub_00B380
 loc_00AC86:
 	tst.b	(ram_C68E).w
+loc_00AC8A:
 	bne.b	loc_00ACAC
+loc_00AC8C:
 	tst.b	d0
+loc_00AC8E:
 	beq.b	loc_00AC9E
+loc_00AC90:
 	cmpi.b	#$20,d0
+loc_00AC94:
 	beq.b	loc_00AC9E
+loc_00AC96:
 	cmpi.b	#$40,d0
+loc_00AC9A:
 	bne.w	loc_00AB9E
 loc_00AC9E:
 	move.w	#$200,(a4)
 loc_00ACA2:
 	move.w	(a3)+,$4(a4)
+loc_00ACA6:
 	move.w	(a3)+,$8(a4)
+loc_00ACAA:
 	rts
 loc_00ACAC:
 	cmpi.b	#$20,d0
@@ -10186,9 +14649,13 @@ loc_00ACC6:
 	dc.b	$00,$70,$60,$BA
 sub_00ACE4:
 	clr.b	(ram_C68E).w
+loc_00ACE8:
 	cmpi.w	#$3,(ram_C328).w
+loc_00ACEE:
 	beq.b	loc_00AD0C
+loc_00ACF0:
 	cmpi.w	#$A,(ram_C328).w
+loc_00ACF6:
 	bne.b	loc_00AD50
 	cmpi.w	#$C60,(Camera_Y).w
 	bcc.b	loc_00AD50
@@ -10223,18 +14690,29 @@ loc_00AD4A:
 	rts
 loc_00AD50:
 	lea	(Objects_B).w,a4
+loc_00AD54:
 	move.w	(ram_FE44).w,d0
+loc_00AD58:
 	add.w	d0,d0
+loc_00AD5A:
 	move.w	dat_00AD7C(pc,d0.w),d1
+loc_00AD5E:
 	lea	dat_00AD7C(pc,d1.w),a1
+loc_00AD62:
 	move.w	(ram_C328).w,d0
+loc_00AD66:
 	moveq	#$0,d7
+loc_00AD68:
 	move.b	(a1,d0.w),d7
 loc_00AD6C:
 	tst.w	(a4)
+loc_00AD6E:
 	beq.b	loc_00AD7A
+loc_00AD70:
 	lea	$60(a4),a4
+loc_00AD74:
 	dbra	d7,loc_00AD6C
+loc_00AD78:
 	addq.w	#$4,a7
 loc_00AD7A:
 	rts
@@ -10248,20 +14726,31 @@ dat_00AD7C:
 	dc.b	$02,$02,$02,$02,$02,$07,$07,$07,$06,$06,$07,$07,$07,$07,$02,$00
 sub_00ADE0:
 	move.w	(Camera_Y).w,d0
+loc_00ADE4:
 	cmp.w	(ram_C622).w,d0
+loc_00ADE8:
 	bne.b	loc_00ADFE
+loc_00ADEA:
 	move.w	(ram_C620).w,d1
+loc_00ADEE:
 	addq.w	#$1,d1
+loc_00ADF0:
 	move.w	d1,(ram_C620).w
+loc_00ADF4:
 	cmpi.w	#$40,d1
+loc_00ADF8:
 	bls.b	loc_00AE06
+loc_00ADFA:
 	moveq	#$1,d2
+loc_00ADFC:
 	rts
 loc_00ADFE:
 	move.w	d0,(ram_C622).w
+loc_00AE02:
 	clr.w	(ram_C620).w
 loc_00AE06:
 	moveq	#$0,d2
+loc_00AE08:
 	rts
 dat_00AE0A:
 	dc.b	$00,$70,$01,$20,$00,$88
@@ -10285,14 +14774,23 @@ dat_00AE8A:
 	dc.b	$01,$88,$01,$80,$01,$50,$01,$70,$01,$50
 sub_00AF0A:
 	tst.w	$30(a1)
+loc_00AF0E:
 	beq.b	loc_00AF2E
+loc_00AF10:
 	cmp.w	$32(a1),d4
+loc_00AF14:
 	bhi.b	loc_00AF2C
+loc_00AF16:
 	cmp.w	$30(a1),d5
+loc_00AF1A:
 	bcs.b	loc_00AF2C
+loc_00AF1C:
 	cmp.w	$36(a1),d6
+loc_00AF20:
 	bhi.b	loc_00AF2C
+loc_00AF22:
 	cmp.w	$34(a1),d7
+loc_00AF26:
 	bcs.b	loc_00AF2C
 loc_00AF28:
 	moveq	#$1,d1
@@ -10318,105 +14816,119 @@ sub_00AF50:
 	move.w	$24(a0),d2
 sub_00AF54:
 	lea	(Objects_A).w,a1
+loc_00AF58:
 	move.b	$20(a1),d3
+loc_00AF5C:
 	andi.w	#$1C,d3
+loc_00AF60:
 	moveq	#$0,d0
+loc_00AF62:
 	move.b	(ram_C642).w,d0
+loc_00AF66:
 	jmp	loc_00AF6A(pc,d0.w)
 loc_00AF6A:
 	bra.w	loc_00AF7E
-	bra.w	loc_00AF90
-	bra.w	loc_00AFD6
-	bra.w	loc_00AFE0
-	bra.w	loc_00AF90
+	dc.b	$60,$00
+	dc.b	$00,$20,$60,$00,$00,$62,$60,$00,$00,$68,$60,$00,$00,$14
 loc_00AF7E:
 	lea	(dat_03F15C).l,a3
+loc_00AF84:
 	lea	(a3,d3.w),a3
+loc_00AF88:
 	move.w	(a3)+,d0
+loc_00AF8A:
 	move.w	(a3)+,d1
-	bra.w	sub_00AFEA
-loc_00AF90:
-	lea	(dat_03F17C).l,a3
-	moveq	#$3,d7
-loc_00AF98:
-	movea.l	(a3,d3.w),a3
-	move.w	d2,-(a7)
-loc_00AF9E:
-	move.w	(a7),d2
-	move.l	(a3)+,d0
-	move.l	(a3)+,d1
-	add.l	$C(a1),d0
-	add.l	$10(a1),d1
-	swap	d0
-	swap	d1
-	bsr.w	sub_00AFEA
-	bne.b	loc_00AFC0
-	dbra	d7,loc_00AF9E
-	move.w	(a7)+,d2
-	moveq	#$0,d1
-	rts
-loc_00AFC0:
-	movem.l	d0/a1,-(a7)
-	moveq	#-$44,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	move.w	(a7)+,d2
-	moveq	#$1,d1
-	rts
-loc_00AFD6:
-	lea	(dat_03F29C).l,a3
-	moveq	#$5,d7
-	bra.b	loc_00AF98
-loc_00AFE0:
-	lea	(dat_03F34C).l,a3
-	moveq	#$5,d7
-	bra.b	loc_00AF98
-sub_00AFEA:
+loc_00AF8C:
+	bra.w	loc_00AFEA
+	dc.b	$47,$F9,$00,$03,$F1,$7C,$7E,$03,$26,$73,$30,$00,$3F,$02,$34,$17
+	dc.b	$20,$1B,$22,$1B,$D0,$A9,$00,$0C,$D2,$A9,$00,$10,$48,$40,$48,$41
+	dc.b	$61,$00,$00,$38,$66,$0A,$51,$CF,$FF,$E6,$34,$1F,$72,$00,$4E,$75
+	dc.b	$48,$E7,$80,$40,$70,$BC,$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01
+	dc.b	$34,$1F,$72,$01,$4E,$75,$47,$F9,$00,$03,$F2,$9C,$7E,$05,$60,$B8
+	dc.b	$47,$F9,$00,$03,$F3,$4C,$7E,$05,$60,$AE
+loc_00AFEA:
 	lea	(dat_02D000).l,a2
+loc_00AFF0:
 	lea	(a2,d2.w),a2
+loc_00AFF4:
 	move.w	$4(a0),d2
+loc_00AFF8:
 	add.w	(a2)+,d2
+loc_00AFFA:
 	move.w	d2,d3
+loc_00AFFC:
 	add.w	(a2)+,d3
+loc_00AFFE:
 	move.w	$8(a0),d4
+loc_00B002:
 	add.w	(a2)+,d4
+loc_00B004:
 	move.w	d4,d5
+loc_00B006:
 	add.w	(a2)+,d5
+loc_00B008:
 	add.w	$4(a1),d0
+loc_00B00C:
 	add.w	$8(a1),d1
+loc_00B010:
 	cmp.w	d2,d0
+loc_00B012:
 	bcs.w	loc_00AF2C
+loc_00B016:
 	cmp.w	d3,d0
+loc_00B018:
 	bhi.w	loc_00AF2C
+loc_00B01C:
 	cmp.w	d4,d1
+loc_00B01E:
 	bcs.w	loc_00AF2C
+loc_00B022:
 	cmp.w	d5,d1
+loc_00B024:
 	bhi.w	loc_00AF2C
+loc_00B028:
 	bset.b	#$3,$2A(a1)
+loc_00B02E:
 	tst.b	(ram_C642).w
+loc_00B032:
 	bra.w	loc_00AF28
 sub_00B036:
 	tst.b	(ram_C5C9).w
+loc_00B03A:
 	bne.w	loc_00AF2C
+loc_00B03E:
 	tst.w	(ram_C5C2).w
+loc_00B042:
 	bne.w	loc_00AF2C
+loc_00B046:
 	lea	(Objects_A).w,a1
+loc_00B04A:
 	bsr.w	sub_00AF0A
+loc_00B04E:
 	beq.w	loc_00AF2A
+loc_00B052:
 	tst.b	(ram_C355).w
+loc_00B056:
 	bne.w	loc_00AF2A
 sub_00B05A:
 	cmpi.b	#$8,$3D(a0)
+loc_00B060:
 	bne.b	loc_00B06A
 	tst.w	(ram_C3C2).w
 	bne.w	loc_00AF2A
 loc_00B06A:
 	bclr.b	#$1,(ram_E02A).w
+loc_00B070:
 	tst.b	(ram_C642).w
-	bne.w	sub_00B1F4
+loc_00B074:
+	bne.w	loc_00B1F4
+loc_00B078:
 	move.b	$3C(a0),d1
+loc_00B07C:
 	ext.w	d1
+loc_00B07E:
 	tst.w	(ram_C3C4).w
+loc_00B082:
 	beq.b	loc_00B090
 	asr.w	#$1,d1
 	move.w	d1,d2
@@ -10426,70 +14938,123 @@ loc_00B06A:
 	moveq	#$1,d1
 loc_00B090:
 	move.w	(ram_C348).w,d0
+loc_00B094:
 	sub.w	d1,d0
+loc_00B096:
 	beq.b	loc_00B0C8
+loc_00B098:
 	bmi.b	loc_00B0C8
+loc_00B09A:
 	bsr.w	sub_008138
+loc_00B09E:
 	bsr.w	sub_00DA20
+loc_00B0A2:
 	movem.l	d0/a1,-(a7)
+loc_00B0A6:
 	moveq	#-$3F,d0
+loc_00B0A8:
 	jsr	(sub_00A068).l
+loc_00B0AE:
 	movem.l	(a7)+,d0/a1
+loc_00B0B2:
 	lea	(dat_00B194).l,a2
+loc_00B0B8:
 	moveq	#$0,d2
+loc_00B0BA:
 	move.b	$3D(a0),d2
+loc_00B0BE:
 	movea.l	(a2,d2.w),a2
+loc_00B0C2:
 	jsr	(a2)
+loc_00B0C4:
 	bra.w	loc_00AF28
 loc_00B0C8:
 	bsr.w	sub_00DA52
+loc_00B0CC:
 	lea	(dat_00B0E2).l,a2
+loc_00B0D2:
 	moveq	#$0,d2
+loc_00B0D4:
 	move.b	$3D(a0),d2
+loc_00B0D8:
 	movea.l	(a2,d2.w),a2
+loc_00B0DC:
 	jsr	(a2)
+loc_00B0DE:
 	bra.w	loc_00AF28
 dat_00B0E2:
 	dc.l	sub_00B0EE,sub_00B160,sub_00B0EE
 sub_00B0EE:
 	movem.l	d0/a1,-(a7)
+loc_00B0F2:
 	moveq	#-$34,d0
+loc_00B0F4:
 	jsr	(sub_00A068).l
+loc_00B0FA:
 	movem.l	(a7)+,d0/a1
+loc_00B0FE:
 	move.w	#$10,(ram_E028).w
+loc_00B104:
 	bsr.w	sub_00DAA8
+loc_00B108:
 	bsr.w	sub_00DAB0
+loc_00B10C:
 	move.b	#$10,(ram_E01E).w
+loc_00B112:
 	tst.b	(ram_E03B).w
+loc_00B116:
 	beq.b	loc_00B11E
+loc_00B118:
 	move.b	#$6,(ram_E01E).w
 loc_00B11E:
 	move.w	#$FF01,(ram_E01C).w
 loc_00B124:
 	move.l	(ram_E004).w,(ram_C694).w
+loc_00B12A:
 	move.l	(ram_E008).w,(ram_C698).w
+loc_00B130:
 	moveq	#$0,d0
+loc_00B132:
 	bsr.w	sub_008138
+loc_00B136:
 	move.w	#$2328,(ram_C5C2).w
+loc_00B13C:
 	bset.b	#$0,(ram_E003).w
+loc_00B142:
 	bclr.b	#$4,(Flags_C5C0).w
+loc_00B148:
 	st.b	(ram_C6B4).w
+loc_00B14C:
 	clr.l	(ram_E00C).w
+loc_00B150:
 	clr.l	(ram_E010).w
+loc_00B154:
 	bclr.b	#$0,(ram_E02A).w
+loc_00B15A:
 	clr.w	(ram_E02C).w
+loc_00B15E:
 	rts
 sub_00B160:
 	movem.l	d0/a1,-(a7)
+loc_00B164:
 	moveq	#-$32,d0
+loc_00B166:
 	jsr	(sub_00A068).l
+loc_00B16C:
 	movem.l	(a7)+,d0/a1
+loc_00B170:
 	move.w	#$18,(ram_E028).w
+loc_00B176:
 	bclr.b	#$3,(ram_E002).w
+loc_00B17C:
 	bsr.w	sub_00DB1C
+loc_00B180:
 	clr.w	(ram_C612).w
+loc_00B184:
 	bset.b	#$2,(Flags_C5EB).w
+loc_00B18A:
 	bne.b	loc_00B192
+loc_00B18C:
 	bset.b	#$4,(Flags_C5EB).w
 loc_00B192:
 	bra.b	loc_00B124
@@ -10499,26 +15064,41 @@ sub_00B1A0:
 	move.w	#$C,(ram_E028).w
 sub_00B1A6:
 	move.w	#$5A,(ram_C5C2).w
+loc_00B1AC:
 	bset.b	#$5,(ram_E02A).w
+loc_00B1B2:
 	clr.l	(ram_E00C).w
+loc_00B1B6:
 	clr.l	(ram_E010).w
+loc_00B1BA:
 	bclr.b	#$0,(ram_E02A).w
+loc_00B1C0:
 	rts
 sub_00B1C2:
 	move.b	(ram_C61A).w,(ram_E020).w
+loc_00B1C8:
 	move.w	#$14,(ram_E028).w
+loc_00B1CE:
 	bsr.b	sub_00B1A6
+loc_00B1D0:
 	bsr.w	sub_00DAC6
+loc_00B1D4:
 	bsr.w	sub_00DAE0
+loc_00B1D8:
 	clr.w	(ram_E00E).w
+loc_00B1DC:
 	clr.w	(ram_E012).w
+loc_00B1E0:
 	bsr.w	sub_00DAFA
+loc_00B1E4:
 	move.b	#$2,(ram_E01E).w
+loc_00B1EA:
 	move.w	#$FF01,(ram_E01C).w
+loc_00B1F0:
 	rts
 sub_00B1F2:
 	rts
-sub_00B1F4:
+loc_00B1F4:
 	bset.b	#$6,(Flags_C5C0).w
 	move.w	#$16,(ram_C5C2).w
 	cmpi.b	#$4,(ram_C642).w
@@ -10564,123 +15144,210 @@ loc_00B256:
 	rts
 sub_00B298:
 	tst.b	(ram_C601).w
+loc_00B29C:
 	bne.w	loc_00B316
+loc_00B2A0:
 	lea	(ram_E1C0).w,a1
+loc_00B2A4:
 	moveq	#$13,d3
 loc_00B2A6:
 	tst.w	(a1)
+loc_00B2A8:
 	beq.b	loc_00B2B0
+loc_00B2AA:
 	bsr.w	sub_00AF0A
+loc_00B2AE:
 	bne.b	loc_00B2BC
 loc_00B2B0:
 	lea	$40(a1),a1
+loc_00B2B4:
 	dbra	d3,loc_00B2A6
+loc_00B2B8:
 	bra.w	loc_00AF2C
 loc_00B2BC:
 	bset.b	#$5,$2A(a1)
+loc_00B2C2:
 	btst.b	#$0,$3(a1)
+loc_00B2C8:
 	bne.w	loc_00AF2C
+loc_00B2CC:
 	btst.b	#$2,$3(a1)
+loc_00B2D2:
 	beq.b	loc_00B2DE
 	btst.b	#$3,$3(a0)
 	beq.w	loc_00AF2C
 loc_00B2DE:
 	moveq	#$0,d2
+loc_00B2E0:
 	move.b	$3C(a1),d2
+loc_00B2E4:
 	sub.w	d2,$38(a0)
+loc_00B2E8:
 	bcs.b	loc_00B2F4
+loc_00B2EA:
 	bset.b	#$0,$3(a1)
+loc_00B2F0:
 	bra.w	loc_00AF28
 loc_00B2F4:
 	move.b	$3D(a1),$3E(a0)
 loc_00B2FA:
 	moveq	#$0,d0
+loc_00B2FC:
 	move.b	$3A(a0),d0
+loc_00B300:
 	jsr	(sub_008B8C).l
+loc_00B306:
 	bset.b	#$2,(Flags_C5C0).w
+loc_00B30C:
 	bset.b	#$0,$3(a0)
+loc_00B312:
 	bra.w	loc_00AF28
 loc_00B316:
 	cmpi.w	#$200,(a0)
+loc_00B31A:
 	bcs.b	loc_00B322
+loc_00B31C:
 	cmpi.w	#$21C,(a0)
+loc_00B320:
 	bls.b	loc_00B32A
 loc_00B322:
 	bsr.w	sub_00B33E
+loc_00B326:
 	bne.w	loc_00AF2C
 loc_00B32A:
 	move.b	#$2,$3E(a0)
+loc_00B330:
 	subi.w	#$14,$38(a0)
+loc_00B336:
 	beq.b	loc_00B2FA
+loc_00B338:
 	bmi.b	loc_00B2FA
+loc_00B33A:
 	bra.w	loc_00AF28
 sub_00B33E:
 	move.w	#$80,d0
+loc_00B342:
 	move.w	$4(a0),d1
+loc_00B346:
 	sub.w	d0,d1
+loc_00B348:
 	bcs.b	loc_00B362
+loc_00B34A:
 	cmpi.w	#$F8,d1
+loc_00B34E:
 	bhi.b	loc_00B362
+loc_00B350:
 	move.w	$8(a0),d1
+loc_00B354:
 	sub.w	d0,d1
+loc_00B356:
 	bcs.b	loc_00B362
+loc_00B358:
 	cmpi.w	#$100,d1
+loc_00B35C:
 	bhi.b	loc_00B362
+loc_00B35E:
 	moveq	#$0,d1
+loc_00B360:
 	rts
 loc_00B362:
 	moveq	#$1,d1
+loc_00B364:
 	rts
 	dc.b	$D0,$68,$00,$10,$26,$40
 sub_00B36C:
 	add.l	$4(a0),d0
+loc_00B370:
 	add.l	$8(a0),d1
+loc_00B374:
 	add.l	(ram_C504).w,d0
+loc_00B378:
 	add.l	(Camera_Y).w,d1
+loc_00B37C:
 	swap	d0
+loc_00B37E:
 	swap	d1
 sub_00B380:
 	subi.w	#$80,d0
+loc_00B384:
 	bcs.w	sub_00B3E8
+loc_00B388:
 	cmp.w	(ram_C58E).w,d0
+loc_00B38C:
 	bcc.w	sub_00B3E8
+loc_00B390:
 	subi.w	#$80,d1
+loc_00B394:
 	bcs.w	loc_00B3FE
+loc_00B398:
 	cmp.w	(ram_C590).w,d1
+loc_00B39C:
 	bcc.w	sub_00B3E8
+loc_00B3A0:
 	move.w	d0,d2
+loc_00B3A2:
 	move.w	d0,d4
+loc_00B3A4:
 	move.w	d1,d3
+loc_00B3A6:
 	move.w	d1,d5
+loc_00B3A8:
 	andi.w	#$7,d2
+loc_00B3AC:
 	andi.w	#$7,d3
+loc_00B3B0:
 	lsr.w	#$5,d0
+loc_00B3B2:
 	lsr.w	#$5,d1
+loc_00B3B4:
 	mulu.w	(ram_C532).w,d1
+loc_00B3B8:
 	add.w	d0,d1
+loc_00B3BA:
 	lea	(ram_FF0000).l,a2
+loc_00B3C0:
 	adda.w	d1,a2
+loc_00B3C2:
 	moveq	#$0,d0
+loc_00B3C4:
 	move.b	(a2),d0
+loc_00B3C6:
 	lsl.w	#$5,d0
+loc_00B3C8:
 	lea	(ram_8000).w,a1
+loc_00B3CC:
 	lea	(a1,d0.w),a1
+loc_00B3D0:
 	lsr.w	#$2,d4
+loc_00B3D2:
 	andi.w	#$6,d4
+loc_00B3D6:
 	andi.w	#$18,d5
+loc_00B3DA:
 	add.w	d4,d5
+loc_00B3DC:
 	move.b	(a1,d5.w),d0
+loc_00B3E0:
 	moveq	#$0,d5
+loc_00B3E2:
 	andi.w	#$64,d0
+loc_00B3E6:
 	rts
 sub_00B3E8:
 	move.w	d0,d2
+loc_00B3EA:
 	andi.w	#$7,d2
+loc_00B3EE:
 	move.w	d1,d4
+loc_00B3F0:
 	andi.w	#$7,d4
+loc_00B3F4:
 	lea	(ram_8000).w,a2
+loc_00B3F8:
 	moveq	#$1,d5
+loc_00B3FA:
 	moveq	#$0,d0
+loc_00B3FC:
 	rts
 loc_00B3FE:
 	bsr.b	sub_00B3E8
@@ -10688,35 +15355,63 @@ loc_00B3FE:
 	rts
 sub_00B404:
 	add.l	$4(a0),d0
+loc_00B408:
 	add.l	$8(a0),d1
+loc_00B40C:
 	subi.l	#$800000,d0
+loc_00B412:
 	subi.l	#$800000,d1
+loc_00B418:
 	add.l	d4,d0
+loc_00B41A:
 	add.l	d5,d1
+loc_00B41C:
 	swap	d0
+loc_00B41E:
 	swap	d1
+loc_00B420:
 	lsr.w	#$2,d0
+loc_00B422:
 	andi.w	#$7E,d0
+loc_00B426:
 	lsl.w	#$4,d1
+loc_00B428:
 	andi.w	#$F80,d1
+loc_00B42C:
 	add.w	d0,d1
+loc_00B42E:
 	move.w	d1,d0
+loc_00B430:
 	add.w	d3,d1
+loc_00B432:
 	rts
 sub_00B434:
 	add.l	$4(a0),d0
+loc_00B438:
 	add.l	$8(a0),d1
+loc_00B43C:
 	subi.l	#$800000,d0
+loc_00B442:
 	subi.l	#$800000,d1
+loc_00B448:
 	add.l	(ram_C504).w,d0
+loc_00B44C:
 	add.l	(Camera_Y).w,d1
+loc_00B450:
 	swap	d0
+loc_00B452:
 	swap	d1
+loc_00B454:
 	lsr.w	#$5,d0
+loc_00B456:
 	lsr.w	#$5,d1
+loc_00B458:
 	mulu.w	(ram_C532).w,d1
+loc_00B45C:
 	add.w	d1,d0
+loc_00B45E:
 	adda.w	d0,a2
+loc_00B460:
 	rts
 sub_00B462:
 	add.l	$4(a0),d0
@@ -10735,93 +15430,149 @@ sub_00B462:
 	rts
 sub_00B490:
 	tst.b	(Flags_C356).w
+loc_00B494:
 	beq.w	loc_00BC26
+loc_00B498:
 	tst.b	(ram_C642).w
+loc_00B49C:
 	bne.w	loc_00BC26
+loc_00B4A0:
 	move.w	(ram_C602).w,d0
+loc_00B4A4:
 	jmp	loc_00B4A8(pc,d0.w)
 loc_00B4A8:
 	bra.w	loc_00B4C0
-	bra.w	loc_00B508
+	dc.b	$60,$00,$00,$5A
+loc_00B4B0:
 	bra.w	loc_00B538
+loc_00B4B4:
 	bra.w	loc_00B56C
-	bra.w	loc_00B508
+	dc.b	$60,$00,$00,$4E
+loc_00B4BC:
 	bra.w	loc_00B538
 loc_00B4C0:
 	btst.b	#$0,(ram_C61D).w
+loc_00B4C6:
 	bne.b	loc_00B4EC
+loc_00B4C8:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00B4CE:
 	beq.w	loc_00BC26
+loc_00B4D2:
 	tst.b	(ram_C6B4).w
+loc_00B4D6:
 	bne.w	loc_00BC26
+loc_00B4DA:
 	tst.w	(ram_C158).w
+loc_00B4DE:
 	bne.w	loc_00BC26
+loc_00B4E2:
 	btst.b	#$0,(ram_C5DC).w
+loc_00B4E8:
 	bne.w	loc_00BC26
 loc_00B4EC:
 	lea	(ram_C700).w,a1
+loc_00B4F0:
 	lea	(ram_DB00).w,a2
+loc_00B4F4:
 	move.w	#$1F,d0
 loc_00B4F8:
 	move.l	(a1)+,(a2)+
+loc_00B4FA:
 	dbra	d0,loc_00B4F8
 loc_00B4FE:
 	addq.w	#$4,(ram_C602).w
+loc_00B502:
 	move.b	#$7,(Timer_C5A4).w
 loc_00B508:
 	subq.b	#$1,(Timer_C5A4).w
+loc_00B50C:
 	bmi.b	loc_00B520
+loc_00B50E:
 	lea	(ram_C700).w,a2
+loc_00B512:
 	moveq	#$3F,d1
+loc_00B514:
 	jsr	(sub_004372).l
+loc_00B51A:
 	bsr.w	sub_00BBD0
+loc_00B51E:
 	bra.b	loc_00B508
 loc_00B520:
 	move.w	(Timer_C606).w,d0
+loc_00B524:
 	move.w	dat_00B52E(pc,d0.w),d1
+loc_00B528:
 	lea	dat_00B52E(pc,d1.w),a1
+loc_00B52C:
 	jmp	(a1)
 dat_00B52E:
 	dc.w	sub_00B586-dat_00B52E,sub_00B60E-dat_00B52E,sub_00B75E-dat_00B52E,sub_00B73E-dat_00B52E,sub_00B8BE-dat_00B52E
 loc_00B538:
 	subq.b	#$1,(Timer_C5A4).w
+loc_00B53C:
 	bmi.b	loc_00B554
+loc_00B53E:
 	lea	(ram_C780).w,a1
+loc_00B542:
 	lea	(ram_C700).w,a2
+loc_00B546:
 	moveq	#$3F,d1
+loc_00B548:
 	jsr	(sub_0042A2).l
+loc_00B54E:
 	bsr.w	sub_00BBD0
+loc_00B552:
 	bra.b	loc_00B538
 loc_00B554:
 	move.w	(Timer_C606).w,d0
+loc_00B558:
 	move.w	dat_00B562(pc,d0.w),d1
+loc_00B55C:
 	lea	dat_00B562(pc,d1.w),a1
+loc_00B560:
 	jmp	(a1)
 dat_00B562:
 	dc.w	sub_00BB88-dat_00B562,sub_00BBAC-dat_00B562,sub_00BB8E-dat_00B562,sub_00BB9A-dat_00B562,sub_00BB8E-dat_00B562
 loc_00B56C:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00B572:
 	bne.b	loc_00B57C
+loc_00B574:
 	bsr.w	sub_00BC28
+loc_00B578:
 	bra.w	loc_00BC82
 loc_00B57C:
 	move.w	#$2,(Timer_C606).w
+loc_00B582:
 	bra.w	loc_00B4FE
 sub_00B586:
 	addq.w	#$4,(ram_C602).w
+loc_00B58A:
 	move.b	#$7,(Timer_C5A4).w
+loc_00B590:
 	move.w	#$120,d0
+loc_00B594:
 	jsr	(sub_008508).l
+loc_00B59A:
 	lea	(ram_FF6000).l,a6
+loc_00B5A0:
 	moveq	#$0,d7
+loc_00B5A2:
 	move.w	#$3FF,d6
 loc_00B5A6:
 	move.l	d7,(a6)+
+loc_00B5A8:
 	dbra	d6,loc_00B5A6
+loc_00B5AC:
 	bsr.w	sub_00B9FE
+loc_00B5B0:
 	bsr.w	sub_00B978
+loc_00B5B4:
 	bsr.w	sub_00B812
+loc_00B5B8:
 	btst.b	#$0,(ram_C61D).w
+loc_00B5BE:
 	beq.b	loc_00B5D8
 	lea	(ram_C3B8).w,a1
 	moveq	#$0,d0
@@ -10836,31 +15587,48 @@ loc_00B5D4:
 	move.w	d0,(ram_C36E).w
 loc_00B5D8:
 	move.b	#$4,(Timer_C605).w
+loc_00B5DE:
 	jsr	(sub_00D94C).l
+loc_00B5E4:
 	bset.b	#$0,(ram_C5C8).w
+loc_00B5EA:
 	st.b	(ram_C5CD).w
+loc_00B5EE:
 	st.b	(ram_C357).w
+loc_00B5F2:
 	st.b	(ram_C5BE).w
+loc_00B5F6:
 	st.b	(ram_C5D1).w
+loc_00B5FA:
 	st.b	(ram_C6C8).w
+loc_00B5FE:
 	tst.b	(ram_C61B).w
+loc_00B602:
 	beq.b	loc_00B608
 	st.b	(ram_C5CB).w
 loc_00B608:
 	st.b	(ram_C61B).w
+loc_00B60C:
 	rts
 sub_00B60E:
 	addq.w	#$4,(ram_C602).w
+loc_00B612:
 	clr.b	(ram_C6BB).w
 loc_00B616:
 	move.b	#$7,(Timer_C5A4).w
+loc_00B61C:
 	lea	(ram_FF5400).l,a1
+loc_00B622:
 	lea	(Objects_A).w,a2
+loc_00B626:
 	move.w	#$13F,d0
 loc_00B62A:
 	move.l	(a1)+,(a2)+
+loc_00B62C:
 	dbra	d0,loc_00B62A
+loc_00B630:
 	tst.b	(ram_C6B5).w
+loc_00B634:
 	beq.b	loc_00B65A
 	cmpi.w	#$F,(ram_C328).w
 	bne.b	loc_00B646
@@ -10874,8 +15642,11 @@ loc_00B64C:
 	move.w	#$F8,(ram_E004).w
 loc_00B65A:
 	move.w	(ram_C36E).w,d0
+loc_00B65E:
 	lsl.w	#$1,d0
+loc_00B660:
 	cmp.w	(ram_C352).w,d0
+loc_00B664:
 	beq.b	loc_00B67A
 	move.w	d0,(ram_C352).w
 	bset.b	#$7,(Flags_C5AF).w
@@ -10883,60 +15654,100 @@ loc_00B65A:
 	andi.b	#$FC,(ram_E02A).w
 loc_00B67A:
 	bsr.w	sub_00B6EA
+loc_00B67E:
 	lea	(ram_DB00).w,a1
+loc_00B682:
 	lea	(ram_C780).w,a2
+loc_00B686:
 	move.w	#$1F,d0
 loc_00B68A:
 	move.l	(a1)+,(a2)+
+loc_00B68C:
 	dbra	d0,loc_00B68A
+loc_00B690:
 	cmpi.w	#$C,(ram_C328).w
+loc_00B696:
 	bne.b	loc_00B6A2
 	move.w	#$190,d0
 	jsr	(sub_008508).l
 loc_00B6A2:
 	bsr.w	sub_00B72A
+loc_00B6A6:
 	lea	(ram_C5B0).w,a1
+loc_00B6AA:
 	move.w	(a1)+,(ram_C510).w
+loc_00B6AE:
 	move.w	(a1)+,(ram_C522).w
+loc_00B6B2:
 	move.w	(a1)+,(ram_C556).w
+loc_00B6B6:
 	move.w	(a1)+,(ram_C568).w
+loc_00B6BA:
 	bset.b	#$1,(ram_C5C8).w
+loc_00B6C0:
 	clr.b	(ram_C357).w
+loc_00B6C4:
 	clr.b	(ram_C5D1).w
+loc_00B6C8:
 	clr.b	(ram_C5C9).w
+loc_00B6CC:
 	tst.b	(ram_C5CB).w
+loc_00B6D0:
 	bne.b	loc_00B6DE
+loc_00B6D2:
 	btst.b	#$4,(Flags_C61C).w
+loc_00B6D8:
 	bne.b	loc_00B6E4
+loc_00B6DA:
 	clr.b	(ram_C61B).w
 loc_00B6DE:
 	clr.b	(ram_C5CB).w
+loc_00B6E2:
 	rts
 loc_00B6E4:
 	st.b	(ram_C61B).w
 	bra.b	loc_00B6DE
 sub_00B6EA:
 	move.w	(ram_C36E).w,d0
+loc_00B6EE:
 	lea	(dat_00BE62).l,a1
+loc_00B6F4:
 	movea.w	(a1,d0.w),a2
+loc_00B6F8:
 	move.w	a2,(ram_C3D0).w
+loc_00B6FC:
 	move.w	(a2)+,(ram_C346).w
+loc_00B700:
 	move.w	(a2)+,d1
+loc_00B702:
 	move.w	d1,(ram_C3B6).w
+loc_00B706:
 	lsl.w	#$2,d1
+loc_00B708:
 	lea	(dat_03F554).l,a1
+loc_00B70E:
 	move.l	(a1,d1.w),(ram_C34C).w
+loc_00B714:
 	move.w	(a2)+,(ram_C348).w
+loc_00B718:
 	move.w	(a2)+,(ram_C34A).w
+loc_00B71C:
 	move.w	(a2)+,(ram_C350).w
+loc_00B720:
 	move.w	(a2)+,(ram_C3C2).w
+loc_00B724:
 	move.w	(a2)+,(ram_C3C4).w
+loc_00B728:
 	rts
 sub_00B72A:
 	lea	(dat_00BFB0).l,a1
+loc_00B730:
 	move.w	(ram_C36E).w,d0
+loc_00B734:
 	add.w	d0,d0
+loc_00B736:
 	move.l	(a1,d0.w),(ram_C7F0).w
+loc_00B73C:
 	rts
 sub_00B73E:
 	addq.w	#$4,(ram_C6B6).w
@@ -10991,14 +15802,23 @@ sub_00B7CE:
 	jmp	(sub_008524).l
 sub_00B812:
 	lea	(ram_C5B0).w,a1
+loc_00B816:
 	move.w	(ram_C510).w,(a1)+
+loc_00B81A:
 	move.w	(ram_C522).w,(a1)+
+loc_00B81E:
 	move.w	(ram_C556).w,(a1)+
+loc_00B822:
 	move.w	(ram_C568).w,(a1)+
+loc_00B826:
 	clr.w	(ram_C510).w
+loc_00B82A:
 	clr.w	(ram_C522).w
+loc_00B82E:
 	clr.w	(ram_C556).w
+loc_00B832:
 	clr.w	(ram_C568).w
+loc_00B836:
 	jmp	(sub_00D94C).l
 sub_00B83C:
 	btst.b	#$7,(ram_C6B9).w
@@ -11091,151 +15911,255 @@ sub_00B942:
 	bra.w	sub_00B9EA
 sub_00B978:
 	bsr.w	sub_00B9C4
+loc_00B97C:
 	lea	(Objects_A).w,a1
+loc_00B980:
 	move.w	#$13C,d2
+loc_00B984:
 	move.w	(ram_C3C6).w,d7
+loc_00B988:
 	lsr.w	#$1,d7
+loc_00B98A:
 	bsr.w	sub_00B9EA
+loc_00B98E:
 	lea	(ram_E140).w,a1
+loc_00B992:
 	move.w	#$14C,d2
+loc_00B996:
 	move.w	(ram_C3C6).w,d7
+loc_00B99A:
 	lsr.w	#$1,d7
+loc_00B99C:
 	bsr.w	sub_00B9EA
+loc_00B9A0:
 	lea	(ram_E280).w,a1
+loc_00B9A4:
 	move.w	#$188,d2
+loc_00B9A8:
 	move.w	(ram_C3C6).w,d7
+loc_00B9AC:
 	lsr.w	#$1,d7
+loc_00B9AE:
 	bsr.w	sub_00B9EA
+loc_00B9B2:
 	lea	(ram_E3C0).w,a1
+loc_00B9B6:
 	move.w	#$18C,d2
+loc_00B9BA:
 	move.w	(ram_C3C6).w,d7
+loc_00B9BE:
 	lsr.w	#$1,d7
+loc_00B9C0:
 	bra.w	sub_00B9EA
 sub_00B9C4:
 	lea	(Objects_A).w,a1
+loc_00B9C8:
 	lea	(ram_FF5400).l,a2
+loc_00B9CE:
 	move.w	#$13F,d0
 loc_00B9D2:
 	move.l	(a1)+,(a2)+
+loc_00B9D4:
 	dbra	d0,loc_00B9D2
+loc_00B9D8:
 	lea	(Objects_A).w,a6
+loc_00B9DC:
 	moveq	#$0,d7
+loc_00B9DE:
 	move.w	#$13F,d6
 loc_00B9E2:
 	move.l	d7,(a6)+
+loc_00B9E4:
 	dbra	d6,loc_00B9E2
+loc_00B9E8:
 	rts
 sub_00B9EA:
 	moveq	#$0,d1
 loc_00B9EC:
 	move.w	d2,(a1)
+loc_00B9EE:
 	move.w	d1,$2C(a1)
+loc_00B9F2:
 	addq.w	#$4,d1
+loc_00B9F4:
 	lea	$40(a1),a1
+loc_00B9F8:
 	dbra	d7,loc_00B9EC
+loc_00B9FC:
 	rts
 sub_00B9FE:
 	lea	(dat_0E4B2E).l,a0
+loc_00BA04:
 	lea	(ram_FF7000).l,a4
+loc_00BA0A:
 	jsr	(sub_00A22A).l
+loc_00BA10:
 	bsr.w	sub_00BA30
+loc_00BA14:
 	bsr.w	sub_00BA52
+loc_00BA18:
 	move.w	(ram_C3C6).w,d0
+loc_00BA1C:
 	lea	(dat_00BE6C).l,a6
 loc_00BA22:
 	move.w	d0,-(a7)
+loc_00BA24:
 	bsr.w	sub_00BA7E
+loc_00BA28:
 	move.w	(a7)+,d0
+loc_00BA2A:
 	subq.w	#$2,d0
+loc_00BA2C:
 	bpl.b	loc_00BA22
+loc_00BA2E:
 	rts
 sub_00BA30:
 	lea	(ram_FF7000).l,a1
 sub_00BA36:
 	lea	(ram_FF6000).l,a2
+loc_00BA3C:
 	moveq	#$1B,d6
 loc_00BA3E:
 	moveq	#$13,d7
+loc_00BA40:
 	movea.l	a2,a3
 loc_00BA42:
 	move.l	(a1)+,(a3)+
+loc_00BA44:
 	dbra	d7,loc_00BA42
+loc_00BA48:
 	lea	$80(a2),a2
+loc_00BA4C:
 	dbra	d6,loc_00BA3E
+loc_00BA50:
 	rts
 sub_00BA52:
 	move.w	(ram_C36E).w,d0
+loc_00BA56:
 	lea	(dat_00BE62).l,a1
+loc_00BA5C:
 	movea.w	(a1,d0.w),a2
+loc_00BA60:
 	move.w	(ram_C346).w,(a2)+
+loc_00BA64:
 	move.w	(ram_C3B6).w,(a2)+
+loc_00BA68:
 	move.w	(ram_C348).w,(a2)+
+loc_00BA6C:
 	move.w	(ram_C34A).w,(a2)+
+loc_00BA70:
 	move.w	(ram_C350).w,(a2)+
+loc_00BA74:
 	move.w	(ram_C3C2).w,(a2)+
+loc_00BA78:
 	move.w	(ram_C3C4).w,(a2)+
+loc_00BA7C:
 	rts
 sub_00BA7E:
 	movea.l	(a6)+,a1
+loc_00BA80:
 	lea	(dat_0E4D48).l,a3
+loc_00BA86:
 	moveq	#$3,d6
 loc_00BA88:
 	movea.l	a1,a2
+loc_00BA8A:
 	moveq	#$11,d7
 loc_00BA8C:
 	move.l	(a3)+,(a2)+
+loc_00BA8E:
 	dbra	d7,loc_00BA8C
+loc_00BA92:
 	lea	$80(a1),a1
+loc_00BA96:
 	dbra	d6,loc_00BA88
+loc_00BA9A:
 	bsr.w	sub_00BB56
+loc_00BA9E:
 	bsr.w	sub_00BB56
+loc_00BAA2:
 	bsr.w	sub_00BB64
+loc_00BAA6:
 	bsr.w	sub_00BB64
+loc_00BAAA:
 	bsr.w	sub_00BB42
+loc_00BAAE:
 	bra.w	sub_00BAB2
 sub_00BAB2:
 	movea.w	(a6)+,a1
+loc_00BAB4:
 	move.w	(a1),d0
+loc_00BAB6:
 	movea.w	(a6)+,a1
+loc_00BAB8:
 	move.w	(a1),d1
+loc_00BABA:
 	movea.l	(a6)+,a1
+loc_00BABC:
 	move.w	(a6)+,d4
+loc_00BABE:
 	move.w	d0,d2
+loc_00BAC0:
 	lsr.w	#$3,d0
+loc_00BAC2:
 	movea.l	a1,a2
+loc_00BAC4:
 	movea.l	a1,a5
+loc_00BAC6:
 	lea	(dat_008288).l,a3
+loc_00BACC:
 	add.w	d1,d1
+loc_00BACE:
 	movea.l	(a3,d1.w),a3
+loc_00BAD2:
 	moveq	#$7,d7
 loc_00BAD4:
 	move.w	(a3)+,(a2)+
+loc_00BAD6:
 	dbra	d7,loc_00BAD4
+loc_00BADA:
 	move.w	#$C462,d6
+loc_00BADE:
 	move.w	#$C464,d7
+loc_00BAE2:
 	move.w	d2,d0
+loc_00BAE4:
 	lsr.w	#$3,d0
+loc_00BAE6:
 	beq.b	loc_00BAEE
 loc_00BAE8:
 	move.w	d6,(a1)+
+loc_00BAEA:
 	subq.w	#$1,d0
+loc_00BAEC:
 	bne.b	loc_00BAE8
 loc_00BAEE:
 	andi.w	#$7,d2
+loc_00BAF2:
 	bne.b	loc_00BAFA
+loc_00BAF4:
 	addq.w	#$4,a6
+loc_00BAF6:
 	bra.w	loc_00BB2C
 loc_00BAFA:
 	lsl.w	#$5,d2
+loc_00BAFC:
 	lea	(dat_00832E).l,a2
+loc_00BB02:
 	movea.l	(a6)+,a3
+loc_00BB04:
 	movea.l	a3,a4
+loc_00BB06:
 	lea	(a2,d2.w),a2
+loc_00BB0A:
 	moveq	#$7,d7
 loc_00BB0C:
 	move.l	(a2)+,(a3)+
+loc_00BB0E:
 	dbra	d7,loc_00BB0C
+loc_00BB12:
 	cmpi.w	#$C463,(a1)
+loc_00BB16:
 	bne.b	loc_00BB2A
 	lea	$2(a4),a2
 	moveq	#$7,d7
@@ -11248,48 +16172,75 @@ loc_00BB2A:
 	move.w	d4,(a1)
 loc_00BB2C:
 	lea	$80(a5),a1
+loc_00BB30:
 	moveq	#$8,d7
+loc_00BB32:
 	move.w	#$1000,d1
 loc_00BB36:
 	move.w	(a5)+,d0
+loc_00BB38:
 	eor.w	d1,d0
+loc_00BB3A:
 	move.w	d0,(a1)+
+loc_00BB3C:
 	dbra	d7,loc_00BB36
+loc_00BB40:
 	rts
 sub_00BB42:
 	moveq	#$2,d0
+loc_00BB44:
 	move.w	#$C518,d3
+loc_00BB48:
 	moveq	#$0,d6
+loc_00BB4A:
 	moveq	#$1,d4
+loc_00BB4C:
 	movea.w	(a6)+,a1
+loc_00BB4E:
 	movea.l	(a6)+,a2
+loc_00BB50:
 	jmp	(loc_008A3C).l
 sub_00BB56:
 	movea.l	(a6)+,a1
+loc_00BB58:
 	movea.l	(a6)+,a2
+loc_00BB5A:
 	move.w	#$C517,d1
+loc_00BB5E:
 	jmp	(sub_0087E2).l
 sub_00BB64:
 	movea.l	(a6)+,a1
+loc_00BB66:
 	movea.w	(a6)+,a2
+loc_00BB68:
 	move.w	(a6)+,d0
+loc_00BB6A:
 	move.w	(a2)+,d1
+loc_00BB6C:
 	addq.w	#$1,d1
+loc_00BB6E:
 	move.w	#$C471,d2
+loc_00BB72:
 	move.w	#$C470,d3
 loc_00BB76:
 	subq.w	#$1,d1
+loc_00BB78:
 	bmi.b	loc_00BB80
+loc_00BB7A:
 	move.w	d3,(a1)+
+loc_00BB7C:
 	bra.w	loc_00BB82
 loc_00BB80:
 	move.w	d2,(a1)+
 loc_00BB82:
 	subq.w	#$1,d0
+loc_00BB84:
 	bne.b	loc_00BB76
+loc_00BB86:
 	rts
 sub_00BB88:
 	addq.w	#$4,(ram_C602).w
+loc_00BB8C:
 	rts
 sub_00BB8E:
 	addq.w	#$4,(ram_C6B6).w
@@ -11302,129 +16253,212 @@ sub_00BB9A:
 	move.w	#$5A,(ram_C5C2).w
 sub_00BBAC:
 	clr.w	(ram_C602).w
+loc_00BBB0:
 	clr.w	(Timer_C606).w
+loc_00BBB4:
 	clr.b	(ram_C5BE).w
+loc_00BBB8:
 	clr.b	(ram_C6C8).w
+loc_00BBBC:
 	clr.b	(ram_C5CD).w
+loc_00BBC0:
 	clr.w	(Joy1_Held).w
+loc_00BBC4:
 	bclr.b	#$0,(ram_C61D).w
+loc_00BBCA:
 	bne.w	loc_00FF50
+loc_00BBCE:
 	rts
 sub_00BBD0:
 	btst.b	#$3,($C00005).l
+loc_00BBD8:
 	bne.b	sub_00BBD0
 loc_00BBDA:
 	btst.b	#$3,($C00005).l
+loc_00BBE2:
 	beq.b	loc_00BBDA
+loc_00BBE4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00BBEC:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_00BBF4:
 	bne.b	loc_00BBEC
+loc_00BBF6:
 	lea	(VDP_Control).l,a6
+loc_00BBFC:
 	move.w	#$9340,(a6)
+loc_00BC00:
 	move.w	#$9400,(a6)
+loc_00BC04:
 	move.w	#$9580,(a6)
+loc_00BC08:
 	move.w	#$96E3,(a6)
+loc_00BC0C:
 	move.w	#$977F,(a6)
+loc_00BC10:
 	move.w	#$C000,(a6)
+loc_00BC14:
 	move.w	#$80,(DMA_Trigger_Word).w
+loc_00BC1A:
 	move.w	(DMA_Trigger_Word).w,(a6)
+loc_00BC1E:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00BC26:
 	rts
 sub_00BC28:
 	move.b	(Joy1_Pressed).w,d0
+loc_00BC2C:
 	andi.b	#$3,d0
+loc_00BC30:
 	beq.b	loc_00BC76
+loc_00BC32:
 	move.w	(ram_C36E).w,d1
+loc_00BC36:
 	lea	(ram_C3B8).w,a1
+loc_00BC3A:
 	btst.b	#$1,d0
+loc_00BC3E:
 	bne.b	loc_00BC52
 loc_00BC40:
 	subq.w	#$2,d1
+loc_00BC42:
 	bpl.b	loc_00BC48
+loc_00BC44:
 	move.w	(ram_C3C6).w,d1
 loc_00BC48:
 	bsr.w	sub_00BC78
+loc_00BC4C:
 	bne.b	loc_00BC40
+loc_00BC4E:
 	bra.w	loc_00BC62
 loc_00BC52:
 	addq.w	#$2,d1
+loc_00BC54:
 	cmp.w	(ram_C3C6).w,d1
+loc_00BC58:
 	bls.b	loc_00BC5C
+loc_00BC5A:
 	moveq	#$0,d1
 loc_00BC5C:
 	bsr.w	sub_00BC78
+loc_00BC60:
 	bne.b	loc_00BC52
 loc_00BC62:
 	move.w	d1,(ram_C36E).w
+loc_00BC66:
 	lea	(ram_C716).w,a1
+loc_00BC6A:
 	move.w	#$644,d0
+loc_00BC6E:
 	moveq	#$4,d7
 loc_00BC70:
 	move.w	d0,(a1)+
+loc_00BC72:
 	dbra	d7,loc_00BC70
 loc_00BC76:
 	rts
 sub_00BC78:
 	move.w	d1,d3
+loc_00BC7A:
 	lsr.w	#$1,d3
+loc_00BC7C:
 	tst.b	(a1,d3.w)
+loc_00BC80:
 	rts
 loc_00BC82:
 	subq.b	#$1,(Timer_C605).w
+loc_00BC86:
 	bne.b	loc_00BCBC
+loc_00BC88:
 	move.b	#$4,(Timer_C605).w
+loc_00BC8E:
 	moveq	#$0,d0
+loc_00BC90:
 	move.b	(ram_C5CE).w,d0
+loc_00BC94:
 	addq.b	#$2,d0
+loc_00BC96:
 	cmpi.b	#$14,d0
+loc_00BC9A:
 	bcs.b	loc_00BC9E
+loc_00BC9C:
 	moveq	#$0,d0
 loc_00BC9E:
 	move.b	d0,(ram_C5CE).w
+loc_00BCA2:
 	move.w	(ram_C36E).w,d1
+loc_00BCA6:
 	lea	(ram_C700).w,a1
+loc_00BCAA:
 	lea	(dat_00BE4E).l,a2
+loc_00BCB0:
 	move.w	(a2,d0.w),$16(a1,d1.w)
+loc_00BCB6:
 	bset.b	#$0,(ram_C59A).w
 loc_00BCBC:
 	rts
 sub_00BCBE:
 	bset.b	#$0,$2(a0)
+loc_00BCC4:
 	bne.b	loc_00BCE8
+loc_00BCC6:
 	move.w	$2C(a0),d0
+loc_00BCCA:
 	add.w	d0,d0
+loc_00BCCC:
 	lea	(dat_00BE1C).l,a1
+loc_00BCD2:
 	lea	(a1,d0.w),a1
+loc_00BCD6:
 	move.l	(a1)+,$14(a0)
+loc_00BCDA:
 	move.w	(a1)+,$4(a0)
+loc_00BCDE:
 	move.w	(a1)+,$8(a0)
+loc_00BCE2:
 	ori.b	#$2,$2(a0)
 loc_00BCE8:
 	move.b	#$E0,$22(a0)
+loc_00BCEE:
 	lea	(ram_C3B8).w,a1
+loc_00BCF2:
 	move.w	$2C(a0),d0
+loc_00BCF6:
 	lsr.w	#$2,d0
+loc_00BCF8:
 	tst.b	(a1,d0.w)
+loc_00BCFC:
 	beq.b	loc_00BD04
 	move.b	#$60,$22(a0)
 loc_00BD04:
 	rts
 sub_00BD06:
 	bset.b	#$0,$2(a0)
+loc_00BD0C:
 	bne.b	loc_00BD4E
+loc_00BD0E:
 	ori.b	#$42,$2(a0)
+loc_00BD14:
 	move.w	#$4B,$1E(a0)
+loc_00BD1A:
 	move.b	#$C0,$22(a0)
+loc_00BD20:
 	move.w	#$180,$4(a0)
+loc_00BD26:
 	move.l	#$3E5F8,$14(a0)
+loc_00BD2E:
 	moveq	#$C,d6
+loc_00BD30:
 	bsr.w	sub_00BD50
+loc_00BD34:
 	tst.w	$2C(a0)
+loc_00BD38:
 	bne.b	loc_00BD4A
+loc_00BD3A:
 	move.b	#$20,$18(a0)
+loc_00BD40:
 	move.b	#$4C,$19(a0)
+loc_00BD46:
 	bsr.w	sub_00F98C
 loc_00BD4A:
 	bsr.w	sub_00BD6E
@@ -11432,56 +16466,95 @@ loc_00BD4E:
 	rts
 sub_00BD50:
 	move.w	$2C(a0),d0
+loc_00BD54:
 	lsr.w	#$1,d0
+loc_00BD56:
 	lea	(dat_00BE62).l,a1
+loc_00BD5C:
 	movea.w	(a1,d0.w),a1
+loc_00BD60:
 	tst.w	(a1,d6.w)
+loc_00BD64:
 	bne.b	loc_00BD6C
+loc_00BD66:
 	ori.b	#$4,$2(a0)
 loc_00BD6C:
 	rts
 sub_00BD6E:
 	move.w	$2C(a0),d0
+loc_00BD72:
 	lsr.w	#$1,d0
+loc_00BD74:
 	lea	(dat_00BFC4).l,a1
+loc_00BD7A:
 	lea	(a1,d0.w),a1
+loc_00BD7E:
 	move.w	(a1)+,$8(a0)
+loc_00BD82:
 	rts
 sub_00BD84:
 	bset.b	#$0,$2(a0)
+loc_00BD8A:
 	bne.w	loc_00BC26
+loc_00BD8E:
 	ori.b	#$42,$2(a0)
+loc_00BD94:
 	move.w	#$54,$1E(a0)
+loc_00BD9A:
 	move.b	#$80,$22(a0)
+loc_00BDA0:
 	move.w	#$1A0,$4(a0)
+loc_00BDA6:
 	move.l	#$3E5D0,$14(a0)
+loc_00BDAE:
 	moveq	#$A,d6
+loc_00BDB0:
 	bsr.b	sub_00BD50
+loc_00BDB2:
 	tst.w	$2C(a0)
+loc_00BDB6:
 	bne.b	loc_00BDC8
+loc_00BDB8:
 	move.b	#$24,$18(a0)
+loc_00BDBE:
 	move.b	#$3C,$19(a0)
+loc_00BDC4:
 	bsr.w	sub_00F98C
 loc_00BDC8:
 	bra.b	sub_00BD6E
 sub_00BDCA:
 	bset.b	#$0,$2(a0)
+loc_00BDD0:
 	bne.b	loc_00BDF8
+loc_00BDD2:
 	move.l	#$E4B24,$14(a0)
+loc_00BDDA:
 	move.w	$2C(a0),d0
+loc_00BDDE:
 	lsr.w	#$1,d0
+loc_00BDE0:
 	move.w	dat_00BE44(pc,d0.w),$8(a0)
+loc_00BDE6:
 	move.w	#$90,$4(a0)
+loc_00BDEC:
 	ori.b	#$6,$2(a0)
+loc_00BDF2:
 	move.b	#$E0,$22(a0)
 loc_00BDF8:
 	tst.b	(ram_C6B5).w
+loc_00BDFC:
 	bne.b	loc_00BE1A
+loc_00BDFE:
 	bset.b	#$2,$2(a0)
+loc_00BE04:
 	lea	(ram_C3B8).w,a1
+loc_00BE08:
 	move.w	$2C(a0),d0
+loc_00BE0C:
 	lsr.w	#$2,d0
+loc_00BE0E:
 	tst.b	(a1,d0.w)
+loc_00BE12:
 	beq.b	loc_00BE1A
 	bclr.b	#$2,$2(a0)
 loc_00BE1A:
@@ -11534,6 +16607,7 @@ dat_00BFC4:
 	dc.b	$00,$B0,$00,$D8,$01,$00,$01,$28,$01,$50
 sub_00BFCE:
 	tst.b	(ram_C6B5).w
+loc_00BFD2:
 	beq.w	loc_00CA28
 	move.w	(ram_C6B6).w,d0
 	jmp	loc_00BFDE(pc,d0.w)
@@ -11650,94 +16724,135 @@ loc_00C13E:
 	rts
 sub_00C15A:
 	bset.b	#$0,$2(a0)
+loc_00C160:
 	bne.b	loc_00C192
+loc_00C162:
 	ori.b	#$2,$2(a0)
+loc_00C168:
 	move.l	#$E5DD2,$14(a0)
+loc_00C170:
 	move.b	#$C0,$22(a0)
+loc_00C176:
 	move.b	#$10,$3E(a0)
+loc_00C17C:
 	move.w	(ram_C36E).w,$30(a0)
+loc_00C182:
 	clr.l	(ram_C3C8).w
+loc_00C186:
 	clr.l	(ram_C3CC).w
+loc_00C18A:
 	bsr.w	sub_00C734
+loc_00C18E:
 	bra.w	sub_00C798
 loc_00C192:
 	move.w	$28(a0),d0
+loc_00C196:
 	jmp	loc_00C19A(pc,d0.w)
 loc_00C19A:
 	bra.w	loc_00C1B2
+loc_00C19E:
 	bra.w	loc_00C1CA
+loc_00C1A2:
 	bra.w	loc_00C1F8
+loc_00C1A6:
 	bra.w	loc_00C22E
-	bra.w	loc_00C254
-	bra.w	loc_00C2A2
+	dc.b	$60,$00,$00,$A8,$60,$00
+	dc.b	$00,$F2
 loc_00C1B2:
 	subq.b	#$1,$3E(a0)
+loc_00C1B6:
 	bne.b	loc_00C1C8
+loc_00C1B8:
 	addq.w	#$4,$28(a0)
+loc_00C1BC:
 	move.b	#$40,$3E(a0)
+loc_00C1C2:
 	moveq	#$0,d0
+loc_00C1C4:
 	bsr.w	sub_0088B8
 loc_00C1C8:
 	rts
 loc_00C1CA:
 	subq.b	#$1,$3E(a0)
+loc_00C1CE:
 	beq.b	loc_00C1F0
+loc_00C1D0:
 	move.b	(Joy1_Pressed).w,d6
+loc_00C1D4:
 	andi.b	#$F,d6
+loc_00C1D8:
 	beq.w	loc_00CA28
+loc_00C1DC:
 	movem.l	d0/a1,-(a7)
+loc_00C1E0:
 	moveq	#-$2E,d0
+loc_00C1E2:
 	jsr	(sub_00A068).l
+loc_00C1E8:
 	movem.l	(a7)+,d0/a1
+loc_00C1EC:
 	bra.w	loc_00C21E
 loc_00C1F0:
 	addq.w	#$4,$28(a0)
+loc_00C1F4:
 	bra.w	loc_00C222
 loc_00C1F8:
 	move.b	(Joy1_Pressed).w,d6
+loc_00C1FC:
 	move.b	d6,d0
+loc_00C1FE:
 	andi.b	#$60,d0
+loc_00C202:
 	bne.w	loc_00C336
+loc_00C206:
 	andi.b	#$F,d6
+loc_00C20A:
 	beq.w	loc_00CA28
+loc_00C20E:
 	movem.l	d0/a1,-(a7)
+loc_00C212:
 	moveq	#-$2E,d0
+loc_00C214:
 	jsr	(sub_00A068).l
+loc_00C21A:
 	movem.l	(a7)+,d0/a1
 loc_00C21E:
 	bsr.w	sub_00C74C
 loc_00C222:
 	bsr.w	sub_00C734
+loc_00C226:
 	bsr.w	sub_00C798
+loc_00C22A:
 	bra.w	loc_00C6EE
 loc_00C22E:
 	move.b	(Joy1_Pressed).w,d0
+loc_00C232:
 	btst.b	#$4,d0
+loc_00C236:
 	bne.w	loc_00C2CC
+loc_00C23A:
 	btst.b	#$5,d0
+loc_00C23E:
 	bne.w	loc_00C3E8
+loc_00C242:
 	btst.b	#$6,d0
+loc_00C246:
 	bne.w	loc_00C3E8
+loc_00C24A:
 	andi.b	#$3,d0
+loc_00C24E:
 	bne.w	loc_00C614
+loc_00C252:
 	rts
-loc_00C254:
-	tst.w	(ram_C5D2).w
-	bne.w	loc_00C2F2
-	movem.l	d0/a1,-(a7)
-	moveq	#-$38,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	bra.w	loc_00C280
+	dc.b	$4A,$78,$C5,$D2,$66,$00,$00,$98,$48,$E7,$80,$40
+	dc.b	$70,$C8,$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01,$60,$00,$00,$12
 loc_00C270:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$2D,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-loc_00C280:
 	moveq	#$4C,d0
 	bsr.w	sub_0088B8
-loc_00C286:
 	move.w	#$8,$28(a0)
 	bset.b	#$7,(ram_C5C8).w
 	move.w	$2E(a0),d0
@@ -11745,22 +16860,9 @@ loc_00C286:
 	lea	(ram_C3C8).w,a1
 	st.b	(a1,d0.w)
 	rts
-loc_00C2A2:
-	tst.b	d0
-	andi.b	#$7F,d0
-	bne.b	loc_00C2AC
-	rts
-loc_00C2AC:
-	tst.b	$3B(a0)
-	bne.b	loc_00C2BA
-	move.w	#$8,$28(a0)
-	rts
-loc_00C2BA:
-	movem.l	d0/a1,-(a7)
-	moveq	#-$2D,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	bra.b	loc_00C286
+	dc.b	$4A,$00,$02,$00,$00,$7F,$66,$02,$4E,$75,$4A,$28,$00,$3B
+	dc.b	$66,$08,$31,$7C,$00,$08,$00,$28,$4E,$75,$48,$E7,$80,$40,$70,$D3
+	dc.b	$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01,$60,$BA
 loc_00C2CC:
 	move.w	#$8,$28(a0)
 	move.w	(ram_C6BE).w,(ram_C3BE).w
@@ -11770,63 +16872,78 @@ loc_00C2CC:
 	lea	(ram_C3BF).w,a1
 	lea	(ram_FF6494).l,a2
 	bra.w	sub_00C8B6
-loc_00C2F2:
-	bset.b	#$7,(ram_C5C8).w
-	subq.w	#$1,(ram_C5D2).w
-	movea.w	$32(a0),a6
-	move.w	$4(a6),d1
-	addq.w	#$1,d1
-	move.w	$6(a6),d2
-	lea	(dat_008276).l,a1
-	move.w	(a1,d2.w),d3
-	cmp.w	d3,d1
-	bls.b	loc_00C31E
-	move.w	d3,d1
-	clr.w	(ram_C5D2).w
-loc_00C31E:
-	move.w	d1,$4(a6)
-	move.w	$30(a0),d1
-	add.w	d1,d1
-	lea	(dat_00CCFA).l,a1
-	movea.l	(a1,d1.w),a6
-	bra.w	sub_00BAB2
+	dc.b	$08,$F8,$00,$07,$C5,$C8,$53,$78,$C5,$D2,$3C,$68,$00,$32
+	dc.b	$32,$2E,$00,$04,$52,$41,$34,$2E,$00,$06,$43,$F9,$00,$00,$82,$76
+	dc.b	$36,$31,$20,$00,$B2,$43,$63,$06,$32,$03,$42,$78,$C5,$D2,$3D,$41
+	dc.b	$00,$04,$32,$28,$00,$30,$D2,$41,$43,$F9,$00,$00,$CC,$FA,$2C,$71
+	dc.b	$10,$00,$60,$00,$F7,$7E
 loc_00C336:
 	bsr.w	sub_00C712
+loc_00C33A:
 	beq.w	loc_00CA28
+loc_00C33E:
 	move.w	$2E(a0),d0
+loc_00C342:
 	lsr.w	#$2,d0
+loc_00C344:
 	lea	(ram_C3C8).w,a2
+loc_00C348:
 	tst.b	(a2,d0.w)
+loc_00C34C:
 	bne.b	loc_00C37A
+loc_00C34E:
 	lea	$1(a1,d1.w),a1
+loc_00C352:
 	move.b	(a1)+,$1F(a0)
+loc_00C356:
 	move.b	(a1)+,$1D(a0)
+loc_00C35A:
 	lea	$1E(a0),a1
+loc_00C35E:
 	lea	(ram_C3BE).w,a2
+loc_00C362:
 	move.w	(a2)+,(ram_C6BE).w
+loc_00C366:
 	moveq	#$0,d0
+loc_00C368:
 	addq.w	#$1,d0
+loc_00C36A:
 	sbcd	-(a1),-(a2)
+loc_00C36C:
 	sbcd	-(a1),-(a2)
+loc_00C36E:
 	bcc.b	loc_00C38C
+loc_00C370:
 	move.w	(ram_C6BE).w,(a2)
+loc_00C374:
 	moveq	#$4,d0
+loc_00C376:
 	bsr.w	sub_0088B8
 loc_00C37A:
 	movem.l	d0/a1,-(a7)
+loc_00C37E:
 	moveq	#-$2F,d0
+loc_00C380:
 	jsr	(sub_00A068).l
+loc_00C386:
 	movem.l	(a7)+,d0/a1
+loc_00C38A:
 	rts
 loc_00C38C:
 	cmpi.b	#$54,$1F(a0)
+loc_00C392:
 	beq.b	loc_00C3AC
+loc_00C394:
 	addq.w	#$4,$28(a0)
+loc_00C398:
 	moveq	#$2,d0
+loc_00C39A:
 	bsr.w	sub_0088B8
 loc_00C39E:
 	lea	(ram_C3BF).w,a1
+loc_00C3A2:
 	lea	(ram_FF6494).l,a2
+loc_00C3A8:
 	bra.w	sub_00C8B6
 loc_00C3AC:
 	move.w	#$14,$28(a0)
@@ -11849,8 +16966,11 @@ loc_00C3E2:
 	bra.b	loc_00C39E
 loc_00C3E8:
 	move.w	$30(a0),d0
+loc_00C3EC:
 	move.w	dat_00C3FA(pc,d0.w),$32(a0)
+loc_00C3F2:
 	move.w	$1E(a0),d0
+loc_00C3F6:
 	jmp	loc_00C404(pc,d0.w)
 dat_00C3FA:
 	dc.b	$C3,$70,$C3,$7E,$C3,$8C
@@ -11883,6 +17003,7 @@ loc_00C404:
 	bra.w	loc_00CA28
 	bra.w	loc_00C5F6
 	bra.w	loc_00C600
+loc_00C470:
 	bra.w	loc_00C60A
 	bra.w	loc_00CA28
 loc_00C478:
@@ -11898,11 +17019,17 @@ loc_00C496:
 	move.w	#$4,(ram_C5D2).w
 loc_00C49C:
 	move.w	#$10,$28(a0)
+loc_00C4A2:
 	movea.w	$32(a0),a6
+loc_00C4A6:
 	move.w	$4(a6),d1
+loc_00C4AA:
 	move.w	$6(a6),d2
+loc_00C4AE:
 	lea	(dat_008276).l,a1
+loc_00C4B4:
 	cmp.w	(a1,d2.w),d1
+loc_00C4B8:
 	bcc.b	loc_00C512
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3A,d0
@@ -11929,11 +17056,17 @@ loc_00C4CC:
 	bra.b	loc_00C49C
 loc_00C512:
 	move.w	#$8,$28(a0)
+loc_00C518:
 	moveq	#$6,d0
+loc_00C51A:
 	bsr.w	sub_0088B8
+loc_00C51E:
 	move.w	(ram_C6BE).w,(ram_C3BE).w
+loc_00C524:
 	lea	(ram_C3BF).w,a1
+loc_00C528:
 	lea	(ram_FF6494).l,a2
+loc_00C52E:
 	bra.w	sub_00C8B6
 loc_00C532:
 	move.w	#$10,(ram_C5D2).w
@@ -12001,13 +17134,19 @@ loc_00C600:
 	bra.w	loc_00C49C
 loc_00C60A:
 	move.w	#$2,(ram_C5D2).w
+loc_00C610:
 	bra.w	loc_00C49C
 loc_00C614:
 	move.w	$30(a0),d1
+loc_00C618:
 	lea	(ram_C3B8).w,a1
+loc_00C61C:
 	cmpi.b	#$50,$1F(a0)
+loc_00C622:
 	beq.w	loc_00C6A6
+loc_00C626:
 	btst.b	#$0,d0
+loc_00C62A:
 	bne.b	loc_00C640
 loc_00C62C:
 	addq.w	#$2,d1
@@ -12020,34 +17159,53 @@ loc_00C636:
 	bra.w	loc_00C64E
 loc_00C640:
 	subq.w	#$2,d1
+loc_00C642:
 	bcc.b	loc_00C648
+loc_00C644:
 	move.w	(ram_C3C6).w,d1
 loc_00C648:
 	bsr.w	sub_00BC78
+loc_00C64C:
 	bne.b	loc_00C640
 loc_00C64E:
 	move.w	d1,$30(a0)
 sub_00C652:
 	lea	(dat_00CA2A).l,a1
+loc_00C658:
 	move.w	d1,d2
+loc_00C65A:
 	add.w	d1,d1
+loc_00C65C:
 	move.l	(a1,d1.w),(ram_E014).w
+loc_00C662:
 	lea	(dat_00BE62).l,a1
+loc_00C668:
 	movea.w	(a1,d2.w),a2
+loc_00C66C:
 	andi.b	#$FB,(ram_E2C2).w
+loc_00C672:
 	tst.w	$C(a2)
+loc_00C676:
 	bne.b	loc_00C67E
+loc_00C678:
 	ori.b	#$4,(ram_E2C2).w
 loc_00C67E:
 	andi.b	#$FB,(ram_E302).w
+loc_00C684:
 	tst.w	$A(a2)
+loc_00C688:
 	bne.b	loc_00C690
+loc_00C68A:
 	ori.b	#$4,(ram_E302).w
 loc_00C690:
 	lea	(dat_00CA6E).l,a1
+loc_00C696:
 	movea.l	(a1,d1.w),a6
+loc_00C69A:
 	bsr.w	sub_00BA7E
+loc_00C69E:
 	bset.b	#$7,(ram_C5C8).w
+loc_00C6A4:
 	rts
 loc_00C6A6:
 	btst.b	#$0,d0
@@ -12078,74 +17236,116 @@ loc_00C6E6:
 	bra.w	sub_00C652
 loc_00C6EE:
 	move.w	$2E(a0),d0
+loc_00C6F2:
 	lsr.w	#$2,d0
+loc_00C6F4:
 	lea	(ram_C3C8).w,a2
+loc_00C6F8:
 	tst.b	(a2,d0.w)
+loc_00C6FC:
 	beq.b	loc_00C704
 	moveq	#$4C,d0
 	bra.w	loc_00C70E
 loc_00C704:
 	bsr.w	sub_00C712
+loc_00C708:
 	beq.b	loc_00C70E
+loc_00C70A:
 	move.b	$3(a1,d1.w),d0
 loc_00C70E:
 	bra.w	sub_0088B8
 sub_00C712:
 	lea	(dat_00CB92).l,a1
+loc_00C718:
 	move.w	(ram_C6B8).w,d1
+loc_00C71C:
 	andi.b	#$7F,d1
+loc_00C720:
 	move.w	(a1,d1.w),d1
+loc_00C724:
 	lea	(a1,d1.w),a1
+loc_00C728:
 	move.w	$2E(a0),d1
+loc_00C72C:
 	moveq	#$4E,d0
+loc_00C72E:
 	cmpi.w	#$1C,d1
+loc_00C732:
 	rts
 sub_00C734:
 	moveq	#$0,d0
+loc_00C736:
 	tst.b	$21(a0)
+loc_00C73A:
 	beq.b	loc_00C73E
+loc_00C73C:
 	moveq	#$10,d0
 loc_00C73E:
 	moveq	#$0,d1
+loc_00C740:
 	move.b	$20(a0),d1
+loc_00C744:
 	add.w	d1,d0
+loc_00C746:
 	move.w	d0,$2E(a0)
+loc_00C74A:
 	rts
 sub_00C74C:
 	btst.b	#$0,d6
+loc_00C750:
 	bne.b	loc_00C766
+loc_00C752:
 	btst.b	#$1,d6
+loc_00C756:
 	bne.b	loc_00C772
+loc_00C758:
 	btst.b	#$2,d6
+loc_00C75C:
 	bne.b	loc_00C77E
+loc_00C75E:
 	btst.b	#$3,d6
+loc_00C762:
 	bne.b	loc_00C78A
 	rts
 loc_00C766:
 	tst.b	$21(a0)
+loc_00C76A:
 	beq.b	loc_00C796
+loc_00C76C:
 	clr.b	$21(a0)
+loc_00C770:
 	rts
 loc_00C772:
 	tst.b	$21(a0)
+loc_00C776:
 	bne.b	loc_00C796
+loc_00C778:
 	st.b	$21(a0)
+loc_00C77C:
 	rts
 loc_00C77E:
 	tst.b	$20(a0)
+loc_00C782:
 	beq.b	loc_00C796
+loc_00C784:
 	subq.b	#$4,$20(a0)
+loc_00C788:
 	rts
 loc_00C78A:
 	cmpi.b	#$C,$20(a0)
+loc_00C790:
 	bcc.b	loc_00C796
+loc_00C792:
 	addq.b	#$4,$20(a0)
 loc_00C796:
 	rts
 sub_00C798:
 	move.w	$2E(a0),d0
+loc_00C79C:
 	dc.w	$4CBB,$0006,$000C		; movem.w loc_00C7AA(pc,d0.w),d1-d2
+loc_00C7A2:
 	move.w	d1,$4(a0)
+loc_00C7A6:
 	move.w	d2,$8(a0)
 loc_00C7AA:
 	rts
@@ -12154,13 +17354,19 @@ loc_00C7AA:
 	dc.b	$01,$20,$00,$DF,$01,$50,$00,$DF,$01,$80,$00,$DF
 sub_00C7CC:
 	bset.b	#$0,$2(a0)
+loc_00C7D2:
 	bne.b	loc_00C7E8
+loc_00C7D4:
 	ori.b	#$2,$2(a0)
+loc_00C7DA:
 	bsr.w	sub_00C802
+loc_00C7DE:
 	bsr.w	sub_00C836
+loc_00C7E2:
 	ori.b	#$80,$22(a0)
 loc_00C7E8:
 	move.w	$2C(a0),d0
+loc_00C7EC:
 	beq.b	loc_00C800
 	lsr.w	#$2,d0
 	lea	(ram_C3C7).w,a1
@@ -12171,8 +17377,11 @@ loc_00C800:
 	rts
 sub_00C802:
 	move.w	$2C(a0),d0
+loc_00C806:
 	dc.w	$4CBB,$0003,$000C		; movem.w loc_00C814(pc,d0.w),d0-d1
+loc_00C80C:
 	move.w	d0,$4(a0)
+loc_00C810:
 	move.w	d1,$8(a0)
 loc_00C814:
 	rts
@@ -12181,13 +17390,21 @@ loc_00C814:
 	dc.b	$00,$F8,$01,$68,$00,$F8
 sub_00C836:
 	move.w	$2C(a0),d0
+loc_00C83A:
 	bne.b	loc_00C862
+loc_00C83C:
 	move.b	#$0,$18(a0)
+loc_00C842:
 	move.b	#$20,$19(a0)
+loc_00C848:
 	clr.b	$2F(a0)
+loc_00C84C:
 	move.w	#$C4FF,(ram_FF6492).l
+loc_00C854:
 	lea	(ram_C3BF).w,a1
+loc_00C858:
 	lea	(ram_FF6494).l,a2
+loc_00C85E:
 	bra.w	loc_00C892
 loc_00C862:
 	lea	(dat_00CB92).l,a1
@@ -12204,6 +17421,7 @@ loc_00C862:
 	movea.l	dat_00C89A(pc,d0.w),a2
 loc_00C892:
 	bsr.w	sub_00C8B6
+loc_00C896:
 	bra.w	sub_00F912
 dat_00C89A:
 	dc.b	$00,$FF,$65,$20,$00,$FF
@@ -12211,31 +17429,53 @@ dat_00C89A:
 	dc.b	$67,$AC,$00,$FF,$67,$B8
 sub_00C8B6:
 	moveq	#$2,d0
+loc_00C8B8:
 	move.w	#$C4F5,d3
+loc_00C8BC:
 	move.w	#$8487,d6
+loc_00C8C0:
 	moveq	#$1,d4
+loc_00C8C2:
 	bra.w	loc_008A3C
 sub_00C8C6:
 	bset.b	#$0,$2(a0)
+loc_00C8CC:
 	bne.b	loc_00C8F0
+loc_00C8CE:
 	ori.b	#$24,$2(a0)
+loc_00C8D4:
 	moveq	#$0,d0
+loc_00C8D6:
 	move.b	$18(a0),d0
+loc_00C8DA:
 	sub.w	d0,$4(a0)
+loc_00C8DE:
 	cmpi.b	#$16,$1A(a0)
+loc_00C8E4:
 	beq.w	loc_00CA28
+loc_00C8E8:
 	moveq	#$10,d0
+loc_00C8EA:
 	moveq	#$28,d1
+loc_00C8EC:
 	bra.w	sub_011B46
 loc_00C8F0:
 	cmpi.w	#$170,$8(a0)
+loc_00C8F6:
 	bcc.w	sub_014220
+loc_00C8FA:
 	cmpi.w	#$8,(ram_E028).w
+loc_00C900:
 	beq.w	loc_00CA28
+loc_00C904:
 	move.w	#$C80,d4
+loc_00C908:
 	bsr.w	sub_00E238
+loc_00C90C:
 	lea	(Objects_A).w,a1
+loc_00C910:
 	bsr.w	sub_00AF0A
+loc_00C914:
 	beq.w	loc_00CA28
 	st.b	(ram_C6B5).w
 	st.b	(ram_C6B4).w
@@ -12246,54 +17486,91 @@ loc_00C8F0:
 	bra.w	sub_014220
 sub_00C936:
 	bset.b	#$0,$2(a0)
+loc_00C93C:
 	bne.b	loc_00C97A
+loc_00C93E:
 	ori.b	#$42,$2(a0)
+loc_00C944:
 	move.w	#$4B,$1E(a0)
+loc_00C94A:
 	move.b	#$C0,$22(a0)
+loc_00C950:
 	move.l	#$3E5F8,$14(a0)
+loc_00C958:
 	moveq	#$C,d6
+loc_00C95A:
 	bsr.w	sub_00C97C
+loc_00C95E:
 	move.w	#$180,$4(a0)
+loc_00C964:
 	move.w	#$B0,$8(a0)
+loc_00C96A:
 	move.b	#$20,$18(a0)
+loc_00C970:
 	move.b	#$4C,$19(a0)
+loc_00C976:
 	bsr.w	sub_00F98C
 loc_00C97A:
 	rts
 sub_00C97C:
 	move.w	(ram_C36E).w,d0
+loc_00C980:
 	lea	(dat_00BE62).l,a1
+loc_00C986:
 	movea.w	(a1,d0.w),a1
+loc_00C98A:
 	tst.w	(a1,d6.w)
+loc_00C98E:
 	bne.b	loc_00C996
+loc_00C990:
 	ori.b	#$4,$2(a0)
 loc_00C996:
 	rts
 sub_00C998:
 	bset.b	#$0,$2(a0)
+loc_00C99E:
 	bne.b	loc_00C9DA
+loc_00C9A0:
 	ori.b	#$42,$2(a0)
+loc_00C9A6:
 	move.w	#$54,$1E(a0)
+loc_00C9AC:
 	move.b	#$E0,$22(a0)
+loc_00C9B2:
 	move.l	#$3E5D0,$14(a0)
+loc_00C9BA:
 	moveq	#$A,d6
+loc_00C9BC:
 	bsr.b	sub_00C97C
+loc_00C9BE:
 	move.w	#$1A0,$4(a0)
+loc_00C9C4:
 	move.w	#$B0,$8(a0)
+loc_00C9CA:
 	move.b	#$24,$18(a0)
+loc_00C9D0:
 	move.b	#$3C,$19(a0)
+loc_00C9D6:
 	bsr.w	sub_00F98C
 loc_00C9DA:
 	rts
 sub_00C9DC:
 	bset.b	#$0,$2(a0)
+loc_00C9E2:
 	bne.b	loc_00CA28
+loc_00C9E4:
 	ori.b	#$2,$2(a0)
+loc_00C9EA:
 	move.b	#$80,$22(a0)
+loc_00C9F0:
 	move.w	#$90,$4(a0)
+loc_00C9F6:
 	move.w	#$90,$8(a0)
+loc_00C9FC:
 	lea	(dat_00CA2A).l,a1
+loc_00CA02:
 	btst.b	#$7,(ram_C6B9).w
+loc_00CA08:
 	beq.b	loc_00CA1C
 	lea	(dat_00CA3E).l,a1
 	move.w	(ram_C6B8).w,d0
@@ -12303,6 +17580,7 @@ loc_00CA1C:
 	move.w	(ram_C36E).w,d0
 loc_00CA20:
 	add.w	d0,d0
+loc_00CA22:
 	move.l	(a1,d0.w),$14(a0)
 loc_00CA28:
 	rts
@@ -12419,764 +17697,641 @@ dat_00CD4A:
 	dc.b	$01,$18,$02,$1A,$1C,$00,$01,$1E
 sub_00CD78:
 	bset.b	#$0,$2(a0)
+loc_00CD7E:
 	bne.b	loc_00CDBE
+loc_00CD80:
 	move.b	#$18,$20(a0)
+loc_00CD86:
 	move.l	#$34722,$14(a0)
+loc_00CD8E:
 	move.b	#$E0,$22(a0)
+loc_00CD94:
 	move.w	(ram_C3B6).w,d0
+loc_00CD98:
 	lsl.w	#$2,d0
+loc_00CD9A:
 	lea	(dat_03F554).l,a1
+loc_00CDA0:
 	move.l	(a1,d0.w),(ram_C34C).w
+loc_00CDA6:
 	lea	(dat_00D6AA).l,a1
+loc_00CDAC:
 	bsr.w	sub_00D69C
+loc_00CDB0:
 	ori.b	#$28,$2(a0)
+loc_00CDB6:
 	clr.b	$3F(a0)
+loc_00CDBA:
 	bra.w	loc_00D0AA
 loc_00CDBE:
 	tst.b	(ram_C6C8).w
+loc_00CDC2:
 	bne.w	loc_00D0BA
+loc_00CDC6:
 	bsr.w	sub_008744
+loc_00CDCA:
 	bsr.w	sub_00D94C
+loc_00CDCE:
 	bsr.w	sub_00E1FE
+loc_00CDD2:
 	bsr.w	sub_00E278
+loc_00CDD6:
 	move.w	$28(a0),d0
+loc_00CDDA:
 	jmp	loc_00CDDE(pc,d0.w)
 loc_00CDDE:
 	bra.w	loc_00CE0E
+loc_00CDE2:
 	bra.w	loc_00CE36
+loc_00CDE6:
 	bra.w	loc_00CE6C
+loc_00CDEA:
 	bra.w	loc_00CE8A
+loc_00CDEE:
 	bra.w	loc_00CEA6
+loc_00CDF2:
 	bra.w	loc_00CF22
+loc_00CDF6:
 	bra.w	loc_00CF6A
-	bra.w	loc_00D01A
-	bra.w	loc_00D042
-	bra.w	loc_00D050
-	bra.w	loc_00D078
+	dc.b	$60,$00,$02,$1E,$60,$00
+	dc.b	$02,$42,$60,$00,$02,$4C,$60,$00,$02,$70
+loc_00CE0A:
 	bra.w	loc_00D09C
 loc_00CE0E:
 	moveq	#$0,d0
+loc_00CE10:
 	move.b	(ram_C5A8).w,d0
+loc_00CE14:
 	andi.b	#$F,d0
+loc_00CE18:
 	bne.w	loc_00D83C
+loc_00CE1C:
 	moveq	#$0,d3
+loc_00CE1E:
 	bsr.w	sub_00DC6A
+loc_00CE22:
 	bsr.w	sub_00E2BA
+loc_00CE26:
 	bsr.w	sub_00DE72
+loc_00CE2A:
 	bsr.w	sub_00D84E
+loc_00CE2E:
 	bsr.w	sub_00D9B4
+loc_00CE32:
 	bra.w	loc_00D0AA
 loc_00CE36:
 	moveq	#$0,d0
+loc_00CE38:
 	move.b	(ram_C5A8).w,d0
+loc_00CE3C:
 	andi.b	#$F,d0
+loc_00CE40:
 	beq.w	loc_00D82A
 loc_00CE44:
 	bsr.w	sub_00D928
+loc_00CE48:
 	bsr.w	sub_00DE72
+loc_00CE4C:
 	bsr.w	sub_00D84E
+loc_00CE50:
 	bsr.w	sub_00D996
+loc_00CE54:
 	bsr.w	sub_00DE06
+loc_00CE58:
 	bsr.w	sub_00DB50
+loc_00CE5C:
 	bsr.w	sub_00DC6A
+loc_00CE60:
 	bsr.w	sub_00D9F2
+loc_00CE64:
 	bsr.w	sub_014248
+loc_00CE68:
 	bra.w	loc_00D0AA
 loc_00CE6C:
 	clr.b	(ram_C601).w
+loc_00CE70:
 	bsr.w	sub_00D914
+loc_00CE74:
 	moveq	#$0,d3
+loc_00CE76:
 	bsr.w	sub_00DC6A
+loc_00CE7A:
 	bsr.w	sub_014248
+loc_00CE7E:
 	beq.w	loc_00D0AA
+loc_00CE82:
 	clr.b	(ram_C6B4).w
+loc_00CE86:
 	bra.w	loc_00D82A
 loc_00CE8A:
 	btst.b	#$5,$2A(a0)
+loc_00CE90:
 	beq.w	loc_00D82A
+loc_00CE94:
 	moveq	#$0,d3
+loc_00CE96:
 	bsr.w	sub_00DC6A
+loc_00CE9A:
 	bsr.w	sub_00E2BA
+loc_00CE9E:
 	bsr.w	sub_00DA80
+loc_00CEA2:
 	bra.w	loc_00D0AA
 loc_00CEA6:
 	bclr.b	#$1,(ram_E02A).w
+loc_00CEAC:
 	moveq	#$0,d3
+loc_00CEAE:
 	bsr.w	sub_00DC6A
+loc_00CEB2:
 	move.w	$2C(a0),d0
+loc_00CEB6:
 	jmp	loc_00CEBA(pc,d0.w)
 loc_00CEBA:
 	bra.w	loc_00CEC2
+loc_00CEBE:
 	bra.w	loc_00CF06
 loc_00CEC2:
 	tst.b	$3B(a0)
+loc_00CEC6:
 	beq.b	loc_00CEDA
+loc_00CEC8:
 	move.b	#$E0,$22(a0)
+loc_00CECE:
 	tst.b	$1C(a0)
+loc_00CED2:
 	beq.b	loc_00CEDA
+loc_00CED4:
 	move.b	#$A0,$22(a0)
 loc_00CEDA:
 	bsr.w	sub_014248
+loc_00CEDE:
 	beq.w	loc_00D0AA
+loc_00CEE2:
 	bsr.w	sub_00D982
+loc_00CEE6:
 	tst.b	$3B(a0)
+loc_00CEEA:
 	beq.b	loc_00CEF2
+loc_00CEEC:
 	bset.b	#$2,$2(a0)
 loc_00CEF2:
 	move.w	#$4,$2C(a0)
 loc_00CEF8:
 	move.b	#$60,$2F(a0)
+loc_00CEFE:
 	not.b	(ram_C614).w
+loc_00CF02:
 	bra.w	loc_00D0AA
 loc_00CF06:
 	tst.b	$3B(a0)
+loc_00CF0A:
 	bne.b	loc_00CF12
+loc_00CF0C:
 	bchg.b	#$2,$2(a0)
 loc_00CF12:
 	subq.b	#$1,$2F(a0)
+loc_00CF16:
 	bne.w	loc_00D0AA
+loc_00CF1A:
 	bsr.w	sub_00D21A
+loc_00CF1E:
 	bra.w	loc_00D0AA
 loc_00CF22:
 	bclr.b	#$1,(ram_E02A).w
+loc_00CF28:
 	btst.b	#$5,$2A(a0)
+loc_00CF2E:
 	beq.w	loc_00D82A
+loc_00CF32:
 	bsr.w	sub_00DAFA
+loc_00CF36:
 	bsr.w	sub_014248
+loc_00CF3A:
 	move.l	$C(a0),d2
+loc_00CF3E:
 	move.l	$10(a0),d3
+loc_00CF42:
 	move.l	d2,(ram_C60A).w
+loc_00CF46:
 	move.l	d3,(ram_C60E).w
+loc_00CF4A:
 	bsr.w	sub_00DE06
+loc_00CF4E:
 	bsr.w	sub_00DB50
+loc_00CF52:
 	bsr.w	sub_00DC6A
+loc_00CF56:
 	cmp.l	(ram_C60A).w,d2
+loc_00CF5A:
 	bne.w	loc_00D82A
+loc_00CF5E:
 	cmp.l	(ram_C60E).w,d3
+loc_00CF62:
 	bne.w	loc_00D82A
+loc_00CF66:
 	bra.w	loc_00D0AA
 loc_00CF6A:
 	bclr.b	#$1,(ram_E02A).w
+loc_00CF70:
 	move.w	$2C(a0),d0
+loc_00CF74:
 	jmp	loc_00CF78(pc,d0.w)
 loc_00CF78:
 	bra.w	loc_00CF84
+loc_00CF7C:
 	bra.w	loc_00D002
+loc_00CF80:
 	bra.w	loc_00CF06
 loc_00CF84:
 	moveq	#$0,d0
+loc_00CF86:
 	move.b	(ram_C61A).w,d0
+loc_00CF8A:
 	lea	(dat_040532).l,a1
+loc_00CF90:
 	movea.l	(a1,d0.w),a1
+loc_00CF94:
 	move.w	(ram_C612).w,d1
+loc_00CF98:
 	andi.w	#$FFFE,d1
+loc_00CF9C:
 	add.w	d1,d1
+loc_00CF9E:
 	lea	(a1,d1.w),a1
+loc_00CFA2:
 	bsr.w	sub_00E342
+loc_00CFA6:
 	beq.b	loc_00CFB4
+loc_00CFA8:
 	addq.w	#$1,(ram_C612).w
+loc_00CFAC:
 	bsr.w	sub_00DC1A
+loc_00CFB0:
 	bra.w	loc_00D0AA
 loc_00CFB4:
 	clr.l	$C(a0)
+loc_00CFB8:
 	clr.l	$10(a0)
+loc_00CFBC:
 	bsr.w	sub_00E2BA
+loc_00CFC0:
 	tst.b	$3B(a0)
+loc_00CFC4:
 	bne.b	loc_00CFD4
+loc_00CFC6:
 	bsr.w	sub_00DB36
+loc_00CFCA:
 	move.w	#$8,$2C(a0)
+loc_00CFD0:
 	bra.w	loc_00CEF8
 loc_00CFD4:
 	movem.l	d0/a1,-(a7)
+loc_00CFD8:
 	moveq	#-$40,d0
+loc_00CFDA:
 	jsr	(sub_00A068).l
+loc_00CFE0:
 	movem.l	(a7)+,d0/a1
+loc_00CFE4:
 	move.w	#$4,$2C(a0)
+loc_00CFEA:
 	move.b	#$20,$22(a0)
+loc_00CFF0:
 	move.l	#$34468,$18(a0)
+loc_00CFF8:
 	moveq	#$6,d0
+loc_00CFFA:
 	bsr.w	sub_00D95E
+loc_00CFFE:
 	bra.w	loc_00D0AA
 loc_00D002:
 	bsr.w	sub_014248
+loc_00D006:
 	beq.w	loc_00D0AA
+loc_00D00A:
 	bset.b	#$2,$2(a0)
+loc_00D010:
 	move.w	#$8,$2C(a0)
+loc_00D016:
 	bra.w	loc_00CEF8
-loc_00D01A:
-	bsr.w	sub_00D63E
-	bsr.w	sub_00D3B8
-	bsr.w	sub_00D686
-	bsr.w	sub_00D518
-	lea	(dat_03F17C).l,a4
-	moveq	#$3,d7
-	bsr.w	sub_00D440
-	bsr.w	sub_00DB50
-	bsr.w	sub_00DC6A
-	bra.w	loc_00D0AA
-loc_00D042:
-	bsr.w	sub_00D63E
-	bsr.w	sub_00D352
-	bsr.w	sub_00D3A0
-	rts
-loc_00D050:
-	bsr.w	sub_00D63E
-	bsr.w	sub_00D400
-	bsr.w	sub_00D33C
-	bsr.w	sub_00D518
-	lea	(dat_03F29C).l,a4
-	moveq	#$2,d7
-	bsr.w	sub_00D440
-	bsr.w	sub_00DB50
-	bsr.w	sub_00DC6A
-	bra.w	loc_00D0AA
-loc_00D078:
-	bsr.w	sub_00D2D8
-	bsr.w	sub_00D416
-	bsr.w	sub_00D2F2
-	lea	(dat_03F34C).l,a4
-	moveq	#$5,d7
-	bsr.w	sub_00D440
-	bsr.w	sub_00DB50
-	bsr.w	sub_00DC6A
-	bra.w	loc_00D0AA
+	dc.b	$61,$00,$06,$22,$61,$00
+	dc.b	$03,$98,$61,$00,$06,$62,$61,$00,$04,$F0,$49,$F9,$00,$03,$F1,$7C
+	dc.b	$7E,$03,$61,$00,$04,$0C,$61,$00,$0B,$18,$61,$00,$0C,$2E,$60,$00
+	dc.b	$00,$6A,$61,$00,$05,$FA,$61,$00,$03,$0A,$61,$00,$03,$54,$4E,$75
+	dc.b	$61,$00,$05,$EC,$61,$00,$03,$AA,$61,$00,$02,$E2,$61,$00,$04,$BA
+	dc.b	$49,$F9,$00,$03,$F2,$9C,$7E,$02,$61,$00,$03,$D6,$61,$00,$0A,$E2
+	dc.b	$61,$00,$0B,$F8,$60,$00,$00,$34,$61,$00,$02,$5E,$61,$00,$03,$98
+	dc.b	$61,$00,$02,$70,$49,$F9,$00,$03,$F3,$4C,$7E,$05,$61,$00,$03,$B2
+	dc.b	$61,$00,$0A,$BE,$61,$00,$0B,$D4,$60,$00,$00,$10
 loc_00D09C:
 	clr.b	(ram_C601).w
+loc_00D0A0:
 	move.w	#$0,$28(a0)
+loc_00D0A6:
 	bra.w	loc_00CE0E
 loc_00D0AA:
 	move.w	$8(a0),$26(a0)
+loc_00D0B0:
 	andi.b	#$F3,(ram_E02A).w
+loc_00D0B6:
 	bsr.w	sub_00D6FA
 loc_00D0BA:
 	rts
 sub_00D0BC:
 	bset.b	#$0,$2(a0)
+loc_00D0C2:
 	bne.b	loc_00D0D8
+loc_00D0C4:
 	move.l	#$343FE,$14(a0)
+loc_00D0CC:
 	ori.b	#$AA,$2(a0)
+loc_00D0D2:
 	moveq	#$4,d0
+loc_00D0D4:
 	bsr.w	sub_00D95E
 loc_00D0D8:
 	move.w	#$10,$26(a0)
+loc_00D0DE:
 	move.w	(ram_E028).w,d0
+loc_00D0E2:
 	jmp	loc_00D0E6(pc,d0.w)
 loc_00D0E6:
 	bra.w	loc_00D116
+loc_00D0EA:
 	bra.w	loc_00D116
+loc_00D0EE:
 	bra.w	loc_00D116
+loc_00D0F2:
 	bra.w	loc_00D116
+loc_00D0F6:
 	bra.w	loc_00D166
+loc_00D0FA:
 	bra.w	loc_00D116
+loc_00D0FE:
 	bra.w	loc_00D172
-	bra.w	loc_00D1B2
-	bra.w	loc_00D1B2
-	bra.w	loc_00D1BC
-	bra.w	loc_00D1B2
-	bra.w	loc_00D116
+	dc.b	$60,$00,$00,$AE,$60,$00,$00,$AA,$60,$00,$00,$B0,$60,$00
+	dc.b	$00,$A2,$60,$00,$00,$02
 loc_00D116:
 	tst.b	(ram_E03B).w
+loc_00D11A:
 	bne.b	loc_00D136
+loc_00D11C:
 	tst.b	(ram_C614).w
+loc_00D120:
 	bne.w	loc_00D212
+loc_00D124:
 	bchg.b	#$2,$2(a0)
+loc_00D12A:
 	move.l	#$343FE,$14(a0)
-	bra.w	sub_00D204
+loc_00D132:
+	bra.w	loc_00D204
 loc_00D136:
 	move.w	#$180,$26(a0)
+loc_00D13C:
 	bclr.b	#$2,$2(a0)
+loc_00D142:
 	cmpi.w	#$4,(ram_E028).w
+loc_00D148:
 	beq.b	loc_00D156
+loc_00D14A:
 	move.l	#$34412,$14(a0)
-	bra.w	sub_00D204
+loc_00D152:
+	bra.w	loc_00D204
 loc_00D156:
 	move.l	#$34430,$18(a0)
+loc_00D15E:
 	bsr.w	sub_014248
-	bra.w	sub_00D204
+loc_00D162:
+	bra.w	loc_00D204
 loc_00D166:
 	tst.b	(ram_E01C).w
+loc_00D16A:
 	bne.w	loc_00D212
-	bra.w	sub_00D204
+loc_00D16E:
+	bra.w	loc_00D204
 loc_00D172:
 	cmpi.w	#$4,(ram_E02C).w
+loc_00D178:
 	beq.w	loc_00D212
+loc_00D17C:
 	moveq	#$0,d0
+loc_00D17E:
 	move.b	(ram_C61A).w,d0
+loc_00D182:
 	lea	(dat_0406F2).l,a1
+loc_00D188:
 	lea	(a1,d0.w),a1
+loc_00D18C:
 	bsr.w	sub_00E342
+loc_00D190:
 	tst.l	(ram_E00C).w
+loc_00D194:
 	bne.b	loc_00D19A
+loc_00D196:
 	clr.l	$C(a0)
 loc_00D19A:
 	tst.b	(ram_C614).w
+loc_00D19E:
 	bne.w	loc_00D212
+loc_00D1A2:
 	bchg.b	#$2,$2(a0)
+loc_00D1A8:
 	move.l	#$343FE,$14(a0)
+loc_00D1B0:
 	rts
-loc_00D1B2:
-	bset.b	#$2,$2(a0)
-	bra.w	sub_00D204
-loc_00D1BC:
-	bsr.w	sub_00D204
-	move.b	(ram_E020).w,d0
-	andi.w	#$1C,d0
-	lea	(dat_03F0FC).l,a1
-	move.l	(a1,d0.w),d1
-	move.w	d1,d2
-	swap	d1
-	add.w	d1,$4(a0)
-	add.w	d2,$8(a0)
-	bclr.b	#$2,$2(a0)
-	tst.l	(ram_E00C).w
-	bne.b	loc_00D1F8
-	tst.l	(ram_E010).w
-	bne.b	loc_00D1F8
-	bset.b	#$2,$2(a0)
-	rts
-loc_00D1F8:
-	move.l	#$387DA,$18(a0)
-	bra.w	sub_014248
-sub_00D204:
+	dc.b	$08,$E8,$00,$02,$00,$02,$60,$00,$00,$4A,$61,$00,$00,$46
+	dc.b	$10,$38,$E0,$20,$02,$40,$00,$1C,$43,$F9,$00,$03,$F0,$FC,$22,$31
+	dc.b	$00,$00,$34,$01,$48,$41,$D3,$68,$00,$04,$D5,$68,$00,$08,$08,$A8
+	dc.b	$00,$02,$00,$02,$4A,$B8,$E0,$0C,$66,$0E,$4A,$B8,$E0,$10,$66,$08
+	dc.b	$08,$E8,$00,$02,$00,$02,$4E,$75,$21,$7C,$00,$03,$87,$DA,$00,$18
+	dc.b	$60,$00,$70,$46
+loc_00D204:
 	move.w	(ram_E004).w,$4(a0)
+loc_00D20A:
 	move.w	(ram_E008).w,$8(a0)
+loc_00D210:
 	rts
 loc_00D212:
 	move.l	(a0),(ram_C69C).w
+loc_00D216:
 	clr.l	(a0)
+loc_00D218:
 	rts
 sub_00D21A:
 	bsr.w	sub_00D94C
+loc_00D21E:
 	lea	(ram_E1C0).w,a6
+loc_00D222:
 	moveq	#$0,d7
+loc_00D224:
 	move.w	#$13F,d6
 loc_00D228:
 	move.l	d7,(a6)+
+loc_00D22A:
 	dbra	d6,loc_00D228
+loc_00D22E:
 	bset.b	#$0,(ram_C693).w
+loc_00D234:
 	st.b	(ram_C357).w
+loc_00D238:
 	tst.b	(Flags_C356).w
+loc_00D23C:
 	bne.w	loc_00D290
+loc_00D240:
 	tst.b	(ram_C61B).w
+loc_00D244:
 	beq.b	loc_00D24A
 	st.b	(ram_C5CB).w
 loc_00D24A:
 	st.b	(ram_C61B).w
+loc_00D24E:
 	st.b	(ram_C6B4).w
+loc_00D252:
 	subq.w	#$4,(ram_C342).w
+loc_00D256:
 	beq.b	loc_00D26E
+loc_00D258:
 	bmi.b	loc_00D26E
+loc_00D25A:
 	move.w	#$130,(ram_E3C0).w
+loc_00D260:
 	move.w	#$134,(ram_E400).w
+loc_00D266:
 	move.w	#$12C,d0
+loc_00D26A:
 	bra.w	loc_00D2B6
 loc_00D26E:
 	st.b	(ram_C61B).w
+loc_00D272:
 	st.b	(ram_C5CD).w
+loc_00D276:
 	lea	(ram_E040).w,a1
+loc_00D27A:
 	lea	(ram_E680).w,a2
+loc_00D27E:
 	move.w	#$F,d0
 loc_00D282:
 	move.l	(a1)+,(a2)+
+loc_00D284:
 	dbra	d0,loc_00D282
+loc_00D288:
 	move.w	#$138,d0
+loc_00D28C:
 	bra.w	loc_00D2B6
 loc_00D290:
 	move.w	(ram_C36E).w,d0
+loc_00D294:
 	lsr.w	#$1,d0
+loc_00D296:
 	lea	(ram_C3B8).w,a1
+loc_00D29A:
 	st.b	(a1,d0.w)
+loc_00D29E:
 	move.w	(ram_C3C6).w,d7
+loc_00D2A2:
 	lsr.w	#$1,d7
 loc_00D2A4:
 	tst.b	(a1)+
+loc_00D2A6:
 	beq.b	loc_00D2AE
+loc_00D2A8:
 	dbra	d7,loc_00D2A4
+loc_00D2AC:
 	bra.b	loc_00D26E
 loc_00D2AE:
 	bset.b	#$0,(ram_C61D).w
 	rts
 loc_00D2B6:
 	moveq	#$0,d1
+loc_00D2B8:
 	move.w	#$7,d7
+loc_00D2BC:
 	lea	(ram_E1C0).w,a1
 loc_00D2C0:
 	move.w	d0,(a1)
+loc_00D2C2:
 	move.w	d1,$2C(a1)
+loc_00D2C6:
 	bset.b	#$2,$2(a1)
+loc_00D2CC:
 	addq.w	#$8,d1
+loc_00D2CE:
 	lea	$40(a1),a1
+loc_00D2D2:
 	dbra	d7,loc_00D2C0
+loc_00D2D6:
 	rts
-sub_00D2D8:
-	moveq	#$0,d1
-	move.b	(ram_C5A8).w,d1
-	andi.b	#$F,d1
-	beq.b	loc_00D2F0
-	lea	(dat_03F524).l,a1
-	move.b	(a1,d1.w),$20(a0)
-loc_00D2F0:
-	rts
-sub_00D2F2:
-	moveq	#$0,d2
-	moveq	#$0,d3
-	moveq	#$0,d6
-	move.b	(ram_C5A8).w,d6
-	andi.b	#$F,d6
-	beq.b	loc_00D32A
-	movem.l	d0/a1,-(a7)
-	moveq	#-$21,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	lea	(dat_03F5E8).l,a1
-	move.b	$20(a0),d0
-	andi.w	#$1C,d0
-	add.w	d0,d0
-	adda.w	d0,a1
-	move.l	(a1)+,d2
-	move.l	(a1)+,d3
-	rts
-loc_00D32A:
-	movem.l	d0/a1,-(a7)
-	moveq	#-$23,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	rts
-sub_00D33C:
-	move.b	$20(a0),d0
-	andi.w	#$1C,d0
-	lea	(dat_034F6E).l,a1
-	move.l	(a1,d0.w),$14(a0)
-	rts
-sub_00D352:
-	btst.b	#$6,(ram_C5A8).w
-	bne.b	loc_00D362
-	btst.b	#$5,(ram_C5A8).w
-	beq.b	sub_00D392
-loc_00D362:
-	bchg.b	#$0,$2A(a0)
-	bne.b	loc_00D398
-	moveq	#$3,d0
-	moveq	#$E,d7
-	bsr.w	sub_00E18E
-	bne.b	loc_00D390
-	bset.b	#$1,$2A(a0)
-	moveq	#$0,d2
-	move.b	$20(a0),d2
-	andi.b	#$1E,d2
-	moveq	#$E,d7
-	moveq	#$3,d4
-	move.w	#$94,d0
-	bsr.w	sub_00E1AA
-loc_00D390:
-	rts
-sub_00D392:
-	bclr.b	#$0,$2A(a0)
-loc_00D398:
-	bclr.b	#$1,$2A(a0)
-	rts
-sub_00D3A0:
-	move.b	$20(a0),d0
-	andi.w	#$1E,d0
-	add.w	d0,d0
-	lea	(dat_034FDE).l,a1
-	move.l	(a1,d0.w),$14(a0)
-	rts
-sub_00D3B8:
-	bsr.w	sub_00D3E0
-	move.w	#$8C,d0
-	move.b	$20(a0),d2
-	andi.b	#$1C,d2
-	moveq	#$1,d4
-	moveq	#$1,d7
-	bclr.b	#$1,$2A(a0)
-	bsr.w	sub_00E1AA
-	bne.b	loc_00D3DE
-	bset.b	#$1,$2A(a0)
-loc_00D3DE:
-	rts
-sub_00D3E0:
-	lea	(ram_C5A8).w,a1
-	move.b	(a1)+,d0
-	tst.b	(ram_FE81).w
-	beq.b	loc_00D3EE
-	move.b	(a1)+,d0
-loc_00D3EE:
-	btst.b	#$6,d0
-	bne.b	loc_00D3FE
-	btst.b	#$5,d0
-	bne.b	loc_00D3FE
-	bsr.b	sub_00D392
-	addq.w	#$4,a7
-loc_00D3FE:
-	rts
-sub_00D400:
-	bsr.b	sub_00D3E0
-	move.w	#$B0,d0
-	move.b	$20(a0),d2
-	andi.w	#$1C,d2
-	moveq	#$2,d4
-	moveq	#$3,d7
-	bra.w	sub_00E1AA
-sub_00D416:
-	bsr.b	sub_00D3E0
-	tst.w	(ram_E240).w
-	bne.w	sub_00D392
-	move.w	#$E4,d0
-	moveq	#$1,d4
-	moveq	#$0,d7
-	bsr.w	sub_00E1AA
-	bne.w	sub_00D392
-	move.w	#$EC,d0
-	moveq	#$2,d4
-	moveq	#$9,d7
-	lea	(ram_EA80).w,a1
-	bra.w	sub_00E1AE
-sub_00D440:
-	movea.l	d2,a5
-	movea.l	d3,a6
-	move.b	$20(a0),d1
-	andi.w	#$1C,d1
-	movea.l	(a4,d1.w),a4
-loc_00D450:
-	move.l	(a4)+,d0
-	move.l	(a4)+,d1
-	move.l	a5,d2
-	move.l	a6,d3
-	add.l	d2,d0
-	add.l	d3,d1
-	bsr.w	sub_00B36C
-	beq.b	loc_00D474
-	cmpi.b	#$4,d0
-	beq.b	loc_00D498
-	cmpi.b	#$24,d0
-	beq.b	loc_00D498
-	cmpi.b	#$40,d0
-	beq.b	loc_00D498
-loc_00D474:
-	cmpi.b	#$8,(ram_C642).w
-	bne.b	loc_00D486
-	cmpi.b	#$20,d0
-	beq.b	loc_00D486
-	bra.w	loc_00D4E4
-loc_00D486:
-	dbra	d7,loc_00D450
-	btst.b	#$3,$2A(a0)
-	bne.b	loc_00D498
-	move.l	a5,d2
-	move.l	a6,d3
-	rts
-loc_00D498:
-	movem.l	d0/a1,-(a7)
-	moveq	#-$44,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	move.l	a5,d2
-	move.l	a6,d3
-	cmpi.w	#$28,$28(a0)
-	beq.b	loc_00D4DE
-	move.l	d2,d4
-	bpl.b	loc_00D4BA
-	neg.l	d4
-loc_00D4BA:
-	cmpi.l	#$10000,d4
-	bcc.b	loc_00D4C4
-	moveq	#$0,d2
-loc_00D4C4:
-	move.l	d3,d5
-	bpl.b	loc_00D4CA
-	neg.l	d5
-loc_00D4CA:
-	cmpi.l	#$10000,d5
-	bcc.b	loc_00D4D4
-	moveq	#$0,d3
-loc_00D4D4:
-	neg.l	d2
-	neg.l	d3
-	asr.l	#$1,d2
-	asr.l	#$1,d3
-	rts
-loc_00D4DE:
-	moveq	#$0,d2
-	moveq	#$0,d3
-	rts
-loc_00D4E4:
-	move.w	#$4,$28(a0)
-	bsr.w	sub_00D9EA
-	bsr.w	sub_014248
-	subq.w	#$8,a4
-	move.l	(a4)+,d0
-	move.l	(a4)+,d1
-	add.l	d0,$4(a0)
-	add.l	d1,$8(a0)
-	move.l	#$3F568,(ram_C34C).w
-	lea	(dat_00D6AA).l,a1
-	bsr.w	sub_00D69C
-	move.l	a5,d2
-	move.l	a6,d3
-	rts
-sub_00D518:
-	move.b	$20(a0),d1
-	andi.w	#$1C,d1
-	moveq	#$0,d6
-	move.b	(ram_C5A8).w,d6
-	andi.b	#$F,d6
-	beq.b	loc_00D594
-	clr.b	(ram_C627).w
-	move.l	$C(a0),d2
-	move.l	$10(a0),d3
-	bne.b	loc_00D556
-	tst.l	d2
-	bne.b	loc_00D556
-	cmpi.w	#$8,(ram_C642).w
-	beq.b	loc_00D556
-	movem.l	d0/a1,-(a7)
-	moveq	#-$21,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-loc_00D556:
-	lea	(dat_03F11C).l,a1
-	add.w	d1,d1
-	lea	(a1,d1.w),a1
-	add.l	(a1)+,d2
-	add.l	(a1)+,d3
-	movea.l	(ram_C34C).w,a1
-	lea	(a1,d1.w),a1
-	move.l	(a1)+,d4
-	beq.b	loc_00D578
-	bmi.b	loc_00D57C
-	cmp.l	d4,d2
-	ble.b	loc_00D580
-loc_00D578:
-	move.l	d4,d2
-	bra.b	loc_00D580
-loc_00D57C:
-	cmp.l	d4,d2
-	blt.b	loc_00D578
-loc_00D580:
-	move.l	(a1)+,d5
-	beq.b	loc_00D58A
-	bmi.b	loc_00D58E
-	cmp.l	d5,d3
-	ble.b	loc_00D592
-loc_00D58A:
-	move.l	d5,d3
-	bra.b	loc_00D592
-loc_00D58E:
-	cmp.l	d5,d3
-	blt.b	loc_00D58A
-loc_00D592:
-	rts
-loc_00D594:
-	move.l	$C(a0),d2
-	move.l	$10(a0),d3
-	bset.b	#$4,(ram_C627).w
-	bne.b	loc_00D5FC
-	movem.l	d0/a1,-(a7)
-	moveq	#-$23,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	move.b	(ram_C627).w,d6
-	andi.b	#$F0,d6
-	tst.l	d2
-	beq.b	loc_00D5CC
-	bmi.b	loc_00D5C8
-	bset.b	#$3,d6
-	bra.b	loc_00D5CC
-loc_00D5C8:
-	bset.b	#$2,d6
-loc_00D5CC:
-	tst.l	d3
-	beq.b	loc_00D5DC
-	bmi.b	loc_00D5D8
-	bset.b	#$1,d6
-	bra.b	loc_00D5DC
-loc_00D5D8:
-	bset.b	#$0,d6
-loc_00D5DC:
-	move.b	d6,(ram_C627).w
-	andi.w	#$F,d6
-	lea	(dat_03F524).l,a1
-	move.b	(a1,d6.w),d6
-	add.w	d6,d6
-	lea	(dat_03F11C).l,a1
-	adda.w	d6,a1
-	move.l	a1,(ram_C656).w
-loc_00D5FC:
-	movea.l	(ram_C656).w,a1
-	move.l	(a1)+,d4
-	move.l	(a1)+,d5
-	move.b	(ram_C627).w,d6
-	andi.b	#$C,d6
-	beq.b	loc_00D620
-	andi.b	#$8,d6
-	beq.b	loc_00D61C
-	sub.l	d4,d2
-	bpl.b	loc_00D620
-loc_00D618:
-	moveq	#$0,d2
-	bra.b	loc_00D620
-loc_00D61C:
-	sub.l	d4,d2
-	bpl.b	loc_00D618
-loc_00D620:
-	move.b	(ram_C627).w,d6
-	andi.b	#$3,d6
-	beq.b	loc_00D63C
-	andi.b	#$2,d6
-	beq.b	loc_00D638
-	sub.l	d5,d3
-	bpl.b	loc_00D63C
-loc_00D634:
-	moveq	#$0,d3
-	bra.b	loc_00D63C
-loc_00D638:
-	sub.l	d5,d3
-	bpl.b	loc_00D634
-loc_00D63C:
-	rts
-sub_00D63E:
-	moveq	#$0,d1
-	move.b	(ram_C5A8).w,d1
-	andi.b	#$F,d1
-	beq.b	loc_00D684
-	lea	(dat_03F524).l,a1
-	move.b	(a1,d1.w),d0
-	move.b	$21(a0),d1
-	moveq	#$1,d2
-	move.b	d1,d3
-	lsr.w	#$1,d3
-	sub.b	d0,d3
-	beq.b	loc_00D672
-	bcc.b	loc_00D668
-	neg.b	d3
-	neg.b	d2
-loc_00D668:
-	cmpi.b	#$10,d3
-	bcc.b	loc_00D670
-	neg.b	d2
-loc_00D670:
-	add.b	d2,d1
-loc_00D672:
-	andi.b	#$3F,d1
-	move.b	d1,$21(a0)
-	lsr.w	#$1,d1
-	andi.b	#$1F,d1
-	move.b	d1,$20(a0)
-loc_00D684:
-	rts
-sub_00D686:
-	move.b	$20(a0),d0
-	andi.w	#$1C,d0
-	lea	(dat_03514E).l,a1
-	move.l	(a1,d0.w),$14(a0)
-	rts
+	dc.b	$72,$00,$12,$38,$C5,$A8,$02,$01
+	dc.b	$00,$0F,$67,$0C,$43,$F9,$00,$03,$F5,$24,$11,$71,$10,$00,$00,$20
+	dc.b	$4E,$75,$74,$00,$76,$00,$7C,$00,$1C,$38,$C5,$A8,$02,$06,$00,$0F
+	dc.b	$67,$28,$48,$E7,$80,$40,$70,$DF,$4E,$B9,$00,$00,$A0,$68,$4C,$DF
+	dc.b	$02,$01,$43,$F9,$00,$03,$F5,$E8,$10,$28,$00,$20,$02,$40,$00,$1C
+	dc.b	$D0,$40,$D2,$C0,$24,$19,$26,$19,$4E,$75,$48,$E7,$80,$40,$70,$DD
+	dc.b	$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01,$4E,$75,$10,$28,$00,$20
+	dc.b	$02,$40,$00,$1C,$43,$F9,$00,$03,$4F,$6E,$21,$71,$00,$00,$00,$14
+	dc.b	$4E,$75,$08,$38,$00,$06,$C5,$A8,$66,$08,$08,$38,$00,$05,$C5,$A8
+	dc.b	$67,$30,$08,$68,$00,$00,$00,$2A,$66,$2E,$70,$03,$7E,$0E,$61,$00
+	dc.b	$0E,$1E,$66,$1C,$08,$E8,$00,$01,$00,$2A,$74,$00,$14,$28,$00,$20
+	dc.b	$02,$02,$00,$1E,$7E,$0E,$78,$03,$30,$3C,$00,$94,$61,$00,$0E,$1C
+	dc.b	$4E,$75,$08,$A8,$00,$00,$00,$2A,$08,$A8,$00,$01,$00,$2A,$4E,$75
+	dc.b	$10,$28,$00,$20,$02,$40,$00,$1E,$D0,$40,$43,$F9,$00,$03,$4F,$DE
+	dc.b	$21,$71,$00,$00,$00,$14,$4E,$75,$61,$00,$00,$26,$30,$3C,$00,$8C
+	dc.b	$14,$28,$00,$20,$02,$02,$00,$1C,$78,$01,$7E,$01,$08,$A8,$00,$01
+	dc.b	$00,$2A,$61,$00,$0D,$D6,$66,$06,$08,$E8,$00,$01,$00,$2A,$4E,$75
+	dc.b	$43,$F8,$C5,$A8,$10,$19,$4A,$38,$FE,$81,$67,$02,$10,$19,$08,$00
+	dc.b	$00,$06,$66,$0A,$08,$00,$00,$05,$66,$04,$61,$96,$58,$4F,$4E,$75
+	dc.b	$61,$DE,$30,$3C,$00,$B0,$14,$28,$00,$20,$02,$42,$00,$1C,$78,$02
+	dc.b	$7E,$03,$60,$00,$0D,$96,$61,$C8,$4A,$78,$E2,$40,$66,$00,$FF,$74
+	dc.b	$30,$3C,$00,$E4,$78,$01,$7E,$00,$61,$00,$0D,$80,$66,$00,$FF,$64
+	dc.b	$30,$3C,$00,$EC,$78,$02,$7E,$09,$43,$F8,$EA,$80,$60,$00,$0D,$70
+	dc.b	$2A,$42,$2C,$43,$12,$28,$00,$20,$02,$41,$00,$1C,$28,$74,$10,$00
+	dc.b	$20,$1C,$22,$1C,$24,$0D,$26,$0E,$D0,$82,$D2,$83,$61,$00,$DF,$0E
+	dc.b	$67,$12,$0C,$00,$00,$04,$67,$30,$0C,$00,$00,$24,$67,$2A,$0C,$00
+	dc.b	$00,$40,$67,$24,$0C,$38,$00,$08,$C6,$42,$66,$0A,$0C,$00,$00,$20
+	dc.b	$67,$04,$60,$00,$00,$60,$51,$CF,$FF,$C8,$08,$28,$00,$03,$00,$2A
+	dc.b	$66,$06,$24,$0D,$26,$0E,$4E,$75,$48,$E7,$80,$40,$70,$BC,$4E,$B9
+	dc.b	$00,$00,$A0,$68,$4C,$DF,$02,$01,$24,$0D,$26,$0E,$0C,$68,$00,$28
+	dc.b	$00,$28,$67,$2A,$28,$02,$6A,$02,$44,$84,$0C,$84,$00,$01,$00,$00
+	dc.b	$64,$02,$74,$00,$2A,$03,$6A,$02,$44,$85,$0C,$85,$00,$01,$00,$00
+	dc.b	$64,$02,$76,$00,$44,$82,$44,$83,$E2,$82,$E2,$83,$4E,$75,$74,$00
+	dc.b	$76,$00,$4E,$75,$31,$7C,$00,$04,$00,$28,$61,$00,$04,$FE,$61,$00
+	dc.b	$6D,$58,$51,$4C,$20,$1C,$22,$1C,$D1,$A8,$00,$04,$D3,$A8,$00,$08
+	dc.b	$21,$FC,$00,$03,$F5,$68,$C3,$4C,$43,$F9,$00,$00,$D6,$AA,$61,$00
+	dc.b	$01,$8C,$24,$0D,$26,$0E,$4E,$75,$12,$28,$00,$20,$02,$41,$00,$1C
+	dc.b	$7C,$00,$1C,$38,$C5,$A8,$02,$06,$00,$0F,$67,$68,$42,$38,$C6,$27
+	dc.b	$24,$28,$00,$0C,$26,$28,$00,$10,$66,$1C,$4A,$82,$66,$18,$0C,$78
+	dc.b	$00,$08,$C6,$42,$67,$10,$48,$E7,$80,$40,$70,$DF,$4E,$B9,$00,$00
+	dc.b	$A0,$68,$4C,$DF,$02,$01,$43,$F9,$00,$03,$F1,$1C,$D2,$41,$43,$F1
+	dc.b	$10,$00,$D4,$99,$D6,$99,$22,$78,$C3,$4C,$43,$F1,$10,$00,$28,$19
+	dc.b	$67,$06,$6B,$08,$B4,$84,$6F,$08,$24,$04,$60,$04,$B4,$84,$6D,$F8
+	dc.b	$2A,$19,$67,$06,$6B,$08,$B6,$85,$6F,$08,$26,$05,$60,$04,$B6,$85
+	dc.b	$6D,$F8,$4E,$75,$24,$28,$00,$0C,$26,$28,$00,$10,$08,$F8,$00,$04
+	dc.b	$C6,$27,$66,$58,$48,$E7,$80,$40,$70,$DD,$4E,$B9,$00,$00,$A0,$68
+	dc.b	$4C,$DF,$02,$01,$1C,$38,$C6,$27,$02,$06,$00,$F0,$4A,$82,$67,$0C
+	dc.b	$6B,$06,$08,$C6,$00,$03,$60,$04,$08,$C6,$00,$02,$4A,$83,$67,$0C
+	dc.b	$6B,$06,$08,$C6,$00,$01,$60,$04,$08,$C6,$00,$00,$11,$C6,$C6,$27
+	dc.b	$02,$46,$00,$0F,$43,$F9,$00,$03,$F5,$24,$1C,$31,$60,$00,$DC,$46
+	dc.b	$43,$F9,$00,$03,$F1,$1C,$D2,$C6,$21,$C9,$C6,$56,$22,$78,$C6,$56
+	dc.b	$28,$19,$2A,$19,$1C,$38,$C6,$27,$02,$06,$00,$0C,$67,$12,$02,$06
+	dc.b	$00,$08,$67,$08,$94,$84,$6A,$08,$74,$00,$60,$04,$94,$84,$6A,$F8
+	dc.b	$1C,$38,$C6,$27,$02,$06,$00,$03,$67,$12,$02,$06,$00,$02,$67,$08
+	dc.b	$96,$85,$6A,$08,$76,$00,$60,$04,$96,$85,$6A,$F8,$4E,$75,$72,$00
+	dc.b	$12,$38,$C5,$A8,$02,$01,$00,$0F,$67,$3A,$43,$F9,$00,$03,$F5,$24
+	dc.b	$10,$31,$10,$00,$12,$28,$00,$21,$74,$01,$16,$01,$E2,$4B,$96,$00
+	dc.b	$67,$10,$64,$04,$44,$03,$44,$02,$0C,$03,$00,$10,$64,$02,$44,$02
+	dc.b	$D2,$02,$02,$01,$00,$3F,$11,$41,$00,$21,$E2,$49,$02,$01,$00,$1F
+	dc.b	$11,$41,$00,$20,$4E,$75,$10,$28,$00,$20,$02,$40,$00,$1C,$43,$F9
+	dc.b	$00,$03,$51,$4E,$21,$71,$00,$00,$00,$14,$4E,$75
 sub_00D69C:
 	lea	(ram_C646).w,a2
+loc_00D6A0:
 	moveq	#$3,d7
 loc_00D6A2:
 	move.l	(a1)+,(a2)+
+loc_00D6A4:
 	dbra	d7,loc_00D6A2
+loc_00D6A8:
 	rts
 dat_00D6AA:
 	dc.b	$00,$B0,$01,$58,$00,$90
@@ -13191,27 +18346,43 @@ dat_00D6CA:
 	dc.b	$01,$50,$01,$10,$01,$30,$00,$E0,$01,$18
 sub_00D6FA:
 	tst.w	(ram_E100).w
+loc_00D6FE:
 	bne.w	loc_00D0BA
+loc_00D702:
 	move.w	$8(a0),d0
+loc_00D706:
 	cmp.w	(ram_C64E).w,d0
+loc_00D70A:
 	bcc.b	loc_00D724
+loc_00D70C:
 	btst.b	#$2,(Flags_C5EB).w
+loc_00D712:
 	bne.b	loc_00D724
+loc_00D714:
 	move.w	(Camera_Y).w,d1
+loc_00D718:
 	subq.w	#$2,d1
+loc_00D71A:
 	bmi.b	loc_00D724
+loc_00D71C:
 	cmp.w	(ram_C542).w,d1
+loc_00D720:
 	bcs.b	loc_00D724
+loc_00D722:
 	bsr.b	sub_00D746
 loc_00D724:
 	move.w	(ram_C504).w,d0
+loc_00D728:
 	cmp.w	(ram_C536).w,d0
+loc_00D72C:
 	bls.b	loc_00D734
 	moveq	#-$1,d1
 	bsr.w	sub_00D7B6
 loc_00D734:
 	move.w	(ram_C504).w,d0
+loc_00D738:
 	cmp.w	(ram_C53E).w,d0
+loc_00D73C:
 	bcc.b	loc_00D744
 	moveq	#$1,d1
 	bsr.w	sub_00D7B6
@@ -13219,42 +18390,29 @@ loc_00D744:
 	rts
 sub_00D746:
 	moveq	#$2,d2
+loc_00D748:
 	move.w	(ram_C328).w,d0
+loc_00D74C:
 	lsl.w	#$2,d0
+loc_00D74E:
 	jmp	loc_00D752(pc,d0.w)
 loc_00D752:
 	bra.w	loc_00D79A
-	bra.w	loc_00D79A
-	bra.w	loc_00D79A
+	dc.b	$60,$00,$00,$42,$60,$00,$00,$3E,$60,$00
+	dc.b	$00,$36,$60,$00,$00,$36,$60,$00,$00,$38,$60,$00,$00,$32
+loc_00D76E:
 	bra.w	loc_00D796
-	bra.w	loc_00D79A
-	bra.w	loc_00D7A0
-	bra.w	loc_00D79E
-	bra.w	loc_00D796
-	bra.w	loc_00D79A
-	bra.w	loc_00D79A
-	bra.w	loc_00D796
-	bra.w	loc_00D79A
-	bra.w	loc_00D79A
-	bra.w	loc_00D79A
-	bra.w	loc_00D796
-	bra.w	loc_00D7A0
-	bra.w	loc_00D79E
+	dc.b	$60,$00,$00,$26,$60,$00,$00,$22,$60,$00,$00,$1A,$60,$00
+	dc.b	$00,$1A,$60,$00,$00,$16,$60,$00,$00,$12,$60,$00,$00,$0A,$60,$00
+	dc.b	$00,$10,$60,$00,$00,$0A
 loc_00D796:
 	sub.w	d2,(ram_C560).w
 loc_00D79A:
 	sub.w	d2,(ram_C51A).w
 loc_00D79E:
 	rts
-loc_00D7A0:
-	sub.w	d2,(ram_C51A).w
-	move.w	d2,d0
-	btst.b	#$1,(Flags_C5EB).w
-	bne.b	loc_00D7B0
-	asr.w	#$1,d0
-loc_00D7B0:
-	sub.w	d0,(ram_C560).w
-	rts
+	dc.b	$95,$78,$C5,$1A,$30,$02,$08,$38,$00,$01,$C5,$EB,$66,$02,$E2,$40
+	dc.b	$91,$78,$C5,$60,$4E,$75
 sub_00D7B6:
 	move.w	(ram_C328).w,d0
 	lsl.w	#$2,d0
@@ -13296,161 +18454,281 @@ loc_00D824:
 	rts
 loc_00D82A:
 	move.w	#$0,$28(a0)
+loc_00D830:
 	clr.l	$C(a0)
+loc_00D834:
 	clr.l	$10(a0)
+loc_00D838:
 	bra.w	loc_00CE0E
 loc_00D83C:
 	move.w	#$4,$28(a0)
+loc_00D842:
 	move.l	#$10600,$1C(a0)
+loc_00D84A:
 	bra.w	loc_00CE44
 sub_00D84E:
 	btst.b	#$4,(ram_C5A9).w
+loc_00D854:
 	beq.w	loc_00D0BA
+loc_00D858:
 	tst.w	(ram_C350).w
+loc_00D85C:
 	beq.w	loc_00D0BA
+loc_00D860:
 	btst.b	#$5,(Flags_C61C).w
+loc_00D866:
 	bne.w	loc_00D0BA
+loc_00D86A:
 	move.w	#$8,$28(a0)
+loc_00D870:
 	move.b	#$18,$20(a0)
+loc_00D876:
 	clr.l	$C(a0)
+loc_00D87A:
 	clr.l	$10(a0)
+loc_00D87E:
 	bclr.b	#$0,$2A(a0)
+loc_00D884:
 	bclr.b	#$1,(ram_E02A).w
+loc_00D88A:
 	st.b	(ram_C601).w
+loc_00D88E:
 	st.b	(ram_C6B4).w
+loc_00D892:
 	bset.b	#$4,$2A(a0)
+loc_00D898:
 	bclr.b	#$2,$2(a0)
+loc_00D89E:
 	move.w	#$80,(ram_C5C2).w
+loc_00D8A4:
 	bsr.w	sub_00D914
+loc_00D8A8:
 	lea	(dat_0404E2).l,a1
+loc_00D8AE:
 	lea	(ram_C352).w,a2
+loc_00D8B2:
 	moveq	#$0,d0
+loc_00D8B4:
 	addq.w	#$1,d0
+loc_00D8B6:
 	sbcd	-(a1),-(a2)
+loc_00D8B8:
 	bsr.w	sub_0080A4
+loc_00D8BC:
 	move.w	#$20,(ram_E100).w
+loc_00D8C2:
 	lea	(ram_E580).w,a1
+loc_00D8C6:
 	moveq	#$1C,d5
+loc_00D8C8:
 	moveq	#$0,d6
+loc_00D8CA:
 	moveq	#$4,d7
 loc_00D8CC:
 	clr.l	(a1)
+loc_00D8CE:
 	move.w	d5,(a1)
+loc_00D8D0:
 	move.w	d6,$2C(a1)
+loc_00D8D4:
 	addq.w	#$4,d6
+loc_00D8D6:
 	lea	$40(a1),a1
+loc_00D8DA:
 	dbra	d7,loc_00D8CC
+loc_00D8DE:
 	bsr.w	sub_00E2BA
+loc_00D8E2:
 	move.l	#$34AE2,$18(a0)
+loc_00D8EA:
 	tst.b	$3B(a0)
+loc_00D8EE:
 	beq.b	loc_00D8F8
+loc_00D8F0:
 	move.l	#$34B28,$18(a0)
 loc_00D8F8:
 	moveq	#$A,d0
+loc_00D8FA:
 	bsr.w	sub_00D95E
+loc_00D8FE:
 	addq.w	#$4,a7
+loc_00D900:
 	movem.l	d0/a1,-(a7)
+loc_00D904:
 	moveq	#-$4B,d0
+loc_00D906:
 	jsr	(sub_00A068).l
+loc_00D90C:
 	movem.l	(a7)+,d0/a1
+loc_00D910:
 	bra.w	loc_00D0AA
 sub_00D914:
 	lea	(Objects_C).w,a2
+loc_00D918:
 	moveq	#$11,d7
+loc_00D91A:
 	moveq	#$0,d0
 loc_00D91C:
 	move.l	d0,(a2)
+loc_00D91E:
 	lea	$40(a2),a2
+loc_00D922:
 	dbra	d7,loc_00D91C
+loc_00D926:
 	rts
 sub_00D928:
 	move.b	$20(a0),d2
+loc_00D92C:
 	lea	(dat_03F524).l,a1
+loc_00D932:
 	moveq	#$0,d1
+loc_00D934:
 	move.b	(a1,d0.w),d1
+loc_00D938:
 	move.b	d1,$20(a0)
+loc_00D93C:
 	cmp.b	d2,d1
+loc_00D93E:
 	beq.b	loc_00D94A
+loc_00D940:
 	bset.b	#$2,$2A(a0)
+loc_00D946:
 	move.b	d2,$21(a0)
 loc_00D94A:
 	rts
 sub_00D94C:
 	clr.l	(ram_C508).w
+loc_00D950:
 	clr.l	(ram_C51A).w
+loc_00D954:
 	clr.l	(ram_C54E).w
+loc_00D958:
 	clr.l	(ram_C560).w
+loc_00D95C:
 	rts
 sub_00D95E:
 	move.b	d0,$1E(a0)
+loc_00D962:
 	move.w	#$FF01,$1C(a0)
+loc_00D968:
 	bra.w	sub_014248
 sub_00D96C:
 	lea	(dat_00E526).l,a1
+loc_00D972:
 	lea	(a1,d0.w),a1
+loc_00D976:
 	move.l	(a1)+,$18(a0)
+loc_00D97A:
 	move.l	(a1),$1C(a0)
+loc_00D97E:
 	bra.w	sub_014248
 sub_00D982:
 	movea.l	$18(a0),a1
+loc_00D986:
 	moveq	#$0,d0
+loc_00D988:
 	move.b	(a1),d0
+loc_00D98A:
 	subq.b	#$1,d0
+loc_00D98C:
 	lsl.w	#$2,d0
+loc_00D98E:
 	move.l	$2(a1,d0.w),$14(a0)
+loc_00D994:
 	rts
 sub_00D996:
 	moveq	#$0,d0
+loc_00D998:
 	move.b	$3B(a0),d0
+loc_00D99C:
 	moveq	#$0,d1
+loc_00D99E:
 	move.b	$20(a0),d1
+loc_00D9A2:
 	movea.l	(ram_C34C).w,a1
+loc_00D9A6:
 	add.w	d1,d1
+loc_00D9A8:
 	add.w	d0,d1
+loc_00D9AA:
 	lea	(a1,d1.w),a1
+loc_00D9AE:
 	move.l	(a1)+,d2
+loc_00D9B0:
 	move.l	(a1)+,d3
+loc_00D9B2:
 	rts
 sub_00D9B4:
 	moveq	#$0,d1
+loc_00D9B6:
 	move.b	$20(a0),d1
+loc_00D9BA:
 	moveq	#$0,d0
+loc_00D9BC:
 	move.b	$3B(a0),d0
+loc_00D9C0:
 	btst.b	#$1,$2A(a0)
+loc_00D9C6:
 	beq.b	loc_00D9CC
+loc_00D9C8:
 	addi.b	#$20,d0
 loc_00D9CC:
 	add.w	d0,d1
+loc_00D9CE:
 	lea	(dat_0344C2).l,a1
+loc_00D9D4:
 	movea.l	(a1,d1.w),a1
+loc_00D9D8:
 	move.w	(a1)+,d0
+loc_00D9DA:
 	andi.b	#$EF,$2(a0)
+loc_00D9E0:
 	or.w	d0,$2(a0)
+loc_00D9E4:
 	move.l	(a1),$14(a0)
+loc_00D9E8:
 	rts
 sub_00D9EA:
 	move.l	#$10600,$1C(a0)
 sub_00D9F2:
 	move.b	$20(a0),d1
+loc_00D9F6:
 	andi.w	#$1C,d1
+loc_00D9FA:
 	moveq	#$0,d0
+loc_00D9FC:
 	move.b	$3B(a0),d0
+loc_00DA00:
 	lsr.w	#$1,d0
+loc_00DA02:
 	add.w	d0,d1
+loc_00DA04:
 	lea	(dat_034602).l,a1
+loc_00DA0A:
 	movea.l	(a1,d1.w),a1
+loc_00DA0E:
 	move.w	(a1)+,d0
+loc_00DA10:
 	andi.b	#$EF,$2(a0)
+loc_00DA16:
 	or.w	d0,$2(a0)
+loc_00DA1A:
 	move.l	(a1),$18(a0)
+loc_00DA1E:
 	rts
 sub_00DA20:
 	moveq	#$0,d4
+loc_00DA22:
 	move.w	$4(a1),d2
+loc_00DA26:
 	move.w	$8(a1),d3
+loc_00DA2A:
 	cmp.w	$8(a0),d3
+loc_00DA2E:
 	bcs.b	loc_00DA38
+loc_00DA30:
 	cmp.w	$4(a0),d2
+loc_00DA34:
 	bcc.b	loc_00DA4A
 	bra.b	loc_00DA46
 loc_00DA38:
@@ -13458,187 +18736,282 @@ loc_00DA38:
 	bcs.b	loc_00DA42
 loc_00DA3E:
 	moveq	#$1C,d4
+loc_00DA40:
 	bra.b	loc_00DA4C
 loc_00DA42:
 	moveq	#$14,d4
+loc_00DA44:
 	bra.b	loc_00DA4C
 loc_00DA46:
 	moveq	#$C,d4
+loc_00DA48:
 	bra.b	loc_00DA4C
 loc_00DA4A:
 	moveq	#$4,d4
 loc_00DA4C:
 	move.b	d4,(ram_C61A).w
+loc_00DA50:
 	rts
 sub_00DA52:
 	moveq	#$0,d4
+loc_00DA54:
 	move.w	$4(a1),d2
+loc_00DA58:
 	move.w	$8(a1),d3
+loc_00DA5C:
 	cmpi.w	#$148,d3
+loc_00DA60:
 	bhi.b	loc_00DA74
+loc_00DA62:
 	cmp.w	$8(a0),d3
+loc_00DA66:
 	bcs.b	loc_00DA74
+loc_00DA68:
 	cmp.w	$4(a0),d2
+loc_00DA6C:
 	bcc.w	loc_00DA4A
+loc_00DA70:
 	bra.w	loc_00DA46
 loc_00DA74:
 	cmp.w	$4(a0),d2
+loc_00DA78:
 	bcs.w	loc_00DA42
+loc_00DA7C:
 	bra.w	loc_00DA3E
 sub_00DA80:
 	lea	(dat_0346A2).l,a1
 loc_00DA86:
 	bsr.b	sub_00DA96
+loc_00DA88:
 	move.l	(a1,d1.w),(ram_E014).w
+loc_00DA8E:
 	bclr.b	#$4,(ram_E002).w
+loc_00DA94:
 	rts
 sub_00DA96:
 	moveq	#$0,d1
+loc_00DA98:
 	move.b	(ram_C61A).w,d1
+loc_00DA9C:
 	moveq	#$0,d0
+loc_00DA9E:
 	move.b	(ram_E03B).w,d0
+loc_00DAA2:
 	lsr.w	#$1,d0
+loc_00DAA4:
 	add.w	d0,d1
+loc_00DAA6:
 	rts
 sub_00DAA8:
 	lea	(dat_034C74).l,a1
+loc_00DAAE:
 	bra.b	loc_00DA86
 sub_00DAB0:
 	lea	(dat_034CB4).l,a1
+loc_00DAB6:
 	bsr.b	sub_00DA96
+loc_00DAB8:
 	move.l	(a1,d1.w),(ram_E018).w
+loc_00DABE:
 	bclr.b	#$4,(ram_E002).w
+loc_00DAC4:
 	rts
 sub_00DAC6:
 	lea	(dat_0346E2).l,a1
+loc_00DACC:
 	moveq	#$0,d1
+loc_00DACE:
 	move.b	(ram_E020).w,d1
+loc_00DAD2:
 	move.l	(a1,d1.w),(ram_E014).w
+loc_00DAD8:
 	bclr.b	#$4,(ram_E002).w
+loc_00DADE:
 	rts
 sub_00DAE0:
 	lea	(dat_034702).l,a1
+loc_00DAE6:
 	moveq	#$0,d1
+loc_00DAE8:
 	move.b	(ram_E020).w,d1
+loc_00DAEC:
 	move.l	(a1,d1.w),(ram_E018).w
+loc_00DAF2:
 	bclr.b	#$4,(ram_E002).w
+loc_00DAF8:
 	rts
 sub_00DAFA:
 	lea	(dat_03F8E8).l,a1
+loc_00DB00:
 	moveq	#$0,d1
+loc_00DB02:
 	move.b	(ram_C61A).w,d1
+loc_00DB06:
 	move.l	(a1,d1.w),d0
+loc_00DB0A:
 	move.w	d0,(ram_E010).w
+loc_00DB0E:
 	swap	d0
+loc_00DB10:
 	move.w	d0,(ram_E00C).w
+loc_00DB14:
 	bclr.b	#$4,(ram_E002).w
+loc_00DB1A:
 	rts
 sub_00DB1C:
 	lea	(dat_034CF4).l,a1
+loc_00DB22:
 	moveq	#$0,d1
+loc_00DB24:
 	move.b	(ram_C61A).w,d1
+loc_00DB28:
 	move.l	(a1,d1.w),(ram_E014).w
+loc_00DB2E:
 	bclr.b	#$4,(ram_E002).w
+loc_00DB34:
 	rts
 sub_00DB36:
 	lea	(dat_034D14).l,a1
+loc_00DB3C:
 	moveq	#$0,d1
+loc_00DB3E:
 	move.b	(ram_C61A).w,d1
+loc_00DB42:
 	move.l	(a1,d1.w),(ram_E014).w
+loc_00DB48:
 	bclr.b	#$4,(ram_E002).w
+loc_00DB4E:
 	rts
 sub_00DB50:
 	tst.b	(ram_C626).w
+loc_00DB54:
 	bne.w	loc_00DC42
+loc_00DB58:
 	move.w	$4(a0),d0
+loc_00DB5C:
 	move.l	(ram_C504).w,d1
+loc_00DB60:
 	tst.l	d2
+loc_00DB62:
 	beq.b	loc_00DB94
+loc_00DB64:
 	bpl.b	loc_00DB7E
+loc_00DB66:
 	cmp.w	(ram_C652).w,d0
+loc_00DB6A:
 	bhi.b	loc_00DB94
+loc_00DB6C:
 	add.l	d2,d1
+loc_00DB6E:
 	cmp.l	(ram_C53E).w,d1
+loc_00DB72:
 	bge.b	loc_00DB92
+loc_00DB74:
 	cmp.w	(ram_C64A).w,d0
+loc_00DB78:
 	bls.b	loc_00DB9C
+loc_00DB7A:
 	bra.w	loc_00DB94
 loc_00DB7E:
 	cmp.w	(ram_C64C).w,d0
+loc_00DB82:
 	bhi.b	loc_00DB9C
+loc_00DB84:
 	add.l	d2,d1
+loc_00DB86:
 	cmp.l	(ram_C536).w,d1
+loc_00DB8A:
 	bhi.b	loc_00DB94
+loc_00DB8C:
 	cmp.w	(ram_C654).w,d0
+loc_00DB90:
 	bcs.b	loc_00DB94
 loc_00DB92:
 	bsr.b	sub_00DBA4
 loc_00DB94:
 	move.l	d2,$C(a0)
+loc_00DB98:
 	moveq	#$0,d4
 loc_00DB9A:
 	rts
 loc_00DB9C:
 	clr.l	$C(a0)
+loc_00DBA0:
 	moveq	#$1,d4
+loc_00DBA2:
 	rts
 sub_00DBA4:
 	btst.b	#$4,(Flags_C61C).w
+loc_00DBAA:
 	bne.b	loc_00DB9A
+loc_00DBAC:
 	move.w	(ram_C328).w,d0
+loc_00DBB0:
 	lsl.w	#$2,d0
+loc_00DBB2:
 	jmp	loc_00DBB6(pc,d0.w)
 loc_00DBB6:
 	bra.w	loc_00DBFA
+loc_00DBBA:
 	bra.w	loc_00DC14
-	bra.w	loc_00DC14
-	bra.w	loc_00DC10
-	bra.w	loc_00DC14
+	dc.b	$60,$00
+	dc.b	$00,$54,$60,$00,$00,$4C,$60,$00,$00,$4C,$60,$00,$00,$2E,$60,$00
+	dc.b	$00,$44
+loc_00DBD2:
 	bra.w	loc_00DBFA
+loc_00DBD6:
 	bra.w	loc_00DC14
-	bra.w	loc_00DBFA
-	bra.w	loc_00DC14
-	bra.w	loc_00DC14
-	bra.w	loc_00DC10
-	bra.w	loc_00DC14
-	bra.w	loc_00DC14
-	bra.w	loc_00DC14
-	bra.w	loc_00DC10
-	bra.w	loc_00DBFA
-	bra.w	loc_00DC18
+	dc.b	$60,$00,$00,$38,$60,$00
+	dc.b	$00,$30,$60,$00,$00,$30,$60,$00,$00,$2C,$60,$00,$00,$28,$60,$00
+	dc.b	$00,$20,$60,$00,$00,$06,$60,$00,$00,$20
 loc_00DBFA:
 	move.l	d2,(ram_C508).w
+loc_00DBFE:
 	move.l	d2,d0
+loc_00DC00:
 	btst.b	#$1,(Flags_C5EB).w
+loc_00DC06:
 	bne.b	loc_00DC0A
+loc_00DC08:
 	asr.l	#$1,d0
 loc_00DC0A:
 	move.l	d0,(ram_C54E).w
+loc_00DC0E:
 	rts
-loc_00DC10:
-	move.l	d2,(ram_C54E).w
+	dc.b	$21,$C2,$C5,$4E
 loc_00DC14:
 	move.l	d2,(ram_C508).w
 loc_00DC18:
 	rts
 sub_00DC1A:
 	move.w	$4(a0),d0
+loc_00DC1E:
 	tst.l	d2
+loc_00DC20:
 	beq.b	loc_00DC32
+loc_00DC22:
 	bpl.b	loc_00DC2C
+loc_00DC24:
 	cmp.w	(ram_C64A).w,d0
+loc_00DC28:
 	bls.b	loc_00DC3A
+loc_00DC2A:
 	bra.b	loc_00DC32
 loc_00DC2C:
 	cmp.w	(ram_C64C).w,d0
+loc_00DC30:
 	bhi.b	loc_00DC3A
 loc_00DC32:
 	move.l	d2,$C(a0)
+loc_00DC36:
 	moveq	#$0,d4
+loc_00DC38:
 	rts
 loc_00DC3A:
 	clr.l	$C(a0)
+loc_00DC3E:
 	moveq	#$1,d4
+loc_00DC40:
 	rts
 loc_00DC42:
 	move.w	$4(a0),d0
@@ -13661,77 +19034,84 @@ loc_00DC62:
 	rts
 sub_00DC6A:
 	tst.b	(ram_C626).w
+loc_00DC6E:
 	bne.w	loc_00DD30
+loc_00DC72:
 	move.w	$8(a0),d0
+loc_00DC76:
 	move.l	(Camera_Y).w,d1
+loc_00DC7A:
 	tst.l	d3
+loc_00DC7C:
 	beq.b	loc_00DCA2
+loc_00DC7E:
 	bpl.b	loc_00DC98
+loc_00DC80:
 	cmp.w	(ram_C646).w,d0
+loc_00DC84:
 	bls.b	loc_00DCAA
+loc_00DC86:
 	add.l	d3,d1
+loc_00DC88:
 	bmi.b	loc_00DCA2
+loc_00DC8A:
 	cmp.l	(ram_C542).w,d1
+loc_00DC8E:
 	bcs.b	loc_00DCA2
+loc_00DC90:
 	cmp.w	(ram_C64E).w,d0
+loc_00DC94:
 	bls.b	loc_00DCA0
+loc_00DC96:
 	bra.b	loc_00DCA2
 loc_00DC98:
 	cmp.w	(ram_C648).w,d0
+loc_00DC9C:
 	bhi.b	loc_00DCAA
+loc_00DC9E:
 	bra.b	loc_00DCA2
 loc_00DCA0:
 	bsr.b	sub_00DCB2
 loc_00DCA2:
 	move.l	d3,$10(a0)
+loc_00DCA6:
 	moveq	#$0,d4
 loc_00DCA8:
 	rts
 loc_00DCAA:
 	clr.l	$10(a0)
+loc_00DCAE:
 	moveq	#$1,d4
+loc_00DCB0:
 	rts
 sub_00DCB2:
 	move.w	(ram_C328).w,d0
+loc_00DCB6:
 	lsl.w	#$2,d0
+loc_00DCB8:
 	jmp	loc_00DCBC(pc,d0.w)
 loc_00DCBC:
 	bra.w	loc_00DD00
-	bra.w	loc_00DD0C
+	dc.b	$60,$00,$00,$4A,$60,$00,$00,$3A,$60,$00,$00,$36,$60,$00,$00,$32
+	dc.b	$60,$00,$00,$40,$60,$00,$00,$36
+loc_00DCD8:
 	bra.w	loc_00DD00
+loc_00DCDC:
 	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD12
-	bra.w	loc_00DD0C
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD00
-	bra.w	loc_00DD12
-	bra.w	loc_00DD10
+	dc.b	$60,$00,$00,$1E,$60,$00,$00,$1A,$60,$00,$00,$16,$60,$00,$00,$12
+	dc.b	$60,$00,$00,$0E,$60,$00,$00,$0A,$60,$00,$00,$18,$60,$00,$00,$12
 loc_00DD00:
 	btst.b	#$2,(Flags_C5EB).w
+loc_00DD06:
 	bne.b	loc_00DCA8
+loc_00DD08:
 	move.l	d3,(ram_C560).w
 loc_00DD0C:
 	move.l	d3,(ram_C51A).w
 loc_00DD10:
 	rts
-loc_00DD12:
-	btst.b	#$2,(Flags_C5EB).w
-	bne.b	loc_00DCA8
-	move.l	d3,(ram_C51A).w
-	move.l	d3,d0
-	btst.b	#$1,(Flags_C5EB).w
-	bne.b	loc_00DD2A
-	asr.l	#$1,d0
-loc_00DD2A:
-	move.l	d0,(ram_C560).w
-	rts
+	dc.b	$08,$38,$00,$02,$C5,$EB,$66,$8E,$21,$C3,$C5,$1A,$20,$03
+	dc.b	$08,$38,$00,$01,$C5,$EB,$66,$02,$E2,$80,$21,$C0,$C5,$60,$4E,$75
 loc_00DD30:
 	move.l	(ram_C634).w,d4
 	bsr.w	sub_00DD74
@@ -13813,109 +19193,179 @@ loc_00DE00:
 	rts
 sub_00DE06:
 	move.l	d2,d6
+loc_00DE08:
 	move.l	d3,d7
+loc_00DE0A:
 	tst.b	(ram_C626).w
+loc_00DE0E:
 	bne.b	loc_00DE6C
+loc_00DE10:
 	tst.l	d6
+loc_00DE12:
 	beq.b	loc_00DE34
+loc_00DE14:
 	move.l	d6,d0
+loc_00DE16:
 	moveq	#$0,d1
+loc_00DE18:
 	bsr.w	sub_00B36C
+loc_00DE1C:
 	beq.b	loc_00DE34
+loc_00DE1E:
 	cmpi.b	#$4,d0
+loc_00DE22:
 	beq.b	loc_00DE32
+loc_00DE24:
 	cmpi.b	#$24,d0
+loc_00DE28:
 	beq.b	loc_00DE32
+loc_00DE2A:
 	cmpi.b	#$40,d0
+loc_00DE2E:
 	beq.b	loc_00DE32
+loc_00DE30:
 	bra.b	loc_00DE34
 loc_00DE32:
 	moveq	#$0,d6
 loc_00DE34:
 	tst.l	d7
+loc_00DE36:
 	beq.b	loc_00DE58
+loc_00DE38:
 	moveq	#$0,d0
+loc_00DE3A:
 	move.l	d7,d1
+loc_00DE3C:
 	bsr.w	sub_00B36C
+loc_00DE40:
 	beq.b	loc_00DE58
+loc_00DE42:
 	cmpi.b	#$4,d0
+loc_00DE46:
 	beq.b	loc_00DE56
+loc_00DE48:
 	cmpi.b	#$24,d0
+loc_00DE4C:
 	beq.b	loc_00DE56
+loc_00DE4E:
 	cmpi.b	#$40,d0
+loc_00DE52:
 	beq.b	loc_00DE56
+loc_00DE54:
 	bra.b	loc_00DE58
 loc_00DE56:
 	moveq	#$0,d7
 loc_00DE58:
 	clr.b	$3B(a0)
+loc_00DE5C:
 	bsr.w	sub_00E2BA
+loc_00DE60:
 	btst.b	#$3,$2A(a0)
+loc_00DE66:
 	beq.b	loc_00DE6C
+loc_00DE68:
 	moveq	#$0,d6
+loc_00DE6A:
 	moveq	#$0,d7
 loc_00DE6C:
 	move.l	d6,d2
+loc_00DE6E:
 	move.l	d7,d3
+loc_00DE70:
 	rts
 sub_00DE72:
 	btst.b	#$0,$2A(a0)
+loc_00DE78:
 	bne.b	loc_00DE9E
+loc_00DE7A:
 	lea	(ram_C5A8).w,a1
+loc_00DE7E:
 	move.b	(a1)+,d0
+loc_00DE80:
 	tst.b	(ram_FE81).w
+loc_00DE84:
 	beq.b	loc_00DE90
+loc_00DE86:
 	cmpi.w	#$4,(ram_C352).w
+loc_00DE8C:
 	beq.b	loc_00DE90
+loc_00DE8E:
 	move.b	(a1)+,d0
 loc_00DE90:
 	btst.b	#$6,d0
+loc_00DE94:
 	bne.b	loc_00DE9E
+loc_00DE96:
 	btst.b	#$5,d0
+loc_00DE9A:
 	beq.w	loc_00D0BA
 loc_00DE9E:
 	move.w	(ram_C352).w,d0
+loc_00DEA2:
 	jmp	loc_00DEA6(pc,d0.w)
 loc_00DEA6:
 	bra.w	loc_00DEBE
-	bra.w	loc_00E05E
-	bra.w	loc_00E006
-	bra.w	loc_00E09A
-	bra.w	loc_00E0C2
-	bra.w	loc_00DF60
+	dc.b	$60,$00,$01,$B2,$60,$00
+	dc.b	$01,$56,$60,$00,$01,$E6,$60,$00,$02,$0A,$60,$00,$00,$A4
 loc_00DEBE:
 	btst.b	#$0,$2A(a0)
+loc_00DEC4:
 	bne.b	loc_00DEEA
+loc_00DEC6:
 	lea	(dat_00DF4C).l,a1
+loc_00DECC:
 	bsr.w	sub_00E17A
+loc_00DED0:
 	bsr.w	sub_00E18E
+loc_00DED4:
 	bne.w	loc_00DF40
+loc_00DED8:
 	bset.b	#$0,$2A(a0)
+loc_00DEDE:
 	bclr.b	#$1,$2A(a0)
+loc_00DEE4:
 	move.b	#$3,$2F(a0)
 loc_00DEEA:
 	bchg.b	#$1,$2A(a0)
+loc_00DEF0:
 	tst.b	$2F(a0)
+loc_00DEF4:
 	bne.b	loc_00DF08
+loc_00DEF6:
 	btst.b	#$1,$2A(a0)
+loc_00DEFC:
 	bne.b	loc_00DF08
+loc_00DEFE:
 	bclr.b	#$0,$2A(a0)
+loc_00DF04:
 	bra.w	loc_00DF40
 loc_00DF08:
 	bsr.w	sub_00E114
+loc_00DF0C:
 	bsr.w	sub_00E14A
+loc_00DF10:
 	bne.b	loc_00DF40
+loc_00DF12:
 	subq.b	#$1,$2F(a0)
+loc_00DF16:
 	bpl.b	loc_00DF1C
+loc_00DF18:
 	clr.b	$2F(a0)
 loc_00DF1C:
 	andi.b	#$1F,d2
+loc_00DF20:
 	lea	(dat_00DF4C).l,a1
+loc_00DF26:
 	bsr.w	sub_00E17A
+loc_00DF2A:
 	move.w	(ram_C346).w,d0
+loc_00DF2E:
 	lea	(dat_00DF42).l,a2
+loc_00DF34:
 	move.b	(a2,d0.w),d4
+loc_00DF38:
 	move.w	#$C,d0
+loc_00DF3C:
 	bsr.w	sub_00E1AA
 loc_00DF40:
 	rts
@@ -13924,319 +19374,316 @@ dat_00DF42:
 dat_00DF4C:
 	dc.b	$03,$05,$03,$05
 	dc.b	$06,$0B,$03,$05,$06,$0B,$09,$11,$09,$11,$09,$11,$09,$11,$09,$11
-loc_00DF60:
-	btst.b	#$0,$2A(a0)
-	bne.b	loc_00DF8C
-	lea	(dat_00DFF2).l,a1
-	bsr.w	sub_00E17A
-	bsr.w	sub_00E18E
-	bne.w	loc_00DFE6
-	bset.b	#$0,$2A(a0)
-	bclr.b	#$1,$2A(a0)
-	move.b	#$2,$2F(a0)
-loc_00DF8C:
-	bchg.b	#$1,$2A(a0)
-	tst.b	$2F(a0)
-	bne.b	loc_00DFAA
-	btst.b	#$1,$2A(a0)
-	bne.b	loc_00DFAA
-	bclr.b	#$0,$2A(a0)
-	bra.w	loc_00DFE6
-loc_00DFAA:
-	btst.b	#$1,$2A(a0)
-	beq.b	loc_00DFE6
-	subq.b	#$1,$2F(a0)
-	bpl.b	loc_00DFBC
-	clr.b	$2F(a0)
-loc_00DFBC:
-	moveq	#$0,d2
-	move.b	$20(a0),d2
-	andi.b	#$1C,d2
-	lea	(dat_00DFF2).l,a1
-	bsr.w	sub_00E17A
-	move.w	(ram_C346).w,d0
-	lea	(dat_00DFE8).l,a2
-	move.b	(a2,d0.w),d4
-	move.w	#$4C,d0
-	bsr.w	sub_00E1AA
-loc_00DFE6:
-	rts
-dat_00DFE8:
-	dc.b	$01,$03,$03,$03,$05,$05,$05,$05
-	dc.b	$05,$05
-dat_00DFF2:
-	dc.b	$02,$03,$06,$0B,$06,$0B,$06,$0B,$0A,$13,$0A,$13,$0A,$13
-	dc.b	$0A,$13,$0A,$13,$0A,$13
-loc_00E006:
-	btst.b	#$0,$2A(a0)
-	bne.b	loc_00E02C
-	moveq	#$1,d0
-	moveq	#$1,d7
-	cmpi.w	#$4,(ram_C346).w
-	bcs.b	loc_00E01C
-	moveq	#$2,d7
-loc_00E01C:
-	bsr.w	sub_00E18E
-	bne.w	loc_00E05C
-	ori.b	#$3,$2A(a0)
-	bra.b	loc_00E036
-loc_00E02C:
-	andi.b	#$FC,$2A(a0)
-	bra.w	loc_00E05C
-loc_00E036:
-	btst.b	#$1,$2A(a0)
-	beq.b	loc_00E05C
-	move.w	#$50,d0
-	move.b	$20(a0),d2
-	andi.b	#$1C,d2
-	moveq	#$1,d4
-	moveq	#$1,d7
-	cmpi.w	#$4,(ram_C346).w
-	bcs.b	loc_00E058
-	moveq	#$2,d7
-loc_00E058:
-	bsr.w	sub_00E1AA
-loc_00E05C:
-	rts
-loc_00E05E:
-	btst.b	#$0,$2A(a0)
-	bne.b	loc_00E098
-	bset.b	#$0,$2A(a0)
-	move.w	#$9F,d7
-	lea	(ram_E1C0).w,a1
-	moveq	#$0,d0
-loc_00E076:
-	move.l	d0,(a1)+
-	dbra	d7,loc_00E076
-	moveq	#$9,d7
-	lea	(ram_E1C0).w,a1
-	move.w	#$54,d0
-	moveq	#$24,d1
-loc_00E088:
-	move.w	d0,(a1)
-	move.w	d1,$2C(a1)
-	subq.w	#$4,d1
-	lea	$40(a1),a1
-	dbra	d7,loc_00E088
-loc_00E098:
-	rts
-loc_00E09A:
-	moveq	#$C,d0
-	moveq	#$B,d7
-	bsr.w	sub_00E18E
-	bne.w	loc_00E0C0
-	bset.b	#$1,$2A(a0)
-	move.w	#$144,d0
-	move.b	$20(a0),d2
-	andi.b	#$1C,d2
-	moveq	#$C,d4
-	moveq	#$B,d7
-	bsr.w	sub_00E1AA
-loc_00E0C0:
-	rts
-loc_00E0C2:
-	move.w	(ram_C346).w,d0
-	moveq	#$0,d7
-	move.b	dat_00E0FA(pc,d0.w),d7
-	bsr.w	sub_00E0FE
-	tst.w	d0
-	beq.b	loc_00E0F8
-	move.w	d0,-(a7)
-	ori.b	#$2,$2A(a0)
-	move.b	$20(a0),d2
-	andi.b	#$1C,d2
-	move.w	(a7)+,d4
-	move.w	(ram_C346).w,d0
-	moveq	#$0,d7
-	move.b	dat_00E0FA(pc,d0.w),d7
-	move.w	#$148,d0
-	bsr.w	sub_00E1AA
-loc_00E0F8:
-	rts
-dat_00E0FA:
-	dc.b	$03,$04,$05,$00
-sub_00E0FE:
-	moveq	#$0,d0
-	lea	(ram_E1C0).w,a1
-loc_00E104:
-	tst.w	(a1)
-	bne.b	loc_00E10A
-	addq.w	#$1,d0
-loc_00E10A:
-	lea	$40(a1),a1
-	dbra	d7,loc_00E104
-	rts
+	dc.b	$08,$28,$00,$00,$00,$2A,$66,$24,$43,$F9,$00,$00,$DF,$F2,$61,$00
+	dc.b	$02,$0A,$61,$00,$02,$1A,$66,$00,$00,$6E,$08,$E8,$00,$00,$00,$2A
+	dc.b	$08,$A8,$00,$01,$00,$2A,$11,$7C,$00,$02,$00,$2F,$08,$68,$00,$01
+	dc.b	$00,$2A,$4A,$28,$00,$2F,$66,$12,$08,$28,$00,$01,$00,$2A,$66,$0A
+	dc.b	$08,$A8,$00,$00,$00,$2A,$60,$00,$00,$3E,$08,$28,$00,$01,$00,$2A
+	dc.b	$67,$34,$53,$28,$00,$2F,$6A,$04,$42,$28,$00,$2F,$74,$00,$14,$28
+	dc.b	$00,$20,$02,$02,$00,$1C,$43,$F9,$00,$00,$DF,$F2,$61,$00,$01,$AC
+	dc.b	$30,$38,$C3,$46,$45,$F9,$00,$00,$DF,$E8,$18,$32,$00,$00,$30,$3C
+	dc.b	$00,$4C,$61,$00,$01,$C6,$4E,$75,$01,$03,$03,$03,$05,$05,$05,$05
+	dc.b	$05,$05,$02,$03,$06,$0B,$06,$0B,$06,$0B,$0A,$13,$0A,$13,$0A,$13
+	dc.b	$0A,$13,$0A,$13,$0A,$13,$08,$28,$00,$00,$00,$2A,$66,$1E,$70,$01
+	dc.b	$7E,$01,$0C,$78,$00,$04,$C3,$46,$65,$02,$7E,$02,$61,$00,$01,$70
+	dc.b	$66,$00,$00,$3A,$00,$28,$00,$03,$00,$2A,$60,$0A,$02,$28,$00,$FC
+	dc.b	$00,$2A,$60,$00,$00,$28,$08,$28,$00,$01,$00,$2A,$67,$1E,$30,$3C
+	dc.b	$00,$50,$14,$28,$00,$20,$02,$02,$00,$1C,$78,$01,$7E,$01,$0C,$78
+	dc.b	$00,$04,$C3,$46,$65,$02,$7E,$02,$61,$00,$01,$50,$4E,$75,$08,$28
+	dc.b	$00,$00,$00,$2A,$66,$32,$08,$E8,$00,$00,$00,$2A,$3E,$3C,$00,$9F
+	dc.b	$43,$F8,$E1,$C0,$70,$00,$22,$C0,$51,$CF,$FF,$FC,$7E,$09,$43,$F8
+	dc.b	$E1,$C0,$30,$3C,$00,$54,$72,$24,$32,$80,$33,$41,$00,$2C,$59,$41
+	dc.b	$43,$E9,$00,$40,$51,$CF,$FF,$F2,$4E,$75,$70,$0C,$7E,$0B,$61,$00
+	dc.b	$00,$EE,$66,$00,$00,$1C,$08,$E8,$00,$01,$00,$2A,$30,$3C,$01,$44
+	dc.b	$14,$28,$00,$20,$02,$02,$00,$1C,$78,$0C,$7E,$0B,$61,$00,$00,$EC
+	dc.b	$4E,$75,$30,$38,$C3,$46,$7E,$00,$1E,$3B,$00,$30,$61,$00,$00,$30
+	dc.b	$4A,$40,$67,$24,$3F,$00,$00,$28,$00,$02,$00,$2A,$14,$28,$00,$20
+	dc.b	$02,$02,$00,$1C,$38,$1F,$30,$38,$C3,$46,$7E,$00,$1E,$3B,$00,$0C
+	dc.b	$30,$3C,$01,$48,$61,$00,$00,$B4,$4E,$75,$03,$04,$05,$00,$70,$00
+	dc.b	$43,$F8,$E1,$C0,$4A,$51,$66,$02,$52,$40,$43,$E9,$00,$40,$51,$CF
+	dc.b	$FF,$F4,$4E,$75
 sub_00E114:
 	move.b	(ram_E020).w,d1
+loc_00E118:
 	moveq	#$0,d3
+loc_00E11A:
 	btst.b	#$2,(ram_E02A).w
+loc_00E120:
 	beq.b	loc_00E13E
+loc_00E122:
 	move.b	(ram_E021).w,d2
+loc_00E126:
 	sub.b	d2,d1
+loc_00E128:
 	move.b	d1,d3
+loc_00E12A:
 	bpl.b	loc_00E12E
+loc_00E12C:
 	neg.b	d1
 loc_00E12E:
 	cmpi.b	#$4,d1
+loc_00E132:
 	bls.b	loc_00E13C
+loc_00E134:
 	cmpi.b	#$1C,d1
+loc_00E138:
 	bne.b	loc_00E142
+loc_00E13A:
 	neg.b	d3
 loc_00E13C:
 	rts
 loc_00E13E:
 	move.b	d1,d2
+loc_00E140:
 	rts
 loc_00E142:
 	move.b	(ram_E020).w,d2
+loc_00E146:
 	moveq	#$0,d3
+loc_00E148:
 	rts
 sub_00E14A:
 	tst.b	d3
+loc_00E14C:
 	beq.b	loc_00E16E
+loc_00E14E:
 	bmi.b	loc_00E15E
+loc_00E150:
 	addq.b	#$1,d2
+loc_00E152:
 	btst.b	#$1,$2A(a0)
+loc_00E158:
 	bne.b	loc_00E15C
+loc_00E15A:
 	addq.b	#$1,d2
 loc_00E15C:
 	bra.b	loc_00E16A
 loc_00E15E:
 	subq.b	#$1,d2
+loc_00E160:
 	btst.b	#$1,$2A(a0)
+loc_00E166:
 	bne.b	loc_00E16A
+loc_00E168:
 	subq.b	#$1,d2
 loc_00E16A:
 	moveq	#$0,d7
+loc_00E16C:
 	rts
 loc_00E16E:
 	btst.b	#$1,$2A(a0)
+loc_00E174:
 	bne.b	loc_00E16A
+loc_00E176:
 	moveq	#$1,d7
+loc_00E178:
 	rts
 sub_00E17A:
 	move.w	(ram_C346).w,d1
+loc_00E17E:
 	add.w	d1,d1
+loc_00E180:
 	lea	(a1,d1.w),a1
+loc_00E184:
 	moveq	#$0,d0
+loc_00E186:
 	move.b	(a1)+,d0
+loc_00E188:
 	moveq	#$0,d7
+loc_00E18A:
 	move.b	(a1)+,d7
+loc_00E18C:
 	rts
 sub_00E18E:
 	lea	(ram_E1C0).w,a1
 loc_00E192:
 	tst.w	(a1)
+loc_00E194:
 	bne.b	loc_00E19A
+loc_00E196:
 	subq.w	#$1,d0
+loc_00E198:
 	beq.b	loc_00E1A6
 loc_00E19A:
 	lea	$40(a1),a1
+loc_00E19E:
 	dbra	d7,loc_00E192
+loc_00E1A2:
 	moveq	#$1,d0
+loc_00E1A4:
 	rts
 loc_00E1A6:
 	moveq	#$0,d0
+loc_00E1A8:
 	rts
 sub_00E1AA:
 	lea	(ram_E1C0).w,a1
 sub_00E1AE:
 	move.w	d4,d1
+loc_00E1B0:
 	moveq	#$0,d3
+loc_00E1B2:
 	lea	(ram_D060).w,a2
 loc_00E1B6:
 	tst.w	(a1)
+loc_00E1B8:
 	bne.b	loc_00E1C0
+loc_00E1BA:
 	move.w	a1,(a2)+
+loc_00E1BC:
 	subq.b	#$1,d4
+loc_00E1BE:
 	beq.b	loc_00E1CC
 loc_00E1C0:
 	lea	$40(a1),a1
+loc_00E1C4:
 	dbra	d7,loc_00E1B6
+loc_00E1C8:
 	moveq	#$1,d7
+loc_00E1CA:
 	rts
 loc_00E1CC:
 	lea	(ram_D060).w,a2
 loc_00E1D0:
 	movea.w	(a2)+,a1
+loc_00E1D2:
 	move.w	d0,(a1)
+loc_00E1D4:
 	move.w	$4(a0),$4(a1)
+loc_00E1DA:
 	move.w	$8(a0),$8(a1)
+loc_00E1E0:
 	move.w	a0,$3A(a1)
+loc_00E1E4:
 	move.b	d2,$2E(a1)
+loc_00E1E8:
 	move.w	d3,$2C(a1)
+loc_00E1EC:
 	addq.w	#$4,d3
+loc_00E1EE:
 	subq.b	#$1,d1
+loc_00E1F0:
 	bne.b	loc_00E1D0
+loc_00E1F2:
 	moveq	#$0,d7
+loc_00E1F4:
 	rts
 	dc.b	$08,$28,$00,$02,$00,$02,$66,$0A
 sub_00E1FE:
 	move.w	$24(a0),d0
 sub_00E202:
 	cmpi.w	#$10,d0
+loc_00E206:
 	bcc.b	loc_00E20E
+loc_00E208:
 	clr.w	$30(a0)
+loc_00E20C:
 	rts
 loc_00E20E:
 	lea	(dat_02D000).l,a1
+loc_00E214:
 	lea	$30(a0),a2
+loc_00E218:
 	adda.w	d0,a1
+loc_00E21A:
 	move.w	$4(a0),d0
+loc_00E21E:
 	add.w	(a1)+,d0
+loc_00E220:
 	move.w	d0,(a2)+
+loc_00E222:
 	add.w	(a1)+,d0
+loc_00E224:
 	move.w	d0,(a2)+
+loc_00E226:
 	move.w	$8(a0),d0
+loc_00E22A:
 	add.w	(a1)+,d0
+loc_00E22C:
 	move.w	d0,(a2)+
+loc_00E22E:
 	add.w	(a1)+,d0
+loc_00E230:
 	move.w	d0,(a2)+
+loc_00E232:
 	rts
 sub_00E234:
 	move.w	$24(a0),d4
 sub_00E238:
 	lea	(dat_02D000).l,a1
+loc_00E23E:
 	cmpi.w	#$10,d4
+loc_00E242:
 	bcs.b	loc_00E25E
+loc_00E244:
 	adda.w	d4,a1
+loc_00E246:
 	move.w	$4(a0),d4
+loc_00E24A:
 	add.w	(a1)+,d4
+loc_00E24C:
 	move.w	d4,d5
+loc_00E24E:
 	add.w	(a1)+,d5
+loc_00E250:
 	move.w	$8(a0),d6
+loc_00E254:
 	add.w	(a1)+,d6
+loc_00E256:
 	move.w	d6,d7
+loc_00E258:
 	add.w	(a1)+,d7
+loc_00E25A:
 	moveq	#$0,d0
+loc_00E25C:
 	rts
 loc_00E25E:
 	moveq	#$1,d0
+loc_00E260:
 	rts
 sub_00E262:
 	move.w	(ram_C502).w,d0
+loc_00E266:
 	neg.w	d0
+loc_00E268:
 	move.w	d0,$6(a0)
+loc_00E26C:
 	move.w	(ram_C514).w,d0
+loc_00E270:
 	neg.w	d0
+loc_00E272:
 	move.w	d0,$A(a0)
+loc_00E276:
 	rts
 sub_00E278:
 	tst.w	(ram_C5C2).w
+loc_00E27C:
 	beq.b	loc_00E2B8
+loc_00E27E:
 	subq.w	#$1,(ram_C5C2).w
+loc_00E282:
 	beq.b	loc_00E2A4
+loc_00E284:
 	btst.b	#$0,$3(a0)
+loc_00E28A:
 	bne.b	loc_00E2B8
+loc_00E28C:
 	btst.b	#$4,$2A(a0)
+loc_00E292:
 	bne.b	loc_00E2B8
+loc_00E294:
 	cmpi.w	#$46,(ram_C5C2).w
+loc_00E29A:
 	bne.b	loc_00E2B2
+loc_00E29C:
 	bclr.b	#$5,$2A(a0)
+loc_00E2A2:
 	bra.b	loc_00E2B2
 loc_00E2A4:
 	bclr.b	#$2,$2(a0)
+loc_00E2AA:
 	bclr.b	#$4,$2A(a0)
+loc_00E2B0:
 	bra.b	loc_00E2B8
 loc_00E2B2:
 	bchg.b	#$2,$2(a0)
@@ -14244,42 +19691,65 @@ loc_00E2B8:
 	rts
 sub_00E2BA:
 	moveq	#$0,d0
+loc_00E2BC:
 	moveq	#$0,d1
+loc_00E2BE:
 	bsr.w	sub_00B36C
+loc_00E2C2:
 	beq.b	loc_00E33C
+loc_00E2C4:
 	cmpi.b	#$20,d0
+loc_00E2C8:
 	beq.b	loc_00E336
+loc_00E2CA:
 	cmpi.b	#$4,d0
+loc_00E2CE:
 	beq.b	loc_00E2DE
+loc_00E2D0:
 	cmpi.b	#$24,d0
+loc_00E2D4:
 	beq.b	loc_00E2DE
 	cmpi.b	#$40,d0
 	bne.w	loc_00E33C
 loc_00E2DE:
 	moveq	#$0,d0
+loc_00E2E0:
 	move.l	#$FFF80000,d1
+loc_00E2E6:
 	bsr.w	sub_00B36C
+loc_00E2EA:
 	bne.b	loc_00E2F4
 	subq.w	#$8,$8(a0)
 	bra.w	loc_00E33C
 loc_00E2F4:
 	move.l	#$80000,d0
+loc_00E2FA:
 	moveq	#$0,d1
+loc_00E2FC:
 	bsr.w	sub_00B36C
+loc_00E300:
 	bne.b	loc_00E30A
 	addq.w	#$8,$4(a0)
 	bra.w	loc_00E33C
 loc_00E30A:
 	moveq	#$0,d0
+loc_00E30C:
 	move.l	#$80000,d1
+loc_00E312:
 	bsr.w	sub_00B36C
+loc_00E316:
 	bne.b	loc_00E320
+loc_00E318:
 	addq.w	#$8,$8(a0)
+loc_00E31C:
 	bra.w	loc_00E33C
 loc_00E320:
 	move.l	#$FFF80000,d0
+loc_00E326:
 	moveq	#$0,d1
+loc_00E328:
 	bsr.w	sub_00B36C
+loc_00E32C:
 	bne.b	loc_00E332
 	subq.w	#$8,$4(a0)
 loc_00E332:
@@ -14288,62 +19758,97 @@ loc_00E336:
 	move.b	#$40,$3B(a0)
 loc_00E33C:
 	move.w	d1,(ram_C616).w
+loc_00E340:
 	rts
 sub_00E342:
 	moveq	#$0,d3
+loc_00E344:
 	move.w	(a1)+,d3
+loc_00E346:
 	ext.l	d3
+loc_00E348:
 	lsl.l	#$8,d3
+loc_00E34A:
 	move.l	d3,$10(a0)
+loc_00E34E:
 	moveq	#$0,d2
+loc_00E350:
 	move.w	(a1)+,d2
+loc_00E352:
 	ext.l	d2
+loc_00E354:
 	lsl.l	#$8,d2
+loc_00E356:
 	move.l	d2,$C(a0)
+loc_00E35A:
 	rts
 sub_00E35C:
 	bsr.w	sub_00E238
+loc_00E360:
 	lea	(ram_E1C0).w,a1
+loc_00E364:
 	moveq	#$13,d0
 loc_00E366:
 	tst.w	(a1)
+loc_00E368:
 	beq.b	loc_00E36E
+loc_00E36A:
 	bsr.w	sub_00E3A4
 loc_00E36E:
 	lea	$40(a1),a1
+loc_00E372:
 	dbra	d0,loc_00E366
+loc_00E376:
 	lea	(Objects_B).w,a1
+loc_00E37A:
 	moveq	#$8,d0
 loc_00E37C:
 	tst.w	(a1)
+loc_00E37E:
 	beq.b	loc_00E384
+loc_00E380:
 	bsr.w	sub_00E3A4
 loc_00E384:
 	lea	$60(a1),a1
+loc_00E388:
 	dbra	d0,loc_00E37C
+loc_00E38C:
 	lea	(Objects_C).w,a1
+loc_00E390:
 	moveq	#$11,d0
 loc_00E392:
 	tst.w	(a1)
+loc_00E394:
 	beq.b	loc_00E39A
+loc_00E396:
 	bsr.w	sub_00E3A4
 loc_00E39A:
 	lea	$40(a1),a1
+loc_00E39E:
 	dbra	d0,loc_00E392
+loc_00E3A2:
 	rts
 sub_00E3A4:
 	cmp.w	$4(a1),d4
+loc_00E3A8:
 	bhi.b	loc_00E3C4
+loc_00E3AA:
 	cmp.w	$4(a1),d5
+loc_00E3AE:
 	bls.b	loc_00E3C4
+loc_00E3B0:
 	cmp.w	$8(a1),d6
+loc_00E3B4:
 	bhi.b	loc_00E3C4
+loc_00E3B6:
 	cmp.w	$8(a1),d7
+loc_00E3BA:
 	bls.b	loc_00E3C4
 	bset.b	#$7,$22(a1)
 	rts
 loc_00E3C4:
 	bclr.b	#$7,$22(a1)
+loc_00E3CA:
 	rts
 	dc.b	$3E,$28,$00,$3E
 	dc.b	$DE,$45,$02,$47,$0F,$FF,$31,$47,$00,$3E,$DE,$43,$61,$1E,$CF,$C0
@@ -14387,84 +19892,137 @@ dat_00E526:
 	dc.b	$86,$08,$00,$03,$86,$1E,$02,$00,$00,$0D,$49,$A8,$00,$0D,$49,$F4
 sub_00E620:
 	bset.b	#$0,$2(a0)
+loc_00E626:
 	bne.b	loc_00E690
+loc_00E628:
 	movem.l	d0/a1,-(a7)
+loc_00E62C:
 	moveq	#-$48,d0
+loc_00E62E:
 	jsr	(sub_00A068).l
+loc_00E634:
 	movem.l	(a7)+,d0/a1
+loc_00E638:
 	move.b	#$2,$3D(a0)
+loc_00E63E:
 	move.b	#$10,$3C(a0)
+loc_00E644:
 	moveq	#$0,d2
+loc_00E646:
 	move.b	$2E(a0),d2
+loc_00E64A:
 	add.w	d2,d2
+loc_00E64C:
 	lea	(dat_03B1DA).l,a1
+loc_00E652:
 	movea.l	(a1,d2.w),a2
+loc_00E656:
 	move.l	a2,$18(a0)
+loc_00E65A:
 	move.l	$2(a2),$14(a0)
+loc_00E660:
 	move.b	#$40,$22(a0)
+loc_00E666:
 	move.l	#$40400,$1C(a0)
+loc_00E66E:
 	lea	(dat_040074).l,a1
+loc_00E674:
 	bsr.w	sub_00F3A0
+loc_00E678:
 	bsr.w	sub_00E868
+loc_00E67C:
 	ori.b	#$20,$2(a0)
+loc_00E682:
 	move.b	#$8,$2F(a0)
+loc_00E688:
 	andi.b	#$FC,(ram_E02A).w
+loc_00E68E:
 	rts
 loc_00E690:
 	move.w	$28(a0),d0
+loc_00E694:
 	jmp	loc_00E698(pc,d0.w)
 loc_00E698:
 	bra.w	loc_00E6AC
-	bra.w	loc_00E74C
-	bra.w	loc_00E7BC
-	bra.w	loc_00E7EE
-	bra.w	loc_00E808
+	dc.b	$60,$00,$00,$AE
+	dc.b	$60,$00,$01,$1A,$60,$00,$01,$48,$60,$00,$01,$5E
 loc_00E6AC:
 	btst.b	#$5,$2A(a0)
+loc_00E6B2:
 	bne.w	loc_00EF9C
+loc_00E6B6:
 	bsr.w	sub_00E1FE
+loc_00E6BA:
 	bsr.w	sub_014248
+loc_00E6BE:
 	subq.b	#$1,$2F(a0)
+loc_00E6C2:
 	beq.b	loc_00E6C6
+loc_00E6C4:
 	rts
 loc_00E6C6:
 	addq.w	#$4,$28(a0)
+loc_00E6CA:
 	lea	(Objects_B).w,a1
+loc_00E6CE:
 	lea	(ram_DA60).w,a2
+loc_00E6D2:
 	moveq	#$F,d7
 loc_00E6D4:
 	tst.w	(a1)
+loc_00E6D6:
 	beq.b	loc_00E6E4
+loc_00E6D8:
 	move.w	$38(a1),d0
+loc_00E6DC:
 	beq.b	loc_00E6E4
+loc_00E6DE:
 	bmi.b	loc_00E6E4
+loc_00E6E0:
 	move.w	a1,(a2)+
+loc_00E6E2:
 	move.w	d0,(a2)+
 loc_00E6E4:
 	lea	$60(a1),a1
+loc_00E6E8:
 	dbra	d7,loc_00E6D4
+loc_00E6EC:
 	lea	(ram_E6C0).w,a1
+loc_00E6F0:
 	moveq	#$E,d7
 loc_00E6F2:
 	tst.w	(a1)
+loc_00E6F4:
 	beq.b	loc_00E702
+loc_00E6F6:
 	move.w	$38(a1),d0
+loc_00E6FA:
 	beq.b	loc_00E702
+loc_00E6FC:
 	bmi.b	loc_00E702
+loc_00E6FE:
 	move.w	a1,(a2)+
+loc_00E700:
 	move.w	d0,(a2)+
 loc_00E702:
 	lea	$40(a1),a1
+loc_00E706:
 	dbra	d7,loc_00E6F2
+loc_00E70A:
 	clr.w	(a2)
+loc_00E70C:
 	lea	(ram_DA60).w,a2
+loc_00E710:
 	tst.w	(a2)
+loc_00E712:
 	bne.b	loc_00E71C
 	move.w	#$C,$28(a0)
 	rts
 loc_00E71C:
 	movea.w	(a2)+,a1
+loc_00E71E:
 	btst.b	#$4,$3(a1)
+loc_00E724:
 	beq.b	loc_00E742
 	addq.w	#$2,a2
 	tst.w	(a2)
@@ -14483,11 +20041,15 @@ loc_00E73C:
 	bne.b	loc_00E732
 loc_00E742:
 	move.w	a1,$20(a0)
+loc_00E746:
 	ori.b	#$10,$3(a1)
 loc_00E74C:
 	cmpi.w	#$200,$4(a0)
+loc_00E752:
 	bhi.w	loc_00E7D8
+loc_00E756:
 	cmpi.w	#$200,$8(a0)
+loc_00E75C:
 	bhi.w	loc_00E7D8
 	subq.b	#$1,$2F(a0)
 	beq.w	loc_00EF9C
@@ -14511,60 +20073,48 @@ loc_00E77C:
 	move.b	#$1,$1D(a0)
 	bsr.w	sub_014248
 	bra.w	sub_00E1FE
-loc_00E7BC:
-	cmpi.w	#$200,$4(a0)
-	bhi.w	loc_00E7D8
-	cmpi.w	#$200,$8(a0)
-	bhi.w	loc_00E7D8
-	bsr.w	sub_014248
-	beq.w	loc_00F5F4
+	dc.b	$0C,$68,$02,$00
+	dc.b	$00,$04,$62,$00,$00,$14,$0C,$68,$02,$00,$00,$08,$62,$00,$00,$0A
+	dc.b	$61,$00,$5A,$76,$67,$00,$0E,$1E
 loc_00E7D8:
 	tst.w	$20(a0)
+loc_00E7DC:
 	beq.w	sub_014220
+loc_00E7E0:
 	movea.w	$20(a0),a1
+loc_00E7E4:
 	bclr.b	#$4,$3(a1)
+loc_00E7EA:
 	bra.w	sub_014220
-loc_00E7EE:
-	cmpi.w	#$200,$4(a0)
-	bhi.w	sub_014220
-	cmpi.w	#$200,$8(a0)
-	bhi.w	sub_014220
-	bsr.w	sub_014248
-	rts
-loc_00E808:
-	move.w	$2C(a0),d3
-	andi.w	#$1C,d3
-	move.l	dat_00E848(pc,d3.w),d0
-	move.w	d0,d3
-	swap	d0
-	bsr.w	sub_00E88C
-	move.w	d3,d0
-	bsr.w	sub_00E8BE
-	jsr	(sub_008438).l
-	andi.w	#$1E,d3
-	add.w	d3,d3
-	lea	(dat_03B1DA).l,a1
-	move.l	(a1,d3.w),$18(a0)
-	move.b	#$1,$1D(a0)
-	bsr.w	sub_014248
-	bra.w	sub_00E1FE
-dat_00E848:
-	dc.b	$02,$00,$01,$00,$02,$00,$02,$00
+	dc.b	$0C,$68
+	dc.b	$02,$00,$00,$04,$62,$00,$5A,$2A,$0C,$68,$02,$00,$00,$08,$62,$00
+	dc.b	$5A,$20,$61,$00,$5A,$44,$4E,$75,$36,$28,$00,$2C,$02,$43,$00,$1C
+	dc.b	$20,$3B,$30,$36,$36,$00,$48,$40,$61,$00,$00,$72,$30,$03,$61,$00
+	dc.b	$00,$9E,$4E,$B9,$00,$00,$84,$38,$02,$43,$00,$1E,$D6,$43,$43,$F9
+	dc.b	$00,$03,$B1,$DA,$21,$71,$30,$00,$00,$18,$11,$7C,$00,$01,$00,$1D
+	dc.b	$61,$00,$5A,$06,$60,$00,$F9,$B8,$02,$00,$01,$00,$02,$00,$02,$00
 	dc.b	$01,$00,$02,$00,$00,$00,$02,$00,$00,$00,$01,$00,$00,$00,$00,$00
 	dc.b	$01,$00,$00,$00,$02,$00,$00,$00
 sub_00E868:
 	lea	(dat_0400F4).l,a1
+loc_00E86E:
 	moveq	#$0,d3
+loc_00E870:
 	move.b	$2E(a0),d3
+loc_00E874:
 	andi.w	#$1E,d3
+loc_00E878:
 	lsl.w	#$2,d3
+loc_00E87A:
 	lea	(a1,d3.w),a1
+loc_00E87E:
 	move.l	(a1)+,$C(a0)
+loc_00E882:
 	move.l	(a1)+,$10(a0)
+loc_00E886:
 	rts
 sub_00E888:
 	move.w	$4(a1),d0
-sub_00E88C:
 	move.l	#$2000,d1
 	move.l	$C(a0),d2
 	cmp.w	$4(a0),d0
@@ -14584,7 +20134,6 @@ loc_00E8B8:
 	rts
 sub_00E8BA:
 	move.w	$8(a1),d0
-sub_00E8BE:
 	move.l	#$2000,d1
 	move.l	$10(a0),d2
 	cmp.w	$8(a0),d0
@@ -14604,16 +20153,27 @@ loc_00E8EA:
 	rts
 sub_00E8EC:
 	bset.b	#$0,$2(a0)
+loc_00E8F2:
 	bne.b	loc_00E91E
+loc_00E8F4:
 	move.b	#$2,$3D(a0)
+loc_00E8FA:
 	move.w	#$58,d0
+loc_00E8FE:
 	jsr	(sub_00D96C).l
+loc_00E904:
 	move.b	#$40,$22(a0)
+loc_00E90A:
 	move.w	$2C(a0),d0
+loc_00E90E:
 	move.l	dat_00E93C(pc,d0.w),d1
+loc_00E912:
 	add.w	d1,$8(a0)
+loc_00E916:
 	swap	d1
+loc_00E918:
 	add.w	d1,$4(a0)
+loc_00E91C:
 	rts
 loc_00E91E:
 	bclr.b	#$0,$3(a0)
@@ -14628,15 +20188,25 @@ dat_00E93C:
 	dc.b	$FF,$D0,$FF,$D0,$FF,$D0,$00,$30,$00,$30,$FF,$D0,$00,$30,$00,$30
 sub_00E950:
 	bset.b	#$0,$2(a0)
+loc_00E956:
 	bne.b	loc_00E986
+loc_00E958:
 	move.b	#$2,$3D(a0)
+loc_00E95E:
 	move.w	#$50,d0
+loc_00E962:
 	jsr	(sub_00D96C).l
+loc_00E968:
 	move.b	#$40,$22(a0)
+loc_00E96E:
 	move.w	#$FFFC,$10(a0)
+loc_00E974:
 	subq.w	#$1,$4(a0)
+loc_00E978:
 	subi.w	#$38,$8(a0)
+loc_00E97E:
 	move.b	#$18,$3C(a0)
+loc_00E984:
 	rts
 loc_00E986:
 	btst.b	#$5,$2A(a0)
@@ -14667,12 +20237,19 @@ loc_00E9B6:
 	bra.w	sub_014220
 sub_00E9D0:
 	bset.b	#$0,$2(a0)
+loc_00E9D6:
 	bne.b	loc_00E9F8
+loc_00E9D8:
 	ori.b	#$C,$2(a0)
+loc_00E9DE:
 	move.w	#$1,$26(a0)
+loc_00E9E4:
 	move.b	#$20,$22(a0)
+loc_00E9EA:
 	move.b	$2D(a0),$3F(a0)
+loc_00E9F0:
 	addq.b	#$8,$3F(a0)
+loc_00E9F4:
 	bra.w	loc_00EA46
 loc_00E9F8:
 	bsr.w	sub_00F7A8
@@ -14699,27 +20276,45 @@ loc_00EA28:
 	rts
 loc_00EA46:
 	move.w	$2C(a0),d0
+loc_00EA4A:
 	move.l	dat_00EA52(pc,d0.w),$14(a0)
+loc_00EA50:
 	rts
 dat_00EA52:
 	dc.b	$00,$03,$8A,$A2,$00,$03,$8A,$A2,$00,$03,$8A,$98
 sub_00EA5E:
 	bset.b	#$0,$2(a0)
+loc_00EA64:
 	bne.b	loc_00EABC
+loc_00EA66:
 	ori.b	#$8,$2(a0)
+loc_00EA6C:
 	move.w	#$1,$26(a0)
+loc_00EA72:
 	move.b	#$20,$22(a0)
+loc_00EA78:
 	move.b	#$10,$3C(a0)
+loc_00EA7E:
 	move.b	#$2,$3D(a0)
+loc_00EA84:
 	move.b	#$4,$3E(a0)
+loc_00EA8A:
 	bsr.w	sub_00EB46
+loc_00EA8E:
 	bsr.w	sub_00EB60
+loc_00EA92:
 	move.w	#$B4,d0
+loc_00EA96:
 	move.b	$2E(a0),d2
+loc_00EA9A:
 	andi.b	#$1E,d2
+loc_00EA9E:
 	moveq	#$3,d4
+loc_00EAA0:
 	moveq	#$B,d7
+loc_00EAA2:
 	lea	(ram_E380).w,a1
+loc_00EAA6:
 	bra.w	sub_00E1AE
 	dc.b	$48,$E7,$80,$40,$70,$B6
 	dc.b	$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01,$4E,$75
@@ -14771,19 +20366,31 @@ sub_00EB30:
 	rts
 sub_00EB46:
 	moveq	#$0,d2
+loc_00EB48:
 	move.b	$2E(a0),d2
+loc_00EB4C:
 	add.w	d2,d2
+loc_00EB4E:
 	lea	(dat_0387E4).l,a1
+loc_00EB54:
 	adda.w	d2,a1
+loc_00EB56:
 	move.l	(a1),$18(a0)
+loc_00EB5A:
 	moveq	#$4,d0
+loc_00EB5C:
 	bra.w	sub_00D95E
 sub_00EB60:
 	lea	(dat_00EB78).l,a1
+loc_00EB66:
 	move.b	(ram_E021).w,d2
+loc_00EB6A:
 	andi.w	#$38,d2
+loc_00EB6E:
 	adda.w	d2,a1
+loc_00EB70:
 	adda.w	$2C(a0),a1
+loc_00EB74:
 	bra.w	loc_00EC3A
 dat_00EB78:
 	dc.b	$00,$0A,$FF,$FC,$00,$0A,$00,$06
@@ -14793,17 +20400,29 @@ dat_00EB78:
 	dc.b	$00,$0D,$FF,$FA,$00,$05,$FF,$F3
 sub_00EBB8:
 	bset.b	#$0,$2(a0)
+loc_00EBBE:
 	bne.b	loc_00EBF8
+loc_00EBC0:
 	move.b	#$2,$3E(a0)
+loc_00EBC6:
 	move.b	#$40,$22(a0)
+loc_00EBCC:
 	move.b	#$2,$3C(a0)
+loc_00EBD2:
 	move.l	#$387B0,$14(a0)
+loc_00EBDA:
 	move.l	#$39352,$18(a0)
+loc_00EBE2:
 	bsr.w	sub_00EC26
+loc_00EBE6:
 	movem.l	d0/a1,-(a7)
+loc_00EBEA:
 	moveq	#-$4A,d0
+loc_00EBEC:
 	jsr	(sub_00A068).l
+loc_00EBF2:
 	movem.l	(a7)+,d0/a1
+loc_00EBF6:
 	rts
 loc_00EBF8:
 	bsr.w	sub_00F7A8
@@ -14822,15 +20441,23 @@ loc_00EC14:
 	bra.w	loc_00F62E
 sub_00EC26:
 	lea	(dat_00EC48).l,a1
+loc_00EC2C:
 	move.b	(ram_E020).w,d2
+loc_00EC30:
 	andi.w	#$1E,d2
+loc_00EC34:
 	add.w	d2,d2
+loc_00EC36:
 	lea	(a1,d2.w),a1
 loc_00EC3A:
 	move.w	(a1)+,d0
+loc_00EC3C:
 	move.w	(a1)+,d1
+loc_00EC3E:
 	add.w	d0,$4(a0)
+loc_00EC42:
 	add.w	d1,$8(a0)
+loc_00EC46:
 	rts
 dat_00EC48:
 	dc.b	$00,$16,$FF,$D3,$00,$12,$FF,$DE
@@ -14840,20 +20467,35 @@ dat_00EC48:
 	dc.b	$00,$0F,$FF,$C3,$00,$12,$FF,$CD
 sub_00EC88:
 	bset.b	#$0,$2(a0)
+loc_00EC8E:
 	bne.b	loc_00ECCA
+loc_00EC90:
 	move.b	#$40,$22(a0)
+loc_00EC96:
 	move.b	#$2,$3D(a0)
+loc_00EC9C:
 	lea	(dat_038E00).l,a1
+loc_00ECA2:
 	move.w	(a1)+,d2
+loc_00ECA4:
 	move.b	d2,$3C(a0)
+loc_00ECA8:
 	moveq	#$0,d2
+loc_00ECAA:
 	move.b	$2E(a0),d2
+loc_00ECAE:
 	move.l	(a1,d2.w),$14(a0)
+loc_00ECB4:
 	bsr.w	sub_00ED6A
+loc_00ECB8:
 	movem.l	d0/a1,-(a7)
+loc_00ECBC:
 	moveq	#-$48,d0
+loc_00ECBE:
 	jsr	(sub_00A068).l
+loc_00ECC4:
 	movem.l	(a7)+,d0/a1
+loc_00ECC8:
 	rts
 loc_00ECCA:
 	bclr.b	#$0,$3(a0)
@@ -14905,95 +20547,163 @@ loc_00ED58:
 	rts
 sub_00ED6A:
 	lea	(dat_03F42C).l,a1
+loc_00ED70:
 	moveq	#$0,d2
+loc_00ED72:
 	move.b	(ram_E020).w,d2
+loc_00ED76:
 	andi.w	#$1C,d2
+loc_00ED7A:
 	lea	(a1,d2.w),a1
+loc_00ED7E:
 	bra.w	loc_00EC3A
 sub_00ED82:
 	bset.b	#$0,$2(a0)
+loc_00ED88:
 	bne.b	loc_00EDC8
+loc_00ED8A:
 	move.b	#$40,$22(a0)
+loc_00ED90:
 	move.b	#$2,$3E(a0)
+loc_00ED96:
 	move.l	#$39352,$18(a0)
+loc_00ED9E:
 	bsr.w	sub_00F6AA
+loc_00EDA2:
 	bsr.w	sub_00F5A4
+loc_00EDA6:
 	movea.l	$14(a0),a1
+loc_00EDAA:
 	move.w	$2(a1),$24(a0)
+loc_00EDB0:
 	bsr.w	sub_00E1FE
+loc_00EDB4:
 	movem.l	d0/a1,-(a7)
+loc_00EDB8:
 	moveq	#-$4A,d0
+loc_00EDBA:
 	jsr	(sub_00A068).l
+loc_00EDC0:
 	movem.l	(a7)+,d0/a1
+loc_00EDC4:
 	bra.w	loc_00EE34
 loc_00EDC8:
 	move.w	$28(a0),d0
+loc_00EDCC:
 	jmp	loc_00EDD0(pc,d0.w)
 loc_00EDD0:
 	bra.w	loc_00EDDC
+loc_00EDD4:
 	bra.w	loc_00EE02
+loc_00EDD8:
 	bra.w	loc_00EE54
 loc_00EDDC:
 	moveq	#$0,d0
+loc_00EDDE:
 	moveq	#$0,d1
+loc_00EDE0:
 	bsr.w	sub_00B36C
+loc_00EDE4:
 	beq.b	loc_00EDF2
+loc_00EDE6:
 	cmpi.b	#$4,d0
+loc_00EDEA:
 	beq.b	loc_00EE36
+loc_00EDEC:
 	cmpi.b	#$40,d0
+loc_00EDF0:
 	beq.b	loc_00EE36
 loc_00EDF2:
 	bsr.w	sub_00E1FE
+loc_00EDF6:
 	move.w	#$4,$28(a0)
+loc_00EDFC:
 	bsr.w	sub_00F5DC
+loc_00EE00:
 	bra.b	loc_00EE34
 loc_00EE02:
 	btst.b	#$0,$3(a0)
+loc_00EE08:
 	bne.w	loc_00EE36
+loc_00EE0C:
 	bsr.w	sub_00E1FE
+loc_00EE10:
 	moveq	#$0,d0
+loc_00EE12:
 	moveq	#$0,d1
+loc_00EE14:
 	bsr.w	sub_00B36C
+loc_00EE18:
 	beq.b	loc_00EE26
+loc_00EE1A:
 	cmpi.b	#$4,d0
+loc_00EE1E:
 	beq.b	loc_00EE36
+loc_00EE20:
 	cmpi.b	#$40,d0
+loc_00EE24:
 	beq.b	loc_00EE36
 loc_00EE26:
 	subq.b	#$1,$2F(a0)
+loc_00EE2A:
 	beq.b	loc_00EE36
+loc_00EE2C:
 	bsr.w	sub_00F7A8
+loc_00EE30:
 	bne.w	sub_014220
 loc_00EE34:
 	rts
 loc_00EE36:
 	move.w	#$8,$28(a0)
+loc_00EE3C:
 	moveq	#$0,d0
+loc_00EE3E:
 	move.b	$3E(a0),d0
+loc_00EE42:
 	bsr.w	sub_00D95E
+loc_00EE46:
 	clr.l	$C(a0)
+loc_00EE4A:
 	clr.l	$10(a0)
+loc_00EE4E:
 	clr.w	$30(a0)
+loc_00EE52:
 	rts
 loc_00EE54:
 	bsr.w	sub_014248
+loc_00EE58:
 	bne.w	sub_014220
+loc_00EE5C:
 	rts
 sub_00EE5E:
 	bset.b	#$0,$2(a0)
+loc_00EE64:
 	bne.b	loc_00EEA4
+loc_00EE66:
 	move.b	#$40,$22(a0)
+loc_00EE6C:
 	bsr.w	sub_00F6D8
+loc_00EE70:
 	move.b	#$2,$3E(a0)
+loc_00EE76:
 	move.l	#$39352,$18(a0)
+loc_00EE7E:
 	bsr.w	sub_00F39A
+loc_00EE82:
 	movea.l	$14(a0),a1
+loc_00EE86:
 	move.w	$2(a1),$24(a0)
+loc_00EE8C:
 	bsr.w	sub_00E1FE
+loc_00EE90:
 	movem.l	d0/a1,-(a7)
+loc_00EE94:
 	moveq	#-$49,d0
+loc_00EE96:
 	jsr	(sub_00A068).l
+loc_00EE9C:
 	movem.l	(a7)+,d0/a1
+loc_00EEA0:
 	bra.w	loc_00EE34
 loc_00EEA4:
 	move.w	$28(a0),d0
@@ -15018,19 +20728,33 @@ loc_00EED2:
 	bra.w	loc_00EE34
 sub_00EEE4:
 	bset.b	#$0,$2(a0)
+loc_00EEEA:
 	bne.b	loc_00EF28
+loc_00EEEC:
 	move.b	#$40,$22(a0)
+loc_00EEF2:
 	move.b	#$2,$3D(a0)
+loc_00EEF8:
 	bsr.w	sub_00F6FE
+loc_00EEFC:
 	lea	(dat_040074).l,a1
+loc_00EF02:
 	bsr.w	sub_00F3A0
+loc_00EF06:
 	movea.l	$14(a0),a1
+loc_00EF0A:
 	move.w	$2(a1),$24(a0)
+loc_00EF10:
 	bsr.w	sub_00E1FE
+loc_00EF14:
 	movem.l	d0/a1,-(a7)
+loc_00EF18:
 	moveq	#-$48,d0
+loc_00EF1A:
 	jsr	(sub_00A068).l
+loc_00EF20:
 	movem.l	(a7)+,d0/a1
+loc_00EF24:
 	bra.w	loc_00EF9A
 loc_00EF28:
 	bclr.b	#$0,$3(a0)
@@ -15103,26 +20827,42 @@ loc_00EFEC:
 	bra.b	loc_00EF9A
 sub_00EFF6:
 	bset.b	#$0,$2(a0)
+loc_00EFFC:
 	bne.b	loc_00F058
+loc_00EFFE:
 	movem.l	d0/a1,-(a7)
+loc_00F002:
 	moveq	#-$31,d0
+loc_00F004:
 	jsr	(sub_00A068).l
+loc_00F00A:
 	movem.l	(a7)+,d0/a1
+loc_00F00E:
 	lea	(dat_0390B6).l,a1
+loc_00F014:
 	bsr.w	sub_00F3A0
+loc_00F018:
 	tst.w	$2C(a0)
+loc_00F01C:
 	beq.b	loc_00F02E
 	ori.b	#$4,$2(a0)
 	move.w	#$8,$28(a0)
 	bra.w	loc_00F0A6
 loc_00F02E:
 	move.b	#$40,$22(a0)
+loc_00F034:
 	ori.b	#$48,$2(a0)
+loc_00F03A:
 	andi.b	#$FC,(ram_E02A).w
+loc_00F040:
 	move.w	#$10,$26(a0)
+loc_00F046:
 	bsr.w	sub_00F724
+loc_00F04A:
 	movea.l	$14(a0),a1
+loc_00F04E:
 	move.w	$2(a1),$24(a0)
+loc_00F054:
 	bra.w	sub_00E1FE
 loc_00F058:
 	move.w	$28(a0),d0
@@ -15176,111 +20916,191 @@ dat_00F0F2:
 	dc.b	$0C,$38
 sub_00F102:
 	bset.b	#$0,$2(a0)
+loc_00F108:
 	bne.b	loc_00F14C
+loc_00F10A:
 	move.b	#$1,$3D(a0)
+loc_00F110:
 	move.b	#$40,$22(a0)
+loc_00F116:
 	ori.b	#$24,$2(a0)
+loc_00F11C:
 	bclr.b	#$1,(ram_E02A).w
+loc_00F122:
 	move.b	#$2,$3C(a0)
+loc_00F128:
 	move.w	$2C(a0),d0
+loc_00F12C:
 	lsr.w	#$1,d0
+loc_00F12E:
 	move.b	d0,$20(a0)
+loc_00F132:
 	bsr.w	sub_00F770
+loc_00F136:
 	moveq	#$4,d0
+loc_00F138:
 	bsr.w	sub_00D95E
+loc_00F13C:
 	movem.l	d0/a1,-(a7)
+loc_00F140:
 	moveq	#-$47,d0
+loc_00F142:
 	jsr	(sub_00A068).l
+loc_00F148:
 	movem.l	(a7)+,d0/a1
 loc_00F14C:
 	bclr.b	#$0,$3(a0)
+loc_00F152:
 	move.w	$28(a0),d0
+loc_00F156:
 	jmp	loc_00F15A(pc,d0.w)
 loc_00F15A:
 	bra.w	loc_00F166
+loc_00F15E:
 	bra.w	loc_00F1A6
+loc_00F162:
 	bra.w	loc_00F298
 loc_00F166:
 	btst.b	#$0,(ram_E003).w
+loc_00F16C:
 	bne.w	sub_014220
+loc_00F170:
 	subq.b	#$1,$20(a0)
+loc_00F174:
 	bpl.w	loc_00F5F4
+loc_00F178:
 	addq.w	#$4,$28(a0)
+loc_00F17C:
 	move.b	#$40,$20(a0)
+loc_00F182:
 	bclr.b	#$2,$2(a0)
+loc_00F188:
 	tst.w	$2C(a0)
+loc_00F18C:
 	bne.b	loc_00F1A6
+loc_00F18E:
 	moveq	#$0,d0
+loc_00F190:
 	move.b	(ram_E020).w,d0
+loc_00F194:
 	lsl.w	#$4,d0
+loc_00F196:
 	move.w	d0,$2E(a0)
+loc_00F19A:
 	lea	(ram_DA00).w,a1
+loc_00F19E:
 	moveq	#$9,d7
 loc_00F1A0:
 	move.w	d0,(a1)+
+loc_00F1A2:
 	dbra	d7,loc_00F1A0
 loc_00F1A6:
 	btst.b	#$0,(ram_E003).w
+loc_00F1AC:
 	bne.w	loc_00F280
+loc_00F1B0:
 	btst.b	#$5,(ram_E02A).w
+loc_00F1B6:
 	bne.w	loc_00F280
+loc_00F1BA:
 	tst.w	$2C(a0)
+loc_00F1BE:
 	beq.b	loc_00F1C8
 	tst.w	$40(a0)
 	beq.w	loc_00F280
 loc_00F1C8:
 	btst.b	#$6,(ram_C5A8).w
+loc_00F1CE:
 	bne.b	loc_00F1E2
+loc_00F1D0:
 	btst.b	#$5,(ram_C5A8).w
+loc_00F1D6:
 	bne.b	loc_00F1E2
+loc_00F1D8:
 	subq.b	#$1,$20(a0)
+loc_00F1DC:
 	beq.w	loc_00F280
+loc_00F1E0:
 	bra.b	loc_00F1E8
 loc_00F1E2:
 	move.b	#$40,$20(a0)
 loc_00F1E8:
 	bsr.w	sub_00E1FE
+loc_00F1EC:
 	bsr.w	sub_014248
 loc_00F1F0:
 	tst.w	$2C(a0)
+loc_00F1F4:
 	bne.b	loc_00F226
+loc_00F1F6:
 	lea	(ram_DA12).w,a1
+loc_00F1FA:
 	lea	(ram_DA14).w,a2
+loc_00F1FE:
 	moveq	#$9,d7
 loc_00F200:
 	move.w	-(a1),-(a2)
+loc_00F202:
 	dbra	d7,loc_00F200
+loc_00F206:
 	moveq	#$0,d0
+loc_00F208:
 	moveq	#$0,d1
+loc_00F20A:
 	move.b	(ram_E020).w,d0
+loc_00F20E:
 	lsl.w	#$4,d0
+loc_00F210:
 	move.w	$2E(a0),d1
+loc_00F214:
 	cmp.w	d0,d1
+loc_00F216:
 	beq.b	loc_00F21C
+loc_00F218:
 	bsr.w	sub_00F2DE
 loc_00F21C:
 	andi.w	#$1FC,d1
+loc_00F220:
 	move.w	d1,(a2)
+loc_00F222:
 	move.w	d1,$2E(a0)
 loc_00F226:
 	lea	(ram_DA00).w,a1
+loc_00F22A:
 	move.w	$2C(a0),d2
+loc_00F22E:
 	lsr.w	#$1,d2
+loc_00F230:
 	adda.w	d2,a1
+loc_00F232:
 	move.w	(a1),d1
+loc_00F234:
 	move.w	d1,$3E(a0)
+loc_00F238:
 	lsr.w	#$1,d1
+loc_00F23A:
 	bsr.w	sub_00F2B4
+loc_00F23E:
 	adda.w	d1,a1
+loc_00F240:
 	move.w	(a1)+,d2
+loc_00F242:
 	move.w	(a1)+,d3
+loc_00F244:
 	move.w	(ram_E004).w,$4(a0)
+loc_00F24A:
 	move.w	(ram_E008).w,$8(a0)
+loc_00F250:
 	add.w	d2,$4(a0)
+loc_00F254:
 	add.w	d3,$8(a0)
+loc_00F258:
 	move.w	$4(a0),d4
+loc_00F25C:
 	move.w	$8(a0),d5
+loc_00F260:
 	move.w	$2C(a0),d0
+loc_00F264:
 	beq.b	loc_00F27E
 	lea	(dat_040712).l,a1
 	move.w	(ram_C346).w,d1
@@ -15292,49 +21112,73 @@ loc_00F27E:
 	rts
 loc_00F280:
 	move.w	#$8,$28(a0)
+loc_00F286:
 	move.w	$2C(a0),d0
+loc_00F28A:
 	lsr.w	#$2,d0
+loc_00F28C:
 	move.b	d0,$20(a0)
+loc_00F290:
 	bsr.w	sub_00F78C
+loc_00F294:
 	bra.w	loc_00F1F0
 loc_00F298:
 	subq.b	#$1,$20(a0)
+loc_00F29C:
 	bpl.w	loc_00F1F0
+loc_00F2A0:
 	move.w	$2C(a0),d0
+loc_00F2A4:
 	cmpi.w	#$24,d0
+loc_00F2A8:
 	bne.b	loc_00F2B0
 	bclr.b	#$0,(ram_E02A).w
 loc_00F2B0:
 	bra.w	sub_014220
 sub_00F2B4:
 	moveq	#$0,d2
+loc_00F2B6:
 	tst.b	(ram_E03B).w
+loc_00F2BA:
 	beq.b	loc_00F2BE
+loc_00F2BC:
 	addq.w	#$4,d2
 loc_00F2BE:
 	cmpi.w	#$4,(ram_E028).w
+loc_00F2C4:
 	bne.b	loc_00F2C8
+loc_00F2C6:
 	addq.w	#$8,d2
 loc_00F2C8:
 	movea.l	dat_00F2CE(pc,d2.w),a1
+loc_00F2CC:
 	rts
 dat_00F2CE:
 	dc.b	$00,$04
 	dc.b	$0F,$2A,$00,$04,$10,$2A,$00,$04,$11,$2A,$00,$04,$12,$2A
 sub_00F2DE:
 	moveq	#$8,d2
+loc_00F2E0:
 	move.w	d1,d3
+loc_00F2E2:
 	andi.w	#$1F8,d3
+loc_00F2E6:
 	sub.w	d0,d3
+loc_00F2E8:
 	bcc.b	loc_00F2EE
+loc_00F2EA:
 	neg.w	d3
+loc_00F2EC:
 	neg.w	d2
 loc_00F2EE:
 	cmpi.w	#$100,d3
+loc_00F2F2:
 	bcc.b	loc_00F2F6
+loc_00F2F4:
 	neg.w	d2
 loc_00F2F6:
 	add.w	d2,d1
+loc_00F2F8:
 	rts
 sub_00F2FA:
 	move.w	$3E(a0),d0
@@ -15365,22 +21209,35 @@ loc_00F32A:
 	rts
 sub_00F338:
 	bset.b	#$0,$2(a0)
+loc_00F33E:
 	bne.b	loc_00F356
+loc_00F340:
 	move.l	#$3935C,$14(a0)
+loc_00F348:
 	move.b	#$40,$22(a0)
+loc_00F34E:
 	ori.b	#$26,$2(a0)
+loc_00F354:
 	bra.b	loc_00F36C
 loc_00F356:
 	bset.b	#$2,$2(a0)
+loc_00F35C:
 	btst.b	#$1,(ram_E02A).w
+loc_00F362:
 	beq.w	loc_00F5F4
+loc_00F366:
 	bclr.b	#$2,$2(a0)
 loc_00F36C:
 	move.l	(ram_E004).w,$4(a0)
+loc_00F372:
 	move.l	(ram_E008).w,$8(a0)
+loc_00F378:
 	moveq	#$0,d0
+loc_00F37A:
 	move.b	(ram_C642).w,d0
+loc_00F37E:
 	movea.l	dat_00F386(pc,d0.w),a1
+loc_00F382:
 	bra.w	sub_00F3A0
 dat_00F386:
 	dc.b	$00,$03,$FF,$F4,$00,$03,$F4,$4C,$00,$03
@@ -15389,20 +21246,31 @@ sub_00F39A:
 	lea	(dat_03FFF4).l,a1
 sub_00F3A0:
 	moveq	#$0,d2
+loc_00F3A2:
 	move.b	(ram_E020).w,d2
+loc_00F3A6:
 	cmpi.b	#$10,(ram_C642).w
+loc_00F3AC:
 	beq.b	loc_00F3D0
+loc_00F3AE:
 	andi.w	#$1C,d2
+loc_00F3B2:
 	cmpi.w	#$4,(ram_E028).w
+loc_00F3B8:
 	bne.b	loc_00F3BE
+loc_00F3BA:
 	addi.w	#$40,d2
 loc_00F3BE:
 	moveq	#$0,d3
+loc_00F3C0:
 	move.b	(ram_E03B).w,d3
+loc_00F3C4:
 	lsr.w	#$1,d3
+loc_00F3C6:
 	add.w	d3,d2
 loc_00F3C8:
 	lea	(a1,d2.w),a1
+loc_00F3CC:
 	bra.w	loc_00EC3A
 loc_00F3D0:
 	andi.w	#$1E,d2
@@ -15410,123 +21278,213 @@ loc_00F3D0:
 	bra.b	loc_00F3C8
 sub_00F3D8:
 	bset.b	#$0,$2(a0)
+loc_00F3DE:
 	bne.b	loc_00F402
+loc_00F3E0:
 	move.b	#$40,$22(a0)
+loc_00F3E6:
 	move.w	#$88,d0
+loc_00F3EA:
 	jsr	(sub_00D96C).l
+loc_00F3F0:
 	movem.l	d0/a1,-(a7)
+loc_00F3F4:
 	moveq	#-$4C,d0
+loc_00F3F6:
 	jsr	(sub_00A068).l
+loc_00F3FC:
 	movem.l	(a7)+,d0/a1
+loc_00F400:
 	rts
 loc_00F402:
 	bsr.w	sub_014248
+loc_00F406:
 	bne.w	sub_014220
+loc_00F40A:
 	rts
 sub_00F40C:
 	bset.b	#$0,$2(a0)
+loc_00F412:
 	bne.b	loc_00F456
+loc_00F414:
 	move.b	#$C0,$22(a0)
+loc_00F41A:
 	ori.b	#$4,$2(a0)
+loc_00F420:
 	move.b	#$3,$2F(a0)
+loc_00F426:
 	move.b	#$3,$3C(a0)
+loc_00F42C:
 	move.b	#$2,$3D(a0)
+loc_00F432:
 	move.w	$2C(a0),d0
+loc_00F436:
 	move.w	d0,$3E(a0)
+loc_00F43A:
 	clr.w	$28(a0)
+loc_00F43E:
 	clr.l	$C(a0)
+loc_00F442:
 	clr.l	$10(a0)
+loc_00F446:
 	bsr.b	sub_00F49E
+loc_00F448:
 	move.l	#$3A56E,$18(a0)
+loc_00F450:
 	moveq	#$6,d0
+loc_00F452:
 	bra.w	sub_00D95E
 loc_00F456:
 	bclr.b	#$0,$3(a0)
+loc_00F45C:
 	move.w	$28(a0),d0
+loc_00F460:
 	jmp	loc_00F464(pc,d0.w)
 loc_00F464:
 	bra.w	loc_00F46C
+loc_00F468:
 	bra.w	loc_00F488
 loc_00F46C:
 	subq.w	#$1,$3E(a0)
+loc_00F470:
 	bpl.b	loc_00F486
+loc_00F472:
 	move.w	#$4,$28(a0)
+loc_00F478:
 	andi.b	#$FB,$2(a0)
+loc_00F47E:
 	move.w	#$160,d0
+loc_00F482:
 	bsr.w	sub_00E202
 loc_00F486:
 	rts
 loc_00F488:
 	bsr.w	sub_00E1FE
+loc_00F48C:
 	bsr.w	sub_014248
+loc_00F490:
 	beq.b	loc_00F49C
+loc_00F492:
 	subq.b	#$1,$2F(a0)
+loc_00F496:
 	beq.w	sub_014220
+loc_00F49A:
 	bsr.b	sub_00F49E
 loc_00F49C:
 	rts
 sub_00F49E:
 	move.w	(ram_E004).w,d0
+loc_00F4A2:
 	move.w	(ram_E008).w,d1
+loc_00F4A6:
 	move.w	$2C(a0),d2
+loc_00F4AA:
 	lea	(dat_0404E2).l,a1
+loc_00F4B0:
 	movea.l	(a1,d2.w),a1
+loc_00F4B4:
 	moveq	#$0,d2
+loc_00F4B6:
 	move.b	$2F(a0),d2
+loc_00F4BA:
 	lsl.w	#$2,d2
+loc_00F4BC:
 	lea	-$4(a1,d2.w),a1
+loc_00F4C0:
 	add.w	(a1)+,d0
+loc_00F4C2:
 	add.w	(a1)+,d1
+loc_00F4C4:
 	move.w	d0,$4(a0)
+loc_00F4C8:
 	move.w	d1,$8(a0)
+loc_00F4CC:
 	rts
 sub_00F4CE:
 	bset.b	#$0,$2(a0)
+loc_00F4D4:
 	bne.b	loc_00F4F2
+loc_00F4D6:
 	ori.b	#$24,$2(a0)
+loc_00F4DC:
 	move.w	#$15,$2C(a0)
+loc_00F4E2:
 	lea	(ram_C6A0).w,a1
+loc_00F4E6:
 	move.l	(ram_C504).w,(a1)+
+loc_00F4EA:
 	move.l	(ram_C536).w,(a1)+
+loc_00F4EE:
 	move.l	(ram_C53E).w,(a1)+
 loc_00F4F2:
 	tst.l	(ram_C508).w
+loc_00F4F6:
 	bne.b	loc_00F552
+loc_00F4F8:
 	moveq	#$0,d0
+loc_00F4FA:
 	move.w	$2C(a0),d0
+loc_00F4FE:
 	beq.b	loc_00F552
+loc_00F500:
 	subq.w	#$1,d0
+loc_00F502:
 	move.w	d0,$2C(a0)
+loc_00F506:
 	beq.b	loc_00F554
+loc_00F508:
 	move.w	d0,d1
+loc_00F50A:
 	lsr.w	#$2,d0
+loc_00F50C:
 	btst.b	#$0,d1
+loc_00F510:
 	beq.b	loc_00F514
+loc_00F512:
 	neg.w	d0
 loc_00F514:
 	swap	d0
+loc_00F516:
 	move.l	(ram_C504).w,d1
+loc_00F51A:
 	lea	(ram_C6A0).w,a1
+loc_00F51E:
 	move.l	(a1)+,d2
+loc_00F520:
 	move.l	(a1)+,d3
+loc_00F522:
 	move.l	(a1)+,d4
+loc_00F524:
 	tst.l	d0
+loc_00F526:
 	bpl.b	loc_00F546
+loc_00F528:
 	cmp.l	d4,d1
+loc_00F52A:
 	bcs.b	loc_00F552
+loc_00F52C:
 	add.l	d2,d0
+loc_00F52E:
 	bpl.b	loc_00F53C
+loc_00F530:
 	neg.l	d1
+loc_00F532:
 	move.l	d1,d0
+loc_00F534:
 	clr.l	(ram_C53E).w
+loc_00F538:
 	bra.w	sub_00F54E
 loc_00F53C:
 	move.l	d0,(ram_C53E).w
+loc_00F540:
 	sub.l	d1,d0
+loc_00F542:
 	bra.w	sub_00F54E
 loc_00F546:
 	add.l	d2,d0
+loc_00F548:
 	move.l	d0,(ram_C536).w
+loc_00F54C:
 	sub.l	d1,d0
 sub_00F54E:
 	move.l	d0,(ram_C508).w
@@ -15534,12 +21492,19 @@ loc_00F552:
 	rts
 loc_00F554:
 	lea	(ram_C6A0).w,a1
+loc_00F558:
 	move.l	(a1)+,d1
+loc_00F55A:
 	move.l	(a1)+,(ram_C536).w
+loc_00F55E:
 	move.l	(a1)+,(ram_C53E).w
+loc_00F562:
 	move.l	(ram_C504).w,d0
+loc_00F566:
 	sub.l	d1,d0
+loc_00F568:
 	bsr.b	sub_00F54E
+loc_00F56A:
 	bra.w	sub_014220
 	dc.b	$D0,$83
 	dc.b	$6A,$10,$B2,$B8,$C5,$3E,$63,$04,$92,$B8,$C5,$3E,$44,$81,$20,$01
@@ -15548,27 +21513,45 @@ loc_00F554:
 	dc.b	$C5,$4E,$4E,$75
 sub_00F5A4:
 	lea	(dat_03F908).l,a1
+loc_00F5AA:
 	move.w	(ram_C346).w,d0
+loc_00F5AE:
 	lsl.w	#$2,d0
+loc_00F5B0:
 	movea.l	(a1,d0.w),a1
+loc_00F5B4:
 	move.w	$2C(a0),d0
+loc_00F5B8:
 	movea.l	(a1,d0.w),a1
+loc_00F5BC:
 	moveq	#$0,d2
+loc_00F5BE:
 	move.b	(ram_E03B).w,d2
+loc_00F5C2:
 	lsr.w	#$1,d2
+loc_00F5C4:
 	cmpi.w	#$4,(ram_E028).w
+loc_00F5CA:
 	bne.b	loc_00F5D0
+loc_00F5CC:
 	addi.w	#$40,d2
 loc_00F5D0:
 	add.b	(ram_E020).w,d2
+loc_00F5D4:
 	lea	(a1,d2.w),a1
+loc_00F5D8:
 	bra.w	loc_00EC3A
 sub_00F5DC:
 	move.w	(ram_C346).w,d0
+loc_00F5E0:
 	lsl.w	#$2,d0
+loc_00F5E2:
 	movea.l	dat_00F5F6(pc,d0.w),a1
+loc_00F5E6:
 	bsr.w	sub_00F690
+loc_00F5EA:
 	move.w	(ram_C346).w,d0
+loc_00F5EE:
 	move.b	dat_00F61E(pc,d0.w),$2F(a0)
 loc_00F5F4:
 	rts
@@ -15611,100 +21594,179 @@ loc_00F68A:
 	lea	(dat_040374).l,a1
 sub_00F690:
 	moveq	#$0,d2
+loc_00F692:
 	move.b	$2E(a0),d2
+loc_00F696:
 	andi.w	#$1F,d2
+loc_00F69A:
 	lsl.w	#$3,d2
+loc_00F69C:
 	lea	(a1,d2.w),a1
+loc_00F6A0:
 	move.l	(a1)+,$C(a0)
+loc_00F6A4:
 	move.l	(a1)+,$10(a0)
+loc_00F6A8:
 	rts
 sub_00F6AA:
 	move.w	(ram_C346).w,d0
+loc_00F6AE:
 	lsl.w	#$2,d0
+loc_00F6B0:
 	lea	(dat_038B68).l,a1
+loc_00F6B6:
 	movea.l	(a1,d0.w),a1
+loc_00F6BA:
 	move.w	$2C(a0),d0
+loc_00F6BE:
 	movea.l	(a1,d0.w),a1
+loc_00F6C2:
 	move.w	(a1)+,d2
+loc_00F6C4:
 	move.b	d2,$3C(a0)
+loc_00F6C8:
 	move.b	$2E(a0),d2
+loc_00F6CC:
 	andi.w	#$1C,d2
+loc_00F6D0:
 	move.l	(a1,d2.w),$14(a0)
+loc_00F6D6:
 	rts
 sub_00F6D8:
 	move.w	(ram_C346).w,d0
+loc_00F6DC:
 	lsl.w	#$2,d0
+loc_00F6DE:
 	lea	(dat_038C4E).l,a1
+loc_00F6E4:
 	movea.l	(a1,d0.w),a1
+loc_00F6E8:
 	move.w	$2C(a0),d0
+loc_00F6EC:
 	add.w	d0,d0
+loc_00F6EE:
 	move.l	(a1,d0.w),$14(a0)
+loc_00F6F4:
 	move.l	$4(a1,d0.w),d2
+loc_00F6F8:
 	move.b	d2,$3C(a0)
+loc_00F6FC:
 	rts
 sub_00F6FE:
 	move.w	(ram_C346).w,d0
+loc_00F702:
 	lsl.w	#$2,d0
+loc_00F704:
 	lea	(dat_038DB6).l,a1
+loc_00F70A:
 	movea.l	(a1,d0.w),a1
+loc_00F70E:
 	move.w	(a1)+,d2
+loc_00F710:
 	move.b	d2,$3C(a0)
+loc_00F714:
 	move.b	$2E(a0),d2
+loc_00F718:
 	andi.w	#$1C,d2
+loc_00F71C:
 	move.l	(a1,d2.w),$14(a0)
+loc_00F722:
 	rts
 sub_00F724:
 	move.w	(ram_C346).w,d0
+loc_00F728:
 	add.w	d0,d0
+loc_00F72A:
 	lea	(dat_03B5DE).l,a1
+loc_00F730:
 	moveq	#$0,d1
+loc_00F732:
 	move.b	(a1,d0.w),d1
+loc_00F736:
 	move.b	$1(a1,d0.w),$3C(a0)
+loc_00F73C:
 	move.b	$2E(a0),d2
+loc_00F740:
 	lsr.w	#$2,d2
+loc_00F742:
 	andi.w	#$7,d2
+loc_00F746:
 	add.w	d1,d2
+loc_00F748:
 	lea	(dat_03B5F0).l,a1
+loc_00F74E:
 	move.b	(a1,d2.w),$1F(a0)
+loc_00F754:
 	lea	(dat_03B610).l,a1
+loc_00F75A:
 	move.b	$2E(a0),d2
+loc_00F75E:
 	andi.w	#$1C,d2
+loc_00F762:
 	movea.l	(a1,d2.w),a1
+loc_00F766:
 	move.l	a1,$18(a0)
+loc_00F76A:
 	move.l	(a1),$14(a0)
+loc_00F76E:
 	rts
 sub_00F770:
 	move.w	(ram_C346).w,d0
+loc_00F774:
 	lsl.w	#$2,d0
+loc_00F776:
 	lea	(dat_038E66).l,a1
+loc_00F77C:
 	movea.l	(a1,d0.w),a1
+loc_00F780:
 	move.w	$2C(a0),d0
+loc_00F784:
 	move.l	(a1,d0.w),$18(a0)
+loc_00F78A:
 	rts
 sub_00F78C:
 	move.w	(ram_C346).w,d0
+loc_00F790:
 	lsl.w	#$2,d0
+loc_00F792:
 	lea	(dat_038F7E).l,a1
+loc_00F798:
 	movea.l	(a1,d0.w),a1
+loc_00F79C:
 	move.w	$2C(a0),d0
+loc_00F7A0:
 	move.l	(a1,d0.w),$14(a0)
+loc_00F7A6:
 	rts
 sub_00F7A8:
 	move.w	#$80,d0
+loc_00F7AC:
 	move.w	$4(a0),d1
+loc_00F7B0:
 	sub.w	d0,d1
+loc_00F7B2:
 	bcs.b	loc_00F7CC
+loc_00F7B4:
 	cmpi.w	#$F0,d1
+loc_00F7B8:
 	bhi.b	loc_00F7CC
+loc_00F7BA:
 	move.w	$8(a0),d1
+loc_00F7BE:
 	sub.w	d0,d1
+loc_00F7C0:
 	bcs.b	loc_00F7CC
+loc_00F7C2:
 	cmpi.w	#$E0,d1
+loc_00F7C6:
 	bhi.b	loc_00F7CC
+loc_00F7C8:
 	moveq	#$0,d1
+loc_00F7CA:
 	rts
 loc_00F7CC:
 	moveq	#$1,d1
+loc_00F7CE:
 	rts
 	dc.b	$08,$E8,$00,$02,$00,$02,$08,$38,$00,$05,$C5,$A9,$67,$0E,$34,$3C
 	dc.b	$00,$08,$31,$FC,$00,$03,$C6,$6A,$61,$00,$00,$04,$4E,$75,$30,$3C
@@ -15716,65 +21778,100 @@ loc_00F7CC:
 	dc.b	$66,$D8,$4E,$75
 sub_00F844:
 	bset.b	#$0,$2(a0)
+loc_00F84A:
 	bne.b	loc_00F86C
+loc_00F84C:
 	move.l	#$3E51C,$14(a0)
+loc_00F854:
 	move.b	#$60,$22(a0)
+loc_00F85A:
 	ori.b	#$28,$2(a0)
+loc_00F860:
 	move.w	#$6,$38(a0)
+loc_00F866:
 	move.b	#$10,$3C(a0)
 loc_00F86C:
 	cmpi.w	#$178,$8(a0)
+loc_00F872:
 	bcc.w	sub_014220
+loc_00F876:
 	move.w	$28(a0),d0
+loc_00F87A:
 	jmp	loc_00F87E(pc,d0.w)
 loc_00F87E:
 	bra.w	loc_00F89A
+loc_00F882:
 	bra.w	loc_00F9C2
+loc_00F886:
 	bra.w	loc_00FB22
-	bra.w	loc_00FB36
-	bra.w	loc_00FB6A
-	bra.w	loc_00FB74
-	bra.w	loc_00FBDA
+	dc.b	$60,$00,$02,$AA,$60,$00
+	dc.b	$02,$DA,$60,$00,$02,$E0,$60,$00,$03,$42
 loc_00F89A:
 	cmpi.w	#$78,$8(a0)
+loc_00F8A0:
 	bcs.w	loc_00F90A
+loc_00F8A4:
 	bsr.w	sub_00AF50
+loc_00F8A8:
 	bsr.w	sub_00E234
+loc_00F8AC:
 	bsr.w	sub_00B298
+loc_00F8B0:
 	beq.w	loc_00F90A
+loc_00F8B4:
 	btst.b	#$0,$3(a0)
+loc_00F8BA:
 	bne.b	loc_00F8D6
+loc_00F8BC:
 	move.w	$38(a0),d0
+loc_00F8C0:
 	andi.w	#$6,d0
+loc_00F8C4:
 	add.w	d0,d0
+loc_00F8C6:
 	lea	(dat_00FC28).l,a1
+loc_00F8CC:
 	move.l	(a1,d0.w),$14(a0)
+loc_00F8D2:
 	bra.w	loc_00F90A
 loc_00F8D6:
 	move.w	#$4,$28(a0)
+loc_00F8DC:
 	lea	(ram_EA80).w,a1
+loc_00F8E0:
 	moveq	#$9,d7
 loc_00F8E2:
 	tst.w	(a1)
+loc_00F8E4:
 	beq.b	loc_00F8F0
+loc_00F8E6:
 	lea	$40(a1),a1
+loc_00F8EA:
 	dbra	d7,loc_00F8E2
 	bra.b	loc_00F900
 loc_00F8F0:
 	move.w	#$18,(a1)
+loc_00F8F4:
 	move.w	$4(a0),$4(a1)
+loc_00F8FA:
 	move.w	$8(a0),$8(a1)
 loc_00F900:
 	bsr.w	sub_00F912
+loc_00F904:
 	move.w	#$FFFE,$10(a0)
 loc_00F90A:
 	move.w	$8(a0),$26(a0)
+loc_00F910:
 	rts
 sub_00F912:
 	lea	(dat_00FC4C).l,a1
+loc_00F918:
 	moveq	#$0,d0
+loc_00F91A:
 	move.b	$19(a0),d0
+loc_00F91E:
 	cmpi.b	#$74,d0
+loc_00F922:
 	bne.b	loc_00F940
 	lea	(dat_00FCC0).l,a2
 	move.l	(RNG_Seed).w,d1
@@ -15785,15 +21882,25 @@ sub_00F912:
 	move.b	d0,$19(a0)
 loc_00F940:
 	move.l	(a1,d0.w),$14(a0)
+loc_00F946:
 	bsr.w	sub_00F98C
+loc_00F94A:
 	lea	(dat_00FC38).l,a1
+loc_00F950:
 	lsr.w	#$1,d1
+loc_00F952:
 	move.w	(a1,d1.w),$1E(a0)
+loc_00F958:
 	ori.b	#$40,$2(a0)
+loc_00F95E:
 	moveq	#$0,d0
+loc_00F960:
 	move.b	$19(a0),d0
+loc_00F964:
 	lsr.w	#$2,d0
+loc_00F966:
 	move.b	dat_00F96E(pc,d0.w),$22(a0)
+loc_00F96C:
 	rts
 dat_00F96E:
 	dc.b	$60,$60
@@ -15801,41 +21908,65 @@ dat_00F96E:
 	dc.b	$40,$40,$40,$40,$40,$40,$40,$60,$60,$60,$40,$40
 sub_00F98C:
 	lea	(dat_04132A).l,a1
+loc_00F992:
 	lea	(ram_D070).w,a2
+loc_00F996:
 	move.w	(a2),d2
+loc_00F998:
 	addq.w	#$1,(a2)+
 loc_00F99A:
 	subq.w	#$1,d2
+loc_00F99C:
 	bmi.b	loc_00F9A4
+loc_00F99E:
 	lea	$E(a2),a2
+loc_00F9A2:
 	bra.b	loc_00F99A
 loc_00F9A4:
 	moveq	#$0,d1
+loc_00F9A6:
 	move.b	$18(a0),d1
+loc_00F9AA:
 	movea.l	(a1,d1.w),a1
+loc_00F9AE:
 	moveq	#$0,d0
+loc_00F9B0:
 	move.b	$19(a0),d0
+loc_00F9B4:
 	movea.l	(a1,d0.w),a1
+loc_00F9B8:
 	moveq	#$6,d7
 loc_00F9BA:
 	move.w	(a1)+,(a2)+
+loc_00F9BC:
 	dbra	d7,loc_00F9BA
+loc_00F9C0:
 	rts
 loc_00F9C2:
 	bsr.w	sub_00E234
+loc_00F9C6:
 	lea	(Objects_A).w,a1
+loc_00F9CA:
 	bsr.w	sub_00AF0A
+loc_00F9CE:
 	bne.w	loc_00FA44
+loc_00F9D2:
 	tst.w	$10(a0)
+loc_00F9D6:
 	bmi.b	loc_00F9E2
+loc_00F9D8:
 	cmpi.l	#$20000,$10(a0)
+loc_00F9E0:
 	bhi.b	loc_00F9EE
 loc_00F9E2:
 	addi.l	#$2000,$10(a0)
+loc_00F9EA:
 	bra.w	loc_00F90A
 loc_00F9EE:
 	move.w	#$8,$28(a0)
+loc_00F9F4:
 	cmpi.b	#$30,$19(a0)
+loc_00F9FA:
 	bne.b	loc_00FA1E
 	move.w	#$C,$28(a0)
 	move.b	#$4,$2F(a0)
@@ -15845,33 +21976,55 @@ loc_00F9EE:
 	bra.w	loc_00FA32
 loc_00FA1E:
 	cmpi.b	#$58,$19(a0)
+loc_00FA24:
 	bne.b	loc_00FA32
 	move.w	#$14,$28(a0)
 	move.b	#$80,$2F(a0)
 loc_00FA32:
 	clr.l	$10(a0)
+loc_00FA36:
 	move.w	#$20,$2C(a0)
+loc_00FA3C:
 	bsr.w	sub_00E262
+loc_00FA40:
 	bra.w	loc_00F90A
 loc_00FA44:
 	btst.b	#$0,(ram_E003).w
+loc_00FA4A:
 	bne.w	loc_00FBEC
+loc_00FA4E:
 	cmpi.b	#$58,$19(a0)
+loc_00FA54:
 	beq.w	loc_00FB96
+loc_00FA58:
 	cmpi.b	#$5C,$19(a0)
+loc_00FA5E:
 	beq.w	loc_00FB96
+loc_00FA62:
 	movem.l	d0/a1,-(a7)
+loc_00FA66:
 	moveq	#-$3E,d0
+loc_00FA68:
 	jsr	(sub_00A068).l
+loc_00FA6E:
 	movem.l	(a7)+,d0/a1
+loc_00FA72:
 	moveq	#$0,d0
+loc_00FA74:
 	move.b	$19(a0),d0
+loc_00FA78:
 	add.w	d0,d0
+loc_00FA7A:
 	lea	(dat_00FD3C).l,a1
+loc_00FA80:
 	lea	(a1,d0.w),a1
+loc_00FA84:
 	movea.w	(a1)+,a2
+loc_00FA86:
 	move.w	(a1)+,d0
+loc_00FA88:
 	cmpa.w	#$C352,a2
+loc_00FA8C:
 	bne.b	loc_00FAA4
 	cmp.w	(a2),d0
 	beq.w	sub_014220
@@ -15881,15 +22034,22 @@ loc_00FA44:
 	bra.w	loc_00FAB0
 loc_00FAA4:
 	cmpa.w	#$C5D8,a2
+loc_00FAA8:
 	bne.b	loc_00FAB0
 	move.w	#$4,(ram_C5D2).w
 loc_00FAB0:
 	move.w	d0,(a2)
+loc_00FAB2:
 	move.w	(a1)+,d0
+loc_00FAB4:
 	bne.b	loc_00FAC4
+loc_00FAB6:
 	move.w	(a1)+,d0
+loc_00FAB8:
 	beq.w	sub_014220
+loc_00FABC:
 	bset.b	d0,(Flags_C5C0).w
+loc_00FAC0:
 	bra.w	sub_014220
 loc_00FAC4:
 	movea.l	a1,a3
@@ -15920,36 +22080,21 @@ loc_00FB14:
 	bra.w	sub_014220
 loc_00FB22:
 	bsr.w	sub_00E234
+loc_00FB26:
 	lea	(Objects_A).w,a1
+loc_00FB2A:
 	bsr.w	sub_00AF0A
+loc_00FB2E:
 	bne.w	loc_00FA44
+loc_00FB32:
 	bra.w	loc_00F90A
-loc_00FB36:
-	bsr.w	sub_00E234
-	lea	(Objects_A).w,a1
-	bsr.w	sub_00AF0A
-	bne.w	loc_00FA44
-	subq.b	#$1,$2F(a0)
-	bne.w	loc_00F90A
-	move.w	#$8,$28(a0)
-	move.b	#$38,$19(a0)
-	bsr.w	sub_00F98C
-	move.l	#$3E5C6,$14(a0)
-	bra.w	loc_00F90A
-loc_00FB6A:
-	subq.w	#$1,$2C(a0)
-	beq.w	sub_014220
-	rts
-loc_00FB74:
-	move.w	#$CF8,d4
-	bsr.w	sub_00E238
-	lea	(Objects_A).w,a1
-	bsr.w	sub_00AF0A
-	bne.w	loc_00FA44
-	subq.b	#$1,$2F(a0)
-	beq.b	loc_00FB96
-	bsr.w	sub_00FBC0
-	bra.w	loc_00F90A
+	dc.b	$61,$00,$E6,$FC,$43,$F8,$E0,$00,$61,$00
+	dc.b	$B3,$CA,$66,$00,$FF,$00,$53,$28,$00,$2F,$66,$00,$FD,$BE,$31,$7C
+	dc.b	$00,$08,$00,$28,$11,$7C,$00,$38,$00,$19,$61,$00,$FE,$30,$21,$7C
+	dc.b	$00,$03,$E5,$C6,$00,$14,$60,$00,$FD,$A2,$53,$68,$00,$2C,$67,$00
+	dc.b	$46,$B0,$4E,$75,$38,$3C,$0C,$F8,$61,$00,$E6,$BE,$43,$F8,$E0,$00
+	dc.b	$61,$00,$B3,$88,$66,$00,$FE,$BE,$53,$28,$00,$2F,$67,$08,$61,$00
+	dc.b	$00,$30,$60,$00,$FD,$76
 loc_00FB96:
 	move.w	#$18,$28(a0)
 	clr.l	$10(a0)
@@ -15959,19 +22104,9 @@ loc_00FB96:
 	move.b	#$40,$22(a0)
 	move.b	#$4,$3D(a0)
 	bra.w	loc_00F90A
-sub_00FBC0:
-	move.b	#$58,$19(a0)
-	bchg.b	#$0,$2A(a0)
-	beq.b	loc_00FBD4
-	move.b	#$5C,$19(a0)
-loc_00FBD4:
-	bsr.w	sub_00F98C
-	rts
-loc_00FBDA:
-	bsr.w	sub_00E234
-	bsr.w	sub_00B036
-	jsr	(sub_014248).l
-	bne.w	sub_014220
+	dc.b	$11,$7C,$00,$58,$00,$19,$08,$68,$00,$00,$00,$2A,$67,$06,$11,$7C
+	dc.b	$00,$5C,$00,$19,$61,$00,$FD,$B6,$4E,$75,$61,$00,$E6,$58,$61,$00
+	dc.b	$B4,$56,$4E,$B9,$00,$01,$42,$48,$66,$00,$46,$36
 loc_00FBEC:
 	rts
 loc_00FBEE:
@@ -16031,17 +22166,27 @@ dat_00FD3C:
 	dc.b	$00,$00,$00,$01
 sub_00FE24:
 	bset.b	#$0,$2(a0)
+loc_00FE2A:
 	bne.b	loc_00FE4A
+loc_00FE2C:
 	ori.b	#$6,$2(a0)
+loc_00FE32:
 	move.b	#$C0,$22(a0)
+loc_00FE38:
 	move.w	#$138,$4(a0)
+loc_00FE3E:
 	move.w	#$D0,$8(a0)
+loc_00FE44:
 	move.b	#$20,$2F(a0)
 loc_00FE4A:
 	subq.b	#$1,$2F(a0)
+loc_00FE4E:
 	bne.b	loc_00FE60
+loc_00FE50:
 	andi.b	#$FB,$2(a0)
+loc_00FE56:
 	move.w	(ram_C342).w,d0
+loc_00FE5A:
 	move.l	dat_00FE62(pc,d0.w),$14(a0)
 loc_00FE60:
 	rts
@@ -16051,114 +22196,192 @@ dat_00FE62:
 	dc.l	dat_058220,dat_05822A
 sub_00FE8A:
 	bset.b	#$0,$2(a0)
+loc_00FE90:
 	bne.b	loc_00FEC8
+loc_00FE92:
 	ori.b	#$6,$2(a0)
+loc_00FE98:
 	move.b	#$C0,$22(a0)
+loc_00FE9E:
 	move.l	#$581D0,$14(a0)
+loc_00FEA6:
 	move.w	#$F0,$4(a0)
+loc_00FEAC:
 	move.w	#$F0,$8(a0)
+loc_00FEB2:
 	move.w	#$24,$2C(a0)
+loc_00FEB8:
 	move.b	#$3C,$2F(a0)
+loc_00FEBE:
 	move.b	#$20,$2E(a0)
+loc_00FEC4:
 	bra.w	loc_00FEF2
 loc_00FEC8:
 	subq.b	#$1,$2E(a0)
+loc_00FECC:
 	bne.b	loc_00FED4
+loc_00FECE:
 	andi.b	#$FB,$2(a0)
 loc_00FED4:
 	bsr.w	sub_00D94C
+loc_00FED8:
 	btst.b	#$7,(Joy1_Pressed).w
+loc_00FEDE:
 	bne.b	loc_00FF20
+loc_00FEE0:
 	subq.b	#$1,$2F(a0)
+loc_00FEE4:
 	bne.b	loc_00FF02
+loc_00FEE6:
 	move.b	#$3C,$2F(a0)
+loc_00FEEC:
 	subq.w	#$4,$2C(a0)
+loc_00FEF0:
 	bmi.b	loc_00FF04
 loc_00FEF2:
 	move.w	$2C(a0),d0
+loc_00FEF6:
 	lea	(dat_00FE62).l,a1
+loc_00FEFC:
 	move.l	(a1,d0.w),$14(a0)
 loc_00FF02:
 	rts
 loc_00FF04:
 	lea	(ram_E1C0).w,a6
+loc_00FF08:
 	moveq	#$0,d7
+loc_00FF0A:
 	move.w	#$13F,d6
 loc_00FF0E:
 	move.l	d7,(a6)+
+loc_00FF10:
 	dbra	d6,loc_00FF0E
+loc_00FF14:
 	st.b	(ram_C5CD).w
+loc_00FF18:
 	move.w	#$138,d0
+loc_00FF1C:
 	bra.w	loc_00D2B6
 loc_00FF20:
 	move.l	(ram_C332).w,d0
+loc_00FF24:
 	cmp.l	(ram_FE50).w,d0
+loc_00FF28:
 	bls.b	loc_00FF2E
+loc_00FF2A:
 	move.l	d0,(ram_FE50).w
 loc_00FF2E:
 	clr.l	(ram_C332).w
+loc_00FF32:
 	move.w	(ram_C34A).w,d1
+loc_00FF36:
 	lea	(dat_008276).l,a1
+loc_00FF3C:
 	move.w	(a1,d1.w),(ram_C5D2).w
+loc_00FF42:
 	cmpi.w	#$3,(ram_C350).w
+loc_00FF48:
 	bcc.b	loc_00FF50
+loc_00FF4A:
 	move.w	#$3,(ram_C350).w
 loc_00FF50:
 	bsr.w	sub_00D914
+loc_00FF54:
 	clr.b	(Joy1_Pressed).w
+loc_00FF58:
 	move.w	#$2C,(ram_E028).w
+loc_00FF5E:
 	move.b	#$18,(ram_E020).w
+loc_00FF64:
 	move.l	(ram_C694).w,(ram_E004).w
+loc_00FF6A:
 	move.l	(ram_C698).w,(ram_E008).w
+loc_00FF70:
 	move.b	#$E0,(ram_E022).w
+loc_00FF76:
 	move.l	(ram_C69C).w,(ram_E080).w
+loc_00FF7C:
 	move.w	#$5A,(ram_C5C2).w
+loc_00FF82:
 	bclr.b	#$4,(ram_E02A).w
+loc_00FF88:
 	bclr.b	#$0,(ram_E003).w
+loc_00FF8E:
 	clr.b	(ram_C6B4).w
+loc_00FF92:
 	clr.b	(ram_C614).w
+loc_00FF96:
 	st.b	(ram_C601).w
+loc_00FF9A:
 	tst.b	(ram_C5CB).w
+loc_00FF9E:
 	bne.b	loc_00FFA4
+loc_00FFA0:
 	clr.b	(ram_C61B).w
 loc_00FFA4:
 	clr.b	(ram_C5CB).w
+loc_00FFA8:
 	btst.b	#$4,(Flags_C61C).w
+loc_00FFAE:
 	beq.b	loc_00FFB4
 	st.b	(ram_C61B).w
 loc_00FFB4:
 	bclr.b	#$4,(Flags_C5EB).w
+loc_00FFBA:
 	beq.b	loc_00FFC2
+loc_00FFBC:
 	bclr.b	#$2,(Flags_C5EB).w
 loc_00FFC2:
 	jsr	(sub_007F3C).l
+loc_00FFC8:
 	bset.b	#$4,(Flags_C5C0).w
+loc_00FFCE:
 	bset.b	#$3,(Flags_C5C0).w
+loc_00FFD4:
 	bset.b	#$7,(Flags_C5AF).w
+loc_00FFDA:
 	bset.b	#$2,(Flags_C5C0).w
+loc_00FFE0:
 	bclr.b	#$6,(Flags_C61C).w
+loc_00FFE6:
 	lea	(ram_E1C0).w,a6
+loc_00FFEA:
 	moveq	#$0,d7
+loc_00FFEC:
 	move.w	#$9F,d6
 loc_00FFF0:
 	move.l	d7,(a6)+
+loc_00FFF2:
 	dbra	d6,loc_00FFF0
+loc_00FFF6:
 	rts
 sub_00FFF8:
 	bset.b	#$0,$2(a0)
+loc_00FFFE:
 	bne.b	loc_010028
+loc_010000:
 	ori.b	#$6,$2(a0)
+loc_010006:
 	move.b	#$C0,$22(a0)
+loc_01000C:
 	move.w	$2C(a0),d0
+loc_010010:
 	lea	dat_010036(pc,d0.w),a1
+loc_010014:
 	move.l	(a1)+,$14(a0)
+loc_010018:
 	move.w	(a1)+,$4(a0)
+loc_01001C:
 	move.w	(a1)+,$8(a0)
+loc_010020:
 	move.b	#$20,$2F(a0)
+loc_010026:
 	rts
 loc_010028:
 	subq.b	#$1,$2F(a0)
+loc_01002C:
 	bne.b	loc_010034
+loc_01002E:
 	andi.b	#$FB,$2(a0)
 loc_010034:
 	rts
@@ -16170,38 +22393,63 @@ dat_010036:
 	dc.b	$82,$48,$01,$18,$00,$D0
 sub_010076:
 	bset.b	#$0,$2(a0)
+loc_01007C:
 	bne.b	loc_0100D4
+loc_01007E:
 	ori.b	#$6,$2(a0)
+loc_010084:
 	move.b	#$C0,$22(a0)
+loc_01008A:
 	move.w	$2C(a0),d0
+loc_01008E:
 	lea	dat_0100F4(pc,d0.w),a1
+loc_010092:
 	move.l	(a1)+,$14(a0)
+loc_010096:
 	move.w	(a1)+,$4(a0)
+loc_01009A:
 	move.w	(a1)+,$8(a0)
+loc_01009E:
 	tst.b	(Flags_C356).w
+loc_0100A2:
 	beq.b	loc_0100BE
+loc_0100A4:
 	movem.l	d0/a1,-(a7)
+loc_0100A8:
 	moveq	#-$60,d0
+loc_0100AA:
 	jsr	(sub_00A068).l
+loc_0100B0:
 	movem.l	(a7)+,d0/a1
+loc_0100B4:
 	move.b	#$20,$2F(a0)
+loc_0100BA:
 	bra.w	loc_0100D4
 loc_0100BE:
 	movem.l	d0/a1,-(a7)
+loc_0100C2:
 	moveq	#-$71,d0
+loc_0100C4:
 	jsr	(sub_00A068).l
+loc_0100CA:
 	movem.l	(a7)+,d0/a1
+loc_0100CE:
 	move.b	#$20,$2F(a0)
 loc_0100D4:
 	subq.b	#$1,$2F(a0)
+loc_0100D8:
 	bne.b	loc_0100E0
+loc_0100DA:
 	andi.b	#$FB,$2(a0)
 loc_0100E0:
 	bsr.w	sub_00D94C
+loc_0100E4:
 	move.w	$28(a0),d0
+loc_0100E8:
 	jmp	loc_0100EC(pc,d0.w)
 loc_0100EC:
 	bra.w	loc_010134
+loc_0100F0:
 	bra.w	loc_01014C
 dat_0100F4:
 	dc.b	$00,$05,$82,$52,$00,$B0,$00,$E0,$00,$05,$82,$34
@@ -16211,118 +22459,170 @@ dat_0100F4:
 	dc.b	$01,$30,$00,$E0
 loc_010134:
 	subq.b	#$1,$2F(a0)
+loc_010138:
 	bne.b	loc_01014A
+loc_01013A:
 	addq.w	#$4,$28(a0)
+loc_01013E:
 	andi.b	#$FB,$2(a0)
+loc_010144:
 	move.w	#$120,$2C(a0)
 loc_01014A:
 	rts
 loc_01014C:
 	subq.w	#$1,$2C(a0)
+loc_010150:
 	bne.b	loc_010158
+loc_010152:
 	bset.b	#$0,(Flags_C61C).w
 loc_010158:
 	rts
 sub_01015A:
 	movea.l	$2A(a0),a1
+loc_01015E:
 	move.w	(a1),d0
+loc_010160:
 	move.w	#$81,d2
+loc_010164:
 	sub.w	d0,d2
+loc_010166:
 	cmp.w	$8(a0),d2
+loc_01016A:
 	bcc.b	loc_010184
 sub_01016C:
 	cmpi.w	#$160,$8(a0)
+loc_010172:
 	bcc.w	loc_010180
+loc_010176:
 	btst.b	#$0,$3(a0)
+loc_01017C:
 	bne.b	loc_010184
+loc_01017E:
 	rts
 loc_010180:
 	bsr.w	sub_014220
 loc_010184:
 	addq.w	#$4,a7
+loc_010186:
 	rts
 sub_010188:
 	bset.b	#$0,$2(a0)
+loc_01018E:
 	bne.b	loc_0101A0
+loc_010190:
 	move.l	(ram_C54A).w,$4(a0)
+loc_010196:
 	move.l	(ram_C55C).w,$8(a0)
+loc_01019C:
 	clr.b	(ram_C601).w
 loc_0101A0:
 	move.l	$C(a0),d0
+loc_0101A4:
 	neg.l	d0
+loc_0101A6:
 	move.l	d0,(ram_C54E).w
+loc_0101AA:
 	move.l	$10(a0),d0
+loc_0101AE:
 	neg.l	d0
+loc_0101B0:
 	move.l	d0,(ram_C560).w
+loc_0101B4:
 	rts
 sub_0101B6:
 	bset.b	#$0,$2(a0)
+loc_0101BC:
 	bne.b	loc_0101DE
+loc_0101BE:
 	ori.b	#$20,$2(a0)
+loc_0101C4:
 	bclr.b	#$2,$2(a0)
+loc_0101CA:
 	move.l	#$59D2A,$14(a0)
+loc_0101D2:
 	move.b	#$40,$22(a0)
+loc_0101D8:
 	move.b	#$10,$2F(a0)
 loc_0101DE:
 	cmpi.w	#$170,$8(a0)
+loc_0101E4:
 	bcc.w	sub_014220
+loc_0101E8:
 	move.b	(ram_C68F).w,d0
+loc_0101EC:
 	cmp.b	$3B(a0),d0
+loc_0101F0:
 	beq.w	sub_014220
+loc_0101F4:
 	subq.b	#$1,$2F(a0)
+loc_0101F8:
 	bne.b	loc_010206
+loc_0101FA:
 	move.b	#$10,$2F(a0)
+loc_010200:
 	bchg.b	#$2,$2(a0)
 loc_010206:
 	rts
 sub_010208:
 	bset.b	#$0,$2(a0)
+loc_01020E:
 	bne.b	loc_010224
+loc_010210:
 	move.l	#$59D20,$14(a0)
+loc_010218:
 	move.b	#$40,$22(a0)
+loc_01021E:
 	move.b	#$10,$2F(a0)
 loc_010224:
 	subq.b	#$1,$2F(a0)
+loc_010228:
 	bne.b	loc_010236
+loc_01022A:
 	move.b	#$10,$2F(a0)
+loc_010230:
 	bchg.b	#$2,$2(a0)
 loc_010236:
 	moveq	#$0,d0
+loc_010238:
 	move.b	$18(a0),d0
+loc_01023C:
 	jmp	loc_010240(pc,d0.w)
 loc_010240:
 	bra.w	loc_01024C
-	bra.w	loc_010256
-	bra.w	loc_010260
+	dc.b	$60,$00,$00,$10,$60,$00,$00,$16
 loc_01024C:
 	tst.w	(ram_E880).w
+loc_010250:
 	beq.w	sub_014220
+loc_010254:
 	rts
-loc_010256:
-	tst.w	(ram_E76C).w
-	beq.w	sub_014220
-	rts
-loc_010260:
-	tst.b	(ram_C67B).w
-	beq.b	loc_01026E
-	clr.b	(ram_C67B).w
-	bra.w	sub_014220
-loc_01026E:
-	rts
+	dc.b	$4A,$78,$E7,$6C,$67,$00,$3F,$C4,$4E,$75
+	dc.b	$4A,$38,$C6,$7B,$67,$08,$42,$38,$C6,$7B,$60,$00,$3F,$B4,$4E,$75
 sub_010270:
 	bset.b	#$0,$2(a0)
+loc_010276:
 	bne.b	loc_01027E
+loc_010278:
 	ori.b	#$24,$2(a0)
 loc_01027E:
 	lea	(dat_0105B4).l,a1
+loc_010284:
 	move.w	(ram_C328).w,d0
+loc_010288:
 	lsl.w	#$3,d0
+loc_01028A:
 	movem.w	(a1,d0.w),d0-d3
+loc_010290:
 	move.w	(Camera_Y).w,d4
+loc_010294:
 	move.w	(ram_C504).w,d5
+loc_010298:
 	cmp.w	d0,d4
+loc_01029A:
 	bcs.b	loc_0102E2
+loc_01029C:
 	cmp.w	d1,d4
+loc_01029E:
 	bhi.b	loc_0102E2
 	cmp.w	d2,d5
 	bcs.b	loc_0102E2
@@ -16468,37 +22768,48 @@ sub_0104A6:
 	rts
 sub_0104C0:
 	bset.b	#$0,$2(a0)
+loc_0104C6:
 	bne.b	loc_0104E8
+loc_0104C8:
 	move.l	#$59CC2,$14(a0)
+loc_0104D0:
 	move.b	#$C0,$22(a0)
+loc_0104D6:
 	move.w	#$F8,$4(a0)
+loc_0104DC:
 	move.w	#$A0,$8(a0)
+loc_0104E2:
 	ori.b	#$2,$2(a0)
 loc_0104E8:
 	tst.b	(ram_C65C).w
+loc_0104EC:
 	beq.b	loc_0104F6
 	bset.b	#$2,$2(a0)
 	rts
 loc_0104F6:
 	move.w	$28(a0),d0
+loc_0104FA:
 	jmp	loc_0104FE(pc,d0.w)
 loc_0104FE:
 	bra.w	loc_010506
-	bra.w	loc_010532
+	dc.b	$60,$00,$00,$2E
 loc_010506:
 	bset.b	#$2,$2(a0)
+loc_01050C:
 	tst.w	(ram_C5A8).w
+loc_010510:
 	beq.b	loc_01051A
+loc_010512:
 	move.w	#$80,$2C(a0)
 loc_010518:
 	rts
 loc_01051A:
 	subq.w	#$1,$2C(a0)
+loc_01051E:
 	bne.b	loc_010518
 	move.w	#$4,$28(a0)
 	move.w	#$10,$2C(a0)
 	bclr.b	#$2,$2(a0)
-loc_010532:
 	subq.w	#$1,$2C(a0)
 	bne.b	loc_01054A
 	tst.w	(ram_C5A8).w
@@ -16536,10 +22847,15 @@ dat_0105B4:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$01,$00,$00,$00,$00
 sub_01063C:
 	lea	(dat_01069E).l,a1
+loc_010642:
 	movea.l	(a1,d0.w),a3
+loc_010646:
 	move.l	d1,d0
+loc_010648:
 	move.l	d2,d1
+loc_01064A:
 	jsr	(sub_008CC0).l
+loc_010650:
 	rts
 dat_010652:
 	dc.b	$02,$00,$00,$E0,$02,$80,$00,$E0,$02,$20,$00,$E0,$02,$20
@@ -16560,13 +22876,19 @@ dat_01069E:
 	dc.b	$A8,$0A,$00,$0D,$A8,$5C,$00,$0D,$A8,$AE,$00,$0D,$A9,$00
 sub_01072E:
 	bset.b	#$0,$2(a0)
+loc_010734:
 	bne.b	loc_010740
+loc_010736:
 	bsr.w	sub_01076E
+loc_01073A:
 	ori.b	#$24,$2(a0)
 loc_010740:
 	bsr.w	sub_01016C
+loc_010744:
 	movea.w	$26(a0),a1
+loc_010748:
 	tst.b	(a1)
+loc_01074A:
 	beq.w	loc_010A74
 	bset.b	#$0,$3(a0)
 	movea.l	$2A(a0),a3
@@ -16578,24 +22900,41 @@ loc_010740:
 	bra.w	sub_014220
 sub_01076E:
 	bsr.w	sub_01079C
+loc_010772:
 	moveq	#$0,d0
+loc_010774:
 	move.b	$18(a0),d0
+loc_010778:
 	lea	(dat_0107B2).l,a1
+loc_01077E:
 	movea.l	(a1,d0.w),a1
+loc_010782:
 	move.l	(a1)+,$2A(a0)
+loc_010786:
 	move.l	(a1)+,$32(a0)
+loc_01078A:
 	move.l	(a1)+,$14(a0)
+loc_01078E:
 	move.w	(a1)+,$26(a0)
+loc_010792:
 	move.w	(a1)+,$36(a0)
+loc_010796:
 	move.b	(a1)+,$3A(a0)
+loc_01079A:
 	rts
 sub_01079C:
 	move.b	$19(a0),d0
+loc_0107A0:
 	ext.w	d0
+loc_0107A2:
 	add.w	d0,$4(a0)
+loc_0107A6:
 	move.b	$1A(a0),d0
+loc_0107AA:
 	ext.w	d0
+loc_0107AC:
 	add.w	d0,$8(a0)
+loc_0107B0:
 	rts
 dat_0107B2:
 	dc.l	$000107BA,dat_0107CC,dat_0454D4
@@ -16606,44 +22945,79 @@ dat_0107CC:
 	dc.b	$00,$01,$17,$26,$00,$00,$8C,$0C,$C6,$70,$00,$04,$01,$00
 sub_0107DE:
 	bset.b	#$0,$2(a0)
+loc_0107E4:
 	bne.b	loc_0107F0
+loc_0107E6:
 	bsr.w	sub_01083E
+loc_0107EA:
 	ori.b	#$24,$2(a0)
 loc_0107F0:
 	bsr.w	sub_01015A
+loc_0107F4:
 	move.w	$20(a0),d4
+loc_0107F8:
 	bsr.w	sub_00E238
+loc_0107FC:
 	bsr.w	sub_00B298
+loc_010800:
 	beq.w	loc_010A74
+loc_010804:
 	movem.l	d0/a1,-(a7)
+loc_010808:
 	moveq	#-$44,d0
+loc_01080A:
 	jsr	(sub_00A068).l
+loc_010810:
 	movem.l	(a7)+,d0/a1
+loc_010814:
 	btst.b	#$0,$3(a0)
+loc_01081A:
 	beq.w	loc_010A74
+loc_01081E:
 	movea.w	$26(a0),a1
+loc_010822:
 	st.b	(a1)
+loc_010824:
 	movea.l	$2A(a0),a3
+loc_010828:
 	movea.l	$14(a0),a1
+loc_01082C:
 	jsr	(a1)
+loc_01082E:
 	move.w	$36(a0),d7
+loc_010832:
 	move.l	$32(a0),d4
+loc_010836:
 	bsr.w	sub_0113F4
+loc_01083A:
 	bra.w	sub_014220
 sub_01083E:
 	bsr.w	sub_01079C
+loc_010842:
 	moveq	#$0,d0
+loc_010844:
 	move.b	$18(a0),d0
+loc_010848:
 	lea	(dat_010874).l,a1
+loc_01084E:
 	movea.l	(a1,d0.w),a1
+loc_010852:
 	move.l	(a1)+,$2A(a0)
+loc_010856:
 	move.l	(a1)+,$32(a0)
+loc_01085A:
 	move.l	(a1)+,$14(a0)
+loc_01085E:
 	move.w	(a1)+,$38(a0)
+loc_010862:
 	move.w	(a1)+,$20(a0)
+loc_010866:
 	move.w	(a1)+,$26(a0)
+loc_01086A:
 	move.w	(a1)+,$36(a0)
+loc_01086E:
 	move.b	(a1)+,$3A(a0)
+loc_010872:
 	rts
 dat_010874:
 	dc.l	$000108A0,dat_0108B6,dat_0108CC,dat_0108E2
@@ -16686,39 +23060,64 @@ dat_01097C:
 	dc.b	$01,$00
 sub_010992:
 	bset.b	#$0,$2(a0)
+loc_010998:
 	bne.b	loc_0109A4
+loc_01099A:
 	bsr.w	sub_010A34
+loc_01099E:
 	ori.b	#$24,$2(a0)
 loc_0109A4:
 	bsr.w	sub_01015A
+loc_0109A8:
 	tst.b	$1B(a0)
+loc_0109AC:
 	beq.b	loc_0109B4
 	jsr	(sub_01B42C).l
 loc_0109B4:
 	bclr.b	#$5,$2A(a0)
+loc_0109BA:
 	beq.b	loc_0109C6
+loc_0109BC:
 	movea.l	$1C(a0),a3
+loc_0109C0:
 	movea.l	$14(a0),a1
+loc_0109C4:
 	jmp	(a1)
 loc_0109C6:
 	move.w	$20(a0),d4
+loc_0109CA:
 	bsr.w	sub_00E238
+loc_0109CE:
 	bsr.w	sub_00B298
+loc_0109D2:
 	beq.w	loc_010A74
+loc_0109D6:
 	movem.l	d0/a1,-(a7)
+loc_0109DA:
 	moveq	#-$44,d0
+loc_0109DC:
 	jsr	(sub_00A068).l
+loc_0109E2:
 	movem.l	(a7)+,d0/a1
+loc_0109E6:
 	btst.b	#$0,$3(a0)
+loc_0109EC:
 	bne.b	loc_0109FE
+loc_0109EE:
 	bset.b	#$5,$2A(a0)
+loc_0109F4:
 	movea.l	$2E(a0),a3
+loc_0109F8:
 	movea.l	$14(a0),a1
+loc_0109FC:
 	jmp	(a1)
 loc_0109FE:
 	movea.w	$26(a0),a1
+loc_010A02:
 	st.b	(a1)
+loc_010A04:
 	tst.b	(ram_C5D0).w
+loc_010A08:
 	beq.b	loc_010A1A
 	clr.b	(ram_C5D0).w
 	bclr.b	#$2,(Flags_C5EB).w
@@ -16726,28 +23125,49 @@ loc_0109FE:
 	st.b	(ram_C625).w
 loc_010A1A:
 	movea.l	$2A(a0),a3
+loc_010A1E:
 	movea.l	$14(a0),a1
+loc_010A22:
 	jsr	(a1)
+loc_010A24:
 	move.w	$36(a0),d7
+loc_010A28:
 	move.l	$32(a0),d4
+loc_010A2C:
 	bsr.w	sub_0113F4
+loc_010A30:
 	bra.w	sub_014220
 sub_010A34:
 	bsr.w	sub_01079C
+loc_010A38:
 	moveq	#$0,d0
+loc_010A3A:
 	move.b	$18(a0),d0
+loc_010A3E:
 	lea	(dat_010A76).l,a1
+loc_010A44:
 	movea.l	(a1,d0.w),a1
+loc_010A48:
 	move.l	(a1)+,$1C(a0)
+loc_010A4C:
 	move.l	(a1)+,$2A(a0)
+loc_010A50:
 	move.l	(a1)+,$2E(a0)
+loc_010A54:
 	move.l	(a1)+,$32(a0)
+loc_010A58:
 	move.l	(a1)+,$14(a0)
+loc_010A5C:
 	move.w	(a1)+,$38(a0)
+loc_010A60:
 	move.w	(a1)+,$20(a0)
+loc_010A64:
 	move.w	(a1)+,$26(a0)
+loc_010A68:
 	move.w	(a1)+,$36(a0)
+loc_010A6C:
 	move.b	(a1)+,$1B(a0)
+loc_010A70:
 	move.b	(a1)+,$3A(a0)
 loc_010A74:
 	rts
@@ -16899,205 +23319,339 @@ dat_010EEC:
 	dc.b	$00,$01
 sub_010F82:
 	bset.b	#$0,$2(a0)
+loc_010F88:
 	bne.b	loc_010FAE
+loc_010F8A:
 	move.l	#$5FF4A,$14(a0)
+loc_010F92:
 	move.b	#$0,$22(a0)
+loc_010F98:
 	ori.b	#$8,$2(a0)
+loc_010F9E:
 	move.w	#$10,$38(a0)
+loc_010FA4:
 	move.b	#$1,$3A(a0)
+loc_010FAA:
 	bra.w	loc_01103A
 loc_010FAE:
 	moveq	#$0,d0
+loc_010FB0:
 	move.b	$18(a0),d0
+loc_010FB4:
 	lea	(dat_011042).l,a1
+loc_010FBA:
 	move.w	(a1,d0.w),$24(a0)
+loc_010FC0:
 	bsr.w	sub_00AF50
+loc_010FC4:
 	cmpi.b	#$2,$18(a0)
+loc_010FCA:
 	bhi.b	loc_010FDE
+loc_010FCC:
 	lea	(ram_E880).w,a1
+loc_010FD0:
 	moveq	#$2,d7
 loc_010FD2:
 	tst.w	(a1)
+loc_010FD4:
 	bne.b	loc_01103A
+loc_010FD6:
 	lea	$40(a1),a1
+loc_010FDA:
 	dbra	d7,loc_010FD2
 loc_010FDE:
 	move.b	#$0,$22(a0)
+loc_010FE4:
 	bsr.w	sub_00E234
+loc_010FE8:
 	bsr.w	sub_00B298
+loc_010FEC:
 	beq.b	loc_010FFE
+loc_010FEE:
 	btst.b	#$0,$3(a0)
+loc_010FF4:
 	bne.w	sub_014220
+loc_010FF8:
 	move.b	#$20,$22(a0)
 loc_010FFE:
 	move.b	$18(a0),d0
+loc_011002:
 	cmpi.b	#$2,d0
+loc_011006:
 	bhi.b	loc_01103A
+loc_011008:
 	beq.b	loc_011014
+loc_01100A:
 	tst.w	(ram_E840).w
+loc_01100E:
 	beq.w	sub_014220
+loc_011012:
 	bra.b	loc_01103A
 loc_011014:
 	tst.w	(ram_E800).w
+loc_011018:
 	beq.w	sub_014220
+loc_01101C:
 	btst.b	#$2,$2(a0)
+loc_011022:
 	beq.b	loc_01102C
 	bset.b	#$2,(ram_E802).w
 	bra.b	loc_01103A
 loc_01102C:
 	btst.b	#$2,(ram_E802).w
+loc_011032:
 	beq.b	loc_01103A
 	bset.b	#$2,$2(a0)
 loc_01103A:
 	move.w	$8(a0),$26(a0)
+loc_011040:
 	rts
 dat_011042:
 	dc.b	$01,$38,$01,$40,$01,$48,$01,$50,$01,$58
 sub_01104C:
 	bset.b	#$0,$2(a0)
+loc_011052:
 	bne.b	loc_01106E
+loc_011054:
 	move.l	#$5FF40,$14(a0)
+loc_01105C:
 	move.b	#$0,$22(a0)
+loc_011062:
 	ori.b	#$8,$2(a0)
+loc_011068:
 	move.w	#$1,$26(a0)
 loc_01106E:
 	rts
 sub_011070:
 	bset.b	#$0,$2(a0)
+loc_011076:
 	bne.b	loc_0110B8
+loc_011078:
 	move.b	(ram_C5F8).w,d0
+loc_01107C:
 	move.b	$18(a0),d1
+loc_011080:
 	and.b	d1,d0
+loc_011082:
 	bne.w	sub_014220
+loc_011086:
 	or.b	d1,(ram_C5F8).w
+loc_01108A:
 	ori.b	#$24,$2(a0)
+loc_011090:
 	bset.b	#$0,(Flags_C5EB).w
+loc_011096:
 	subi.w	#$80,$8(a0)
+loc_01109C:
 	move.w	#$30,d0
+loc_0110A0:
 	moveq	#$0,d1
+loc_0110A2:
 	moveq	#$4,d7
+loc_0110A4:
 	lea	(ram_E940).w,a1
 loc_0110A8:
 	move.w	d0,(a1)
+loc_0110AA:
 	move.w	d1,$2C(a1)
+loc_0110AE:
 	addq.w	#$4,d1
+loc_0110B0:
 	lea	$40(a1),a1
+loc_0110B4:
 	dbra	d7,loc_0110A8
 loc_0110B8:
 	move.w	#$188,d4
+loc_0110BC:
 	bsr.w	sub_00E35C
+loc_0110C0:
 	move.w	$28(a0),d0
+loc_0110C4:
 	jmp	loc_0110C8(pc,d0.w)
 loc_0110C8:
 	bra.w	loc_0110D8
+loc_0110CC:
 	bra.w	loc_011108
+loc_0110D0:
 	bra.w	loc_011150
-	bra.w	loc_011174
+	dc.b	$60,$00,$00,$9E
 loc_0110D8:
 	bsr.w	sub_011176
+loc_0110DC:
 	tst.w	$8(a0)
+loc_0110E0:
 	bpl.b	loc_0110E4
+loc_0110E2:
 	rts
 loc_0110E4:
 	move.w	#$4,$28(a0)
+loc_0110EA:
 	movem.l	d0/a1,-(a7)
+loc_0110EE:
 	moveq	#-$42,d0
+loc_0110F0:
 	jsr	(sub_00A068).l
+loc_0110F6:
 	movem.l	(a7)+,d0/a1
+loc_0110FA:
 	bsr.w	sub_0111EA
+loc_0110FE:
 	lea	(dat_043F60).l,a1
+loc_011104:
 	bra.w	loc_01119C
 loc_011108:
 	bsr.w	sub_011176
+loc_01110C:
 	move.w	$8(a0),d0
+loc_011110:
 	cmp.w	(ram_E708).w,d0
+loc_011114:
 	bcc.b	loc_011124
+loc_011116:
 	bsr.w	sub_0111EA
+loc_01111A:
 	lea	(dat_043F60).l,a1
+loc_011120:
 	bra.w	loc_01119C
 loc_011124:
 	move.w	#$8,$28(a0)
+loc_01112A:
 	not.b	(ram_C5ED).w
+loc_01112E:
 	clr.l	$C(a0)
+loc_011132:
 	clr.l	$10(a0)
+loc_011136:
 	move.l	(ram_E704).w,$4(a0)
+loc_01113C:
 	move.l	(ram_E708).w,$8(a0)
+loc_011142:
 	bsr.w	sub_0111EA
+loc_011146:
 	lea	(dat_044174).l,a1
+loc_01114C:
 	bra.w	loc_0111DA
 loc_011150:
 	move.w	(ram_E708).w,d0
+loc_011154:
 	cmpi.w	#$80,d0
+loc_011158:
 	bcc.b	loc_011168
+loc_01115A:
 	bsr.w	sub_0111EA
+loc_01115E:
 	lea	(dat_044174).l,a1
+loc_011164:
 	bra.w	loc_01119C
 loc_011168:
 	move.w	#$C,$28(a0)
 	bset.b	#$0,(ram_C5FE).w
-loc_011174:
 	rts
 sub_011176:
 	addq.b	#$1,$2F(a0)
+loc_01117A:
 	btst.b	#$0,$2F(a0)
+loc_011180:
 	beq.b	loc_011190
+loc_011182:
 	clr.w	$10(a0)
+loc_011186:
 	move.l	#$FFFEE000,$C(a0)
+loc_01118E:
 	rts
 loc_011190:
 	clr.l	$C(a0)
+loc_011194:
 	move.w	#$2,$10(a0)
+loc_01119A:
 	rts
 loc_01119C:
 	move.l	#$800000,d0
+loc_0111A2:
 	sub.l	$8(a0),d0
+loc_0111A6:
 	bcs.b	loc_0111D8
+loc_0111A8:
 	swap	d0
+loc_0111AA:
 	move.w	$38(a0),d1
+loc_0111AE:
 	move.w	d0,$38(a0)
+loc_0111B2:
 	eor.w	d0,d1
+loc_0111B4:
 	andi.w	#$8,d1
+loc_0111B8:
 	beq.b	loc_0111D8
 loc_0111BA:
 	andi.w	#$78,d0
+loc_0111BE:
 	move.w	d0,d1
+loc_0111C0:
 	lsl.w	#$4,d1
+loc_0111C2:
 	addi.w	#$E000,d1
+loc_0111C6:
 	jsr	(sub_008BE4).l
+loc_0111CC:
 	lea	(a1,d0.w),a1
+loc_0111D0:
 	move.l	(a1)+,(a5)+
+loc_0111D2:
 	move.w	d1,(a5)+
+loc_0111D4:
 	move.w	(a1)+,(a5)+
+loc_0111D6:
 	move.w	(a1)+,(a5)+
 loc_0111D8:
 	rts
 loc_0111DA:
 	move.l	#$800000,d0
+loc_0111E0:
 	sub.l	$8(a0),d0
+loc_0111E4:
 	bcs.b	loc_0111D8
+loc_0111E6:
 	swap	d0
+loc_0111E8:
 	bra.b	loc_0111BA
 sub_0111EA:
 	move.l	$4(a0),d1
+loc_0111EE:
 	sub.l	(ram_C508).w,d1
+loc_0111F2:
 	subi.l	#$800000,d1
+loc_0111F8:
 	swap	d1
+loc_0111FA:
 	move.w	d1,(ram_C556).w
+loc_0111FE:
 	move.l	$8(a0),d1
+loc_011202:
 	sub.l	(ram_C51A).w,d1
+loc_011206:
 	subi.l	#$800000,d1
+loc_01120C:
 	swap	d1
+loc_01120E:
 	neg.w	d1
+loc_011210:
 	move.w	d1,(ram_C568).w
+loc_011214:
 	rts
 sub_011216:
 	bset.b	#$0,$2(a0)
+loc_01121C:
 	bne.b	loc_011230
+loc_01121E:
 	ori.b	#$24,$2(a0)
+loc_011224:
 	subi.w	#$10,$8(a0)
+loc_01122A:
 	subi.w	#$40,$4(a0)
 loc_011230:
 	btst.b	#$0,(ram_C5FE).w
+loc_011236:
 	beq.b	loc_011282
 	move.l	(ram_C546).w,d1
 	bsr.w	sub_00A82E
@@ -17123,63 +23677,103 @@ loc_011282:
 	rts
 sub_011284:
 	bset.b	#$0,$2(a0)
+loc_01128A:
 	bne.b	loc_0112AE
+loc_01128C:
 	move.l	#$5FF94,$18(a0)
+loc_011294:
 	moveq	#$4,d0
+loc_011296:
 	bsr.w	sub_00D95E
+loc_01129A:
 	move.b	#$80,$22(a0)
+loc_0112A0:
 	ori.b	#$24,$2(a0)
+loc_0112A6:
 	move.w	$2C(a0),$30(a0)
+loc_0112AC:
 	rts
 loc_0112AE:
 	move.w	$28(a0),d0
+loc_0112B2:
 	jmp	loc_0112B6(pc,d0.w)
 loc_0112B6:
 	bra.w	loc_0112BE
+loc_0112BA:
 	bra.w	loc_0112D2
 loc_0112BE:
 	subq.w	#$1,$30(a0)
+loc_0112C2:
 	bpl.b	loc_0112D0
+loc_0112C4:
 	move.w	#$4,$28(a0)
+loc_0112CA:
 	bclr.b	#$2,$2(a0)
 loc_0112D0:
 	rts
 loc_0112D2:
 	bsr.w	sub_014248
+loc_0112D6:
 	beq.b	loc_011318
+loc_0112D8:
 	tst.b	(ram_C5ED).w
+loc_0112DC:
 	bne.w	sub_014220
+loc_0112E0:
 	move.w	$2C(a0),d0
+loc_0112E4:
 	lea	(dat_011856).l,a1
+loc_0112EA:
 	movea.l	(a1,d0.w),a1
+loc_0112EE:
 	move.w	$38(a0),d1
+loc_0112F2:
 	lea	(a1,d1.w),a1
+loc_0112F6:
 	addq.w	#$4,d1
+loc_0112F8:
 	cmpi.w	#$14,d1
+loc_0112FC:
 	bcs.b	loc_011300
+loc_0112FE:
 	moveq	#$0,d1
 loc_011300:
 	move.w	d1,$38(a0)
+loc_011304:
 	move.w	(ram_E6C4).w,d2
+loc_011308:
 	move.w	(ram_E6C8).w,d3
+loc_01130C:
 	add.w	(a1)+,d2
+loc_01130E:
 	add.w	(a1)+,d3
+loc_011310:
 	move.w	d2,$4(a0)
+loc_011314:
 	move.w	d3,$8(a0)
 loc_011318:
 	rts
 sub_01131A:
 	bset.b	#$0,$2(a0)
+loc_011320:
 	bne.b	loc_01133E
+loc_011322:
 	ori.b	#$24,$2(a0)
+loc_011328:
 	subi.w	#$40,$4(a0)
+loc_01132E:
 	subi.w	#$20,$8(a0)
+loc_011334:
 	bsr.w	sub_0114D6
+loc_011338:
 	move.b	#$1,$3A(a0)
 loc_01133E:
 	cmpi.w	#$150,$8(a0)
+loc_011344:
 	bcc.w	sub_014220
+loc_011348:
 	cmpi.w	#$40,$8(a0)
+loc_01134E:
 	bcs.w	loc_0116F4
 	btst.b	#$0,$3(a0)
 	bne.w	loc_0116F4
@@ -17225,19 +23819,31 @@ loc_01139E:
 	moveq	#$2,d7
 sub_0113F4:
 	lea	(ram_EA80).w,a1
+loc_0113F8:
 	moveq	#$38,d5
+loc_0113FA:
 	moveq	#$0,d6
 loc_0113FC:
 	clr.l	(a1)
+loc_0113FE:
 	move.w	d5,(a1)
+loc_011400:
 	move.l	d4,$30(a1)
+loc_011404:
 	move.w	a0,$34(a1)
+loc_011408:
 	move.w	$4(a0),$4(a1)
+loc_01140E:
 	move.w	$8(a0),$8(a1)
+loc_011414:
 	move.w	d6,$2C(a1)
+loc_011418:
 	addq.w	#$4,d6
+loc_01141A:
 	lea	$40(a1),a1
+loc_01141E:
 	dbra	d7,loc_0113FC
+loc_011422:
 	rts
 sub_011424:
 	move.b	$18(a0),d0
@@ -17285,10 +23891,15 @@ dat_0114AE:
 	dc.b	$00,$00,$00,$00,$00,$00
 sub_0114D6:
 	moveq	#$0,d0
+loc_0114D8:
 	move.b	$18(a0),d0
+loc_0114DC:
 	lea	dat_0114EA(pc,d0.w),a1
+loc_0114E0:
 	move.w	(a1)+,$38(a0)
+loc_0114E4:
 	move.w	(a1)+,$2C(a0)
+loc_0114E8:
 	rts
 dat_0114EA:
 	dc.b	$00,$20,$00,$0C,$00,$20
@@ -17354,47 +23965,77 @@ dat_0115E2:
 	dc.b	$48,$54,$00,$04,$47,$1E,$00,$04,$4B,$24
 sub_01160A:
 	bset.b	#$0,$2(a0)
+loc_011610:
 	bne.b	loc_01164E
+loc_011612:
 	move.b	#$40,$22(a0)
+loc_011618:
 	ori.b	#$24,$2(a0)
+loc_01161E:
 	move.w	$2C(a0),d0
+loc_011622:
 	add.w	d0,d0
+loc_011624:
 	move.w	d0,$3E(a0)
+loc_011628:
 	clr.w	$28(a0)
+loc_01162C:
 	bsr.w	sub_0116D0
+loc_011630:
 	move.l	#$3A56E,$18(a0)
+loc_011638:
 	btst.b	#$3,$2D(a0)
+loc_01163E:
 	beq.b	loc_011648
+loc_011640:
 	move.l	#$3A55C,$18(a0)
 loc_011648:
 	moveq	#$6,d0
+loc_01164A:
 	bra.w	sub_00D95E
 loc_01164E:
 	move.w	$28(a0),d0
+loc_011652:
 	jmp	loc_011656(pc,d0.w)
 loc_011656:
 	bra.w	loc_01165E
+loc_01165A:
 	bra.w	loc_011688
 loc_01165E:
 	subq.w	#$1,$3E(a0)
+loc_011662:
 	bpl.b	loc_011686
+loc_011664:
 	move.w	#$4,$28(a0)
+loc_01166A:
 	andi.b	#$FB,$2(a0)
+loc_011670:
 	tst.w	$2C(a0)
+loc_011674:
 	bne.b	loc_011686
+loc_011676:
 	movem.l	d0/a1,-(a7)
+loc_01167A:
 	moveq	#-$4C,d0
+loc_01167C:
 	jsr	(sub_00A068).l
+loc_011682:
 	movem.l	(a7)+,d0/a1
 loc_011686:
 	rts
 loc_011688:
 	bsr.w	sub_014248
+loc_01168C:
 	beq.b	loc_0116CE
+loc_01168E:
 	addq.b	#$1,$2F(a0)
+loc_011692:
 	cmpi.b	#$3,$2F(a0)
+loc_011698:
 	bcs.b	loc_0116B6
+loc_01169A:
 	tst.b	(ram_C5CF).w
+loc_01169E:
 	beq.w	sub_014220
 	clr.b	$2F(a0)
 	movea.w	$34(a0),a1
@@ -17402,25 +24043,41 @@ loc_011688:
 	move.w	$8(a1),$8(a0)
 loc_0116B6:
 	bsr.b	sub_0116D0
+loc_0116B8:
 	tst.w	$2C(a0)
+loc_0116BC:
 	bne.b	loc_0116CE
+loc_0116BE:
 	movem.l	d0/a1,-(a7)
+loc_0116C2:
 	moveq	#-$4C,d0
+loc_0116C4:
 	jsr	(sub_00A068).l
+loc_0116CA:
 	movem.l	(a7)+,d0/a1
 loc_0116CE:
 	rts
 sub_0116D0:
 	move.w	$2C(a0),d2
+loc_0116D4:
 	movea.l	$30(a0),a1
+loc_0116D8:
 	movea.l	(a1,d2.w),a1
+loc_0116DC:
 	moveq	#$0,d2
+loc_0116DE:
 	move.b	$2F(a0),d2
+loc_0116E2:
 	lsl.w	#$2,d2
+loc_0116E4:
 	lea	(a1,d2.w),a1
+loc_0116E8:
 	move.w	(a1)+,d0
+loc_0116EA:
 	move.w	(a1)+,d1
+loc_0116EC:
 	add.w	d0,$4(a0)
+loc_0116F0:
 	add.w	d1,$8(a0)
 loc_0116F4:
 	rts
@@ -17468,28 +24125,45 @@ dat_0118BA:
 	dc.b	$00,$70,$00,$38,$00,$58,$00,$10,$00,$70,$00,$38,$00,$70
 sub_0118CE:
 	bset.b	#$0,$2(a0)
+loc_0118D4:
 	bne.b	loc_011914
+loc_0118D6:
 	move.l	#$38686,$14(a0)
+loc_0118DE:
 	ori.b	#$60,$2(a0)
+loc_0118E4:
 	move.w	#$0,$1E(a0)
+loc_0118EA:
 	move.b	#$1,$3F(a0)
+loc_0118F0:
 	tst.b	$18(a0)
+loc_0118F4:
 	beq.b	loc_011902
 	move.w	#$2B,$1E(a0)
 	move.b	#$2,$3F(a0)
 loc_011902:
 	move.b	#$20,$22(a0)
+loc_011908:
 	move.b	#$10,$20(a0)
+loc_01190E:
 	clr.b	$3E(a0)
+loc_011912:
 	rts
 loc_011914:
 	subq.b	#$1,$20(a0)
+loc_011918:
 	bne.b	loc_011938
+loc_01191A:
 	move.b	#$10,$20(a0)
+loc_011920:
 	addq.w	#$4,$2C(a0)
+loc_011924:
 	move.w	$2C(a0),d0
+loc_011928:
 	andi.w	#$1C,d0
+loc_01192C:
 	lea	(dat_01193A).l,a1
+loc_011932:
 	move.l	(a1,d0.w),$14(a0)
 loc_011938:
 	rts
@@ -17498,37 +24172,56 @@ dat_01193A:
 	dc.l	dat_03870E,dat_03872A,dat_038758,dat_038768
 sub_01195A:
 	bset.b	#$0,$2(a0)
+loc_011960:
 	bne.b	loc_0119A6
+loc_011962:
 	ori.b	#$68,$2(a0)
+loc_011968:
 	ori.b	#$4,$3(a0)
+loc_01196E:
 	move.b	#$20,$22(a0)
+loc_011974:
 	clr.w	$1E(a0)
+loc_011978:
 	move.b	#$1,$3F(a0)
+loc_01197E:
 	cmpi.w	#$4,(ram_C328).w
+loc_011984:
 	bne.b	loc_011992
 	move.w	#$69,$1E(a0)
 	move.b	#$3,$3F(a0)
 loc_011992:
 	bsr.w	sub_00E262
+loc_011996:
 	moveq	#$0,d0
+loc_011998:
 	moveq	#$0,d1
+loc_01199A:
 	bsr.w	sub_011B46
+loc_01199E:
 	move.b	$20(a0),d0
+loc_0119A2:
 	bra.w	loc_011B18
 loc_0119A6:
 	cmpi.w	#$190,$8(a0)
+loc_0119AC:
 	bcc.w	sub_014220
+loc_0119B0:
 	move.w	$8(a0),$26(a0)
+loc_0119B6:
 	move.w	$28(a0),d0
+loc_0119BA:
 	jmp	loc_0119BE(pc,d0.w)
 loc_0119BE:
 	bra.w	loc_0119CA
-	bra.w	loc_011AA4
-	bra.w	loc_011ACC
+	dc.b	$60,$00,$00,$E0,$60,$00,$01,$04
 loc_0119CA:
 	bsr.w	sub_00E234
+loc_0119CE:
 	lea	(Objects_A).w,a1
+loc_0119D2:
 	bsr.w	sub_00AF0A
+loc_0119D6:
 	beq.w	loc_0119EE
 	addq.w	#$4,$28(a0)
 	lea	(dat_011A64).l,a3
@@ -17589,36 +24282,22 @@ loc_011AC2:
 	move.l	(a2)+,(a1)+
 	dbra	d7,loc_011AC2
 	bra.w	sub_014220
-loc_011ACC:
-	tst.b	(ram_C5C1).w
-	beq.b	loc_011B36
-	btst.b	#$0,(ram_E003).w
-	bne.b	loc_011B36
-	cmpi.w	#$1,(ram_C328).w
-	beq.b	loc_011AF6
-	cmpi.w	#$B,(ram_C328).w
-	bne.b	loc_011AFE
-	cmpi.w	#$620,(Camera_Y).w
-	bcs.b	loc_011B2A
-	bra.w	loc_011AFE
-loc_011AF6:
-	cmpi.w	#$2C0,(Camera_Y).w
-	bcs.b	loc_011B2A
-loc_011AFE:
-	bclr.b	#$0,$3(a0)
-	bsr.w	sub_00E1FE
-	move.l	(ram_E004).w,$4(a0)
-	move.l	(ram_E008).w,$8(a0)
-	move.b	(ram_E020).w,d0
+	dc.b	$4A,$38,$C5,$C1
+	dc.b	$67,$64,$08,$38,$00,$00,$E0,$03,$66,$5C,$0C,$78,$00,$01,$C3,$28
+	dc.b	$67,$14,$0C,$78,$00,$0B,$C3,$28,$66,$14,$0C,$78,$06,$20,$C5,$16
+	dc.b	$65,$38,$60,$00,$00,$0A,$0C,$78,$02,$C0,$C5,$16,$65,$2C,$08,$A8
+	dc.b	$00,$00,$00,$03,$61,$00,$C6,$F8,$21,$78,$E0,$04,$00,$04,$21,$78
+	dc.b	$E0,$08,$00,$08,$10,$38,$E0,$20
 loc_011B18:
 	andi.w	#$1C,d0
+loc_011B1C:
 	lea	(dat_01193A).l,a1
+loc_011B22:
 	move.l	(a1,d0.w),$14(a0)
+loc_011B28:
 	rts
-loc_011B2A:
-	clr.b	(ram_C5C1).w
-	clr.b	(ram_C68F).w
-	bsr.w	sub_00B1F4
+	dc.b	$42,$38,$C5,$C1,$42,$38
+	dc.b	$C6,$8F,$61,$00,$96,$C0
 loc_011B36:
 	moveq	#$2,d7
 	move.l	#$11826,d4
@@ -17626,8 +24305,11 @@ loc_011B36:
 	bra.w	sub_014220
 sub_011B46:
 	moveq	#$1,d2
+loc_011B48:
 	lea	(ram_E140).w,a1
+loc_011B4C:
 	tst.w	(a1)
+loc_011B4E:
 	beq.b	loc_011B66
 	moveq	#$2,d2
 	lea	(ram_EBC0).w,a1
@@ -17640,34 +24322,54 @@ loc_011B58:
 	rts
 loc_011B66:
 	move.w	#$98,(a1)
+loc_011B6A:
 	bset.b	#$2,$2(a1)
+loc_011B70:
 	move.l	$4(a0),$4(a1)
+loc_011B76:
 	move.l	$8(a0),$8(a1)
+loc_011B7C:
 	add.w	d0,$4(a1)
+loc_011B80:
 	add.w	d1,$8(a1)
+loc_011B84:
 	move.b	d2,$3B(a1)
+loc_011B88:
 	move.b	d2,$3B(a0)
+loc_011B8C:
 	rts
 sub_011B8E:
 	bset.b	#$0,$2(a0)
+loc_011B94:
 	bne.b	loc_011BAA
+loc_011B96:
 	ori.b	#$28,$2(a0)
+loc_011B9C:
 	move.l	#$C9314,$14(a0)
+loc_011BA4:
 	move.b	$18(a0),$39(a0)
 loc_011BAA:
 	cmpi.w	#$1A0,$8(a0)
+loc_011BB0:
 	bcc.w	sub_014220
+loc_011BB4:
 	move.w	$8(a0),$26(a0)
+loc_011BBA:
 	move.w	$28(a0),d0
+loc_011BBE:
 	jmp	loc_011BC2(pc,d0.w)
 loc_011BC2:
 	bra.w	loc_011BCA
-	bra.w	loc_01251A
+	dc.b	$60,$00,$09,$52
 loc_011BCA:
 	move.w	#$CD0,d2
+loc_011BCE:
 	bsr.w	sub_00AF54
+loc_011BD2:
 	bsr.w	sub_00E234
+loc_011BD6:
 	bsr.w	sub_00B298
+loc_011BDA:
 	beq.b	loc_011BEC
 	cmpi.b	#$FF,$18(a0)
 	beq.b	loc_011BEC
@@ -17681,76 +24383,128 @@ loc_011BEE:
 	bra.w	loc_0124F8
 sub_011BFA:
 	bset.b	#$0,$2(a0)
+loc_011C00:
 	bne.b	loc_011C4E
+loc_011C02:
 	ori.b	#$26,$2(a0)
+loc_011C08:
 	lea	(dat_0FE77A).l,a1
+loc_011C0E:
 	lea	(ram_D000).w,a2
+loc_011C12:
 	move.w	#$3,d0
 loc_011C16:
 	move.l	(a1)+,(a2)+
+loc_011C18:
 	dbra	d0,loc_011C16
+loc_011C1C:
 	st.b	(ram_C5AE).w
+loc_011C20:
 	move.b	#$60,(ram_E022).w
+loc_011C26:
 	move.l	a0,-(a7)
+loc_011C28:
 	lea	(dat_0B0026).l,a0
+loc_011C2E:
 	lea	(ram_FF5C00).l,a4
+loc_011C34:
 	jsr	(sub_00A22A).l
+loc_011C3A:
 	movea.l	(a7)+,a0
+loc_011C3C:
 	move.b	#$4,$2F(a0)
+loc_011C42:
 	move.b	#$20,$2E(a0)
+loc_011C48:
 	bset.b	#$0,(Flags_C5EB).w
 loc_011C4E:
 	cmpi.w	#$40,(Camera_Y).w
+loc_011C54:
 	bcc.b	loc_011C5A
 	st.b	$20(a0)
 loc_011C5A:
 	tst.b	(ram_C6B5).w
+loc_011C5E:
 	bne.b	loc_011C6A
+loc_011C60:
 	lea	(ram_D000).w,a1
+loc_011C64:
 	jsr	(sub_0086E2).l
 loc_011C6A:
 	move.l	#$FFFF8000,d0
+loc_011C70:
 	move.l	#$FFFF8000,d1
+loc_011C76:
 	sub.l	(ram_C508).w,d0
+loc_011C7A:
 	add.l	d0,$30(a0)
+loc_011C7E:
 	move.w	$30(a0),(ram_C556).w
+loc_011C84:
 	add.l	(ram_C51A).w,d1
+loc_011C88:
 	add.l	d1,$34(a0)
+loc_011C8C:
 	move.w	$34(a0),(ram_C568).w
+loc_011C92:
 	tst.b	$20(a0)
+loc_011C96:
 	bne.w	loc_011D06
+loc_011C9A:
 	subq.b	#$1,$2F(a0)
+loc_011C9E:
 	bne.b	loc_011CE8
+loc_011CA0:
 	move.b	#$4,$2F(a0)
+loc_011CA6:
 	bset.b	#$6,(ram_C5C8).w
+loc_011CAC:
 	subq.b	#$1,$2E(a0)
+loc_011CB0:
 	bne.b	loc_011CC6
+loc_011CB2:
 	move.b	(RNG_Seed).w,d0
+loc_011CB6:
 	andi.b	#$3F,d0
+loc_011CBA:
 	move.b	#$20,$2E(a0)
+loc_011CC0:
 	bchg.b	#$0,$2A(a0)
 loc_011CC6:
 	btst.b	#$0,$2A(a0)
+loc_011CCC:
 	bne.b	loc_011CEA
+loc_011CCE:
 	lea	(ram_FF6000).l,a1
+loc_011CD4:
 	lea	(ram_FF5FFF).l,a2
+loc_011CDA:
 	move.b	(a2),d0
+loc_011CDC:
 	move.w	#$3FE,d7
 loc_011CE0:
 	move.b	-(a2),-(a1)
+loc_011CE2:
 	dbra	d7,loc_011CE0
+loc_011CE6:
 	move.b	d0,(a1)
 loc_011CE8:
 	rts
 loc_011CEA:
 	lea	(ram_FF5C00).l,a1
+loc_011CF0:
 	lea	(ram_FF5C01).l,a2
+loc_011CF6:
 	move.b	(a1),d0
+loc_011CF8:
 	move.w	#$3FE,d7
 loc_011CFC:
 	move.b	(a2)+,(a1)+
+loc_011CFE:
 	dbra	d7,loc_011CFC
+loc_011D02:
 	move.b	d0,(a1)
+loc_011D04:
 	rts
 loc_011D06:
 	bchg.b	#$1,$2A(a0)
@@ -17792,14 +24546,23 @@ dat_011D68:
 	dc.b	$00,$E8
 sub_011D92:
 	bset.b	#$0,$2(a0)
+loc_011D98:
 	bne.b	loc_011DC0
+loc_011D9A:
 	ori.b	#$88,$2(a0)
+loc_011DA0:
 	move.w	#$1,$26(a0)
+loc_011DA6:
 	move.l	#$38796,$14(a0)
+loc_011DAE:
 	move.b	#$40,$22(a0)
+loc_011DB4:
 	clr.w	$28(a0)
+loc_011DB8:
 	moveq	#$0,d0
+loc_011DBA:
 	moveq	#-$28,d1
+loc_011DBC:
 	bra.w	sub_011B46
 loc_011DC0:
 	move.w	$28(a0),d0
@@ -17851,10 +24614,13 @@ loc_011E50:
 	rts
 sub_011E5A:
 	bset.b	#$0,$2(a0)
+loc_011E60:
 	bne.b	loc_011E68
+loc_011E62:
 	ori.b	#$4,$2(a0)
 loc_011E68:
 	cmpi.w	#$A0,$8(a0)
+loc_011E6E:
 	bcs.b	loc_011E84
 	lea	(dat_045092).l,a3
 	moveq	#$0,d0
@@ -17865,15 +24631,23 @@ loc_011E84:
 	rts
 sub_011E86:
 	bset.b	#$0,$2(a0)
+loc_011E8C:
 	bne.b	loc_011EB4
+loc_011E8E:
 	jsr	(sub_008DDC).l
+loc_011E94:
 	move.l	#$70A5C,$14(a0)
+loc_011E9C:
 	move.b	#$20,$22(a0)
+loc_011EA2:
 	move.b	#$40,$2F(a0)
+loc_011EA8:
 	move.w	#$100,$38(a0)
+loc_011EAE:
 	move.b	#$F,$3A(a0)
 loc_011EB4:
 	cmpi.w	#$98,$8(a0)
+loc_011EBA:
 	bcs.w	loc_012264
 	cmpi.w	#$120,$8(a0)
 	bcc.w	sub_014220
@@ -18000,50 +24774,64 @@ loc_01208C:
 	rts
 sub_01208E:
 	bsr.w	sub_00E234
+loc_012092:
 	bsr.w	sub_00B036
+loc_012096:
 	move.w	$28(a0),d0
+loc_01209A:
 	jmp	loc_01209E(pc,d0.w)
 loc_01209E:
 	bra.w	loc_0120A6
-	bra.w	loc_0120D8
+	dc.b	$60,$00,$00,$34
 loc_0120A6:
 	bsr.w	sub_014248
+loc_0120AA:
 	subq.w	#$1,$2E(a0)
+loc_0120AE:
 	bpl.b	loc_0120D6
+loc_0120B0:
 	move.w	#$4,$28(a0)
+loc_0120B6:
 	move.l	#$70B0E,$14(a0)
+loc_0120BE:
 	move.l	#$70B00,$18(a0)
+loc_0120C6:
 	move.l	#$FF010200,$1C(a0)
+loc_0120CE:
 	clr.l	$C(a0)
+loc_0120D2:
 	clr.l	$10(a0)
 loc_0120D6:
 	rts
-loc_0120D8:
-	bsr.w	sub_014248
-	bne.w	sub_014220
-	rts
+	dc.b	$61,$00,$21,$6E,$66,$00,$21,$42
+	dc.b	$4E,$75
 sub_0120E2:
 	bset.b	#$0,$2(a0)
+loc_0120E8:
 	bne.b	loc_012100
+loc_0120EA:
 	jsr	(sub_008DDC).l
+loc_0120F0:
 	bsr.w	sub_0122BE
+loc_0120F4:
 	ori.b	#$28,$2(a0)
+loc_0120FA:
 	move.w	#$1,$26(a0)
 loc_012100:
 	cmpi.w	#$160,$8(a0)
+loc_012106:
 	bcc.w	sub_014220
+loc_01210A:
 	move.w	$28(a0),d0
+loc_01210E:
 	jmp	loc_012112(pc,d0.w)
 loc_012112:
 	bra.w	loc_01212E
-	bra.w	loc_012208
-	bra.w	loc_012264
-	bra.w	loc_012266
-	bra.w	loc_012276
-	bra.w	loc_0122B4
-	bra.w	loc_012204
+	dc.b	$60,$00,$00,$F0,$60,$00,$01,$48,$60,$00
+	dc.b	$01,$46,$60,$00,$01,$52,$60,$00,$01,$8C,$60,$00,$00,$D8
 loc_01212E:
 	cmpi.w	#$80,$8(a0)
+loc_012134:
 	bcs.w	loc_012264
 	bsr.w	sub_00AF30
 	beq.w	loc_012202
@@ -18102,76 +24890,42 @@ sub_0121EA:
 	move.l	d0,$10(a0)
 loc_012202:
 	rts
-loc_012204:
-	bsr.w	sub_014248
-loc_012208:
-	move.l	#$FFFF8000,d0
-	move.l	d0,(ram_C634).w
-	move.l	d0,$10(a0)
-	btst.b	#$0,(ram_E003).w
-	beq.b	loc_012226
-	clr.l	$10(a0)
-	clr.l	(ram_C634).w
-loc_012226:
-	bsr.w	sub_00E234
-	lea	(ram_C628).w,a1
-	move.w	d4,(a1)+
-	move.w	d5,(a1)+
-	move.w	d6,(a1)+
-	move.w	d7,(a1)+
-	btst.b	#$0,(ram_E003).w
-	bne.b	loc_012262
-	subq.w	#$1,$2C(a0)
-	bne.b	loc_012262
-	move.w	#$8,$28(a0)
-	clr.b	(ram_C626).w
-	clr.b	(ram_C68F).w
-	clr.l	$C(a0)
-	clr.l	$10(a0)
-	clr.l	$30(a0)
-	bsr.w	sub_00E262
-loc_012262:
-	rts
+	dc.b	$61,$00,$20,$42,$20,$3C,$FF,$FF,$80,$00,$21,$C0
+	dc.b	$C6,$34,$21,$40,$00,$10,$08,$38,$00,$00,$E0,$03,$67,$08,$42,$A8
+	dc.b	$00,$10,$42,$B8,$C6,$34,$61,$00,$C0,$0C,$43,$F8,$C6,$28,$32,$C4
+	dc.b	$32,$C5,$32,$C6,$32,$C7,$08,$38,$00,$00,$E0,$03,$66,$24,$53,$68
+	dc.b	$00,$2C,$66,$1E,$31,$7C,$00,$08,$00,$28,$42,$38,$C6,$26,$42,$38
+	dc.b	$C6,$8F,$42,$A8,$00,$0C,$42,$A8,$00,$10,$42,$A8,$00,$30,$61,$00
+	dc.b	$C0,$02,$4E,$75
 loc_012264:
 	rts
-loc_012266:
-	tst.b	(ram_C66D).w
-	beq.b	loc_012264
-	addq.w	#$4,$28(a0)
-	move.b	#$80,$2F(a0)
-loc_012276:
-	subq.b	#$1,$2F(a0)
-	beq.b	loc_0122B0
-	cmpi.b	#$78,$2F(a0)
-	bne.b	loc_01229A
-	lea	(ram_E140).w,a1
-	move.l	#$27C0000,(a1)
-	move.b	#$B,$1A(a1)
-	ori.b	#$26,$2(a1)
-loc_01229A:
-	move.l	(ram_C634).w,d0
-	addi.l	#$FFFFF800,d0
-	move.l	d0,(ram_C634).w
-	swap	d0
-	add.w	d0,(ram_C522).w
-	rts
-loc_0122B0:
-	addq.w	#$4,$28(a0)
-loc_0122B4:
-	move.w	(ram_C634).w,d0
-	add.w	d0,(ram_C522).w
-	rts
+	dc.b	$4A,$38,$C6,$6D,$67,$F8,$58,$68,$00,$28
+	dc.b	$11,$7C,$00,$80,$00,$2F,$53,$28,$00,$2F,$67,$34,$0C,$28,$00,$78
+	dc.b	$00,$2F,$66,$16,$43,$F8,$E1,$40,$22,$BC,$02,$7C,$00,$00,$13,$7C
+	dc.b	$00,$0B,$00,$1A,$00,$29,$00,$26,$00,$02,$20,$38,$C6,$34,$06,$80
+	dc.b	$FF,$FF,$F8,$00,$21,$C0,$C6,$34,$48,$40,$D1,$78,$C5,$22,$4E,$75
+	dc.b	$58,$68,$00,$28,$30,$38,$C6,$34,$D1,$78,$C5,$22,$4E,$75
 sub_0122BE:
 	moveq	#$0,d0
+loc_0122C0:
 	move.b	$19(a0),d0
+loc_0122C4:
 	movea.l	dat_0122E2(pc,d0.w),a1
+loc_0122C8:
 	move.l	(a1)+,$14(a0)
+loc_0122CC:
 	move.w	(a1)+,$22(a0)
+loc_0122D0:
 	move.w	(a1)+,$2C(a0)
+loc_0122D4:
 	move.w	(a1)+,d0
+loc_0122D6:
 	add.w	d0,$8(a0)
+loc_0122DA:
 	move.w	(a1)+,d0
+loc_0122DC:
 	move.w	(a1)+,d1
+loc_0122DE:
 	bra.w	sub_011B46
 dat_0122E2:
 	dc.b	$00,$01,$22,$FA,$00,$01,$23,$08,$00,$01,$23,$16,$00,$01
@@ -18183,19 +24937,31 @@ dat_0122E2:
 	dc.b	$00,$0D,$80,$94,$00,$00,$04,$00,$00,$00,$00,$20,$00,$28
 sub_01234E:
 	bset.b	#$0,$2(a0)
+loc_012354:
 	bne.b	loc_01236E
+loc_012356:
 	ori.b	#$24,$2(a0)
+loc_01235C:
 	move.b	$18(a0),$29(a0)
+loc_012362:
 	moveq	#$0,d0
+loc_012364:
 	move.b	$19(a0),d0
+loc_012368:
 	move.w	dat_0123A0(pc,d0.w),$30(a0)
 loc_01236E:
 	cmpi.w	#$170,$8(a0)
+loc_012374:
 	bcc.w	sub_014220
+loc_012378:
 	move.w	$30(a0),d4
+loc_01237C:
 	bsr.w	sub_00E238
+loc_012380:
 	lea	(Objects_A).w,a1
+loc_012384:
 	bsr.w	sub_00AF0A
+loc_012388:
 	beq.w	loc_012264
 	move.w	$28(a0),d0
 	jmp	loc_012394(pc,d0.w)
@@ -18225,26 +24991,40 @@ loc_0123CE:
 	dc.b	$00,$00,$00,$00,$00,$06,$03,$03,$F8,$F8
 sub_0123E0:
 	bset.b	#$0,$2(a0)
+loc_0123E6:
 	bne.b	loc_012404
+loc_0123E8:
 	ori.b	#$28,$2(a0)
+loc_0123EE:
 	move.l	#$CF4F8,$14(a0)
+loc_0123F6:
 	move.b	$1A(a0),$39(a0)
+loc_0123FC:
 	move.w	$18(a0),$2C(a0)
+loc_012402:
 	rts
 loc_012404:
 	cmpi.w	#$1A0,$8(a0)
+loc_01240A:
 	bcc.w	sub_014220
+loc_01240E:
 	move.w	$8(a0),$26(a0)
+loc_012414:
 	move.w	$28(a0),d0
+loc_012418:
 	jmp	loc_01241C(pc,d0.w)
 loc_01241C:
 	bra.w	loc_012424
-	bra.w	loc_012464
+	dc.b	$60,$00,$00,$42
 loc_012424:
 	move.w	#$CF0,d2
+loc_012428:
 	bsr.w	sub_00AF54
+loc_01242C:
 	bsr.w	sub_00E234
+loc_012430:
 	bsr.w	sub_00B298
+loc_012434:
 	beq.b	loc_012456
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
@@ -18260,33 +25040,44 @@ loc_012458:
 	addq.w	#$4,$28(a0)
 	subq.w	#$8,$8(a0)
 	bra.w	loc_0124F8
-loc_012464:
-	bsr.w	sub_014248
-	beq.w	loc_0125A0
-	move.w	$2C(a0),$18(a0)
-	bra.w	loc_00FBEE
+	dc.b	$61,$00,$1D,$E2,$67,$00,$01,$36,$31,$68,$00,$2C
+	dc.b	$00,$18,$60,$00,$D7,$7A
 sub_012476:
 	bset.b	#$0,$2(a0)
+loc_01247C:
 	bne.b	loc_012498
+loc_01247E:
 	move.l	#$C7D90,$14(a0)
+loc_012486:
 	ori.b	#$28,$2(a0)
+loc_01248C:
 	move.w	#$20,$38(a0)
+loc_012492:
 	move.b	#$1,$3A(a0)
 loc_012498:
 	cmpi.w	#$1A0,$8(a0)
+loc_01249E:
 	bcc.w	sub_014220
+loc_0124A2:
 	move.w	$8(a0),$26(a0)
+loc_0124A8:
 	move.w	$28(a0),d0
+loc_0124AC:
 	jmp	loc_0124B0(pc,d0.w)
 loc_0124B0:
 	bra.w	loc_0124B8
-	bra.w	loc_01251A
+	dc.b	$60,$00,$00,$64
 loc_0124B8:
 	clr.b	$22(a0)
+loc_0124BC:
 	move.w	#$CC0,d2
+loc_0124C0:
 	bsr.w	sub_00AF54
+loc_0124C4:
 	bsr.w	sub_00E234
+loc_0124C8:
 	bsr.w	sub_00B298
+loc_0124CC:
 	beq.b	loc_0124EC
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
@@ -18302,43 +25093,66 @@ loc_0124EE:
 	subi.w	#$10,$8(a0)
 loc_0124F8:
 	move.w	#$58,d0
+loc_0124FC:
 	jsr	(sub_00D96C).l
+loc_012502:
 	move.b	#$40,$22(a0)
+loc_012508:
 	movem.l	d0/a1,-(a7)
+loc_01250C:
 	moveq	#-$4C,d0
+loc_01250E:
 	jsr	(sub_00A068).l
+loc_012514:
 	movem.l	(a7)+,d0/a1
+loc_012518:
 	rts
 loc_01251A:
 	bsr.w	sub_014248
+loc_01251E:
 	bne.w	sub_014220
+loc_012522:
 	rts
 sub_012524:
 	bset.b	#$0,$2(a0)
+loc_01252A:
 	bne.b	loc_01254E
+loc_01252C:
 	ori.b	#$28,$2(a0)
+loc_012532:
 	ori.b	#$4,$3(a0)
+loc_012538:
 	move.b	#$40,$22(a0)
+loc_01253E:
 	bsr.w	sub_00E262
+loc_012542:
 	moveq	#$0,d0
+loc_012544:
 	moveq	#$0,d1
+loc_012546:
 	bsr.w	sub_011B46
+loc_01254A:
 	bra.w	sub_0125CC
 loc_01254E:
 	move.w	$8(a0),$26(a0)
+loc_012554:
 	move.w	$28(a0),d0
+loc_012558:
 	jmp	loc_01255C(pc,d0.w)
 loc_01255C:
 	bra.w	loc_01256C
-	bra.w	loc_011AA4
-	bra.w	loc_0125A2
-	bra.w	loc_01261C
+	dc.b	$60,$00,$F5,$42,$60,$00,$00,$3C,$60,$00,$00,$B2
 loc_01256C:
 	cmpi.w	#$180,$8(a0)
+loc_012572:
 	bcc.w	loc_01262E
+loc_012576:
 	bsr.w	sub_00E234
+loc_01257A:
 	lea	(Objects_A).w,a1
+loc_01257E:
 	bsr.w	sub_00AF0A
+loc_012582:
 	beq.w	loc_0125A0
 	addq.w	#$4,$28(a0)
 	st.b	(ram_C68C).w
@@ -18348,98 +25162,107 @@ loc_01256C:
 	bsr.w	sub_0125CC
 loc_0125A0:
 	rts
-loc_0125A2:
-	tst.b	(ram_C5C1).w
-	beq.w	loc_0125E2
-	btst.b	#$0,(ram_E003).w
-	bne.w	loc_0125E2
-	cmpi.w	#$24,(ram_E028).w
-	bne.b	loc_0125EA
-	bsr.w	sub_00E1FE
-	move.l	(ram_E004).w,$4(a0)
-	move.l	(ram_E008).w,$8(a0)
+	dc.b	$4A,$38,$C5,$C1,$67,$00,$00,$3A,$08,$38,$00,$00,$E0,$03
+	dc.b	$66,$00,$00,$30,$0C,$78,$00,$24,$E0,$28,$66,$2E,$61,$00,$BC,$40
+	dc.b	$21,$78,$E0,$04,$00,$04,$21,$78,$E0,$08,$00,$08
 sub_0125CC:
 	move.b	(ram_E020).w,d0
+loc_0125D0:
 	andi.w	#$1C,d0
+loc_0125D4:
 	lea	(dat_0387BA).l,a1
+loc_0125DA:
 	move.l	(a1,d0.w),$14(a0)
+loc_0125E0:
 	rts
-loc_0125E2:
-	clr.b	(ram_C68C).w
-	bra.w	loc_011B36
-loc_0125EA:
-	move.w	#$C,$28(a0)
-	bclr.b	#$1,$2(a0)
-	clr.w	$30(a0)
-	lea	(ram_E900).w,a1
-	cmpi.w	#$3,(ram_C328).w
-	beq.b	loc_01260A
-	lea	(ram_E140).w,a1
-loc_01260A:
-	movea.l	a0,a2
-	moveq	#$F,d7
-loc_01260E:
-	move.l	(a2)+,(a1)+
-	dbra	d7,loc_01260E
-	bsr.w	sub_00B232
-	bra.w	sub_014220
-loc_01261C:
-	cmpi.w	#$190,$8(a0)
-	bcs.w	loc_0125A0
-	clr.b	(ram_C68C).w
-	bra.w	sub_014220
+	dc.b	$42,$38,$C6,$8C,$60,$00,$F5,$4E,$31,$7C,$00,$0C,$00,$28
+	dc.b	$08,$A8,$00,$01,$00,$02,$42,$68,$00,$30,$43,$F8,$E9,$00,$0C,$78
+	dc.b	$00,$03,$C3,$28,$67,$04,$43,$F8,$E1,$40,$24,$48,$7E,$0F,$22,$DA
+	dc.b	$51,$CF,$FF,$FC,$61,$00,$8C,$1C,$60,$00,$1C,$06,$0C,$68,$01,$90
+	dc.b	$00,$08,$65,$00,$FF,$7C,$42,$38,$C6,$8C,$60,$00,$1B,$F4
 loc_01262E:
 	clr.b	(ram_C68C).w
 	bra.w	loc_01422E
 sub_012636:
 	bset.b	#$0,$2(a0)
+loc_01263C:
 	bne.b	loc_01264A
+loc_01263E:
 	ori.b	#$26,$2(a0)
+loc_012644:
 	bset.b	#$0,(Flags_C5EB).w
 loc_01264A:
 	move.l	(ram_C508).w,d0
+loc_01264E:
 	asr.l	#$1,d0
+loc_012650:
 	sub.l	d0,$30(a0)
+loc_012654:
 	move.w	$30(a0),(ram_C556).w
+loc_01265A:
 	move.l	(ram_C51A).w,d1
+loc_01265E:
 	asr.l	#$1,d1
+loc_012660:
 	add.l	d1,$34(a0)
+loc_012664:
 	move.w	$34(a0),(ram_C568).w
+loc_01266A:
 	rts
 sub_01266C:
 	bset.b	#$0,$2(a0)
+loc_012672:
 	bne.b	loc_01267A
+loc_012674:
 	ori.b	#$24,$2(a0)
 loc_01267A:
 	move.w	#$CE8,d4
+loc_01267E:
 	bsr.w	sub_00E238
+loc_012682:
 	lea	(Objects_A).w,a1
+loc_012686:
 	bsr.w	sub_00AF0A
+loc_01268A:
 	beq.w	loc_0125A0
 	st.b	(ram_C5CD).w
 	bset.b	#$1,(Flags_C61C).w
 	rts
 sub_01269A:
 	bset.b	#$0,$2(a0)
+loc_0126A0:
 	bne.b	loc_0126C2
+loc_0126A2:
 	ori.b	#$24,$2(a0)
+loc_0126A8:
 	move.l	#$10,$34(a0)
+loc_0126B0:
 	move.w	#$3E8,$38(a0)
+loc_0126B6:
 	move.b	#$16,$3A(a0)
+loc_0126BC:
 	bset.b	#$4,(Flags_C61C).w
 loc_0126C2:
 	cmpi.w	#$1E0,(ram_C55C).w
+loc_0126C8:
 	bcs.b	loc_01271C
+loc_0126CA:
 	bclr.b	#$5,$2A(a0)
+loc_0126D0:
 	beq.b	loc_0126DA
 	move.w	#$230,d0
 	bra.w	loc_012716
 loc_0126DA:
 	btst.b	#$0,$3(a0)
+loc_0126E0:
 	bne.b	loc_01271C
+loc_0126E2:
 	move.w	#$D08,d4
+loc_0126E6:
 	bsr.w	sub_00E238
+loc_0126EA:
 	bsr.w	sub_00B298
+loc_0126EE:
 	beq.b	loc_01271C
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
@@ -18455,219 +25278,274 @@ loc_012716:
 	jsr	(sub_008508).l
 loc_01271C:
 	move.w	$28(a0),d0
+loc_012720:
 	jmp	loc_012724(pc,d0.w)
 loc_012724:
 	bra.w	loc_01273C
+loc_012728:
 	bra.w	loc_0127AE
+loc_01272C:
 	bra.w	loc_012802
+loc_012730:
 	bra.w	loc_01283C
-	bra.w	loc_012868
-	bra.w	loc_0128FE
+	dc.b	$60,$00,$01,$32,$60,$00,$01,$C4
 loc_01273C:
 	cmpi.w	#$620,(ram_C55C).w
+loc_012742:
 	bcc.b	loc_012772
+loc_012744:
 	move.l	$30(a0),d0
+loc_012748:
 	move.l	$34(a0),d1
+loc_01274C:
 	add.l	d1,d0
+loc_01274E:
 	cmpi.w	#$380,(ram_C55C).w
+loc_012754:
 	bcs.b	loc_01275A
+loc_012756:
 	addq.w	#$2,$36(a0)
 loc_01275A:
 	move.l	d0,$30(a0)
+loc_01275E:
 	move.l	d0,(ram_C560).w
+loc_012762:
 	cmpi.w	#$4A0,(ram_C55C).w
+loc_012768:
 	bcs.b	loc_012770
+loc_01276A:
 	neg.l	d0
+loc_01276C:
 	move.l	d0,$10(a0)
 loc_012770:
 	rts
 loc_012772:
 	addq.w	#$4,$28(a0)
+loc_012776:
 	lea	(ram_C700).w,a1
+loc_01277A:
 	lea	(ram_C780).w,a2
+loc_01277E:
 	move.w	#$1F,d0
 loc_012782:
 	move.l	(a1)+,(a2)+
+loc_012784:
 	dbra	d0,loc_012782
+loc_012788:
 	st.b	(ram_C6B4).w
+loc_01278C:
 	st.b	(ram_C5D1).w
+loc_012790:
 	st.b	(ram_C6C8).w
+loc_012794:
 	bset.b	#$2,(ram_E002).w
+loc_01279A:
 	clr.l	(ram_E080).w
+loc_01279E:
 	btst.b	#$0,(ram_E003).w
+loc_0127A4:
 	beq.b	loc_012770
 	move.b	#$FF,(ram_E02F).w
 	rts
 loc_0127AE:
 	addq.b	#$1,$2F(a0)
+loc_0127B2:
 	cmpi.b	#$20,$2F(a0)
+loc_0127B8:
 	bhi.b	loc_0127F0
+loc_0127BA:
 	btst.b	#$0,$2F(a0)
+loc_0127C0:
 	beq.b	loc_0127DC
 loc_0127C2:
 	lea	(ram_C700).w,a1
+loc_0127C6:
 	move.w	#$EEE,d1
+loc_0127CA:
 	move.w	#$3F,d0
 loc_0127CE:
 	move.w	d1,(a1)+
+loc_0127D0:
 	dbra	d0,loc_0127CE
 loc_0127D4:
 	bset.b	#$0,(ram_C59A).w
+loc_0127DA:
 	rts
 loc_0127DC:
 	lea	(ram_C780).w,a1
+loc_0127E0:
 	lea	(ram_C700).w,a2
+loc_0127E4:
 	move.w	#$1F,d0
 loc_0127E8:
 	move.l	(a1)+,(a2)+
+loc_0127EA:
 	dbra	d0,loc_0127E8
+loc_0127EE:
 	bra.b	loc_0127D4
 loc_0127F0:
 	addq.w	#$4,$28(a0)
+loc_0127F4:
 	move.b	#$8,$2F(a0)
+loc_0127FA:
 	move.b	#$7,(Timer_C5A4).w
+loc_012800:
 	bra.b	loc_0127C2
 loc_012802:
 	subq.b	#$1,$2F(a0)
+loc_012806:
 	bne.w	loc_0125A0
+loc_01280A:
 	move.b	#$4,$2F(a0)
+loc_012810:
 	subq.b	#$1,(Timer_C5A4).w
+loc_012814:
 	bmi.b	loc_012828
+loc_012816:
 	bset.b	#$0,(ram_C59A).w
+loc_01281C:
 	lea	(ram_C700).w,a2
+loc_012820:
 	moveq	#$3F,d1
+loc_012822:
 	jmp	(sub_004372).l
 loc_012828:
 	addq.w	#$4,$28(a0)
+loc_01282C:
 	move.b	#$7,(Timer_C5A4).w
+loc_012832:
 	move.b	#$4,$2F(a0)
+loc_012838:
 	bsr.w	sub_012940
 loc_01283C:
 	subq.b	#$1,$2F(a0)
+loc_012840:
 	bne.w	loc_0125A0
+loc_012844:
 	move.b	#$4,$2F(a0)
+loc_01284A:
 	subq.b	#$1,(Timer_C5A4).w
+loc_01284E:
 	bmi.w	sub_014220
+loc_012852:
 	bset.b	#$0,(ram_C59A).w
+loc_012858:
 	lea	(ram_C780).w,a1
+loc_01285C:
 	lea	(ram_C700).w,a2
+loc_012860:
 	moveq	#$3F,d1
+loc_012862:
 	jmp	(sub_0042A2).l
-loc_012868:
-	addq.w	#$4,$28(a0)
-	move.l	#$FFFFC000,$30(a0)
-	move.w	#$200,$2E(a0)
-	clr.l	$10(a0)
-	st.b	(ram_C5C9).w
-	bset.b	#$5,(Flags_C61C).w
-	st.b	(ram_C6B4).w
-	subi.w	#$18,$4(a0)
-	subi.w	#$40,$8(a0)
-	st.b	(ram_C5CF).w
-	move.w	#$4,d7
-	move.l	#$11776,d4
-	lea	(ram_EA80).w,a1
-	moveq	#$38,d5
-	moveq	#$0,d6
-loc_0128AE:
-	clr.l	(a1)
-	move.w	d5,(a1)
-	move.l	d4,$30(a1)
-	move.w	a0,$34(a1)
-	move.w	$4(a0),$4(a1)
-	move.w	$8(a0),$8(a1)
-	move.w	d6,$2C(a1)
-	ori.b	#$28,$2(a1)
-	move.w	#$1,$26(a1)
-	addq.w	#$4,d6
-	lea	$40(a1),a1
-	dbra	d7,loc_0128AE
-	move.w	#$1CC,(ram_E740).w
-	move.w	#$1CC,(ram_E780).w
-	movem.l	d0/a1,-(a7)
-	moveq	#-$61,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	rts
-loc_0128FE:
-	subq.w	#$1,$2E(a0)
-	beq.b	loc_012926
-	move.l	$30(a0),d0
-	move.l	d0,(ram_C560).w
-	neg.l	d0
-	move.l	d0,$10(a0)
-	lea	(ram_EA80).w,a1
-	moveq	#$4,d7
-loc_012918:
-	move.l	d0,$10(a1)
-	lea	$40(a1),a1
-	dbra	d7,loc_012918
-	rts
-loc_012926:
-	bset.b	#$3,(Flags_C61C).w
-	move.l	(ram_C332).w,d0
-	cmp.l	(ram_FE50).w,d0
-	bls.b	loc_01293A
-	move.l	d0,(ram_FE50).w
-loc_01293A:
-	clr.l	(ram_C332).w
-	rts
+	dc.b	$58,$68,$00,$28,$21,$7C,$FF,$FF
+	dc.b	$C0,$00,$00,$30,$31,$7C,$02,$00,$00,$2E,$42,$A8,$00,$10,$50,$F8
+	dc.b	$C5,$C9,$08,$F8,$00,$05,$C6,$1C,$50,$F8,$C6,$B4,$04,$68,$00,$18
+	dc.b	$00,$04,$04,$68,$00,$40,$00,$08,$50,$F8,$C5,$CF,$3E,$3C,$00,$04
+	dc.b	$28,$3C,$00,$01,$17,$76,$43,$F8,$EA,$80,$7A,$38,$7C,$00,$42,$91
+	dc.b	$32,$85,$23,$44,$00,$30,$33,$48,$00,$34,$33,$68,$00,$04,$00,$04
+	dc.b	$33,$68,$00,$08,$00,$08,$33,$46,$00,$2C,$00,$29,$00,$28,$00,$02
+	dc.b	$33,$7C,$00,$01,$00,$26,$58,$46,$43,$E9,$00,$40,$51,$CF,$FF,$D0
+	dc.b	$31,$FC,$01,$CC,$E7,$40,$31,$FC,$01,$CC,$E7,$80,$48,$E7,$80,$40
+	dc.b	$70,$9F,$4E,$B9,$00,$00,$A0,$68,$4C,$DF,$02,$01,$4E,$75,$53,$68
+	dc.b	$00,$2E,$67,$22,$20,$28,$00,$30,$21,$C0,$C5,$60,$44,$80,$21,$40
+	dc.b	$00,$10,$43,$F8,$EA,$80,$7E,$04,$23,$40,$00,$10,$43,$E9,$00,$40
+	dc.b	$51,$CF,$FF,$F6,$4E,$75,$08,$F8,$00,$03,$C6,$1C,$20,$38,$C3,$32
+	dc.b	$B0,$B8,$FE,$50,$63,$04,$21,$C0,$FE,$50,$42,$B8,$C3,$32,$4E,$75
 sub_012940:
 	bset.b	#$0,(ram_C693).w
+loc_012946:
 	st.b	(ram_C357).w
+loc_01294A:
 	st.b	(ram_C5CD).w
+loc_01294E:
 	bset.b	#$0,$3(a0)
+loc_012954:
 	bsr.w	sub_00D94C
+loc_012958:
 	lea	(ram_E1C0).w,a6
+loc_01295C:
 	moveq	#$0,d7
+loc_01295E:
 	move.w	#$13F,d6
 loc_012962:
 	move.l	d7,(a6)+
+loc_012964:
 	dbra	d6,loc_012962
+loc_012968:
 	lea	(Objects_B).w,a6
+loc_01296C:
 	moveq	#$0,d7
+loc_01296E:
 	move.w	#$3BF,d6
 loc_012972:
 	move.l	d7,(a6)+
+loc_012974:
 	dbra	d6,loc_012972
+loc_012978:
 	movea.l	a0,a1
+loc_01297A:
 	moveq	#$F,d7
+loc_01297C:
 	lea	(ram_E440).w,a2
 loc_012980:
 	move.l	(a1)+,(a2)+
+loc_012982:
 	dbra	d7,loc_012980
+loc_012986:
 	move.w	#$138,d0
+loc_01298A:
 	bra.w	loc_00D2B6
 sub_01298E:
 	bset.b	#$0,$2(a0)
+loc_012994:
 	bne.b	loc_0129BC
+loc_012996:
 	move.l	#$12D36,$14(a0)
+loc_01299E:
 	ori.b	#$2A,$2(a0)
+loc_0129A4:
 	bset.b	#$1,$3(a0)
+loc_0129AA:
 	move.w	#$0,$4(a0)
+loc_0129B0:
 	move.w	#$110,$8(a0)
+loc_0129B6:
 	move.w	#$2,$26(a0)
 loc_0129BC:
 	rts
 sub_0129BE:
 	bset.b	#$0,$2(a0)
+loc_0129C4:
 	bne.b	loc_012A08
+loc_0129C6:
 	move.l	#$D80B0,$14(a0)
+loc_0129CE:
 	ori.b	#$A,$2(a0)
+loc_0129D4:
 	move.w	#$3,$26(a0)
+loc_0129DA:
 	lea	(dat_0FE234).l,a1
+loc_0129E0:
 	lea	(ram_D000).w,a2
+loc_0129E4:
 	move.w	#$3,d0
 loc_0129E8:
 	move.l	(a1)+,(a2)+
+loc_0129EA:
 	dbra	d0,loc_0129E8
+loc_0129EE:
 	lea	(dat_0FE26A).l,a1
+loc_0129F4:
 	lea	(ram_D010).w,a2
+loc_0129F8:
 	move.w	#$3,d0
 loc_0129FC:
 	move.l	(a1)+,(a2)+
+loc_0129FE:
 	dbra	d0,loc_0129FC
+loc_012A02:
 	st.b	(ram_C61B).w
+loc_012A06:
 	rts
 loc_012A08:
 	tst.b	(ram_C5BE).w
@@ -18678,23 +25556,32 @@ loc_012A08:
 	jmp	(sub_0086E2).l
 sub_012A24:
 	bset.b	#$0,$2(a0)
+loc_012A2A:
 	bne.b	loc_012A38
+loc_012A2C:
 	ori.b	#$24,$2(a0)
+loc_012A32:
 	move.b	$18(a0),$29(a0)
 loc_012A38:
 	move.w	$8(a0),d0
+loc_012A3C:
 	move.w	$28(a0),d1
+loc_012A40:
 	jmp	loc_012A44(pc,d1.w)
 loc_012A44:
 	bra.w	loc_012A4C
-	bra.w	loc_012A8C
+	dc.b	$60,$00,$00,$42
 loc_012A4C:
 	lea	(Objects_B).w,a1
+loc_012A50:
 	moveq	#$8,d7
 loc_012A52:
 	tst.w	(a1)
+loc_012A54:
 	beq.b	loc_012A76
+loc_012A56:
 	cmp.w	$8(a1),d0
+loc_012A5A:
 	bcs.b	loc_012A76
 	andi.b	#$FB,$2(a1)
 	btst.b	#$0,$3(a1)
@@ -18704,107 +25591,140 @@ loc_012A52:
 	ori.b	#$4,$2(a1)
 loc_012A76:
 	lea	$60(a1),a1
+loc_012A7A:
 	dbra	d7,loc_012A52
+loc_012A7E:
 	cmpi.w	#$198,d0
+loc_012A82:
 	bcs.b	loc_012A8A
 	ori.b	#$2,$2(a0)
 loc_012A8A:
 	rts
-loc_012A8C:
-	lea	(Objects_B).w,a1
-	moveq	#$8,d7
-loc_012A92:
-	tst.w	(a1)
-	beq.b	loc_012ABC
-	andi.b	#$FB,$2(a1)
-	cmp.w	$8(a1),d0
-	bcc.b	loc_012ABC
-	andi.b	#$FB,$2(a1)
-	btst.b	#$0,$3(a1)
-	bne.b	loc_012ABC
-	cmpi.w	#$200,(a1)
-	beq.b	loc_012ABC
-	ori.b	#$4,$2(a1)
-loc_012ABC:
-	lea	$60(a1),a1
-	dbra	d7,loc_012A92
-	cmpi.w	#$190,d0
-	bcs.b	loc_012AD0
-	clr.l	(a0)
-	clr.l	(ram_EA00).w
-loc_012AD0:
-	rts
+	dc.b	$43,$F8,$ED,$00
+	dc.b	$7E,$08,$4A,$51,$67,$26,$02,$29,$00,$FB,$00,$02,$B0,$69,$00,$08
+	dc.b	$64,$1A,$02,$29,$00,$FB,$00,$02,$08,$29,$00,$00,$00,$03,$66,$0C
+	dc.b	$0C,$51,$02,$00,$67,$06,$00,$29,$00,$04,$00,$02,$43,$E9,$00,$60
+	dc.b	$51,$CF,$FF,$D0,$0C,$40,$01,$90,$65,$06,$42,$90,$42,$B8,$EA,$00
+	dc.b	$4E,$75
 sub_012AD2:
 	bset.b	#$0,$2(a0)
+loc_012AD8:
 	bne.b	loc_012AF6
+loc_012ADA:
 	subi.w	#$200,$8(a0)
+loc_012AE0:
 	ori.b	#$24,$2(a0)
+loc_012AE6:
 	move.l	#$D8084,$14(a0)
+loc_012AEE:
 	move.w	#$20,$2C(a0)
+loc_012AF4:
 	rts
 loc_012AF6:
 	cmpi.w	#$80,$8(a0)
+loc_012AFC:
 	bge.w	sub_014220
+loc_012B00:
 	subq.w	#$1,$2C(a0)
+loc_012B04:
 	beq.b	loc_012B08
+loc_012B06:
 	rts
 loc_012B08:
 	move.l	(RNG_Seed).w,d0
+loc_012B0C:
 	move.w	d0,d1
+loc_012B0E:
 	rol.l	#$1,d0
+loc_012B10:
 	move.l	d0,(RNG_Seed).w
+loc_012B14:
 	andi.w	#$60,d1
+loc_012B18:
 	bne.b	loc_012B1C
+loc_012B1A:
 	moveq	#$40,d1
 loc_012B1C:
 	move.w	d1,$2C(a0)
+loc_012B20:
 	lea	(ram_E900).w,a1
+loc_012B24:
 	moveq	#$5,d7
 loc_012B26:
 	tst.w	(a1)
+loc_012B28:
 	beq.b	loc_012B34
+loc_012B2A:
 	lea	$40(a1),a1
+loc_012B2E:
 	dbra	d7,loc_012B26
+loc_012B32:
 	rts
 loc_012B34:
 	move.w	#$1B0,(a1)
+loc_012B38:
 	move.w	$4(a0),$4(a1)
+loc_012B3E:
 	move.w	$8(a0),$8(a1)
+loc_012B44:
 	rts
 sub_012B46:
 	bset.b	#$0,$2(a0)
+loc_012B4C:
 	bne.b	loc_012B74
+loc_012B4E:
 	ori.b	#$28,$2(a0)
+loc_012B54:
 	move.l	#$D8084,$14(a0)
+loc_012B5C:
 	move.w	#$1,$26(a0)
+loc_012B62:
 	move.w	#$4,$10(a0)
+loc_012B68:
 	move.w	#$20,$38(a0)
+loc_012B6E:
 	move.b	#$10,$3C(a0)
 loc_012B74:
 	cmpi.w	#$170,$8(a0)
+loc_012B7A:
 	bge.w	sub_014220
+loc_012B7E:
 	move.w	$28(a0),d0
+loc_012B82:
 	jmp	loc_012B86(pc,d0.w)
 loc_012B86:
 	bra.w	loc_012B8E
+loc_012B8A:
 	bra.w	loc_01251A
 loc_012B8E:
 	cmpi.w	#$80,$8(a0)
+loc_012B94:
 	blt.b	loc_012BBC
+loc_012B96:
 	move.l	#$100000,d0
+loc_012B9C:
 	move.l	#$380000,d1
+loc_012BA2:
 	jsr	(sub_00B36C).l
+loc_012BA8:
 	beq.b	loc_012BBC
+loc_012BAA:
 	cmpi.b	#$4,d0
+loc_012BAE:
 	beq.b	loc_012BE4
+loc_012BB0:
 	cmpi.b	#$24,d0
+loc_012BB4:
 	beq.b	loc_012BE4
 	cmpi.b	#$40,d0
 	beq.b	loc_012BE4
 loc_012BBC:
 	bsr.w	sub_00E234
+loc_012BC0:
 	bsr.w	sub_00B036
+loc_012BC4:
 	bsr.w	sub_00B298
+loc_012BC8:
 	beq.b	loc_012BE2
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
@@ -18816,17 +25736,25 @@ loc_012BE2:
 	rts
 loc_012BE4:
 	addq.w	#$4,$28(a0)
+loc_012BE8:
 	clr.l	$10(a0)
+loc_012BEC:
 	addi.w	#$10,$4(a0)
+loc_012BF2:
 	addi.w	#$18,$8(a0)
+loc_012BF8:
 	bra.w	loc_0124F8
 sub_012BFC:
 	bset.b	#$0,$2(a0)
+loc_012C02:
 	bne.b	loc_012C10
+loc_012C04:
 	ori.b	#$C,$2(a0)
+loc_012C0A:
 	move.w	#$118,(ram_C646).w
 loc_012C10:
 	btst.b	#$4,(Flags_C61C).w
+loc_012C16:
 	beq.b	loc_012C32
 	addq.b	#$1,$2F(a0)
 	move.b	$2F(a0),d0
@@ -18836,16 +25764,17 @@ loc_012C10:
 	bset.b	#$0,(ram_C59A).w
 loc_012C32:
 	move.w	$28(a0),d0
+loc_012C36:
 	jmp	loc_012C42(pc,d0.w)
 dat_012C3A:
 	dc.b	$04,$44,$02,$22,$02,$22
 	dc.b	$04,$44
 loc_012C42:
 	bra.w	loc_012C4E
-	bra.w	loc_012C82
-	bra.w	loc_012CD2
+	dc.b	$60,$00,$00,$3A,$60,$00,$00,$86
 loc_012C4E:
 	tst.b	(ram_C3D4).w
+loc_012C52:
 	beq.b	loc_012C80
 	addq.w	#$4,$28(a0)
 	lea	(dat_0FE1C0).l,a1
@@ -18862,60 +25791,50 @@ loc_012C7A:
 	dbra	d0,loc_012C7A
 loc_012C80:
 	rts
-loc_012C82:
-	move.l	#$FFFFC000,d0
-	move.l	(ram_C512).w,d1
-	move.l	(Camera_Y).w,d3
-	add.l	d0,d1
-	add.l	d0,d3
-	bmi.b	loc_012CCC
-	move.l	d1,(ram_C512).w
-	move.l	d3,(Camera_Y).w
-	jsr	(sub_00A824).l
-	move.w	d4,(ram_C522).w
-	tst.b	$20(a0)
-	bne.b	loc_012CCA
-	lea	(ram_D000).w,a1
-	jsr	(sub_0086E2).l
-	lea	(ram_D010).w,a1
-	jsr	(sub_0086E2).l
-	tst.w	d7
-	beq.b	loc_012CCA
-	st.b	$20(a0)
-loc_012CCA:
-	rts
-loc_012CCC:
-	addq.w	#$4,$28(a0)
-	rts
-loc_012CD2:
-	rts
+	dc.b	$20,$3C,$FF,$FF,$C0,$00,$22,$38,$C5,$12,$26,$38,$C5,$16
+	dc.b	$D2,$80,$D6,$80,$6B,$36,$21,$C1,$C5,$12,$21,$C3,$C5,$16,$4E,$B9
+	dc.b	$00,$00,$A8,$24,$31,$C4,$C5,$22,$4A,$28,$00,$20,$66,$1C,$43,$F8
+	dc.b	$D0,$00,$4E,$B9,$00,$00,$86,$E2,$43,$F8,$D0,$10,$4E,$B9,$00,$00
+	dc.b	$86,$E2,$4A,$47,$67,$04,$50,$E8,$00,$20,$4E,$75,$58,$68,$00,$28
+	dc.b	$4E,$75,$4E,$75
 sub_012CD4:
 	bset.b	#$0,$2(a0)
+loc_012CDA:
 	bne.b	loc_012CFE
+loc_012CDC:
 	ori.b	#$26,$2(a0)
+loc_012CE2:
 	lea	(dat_0FE190).l,a1
+loc_012CE8:
 	lea	(ram_D000).w,a2
+loc_012CEC:
 	move.w	#$3,d0
 loc_012CF0:
 	move.l	(a1)+,(a2)+
+loc_012CF2:
 	dbra	d0,loc_012CF0
+loc_012CF6:
 	move.b	$18(a0),$29(a0)
+loc_012CFC:
 	rts
 loc_012CFE:
 	move.w	$28(a0),d0
+loc_012D02:
 	jmp	loc_012D06(pc,d0.w)
 loc_012D06:
 	bra.w	loc_012D0E
-	bra.w	loc_012D1A
+	dc.b	$60,$00,$00,$0E
 loc_012D0E:
 	tst.b	(ram_C6B5).w
+loc_012D12:
 	bne.w	sub_014220
+loc_012D16:
 	bra.w	loc_012D22
-loc_012D1A:
-	tst.b	(ram_C5BE).w
-	bne.w	loc_0125A0
+	dc.b	$4A,$38,$C5,$BE,$66,$00
+	dc.b	$F8,$80
 loc_012D22:
 	lea	(ram_D000).w,a1
+loc_012D26:
 	jmp	(sub_0086E2).l
 	dc.b	$00,$00,$00,$00
 	dc.b	$00,$06,$03,$03,$F8,$F8,$00,$05,$00,$00,$00,$03,$00,$00,$00,$F8
@@ -18923,34 +25842,44 @@ loc_012D22:
 	dc.b	$00,$F8,$40,$03,$00,$00,$00,$F8,$40,$03,$00,$00,$00,$F8
 sub_012D5E:
 	bset.b	#$0,$2(a0)
+loc_012D64:
 	bne.b	loc_012D82
+loc_012D66:
 	ori.b	#$26,$2(a0)
+loc_012D6C:
 	move.b	#$40,$22(a0)
+loc_012D72:
 	move.b	#$8,$3C(a0)
+loc_012D78:
 	move.b	#$8,$3A(a0)
+loc_012D7E:
 	bra.w	loc_012E84
 loc_012D82:
 	move.l	(ram_F2AC).w,$C(a0)
+loc_012D88:
 	move.l	(ram_F2B0).w,$10(a0)
+loc_012D8E:
 	move.w	$28(a0),d0
+loc_012D92:
 	jmp	loc_012D96(pc,d0.w)
 loc_012D96:
 	bra.w	loc_012DB2
-	bra.w	loc_012DDC
-	bra.w	loc_012DFC
-	bra.w	loc_012E18
-	bra.w	loc_012E3C
-	bra.w	loc_012E60
-	bra.w	loc_012E78
+	dc.b	$60,$00,$00,$40,$60,$00
+	dc.b	$00,$5C,$60,$00,$00,$74,$60,$00,$00,$94,$60,$00,$00,$B4,$60,$00
+	dc.b	$00,$C8
 loc_012DB2:
 	move.w	(ram_E008).w,d0
+loc_012DB6:
 	moveq	#$28,d1
+loc_012DB8:
 	sub.w	$8(a0),d0
+loc_012DBC:
 	bpl.b	loc_012DC2
 	neg.w	d0
 	moveq	#$8,d1
 loc_012DC2:
 	cmp.w	d1,d0
+loc_012DC4:
 	bhi.b	loc_012DDA
 	addq.w	#$4,$28(a0)
 	andi.b	#$FB,$2(a0)
@@ -18958,81 +25887,56 @@ loc_012DC2:
 	jsr	(sub_00D96C).l
 loc_012DDA:
 	rts
-loc_012DDC:
-	bsr.w	sub_00E234
-	bsr.w	sub_00B036
-	bsr.w	sub_014248
-	beq.b	loc_012DFA
-	addq.w	#$4,$28(a0)
-	ori.b	#$4,$2(a0)
-	move.b	#$10,$2F(a0)
-loc_012DFA:
-	rts
-loc_012DFC:
-	subq.b	#$1,$2F(a0)
-	bne.b	loc_012E16
-	addq.w	#$4,$28(a0)
-	andi.b	#$FB,$2(a0)
-	move.w	#$98,d0
-	jsr	(sub_00D96C).l
-loc_012E16:
-	rts
-loc_012E18:
-	bsr.w	sub_00E234
-	bsr.w	sub_00B036
-	bsr.w	sub_014248
-	beq.b	loc_012E3A
-	addq.w	#$4,$28(a0)
-	move.b	#$40,$2F(a0)
-	move.w	#$A0,d0
-	jsr	(sub_00D96C).l
-loc_012E3A:
-	rts
-loc_012E3C:
-	bsr.w	sub_00E234
-	bsr.w	sub_00B036
-	subq.b	#$1,$2F(a0)
-	bne.w	sub_014248
-	addq.w	#$4,$28(a0)
-	move.l	#$38634,$14(a0)
-	move.b	#$4,$2F(a0)
-	rts
-loc_012E60:
-	subq.b	#$1,$2F(a0)
-	bne.b	loc_012DFA
-	addq.w	#$4,$28(a0)
-	ori.b	#$4,$2(a0)
-	move.b	#$20,$2F(a0)
-	rts
-loc_012E78:
-	subq.b	#$1,$2F(a0)
-	bne.b	loc_012E82
-	clr.w	$28(a0)
-loc_012E82:
-	rts
+	dc.b	$61,$00,$B4,$56
+	dc.b	$61,$00,$82,$54,$61,$00,$14,$62,$67,$10,$58,$68,$00,$28,$00,$28
+	dc.b	$00,$04,$00,$02,$11,$7C,$00,$10,$00,$2F,$4E,$75,$53,$28,$00,$2F
+	dc.b	$66,$14,$58,$68,$00,$28,$02,$28,$00,$FB,$00,$02,$30,$3C,$00,$98
+	dc.b	$4E,$B9,$00,$00,$D9,$6C,$4E,$75,$61,$00,$B4,$1A,$61,$00,$82,$18
+	dc.b	$61,$00,$14,$26,$67,$14,$58,$68,$00,$28,$11,$7C,$00,$40,$00,$2F
+	dc.b	$30,$3C,$00,$A0,$4E,$B9,$00,$00,$D9,$6C,$4E,$75,$61,$00,$B3,$F6
+	dc.b	$61,$00,$81,$F4,$53,$28,$00,$2F,$66,$00,$13,$FE,$58,$68,$00,$28
+	dc.b	$21,$7C,$00,$03,$86,$34,$00,$14,$11,$7C,$00,$04,$00,$2F,$4E,$75
+	dc.b	$53,$28,$00,$2F,$66,$94,$58,$68,$00,$28,$00,$28,$00,$04,$00,$02
+	dc.b	$11,$7C,$00,$20,$00,$2F,$4E,$75,$53,$28,$00,$2F,$66,$04,$42,$68
+	dc.b	$00,$28,$4E,$75
 loc_012E84:
 	move.w	$2C(a0),d0
+loc_012E88:
 	move.l	dat_012E98(pc,d0.w),d1
+loc_012E8C:
 	add.w	d1,$8(a0)
+loc_012E90:
 	swap	d1
+loc_012E92:
 	add.w	d1,$4(a0)
+loc_012E96:
 	rts
 dat_012E98:
 	dc.b	$00,$14,$00,$5D,$00,$14,$00,$69
 	dc.b	$00,$14,$00,$C5,$00,$14,$00,$D1
 sub_012EA8:
 	bset.b	#$0,$2(a0)
+loc_012EAE:
 	bne.b	loc_012ECA
+loc_012EB0:
 	ori.b	#$26,$2(a0)
+loc_012EB6:
 	move.w	#$1A0,$4(a0)
+loc_012EBC:
 	move.w	#$FE20,$8(a0)
+loc_012EC2:
 	move.l	#$10600,$1C(a0)
 loc_012ECA:
 	move.l	(ram_F2AC).w,$C(a0)
+loc_012ED0:
 	move.l	(ram_F2B0).w,$10(a0)
+loc_012ED6:
 	cmpi.w	#$40,$8(a0)
+loc_012EDC:
 	bcs.b	loc_012F14
+loc_012EDE:
 	cmpi.w	#$160,$8(a0)
+loc_012EE4:
 	bcc.b	loc_012F14
 	subq.b	#$1,$1D(a0)
 	bne.b	loc_012F14
@@ -19056,26 +25960,40 @@ dat_012F16:
 	dc.b	$7E,$4E
 sub_012F22:
 	bset.b	#$0,$2(a0)
+loc_012F28:
 	bne.b	loc_012F54
+loc_012F2A:
 	ori.b	#$28,$2(a0)
+loc_012F30:
 	move.w	#$1,$26(a0)
+loc_012F36:
 	move.w	#$80,d0
+loc_012F3A:
 	jsr	(sub_00D96C).l
+loc_012F40:
 	move.b	#$40,$22(a0)
+loc_012F46:
 	move.b	#$4,$3D(a0)
+loc_012F4C:
 	move.b	#$7F,$3C(a0)
+loc_012F52:
 	rts
 loc_012F54:
 	move.w	$28(a0),d0
+loc_012F58:
 	jmp	loc_012F5C(pc,d0.w)
 loc_012F5C:
 	bra.w	loc_012F64
-	bra.w	loc_012FAE
+	dc.b	$60,$00,$00,$4C
 loc_012F64:
 	cmpi.w	#$160,$8(a0)
+loc_012F6A:
 	bcc.w	sub_014220
+loc_012F6E:
 	bsr.w	sub_014248
+loc_012F72:
 	jsr	(sub_00AF50).l
+loc_012F78:
 	beq.w	loc_01308E
 	tst.b	(ram_C642).w
 	bne.b	loc_012F88
@@ -19092,39 +26010,58 @@ loc_012F96:
 	move.w	#$88,d0
 	jsr	(sub_00D96C).l
 	rts
-loc_012FAE:
-	bsr.w	sub_014248
-	bne.w	sub_014220
-	rts
+	dc.b	$61,$00
+	dc.b	$12,$98,$66,$00,$12,$6C,$4E,$75
 sub_012FB8:
 	bset.b	#$0,$2(a0)
+loc_012FBE:
 	bne.b	loc_012FE2
+loc_012FC0:
 	move.w	$2C(a0),d0
+loc_012FC4:
 	movea.l	dat_012FEC(pc,d0.w),a1
+loc_012FC8:
 	move.l	(a1)+,d1
+loc_012FCA:
 	add.w	d1,$8(a0)
+loc_012FCE:
 	swap	d1
+loc_012FD0:
 	add.w	d1,$4(a0)
+loc_012FD4:
 	move.b	(a1)+,$22(a0)
+loc_012FD8:
 	moveq	#$0,d0
+loc_012FDA:
 	move.b	(a1)+,d0
+loc_012FDC:
 	jsr	(sub_00D96C).l
 loc_012FE2:
 	bsr.w	sub_014248
+loc_012FE6:
 	bne.w	sub_014220
+loc_012FEA:
 	rts
 dat_012FEC:
 	dc.b	$00,$01,$2F,$F4
 	dc.b	$00,$01,$2F,$FA,$00,$00,$00,$10,$20,$60,$00,$00,$FF,$D8,$40,$68
 sub_013000:
 	bset.b	#$0,$2(a0)
+loc_013006:
 	bne.b	loc_01302A
+loc_013008:
 	move.l	#$38AF6,$14(a0)
+loc_013010:
 	ori.b	#$8,$2(a0)
+loc_013016:
 	ori.b	#$4,$3(a0)
+loc_01301C:
 	move.b	#$20,$22(a0)
+loc_013022:
 	moveq	#$0,d0
+loc_013024:
 	moveq	#$0,d1
+loc_013026:
 	bra.w	sub_011B46
 loc_01302A:
 	move.w	$8(a0),$26(a0)
@@ -19157,23 +26094,33 @@ loc_01308E:
 	rts
 sub_013090:
 	bset.b	#$0,$2(a0)
+loc_013096:
 	bne.b	loc_0130A4
+loc_013098:
 	ori.b	#$24,$2(a0)
+loc_01309E:
 	move.b	$18(a0),$29(a0)
 loc_0130A4:
 	cmpi.w	#$160,$8(a0)
+loc_0130AA:
 	bcc.w	sub_014220
+loc_0130AE:
 	move.w	$28(a0),d0
+loc_0130B2:
 	jmp	loc_0130B6(pc,d0.w)
 loc_0130B6:
 	bra.w	loc_0130C2
-	bra.w	loc_013106
-	bra.w	loc_01311A
+	dc.b	$60,$00,$00,$4A,$60,$00
+	dc.b	$00,$5A
 loc_0130C2:
 	move.w	#$388,d4
+loc_0130C6:
 	bsr.w	sub_00E238
+loc_0130CA:
 	lea	(Objects_A).w,a1
+loc_0130CE:
 	jsr	(sub_00AF0A).l
+loc_0130D4:
 	beq.b	loc_013104
 	addq.w	#$4,$28(a0)
 	ori.b	#$2,$2(a0)
@@ -19189,94 +26136,96 @@ loc_0130EE:
 	movem.l	(a7)+,d0/a1
 loc_013104:
 	rts
-loc_013106:
-	lea	(ram_D000).w,a1
-	jsr	(sub_0086E2).l
-	tst.b	(ram_C68D).w
-	bne.w	sub_014220
-	rts
-loc_01311A:
-	move.w	#$388,d4
-	bsr.w	sub_00E238
-	lea	(Objects_A).w,a1
-	jsr	(sub_00AF0A).l
-	beq.b	loc_013146
-	st.b	(ram_C68D).w
-	movem.l	d0/a1,-(a7)
-	moveq	#-$23,d0
-	jsr	(sub_00A068).l
-	movem.l	(a7)+,d0/a1
-	bra.w	sub_014220
-loc_013146:
-	rts
+	dc.b	$43,$F8,$D0,$00,$4E,$B9,$00,$00,$86,$E2
+	dc.b	$4A,$38,$C6,$8D,$66,$00,$11,$0A,$4E,$75,$38,$3C,$03,$88,$61,$00
+	dc.b	$B1,$18,$43,$F8,$E0,$00,$4E,$B9,$00,$00,$AF,$0A,$67,$18,$50,$F8
+	dc.b	$C6,$8D,$48,$E7,$80,$40,$70,$DD,$4E,$B9,$00,$00,$A0,$68,$4C,$DF
+	dc.b	$02,$01,$60,$00,$10,$DC,$4E,$75
 sub_013148:
 	bset.b	#$0,$2(a0)
+loc_01314E:
 	bne.b	loc_01317E
+loc_013150:
 	ori.b	#$4,$2(a0)
+loc_013156:
 	move.b	#$40,$22(a0)
+loc_01315C:
 	addi.w	#$78,$8(a0)
+loc_013162:
 	tst.b	$2E(a0)
+loc_013166:
 	beq.b	loc_01316E
 	addi.w	#$B0,$4(a0)
 loc_01316E:
 	move.w	$2C(a0),d0
+loc_013172:
 	lsr.w	#$1,d0
+loc_013174:
 	move.w	d0,$2C(a0)
+loc_013178:
 	move.b	#$8,$3C(a0)
 loc_01317E:
 	move.w	$28(a0),d0
+loc_013182:
 	jmp	loc_013186(pc,d0.w)
 loc_013186:
 	bra.w	loc_013192
-	bra.w	loc_0131AC
-	bra.w	loc_0131D6
+	dc.b	$60,$00,$00,$20,$60,$00
+	dc.b	$00,$46
 loc_013192:
 	subq.w	#$1,$2C(a0)
+loc_013196:
 	bpl.b	loc_0131AA
+loc_013198:
 	addq.w	#$4,$28(a0)
+loc_01319C:
 	move.l	#$3935C,$14(a0)
+loc_0131A4:
 	andi.b	#$FB,$2(a0)
 loc_0131AA:
 	rts
-loc_0131AC:
-	addq.w	#$4,$28(a0)
-	move.l	#$38482,$14(a0)
-	move.w	#$4,$10(a0)
-	move.w	#$FFFA,$C(a0)
-	tst.b	$2E(a0)
-	beq.b	loc_0131D4
-	neg.w	$C(a0)
-	ori.b	#$10,$2(a0)
-loc_0131D4:
-	rts
-loc_0131D6:
-	bsr.w	sub_00E234
-	jmp	(sub_00B036).l
+	dc.b	$58,$68,$00,$28
+	dc.b	$21,$7C,$00,$03,$84,$82,$00,$14,$31,$7C,$00,$04,$00,$10,$31,$7C
+	dc.b	$FF,$FA,$00,$0C,$4A,$28,$00,$2E,$67,$0A,$44,$68,$00,$0C,$00,$28
+	dc.b	$00,$10,$00,$02,$4E,$75,$61,$00,$B0,$5C,$4E,$F9,$00,$00,$B0,$36
 sub_0131E0:
 	bset.b	#$0,$2(a0)
+loc_0131E6:
 	bne.b	loc_01320E
+loc_0131E8:
 	tst.b	$18(a0)
+loc_0131EC:
 	beq.b	loc_0131FA
 	jsr	(sub_008DDC).l
 	ori.b	#$10,$2(a0)
 loc_0131FA:
 	move.l	#$3864A,$14(a0)
+loc_013202:
 	move.w	#$40,$38(a0)
+loc_013208:
 	move.b	#$8,$3A(a0)
 loc_01320E:
 	moveq	#$0,d0
+loc_013210:
 	move.b	$19(a0),d0
+loc_013214:
 	add.w	d0,d0
+loc_013216:
 	movea.l	dat_013280(pc,d0.w),a1
+loc_01321A:
 	jsr	(a1)
+loc_01321C:
 	bclr.b	#$5,$2A(a0)
+loc_013222:
 	beq.b	loc_01322E
 	move.l	#$3864A,$14(a0)
 loc_01322C:
 	rts
 loc_01322E:
 	bsr.w	sub_00E234
+loc_013232:
 	jsr	(sub_00B298).l
+loc_013238:
 	beq.b	loc_01322C
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
@@ -19300,71 +26249,89 @@ dat_013280:
 	dc.b	$00,$01,$B7,$10,$00,$01,$B6,$AE
 sub_013288:
 	bset.b	#$0,$2(a0)
+loc_01328E:
 	bne.b	loc_0132CC
+loc_013290:
 	ori.b	#$2C,$2(a0)
+loc_013296:
 	move.b	#$7F,$3C(a0)
+loc_01329C:
 	move.b	#$4,$3D(a0)
+loc_0132A2:
 	tst.b	(Flags_C356).w
+loc_0132A6:
 	beq.b	loc_0132B4
+loc_0132A8:
 	move.b	#$19,$3C(a0)
+loc_0132AE:
 	move.b	#$0,$3D(a0)
 loc_0132B4:
 	move.w	#$2,$26(a0)
+loc_0132BA:
 	move.b	#$40,$22(a0)
+loc_0132C0:
 	move.w	#$28,d0
+loc_0132C4:
 	jsr	(sub_00D96C).l
+loc_0132CA:
 	rts
 loc_0132CC:
 	cmpi.w	#$170,$8(a0)
+loc_0132D2:
 	bcc.w	sub_014220
+loc_0132D6:
 	move.w	$28(a0),d0
+loc_0132DA:
 	jmp	loc_0132DE(pc,d0.w)
 loc_0132DE:
 	bra.w	loc_0132EA
-	bra.w	loc_01330A
-	bra.w	loc_01332E
+	dc.b	$60,$00,$00,$26,$60,$00,$00,$46
 loc_0132EA:
 	move.w	(ram_E008).w,d0
+loc_0132EE:
 	sub.w	$8(a0),d0
+loc_0132F2:
 	cmpi.w	#$28,d0
+loc_0132F6:
 	bcc.b	loc_013308
 	addq.w	#$4,$28(a0)
 	andi.b	#$FB,$2(a0)
 	move.b	#$40,$2F(a0)
 loc_013308:
 	rts
-loc_01330A:
-	subq.b	#$1,$2F(a0)
-	beq.b	loc_01331E
-	bsr.w	sub_00E234
-	jsr	(sub_00B036).l
-	bra.w	sub_014248
-loc_01331E:
-	addq.w	#$4,$28(a0)
-	move.b	#$40,$2F(a0)
-	ori.b	#$4,$2(a0)
-loc_01332E:
-	subq.b	#$1,$2F(a0)
-	bne.b	loc_013338
-	clr.w	$28(a0)
-loc_013338:
-	rts
+	dc.b	$53,$28,$00,$2F,$67,$0E
+	dc.b	$61,$00,$AF,$22,$4E,$B9,$00,$00,$B0,$36,$60,$00,$0F,$2C,$58,$68
+	dc.b	$00,$28,$11,$7C,$00,$40,$00,$2F,$00,$28,$00,$04,$00,$02,$53,$28
+	dc.b	$00,$2F,$66,$04,$42,$68,$00,$28,$4E,$75
 sub_01333A:
 	bset.b	#$0,$2(a0)
+loc_013340:
 	bne.b	loc_013382
+loc_013342:
 	ori.b	#$20,$2(a0)
+loc_013348:
 	move.b	#$20,$22(a0)
+loc_01334E:
 	move.l	#$3848C,$14(a0)
+loc_013356:
 	subi.w	#$40,$8(a0)
+loc_01335C:
 	move.w	#$80,d1
+loc_013360:
 	bsr.w	sub_013854
+loc_013364:
 	move.w	#$C0,$38(a0)
+loc_01336A:
 	move.b	#$7F,$3C(a0)
+loc_013370:
 	move.b	#$4,$3D(a0)
+loc_013376:
 	move.w	#$4000,$12(a0)
+loc_01337C:
 	move.b	#$C,$3A(a0)
 loc_013382:
 	cmpi.w	#$160,$8(a0)
+loc_013388:
 	bcc.w	sub_014220
 	bsr.w	sub_00E234
 	jsr	(sub_00B036).l
@@ -19385,83 +26352,115 @@ loc_013382:
 	bra.w	sub_014220
 sub_0133DA:
 	bset.b	#$0,$2(a0)
+loc_0133E0:
 	bne.b	loc_01341A
+loc_0133E2:
 	ori.b	#$20,$2(a0)
+loc_0133E8:
 	move.b	#$20,$22(a0)
+loc_0133EE:
 	move.l	#$384CC,$14(a0)
+loc_0133F6:
 	addi.w	#$C,$4(a0)
+loc_0133FC:
 	addi.w	#$3C,$8(a0)
+loc_013402:
 	move.w	#$1E0,$2C(a0)
+loc_013408:
 	move.w	#$2000,$E(a0)
+loc_01340E:
 	move.w	#$20,$38(a0)
+loc_013414:
 	move.w	#$4000,$12(a0)
 loc_01341A:
 	movea.w	$30(a0),a1
+loc_01341E:
 	tst.w	(a1)
+loc_013420:
 	beq.w	sub_014220
+loc_013424:
 	subq.b	#$1,$2F(a0)
+loc_013428:
 	bne.b	loc_013434
+loc_01342A:
 	move.w	#$1E0,$2C(a0)
+loc_013430:
 	neg.l	$C(a0)
 loc_013434:
 	rts
 sub_013436:
 	bset.b	#$0,$2(a0)
+loc_01343C:
 	bne.b	loc_013478
+loc_01343E:
 	ori.b	#$20,$2(a0)
+loc_013444:
 	tst.b	$1A(a0)
+loc_013448:
 	beq.b	loc_013450
 	jsr	(sub_008DDC).l
 loc_013450:
 	tst.b	$19(a0)
+loc_013454:
 	beq.b	loc_01345C
 	ori.b	#$10,$2(a0)
 loc_01345C:
 	move.l	#$3855A,$14(a0)
+loc_013464:
 	move.b	#$20,$22(a0)
+loc_01346A:
 	move.w	#$A0,$38(a0)
+loc_013470:
 	move.b	#$8,$3A(a0)
+loc_013476:
 	rts
 loc_013478:
 	cmpi.w	#$4,(ram_C328).w
+loc_01347E:
 	beq.b	loc_01348A
+loc_013480:
 	cmpi.w	#$180,$8(a0)
+loc_013486:
 	bcc.w	sub_014220
 loc_01348A:
 	move.w	$28(a0),d0
+loc_01348E:
 	jmp	loc_013492(pc,d0.w)
 loc_013492:
 	bra.w	loc_01349E
-	bra.w	loc_0134B8
-	bra.w	loc_0134BC
+	dc.b	$60,$00,$00,$20,$60,$00,$00,$20
 loc_01349E:
 	move.w	(ram_E008).w,d0
+loc_0134A2:
 	sub.w	$8(a0),d0
+loc_0134A6:
 	cmpi.w	#$30,d0
+loc_0134AA:
 	bcc.b	loc_0134B4
 	addq.w	#$4,$28(a0)
 	bsr.w	sub_013566
 loc_0134B4:
 	bra.w	loc_0134C6
-loc_0134B8:
-	bra.w	loc_0134C6
-loc_0134BC:
-	bsr.w	sub_014248
-	bne.w	sub_014220
-	rts
+	dc.b	$60,$00,$00,$0C,$61,$00,$0D,$8A
+	dc.b	$66,$00,$0D,$5E,$4E,$75
 loc_0134C6:
 	bclr.b	#$5,$2A(a0)
+loc_0134CC:
 	beq.b	loc_0134D8
 	move.l	#$3855A,$14(a0)
 	rts
 loc_0134D8:
 	move.w	#$B48,d4
+loc_0134DC:
 	btst.b	#$4,$2(a0)
+loc_0134E2:
 	beq.b	loc_0134E8
 	move.w	#$B50,d4
 loc_0134E8:
 	bsr.w	sub_00E238
+loc_0134EC:
 	jsr	(sub_00B298).l
+loc_0134F2:
 	beq.b	loc_01351A
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
@@ -19514,94 +26513,156 @@ loc_01357A:
 	rts
 sub_01359E:
 	bset.b	#$0,$2(a0)
+loc_0135A4:
 	bne.b	loc_0135D6
+loc_0135A6:
 	move.b	#$40,$22(a0)
+loc_0135AC:
 	ori.b	#$20,$2(a0)
+loc_0135B2:
 	tst.b	$19(a0)
+loc_0135B6:
 	beq.b	loc_0135BE
 	ori.b	#$10,$2(a0)
 loc_0135BE:
 	move.b	#$8,$3C(a0)
+loc_0135C4:
 	move.w	#$18,d0
+loc_0135C8:
 	jsr	(sub_00D96C).l
+loc_0135CE:
 	move.b	#$8,$3A(a0)
+loc_0135D4:
 	rts
 loc_0135D6:
 	cmpi.w	#$4,(ram_C328).w
+loc_0135DC:
 	beq.b	loc_0135E8
+loc_0135DE:
 	cmpi.w	#$180,$8(a0)
+loc_0135E4:
 	bcc.w	sub_014220
 loc_0135E8:
 	movea.w	$30(a0),a1
+loc_0135EC:
 	tst.w	(a1)
+loc_0135EE:
 	beq.w	sub_014220
+loc_0135F2:
 	btst.b	#$0,$3(a1)
+loc_0135F8:
 	bne.w	sub_014220
+loc_0135FC:
 	bsr.w	sub_00E234
+loc_013600:
 	jsr	(sub_00B036).l
+loc_013606:
 	move.w	$28(a0),d0
+loc_01360A:
 	jmp	loc_01360E(pc,d0.w)
 loc_01360E:
 	bra.w	loc_01361A
+loc_013612:
 	bra.w	loc_013636
+loc_013616:
 	bra.w	loc_013652
 loc_01361A:
 	bsr.w	sub_014248
+loc_01361E:
 	beq.b	loc_013634
+loc_013620:
 	addq.w	#$4,$28(a0)
+loc_013624:
 	move.b	#$10,$2F(a0)
+loc_01362A:
 	move.w	#$20,d0
+loc_01362E:
 	jsr	(sub_00D96C).l
 loc_013634:
 	rts
 loc_013636:
 	subq.b	#$1,$2F(a0)
+loc_01363A:
 	bne.w	sub_014248
+loc_01363E:
 	addq.w	#$4,$28(a0)
+loc_013642:
 	move.l	#$385B4,$14(a0)
+loc_01364A:
 	move.b	#$4,$2F(a0)
+loc_013650:
 	rts
 loc_013652:
 	subq.b	#$1,$2F(a0)
+loc_013656:
 	bne.b	loc_013634
+loc_013658:
 	addq.w	#$4,$28(a0)
+loc_01365C:
 	move.l	#$3855A,$14(a0)
+loc_013664:
 	bra.w	sub_014220
 sub_013668:
 	bset.b	#$0,$2(a0)
+loc_01366E:
 	bne.b	loc_0136C2
+loc_013670:
 	tst.w	$2C(a0)
+loc_013674:
 	bne.b	loc_013682
+loc_013676:
 	move.b	#$10,$18(a0)
+loc_01367C:
 	jsr	(sub_008DDC).l
 loc_013682:
 	move.l	#$3866A,$14(a0)
+loc_01368A:
 	move.w	#$30,$8(a0)
+loc_013690:
 	ori.b	#$20,$2(a0)
+loc_013696:
 	move.w	#$2,$10(a0)
+loc_01369C:
 	move.b	#$20,$22(a0)
+loc_0136A2:
 	move.w	#$60,$38(a0)
+loc_0136A8:
 	move.b	#$10,$3C(a0)
+loc_0136AE:
 	move.w	$2C(a0),d0
+loc_0136B2:
 	lsr.w	#$1,d0
+loc_0136B4:
 	move.w	dat_013734(pc,d0.w),d1
+loc_0136B8:
 	add.w	d1,$4(a0)
+loc_0136BC:
 	move.b	#$7,$3A(a0)
 loc_0136C2:
 	cmpi.w	#$160,$8(a0)
+loc_0136C8:
 	bcc.w	sub_014220
+loc_0136CC:
 	move.w	$28(a0),d0
+loc_0136D0:
 	jmp	loc_0136D4(pc,d0.w)
 loc_0136D4:
 	bra.w	loc_0136D8
 loc_0136D8:
 	bsr.w	sub_00E234
+loc_0136DC:
 	jsr	(sub_00B036).l
+loc_0136E2:
 	bclr.b	#$5,$2A(a0)
+loc_0136E8:
 	bne.b	loc_013732
+loc_0136EA:
 	jsr	(sub_00B298).l
+loc_0136F0:
 	bset.b	#$5,$2A(a0)
+loc_0136F6:
 	btst.b	#$0,$3(a0)
+loc_0136FC:
 	beq.b	loc_013732
 	movem.l	d0/a1,-(a7)
 	moveq	#-$4C,d0
@@ -19622,14 +26683,21 @@ dat_013734:
 	dc.b	$00,$10
 sub_013742:
 	bset.b	#$0,$2(a0)
+loc_013748:
 	bne.b	loc_013766
+loc_01374A:
 	ori.b	#$24,$2(a0)
+loc_013750:
 	subi.w	#$20,$8(a0)
+loc_013756:
 	move.w	#$10,$2C(a0)
+loc_01375C:
 	move.b	#$E,$3A(a0)
+loc_013762:
 	clr.b	(ram_C5D0).w
 loc_013766:
 	cmpi.w	#$160,$8(a0)
+loc_01376C:
 	bcc.w	sub_014220
 	btst.b	#$0,$3(a0)
 	bne.w	loc_013A32
@@ -19705,59 +26773,95 @@ loc_013836:
 	rts
 sub_013854:
 	lea	(ram_E800).w,a1
+loc_013858:
 	moveq	#$5,d7
 loc_01385A:
 	tst.w	(a1)
+loc_01385C:
 	beq.b	loc_013868
 	lea	$40(a1),a1
 	dbra	d7,loc_01385A
 	rts
 loc_013868:
 	move.w	d1,(a1)
+loc_01386A:
 	move.w	$4(a0),$4(a1)
+loc_013870:
 	move.w	$8(a0),$8(a1)
+loc_013876:
 	move.w	a0,$30(a1)
+loc_01387A:
 	move.w	$20(a0),$2C(a1)
+loc_013880:
 	rts
 	dc.b	$03,$00,$00,$04,$93,$20,$00,$04,$94,$3C,$00,$04,$95,$58
 	dc.b	$03,$00,$00,$04,$95,$58,$00,$04,$94,$3C,$00,$04,$93,$20
 sub_01389E:
 	bset.b	#$0,$2(a0)
+loc_0138A4:
 	bne.b	loc_0138EE
+loc_0138A6:
 	ori.b	#$20,$2(a0)
+loc_0138AC:
 	move.l	#$38478,$14(a0)
+loc_0138B4:
 	tst.b	$18(a0)
+loc_0138B8:
 	beq.b	loc_0138C2
 	move.l	#$13A34,$14(a0)
 loc_0138C2:
 	move.b	#$60,$22(a0)
+loc_0138C8:
 	moveq	#$0,d0
+loc_0138CA:
 	move.b	$19(a0),d0
+loc_0138CE:
 	sub.w	d0,$4(a0)
+loc_0138D2:
 	moveq	#$0,d0
+loc_0138D4:
 	move.b	$1A(a0),d0
+loc_0138D8:
 	sub.w	d0,$8(a0)
+loc_0138DC:
 	move.b	#$20,$2F(a0)
+loc_0138E2:
 	move.w	#$200,$38(a0)
+loc_0138E8:
 	move.b	#$A,$3A(a0)
 loc_0138EE:
 	cmpi.w	#$1A0,$8(a0)
+loc_0138F4:
 	bge.w	sub_014220
+loc_0138F8:
 	bsr.w	sub_0139A6
+loc_0138FC:
 	move.w	#$B20,d4
+loc_013900:
 	bsr.w	sub_01391E
+loc_013904:
 	move.w	#$B28,d4
+loc_013908:
 	bsr.w	sub_01391E
+loc_01390C:
 	move.w	#$B30,d4
+loc_013910:
 	bsr.w	sub_01391E
+loc_013914:
 	move.w	#$B38,d4
+loc_013918:
 	bsr.w	sub_01391E
+loc_01391C:
 	rts
 sub_01391E:
 	bclr.b	#$5,$2A(a0)
+loc_013924:
 	bne.w	loc_013A32
+loc_013928:
 	bsr.w	sub_00E238
+loc_01392C:
 	jsr	(sub_00B298).l
+loc_013932:
 	beq.w	loc_013A32
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
@@ -19790,10 +26894,15 @@ loc_013996:
 	bra.w	sub_014220
 sub_0139A6:
 	move.w	(ram_E008).w,d0
+loc_0139AA:
 	sub.w	$8(a0),d0
+loc_0139AE:
 	cmpi.w	#$78,d0
+loc_0139B2:
 	bcs.b	loc_0139DA
+loc_0139B4:
 	cmpi.w	#$C0,d0
+loc_0139B8:
 	bcc.b	loc_0139DA
 	subq.b	#$1,$2F(a0)
 	bne.b	loc_0139DA
@@ -19808,13 +26917,19 @@ loc_0139DA:
 	rts
 sub_0139DC:
 	bset.b	#$0,$2(a0)
+loc_0139E2:
 	bne.b	loc_0139EA
+loc_0139E4:
 	ori.b	#$4,$2(a0)
 loc_0139EA:
 	move.w	#$388,d4
+loc_0139EE:
 	bsr.w	sub_00E238
+loc_0139F2:
 	lea	(Objects_A).w,a1
+loc_0139F6:
 	jsr	(sub_00AF0A).l
+loc_0139FC:
 	beq.b	loc_013A32
 	move.l	(ram_C504).w,(ram_C54A).w
 	move.l	(Camera_Y).w,(ram_C55C).w
@@ -19830,70 +26945,117 @@ loc_013A32:
 	dc.b	$00,$00,$00,$00,$49,$05,$0A,$D5,$7F,$71
 sub_013A3E:
 	bset.b	#$0,$2(a0)
+loc_013A44:
 	bne.b	loc_013A4E
+loc_013A46:
 	ori.b	#$26,$2(a0)
+loc_013A4C:
 	rts
 loc_013A4E:
 	moveq	#$0,d0
+loc_013A50:
 	move.b	$18(a0),d0
+loc_013A54:
 	move.w	dat_013A62(pc,d0.w),d2
+loc_013A58:
 	jsr	(sub_00AF54).l
+loc_013A5E:
 	bra.w	loc_013F44
 dat_013A62:
 	dc.b	$0B,$D8,$0B,$E0,$0B,$E8,$0B,$F0
 sub_013A6A:
 	bset.b	#$0,$2(a0)
+loc_013A70:
 	bne.b	loc_013A94
+loc_013A72:
 	ori.b	#$22,$2(a0)
+loc_013A78:
 	move.b	#$60,$22(a0)
+loc_013A7E:
 	move.w	#$40,d0
+loc_013A82:
 	jsr	(sub_00D96C).l
+loc_013A88:
 	addq.w	#$8,$4(a0)
+loc_013A8C:
 	addi.w	#$24,$8(a0)
+loc_013A92:
 	rts
 loc_013A94:
 	bchg.b	#$2,$2(a0)
+loc_013A9A:
 	move.w	$28(a0),d0
+loc_013A9E:
 	jmp	loc_013AA2(pc,d0.w)
 loc_013AA2:
 	bra.w	loc_013AAA
+loc_013AA6:
 	bra.w	loc_013AC2
 loc_013AAA:
 	bsr.w	sub_014248
+loc_013AAE:
 	beq.b	loc_013ABE
+loc_013AB0:
 	addq.w	#$4,$28(a0)
+loc_013AB4:
 	move.w	#$48,d0
+loc_013AB8:
 	jsr	(sub_00D96C).l
 loc_013ABE:
 	bra.w	loc_013F44
 loc_013AC2:
 	bsr.w	sub_014248
+loc_013AC6:
 	bra.w	loc_013F44
 sub_013ACA:
 	bset.b	#$0,$2(a0)
+loc_013AD0:
 	bne.b	loc_013B30
+loc_013AD2:
 	move.b	#$40,$22(a0)
+loc_013AD8:
 	move.w	(ram_E008).w,$30(a0)
+loc_013ADE:
 	moveq	#$0,d0
+loc_013AE0:
 	move.b	$2E(a0),d0
+loc_013AE4:
 	add.w	d0,d0
+loc_013AE6:
 	andi.w	#$FFFC,d0
+loc_013AEA:
 	lea	(dat_03AA7A).l,a1
+loc_013AF0:
 	move.l	(a1,d0.w),$14(a0)
+loc_013AF6:
 	lea	(dat_013B8E).l,a1
+loc_013AFC:
 	lea	(a1,d0.w),a1
+loc_013B00:
 	move.l	(a1),d1
+loc_013B02:
 	add.w	d1,$8(a0)
+loc_013B06:
 	swap	d1
+loc_013B08:
 	add.w	d1,$4(a0)
+loc_013B0C:
 	lea	(dat_03F4FC).l,a1
+loc_013B12:
 	add.w	d0,d0
+loc_013B14:
 	adda.w	d0,a1
+loc_013B16:
 	move.l	(a1)+,$C(a0)
+loc_013B1A:
 	move.l	(a1)+,$10(a0)
+loc_013B1E:
 	move.w	#$1,$38(a0)
+loc_013B24:
 	move.b	#$10,$3C(a0)
+loc_013B2A:
 	clr.w	$28(a0)
+loc_013B2E:
 	rts
 loc_013B30:
 	move.w	$28(a0),d0
@@ -19931,24 +27093,39 @@ dat_013B8E:
 	dc.b	$00,$19
 sub_013BA2:
 	bset.b	#$0,$2(a0)
+loc_013BA8:
 	bne.b	loc_013BD2
+loc_013BAA:
 	move.l	#$38454,$14(a0)
+loc_013BB2:
 	ori.b	#$2A,$2(a0)
+loc_013BB8:
 	move.w	#$1,$26(a0)
+loc_013BBE:
 	move.w	#$20,$2E(a0)
+loc_013BC4:
 	move.b	#$3,$3F(a0)
+loc_013BCA:
 	move.b	#$20,$22(a0)
+loc_013BD0:
 	rts
 loc_013BD2:
 	bsr.w	sub_013C3A
+loc_013BD6:
 	bsr.w	sub_013BDE
+loc_013BDA:
 	bra.w	loc_013F44
 sub_013BDE:
 	tst.b	(ram_C678).w
+loc_013BE2:
 	bne.b	loc_013C38
+loc_013BE4:
 	cmpi.w	#$80,$4(a0)
+loc_013BEA:
 	bcs.b	loc_013C38
+loc_013BEC:
 	cmpi.w	#$170,$4(a0)
+loc_013BF2:
 	bhi.b	loc_013C38
 	subq.w	#$1,$2E(a0)
 	bne.b	loc_013C38
@@ -19976,53 +27153,84 @@ loc_013C38:
 	rts
 sub_013C3A:
 	jsr	(sub_008444).l
+loc_013C40:
 	subq.w	#$4,d3
+loc_013C42:
 	bcc.b	loc_013C46
+loc_013C44:
 	moveq	#$0,d3
 loc_013C46:
 	cmpi.w	#$8,d3
+loc_013C4A:
 	bls.b	loc_013C4E
 	moveq	#$8,d3
 loc_013C4E:
 	move.b	d3,$20(a0)
+loc_013C52:
 	add.w	d3,d3
+loc_013C54:
 	andi.w	#$FFFC,d3
+loc_013C58:
 	lea	(dat_038426).l,a1
+loc_013C5E:
 	move.l	(a1,d3.w),$14(a0)
+loc_013C64:
 	rts
 sub_013C66:
 	bset.b	#$0,$2(a0)
+loc_013C6C:
 	bne.b	loc_013CA4
+loc_013C6E:
 	move.w	$18(a0),$2C(a0)
+loc_013C74:
 	move.w	#$30,d0
+loc_013C78:
 	jsr	(sub_00D96C).l
+loc_013C7E:
 	ori.b	#$2A,$2(a0)
+loc_013C84:
 	move.w	#$2,$26(a0)
+loc_013C8A:
 	move.b	#$20,$22(a0)
+loc_013C90:
 	move.w	#$10,$30(a0)
+loc_013C96:
 	move.b	#$10,$3C(a0)
+loc_013C9C:
 	move.b	#$4,$3D(a0)
+loc_013CA2:
 	rts
 loc_013CA4:
 	cmpi.w	#$1F0,$8(a0)
+loc_013CAA:
 	bcc.w	sub_014220
+loc_013CAE:
 	move.w	$28(a0),d0
+loc_013CB2:
 	jmp	loc_013CB6(pc,d0.w)
 loc_013CB6:
 	bra.w	loc_013CBE
-	bra.w	loc_013D16
+	dc.b	$60,$00,$00,$5A
 loc_013CBE:
 	subi.l	#$400,$30(a0)
+loc_013CC6:
 	cmpi.l	#$20000,$30(a0)
+loc_013CCE:
 	bcc.b	loc_013CD8
 	move.l	#$20000,$30(a0)
 loc_013CD8:
 	move.b	$31(a0),$1E(a0)
+loc_013CDE:
 	move.w	$2C(a0),d0
+loc_013CE2:
 	movea.w	dat_013CF2(pc,d0.w),a1
+loc_013CE6:
 	tst.b	(a1)
+loc_013CE8:
 	bne.b	loc_013CF6
+loc_013CEA:
 	bsr.w	sub_014248
+loc_013CEE:
 	bra.w	loc_013F44
 dat_013CF2:
 	dc.b	$C6,$77,$C6,$78
@@ -20035,103 +27243,85 @@ loc_013CF6:
 	moveq	#$1,d7
 	lea	(ram_FAE0).w,a1
 	bra.w	sub_00E1AE
-loc_013D16:
-	tst.b	(ram_C678).w
-	bne.w	sub_014248
-	bsr.w	sub_00E234
-	jsr	(sub_00B036).l
-	bra.w	sub_014248
+	dc.b	$4A,$38,$C6,$78,$66,$00,$05,$2C,$61,$00
+	dc.b	$A5,$14,$4E,$B9,$00,$00,$B0,$36,$60,$00,$05,$1E
 sub_013D2C:
 	bset.b	#$0,$2(a0)
+loc_013D32:
 	bne.b	loc_013D82
+loc_013D34:
 	ori.b	#$26,$2(a0)
+loc_013D3A:
 	move.w	#$300,$36(a0)
+loc_013D40:
 	move.w	#$500,$38(a0)
+loc_013D46:
 	lea	(dat_013F2C).l,a1
+loc_013D4C:
 	bsr.w	sub_013F1E
+loc_013D50:
 	st.b	(ram_C61B).w
+loc_013D54:
 	lea	(dat_00D6BA).l,a1
+loc_013D5A:
 	bsr.w	sub_00D69C
+loc_013D5E:
 	lea	(Objects_B).w,a1
+loc_013D62:
 	move.w	#$2D0,(a1)
+loc_013D66:
 	bset.b	#$6,$2(a1)
+loc_013D6C:
 	move.w	#$CE,$1E(a1)
+loc_013D72:
 	st.b	$28(a1)
+loc_013D76:
 	move.l	#$13F7A,$54(a1)
+loc_013D7E:
 	move.l	a0,$50(a1)
 loc_013D82:
 	move.w	$28(a0),d0
+loc_013D86:
 	jmp	loc_013D8A(pc,d0.w)
 loc_013D8A:
 	bra.w	loc_013D9E
-	bra.w	loc_013DB0
-	bra.w	loc_013DE8
-	bra.w	loc_013E3C
-	bra.w	loc_013E4C
+	dc.b	$60,$00
+	dc.b	$00,$20,$60,$00,$00,$54,$60,$00,$00,$A4,$60,$00,$00,$B0
 loc_013D9E:
 	bsr.w	sub_013E5A
+loc_013DA2:
 	subq.w	#$1,$36(a0)
+loc_013DA6:
 	bne.b	loc_013DAC
 	addq.w	#$4,$28(a0)
 loc_013DAC:
 	bra.w	loc_013F3C
-loc_013DB0:
-	bsr.w	sub_013E5A
-	cmpi.l	#$20000,(ram_C54A).w
-	bcs.b	loc_013DE0
-	move.l	$32(a0),d0
-	move.l	#$FFFC0000,d1
-	subi.l	#$80,d0
-	cmp.l	d1,d0
-	bcc.b	loc_013DD4
-	move.l	d1,d0
-loc_013DD4:
-	move.l	d0,$32(a0)
-	move.l	d0,(ram_C54E).w
-	bra.w	loc_013F3C
-loc_013DE0:
-	addq.w	#$4,$28(a0)
-	clr.l	(ram_C54E).w
-loc_013DE8:
-	btst.b	#$0,(ram_E003).w
-	bne.w	loc_013F4C
-	move.w	#$10,$28(a0)
-	move.w	#$40,$2C(a0)
-	move.w	#$3,(ram_C350).w
-	st.b	(ram_C5C9).w
-	lea	(ram_B000).w,a6
-	moveq	#$0,d7
-	move.w	#$3FF,d6
-loc_013E12:
-	move.l	d7,(a6)+
-	dbra	d6,loc_013E12
-	bset.b	#$0,(ram_C5FE).w
-	bset.b	#$2,(ram_C5DC).w
-	clr.w	(ram_C556).w
-	clr.w	(ram_C568).w
-	st.b	(ram_C357).w
-	lea	(dat_013F4E).l,a6
-	jmp	(sub_0087C6).l
-loc_013E3C:
-	subq.w	#$1,$36(a0)
-	bne.b	loc_013E48
-	bset.b	#$2,(Flags_C61C).w
-loc_013E48:
-	bra.w	loc_013F3C
-loc_013E4C:
-	subq.w	#$1,$2C(a0)
-	bne.b	loc_013E58
-	bset.b	#$7,(Flags_C61C).w
-loc_013E58:
-	rts
+	dc.b	$61,$00,$00,$A8,$0C,$B8,$00,$02,$00,$00,$C5,$4A,$65,$22,$20,$28
+	dc.b	$00,$32,$22,$3C,$FF,$FC,$00,$00,$04,$80,$00,$00,$00,$80,$B0,$81
+	dc.b	$64,$02,$20,$01,$21,$40,$00,$32,$21,$C0,$C5,$4E,$60,$00,$01,$5E
+	dc.b	$58,$68,$00,$28,$42,$B8,$C5,$4E,$08,$38,$00,$00,$E0,$03,$66,$00
+	dc.b	$01,$5C,$31,$7C,$00,$10,$00,$28,$31,$7C,$00,$40,$00,$2C,$31,$FC
+	dc.b	$00,$03,$C3,$50,$50,$F8,$C5,$C9,$4D,$F8,$B0,$00,$7E,$00,$3C,$3C
+	dc.b	$03,$FF,$2C,$C7,$51,$CE,$FF,$FC,$08,$F8,$00,$00,$C5,$FE,$08,$F8
+	dc.b	$00,$02,$C5,$DC,$42,$78,$C5,$56,$42,$78,$C5,$68,$50,$F8,$C3,$57
+	dc.b	$4D,$F9,$00,$01,$3F,$4E,$4E,$F9,$00,$00,$87,$C6,$53,$68,$00,$36
+	dc.b	$66,$06,$08,$F8,$00,$02,$C6,$1C,$60,$00,$00,$F2,$53,$68,$00,$2C
+	dc.b	$66,$06,$08,$F8,$00,$07,$C6,$1C,$4E,$75
 sub_013E5A:
 	btst.b	#$0,$3(a0)
+loc_013E60:
 	bne.w	loc_013F4C
+loc_013E64:
 	bclr.b	#$5,$2A(a0)
+loc_013E6A:
 	bne.w	loc_013F0C
+loc_013E6E:
 	move.w	$20(a0),d4
+loc_013E72:
 	bsr.w	sub_00E238
+loc_013E76:
 	jsr	(sub_00B298).l
+loc_013E7C:
 	beq.w	loc_013F4C
 	bset.b	#$5,$2A(a0)
 	moveq	#$20,d0
@@ -20175,8 +27365,11 @@ loc_013F1C:
 	rts
 sub_013F1E:
 	move.l	(a1)+,$2A(a0)
+loc_013F22:
 	move.w	(a1)+,$20(a0)
+loc_013F26:
 	move.w	(a1)+,$26(a0)
+loc_013F2A:
 	rts
 dat_013F2C:
 	dc.b	$00,$04,$97,$90
@@ -20185,13 +27378,14 @@ dat_013F34:
 	dc.b	$00,$04,$99,$34,$0B,$B0,$C6,$78
 loc_013F3C:
 	move.l	(ram_C508).w,d0
+loc_013F40:
 	add.l	d0,(ram_C54E).w
 loc_013F44:
 	move.l	(ram_C54E).w,d0
+loc_013F48:
 	sub.l	d0,$4(a0)
 loc_013F4C:
 	rts
-dat_013F4E:
 	dc.b	$00,$01
 	dc.b	$C3,$9A,$00,$00,$00,$00,$88,$78,$00,$01,$3F,$64,$B2,$8A,$00,$01
 	dc.b	$3F,$70,$B4,$0A,$59,$4F,$55,$20,$46,$41,$49,$4C,$45,$44,$00,$00
@@ -20199,300 +27393,495 @@ dat_013F4E:
 	dc.b	$00,$B4
 sub_013F82:
 	move.l	$4(a0),d3
+loc_013F86:
 	add.l	$C(a0),d3
+loc_013F8A:
 	btst.b	#$1,$2(a0)
+loc_013F90:
 	bne.b	loc_013F96
+loc_013F92:
 	sub.l	(ram_C508).w,d3
 loc_013F96:
 	btst.b	#$5,$2(a0)
+loc_013F9C:
 	bne.b	loc_013FB2
+loc_013F9E:
 	cmpi.l	#$2000000,d3
+loc_013FA4:
 	bcc.w	sub_014220
+loc_013FA8:
 	cmpi.l	#$400000,d3
+loc_013FAE:
 	bcs.w	sub_014220
 loc_013FB2:
 	move.l	$8(a0),d2
+loc_013FB6:
 	add.l	$10(a0),d2
+loc_013FBA:
 	btst.b	#$1,$2(a0)
+loc_013FC0:
 	bne.b	loc_013FC6
+loc_013FC2:
 	sub.l	(ram_C51A).w,d2
 loc_013FC6:
 	btst.b	#$5,$2(a0)
+loc_013FCC:
 	bne.b	loc_013FE2
+loc_013FCE:
 	cmpi.l	#$1A00000,d2
+loc_013FD4:
 	bcc.w	sub_014220
+loc_013FD8:
 	cmpi.l	#$400000,d2
+loc_013FDE:
 	bcs.w	sub_014220
 loc_013FE2:
 	move.l	d2,$8(a0)
+loc_013FE6:
 	move.l	d3,$4(a0)
+loc_013FEA:
 	rts
 sub_013FEC:
 	move.l	$4(a0),d3
+loc_013FF0:
 	add.l	$C(a0),d3
+loc_013FF4:
 	btst.b	#$1,$2(a0)
+loc_013FFA:
 	bne.b	loc_014000
+loc_013FFC:
 	sub.l	(ram_C508).w,d3
 loc_014000:
 	btst.b	#$5,$2(a0)
+loc_014006:
 	bne.b	loc_01401C
+loc_014008:
 	cmpi.l	#$2000000,d3
+loc_01400E:
 	bcc.w	loc_01422E
+loc_014012:
 	cmpi.l	#$400000,d3
+loc_014018:
 	bcs.w	loc_01422E
 loc_01401C:
 	move.l	$8(a0),d2
+loc_014020:
 	add.l	$10(a0),d2
+loc_014024:
 	btst.b	#$1,$2(a0)
+loc_01402A:
 	bne.b	loc_014030
+loc_01402C:
 	sub.l	(ram_C51A).w,d2
 loc_014030:
 	btst.b	#$5,$2(a0)
+loc_014036:
 	bne.b	loc_01404C
+loc_014038:
 	cmpi.l	#$1A00000,d2
+loc_01403E:
 	bcc.w	loc_01422E
+loc_014042:
 	cmpi.l	#$400000,d2
+loc_014048:
 	bcs.w	loc_01422E
 loc_01404C:
 	move.l	d2,$8(a0)
+loc_014050:
 	move.l	d3,$4(a0)
+loc_014054:
 	rts
 sub_014056:
 	lea	(ram_D100).w,a2
+loc_01405A:
 	lea	(ram_D400).w,a6
+loc_01405E:
 	moveq	#$1,d6
+loc_014060:
 	tst.b	(ram_C6C9).w
+loc_014064:
 	beq.b	loc_014076
+loc_014066:
 	lea	(dat_014286).l,a1
+loc_01406C:
 	moveq	#$9,d7
 loc_01406E:
 	move.l	(a1)+,(a2)+
+loc_014070:
 	dbra	d7,loc_01406E
+loc_014074:
 	moveq	#$6,d6
 loc_014076:
 	tst.b	(ram_C5D1).w
+loc_01407A:
 	beq.b	loc_014086
+loc_01407C:
 	lea	(Objects_A).w,a0
+loc_014080:
 	moveq	#$13,d7
+loc_014082:
 	bra.w	loc_01409A
 loc_014086:
 	lea	(Objects_A).w,a0
+loc_01408A:
 	moveq	#$33,d7
+loc_01408C:
 	btst.b	#$6,(Flags_C61C).w
+loc_014092:
 	beq.b	loc_01409A
+loc_014094:
 	lea	(ram_E140).w,a0
+loc_014098:
 	moveq	#$2E,d7
 loc_01409A:
 	move.l	(a0),d0
+loc_01409C:
 	beq.b	loc_0140B6
+loc_01409E:
 	btst.b	#$A,d0
+loc_0140A2:
 	bne.b	loc_0140B6
+loc_0140A4:
 	btst.b	#$B,d0
+loc_0140A8:
 	beq.b	loc_0140B2
+loc_0140AA:
 	move.w	a0,(a6)+
+loc_0140AC:
 	move.w	$26(a0),(a6)+
+loc_0140B0:
 	bra.b	loc_0140B6
 loc_0140B2:
 	bsr.w	sub_014160
 loc_0140B6:
 	lea	$40(a0),a0
+loc_0140BA:
 	dbra	d7,loc_01409A
+loc_0140BE:
 	tst.b	(ram_C5D1).w
+loc_0140C2:
 	bne.b	loc_01411E
+loc_0140C4:
 	lea	(Objects_B).w,a0
+loc_0140C8:
 	moveq	#$18,d7
 loc_0140CA:
 	move.l	(a0),d0
+loc_0140CC:
 	beq.b	loc_0140EE
+loc_0140CE:
 	movea.l	$14(a0),a1
+loc_0140D2:
 	move.w	$2(a1),$24(a0)
+loc_0140D8:
 	btst.b	#$A,d0
+loc_0140DC:
 	bne.b	loc_0140EE
+loc_0140DE:
 	btst.b	#$B,d0
+loc_0140E2:
 	beq.b	loc_0140EC
+loc_0140E4:
 	move.w	a0,(a6)+
+loc_0140E6:
 	move.w	$26(a0),(a6)+
+loc_0140EA:
 	bra.b	loc_0140EE
 loc_0140EC:
 	bsr.b	sub_014160
 loc_0140EE:
 	lea	$60(a0),a0
+loc_0140F2:
 	dbra	d7,loc_0140CA
+loc_0140F6:
 	lea	(Objects_C).w,a0
+loc_0140FA:
 	moveq	#$15,d7
 loc_0140FC:
 	move.l	(a0),d0
+loc_0140FE:
 	beq.b	loc_014116
+loc_014100:
 	btst.b	#$A,d0
+loc_014104:
 	bne.b	loc_014116
+loc_014106:
 	btst.b	#$B,d0
+loc_01410A:
 	beq.b	loc_014114
+loc_01410C:
 	move.w	a0,(a6)+
+loc_01410E:
 	move.w	$26(a0),(a6)+
+loc_014112:
 	bra.b	loc_014116
 loc_014114:
 	bsr.b	sub_014160
 loc_014116:
 	lea	$40(a0),a0
+loc_01411A:
 	dbra	d7,loc_0140FC
 loc_01411E:
 	clr.l	(a6)
+loc_014120:
 	lea	(ram_D400).w,a1
+loc_014124:
 	lea	(ram_D600).w,a4
+loc_014128:
 	movea.l	a1,a5
+loc_01412A:
 	tst.l	(a5)+
+loc_01412C:
 	beq.b	loc_01415C
 loc_01412E:
 	movea.l	a1,a3
+loc_014130:
 	move.l	(a3)+,d2
+loc_014132:
 	movea.l	a3,a6
 loc_014134:
 	move.l	(a3)+,d3
+loc_014136:
 	cmp.w	d2,d3
+loc_014138:
 	ble.b	loc_01413E
+loc_01413A:
 	move.l	d3,d2
+loc_01413C:
 	movea.l	a3,a6
 loc_01413E:
 	tst.w	(a3)
+loc_014140:
 	bne.b	loc_014134
+loc_014142:
 	swap	d2
+loc_014144:
 	move.w	d2,(a4)+
+loc_014146:
 	clr.w	-$2(a6)
+loc_01414A:
 	tst.l	(a5)+
+loc_01414C:
 	bne.b	loc_01412E
+loc_01414E:
 	clr.w	(a4)
+loc_014150:
 	lea	(ram_D600).w,a6
 loc_014154:
 	movea.w	(a6)+,a0
+loc_014156:
 	bsr.b	sub_014160
+loc_014158:
 	tst.w	(a6)
+loc_01415A:
 	bne.b	loc_014154
 loc_01415C:
 	clr.l	(a2)+
+loc_01415E:
 	rts
 sub_014160:
 	move.l	$14(a0),d0
+loc_014164:
 	beq.w	sub_014358
+loc_014168:
 	movea.l	d0,a1
+loc_01416A:
 	moveq	#$0,d4
+loc_01416C:
 	moveq	#$0,d0
+loc_01416E:
 	move.b	(a1)+,d0
+loc_014170:
 	move.b	(a1)+,d4
+loc_014172:
 	tst.b	d0
+loc_014174:
 	beq.b	loc_01417C
+loc_014176:
 	jsr	(sub_008580).l
 loc_01417C:
 	move.w	(a1)+,d0
+loc_01417E:
 	btst.b	#$4,$2(a0)
+loc_014184:
 	sne.b	d1
+loc_014186:
 	beq.b	loc_01418A
+loc_014188:
 	addq.w	#$8,d0
 loc_01418A:
 	move.w	d0,$24(a0)
+loc_01418E:
 	move.w	$8(a0),d2
+loc_014192:
 	move.w	$4(a0),d5
 loc_014196:
 	cmpi.b	#$51,d6
+loc_01419A:
 	bcs.b	loc_0141A4
+loc_01419C:
 	move.b	#$0,-$5(a2)
+loc_0141A2:
 	rts
 loc_0141A4:
 	move.b	$4(a1),d3
+loc_0141A8:
 	tst.b	d1
+loc_0141AA:
 	beq.b	loc_0141B0
+loc_0141AC:
 	move.b	$5(a1),d3
 loc_0141B0:
 	ext.w	d3
+loc_0141B2:
 	add.w	d5,d3
+loc_0141B4:
 	cmpi.w	#$1C0,d3
+loc_0141B8:
 	bcc.b	loc_0141C8
+loc_0141BA:
 	btst.b	#$1,$3(a0)
+loc_0141C0:
 	bne.b	loc_0141D0
+loc_0141C2:
 	cmpi.w	#$60,d3
+loc_0141C6:
 	bcc.b	loc_0141D0
 loc_0141C8:
 	addq.w	#$6,a1
+loc_0141CA:
 	dbra	d4,loc_014196
+loc_0141CE:
 	rts
 loc_0141D0:
 	move.b	(a1)+,d0
+loc_0141D2:
 	ext.w	d0
+loc_0141D4:
 	add.w	d2,d0
+loc_0141D6:
 	cmpi.w	#$160,d0
+loc_0141DA:
 	bcc.b	loc_0141E2
+loc_0141DC:
 	cmpi.w	#$60,d0
+loc_0141E0:
 	bcc.b	loc_0141EA
 loc_0141E2:
 	addq.w	#$5,a1
+loc_0141E4:
 	dbra	d4,loc_014196
+loc_0141E8:
 	rts
 loc_0141EA:
 	move.w	d0,(a2)+
+loc_0141EC:
 	move.b	(a1)+,(a2)+
+loc_0141EE:
 	move.b	d6,(a2)+
+loc_0141F0:
 	move.w	(a1)+,d0
+loc_0141F2:
 	btst.b	#$7,$2(a0)
+loc_0141F8:
 	bne.b	loc_0141FE
+loc_0141FA:
 	or.w	$22(a0),d0
 loc_0141FE:
 	btst.b	#$6,$2(a0)
+loc_014204:
 	beq.b	loc_01420A
+loc_014206:
 	add.w	$1E(a0),d0
 loc_01420A:
 	tst.b	d1
+loc_01420C:
 	beq.b	loc_014212
+loc_01420E:
 	eori.w	#$800,d0
 loc_014212:
 	move.w	d0,(a2)+
+loc_014214:
 	move.w	d3,(a2)+
+loc_014216:
 	addq.b	#$1,d6
+loc_014218:
 	addq.w	#$2,a1
+loc_01421A:
 	dbra	d4,loc_014196
+loc_01421E:
 	rts
 sub_014220:
 	movea.l	a0,a6
+loc_014222:
 	moveq	#$F,d7
+loc_014224:
 	moveq	#$0,d6
 loc_014226:
 	move.l	d6,(a6)+
+loc_014228:
 	dbra	d7,loc_014226
+loc_01422C:
 	rts
 loc_01422E:
 	dc.w	$0C68,$0200,$0000		; cmpi.w #$200,$0(a0)
+loc_014234:
 	blt.b	loc_01423A
+loc_014236:
 	bsr.w	sub_017A20
 loc_01423A:
 	movea.l	a0,a6
+loc_01423C:
 	moveq	#$17,d7
+loc_01423E:
 	moveq	#$0,d6
 loc_014240:
 	move.l	d6,(a6)+
+loc_014242:
 	dbra	d7,loc_014240
+loc_014246:
 	rts
 sub_014248:
 	movea.l	$18(a0),a1
+loc_01424C:
 	moveq	#$0,d0
+loc_01424E:
 	move.b	$1C(a0),d0
+loc_014252:
 	move.b	$1D(a0),d1
+loc_014256:
 	subq.b	#$1,d1
+loc_014258:
 	move.b	d1,$1D(a0)
+loc_01425C:
 	bne.b	loc_014276
+loc_01425E:
 	move.b	$1E(a0),$1D(a0)
+loc_014264:
 	addq.b	#$1,d0
+loc_014266:
 	cmp.b	(a1),d0
+loc_014268:
 	bcc.b	loc_01427A
 sub_01426A:
 	move.b	d0,$1C(a0)
+loc_01426E:
 	asl.w	#$2,d0
+loc_014270:
 	move.l	$2(a1,d0.w),$14(a0)
 loc_014276:
 	moveq	#$0,d0
+loc_014278:
 	rts
 loc_01427A:
 	clr.b	$1C(a0)
+loc_01427E:
 	moveq	#$0,d0
+loc_014280:
 	bsr.b	sub_01426A
+loc_014282:
 	moveq	#$1,d0
+loc_014284:
 	rts
 dat_014286:
 	dc.b	$00,$E8,$00,$01,$C6,$90,$00,$D0,$00,$E8
@@ -20500,68 +27889,117 @@ dat_014286:
 	dc.b	$00,$04,$C6,$97,$01,$00,$00,$E8,$00,$05,$C6,$98,$01,$10
 ObjectUpdate:
 	tst.b	(ram_C5BE).w
+loc_0142B2:
 	beq.b	loc_0142BE
+loc_0142B4:
 	lea	(Objects_A).w,a0
+loc_0142B8:
 	moveq	#$13,d7
+loc_0142BA:
 	bra.w	loc_0142D2
 loc_0142BE:
 	lea	(Objects_A).w,a0
+loc_0142C2:
 	moveq	#$33,d7
+loc_0142C4:
 	btst.b	#$6,(Flags_C61C).w
+loc_0142CA:
 	beq.b	loc_0142D2
+loc_0142CC:
 	lea	(ram_E1C0).w,a0
+loc_0142D0:
 	moveq	#$B,d7
 loc_0142D2:
 	move.l	d7,-(a7)
+loc_0142D4:
 	moveq	#$0,d0
+loc_0142D6:
 	move.w	(a0),d0
+loc_0142D8:
 	beq.b	loc_0142EE
+loc_0142DA:
 	lea	(ObjectTypeTable).l,a1
+loc_0142E0:
 	movea.l	(a1,d0.w),a1
+loc_0142E4:
 	jsr	(a1)
+loc_0142E6:
 	tst.w	(a0)
+loc_0142E8:
 	beq.b	loc_0142EE
+loc_0142EA:
 	bsr.w	sub_013F82
 loc_0142EE:
 	lea	$40(a0),a0
+loc_0142F2:
 	move.l	(a7)+,d7
+loc_0142F4:
 	dbra	d7,loc_0142D2
+loc_0142F8:
 	tst.b	(ram_C5BE).w
+loc_0142FC:
 	bne.b	sub_014358
+loc_0142FE:
 	btst.b	#$6,(Flags_C61C).w
+loc_014304:
 	bne.b	sub_014358
+loc_014306:
 	lea	(Objects_B).w,a0
+loc_01430A:
 	moveq	#$18,d7
 loc_01430C:
 	move.l	d7,-(a7)
+loc_01430E:
 	moveq	#$0,d0
+loc_014310:
 	move.w	(a0),d0
+loc_014312:
 	beq.b	loc_014322
+loc_014314:
 	movea.l	ObjectTypeTable(pc,d0.w),a1
+loc_014318:
 	jsr	(a1)
+loc_01431A:
 	tst.w	(a0)
+loc_01431C:
 	beq.b	loc_014322
+loc_01431E:
 	bsr.w	sub_013FEC
 loc_014322:
 	lea	$60(a0),a0
+loc_014326:
 	move.l	(a7)+,d7
+loc_014328:
 	dbra	d7,loc_01430C
+loc_01432C:
 	lea	(Objects_C).w,a0
+loc_014330:
 	moveq	#$15,d7
 loc_014332:
 	move.l	d7,-(a7)
+loc_014334:
 	moveq	#$0,d0
+loc_014336:
 	move.w	(a0),d0
+loc_014338:
 	beq.b	loc_01434E
+loc_01433A:
 	lea	(ObjectTypeTable).l,a1
+loc_014340:
 	movea.l	(a1,d0.w),a1
+loc_014344:
 	jsr	(a1)
+loc_014346:
 	tst.w	(a0)
+loc_014348:
 	beq.b	loc_01434E
+loc_01434A:
 	bsr.w	sub_013F82
 loc_01434E:
 	lea	$40(a0),a0
+loc_014352:
 	move.l	(a7)+,d7
+loc_014354:
 	dbra	d7,loc_014332
 sub_014358:
 	rts
@@ -20960,7 +28398,9 @@ dat_01580A:
 	dc.b	$58,$B6,$00,$01,$58,$B6,$00,$01,$59,$7E,$00,$09,$00,$08,$72,$A8
 	dc.b	$00,$C0,$00,$04,$76,$80,$FF,$00,$00,$00,$00,$09,$FF,$FF,$FF,$FF
 	dc.b	$00,$00,$01,$00,$00,$00,$00,$0C,$00,$08,$72,$B2,$00,$C0,$00,$04
-	dc.b	$77,$40,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A,$00,$02,$FF,$FF
+	dc.b	$77,$40,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
+dat_01585C:
+	dc.b	$00,$02,$FF,$FF
 	dc.b	$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$50,$00,$09
 	dc.b	$00,$08,$73,$48,$00,$C0,$00,$04,$76,$80,$FF,$00,$00,$00,$FF,$FF
 	dc.b	$00,$01,$58,$3A,$00,$09,$00,$08,$73,$8E,$00,$80,$00,$04,$7B,$30
@@ -21066,7 +28506,9 @@ dat_015AD2:
 	dc.b	$03,$80,$00,$5A,$00,$02,$00,$08,$72,$DA,$00,$00,$04,$00,$00,$5A
 	dc.b	$00,$02,$00,$08,$72,$DA,$00,$00,$05,$00,$00,$5A,$00,$02,$00,$08
 	dc.b	$72,$DA,$00,$00,$06,$80,$00,$5A,$00,$02,$00,$08,$72,$DA,$00,$00
-	dc.b	$07,$00,$00,$5A,$00,$00,$00,$01,$7A,$8E,$00,$01,$59,$68,$00,$01
+	dc.b	$07,$00,$00,$5A,$00,$00,$00,$01,$7A,$8E
+dat_015EAA:
+	dc.b	$00,$01,$59,$68,$00,$01
 	dc.b	$58,$46,$00,$01,$58,$46,$00,$01,$59,$9A
 dat_015EBA:
 	dc.b	$00,$04,$00,$08,$73,$02
@@ -21091,13 +28533,17 @@ dat_015F70:
 	dc.b	$00,$04,$00,$08,$7A,$7A,$00,$90,$00,$04,$C3,$60,$00,$00,$00,$00
 	dc.b	$00,$04,$00,$08,$7A,$84,$00,$90,$00,$04,$C3,$F0,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$7A,$7A,$00,$01,$00,$03,$44,$3A,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$00,$00,$01,$7A,$7A,$00,$06,$00,$03,$44,$3A,$00,$00
+	dc.b	$00,$00,$00,$00,$00,$01,$7A,$7A
+dat_016008:
+	dc.b	$00,$06,$00,$03,$44,$3A,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$44,$44,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$06,$00,$03,$44,$54,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$44,$5E,$00,$00,$00,$00,$00,$00,$00,$06,$00,$08,$70,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$44,$5E,$00,$00,$00,$00,$00,$00
 dat_016050:
-	dc.b	$00,$00,$00,$01,$7A,$20,$00,$06,$00,$03,$44,$7E,$00,$00,$00,$00
+	dc.b	$00,$00,$00,$01,$7A,$20
+dat_016056:
+	dc.b	$00,$06,$00,$03,$44,$7E,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$06,$00,$03,$44,$92,$00,$00,$00,$00,$00,$00,$00,$06
 	dc.b	$00,$03,$44,$A2,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$44,$B2
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$44,$5E,$00,$00,$00,$00
@@ -21121,26 +28567,41 @@ loc_016168:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_016170:
 	btst.b	#$0,(Z80_Bus_Request).l
+loc_016178:
 	bne.b	loc_016170
+loc_01617A:
 	lea	(VDP_Control).l,a6
+loc_016180:
 	move.w	(a1),d7
+loc_016182:
 	andi.w	#$F,d7
+loc_016186:
 	clr.w	(a1)+
+loc_016188:
 	bra.b	loc_016198
 loc_01618A:
 	move.w	(a1)+,(a6)
+loc_01618C:
 	move.w	(a1)+,(a6)
+loc_01618E:
 	move.w	(a1)+,(a6)
+loc_016190:
 	move.w	(a1)+,(a6)
+loc_016192:
 	move.w	(a1)+,(a6)
+loc_016194:
 	move.w	(a1)+,(a6)
+loc_016196:
 	move.w	(a1)+,(a6)
 loc_016198:
 	dbra	d7,loc_01618A
+loc_01619C:
 	move.w	#$0,(Z80_Bus_Request).l
+loc_0161A4:
 	rts
 sub_0161A6:
 	tst.w	(ram_C158).w
+loc_0161AA:
 	beq.w	loc_01622A
 	lea	(VDP_Control).l,a4
 	move.w	(ram_C104).w,d0
@@ -21186,56 +28647,96 @@ loc_016232:
 	rts
 sub_01623C:
 	lea	(ram_C210).w,a2
+loc_016240:
 	move.w	(a2),d7
+loc_016242:
 	clr.w	(a2)+
+loc_016244:
 	bra.b	loc_01625C
 loc_016246:
 	movea.l	(a2)+,a1
+loc_016248:
 	move.w	(a2)+,d0
+loc_01624A:
 	move.w	(a2)+,d1
+loc_01624C:
 	move.w	(a2)+,d2
+loc_01624E:
 	movem.l	d7/a2,-(a7)
+loc_016252:
 	jsr	(sub_00A150).l
+loc_016258:
 	movem.l	(a7)+,d7/a2
 loc_01625C:
 	dbra	d7,loc_016246
+loc_016260:
 	rts
 sub_016262:
 	move.l	#$87028,$14(a0)
+loc_01626A:
 	move.b	#$60,$22(a0)
+loc_016270:
 	bset.b	#$3,$2(a0)
+loc_016276:
 	lea	(Objects_A).w,a1
+loc_01627A:
 	jsr	(sub_01ABA6).l
+loc_016280:
 	move.b	(RNG_Seed).w,d0
+loc_016284:
 	andi.w	#$1F,d0
+loc_016288:
 	lea	dat_0162E4(pc),a1
+loc_01628C:
 	move.w	(ram_FE44).w,d1
+loc_016290:
 	cmpi.w	#$2,d1
+loc_016294:
 	ble.b	loc_01629E
+loc_016296:
 	tst.b	(ram_C3D5).w
+loc_01629A:
 	beq.b	loc_01629E
 	moveq	#$5,d1
 loc_01629E:
 	lsl.w	#$2,d1
+loc_0162A0:
 	adda.w	d1,a1
+loc_0162A2:
 	moveq	#$0,d1
+loc_0162A4:
 	sub.b	(a1)+,d0
+loc_0162A6:
 	bmi.b	loc_0162BC
+loc_0162A8:
 	addq.w	#$4,d1
+loc_0162AA:
 	sub.b	(a1)+,d0
+loc_0162AC:
 	bmi.b	loc_0162BC
+loc_0162AE:
 	addq.w	#$4,d1
+loc_0162B0:
 	sub.b	(a1)+,d0
+loc_0162B2:
 	bmi.b	loc_0162BC
+loc_0162B4:
 	addq.w	#$4,d1
+loc_0162B6:
 	sub.b	(a1)+,d0
+loc_0162B8:
 	bmi.b	loc_0162BC
+loc_0162BA:
 	addq.w	#$4,d1
 loc_0162BC:
 	movea.l	dat_0162D0(pc,d1.w),a1
+loc_0162C0:
 	jsr	(a1)
+loc_0162C2:
 	bset.b	#$6,$2(a0)
+loc_0162C8:
 	bset.b	#$3,$3(a0)
+loc_0162CE:
 	rts
 dat_0162D0:
 	dc.l	sub_017812,sub_017832,sub_01784E,sub_01786A
@@ -21245,165 +28746,297 @@ dat_0162E4:
 	dc.b	$08,$08,$08,$08,$07,$07,$07,$07,$00,$00,$00,$00
 sub_0162FC:
 	bset.b	#$0,$2(a0)
+loc_016302:
 	bne.w	loc_016310
+loc_016306:
 	clr.b	$28(a0)
+loc_01630A:
 	bset.b	#$2,$2(a0)
 loc_016310:
 	tst.b	$28(a0)
+loc_016314:
 	bne.w	loc_0163F4
+loc_016318:
 	move.b	#$15,$28(a0)
+loc_01631E:
 	jsr	sub_01ABA6(pc)
+loc_016322:
 	move.w	(RNG_Seed).w,d0
+loc_016326:
 	andi.w	#$7F,d0
+loc_01632A:
 	subi.w	#$40,d0
+loc_01632E:
 	move.w	d0,d1
+loc_016330:
 	bpl.b	loc_016334
+loc_016332:
 	neg.w	d1
 loc_016334:
 	cmpi.w	#$F,d1
+loc_016338:
 	ble.w	loc_0163F4
+loc_01633C:
 	jsr	sub_01ABA6(pc)
+loc_016340:
 	move.w	(RNG_Seed).w,d2
+loc_016344:
 	andi.w	#$7F,d2
+loc_016348:
 	subi.w	#$40,d2
+loc_01634C:
 	move.w	d2,d1
+loc_01634E:
 	bpl.b	loc_016352
+loc_016350:
 	neg.w	d1
 loc_016352:
 	cmpi.w	#$F,d1
+loc_016356:
 	ble.w	loc_0163F4
+loc_01635A:
 	jsr	sub_01ABA6(pc)
+loc_01635E:
 	move.w	(RNG_Seed).w,d1
+loc_016362:
 	andi.w	#$F,d1
+loc_016366:
 	cmpi.w	#$3,d0
+loc_01636A:
 	bge.w	loc_0163F4
+loc_01636E:
 	lea	(Objects_A).w,a1
+loc_016372:
 	add.w	$8(a1),d0
+loc_016376:
 	add.w	$4(a1),d2
+loc_01637A:
 	movem.w	d0/d2,-(a7)
+loc_01637E:
 	jsr	sub_01AC8A(pc)
+loc_016382:
 	movem.w	(a7)+,d0/d2
+loc_016386:
 	tst.w	d7
+loc_016388:
 	bmi.b	loc_0163F4
+loc_01638A:
 	move.w	d0,$8(a2)
+loc_01638E:
 	move.w	d2,$4(a2)
+loc_016392:
 	movea.l	a0,a6
+loc_016394:
 	movea.l	a2,a0
+loc_016396:
 	moveq	#$0,d0
+loc_016398:
 	moveq	#$0,d1
+loc_01639A:
 	jsr	(sub_00B36C).l
+loc_0163A0:
 	cmpi.b	#$20,d0
+loc_0163A4:
 	bne.b	loc_0163F0
+loc_0163A6:
 	moveq	#$3,d0
+loc_0163A8:
 	jsr	sub_01AB5C(pc)
+loc_0163AC:
 	bne.b	loc_0163F0
+loc_0163AE:
 	ori.b	#$48,$2(a0)
+loc_0163B4:
 	lea	dat_0166C4(pc),a1
+loc_0163B8:
 	jsr	sub_01ADB0(pc)
+loc_0163BC:
 	move.b	#$60,$22(a0)
+loc_0163C2:
 	lea	(Objects_A).w,a1
+loc_0163C6:
 	jsr	sub_01ABCE(pc)
+loc_0163CA:
 	andi.w	#$1E,d0
+loc_0163CE:
 	move.b	d0,$35(a0)
+loc_0163D2:
 	move.b	d0,$28(a0)
+loc_0163D6:
 	lea	dat_0166D4(pc),a1
+loc_0163DA:
 	lsr.w	#$2,d0
+loc_0163DC:
 	andi.w	#$6,d0
+loc_0163E0:
 	adda.w	(a1,d0.w),a1
+loc_0163E4:
 	move.l	a1,$30(a0)
+loc_0163E8:
 	move.w	#$23C,(a0)
+loc_0163EC:
 	jsr	sub_01AF0E(pc)
 loc_0163F0:
 	movea.l	a6,a0
+loc_0163F2:
 	rts
 loc_0163F4:
 	subq.b	#$1,$28(a0)
+loc_0163F8:
 	rts
 sub_0163FA:
 	bset.b	#$2,$2(a0)
+loc_016400:
 	moveq	#$3,d0
+loc_016402:
 	jsr	sub_01AB5C(pc)
+loc_016406:
 	bne.b	loc_01642A
+loc_016408:
 	ori.b	#$48,$2(a0)
+loc_01640E:
 	bclr.b	#$2,$2(a0)
+loc_016414:
 	lea	dat_0166B4(pc),a1
+loc_016418:
 	jsr	sub_01ADB0(pc)
+loc_01641C:
 	move.b	#$60,$22(a0)
+loc_016422:
 	move.w	#$23C,(a0)
+loc_016426:
 	jmp	sub_01AF0E(pc)
 loc_01642A:
 	rts
 sub_01642C:
 	jsr	(sub_00E234).l
+loc_016432:
 	jsr	(sub_00B036).l
+loc_016438:
 	jsr	(sub_00B298).l
+loc_01643E:
 	btst.b	#$0,$3(a0)
+loc_016444:
 	bne.w	loc_0165AC
+loc_016448:
 	cmpi.b	#$4,$37(a0)
+loc_01644E:
 	beq.b	loc_0164B4
+loc_016450:
 	bsr.w	sub_0164B8
+loc_016454:
 	bsr.w	sub_0164EE
+loc_016458:
 	bsr.w	sub_016534
+loc_01645C:
 	jsr	sub_01AE8E(pc)
+loc_016460:
 	moveq	#$0,d0
+loc_016462:
 	moveq	#$0,d1
+loc_016464:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_016468:
 	jsr	(sub_00B36C).l
+loc_01646E:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_016472:
 	cmpi.b	#$20,d0
+loc_016476:
 	bne.w	loc_016586
+loc_01647A:
 	moveq	#-$10,d0
+loc_01647C:
 	moveq	#$0,d1
+loc_01647E:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_016482:
 	jsr	(sub_00B36C).l
+loc_016488:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_01648C:
 	cmpi.b	#$20,d0
+loc_016490:
 	bne.w	loc_016586
+loc_016494:
 	tst.b	$29(a0)
+loc_016498:
 	beq.b	loc_0164B4
+loc_01649A:
 	clr.b	$29(a0)
+loc_01649E:
 	lea	dat_0167B8(pc),a1
+loc_0164A2:
 	move.b	$28(a0),d0
+loc_0164A6:
 	andi.w	#$1C,d0
+loc_0164AA:
 	lsr.w	#$1,d0
+loc_0164AC:
 	adda.w	(a1,d0.w),a1
+loc_0164B0:
 	jmp	sub_01AF1A(pc)
 loc_0164B4:
 	jmp	sub_01AF0E(pc)
 sub_0164B8:
 	lea	(Objects_A).w,a1
+loc_0164BC:
 	move.w	#$14,d1
+loc_0164C0:
 	move.w	#$10,d2
+loc_0164C4:
 	bsr.w	sub_016626
+loc_0164C8:
 	bne.b	loc_0164EC
+loc_0164CA:
 	move.b	#$A,$4A(a0)
+loc_0164D0:
 	move.b	#$4,$37(a0)
+loc_0164D6:
 	lea	dat_0169F8(pc),a1
+loc_0164DA:
 	move.b	$28(a0),d0
+loc_0164DE:
 	andi.w	#$1E,d0
+loc_0164E2:
 	adda.w	(a1,d0.w),a1
+loc_0164E6:
 	move.l	(a7)+,d0
+loc_0164E8:
 	jmp	sub_01AF1A(pc)
 loc_0164EC:
 	rts
 sub_0164EE:
 	tst.b	$2B(a0)
+loc_0164F2:
 	beq.b	loc_0164FA
+loc_0164F4:
 	subq.b	#$1,$2B(a0)
 loc_0164F8:
 	rts
 loc_0164FA:
 	move.b	#$2,$2B(a0)
+loc_016500:
 	lea	(Objects_A).w,a1
+loc_016504:
 	jsr	sub_01ABCE(pc)
+loc_016508:
 	andi.b	#$1F,d0
+loc_01650C:
 	sub.b	$35(a0),d0
+loc_016510:
 	beq.b	loc_0164F8
+loc_016512:
 	andi.b	#$1F,d0
+loc_016516:
 	cmpi.b	#$10,d0
+loc_01651A:
 	bcc.b	loc_016528
+loc_01651C:
 	addq.b	#$1,$35(a0)
+loc_016520:
 	andi.b	#$1F,$35(a0)
+loc_016526:
 	rts
 loc_016528:
 	subq.b	#$1,$35(a0)
@@ -21411,35 +29044,66 @@ loc_016528:
 	rts
 sub_016534:
 	tst.b	$2A(a0)
+loc_016538:
 	beq.b	loc_016540
+loc_01653A:
 	subq.b	#$1,$2A(a0)
 loc_01653E:
 	rts
 loc_016540:
 	move.b	#$2,$2A(a0)
+loc_016546:
 	lea	(Objects_A).w,a1
+loc_01654A:
 	jsr	sub_01ABCE(pc)
+loc_01654E:
 	andi.b	#$1E,d0
+loc_016552:
 	sub.b	$28(a0),d0
+loc_016556:
 	beq.b	loc_01653E
+loc_016558:
 	andi.b	#$1E,d0
+loc_01655C:
 	cmpi.b	#$10,d0
+loc_016560:
 	bcc.b	loc_016574
+loc_016562:
 	addq.b	#$2,$28(a0)
+loc_016566:
 	andi.b	#$1E,$28(a0)
+loc_01656C:
 	move.b	#$44,$29(a0)
+loc_016572:
 	rts
 loc_016574:
 	subq.b	#$2,$28(a0)
+loc_016578:
 	andi.b	#$1E,$28(a0)
+loc_01657E:
 	move.b	#$44,$29(a0)
+loc_016584:
 	rts
 loc_016586:
 	move.w	#$23C,(a0)
+loc_01658A:
 	lea	dat_016B48(pc),a1
+loc_01658E:
 	jmp	sub_01AF1A(pc)
-	dc.b	$30,$BC,$02,$5C,$43,$FA,$02,$20,$10,$28,$00,$28,$02,$40
-	dc.b	$00,$1C,$E2,$48,$D2,$F1,$00,$00,$4E,$FA,$49,$70
+loc_016592:
+	move.w	#$25C,(a0)
+loc_016596:
+	lea	dat_0167B8(pc),a1
+loc_01659A:
+	move.b	$28(a0),d0
+loc_01659E:
+	andi.w	#$1C,d0
+loc_0165A2:
+	lsr.w	#$1,d0
+loc_0165A4:
+	adda.w	(a1,d0.w),a1
+loc_0165A8:
+	jmp	sub_01AF1A(pc)
 loc_0165AC:
 	move.b	#$1,$34(a0)
 	move.w	#$23C,(a0)
@@ -21466,46 +29130,91 @@ loc_0165E8:
 	jmp	sub_01AF1A(pc)
 sub_016602:
 	moveq	#$0,d0
+loc_016604:
 	move.w	$4E(a0),d1
+loc_016608:
 	sub.w	$8(a0),d1
+loc_01660C:
 	bcc.b	loc_016610
+loc_01660E:
 	addq.b	#$2,d0
 loc_016610:
 	move.w	$4C(a0),d1
+loc_016614:
 	sub.w	$4(a0),d1
+loc_016618:
 	bcc.b	loc_01661C
+loc_01661A:
 	addq.b	#$1,d0
 loc_01661C:
 	move.b	dat_016622(pc,d0.w),d0
+loc_016620:
 	rts
 dat_016622:
 	dc.b	$00,$01,$03,$02
 sub_016626:
 	move.w	$4(a1),d0
+loc_01662A:
 	sub.w	$4(a0),d0
+loc_01662E:
 	bcc.b	loc_016632
+loc_016630:
 	neg.w	d0
 loc_016632:
 	cmp.w	d1,d0
+loc_016634:
 	bcc.b	loc_01664A
+loc_016636:
 	move.w	$8(a1),d0
+loc_01663A:
 	sub.w	$8(a0),d0
+loc_01663E:
 	bcc.b	loc_016642
+loc_016640:
 	neg.w	d0
 loc_016642:
 	cmp.w	d2,d0
+loc_016644:
 	bcc.b	loc_01664A
+loc_016646:
 	moveq	#$0,d0
+loc_016648:
 	rts
 loc_01664A:
 	moveq	#-$1,d0
+loc_01664C:
 	rts
-	dc.b	$70,$00
-	dc.b	$72,$00,$48,$E7,$3C,$F0,$4E,$B9,$00,$00,$B3,$6C,$4C,$DF,$0F,$3C
-	dc.b	$0C,$00,$00,$20,$66,$1C,$08,$A8,$00,$06,$00,$02,$11,$7C,$00,$20
-	dc.b	$00,$22,$70,$C0,$4E,$B9,$00,$00,$A0,$68,$43,$FA,$F9,$DA,$4E,$FA
-	dc.b	$48,$9A,$43,$FA,$09,$78,$10,$28,$00,$35,$D0,$40,$D2,$F1,$00,$00
-	dc.b	$4E,$FA,$48,$88,$FF,$E0,$00,$00,$FF,$E8,$FF,$E8,$00,$00,$FF,$E0
+loc_01664E:
+	moveq	#$0,d0
+loc_016650:
+	moveq	#$0,d1
+loc_016652:
+	movem.l	d2-d5/a0-a3,-(a7)
+loc_016656:
+	jsr	(sub_00B36C).l
+loc_01665C:
+	movem.l	(a7)+,d2-d5/a0-a3
+loc_016660:
+	cmpi.b	#$20,d0
+loc_016664:
+	bne.b	loc_016682
+	bclr.b	#$6,$2(a0)
+	move.b	#$20,$22(a0)
+	moveq	#-$40,d0
+	jsr	(sub_00A068).l
+	lea	dat_016056(pc),a1
+	jmp	sub_01AF1A(pc)
+loc_016682:
+	lea	dat_016FFC(pc),a1
+loc_016686:
+	move.b	$35(a0),d0
+loc_01668A:
+	add.w	d0,d0
+loc_01668C:
+	adda.w	(a1,d0.w),a1
+loc_016690:
+	jmp	sub_01AF1A(pc)
+	dc.b	$FF,$E0,$00,$00,$FF,$E8,$FF,$E8,$00,$00,$FF,$E0
 	dc.b	$00,$18,$FF,$E8,$00,$20,$00,$00,$00,$18,$00,$18,$00,$00,$00,$20
 	dc.b	$FF,$E8,$00,$18
 dat_0166B4:
@@ -21671,7 +29380,9 @@ dat_016C14:
 	dc.b	$00,$00,$03,$80,$00,$5A,$00,$02,$00,$08,$7A,$48,$00,$00,$04,$00
 	dc.b	$00,$5A,$00,$02,$00,$08,$7A,$48,$00,$00,$05,$00,$00,$5A,$00,$02
 	dc.b	$00,$08,$7A,$48,$00,$00,$06,$80,$00,$5A,$00,$02,$00,$08,$7A,$48
-	dc.b	$00,$00,$07,$00,$00,$5A,$00,$00,$00,$01,$66,$4E,$00,$34,$00,$4A
+	dc.b	$00,$00,$07,$00,$00,$5A,$00,$00,$00,$01,$66,$4E
+dat_016FFC:
+	dc.b	$00,$34,$00,$4A
 	dc.b	$00,$08,$00,$1E,$00,$0C,$00,$08,$7A,$34,$00,$C0,$00,$04,$BF,$40
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A,$00,$0C,$00,$08,$7A,$52
 	dc.b	$00,$C0,$00,$04,$C1,$20,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
@@ -21680,605 +29391,1022 @@ dat_016C14:
 	dc.b	$BF,$40,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
 sub_01705C:
 	lea	(Objects_A).w,a1
+loc_017060:
 	jsr	sub_01ABCE(pc)
+loc_017064:
 	move.w	d0,d5
+loc_017066:
 	bsr.w	sub_0171BE
+loc_01706A:
 	btst.b	#$2,$55(a0)
+loc_017070:
 	beq.b	loc_017078
+loc_017072:
 	bsr.w	sub_01768A
+loc_017076:
 	bra.b	loc_017092
 loc_017078:
 	btst.b	#$3,$55(a0)
+loc_01707E:
 	beq.b	loc_017086
+loc_017080:
 	bsr.w	sub_017548
+loc_017084:
 	bra.b	loc_01708E
 loc_017086:
 	bsr.w	sub_017516
+loc_01708A:
 	bsr.w	sub_0175A6
 loc_01708E:
 	bsr.w	sub_01760A
 loc_017092:
 	move.b	$55(a0),d0
+loc_017096:
 	andi.b	#$C,d0
+loc_01709A:
 	beq.b	loc_0170A8
+loc_01709C:
 	clr.l	$C(a0)
+loc_0170A0:
 	clr.l	$10(a0)
+loc_0170A4:
 	bra.w	loc_01712C
 loc_0170A8:
 	jsr	sub_01AE8E(pc)
+loc_0170AC:
 	moveq	#$0,d7
+loc_0170AE:
 	bsr.w	sub_0173DE
+loc_0170B2:
 	btst.b	#$0,$56(a0)
+loc_0170B8:
 	beq.b	loc_0170BE
+loc_0170BA:
 	clr.l	$C(a0)
 loc_0170BE:
 	btst.b	#$1,$56(a0)
+loc_0170C4:
 	beq.b	loc_0170D4
+loc_0170C6:
 	clr.l	$10(a0)
+loc_0170CA:
 	tst.l	$C(a0)
+loc_0170CE:
 	bne.b	loc_0170D4
+loc_0170D0:
 	clr.b	$2B(a0)
 loc_0170D4:
 	tst.b	d7
+loc_0170D6:
 	bne.b	loc_017106
+loc_0170D8:
 	btst.b	#$0,$55(a0)
+loc_0170DE:
 	beq.b	loc_01712C
+loc_0170E0:
 	bclr.b	#$0,$55(a0)
+loc_0170E6:
 	move.b	#$4,$3B(a0)
+loc_0170EC:
 	cmpi.b	#$45,$54(a0)
+loc_0170F2:
 	bne.b	loc_0170FA
+loc_0170F4:
 	move.b	#$24,$3B(a0)
 loc_0170FA:
 	bset.b	#$6,$56(a0)
+loc_017100:
 	clr.l	$600(a0)
+loc_017104:
 	bra.b	loc_01712C
 loc_017106:
 	btst.b	#$0,$55(a0)
+loc_01710C:
 	bne.b	loc_01712C
+loc_01710E:
 	bset.b	#$0,$55(a0)
+loc_017114:
 	move.b	#$0,$3B(a0)
+loc_01711A:
 	bset.b	#$6,$56(a0)
+loc_017120:
 	move.w	#$234,$600(a0)
+loc_017126:
 	move.b	#$1,$628(a0)
 loc_01712C:
 	btst.b	#$2,$55(a0)
+loc_017132:
 	bne.b	sub_017146
+loc_017134:
 	btst.b	#$6,$56(a0)
+loc_01713A:
 	beq.b	sub_017146
+loc_01713C:
 	bclr.b	#$6,$56(a0)
+loc_017142:
 	bsr.w	sub_017720
 sub_017146:
 	jsr	(sub_00E234).l
+loc_01714C:
 	jsr	(sub_00B036).l
+loc_017152:
 	bne.b	loc_017164
 loc_017154:
 	jsr	(sub_00B298).l
+loc_01715A:
 	beq.b	loc_017160
+loc_01715C:
 	move.w	#$20C,(a0)
 loc_017160:
 	jmp	sub_01AF0E(pc)
 loc_017164:
 	cmpi.b	#$45,$54(a0)
+loc_01716A:
 	bne.b	loc_017154
+loc_01716C:
 	move.l	#$16128,$30(a0)
+loc_017174:
 	move.b	#$1,$34(a0)
+loc_01717A:
 	move.w	#$23C,(a0)
+loc_01717E:
 	bclr.b	#$6,$2(a0)
+loc_017184:
 	move.b	#$40,$22(a0)
+loc_01718A:
 	bra.b	loc_017160
 sub_01718C:
 	moveq	#$0,d0
+loc_01718E:
 	move.w	$4E(a0),d1
+loc_017192:
 	sub.w	$8(a0),d1
+loc_017196:
 	bcc.b	loc_01719C
+loc_017198:
 	neg.w	d1
+loc_01719A:
 	addq.b	#$4,d0
 loc_01719C:
 	move.w	$4C(a0),d2
+loc_0171A0:
 	sub.w	$4(a0),d2
+loc_0171A4:
 	bcc.b	loc_0171AA
+loc_0171A6:
 	neg.w	d2
+loc_0171A8:
 	addq.b	#$2,d0
 loc_0171AA:
 	cmp.w	d1,d2
+loc_0171AC:
 	bcc.b	loc_0171B0
+loc_0171AE:
 	addq.b	#$1,d0
 loc_0171B0:
 	move.b	dat_0171B6(pc,d0.w),d0
+loc_0171B4:
 	rts
 dat_0171B6:
 	dc.b	$06,$07,$01,$00,$05,$04,$02,$03
 sub_0171BE:
 	move.b	$55(a0),d0
+loc_0171C2:
 	andi.b	#$C,d0
+loc_0171C6:
 	bne.b	loc_0171D2
+loc_0171C8:
 	tst.b	$2B(a0)
+loc_0171CC:
 	beq.b	loc_0171D4
+loc_0171CE:
 	subq.b	#$1,$2B(a0)
 loc_0171D2:
 	rts
 loc_0171D4:
 	move.b	#$F,$2B(a0)
+loc_0171DA:
 	bclr.b	#$7,$55(a0)
+loc_0171E0:
 	tst.l	$C(a0)
+loc_0171E4:
 	bne.b	loc_017210
+loc_0171E6:
 	tst.l	$10(a0)
+loc_0171EA:
 	bne.b	loc_017210
+loc_0171EC:
 	bset.b	#$7,$55(a0)
+loc_0171F2:
 	bsr.w	sub_017310
+loc_0171F6:
 	addq.b	#$1,$53(a0)
+loc_0171FA:
 	cmpi.b	#$4,$53(a0)
+loc_017200:
 	bcs.b	loc_0171D2
+loc_017202:
 	bclr.b	#$5,$55(a0)
+loc_017208:
 	bclr.b	#$4,$55(a0)
+loc_01720E:
 	rts
 loc_017210:
 	btst.b	#$4,$55(a0)
+loc_017216:
 	bne.b	loc_0171D2
+loc_017218:
 	lea	dat_017DC6(pc),a2
+loc_01721C:
 	bsr.w	sub_0173A4
+loc_017220:
 	moveq	#$1,d1
+loc_017222:
 	move.b	d0,$52(a0)
+loc_017226:
 	btst.b	#$5,$55(a0)
+loc_01722C:
 	beq.b	loc_017246
+loc_01722E:
 	cmpi.b	#$3,$52(a0)
+loc_017234:
 	bcs.b	loc_017246
+loc_017236:
 	bset.b	#$4,$55(a0)
+loc_01723C:
 	clr.b	$53(a0)
+loc_017240:
 	clr.b	d0
+loc_017242:
 	bra.w	loc_017300
 loc_017246:
 	andi.w	#$FF,d0
+loc_01724A:
 	add.w	d0,d0
+loc_01724C:
 	move.w	d0,d1
+loc_01724E:
 	add.w	d0,d0
+loc_017250:
 	add.w	d1,d0
+loc_017252:
 	lea	dat_017EC6(pc),a2
+loc_017256:
 	cmpi.b	#$41,$54(a0)
+loc_01725C:
 	beq.b	loc_017286
+loc_01725E:
 	lea	dat_017F1A(pc),a2
+loc_017262:
 	cmpi.b	#$42,$54(a0)
+loc_017268:
 	beq.b	loc_017286
+loc_01726A:
 	lea	dat_017F6E(pc),a2
+loc_01726E:
 	cmpi.b	#$43,$54(a0)
+loc_017274:
 	beq.b	loc_017286
+loc_017276:
 	lea	dat_017FC2(pc),a2
+loc_01727A:
 	cmpi.b	#$43,$54(a0)
+loc_017280:
 	beq.b	loc_017286
+loc_017282:
 	lea	dat_018016(pc),a2
 loc_017286:
 	jsr	sub_01ABA6(pc)
+loc_01728A:
 	move.b	(RNG_Seed).w,d1
+loc_01728E:
 	andi.b	#$1F,d1
+loc_017292:
 	moveq	#$0,d3
+loc_017294:
 	move.b	(a2,d0.w),d2
+loc_017298:
 	cmp.b	d2,d1
+loc_01729A:
 	bcs.b	loc_017300
+loc_01729C:
 	addq.w	#$4,d3
+loc_01729E:
 	add.b	$1(a2,d0.w),d2
+loc_0172A2:
 	cmp.b	d2,d1
+loc_0172A4:
 	bcs.b	loc_017300
+loc_0172A6:
 	addq.w	#$4,d3
+loc_0172A8:
 	add.b	$2(a2,d0.w),d2
+loc_0172AC:
 	cmp.b	d2,d1
+loc_0172AE:
 	bcs.b	loc_017300
+loc_0172B0:
 	addq.w	#$4,d3
+loc_0172B2:
 	add.b	$3(a2,d0.w),d2
+loc_0172B6:
 	cmp.b	d2,d1
+loc_0172B8:
 	bcs.b	loc_0172FA
+loc_0172BA:
 	moveq	#$0,d3
+loc_0172BC:
 	add.b	$4(a2,d0.w),d2
+loc_0172C0:
 	cmp.b	d2,d1
+loc_0172C2:
 	bcs.b	loc_0172E6
+loc_0172C4:
 	add.b	$5(a2,d0.w),d2
+loc_0172C8:
 	cmp.b	d2,d1
+loc_0172CA:
 	bcc.b	loc_017300
+loc_0172CC:
 	bsr.w	sub_0174EE
+loc_0172D0:
 	bne.b	loc_017300
+loc_0172D2:
 	bset.b	#$3,$55(a0)
+loc_0172D8:
 	bclr.b	#$1,$55(a0)
+loc_0172DE:
 	move.b	#$A,$50(a0)
+loc_0172E4:
 	bra.b	loc_017300
 loc_0172E6:
 	bsr.w	sub_0174EE
+loc_0172EA:
 	bne.b	loc_017300
+loc_0172EC:
 	bset.b	#$2,$55(a0)
+loc_0172F2:
 	move.b	#$FF,$51(a0)
+loc_0172F8:
 	bra.b	loc_017300
 loc_0172FA:
 	bset.b	#$5,$55(a0)
 loc_017300:
 	btst.b	#$2,$56(a0)
+loc_017306:
 	bne.b	loc_01730A
+loc_017308:
 	neg.b	d3
 loc_01730A:
 	move.b	d3,$57(a0)
+loc_01730E:
 	rts
 sub_017310:
 	moveq	#$0,d0
+loc_017312:
 	move.b	$35(a0),d0
+loc_017316:
 	andi.b	#$1C,d0
+loc_01731A:
 	lea	dat_017BD6(pc),a2
+loc_01731E:
 	movea.l	(a2,d0.w),a2
+loc_017322:
 	moveq	#$6,d4
 loc_017324:
 	movem.w	(a2),d0-d1
+loc_017328:
 	swap	d0
+loc_01732A:
 	swap	d1
+loc_01732C:
 	clr.w	d0
+loc_01732E:
 	clr.w	d1
+loc_017330:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_017334:
 	jsr	(sub_00B36C).l
+loc_01733A:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_01733E:
 	cmpi.b	#$4,d0
+loc_017342:
 	beq.b	loc_017364
+loc_017344:
 	cmpi.b	#$24,d0
+loc_017348:
 	beq.b	loc_017364
+loc_01734A:
 	cmpi.b	#$44,d0
+loc_01734E:
 	beq.b	loc_017364
+loc_017350:
 	move.w	$4(a2),d0
+loc_017354:
 	move.b	d0,$35(a0)
+loc_017358:
 	clr.b	$57(a0)
+loc_01735C:
 	bset.b	#$6,$56(a0)
+loc_017362:
 	rts
 loc_017364:
 	lea	$6(a2),a2
+loc_017368:
 	dbra	d4,loc_017324
+loc_01736C:
 	move.w	$4(a0),d0
+loc_017370:
 	subi.w	#$80,d0
+loc_017374:
 	bcc.b	loc_017378
+loc_017376:
 	neg.w	d0
 loc_017378:
 	cmpi.w	#$80,d0
+loc_01737C:
 	bcc.b	loc_017398
+loc_01737E:
 	move.w	$8(a0),d0
+loc_017382:
 	subi.w	#$C0,d0
+loc_017386:
 	bcc.b	loc_01738A
+loc_017388:
 	neg.w	d0
 loc_01738A:
 	cmpi.w	#$C0,d0
+loc_01738E:
 	bcc.b	loc_017398
+loc_017390:
 	movem.l	(a7)+,d0-d1
+loc_017394:
 	bra.w	loc_01775C
 loc_017398:
 	movem.l	(a7)+,d0-d1
+loc_01739C:
 	lea	dat_016050(pc),a1
+loc_0173A0:
 	jmp	sub_01AF1A(pc)
 sub_0173A4:
 	moveq	#$0,d0
+loc_0173A6:
 	move.w	$4(a0),d1
+loc_0173AA:
 	sub.w	$4(a1),d1
+loc_0173AE:
 	bcc.b	loc_0173B2
+loc_0173B0:
 	neg.w	d1
 loc_0173B2:
 	lsr.w	#$5,d1
+loc_0173B4:
 	cmpi.w	#$8,d1
+loc_0173B8:
 	bcc.b	loc_0173D8
+loc_0173BA:
 	lsl.w	#$3,d1
+loc_0173BC:
 	move.w	$8(a0),d2
+loc_0173C0:
 	sub.w	$8(a1),d2
+loc_0173C4:
 	bcc.b	loc_0173C8
+loc_0173C6:
 	neg.w	d2
 loc_0173C8:
 	lsr.w	#$5,d2
+loc_0173CA:
 	cmpi.w	#$C,d2
+loc_0173CE:
 	bcc.b	loc_0173D8
+loc_0173D0:
 	add.w	d2,d1
+loc_0173D2:
 	move.b	(a2,d1.w),d0
+loc_0173D6:
 	rts
 loc_0173D8:
 	move.b	#$FF,d0
+loc_0173DC:
 	rts
 sub_0173DE:
 	tst.b	$2A(a0)
+loc_0173E2:
 	beq.b	sub_0173EA
 	subq.b	#$1,$2A(a0)
 	rts
 sub_0173EA:
 	move.b	$35(a0),d0
+loc_0173EE:
 	andi.b	#$18,d0
+loc_0173F2:
 	tst.b	d0
+loc_0173F4:
 	beq.b	loc_01740A
+loc_0173F6:
 	subq.b	#$8,d0
+loc_0173F8:
 	beq.b	loc_01740E
+loc_0173FA:
 	subq.b	#$8,d0
+loc_0173FC:
 	beq.b	loc_017412
+loc_0173FE:
 	subq.b	#$8,d0
+loc_017400:
 	beq.b	loc_017404
 	rts
 loc_017404:
 	bsr.w	sub_01748E
+loc_017408:
 	bra.b	sub_017416
 loc_01740A:
 	bsr.b	sub_017416
+loc_01740C:
 	bra.b	sub_017480
 loc_01740E:
 	bsr.b	sub_017480
+loc_017410:
 	bra.b	sub_017422
 loc_017412:
 	bsr.b	sub_017422
+loc_017414:
 	bra.b	sub_01748E
 sub_017416:
 	move.w	#$FFF8,$40(a0)
+loc_01741C:
 	clr.w	$42(a0)
+loc_017420:
 	bra.b	loc_01742C
 sub_017422:
 	move.w	#$FFE8,$40(a0)
+loc_017428:
 	clr.w	$42(a0)
 loc_01742C:
 	lea	dat_017B96(pc),a4
+loc_017430:
 	move.b	$35(a0),d0
+loc_017434:
 	andi.w	#$1E,d0
+loc_017438:
 	add.w	d0,d0
+loc_01743A:
 	movem.w	(a4,d0.w),d0-d1
+loc_017440:
 	swap	d0
+loc_017442:
 	swap	d1
+loc_017444:
 	clr.w	d0
+loc_017446:
 	clr.w	d1
+loc_017448:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_01744C:
 	jsr	(sub_00B36C).l
+loc_017452:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_017456:
 	cmpi.b	#$20,d0
+loc_01745A:
 	bne.b	loc_01745E
+loc_01745C:
 	addq.w	#$1,d7
 loc_01745E:
 	cmpi.b	#$4,d0
+loc_017462:
 	beq.b	loc_017478
+loc_017464:
 	cmpi.b	#$24,d0
+loc_017468:
 	beq.b	loc_017478
+loc_01746A:
 	cmpi.b	#$44,d0
+loc_01746E:
 	beq.b	loc_017478
+loc_017470:
 	bclr.b	#$0,$56(a0)
+loc_017476:
 	rts
 loc_017478:
 	bset.b	#$0,$56(a0)
+loc_01747E:
 	rts
 sub_017480:
 	move.w	#$FFF0,$40(a0)
+loc_017486:
 	move.w	#$6,$42(a0)
+loc_01748C:
 	bra.b	loc_01749A
 sub_01748E:
 	move.w	#$FFF0,$40(a0)
+loc_017494:
 	move.w	#$FFFA,$42(a0)
 loc_01749A:
 	lea	dat_017B96(pc),a4
+loc_01749E:
 	move.b	$35(a0),d0
+loc_0174A2:
 	andi.w	#$1E,d0
+loc_0174A6:
 	add.w	d0,d0
+loc_0174A8:
 	movem.w	(a4,d0.w),d0-d1
+loc_0174AE:
 	swap	d0
+loc_0174B0:
 	swap	d1
+loc_0174B2:
 	clr.w	d0
+loc_0174B4:
 	clr.w	d1
+loc_0174B6:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_0174BA:
 	jsr	(sub_00B36C).l
+loc_0174C0:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_0174C4:
 	cmpi.b	#$20,d0
+loc_0174C8:
 	bne.b	loc_0174CC
+loc_0174CA:
 	addq.w	#$1,d7
 loc_0174CC:
 	cmpi.b	#$4,d0
+loc_0174D0:
 	beq.b	loc_0174E6
+loc_0174D2:
 	cmpi.b	#$24,d0
+loc_0174D6:
 	beq.b	loc_0174E6
+loc_0174D8:
 	cmpi.b	#$44,d0
+loc_0174DC:
 	beq.b	loc_0174E6
+loc_0174DE:
 	bclr.b	#$1,$56(a0)
+loc_0174E4:
 	rts
 loc_0174E6:
 	bset.b	#$1,$56(a0)
+loc_0174EC:
 	rts
 sub_0174EE:
 	move.w	$4(a0),d1
+loc_0174F2:
 	subi.w	#$80,d1
+loc_0174F6:
 	bcs.b	loc_017512
+loc_0174F8:
 	cmpi.w	#$F0,d1
+loc_0174FC:
 	bcc.b	loc_017512
+loc_0174FE:
 	move.w	$8(a0),d1
+loc_017502:
 	subi.w	#$80,d1
+loc_017506:
 	bcs.b	loc_017512
+loc_017508:
 	cmpi.w	#$E0,d1
+loc_01750C:
 	bcc.b	loc_017512
+loc_01750E:
 	moveq	#$0,d1
+loc_017510:
 	rts
 loc_017512:
 	moveq	#$1,d1
+loc_017514:
 	rts
 sub_017516:
 	btst.b	#$4,$55(a0)
+loc_01751C:
 	bne.b	loc_017530
+loc_01751E:
 	btst.b	#$1,$55(a0)
+loc_017524:
 	beq.b	loc_017530
+loc_017526:
 	tst.b	$2E(a0)
+loc_01752A:
 	beq.b	loc_017532
+loc_01752C:
 	subq.b	#$1,$2E(a0)
 loc_017530:
 	rts
 loc_017532:
 	move.b	#$5A,$2E(a0)
+loc_017538:
 	cmpi.b	#$3,$52(a0)
+loc_01753E:
 	bcs.b	loc_017530
+loc_017540:
 	bsr.w	sub_0174EE
+loc_017544:
 	bne.b	loc_017530
+loc_017546:
 	bra.b	loc_01759E
 sub_017548:
 	tst.b	$2F(a0)
+loc_01754C:
 	bne.b	loc_017564
+loc_01754E:
 	btst.b	#$1,$55(a0)
+loc_017554:
 	beq.b	loc_017582
+loc_017556:
 	move.b	#$3C,$2F(a0)
+loc_01755C:
 	bset.b	#$6,$56(a0)
+loc_017562:
 	rts
 loc_017564:
 	subq.b	#$1,$2F(a0)
+loc_017568:
 	bne.b	loc_017584
+loc_01756A:
 	move.b	$28(a0),$35(a0)
+loc_017570:
 	bclr.b	#$3,$55(a0)
+loc_017576:
 	bset.b	#$6,$56(a0)
+loc_01757C:
 	move.b	#$1E,$2B(a0)
 loc_017582:
 	rts
 loc_017584:
 	tst.b	$50(a0)
+loc_017588:
 	beq.b	loc_017590
+loc_01758A:
 	subq.b	#$1,$50(a0)
+loc_01758E:
 	rts
 loc_017590:
 	btst.b	#$4,$55(a0)
+loc_017596:
 	bne.b	loc_017582
+loc_017598:
 	move.b	#$A,$50(a0)
 loc_01759E:
 	move.b	$28(a0),d2
+loc_0175A2:
 	jmp	loc_01A180(pc)
 sub_0175A6:
 	btst.b	#$7,$55(a0)
+loc_0175AC:
 	bne.b	loc_0175B8
+loc_0175AE:
 	tst.b	$2D(a0)
+loc_0175B2:
 	beq.b	loc_0175BA
+loc_0175B4:
 	subq.b	#$1,$2D(a0)
 loc_0175B8:
 	rts
 loc_0175BA:
 	move.b	#$8,d0
+loc_0175BE:
 	btst.b	#$0,$55(a0)
+loc_0175C4:
 	beq.b	loc_0175C8
+loc_0175C6:
 	add.b	d0,d0
 loc_0175C8:
 	move.b	d0,$2D(a0)
+loc_0175CC:
 	move.w	d5,d0
+loc_0175CE:
 	add.b	$57(a0),d0
+loc_0175D2:
 	andi.b	#$1F,d0
+loc_0175D6:
 	sub.b	$35(a0),d0
+loc_0175DA:
 	beq.b	loc_0175B8
+loc_0175DC:
 	andi.b	#$1F,d0
+loc_0175E0:
 	cmpi.b	#$10,d0
+loc_0175E4:
 	bcc.b	loc_0175F8
+loc_0175E6:
 	bclr.b	#$2,$56(a0)
+loc_0175EC:
 	addq.b	#$1,$35(a0)
+loc_0175F0:
 	andi.b	#$1F,$35(a0)
+loc_0175F6:
 	rts
 loc_0175F8:
 	bset.b	#$2,$56(a0)
+loc_0175FE:
 	subq.b	#$1,$35(a0)
+loc_017602:
 	andi.b	#$1F,$35(a0)
+loc_017608:
 	rts
 sub_01760A:
 	tst.b	$2C(a0)
+loc_01760E:
 	beq.b	loc_017616
+loc_017610:
 	subq.b	#$1,$2C(a0)
+loc_017614:
 	rts
 loc_017616:
 	move.b	#$4,d0
+loc_01761A:
 	btst.b	#$0,$55(a0)
+loc_017620:
 	beq.b	loc_017624
+loc_017622:
 	add.b	d0,d0
 loc_017624:
 	move.b	d0,$2C(a0)
+loc_017628:
 	bclr.b	#$1,$55(a0)
+loc_01762E:
 	move.w	d5,d0
+loc_017630:
 	btst.b	#$4,$55(a0)
+loc_017636:
 	beq.b	loc_017642
+loc_017638:
 	move.b	#$2,$2C(a0)
+loc_01763E:
 	addi.b	#$10,d0
 loc_017642:
 	moveq	#-$2,d1
+loc_017644:
 	andi.b	#$1E,d0
+loc_017648:
 	sub.b	$28(a0),d0
+loc_01764C:
 	beq.b	loc_01766C
+loc_01764E:
 	andi.b	#$1E,d0
+loc_017652:
 	cmpi.b	#$10,d0
+loc_017656:
 	bcc.b	loc_01765A
+loc_017658:
 	addq.w	#$4,d1
 loc_01765A:
 	add.b	d1,$28(a0)
+loc_01765E:
 	andi.b	#$1E,$28(a0)
+loc_017664:
 	bset.b	#$6,$56(a0)
+loc_01766A:
 	rts
 loc_01766C:
 	btst.b	#$7,$55(a0)
+loc_017672:
 	bne.b	loc_017682
+loc_017674:
 	btst.b	#$4,$55(a0)
+loc_01767A:
 	beq.b	loc_017682
+loc_01767C:
 	move.b	$28(a0),$35(a0)
 loc_017682:
 	bset.b	#$1,$55(a0)
+loc_017688:
 	rts
 sub_01768A:
 	cmpi.b	#$FF,$51(a0)
+loc_017690:
 	beq.b	loc_017694
+loc_017692:
 	rts
 loc_017694:
 	move.w	d5,d0
+loc_017696:
 	andi.b	#$1E,d0
+loc_01769A:
 	move.b	d0,$28(a0)
+loc_01769E:
 	jsr	sub_01808A(pc)
+loc_0176A2:
 	bne.b	loc_0176FC
+loc_0176A4:
 	move.b	d0,$51(a0)
+loc_0176A8:
 	movea.l	$58(a0),a2
+loc_0176AC:
 	movea.l	$10(a2),a1
+loc_0176B0:
 	btst.b	#$0,$55(a0)
+loc_0176B6:
 	beq.b	loc_0176BC
+loc_0176B8:
 	movea.l	$18(a2),a1
 loc_0176BC:
 	move.b	$28(a0),d0
+loc_0176C0:
 	andi.w	#$1C,d0
+loc_0176C4:
 	move.l	(a1,d0.w),$30(a0)
+loc_0176CA:
 	move.b	#$1,$34(a0)
+loc_0176D0:
 	rts
 	dc.b	$24,$68,$00,$58,$22,$6A,$00,$14,$08,$28,$00,$00,$00,$55
 	dc.b	$67,$04,$22,$6A,$00,$1C,$10,$28,$00,$28,$02,$40,$00,$1C,$21,$71
 	dc.b	$00,$00,$00,$30,$11,$7C,$00,$01,$00,$34,$4E,$75
 loc_0176FC:
 	bclr.b	#$2,$55(a0)
+loc_017702:
 	move.b	$28(a0),$35(a0)
+loc_017708:
 	bset.b	#$6,$56(a0)
+loc_01770E:
 	move.b	#$1E,$2B(a0)
+loc_017714:
 	bra.w	sub_017720
 	dc.b	$08,$A8,$00,$02,$00,$55,$4E,$75
 sub_017720:
 	movea.l	$58(a0),a3
+loc_017724:
 	movea.l	$8(a3),a1
+loc_017728:
 	movea.l	$C(a3),a2
+loc_01772C:
 	btst.b	#$3,$55(a0)
+loc_017732:
 	bne.b	loc_01773C
+loc_017734:
 	dc.w	$226B,$0000		; movea.l $0(a3),a1
+loc_017738:
 	movea.l	$4(a3),a2
 loc_01773C:
 	btst.b	#$0,$55(a0)
+loc_017742:
 	beq.b	loc_017746
+loc_017744:
 	movea.l	a2,a1
 loc_017746:
 	moveq	#$0,d0
+loc_017748:
 	move.b	$28(a0),d0
+loc_01774C:
 	add.w	d0,d0
+loc_01774E:
 	move.l	(a1,d0.w),$30(a0)
+loc_017754:
 	move.b	#$1,$34(a0)
+loc_01775A:
 	rts
 loc_01775C:
 	move.b	#$20,$37(a0)
+loc_017762:
 	move.b	#$2,$3E(a0)
 sub_017768:
 	move.w	#$23C,(a0)
+loc_01776C:
 	movea.l	$58(a0),a2
+loc_017770:
 	cmpi.b	#$1,$3E(a0)
+loc_017776:
 	beq.b	loc_0177B6
+loc_017778:
 	cmpi.b	#$2,$3E(a0)
+loc_01777E:
 	beq.b	loc_0177D4
+loc_017780:
 	lea	dat_017802(pc),a1
+loc_017784:
 	btst.b	#$0,$55(a0)
+loc_01778A:
 	beq.b	loc_017794
+loc_01778C:
 	lea	dat_01780A(pc),a1
+loc_017790:
 	clr.l	$600(a0)
 loc_017794:
 	moveq	#$0,d0
+loc_017796:
 	move.b	$28(a0),d0
+loc_01779A:
 	lsr.w	#$2,d0
+loc_01779C:
 	move.b	(a1,d0.w),d0
+loc_0177A0:
 	movea.l	(a2,d0.w),a2
+loc_0177A4:
 	lea	(Objects_A).w,a1
+loc_0177A8:
 	bsr.w	sub_01718C
+loc_0177AC:
 	lsl.w	#$2,d0
+loc_0177AE:
 	movea.l	(a2,d0.w),a1
+loc_0177B2:
 	jmp	sub_01AF1A(pc)
 loc_0177B6:
 	move.b	#$40,$22(a0)
@@ -22291,15 +30419,25 @@ loc_0177D0:
 	jmp	sub_01AF1A(pc)
 loc_0177D4:
 	movea.l	$40(a2),a1
+loc_0177D8:
 	bsr.w	sub_01718C
+loc_0177DC:
 	andi.w	#$E,d0
+loc_0177E0:
 	add.w	d0,d0
+loc_0177E2:
 	move.b	d0,$35(a0)
+loc_0177E6:
 	move.b	d0,$635(a0)
+loc_0177EA:
 	clr.b	$602(a0)
+loc_0177EE:
 	move.w	#$40,$628(a0)
+loc_0177F4:
 	move.w	#$234,$600(a0)
+loc_0177FA:
 	movea.l	(a1,d0.w),a1
+loc_0177FE:
 	jmp	sub_01AF1A(pc)
 dat_017802:
 	dc.b	$30,$28,$28,$20,$20,$28,$28,$30
@@ -22308,129 +30446,225 @@ dat_01780A:
 	dc.b	$2C,$34
 sub_017812:
 	moveq	#$2,d0
+loc_017814:
 	jsr	sub_01AB5C(pc)
+loc_017818:
 	bne.b	loc_01782E
+loc_01781A:
 	move.b	#$41,$54(a0)
+loc_017820:
 	move.l	#$147EA,$58(a0)
+loc_017828:
 	lea	dat_017E86(pc),a1
+loc_01782C:
 	bra.b	loc_0178A0
 loc_01782E:
 	clr.l	(a0)
 	rts
 sub_017832:
 	moveq	#$2,d0
+loc_017834:
 	jsr	sub_01AB5C(pc)
+loc_017838:
 	bne.b	loc_01782E
+loc_01783A:
 	move.b	#$42,$54(a0)
+loc_017840:
 	move.l	#$147EA,$58(a0)
+loc_017848:
 	lea	dat_017E96(pc),a1
+loc_01784C:
 	bra.b	loc_0178A0
 sub_01784E:
 	moveq	#$2,d0
+loc_017850:
 	jsr	sub_01AB5C(pc)
+loc_017854:
 	bne.b	loc_01782E
+loc_017856:
 	move.b	#$43,$54(a0)
+loc_01785C:
 	move.l	#$147EA,$58(a0)
+loc_017864:
 	lea	dat_017EA6(pc),a1
+loc_017868:
 	bra.b	loc_0178A0
 sub_01786A:
 	moveq	#$2,d0
+loc_01786C:
 	jsr	sub_01AB5C(pc)
+loc_017870:
 	bne.b	loc_01782E
+loc_017872:
 	move.b	#$44,$54(a0)
+loc_017878:
 	move.l	#$147EA,$58(a0)
+loc_017880:
 	lea	dat_017E86(pc),a1
+loc_017884:
 	bra.b	loc_0178A0
 sub_017886:
 	moveq	#$2,d0
+loc_017888:
 	jsr	sub_01AB5C(pc)
+loc_01788C:
 	bne.b	loc_01782E
+loc_01788E:
 	move.b	#$45,$54(a0)
+loc_017894:
 	move.l	#$147EA,$58(a0)
+loc_01789C:
 	lea	dat_017EB6(pc),a1
 loc_0178A0:
 	jsr	sub_01ADB0(pc)
+loc_0178A4:
 	move.w	#$208,(a0)
+loc_0178A8:
 	ori.b	#$C,$48(a0)
+loc_0178AE:
 	clr.w	$2(a0)
+loc_0178B2:
 	ori.b	#$49,$2(a0)
+loc_0178B8:
 	clr.b	$55(a0)
+loc_0178BC:
 	clr.l	$28(a0)
+loc_0178C0:
 	clr.l	$2C(a0)
+loc_0178C4:
 	clr.l	$50(a0)
+loc_0178C8:
 	clr.b	$56(a0)
+loc_0178CC:
 	clr.b	$57(a0)
+loc_0178D0:
 	move.w	#$1,$C(a0)
+loc_0178D6:
 	bsr.w	sub_0171BE
+loc_0178DA:
 	andi.b	#$1,$55(a0)
+loc_0178E0:
 	jsr	sub_01ABCE(pc)
+loc_0178E4:
 	andi.b	#$1E,d0
+loc_0178E8:
 	move.b	d0,$35(a0)
+loc_0178EC:
 	move.b	d0,$28(a0)
+loc_0178F0:
 	jsr	sub_01AE8E(pc)
+loc_0178F4:
 	bra.w	sub_017720
 sub_0178F8:
 	moveq	#$2,d0
+loc_0178FA:
 	jsr	sub_01AB5C(pc)
+loc_0178FE:
 	bne.w	loc_01782E
+loc_017902:
 	move.b	#$41,$54(a0)
+loc_017908:
 	move.l	#$147EA,$58(a0)
+loc_017910:
 	lea	dat_017E96(pc),a1
+loc_017914:
 	jsr	sub_01ADB0(pc)
+loc_017918:
 	move.w	#$210,(a0)
+loc_01791C:
 	ori.b	#$C,$48(a0)
+loc_017922:
 	clr.b	$55(a0)
+loc_017926:
 	clr.l	$28(a0)
+loc_01792A:
 	clr.l	$2C(a0)
+loc_01792E:
 	clr.l	$50(a0)
+loc_017932:
 	clr.b	$56(a0)
+loc_017936:
 	clr.b	$57(a0)
+loc_01793A:
 	move.b	#$60,$22(a0)
+loc_017940:
 	bset.b	#$3,$2(a0)
+loc_017946:
 	bset.b	#$6,$2(a0)
+loc_01794C:
 	andi.b	#$1,$55(a0)
+loc_017952:
 	lea	(Objects_A).w,a1
+loc_017956:
 	jsr	sub_01ABCE(pc)
+loc_01795A:
 	andi.b	#$1E,d0
+loc_01795E:
 	move.b	d0,$35(a0)
+loc_017962:
 	move.b	d0,$28(a0)
+loc_017966:
 	bset.b	#$1,$55(a0)
+loc_01796C:
 	move.b	#$4,$52(a0)
+loc_017972:
 	lea	dat_0155C0(pc),a1
+loc_017976:
 	jmp	sub_01AF1A(pc)
 sub_01797A:
 	subq.b	#$1,$2B(a0)
+loc_01797E:
 	jsr	(sub_00E234).l
+loc_017984:
 	jsr	(sub_00B298).l
+loc_01798A:
 	beq.b	loc_01799A
 	move.b	#$1,$34(a0)
 	move.w	#$20C,(a0)
 	jmp	sub_01AF0E(pc)
 loc_01799A:
 	lea	(Objects_A).w,a1
+loc_01799E:
 	move.w	$8(a1),d0
+loc_0179A2:
 	sub.w	$8(a0),d0
+loc_0179A6:
 	cmpi.w	#$40,d0
+loc_0179AA:
 	ble.b	loc_0179EA
+loc_0179AC:
 	jsr	sub_01ABCE(pc)
+loc_0179B0:
 	andi.b	#$1E,d0
+loc_0179B4:
 	move.b	d0,$35(a0)
+loc_0179B8:
 	move.b	d0,$28(a0)
+loc_0179BC:
 	bsr.w	sub_017516
+loc_0179C0:
 	lea	dat_017A04(pc),a1
+loc_0179C4:
 	move.b	$28(a0),d0
+loc_0179C8:
 	cmpi.b	#$A,d0
+loc_0179CC:
 	bge.b	loc_0179D0
 	moveq	#$A,d0
 loc_0179D0:
 	cmpi.b	#$16,d0
+loc_0179D4:
 	ble.b	loc_0179D8
 	moveq	#$16,d0
 loc_0179D8:
 	subi.b	#$A,d0
+loc_0179DC:
 	andi.w	#$1E,d0
+loc_0179E0:
 	add.w	d0,d0
+loc_0179E2:
 	movea.l	(a1,d0.w),a1
+loc_0179E6:
 	jmp	sub_01AF1A(pc)
 loc_0179EA:
 	clr.b	$28(a0)
@@ -22444,85 +30678,180 @@ dat_017A04:
 	dc.l	dat_0155D6,dat_0155EC,dat_015602
 sub_017A20:
 	lea	(ram_C0E0).w,a2
+loc_017A24:
 	moveq	#$0,d0
+loc_017A26:
 	move.b	$18(a0),d0
+loc_017A2A:
 	adda.w	d0,a2
+loc_017A2C:
 	move.b	$19(a0),d0
+loc_017A30:
 	beq.b	loc_017A48
+loc_017A32:
 	cmpi.b	#$2,d0
+loc_017A36:
 	beq.b	loc_017A42
+loc_017A38:
 	blt.b	loc_017A44
+loc_017A3A:
 	cmpi.b	#$3,d0
+loc_017A3E:
 	bne.b	loc_017A44
+loc_017A40:
 	clr.b	(a2)+
 loc_017A42:
 	clr.b	(a2)+
 loc_017A44:
 	clr.b	(a2)+
+loc_017A46:
 	clr.b	(a2)+
 loc_017A48:
 	cmpi.b	#$49,$36(a0)
+loc_017A4E:
 	beq.b	loc_017A5C
+loc_017A50:
 	moveq	#$17,d7
+loc_017A52:
 	movea.l	a0,a2
 loc_017A54:
 	clr.l	(a2)+
+loc_017A56:
 	dbra	d7,loc_017A54
+loc_017A5A:
 	rts
 loc_017A5C:
 	move.w	$20(a0),$18(a0)
 	jmp	(loc_00FBEE).l
-	dc.b	$08,$A8,$00,$06,$00,$02,$11,$7C
-	dc.b	$00,$20,$00,$22,$5C,$49,$4E,$FA,$34,$A2,$08,$A8,$00,$06,$00,$02
-	dc.b	$11,$7C,$00,$20,$00,$22,$43,$FA,$E5,$80,$4E,$FA,$34,$8E,$70,$00
-	dc.b	$72,$00,$48,$E7,$3C,$F0,$4E,$B9,$00,$00,$B3,$6C,$4C,$DF,$0F,$3C
-	dc.b	$42,$A8,$06,$00,$0C,$00,$00,$20,$66,$1C,$08,$A8,$00,$06,$00,$02
-	dc.b	$11,$7C,$00,$20,$00,$22,$70,$C0,$4E,$B9,$00,$00,$A0,$68,$43,$FA
-	dc.b	$E5,$96,$4E,$FA,$34,$56,$43,$FA,$E3,$E2,$10,$28,$00,$35,$22,$71
-	dc.b	$00,$00,$4E,$FA,$34,$46
+loc_017A68:
+	bclr.b	#$6,$2(a0)
+loc_017A6E:
+	move.b	#$20,$22(a0)
+loc_017A74:
+	addq.w	#$6,a1
+loc_017A76:
+	jmp	sub_01AF1A(pc)
+loc_017A7A:
+	bclr.b	#$6,$2(a0)
+loc_017A80:
+	move.b	#$20,$22(a0)
+loc_017A86:
+	lea	dat_016008(pc),a1
+loc_017A8A:
+	jmp	sub_01AF1A(pc)
+loc_017A8E:
+	moveq	#$0,d0
+loc_017A90:
+	moveq	#$0,d1
+loc_017A92:
+	movem.l	d2-d5/a0-a3,-(a7)
+loc_017A96:
+	jsr	(sub_00B36C).l
+loc_017A9C:
+	movem.l	(a7)+,d2-d5/a0-a3
+loc_017AA0:
+	clr.l	$600(a0)
+loc_017AA4:
+	cmpi.b	#$20,d0
+loc_017AA8:
+	bne.b	loc_017AC6
+loc_017AAA:
+	bclr.b	#$6,$2(a0)
+loc_017AB0:
+	move.b	#$20,$22(a0)
+loc_017AB6:
+	moveq	#-$40,d0
+loc_017AB8:
+	jsr	(sub_00A068).l
+loc_017ABE:
+	lea	dat_016056(pc),a1
+loc_017AC2:
+	jmp	sub_01AF1A(pc)
+loc_017AC6:
+	lea	dat_015EAA(pc),a1
+loc_017ACA:
+	move.b	$35(a0),d0
+loc_017ACE:
+	movea.l	(a1,d0.w),a1
+loc_017AD2:
+	jmp	sub_01AF1A(pc)
 sub_017AD6:
 	movea.l	a0,a1
+loc_017AD8:
 	suba.w	#$600,a1
+loc_017ADC:
 	tst.l	(a1)
+loc_017ADE:
 	bne.b	loc_017AE4
+loc_017AE0:
 	clr.l	(a0)
+loc_017AE2:
 	rts
 loc_017AE4:
 	bset.b	#$0,$2(a0)
+loc_017AEA:
 	bne.b	loc_017B5C
+loc_017AEC:
 	clr.l	$4(a0)
+loc_017AF0:
 	clr.l	$8(a0)
+loc_017AF4:
 	move.b	#$1,$34(a0)
+loc_017AFA:
 	cmpi.b	#$1,$28(a0)
+loc_017B00:
 	beq.b	loc_017B2C
+loc_017B02:
 	move.w	$4(a1),$4(a0)
+loc_017B08:
 	move.w	$8(a1),$8(a0)
+loc_017B0E:
 	move.b	#$20,$22(a0)
+loc_017B14:
 	move.b	$35(a1),d0
+loc_017B18:
 	andi.w	#$C,d0
+loc_017B1C:
 	movea.l	dat_017B86(pc,d0.w),a1
+loc_017B20:
 	jsr	sub_01AF1A(pc)
+loc_017B24:
 	move.w	#$1,$26(a0)
+loc_017B2A:
 	rts
 loc_017B2C:
 	bset.b	#$1,$2(a0)
+loc_017B32:
 	bset.b	#$3,$2(a0)
+loc_017B38:
 	move.b	#$20,$22(a0)
+loc_017B3E:
 	move.l	#$14F6E,$30(a0)
+loc_017B46:
 	move.w	$4(a1),$4(a0)
+loc_017B4C:
 	move.w	$8(a1),$8(a0)
+loc_017B52:
 	addi.w	#$A,$8(a0)
+loc_017B58:
 	jmp	sub_01AF0E(pc)
 loc_017B5C:
 	cmpi.b	#$1,$28(a0)
+loc_017B62:
 	beq.b	loc_017B70
+loc_017B64:
 	jsr	sub_01AF0E(pc)
+loc_017B68:
 	move.w	#$1,$26(a0)
+loc_017B6E:
 	rts
 loc_017B70:
 	move.w	$4(a1),$4(a0)
+loc_017B76:
 	move.w	$8(a1),$8(a0)
+loc_017B7C:
 	addi.w	#$A,$8(a0)
+loc_017B82:
 	jmp	sub_01AF0E(pc)
 dat_017B86:
 	dc.b	$00,$01,$60,$B0,$00,$01,$60,$CE,$00,$01
@@ -22649,141 +30978,255 @@ dat_018016:
 	dc.b	$FF,$F3,$00,$13,$FF,$FA,$00,$16,$FF,$FD
 sub_01808A:
 	jsr	sub_01AD12(pc)
+loc_01808E:
 	bne.w	loc_0181A6
+loc_018092:
 	lea	(Objects_A).w,a1
+loc_018096:
 	movea.l	a2,a5
+loc_018098:
 	lea	dat_017E26(pc),a2
+loc_01809C:
 	jsr	sub_0173A4(pc)
+loc_0180A0:
 	move.w	d0,d6
+loc_0180A2:
 	movea.l	a5,a2
+loc_0180A4:
 	cmpi.b	#$FF,d0
+loc_0180A8:
 	beq.w	loc_0181A6
+loc_0180AC:
 	addq.b	#$2,d0
+loc_0180AE:
 	cmpi.b	#$7,d0
+loc_0180B2:
 	ble.b	loc_0180B6
 	moveq	#$7,d0
 loc_0180B6:
 	andi.w	#$7,d0
+loc_0180BA:
 	add.w	d0,d0
+loc_0180BC:
 	lea	dat_0182E2(pc),a4
+loc_0180C0:
 	move.w	(a4,d0.w),d2
+loc_0180C4:
 	move.b	$28(a0),d0
+loc_0180C8:
 	andi.w	#$1E,d0
+loc_0180CC:
 	move.w	d0,d1
+loc_0180CE:
 	add.w	d0,d0
+loc_0180D0:
 	lea	dat_018354(pc),a5
+loc_0180D4:
 	movem.w	(a5,d0.w),d3-d4
+loc_0180DA:
 	lsl.l	#$8,d3
+loc_0180DC:
 	lsl.l	#$8,d4
+loc_0180DE:
 	move.l	d3,$C(a3)
+loc_0180E2:
 	move.l	d4,$10(a3)
+loc_0180E6:
 	move.l	#$87C16,$14(a3)
+loc_0180EE:
 	move.l	#$26CAA,$30(a3)
+loc_0180F6:
 	move.w	#$3D4,(a3)
+loc_0180FA:
 	move.b	#$1,$34(a3)
+loc_018100:
 	move.b	#$60,$22(a3)
+loc_018106:
 	ori.b	#$8,$2(a3)
+loc_01810C:
 	move.w	a3,$3A(a2)
+loc_018110:
 	add.w	d1,d0
+loc_018112:
 	lea	dat_0182F4(pc),a4
+loc_018116:
 	movem.w	(a4,d0.w),d0-d1/d3
+loc_01811C:
 	lsl.l	#$8,d0
+loc_01811E:
 	move.l	d0,$C(a2)
+loc_018122:
 	move.w	d1,$28(a2)
+loc_018126:
 	move.w	d2,$36(a2)
+loc_01812A:
 	move.w	d3,$2A(a2)
+loc_01812E:
 	lea	dat_018292(pc),a4
+loc_018132:
 	btst.b	#$0,$55(a0)
+loc_018138:
 	beq.b	loc_01813E
+loc_01813A:
 	lea	dat_0182B2(pc),a4
 loc_01813E:
 	moveq	#$1C,d0
+loc_018140:
 	and.b	$28(a0),d0
+loc_018144:
 	movem.w	(a4,d0.w),d0-d1
+loc_01814A:
 	add.w	$4(a0),d0
+loc_01814E:
 	move.w	d0,$4(a2)
+loc_018152:
 	add.w	$8(a0),d1
+loc_018156:
 	move.w	d1,$8(a2)
+loc_01815A:
 	move.w	$4(a2),$4(a3)
+loc_018160:
 	move.w	$8(a2),$8(a3)
+loc_018166:
 	moveq	#$0,d7
+loc_018168:
 	move.l	d7,$10(a2)
+loc_01816C:
 	move.l	d7,$2C(a2)
+loc_018170:
 	move.w	d7,$18(a2)
+loc_018174:
 	move.w	d7,$1C(a2)
+loc_018178:
 	move.b	#$1,$34(a2)
+loc_01817E:
 	move.l	#$18394,$30(a2)
+loc_018186:
 	move.b	#$60,$22(a2)
+loc_01818C:
 	move.b	#$A,$3C(a2)
+loc_018192:
 	move.b	#$4,$3D(a2)
+loc_018198:
 	bset.b	#$5,$2(a2)
+loc_01819E:
 	move.w	#$214,(a2)
+loc_0181A2:
 	moveq	#$0,d7
+loc_0181A4:
 	rts
 loc_0181A6:
 	moveq	#-$1,d7
+loc_0181A8:
 	rts
 sub_0181AA:
 	movem.w	$36(a0),d0
+loc_0181B0:
 	subq.l	#$8,d0
+loc_0181B2:
 	move.w	d0,$36(a0)
+loc_0181B6:
 	lsl.l	#$8,d0
+loc_0181B8:
 	add.l	d0,$2C(a0)
+loc_0181BC:
 	ble.b	sub_018238
+loc_0181BE:
 	neg.l	d0
+loc_0181C0:
 	movem.w	$2A(a0),d1
+loc_0181C6:
 	lsl.l	#$8,d1
+loc_0181C8:
 	add.l	d1,d0
+loc_0181CA:
 	cmpi.w	#$1E,$2C(a0)
+loc_0181D0:
 	ble.b	loc_01820A
+loc_0181D2:
 	cmpi.w	#$3C,$2C(a0)
+loc_0181D8:
 	ble.b	loc_0181F2
+loc_0181DA:
 	andi.b	#$4,$35(a0)
+loc_0181E0:
 	bset.b	#$2,$35(a0)
+loc_0181E6:
 	bne.b	loc_018226
+loc_0181E8:
 	move.l	#$183D0,$30(a0)
+loc_0181F0:
 	bra.b	loc_018220
 loc_0181F2:
 	andi.b	#$2,$35(a0)
+loc_0181F8:
 	bset.b	#$1,$35(a0)
+loc_0181FE:
 	bne.b	loc_018226
+loc_018200:
 	move.l	#$183B2,$30(a0)
+loc_018208:
 	bra.b	loc_018220
 loc_01820A:
 	andi.b	#$1,$35(a0)
+loc_018210:
 	bset.b	#$0,$35(a0)
+loc_018216:
 	bne.b	loc_018226
+loc_018218:
 	move.l	#$183A0,$30(a0)
 loc_018220:
 	move.b	#$1,$34(a0)
 loc_018226:
 	movem.w	$28(a0),d1
+loc_01822C:
 	lsl.l	#$8,d1
+loc_01822E:
 	add.l	d1,d0
+loc_018230:
 	move.l	d0,$10(a0)
+loc_018234:
 	jmp	sub_01AF0E(pc)
 sub_018238:
 	bset.b	#$0,$2(a0)
+loc_01823E:
 	bne.b	loc_018274
+loc_018240:
 	moveq	#-$1,d0
+loc_018242:
 	move.w	$3A(a0),d0
+loc_018246:
 	beq.b	loc_018258
+loc_018248:
 	movea.l	d0,a1
+loc_01824A:
 	move.b	#$1,$34(a1)
+loc_018250:
 	move.l	#$1843C,$30(a1)
 loc_018258:
 	move.l	#$18406,$30(a0)
+loc_018260:
 	move.b	#$1,$34(a0)
+loc_018266:
 	move.b	#$40,$22(a0)
+loc_01826C:
 	moveq	#-$4D,d0
+loc_01826E:
 	jsr	(sub_00A068).l
 loc_018274:
 	move.w	#$6F8,d4
+loc_018278:
 	jsr	(sub_00E238).l
+loc_01827E:
 	jsr	(sub_00B036).l
+loc_018284:
 	jmp	sub_01AF0E(pc)
-	dc.b	$30,$BC,$02,$3C,$5C,$49,$4E,$FA
-	dc.b	$2C,$8A
+loc_018288:
+	move.w	#$23C,(a0)
+loc_01828C:
+	addq.w	#$6,a1
+loc_01828E:
+	jmp	sub_01AF1A(pc)
 dat_018292:
 	dc.b	$00,$09,$00,$06,$FF,$F0,$FF,$F4,$FF,$F0,$FF,$EF,$FF,$FC
 	dc.b	$FF,$F0,$FF,$F8,$FF,$F0,$00,$04,$FF,$F0,$00,$0A,$FF,$F6,$00,$0C
@@ -22824,9 +31267,13 @@ dat_018406:
 	dc.b	$00,$06,$00,$03,$A5,$F0,$00,$00,$00,$00,$00,$00,$FF,$FE
 sub_01843E:
 	jsr	(sub_00E234).l
+loc_018444:
 	jsr	(sub_00B036).l
+loc_01844A:
 	jsr	(sub_00B298).l
+loc_018450:
 	btst.b	#$0,$3(a0)
+loc_018456:
 	beq.b	loc_018460
 	move.b	#$1,$34(a0)
 	bra.b	loc_018464
@@ -22866,34 +31313,59 @@ dat_0184AE:
 	dc.b	$72,$00,$48,$E7,$3C,$F0,$4E,$B9,$00,$00,$B3,$6C,$4C,$DF,$0F,$3C
 	dc.b	$0C,$00,$00,$20,$67,$06,$5C,$49,$4E,$FA,$2A,$20,$08,$A8,$00,$06
 	dc.b	$00,$02,$11,$7C,$00,$20,$00,$22,$43,$FA,$DB,$4C,$0C,$28,$00,$02
-	dc.b	$00,$3E,$67,$04,$43,$FA,$DA,$E0,$4E,$FA,$2A,$00,$47,$FA,$05,$0A
-	dc.b	$60,$16,$47,$FA,$05,$A4,$60,$10,$47,$FA,$07,$36,$60,$0A
+	dc.b	$00,$3E,$67,$04,$43,$FA,$DA,$E0,$4E,$FA,$2A,$00
+loc_01851C:
+	lea	dat_018A28(pc),a3
+loc_018520:
+	bra.b	loc_018538
+	dc.b	$47,$FA,$05,$A4,$60,$10
+loc_018528:
+	lea	dat_018C60(pc),a3
+loc_01852C:
+	bra.b	loc_018538
 sub_01852E:
 	lea	dat_018BB4(pc),a3
+loc_018532:
 	bra.b	loc_018538
 sub_018534:
 	lea	dat_018D7C(pc),a3
 loc_018538:
 	moveq	#$0,d0
+loc_01853A:
 	movea.l	d0,a4
+loc_01853C:
 	moveq	#$3,d0
+loc_01853E:
 	jsr	sub_01AB5C(pc)
+loc_018542:
 	beq.b	loc_01854C
 	bset.b	#$2,$2(a0)
 	rts
 loc_01854C:
 	bclr.b	#$2,$2(a0)
+loc_018552:
 	ori.b	#$68,$2(a0)
+loc_018558:
 	lea	dat_018946(pc),a1
+loc_01855C:
 	jsr	sub_01ADB0(pc)
+loc_018560:
 	clr.b	$3E(a0)
+loc_018564:
 	move.l	a4,$50(a0)
+loc_018568:
 	move.b	#$FF,$55(a0)
+loc_01856E:
 	move.b	#$10,$3B(a0)
+loc_018574:
 	move.b	#$60,$22(a0)
+loc_01857A:
 	move.w	#$FFE2,$2E(a0)
+loc_018580:
 	move.w	#$250,(a0)
+loc_018584:
 	movea.l	a3,a1
+loc_018586:
 	jmp	sub_01AF1A(pc)
 sub_01858A:
 	lea	dat_01956E(pc),a3
@@ -22939,9 +31411,11 @@ sub_0185FC:
 	bra.b	loc_018618
 sub_018602:
 	lea	dat_019A24(pc),a3
+loc_018606:
 	bra.b	loc_018618
 sub_018608:
 	lea	dat_019BBE(pc),a3
+loc_01860C:
 	bra.b	loc_018618
 	dc.b	$47,$FA
 	dc.b	$13,$5E,$60,$04
@@ -22949,80 +31423,239 @@ sub_018614:
 	lea	dat_019B58(pc),a3
 loc_018618:
 	moveq	#$3,d0
+loc_01861A:
 	jsr	sub_01AB5C(pc)
+loc_01861E:
 	beq.b	loc_018628
 	bset.b	#$2,$2(a0)
 	rts
 loc_018628:
 	bclr.b	#$2,$2(a0)
+loc_01862E:
 	ori.b	#$48,$2(a0)
+loc_018634:
 	lea	dat_018946(pc),a1
+loc_018638:
 	jsr	sub_01ADB0(pc)
+loc_01863C:
 	clr.w	$2E(a0)
+loc_018640:
 	clr.b	$3E(a0)
+loc_018644:
 	move.b	#$60,$22(a0)
+loc_01864A:
 	move.b	#$10,$3B(a0)
+loc_018650:
 	move.b	#$FF,$55(a0)
+loc_018656:
 	move.w	#$250,(a0)
+loc_01865A:
 	move.l	a4,$50(a0)
+loc_01865E:
 	movea.l	a3,a1
+loc_018660:
 	jmp	sub_01AF1A(pc)
 sub_018664:
 	lea	dat_019DF6(pc),a3
+loc_018668:
 	bra.b	loc_01867A
 sub_01866A:
 	lea	dat_019D80(pc),a3
 	bra.b	loc_01867A
 sub_018670:
 	lea	dat_019E92(pc),a3
+loc_018674:
 	bra.b	loc_01867A
 sub_018676:
 	lea	dat_019EF8(pc),a3
 loc_01867A:
 	moveq	#$3,d0
+loc_01867C:
 	jsr	sub_01AB5C(pc)
+loc_018680:
 	beq.b	loc_01868A
 	bset.b	#$2,$2(a0)
 	rts
 loc_01868A:
 	bclr.b	#$2,$2(a0)
+loc_018690:
 	ori.b	#$48,$2(a0)
+loc_018696:
 	lea	dat_018946(pc),a1
+loc_01869A:
 	jsr	sub_01ADB0(pc)
+loc_01869E:
 	clr.b	$3E(a0)
+loc_0186A2:
 	move.b	#$60,$22(a0)
+loc_0186A8:
 	move.b	#$FF,$55(a0)
+loc_0186AE:
 	move.b	#$C,$3B(a0)
+loc_0186B4:
 	move.w	#$40,$2E(a0)
+loc_0186BA:
 	move.w	#$250,(a0)
+loc_0186BE:
 	move.l	a4,$50(a0)
+loc_0186C2:
 	movea.l	a3,a1
+loc_0186C4:
 	jmp	sub_01AF1A(pc)
-	dc.b	$21,$49,$00,$2A,$11,$7C,$00,$10
-	dc.b	$00,$54,$08,$A8,$00,$05,$00,$02,$10,$28,$00,$55,$67,$06,$11,$40
-	dc.b	$00,$28,$60,$14,$4E,$BA,$24,$C0,$10,$38,$C3,$12,$02,$40,$00,$07
-	dc.b	$10,$3B,$00,$2E,$11,$40,$00,$28,$43,$F8,$E0,$00,$4E,$BA,$24,$A8
-	dc.b	$10,$38,$C3,$12,$02,$40,$00,$07,$10,$3B,$00,$16,$E5,$48,$24,$7B
-	dc.b	$00,$00,$4E,$D2,$00,$01,$87,$28,$00,$01,$87,$38,$00,$01,$87,$54
-	dc.b	$01,$02,$02,$02,$02,$03,$03,$03,$70,$00,$4A,$69,$00,$08,$64,$04
-	dc.b	$30,$29,$00,$08,$60,$00,$00,$20,$43,$F8,$E0,$00,$70,$FF,$34,$29
-	dc.b	$00,$04,$94,$68,$00,$04,$64,$00,$00,$04,$44,$42,$B0,$42,$65,$02
-	dc.b	$30,$02,$60,$02,$4E,$71,$4E,$BA,$24,$76,$02,$40,$00,$1F,$10,$3B
-	dc.b	$00,$28,$67,$44,$11,$40,$00,$29,$72,$00,$12,$28,$00,$54,$14,$01
-	dc.b	$E5,$49,$43,$FA,$06,$F4,$43,$F1,$10,$C8,$B0,$02,$64,$04,$43,$E9
-	dc.b	$00,$14,$22,$51,$4E,$FA,$27,$94,$00,$00,$00,$00,$00,$00,$00,$00
+loc_0186C8:
+	move.l	a1,$2A(a0)
+loc_0186CC:
+	move.b	#$10,$54(a0)
+loc_0186D2:
+	bclr.b	#$5,$2(a0)
+loc_0186D8:
+	move.b	$55(a0),d0
+loc_0186DC:
+	beq.b	loc_0186E4
+loc_0186DE:
+	move.b	d0,$28(a0)
+loc_0186E2:
+	bra.b	loc_0186F8
+loc_0186E4:
+	jsr	sub_01ABA6(pc)
+	move.b	(RNG_Seed).w,d0
+	andi.w	#$7,d0
+	move.b	dat_018720(pc,d0.w),d0
+	move.b	d0,$28(a0)
+loc_0186F8:
+	lea	(Objects_A).w,a1
+loc_0186FC:
+	jsr	sub_01ABA6(pc)
+loc_018700:
+	move.b	(RNG_Seed).w,d0
+loc_018704:
+	andi.w	#$7,d0
+loc_018708:
+	move.b	dat_018720(pc,d0.w),d0
+loc_01870C:
+	lsl.w	#$2,d0
+loc_01870E:
+	dc.w	$247B,$0000		; movea.l $18710(pc,d0.w),a2
+loc_018712:
+	jmp	(a2)
+dat_018714:
+	dc.l	sub_018728,sub_018738,sub_018754
+dat_018720:
+	dc.b	$01,$02,$02,$02,$02,$03,$03,$03
+sub_018728:
+	moveq	#$0,d0
+loc_01872A:
+	tst.w	$8(a1)
+loc_01872E:
+	bcc.b	loc_018734
+	move.w	$8(a1),d0
+loc_018734:
+	bra.w	loc_018756
+sub_018738:
+	lea	(Objects_A).w,a1
+loc_01873C:
+	moveq	#-$1,d0
+loc_01873E:
+	move.w	$4(a1),d2
+loc_018742:
+	sub.w	$4(a0),d2
+loc_018746:
+	bcc.w	loc_01874C
+loc_01874A:
+	neg.w	d2
+loc_01874C:
+	cmp.w	d2,d0
+loc_01874E:
+	bcs.b	loc_018752
+loc_018750:
+	move.w	d2,d0
+loc_018752:
+	bra.b	loc_018756
+sub_018754:
+	nop
+loc_018756:
+	jsr	sub_01ABCE(pc)
+loc_01875A:
+	andi.w	#$1F,d0
+loc_01875E:
+	move.b	dat_018788(pc,d0.w),d0
+loc_018762:
+	beq.b	loc_0187A8
+loc_018764:
+	move.b	d0,$29(a0)
+loc_018768:
+	moveq	#$0,d1
+loc_01876A:
+	move.b	$54(a0),d1
+loc_01876E:
+	move.b	d1,d2
+loc_018770:
+	lsl.w	#$2,d1
+loc_018772:
+	lea	dat_018E68(pc),a1
+loc_018776:
+	lea	-$38(a1,d1.w),a1
+loc_01877A:
+	cmp.b	d2,d0
+loc_01877C:
+	bcc.b	loc_018782
+loc_01877E:
+	lea	$14(a1),a1
+loc_018782:
+	movea.l	(a1),a1
+loc_018784:
+	jmp	sub_01AF1A(pc)
+dat_018788:
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$0E,$0E,$0E,$0F,$10,$11,$12,$12,$12,$00,$00,$00
-	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$43,$FA,$07,$9C,$70,$00,$10,$28
-	dc.b	$00,$54,$04,$00,$00,$0E,$D0,$40,$D2,$F1,$00,$00,$43,$E9,$00,$20
-	dc.b	$60,$00,$00,$68,$11,$7C,$00,$0E,$00,$54,$60,$00,$00,$26,$11,$7C
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
+loc_0187A8:
+	lea	dat_018F46(pc),a1
+loc_0187AC:
+	moveq	#$0,d0
+loc_0187AE:
+	move.b	$54(a0),d0
+loc_0187B2:
+	subi.b	#$E,d0
+loc_0187B6:
+	add.w	d0,d0
+loc_0187B8:
+	adda.w	(a1,d0.w),a1
+loc_0187BC:
+	lea	$20(a1),a1
+loc_0187C0:
+	bra.w	loc_01882A
+	dc.b	$11,$7C,$00,$0E,$00,$54,$60,$00,$00,$26,$11,$7C
 	dc.b	$00,$0F,$00,$54,$60,$00,$00,$1C,$11,$7C,$00,$10,$00,$54,$60,$00
 	dc.b	$00,$12,$11,$7C,$00,$11,$00,$54,$60,$00,$00,$08,$11,$7C,$00,$12
 	dc.b	$00,$54,$4E,$BA,$EC,$FA,$66,$0A,$10,$28,$00,$54,$B0,$28,$00,$29
 	dc.b	$67,$06,$5C,$49,$4E,$FA,$27,$14,$2F,$08,$24,$48,$61,$00,$00,$9A
 	dc.b	$20,$5F,$43,$FA,$07,$32,$70,$00,$10,$28,$00,$29,$04,$00,$00,$0E
-	dc.b	$D0,$40,$D2,$F1,$00,$00,$4E,$FA,$26,$F2,$4A,$68,$00,$2E,$67,$10
-	dc.b	$30,$28,$00,$08,$32,$00,$92,$78,$E0,$08,$B2,$68,$00,$2E,$6C,$06
-	dc.b	$53,$28,$00,$28,$66,$04,$22,$68,$00,$2A,$5C,$49,$4E,$FA,$26,$CC
+	dc.b	$D0,$40,$D2,$F1,$00,$00,$4E,$FA,$26,$F2
+loc_01882A:
+	tst.w	$2E(a0)
+loc_01882E:
+	beq.b	loc_018840
+loc_018830:
+	move.w	$8(a0),d0
+loc_018834:
+	move.w	d0,d1
+loc_018836:
+	sub.w	(ram_E008).w,d1
+loc_01883A:
+	cmp.w	$2E(a0),d1
+loc_01883E:
+	bge.b	loc_018846
+loc_018840:
+	subq.b	#$1,$28(a0)
+loc_018844:
+	bne.b	loc_01884A
+loc_018846:
+	movea.l	$2A(a0),a1
+loc_01884A:
+	addq.w	#$6,a1
+loc_01884C:
+	jmp	sub_01AF1A(pc)
 	dc.b	$4A,$A8,$00,$50,$66,$08,$43,$E9,$00,$16,$4E,$FA,$26,$BE,$5C,$49
 	dc.b	$4E,$FA,$26,$B8,$11,$7C,$00,$08,$00,$3B,$5C,$49,$4E,$FA,$26,$AC
 	dc.b	$11,$7C,$00,$0C,$00,$3B,$60,$F2,$48,$E7,$00,$C0,$43,$F8,$E0,$00
@@ -23054,7 +31687,9 @@ dat_018946:
 	dc.b	$00,$18,$00,$06,$00,$08,$77,$9A,$00,$F0,$00,$04,$9D,$B0,$80,$00
 	dc.b	$00,$18,$00,$06,$00,$08,$77,$AA,$00,$F0,$00,$04,$9E,$A0,$80,$00
 	dc.b	$00,$18,$00,$06,$00,$08,$77,$9A,$00,$F0,$00,$04,$9D,$B0,$80,$00
-	dc.b	$00,$18,$FF,$FF,$00,$01,$89,$E2,$00,$06,$00,$08,$77,$AA,$00,$F0
+	dc.b	$00,$18,$FF,$FF,$00,$01,$89,$E2
+dat_018A28:
+	dc.b	$00,$06,$00,$08,$77,$AA,$00,$F0
 	dc.b	$00,$04,$9E,$A0,$80,$00,$00,$18,$00,$06,$00,$08,$77,$9A,$00,$F0
 	dc.b	$00,$04,$9E,$A0,$80,$00,$00,$18,$00,$06,$00,$08,$77,$8A,$00,$F0
 	dc.b	$00,$04,$9C,$C0,$80,$00,$00,$18,$00,$06,$00,$08,$77,$9A,$00,$F0
@@ -23092,6 +31727,7 @@ dat_018BB4:
 	dc.b	$80,$00,$00,$18,$00,$02,$00,$08,$77,$AA,$00,$F0,$00,$04,$9E,$A0
 	dc.b	$80,$00,$00,$18,$00,$00,$00,$01,$86,$C8,$00,$06,$00,$08,$78,$72
 	dc.b	$00,$C0,$00,$04,$AC,$60,$00,$00,$00,$00,$FF,$FF,$00,$01,$89,$9C
+dat_018C60:
 	dc.b	$00,$06,$00,$08,$77,$BA,$00,$F0,$00,$04,$9F,$90,$80,$00,$00,$08
 	dc.b	$00,$06,$00,$08,$77,$CA,$00,$F0,$00,$04,$A0,$80,$80,$00,$00,$08
 	dc.b	$00,$06,$00,$08,$77,$DA,$00,$F0,$00,$04,$A1,$70,$80,$00,$00,$08
@@ -23126,21 +31762,35 @@ dat_018D7C:
 	dc.b	$77,$CA,$00,$F0,$00,$04,$A0,$80,$80,$00,$00,$08,$00,$02,$00,$08
 	dc.b	$77,$DA,$00,$F0,$00,$04,$A1,$70,$80,$00,$00,$08,$00,$00,$00,$01
 	dc.b	$86,$C8,$00,$06,$00,$08,$78,$72,$00,$C0,$00,$04,$AC,$60,$00,$00
-	dc.b	$00,$00,$FF,$FF,$00,$01,$89,$9C,$00,$01,$8E,$90,$00,$01,$8E,$A6
-	dc.b	$00,$01,$8E,$BC,$00,$01,$8E,$D2,$00,$01,$8E,$E8,$00,$01,$8E,$90
+	dc.b	$00,$00,$FF,$FF,$00,$01,$89,$9C
+dat_018E68:
+	dc.l	dat_018E90,dat_018EA6,dat_018EBC,dat_018ED2
+	dc.l	dat_018EE8
+	dc.b	$00,$01,$8E,$90
 	dc.b	$00,$01,$8F,$2A,$00,$01,$8F,$14,$00,$01,$8E,$FE,$00,$01,$8E,$E8
+dat_018E90:
 	dc.b	$00,$06,$00,$08,$78,$9A,$00,$C0,$00,$04,$AF,$60,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$01,$87,$C4,$00,$06,$00,$08,$78,$86,$00,$C0,$00,$04
-	dc.b	$AD,$E0,$00,$00,$00,$00,$00,$00,$00,$01,$87,$CE,$00,$06,$00,$08
+	dc.b	$00,$00,$00,$01,$87,$C4
+dat_018EA6:
+	dc.b	$00,$06,$00,$08,$78,$86,$00,$C0,$00,$04
+	dc.b	$AD,$E0,$00,$00,$00,$00,$00,$00,$00,$01,$87,$CE
+dat_018EBC:
+	dc.b	$00,$06,$00,$08
 	dc.b	$78,$72,$00,$C0,$00,$04,$AC,$60,$00,$00,$00,$00,$00,$00,$00,$01
-	dc.b	$87,$D8,$00,$06,$00,$08,$78,$5E,$00,$C0,$00,$04,$AA,$E0,$00,$00
-	dc.b	$00,$00,$00,$00,$00,$01,$87,$E2,$00,$06,$00,$08,$78,$4A,$00,$C0
+	dc.b	$87,$D8
+dat_018ED2:
+	dc.b	$00,$06,$00,$08,$78,$5E,$00,$C0,$00,$04,$AA,$E0,$00,$00
+	dc.b	$00,$00,$00,$00,$00,$01,$87,$E2
+dat_018EE8:
+	dc.b	$00,$06,$00,$08,$78,$4A,$00,$C0
 	dc.b	$00,$04,$A9,$60,$00,$00,$00,$00,$00,$00,$00,$01,$87,$EC,$00,$06
 	dc.b	$00,$08,$78,$5E,$00,$C0,$00,$04,$AA,$E0,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$87,$E2,$00,$06,$00,$08,$78,$72,$00,$C0,$00,$04,$AC,$60
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$01,$87,$D8,$00,$06,$00,$08,$78,$86
 	dc.b	$00,$C0,$00,$04,$AD,$E0,$00,$00,$00,$00,$00,$00,$00,$01,$87,$CE
-	dc.b	$FF,$FF,$00,$01,$8E,$90,$00,$0A,$00,$5C,$00,$AE,$01,$00,$01,$52
+	dc.b	$FF,$FF,$00,$01,$8E,$90
+dat_018F46:
+	dc.b	$00,$0A,$00,$5C,$00,$AE,$01,$00,$01,$52
 	dc.b	$00,$08,$00,$08,$78,$A4,$00,$C0,$00,$04,$B0,$20,$00,$00,$00,$00
 	dc.b	$00,$06,$00,$08,$78,$9A,$00,$C0,$00,$04,$AF,$60,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$88,$2A,$00,$36,$00,$08,$78,$9A,$00,$C0,$00,$04
@@ -23462,116 +32112,205 @@ dat_019EF8:
 	dc.b	$FF,$F8,$FF,$E0,$FF,$FE,$FF,$E0,$00,$06,$FF,$E0,$00,$08,$FF,$E0
 loc_01A180:
 	jsr	sub_01AD5E(pc)
+loc_01A184:
 	bne.w	loc_01A1F6
+loc_01A188:
 	lea	dat_01A4BE(pc),a1
+loc_01A18C:
 	jsr	sub_01ADF6(pc)
+loc_01A190:
 	move.b	d2,$35(a2)
+loc_01A194:
 	move.b	#$40,$22(a2)
+loc_01A19A:
 	move.l	#$3935C,$14(a2)
+loc_01A1A2:
 	moveq	#$1E,d0
+loc_01A1A4:
 	and.b	d2,d0
+loc_01A1A6:
 	add.w	d0,d0
+loc_01A1A8:
 	lea	dat_01A4EE(pc),a3
+loc_01A1AC:
 	btst.b	#$0,$55(a0)
+loc_01A1B2:
 	beq.b	loc_01A1B8
+loc_01A1B4:
 	lea	dat_01A52E(pc),a3
 loc_01A1B8:
 	cmpi.w	#$210,(a0)
+loc_01A1BC:
 	bne.b	loc_01A1C4
 	lea	(dat_01A56E).l,a3
 loc_01A1C4:
 	movem.w	(a3,d0.w),d0-d1
+loc_01A1CA:
 	add.w	$4(a0),d0
+loc_01A1CE:
 	add.w	$8(a0),d1
+loc_01A1D2:
 	move.w	d0,$4(a2)
+loc_01A1D6:
 	move.w	d1,$8(a2)
+loc_01A1DA:
 	move.b	#$60,$3E(a2)
+loc_01A1E0:
 	clr.w	$18(a2)
+loc_01A1E4:
 	clr.w	$1C(a2)
+loc_01A1E8:
 	move.w	#$228,(a2)
+loc_01A1EC:
 	cmpi.w	#$210,(a0)
+loc_01A1F0:
 	beq.b	loc_01A1F6
+loc_01A1F2:
 	move.w	#$238,(a2)
 loc_01A1F6:
 	rts
 sub_01A1F8:
 	jsr	sub_01AD58(pc)
+loc_01A1FC:
 	bne.w	loc_01A266
+loc_01A200:
 	lea	dat_01A4BE(pc),a1
+loc_01A204:
 	jsr	sub_01ADF6(pc)
+loc_01A208:
 	move.b	d2,$35(a2)
+loc_01A20C:
 	move.l	#$3935C,$14(a2)
+loc_01A214:
 	move.l	a3,d7
+loc_01A216:
 	beq.b	loc_01A234
+loc_01A218:
 	moveq	#$1E,d0
+loc_01A21A:
 	and.b	d2,d0
+loc_01A21C:
 	add.w	d0,d0
+loc_01A21E:
 	movem.w	(a3,d0.w),d0-d1
+loc_01A224:
 	add.w	$4(a0),d0
+loc_01A228:
 	move.w	d0,$4(a2)
+loc_01A22C:
 	add.w	$8(a0),d1
+loc_01A230:
 	move.w	d1,$8(a2)
 loc_01A234:
 	move.b	#$40,$22(a2)
+loc_01A23A:
 	move.b	#$60,$3E(a2)
+loc_01A240:
 	cmpi.b	#$48,$36(a0)
+loc_01A246:
 	bne.b	loc_01A24E
 	move.b	#$C,$3B(a2)
 loc_01A24E:
 	clr.w	$18(a2)
+loc_01A252:
 	clr.w	$1C(a2)
+loc_01A256:
 	move.w	#$228,(a2)
+loc_01A25A:
 	cmpi.w	#$2B0,(a0)
+loc_01A25E:
 	beq.b	loc_01A264
+loc_01A260:
 	move.w	#$238,(a2)
 loc_01A264:
 	moveq	#$0,d7
 loc_01A266:
 	rts
-	dc.b	$2F,$09,$4E,$BA,$0C,$22,$22,$5F
-	dc.b	$5C,$49,$4E,$FA,$0C,$A6
+loc_01A268:
+	move.l	a1,-(a7)
+loc_01A26A:
+	jsr	sub_01AE8E(pc)
+loc_01A26E:
+	movea.l	(a7)+,a1
+loc_01A270:
+	addq.w	#$6,a1
+loc_01A272:
+	jmp	sub_01AF1A(pc)
 sub_01A276:
 	lea	dat_01A5AE(pc),a3
 sub_01A27A:
 	jsr	sub_01AD58(pc)
+loc_01A27E:
 	bne.w	loc_01A306
+loc_01A282:
 	lea	dat_01A4CE(pc),a1
+loc_01A286:
 	jsr	sub_01ADF6(pc)
+loc_01A28A:
 	bset.b	#$6,$2(a2)
+loc_01A290:
 	move.b	d2,$35(a2)
+loc_01A294:
 	move.b	d3,$3E(a2)
+loc_01A298:
 	move.l	#$3935C,$14(a2)
+loc_01A2A0:
 	moveq	#$1F,d0
+loc_01A2A2:
 	and.b	d2,d0
+loc_01A2A4:
 	cmpi.w	#$8,d0
+loc_01A2A8:
 	bge.b	loc_01A2AC
 	moveq	#$8,d0
 loc_01A2AC:
 	cmpi.b	#$18,d0
+loc_01A2B0:
 	ble.b	loc_01A2B4
 	moveq	#$18,d0
 loc_01A2B4:
 	subq.w	#$8,d0
+loc_01A2B6:
 	move.w	d0,d3
+loc_01A2B8:
 	lsl.w	#$2,d0
+loc_01A2BA:
 	movem.w	(a3,d0.w),d0-d1
+loc_01A2C0:
 	add.w	$4(a0),d0
+loc_01A2C4:
 	add.w	$8(a0),d1
+loc_01A2C8:
 	move.w	d0,$4(a2)
+loc_01A2CC:
 	move.w	d1,$8(a2)
+loc_01A2D0:
 	move.b	#$40,$22(a2)
+loc_01A2D6:
 	move.b	#$C,$3C(a2)
+loc_01A2DC:
 	clr.w	$18(a2)
+loc_01A2E0:
 	clr.w	$1C(a2)
+loc_01A2E4:
 	move.w	(ram_C328).w,d0
+loc_01A2E8:
 	add.w	d0,d0
+loc_01A2EA:
 	move.w	dat_01A308(pc,d0.w),d0
+loc_01A2EE:
 	move.w	d0,$1E(a2)
+loc_01A2F2:
 	add.w	d3,d3
+loc_01A2F4:
 	lea	dat_01A6BC(pc),a3
+loc_01A2F8:
 	adda.w	(a3,d3.w),a3
+loc_01A2FC:
 	move.l	a3,$30(a2)
+loc_01A300:
 	move.w	#$274,(a2)
+loc_01A304:
 	moveq	#$0,d0
 loc_01A306:
 	rts
@@ -23583,44 +32322,81 @@ dat_01A31C:
 	dc.b	$00,$00,$02,$59,$00,$00
 sub_01A326:
 	jsr	sub_01AD58(pc)
+loc_01A32A:
 	bne.w	loc_01A3B4
+loc_01A32E:
 	move.l	a1,-(a7)
+loc_01A330:
 	lea	dat_01A4DE(pc),a1
+loc_01A334:
 	jsr	sub_01ADF6(pc)
+loc_01A338:
 	bset.b	#$6,$2(a2)
+loc_01A33E:
 	move.b	d2,$35(a2)
+loc_01A342:
 	move.b	d3,$3E(a2)
+loc_01A346:
 	move.l	#$87D6A,$14(a2)
+loc_01A34E:
 	movea.l	(a7)+,a1
+loc_01A350:
 	move.l	a1,d7
+loc_01A352:
 	beq.b	loc_01A370
+loc_01A354:
 	moveq	#$1F,d0
+loc_01A356:
 	and.b	d2,d0
+loc_01A358:
 	lsl.w	#$2,d0
+loc_01A35A:
 	movem.w	(a1,d0.w),d0-d1
+loc_01A360:
 	add.w	$4(a0),d0
+loc_01A364:
 	add.w	$8(a0),d1
+loc_01A368:
 	move.w	d0,$4(a2)
+loc_01A36C:
 	move.w	d1,$8(a2)
 loc_01A370:
 	moveq	#$0,d0
+loc_01A372:
 	move.w	d0,$18(a2)
+loc_01A376:
 	move.w	d0,$1C(a2)
+loc_01A37A:
 	move.w	(ram_C328).w,d0
+loc_01A37E:
 	move.b	dat_01A3B6(pc,d0.w),$3C(a2)
+loc_01A384:
 	add.w	d0,d0
+loc_01A386:
 	move.w	dat_01A3C6(pc,d0.w),d0
+loc_01A38A:
 	move.w	d0,$1E(a2)
+loc_01A38E:
 	moveq	#$1F,d0
+loc_01A390:
 	and.w	d2,d0
+loc_01A392:
 	add.w	d0,d0
+loc_01A394:
 	lea	dat_01A8DC(pc),a3
+loc_01A398:
 	adda.w	(a3,d0.w),a3
+loc_01A39C:
 	move.l	a3,$30(a2)
+loc_01A3A0:
 	move.w	#$270,(a2)
+loc_01A3A4:
 	move.b	#$40,$22(a2)
+loc_01A3AA:
 	moveq	#-$4E,d0
+loc_01A3AC:
 	jsr	(sub_00A068).l
+loc_01A3B2:
 	moveq	#$0,d0
 loc_01A3B4:
 	rts
@@ -23633,64 +32409,111 @@ dat_01A3C6:
 	dc.b	$02,$8D,$02,$EE
 sub_01A3E4:
 	subq.b	#$1,$3E(a0)
+loc_01A3E8:
 	beq.b	loc_01A40C
+loc_01A3EA:
 	moveq	#$0,d0
+loc_01A3EC:
 	moveq	#$0,d1
+loc_01A3EE:
 	jsr	(sub_00B36C).l
+loc_01A3F4:
 	cmpi.b	#$4,d0
+loc_01A3F8:
 	beq.b	loc_01A40C
+loc_01A3FA:
 	jsr	(sub_00E234).l
+loc_01A400:
 	jsr	(sub_00B036).l
+loc_01A406:
 	bne.b	loc_01A40C
+loc_01A408:
 	jmp	sub_01AF0E(pc)
 loc_01A40C:
 	move.w	#$23C,(a0)
+loc_01A410:
 	lea	dat_01A6A2(pc),a1
+loc_01A414:
 	jmp	(sub_01AF1A).l
 sub_01A41A:
 	subq.b	#$1,$3E(a0)
+loc_01A41E:
 	beq.b	loc_01A40C
+loc_01A420:
 	jsr	(sub_00E234).l
+loc_01A426:
 	jsr	(sub_00B036).l
+loc_01A42C:
 	bne.b	loc_01A40C
+loc_01A42E:
 	jmp	sub_01AF0E(pc)
 sub_01A432:
 	subq.b	#$1,$3E(a0)
+loc_01A436:
 	beq.b	loc_01A498
+loc_01A438:
 	jsr	(sub_00E234).l
+loc_01A43E:
 	jsr	(sub_00B036).l
+loc_01A444:
 	jmp	sub_01AF0E(pc)
 sub_01A448:
 	subq.b	#$1,$3E(a0)
+loc_01A44C:
 	beq.b	loc_01A498
+loc_01A44E:
 	moveq	#$0,d0
+loc_01A450:
 	moveq	#$0,d1
+loc_01A452:
 	jsr	(sub_00B36C).l
+loc_01A458:
 	cmpi.b	#$4,d0
+loc_01A45C:
 	beq.b	loc_01A498
+loc_01A45E:
 	jsr	(sub_00E234).l
+loc_01A464:
 	jsr	(sub_00B036).l
+loc_01A46A:
 	bne.b	loc_01A498
+loc_01A46C:
 	jsr	(sub_00B298).l
+loc_01A472:
 	bne.b	loc_01A498
+loc_01A474:
 	jmp	sub_01AF0E(pc)
 sub_01A478:
 	subq.b	#$1,$3E(a0)
+loc_01A47C:
 	beq.b	loc_01A498
+loc_01A47E:
 	jsr	(sub_00E234).l
+loc_01A484:
 	jsr	(sub_00B036).l
+loc_01A48A:
 	bne.b	loc_01A498
+loc_01A48C:
 	jsr	(sub_00B298).l
+loc_01A492:
 	bne.b	loc_01A498
+loc_01A494:
 	jmp	sub_01AF0E(pc)
 loc_01A498:
 	bclr.b	#$6,$2(a0)
+loc_01A49E:
 	clr.w	$1E(a0)
+loc_01A4A2:
 	moveq	#-$4C,d0
+loc_01A4A4:
 	jsr	(sub_00A068).l
+loc_01A4AA:
 	move.b	#$40,$22(a0)
+loc_01A4B0:
 	move.w	#$23C,(a0)
+loc_01A4B4:
 	lea	dat_018406(pc),a1
+loc_01A4B8:
 	jmp	(sub_01AF1A).l
 dat_01A4BE:
 	dc.b	$80,$01
@@ -23824,95 +32647,160 @@ dat_01A8DC:
 	dc.b	$00,$00,$80,$00,$00,$1F,$FF,$FF,$00,$01,$AB,$4A
 sub_01AB5C:
 	lea	(ram_C0E0).w,a2
+loc_01AB60:
 	moveq	#$0,d1
+loc_01AB62:
 	moveq	#$1D,d7
 loc_01AB64:
 	tst.b	(a2,d1.w)
+loc_01AB68:
 	beq.b	loc_01AB74
 loc_01AB6A:
 	addq.w	#$1,d1
+loc_01AB6C:
 	dbra	d7,loc_01AB64
 loc_01AB70:
 	moveq	#-$1,d7
 	rts
 loc_01AB74:
 	add.w	d0,d1
+loc_01AB76:
 	sub.w	d0,d7
+loc_01AB78:
 	bls.b	loc_01AB70
+loc_01AB7A:
 	tst.b	(a2,d1.w)
+loc_01AB7E:
 	bne.b	loc_01AB6A
+loc_01AB80:
 	sub.w	d0,d1
+loc_01AB82:
 	adda.w	d1,a2
+loc_01AB84:
 	move.b	d1,$18(a0)
+loc_01AB88:
 	move.b	d0,$19(a0)
+loc_01AB8C:
 	lsl.w	#$2,d1
+loc_01AB8E:
 	addi.w	#$399,d1
+loc_01AB92:
 	move.w	d1,$1E(a0)
+loc_01AB96:
 	lsl.w	#$5,d1
+loc_01AB98:
 	move.w	d1,$1C(a0)
 loc_01AB9C:
 	addq.b	#$1,(a2)+
+loc_01AB9E:
 	dbra	d0,loc_01AB9C
+loc_01ABA2:
 	moveq	#$0,d7
+loc_01ABA4:
 	rts
 sub_01ABA6:
 	move.l	d7,-(a7)
+loc_01ABA8:
 	move.w	(RNG_Seed).w,d7
+loc_01ABAC:
 	rol.w	#$2,d7
+loc_01ABAE:
 	add.w	(RNG_Seed).w,d7
+loc_01ABB2:
 	addi.w	#$3753,d7
+loc_01ABB6:
 	move.w	d7,(RNG_Seed).w
+loc_01ABBA:
 	move.l	(a7)+,d7
+loc_01ABBC:
 	rts
 	dc.b	$43,$F8
 	dc.b	$E0,$00,$4A,$29,$00,$37,$67,$04,$43,$F8,$EE,$40,$4E,$75
 sub_01ABCE:
 	move.w	$4(a1),d0
+loc_01ABD2:
 	move.w	$8(a1),d1
+loc_01ABD6:
 	moveq	#$0,d2
+loc_01ABD8:
 	move.w	$4(a0),d3
+loc_01ABDC:
 	sub.w	d3,d0
+loc_01ABDE:
 	bcc.b	loc_01ABE4
+loc_01ABE0:
 	neg.w	d0
+loc_01ABE2:
 	addq.w	#$4,d2
 loc_01ABE4:
 	move.w	$8(a0),d3
+loc_01ABE8:
 	sub.w	d3,d1
+loc_01ABEA:
 	bcc.b	loc_01ABF0
+loc_01ABEC:
 	neg.w	d1
+loc_01ABEE:
 	addq.w	#$2,d2
 loc_01ABF0:
 	cmp.w	d1,d0
+loc_01ABF2:
 	bcc.b	loc_01ABF8
+loc_01ABF4:
 	addq.w	#$1,d2
+loc_01ABF6:
 	exg	d0,d1
 loc_01ABF8:
 	move.w	d0,d4
+loc_01ABFA:
 	asl.w	#$3,d1
+loc_01ABFC:
 	moveq	#$0,d3
+loc_01ABFE:
 	cmp.w	d0,d1
+loc_01AC00:
 	bcs.b	loc_01AC22
+loc_01AC02:
 	addq.w	#$1,d3
+loc_01AC04:
 	add.w	d4,d0
+loc_01AC06:
 	add.w	d4,d0
+loc_01AC08:
 	cmp.w	d0,d1
+loc_01AC0A:
 	bcs.b	loc_01AC22
+loc_01AC0C:
 	addq.w	#$1,d3
+loc_01AC0E:
 	add.w	d4,d0
+loc_01AC10:
 	add.w	d4,d0
+loc_01AC12:
 	cmp.w	d0,d1
+loc_01AC14:
 	bcs.b	loc_01AC22
+loc_01AC16:
 	addq.w	#$1,d3
+loc_01AC18:
 	add.w	d4,d0
+loc_01AC1A:
 	add.w	d4,d0
+loc_01AC1C:
 	cmp.w	d0,d1
+loc_01AC1E:
 	bcs.b	loc_01AC22
+loc_01AC20:
 	addq.w	#$1,d3
 loc_01AC22:
 	asl.w	#$3,d2
+loc_01AC24:
 	or.w	d3,d2
+loc_01AC26:
 	moveq	#$0,d0
+loc_01AC28:
 	move.b	dat_01AC2E(pc,d2.w),d0
+loc_01AC2C:
 	rts
 dat_01AC2E:
 	dc.b	$08,$09
@@ -23925,28 +32813,41 @@ sub_01AC72:
 	moveq	#$1,d7
 loc_01AC74:
 	tst.l	(a2)
+loc_01AC76:
 	beq.b	loc_01AC84
+loc_01AC78:
 	adda.w	#$60,a2
+loc_01AC7C:
 	dbra	d7,loc_01AC74
+loc_01AC80:
 	moveq	#-$1,d7
+loc_01AC82:
 	rts
 loc_01AC84:
 	subq.w	#$2,d7
+loc_01AC86:
 	not.w	d7
+loc_01AC88:
 	rts
 sub_01AC8A:
 	lea	(ram_EE20).w,a2
+loc_01AC8E:
 	moveq	#$4,d7
 loc_01AC90:
 	tst.l	(a2)
+loc_01AC92:
 	beq.b	loc_01ACA0
+loc_01AC94:
 	adda.w	#$60,a2
+loc_01AC98:
 	dbra	d7,loc_01AC90
 	moveq	#-$1,d7
 	rts
 loc_01ACA0:
 	subq.w	#$5,d7
+loc_01ACA2:
 	not.w	d7
+loc_01ACA4:
 	rts
 	dc.b	$45,$F8,$F0,$C0,$7E,$00,$4A,$92,$66,$06
 	dc.b	$4A,$AA,$00,$60,$67,$1C,$45,$F8,$F1,$80,$4A,$92,$66,$06,$4A,$AA
@@ -23958,59 +32859,86 @@ loc_01ACA0:
 	dc.b	$60,$14
 sub_01AD12:
 	move.w	(ram_FE44).w,d1
+loc_01AD16:
 	add.w	d1,d1
+loc_01AD18:
 	addq.w	#$1,d1
+loc_01AD1A:
 	lea	dat_01AD4E(pc),a6
+loc_01AD1E:
 	move.b	(a6,d1.w),d0
+loc_01AD22:
 	lea	(ram_F8A0).w,a2
 loc_01AD26:
 	tst.l	(a2)
+loc_01AD28:
 	beq.b	loc_01AD36
+loc_01AD2A:
 	lea	$40(a2),a2
+loc_01AD2E:
 	dbra	d0,loc_01AD26
 loc_01AD32:
 	moveq	#-$1,d0
+loc_01AD34:
 	rts
 loc_01AD36:
 	movea.l	a2,a3
+loc_01AD38:
 	lea	$40(a2),a2
 loc_01AD3C:
 	tst.l	(a2)
+loc_01AD3E:
 	beq.b	loc_01AD4A
+loc_01AD40:
 	lea	$40(a2),a2
+loc_01AD44:
 	dbra	d0,loc_01AD3C
+loc_01AD48:
 	bra.b	loc_01AD32
 loc_01AD4A:
 	moveq	#$0,d0
+loc_01AD4C:
 	rts
 dat_01AD4E:
 	dc.b	$02,$01
 	dc.b	$04,$03,$07,$04,$04,$03,$07,$04
 sub_01AD58:
 	move.w	#$11,d0
+loc_01AD5C:
 	bra.b	loc_01AD6C
 sub_01AD5E:
 	move.w	(ram_FE44).w,d1
+loc_01AD62:
 	add.w	d1,d1
+loc_01AD64:
 	lea	dat_01AD4E(pc),a2
+loc_01AD68:
 	move.b	(a2,d1.w),d0
 loc_01AD6C:
 	lea	(Objects_C).w,a2
 loc_01AD70:
 	tst.l	(a2)
+loc_01AD72:
 	beq.b	loc_01AD80
+loc_01AD74:
 	lea	$40(a2),a2
+loc_01AD78:
 	dbra	d0,loc_01AD70
+loc_01AD7C:
 	moveq	#-$1,d0
+loc_01AD7E:
 	rts
 loc_01AD80:
 	moveq	#$0,d0
+loc_01AD82:
 	rts
 sub_01AD84:
 	moveq	#$3,d7
+loc_01AD86:
 	lea	(ram_FAE0).w,a2
 loc_01AD8A:
 	tst.l	(a2)
+loc_01AD8C:
 	beq.b	loc_01AD98
 	lea	$40(a2),a2
 	dbra	d7,loc_01AD8A
@@ -24019,53 +32947,92 @@ loc_01AD98:
 	rts
 sub_01AD9A:
 	moveq	#$E,d7
+loc_01AD9C:
 	lea	(ram_E6C0).w,a2
 loc_01ADA0:
 	tst.l	(a2)
+loc_01ADA2:
 	beq.b	loc_01ADAE
+loc_01ADA4:
 	lea	$40(a2),a2
+loc_01ADA8:
 	dbra	d7,loc_01ADA0
 	moveq	#-$1,d7
 loc_01ADAE:
 	rts
 sub_01ADB0:
 	move.b	(a1)+,$37(a0)
+loc_01ADB4:
 	move.b	(a1)+,$34(a0)
+loc_01ADB8:
 	move.b	(a1)+,$4A(a0)
+loc_01ADBC:
 	move.b	(a1)+,d7
+loc_01ADBE:
 	move.b	(a1)+,$3A(a0)
+loc_01ADC2:
 	move.b	(a1)+,$3B(a0)
+loc_01ADC6:
 	move.b	(a1)+,$3C(a0)
+loc_01ADCA:
 	move.b	(a1)+,d7
+loc_01ADCC:
 	move.w	(a1)+,$38(a0)
+loc_01ADD0:
 	move.b	(a1)+,$48(a0)
+loc_01ADD4:
 	move.b	(a1)+,$3D(a0)
+loc_01ADD8:
 	move.l	(a1),$30(a0)
+loc_01ADDC:
 	moveq	#$0,d7
+loc_01ADDE:
 	move.l	d7,$C(a0)
+loc_01ADE2:
 	move.l	d7,$10(a0)
+loc_01ADE6:
 	move.b	d7,$44(a0)
+loc_01ADEA:
 	move.b	d7,$44(a0)
+loc_01ADEE:
 	move.b	#$88,$4B(a0)
+loc_01ADF4:
 	rts
 sub_01ADF6:
 	move.b	(a1)+,$37(a2)
+loc_01ADFA:
 	move.b	(a1)+,$34(a2)
+loc_01ADFE:
 	move.b	(a1)+,d7
+loc_01AE00:
 	move.b	(a1)+,d7
+loc_01AE02:
 	move.b	(a1)+,$3A(a2)
+loc_01AE06:
 	move.b	(a1)+,$3B(a2)
+loc_01AE0A:
 	move.b	(a1)+,$3C(a2)
+loc_01AE0E:
 	move.b	(a1)+,d7
+loc_01AE10:
 	move.w	(a1)+,$38(a2)
+loc_01AE14:
 	move.b	(a1)+,d7
+loc_01AE16:
 	move.b	(a1)+,$3D(a2)
+loc_01AE1A:
 	move.l	(a1),$30(a2)
+loc_01AE1E:
 	moveq	#$0,d7
+loc_01AE20:
 	move.l	d7,$C(a2)
+loc_01AE24:
 	move.l	d7,$10(a2)
+loc_01AE28:
 	move.w	d7,$18(a2)
+loc_01AE2C:
 	move.w	d7,$1C(a2)
+loc_01AE30:
 	rts
 loc_01AE32:
 	movea.l	a0,a2
@@ -24075,24 +33042,48 @@ loc_01AE32:
 	jsr	sub_01B002(pc)
 	movea.l	a2,a0
 	jmp	sub_01B002(pc)
-	dc.b	$31,$7C,$00,$11,$00,$44
-	dc.b	$53,$68,$00,$44,$67,$0E,$0A,$28,$00,$04,$00,$02,$43,$FA,$A9,$FE
-	dc.b	$4E,$FA,$00,$B8,$4E,$FA,$CB,$BA,$11,$7C,$00,$09,$00,$3E,$60,$06
+loc_01AE4A:
+	move.w	#$11,$44(a0)
+loc_01AE50:
+	subq.w	#$1,$44(a0)
+loc_01AE54:
+	beq.b	loc_01AE64
+loc_01AE56:
+	eori.b	#$4,$2(a0)
+loc_01AE5C:
+	lea	dat_01585C(pc),a1
+loc_01AE60:
+	jmp	sub_01AF1A(pc)
+loc_01AE64:
+	jmp	sub_017A20(pc)
+	dc.b	$11,$7C,$00,$09,$00,$3E,$60,$06
 	dc.b	$11,$7C,$00,$11,$00,$3E,$53,$28,$00,$3E,$67,$0E,$0A,$28,$00,$04
 	dc.b	$00,$02,$43,$FA,$4F,$C2,$4E,$FA,$00,$92,$4E,$FA,$01,$76
 sub_01AE8E:
 	moveq	#$0,d0
+loc_01AE90:
 	move.b	$3B(a0),d0
+loc_01AE94:
 	movea.l	dat_01AEB8(pc,d0.w),a1
+loc_01AE98:
 	move.b	$35(a0),d0
+loc_01AE9C:
 	andi.w	#$1F,d0
+loc_01AEA0:
 	lsl.w	#$2,d0
+loc_01AEA2:
 	movem.w	(a1,d0.w),d1-d2
+loc_01AEA8:
 	asl.l	#$8,d1
+loc_01AEAA:
 	asl.l	#$8,d2
+loc_01AEAC:
 	neg.l	d1
+loc_01AEAE:
 	move.l	d2,$C(a0)
+loc_01AEB2:
 	move.l	d1,$10(a0)
+loc_01AEB6:
 	rts
 dat_01AEB8:
 	dc.b	$00,$08,$B8,$80,$00,$08,$B9,$00
@@ -24103,172 +33094,302 @@ dat_01AEB8:
 	dc.b	$00,$44,$4A,$28,$00,$44,$67,$04,$53,$28,$00,$44,$4E,$75
 sub_01AF0E:
 	subq.b	#$1,$34(a0)
+loc_01AF12:
 	bne.w	loc_01AFEA
+loc_01AF16:
 	movea.l	$30(a0),a1
 sub_01AF1A:
 	move.w	(a1),d0
+loc_01AF1C:
 	beq.b	loc_01AF2A
+loc_01AF1E:
 	addq.w	#$1,d0
+loc_01AF20:
 	beq.b	loc_01AF30
+loc_01AF22:
 	addq.w	#$1,d0
+loc_01AF24:
 	bne.b	loc_01AF38
+loc_01AF26:
 	jmp	sub_01B002(pc)
 loc_01AF2A:
 	movea.l	$2(a1),a2
+loc_01AF2E:
 	jmp	(a2)
 loc_01AF30:
 	movea.l	$2(a1),a1
+loc_01AF34:
 	move.l	a1,$30(a0)
 loc_01AF38:
 	move.w	(a1)+,d0
+loc_01AF3A:
 	move.b	d0,$34(a0)
+loc_01AF3E:
 	move.l	(a1)+,d0
+loc_01AF40:
 	cmpi.w	#$FFFF,d0
+loc_01AF44:
 	beq.b	loc_01AF4A
+loc_01AF46:
 	move.l	d0,$14(a0)
 loc_01AF4A:
 	move.w	(a1),d0
+loc_01AF4C:
 	bne.b	loc_01AF52
+loc_01AF4E:
 	addq.w	#$2,a1
+loc_01AF50:
 	bra.b	loc_01AFAA
 loc_01AF52:
 	lea	(ram_C000).w,a2
+loc_01AF56:
 	move.w	(a2),d0
+loc_01AF58:
 	addq.w	#$1,(a2)+
+loc_01AF5A:
 	move.w	d0,d1
+loc_01AF5C:
 	lsl.w	#$3,d0
+loc_01AF5E:
 	sub.w	d1,d0
+loc_01AF60:
 	add.w	d0,d0
+loc_01AF62:
 	adda.w	d0,a2
+loc_01AF64:
 	move.w	#$9300,d0
+loc_01AF68:
 	move.w	#$9400,d1
+loc_01AF6C:
 	move.w	#$9500,d2
+loc_01AF70:
 	move.w	#$9600,d3
+loc_01AF74:
 	move.w	#$9700,d4
+loc_01AF78:
 	move.b	(a1)+,d1
+loc_01AF7A:
 	move.b	(a1)+,d0
+loc_01AF7C:
 	addq.w	#$1,a1
+loc_01AF7E:
 	move.b	(a1)+,d4
+loc_01AF80:
 	move.b	(a1)+,d3
+loc_01AF82:
 	move.b	(a1)+,d2
+loc_01AF84:
 	movem.w	d0-d4,(a2)
+loc_01AF88:
 	adda.w	#$A,a2
+loc_01AF8C:
 	move.w	$1C(a0),d0
+loc_01AF90:
 	andi.w	#$3FFF,d0
+loc_01AF94:
 	ori.w	#$4000,d0
+loc_01AF98:
 	move.w	d0,(a2)+
+loc_01AF9A:
 	moveq	#$0,d0
+loc_01AF9C:
 	move.w	$1C(a0),d0
+loc_01AFA0:
 	lsl.l	#$2,d0
+loc_01AFA2:
 	swap	d0
+loc_01AFA4:
 	ori.w	#$80,d0
+loc_01AFA8:
 	move.w	d0,(a2)+
 loc_01AFAA:
 	cmpi.w	#$8000,(a1)
+loc_01AFAE:
 	beq.b	loc_01AFCA
+loc_01AFB0:
 	movem.w	(a1)+,d0-d1
+loc_01AFB4:
 	asl.l	#$8,d0
+loc_01AFB6:
 	asl.l	#$8,d1
+loc_01AFB8:
 	movem.l	d1,$C(a0)
+loc_01AFBE:
 	movem.l	d0,$10(a0)
+loc_01AFC4:
 	move.l	a1,$30(a0)
+loc_01AFC8:
 	bra.b	loc_01AFEA
 loc_01AFCA:
 	move.w	$2(a1),d0
+loc_01AFCE:
 	lea	$4(a1),a1
+loc_01AFD2:
 	move.l	a1,$30(a0)
+loc_01AFD6:
 	cmpi.w	#$FF,d0
+loc_01AFDA:
 	beq.b	loc_01AFEA
+loc_01AFDC:
 	cmpi.w	#$FE,d0
+loc_01AFE0:
 	beq.b	loc_01AFEA
+loc_01AFE2:
 	move.b	d0,$35(a0)
+loc_01AFE6:
 	jsr	sub_01AE8E(pc)
 loc_01AFEA:
 	move.w	$8(a0),$26(a0)
+loc_01AFF0:
 	rts
 sub_01AFF2:
 	jsr	(sub_00E234).l
+loc_01AFF8:
 	jsr	(sub_00B036).l
+loc_01AFFE:
 	bra.w	sub_01AF0E
 sub_01B002:
 	movea.l	a0,a1
+loc_01B004:
 	moveq	#$17,d7
+loc_01B006:
 	cmpa.w	#$ED00,a0
+loc_01B00A:
 	blt.b	loc_01B012
+loc_01B00C:
 	cmpa.w	#$F2A0,a0
+loc_01B010:
 	ble.b	loc_01B014
 loc_01B012:
 	moveq	#$F,d7
 loc_01B014:
 	clr.l	(a1)+
+loc_01B016:
 	dbra	d7,loc_01B014
+loc_01B01A:
 	rts
 sub_01B01C:
 	move.w	$8(a0),d0
+loc_01B020:
 	move.w	$4(a0),d1
+loc_01B024:
 	subi.w	#$80,d0
+loc_01B028:
 	subi.w	#$80,d1
+loc_01B02C:
 	add.w	(ram_C568).w,d0
+loc_01B030:
 	sub.w	(ram_C556).w,d1
+loc_01B034:
 	lsr.w	#$2,d1
+loc_01B036:
 	andi.w	#$7E,d1
+loc_01B03A:
 	lsl.w	#$4,d0
+loc_01B03C:
 	andi.w	#$F80,d0
+loc_01B040:
 	add.w	d1,d0
+loc_01B042:
 	addi.w	#$E000,d0
+loc_01B046:
 	rts
 sub_01B048:
 	cmpi.w	#$180,$8(a0)
+loc_01B04E:
 	bgt.w	loc_01B0DC
+loc_01B052:
 	moveq	#$0,d2
+loc_01B054:
 	bclr.b	#$0,(ram_C233).w
+loc_01B05A:
 	bne.b	loc_01B0C8
+loc_01B05C:
 	moveq	#-$1,d0
+loc_01B05E:
 	move.w	$2C(a0),d0
+loc_01B062:
 	movea.l	d0,a1
+loc_01B064:
 	movea.l	a1,a3
+loc_01B066:
 	move.l	$8(a0),d0
+loc_01B06A:
 	add.l	$10(a0),d0
+loc_01B06E:
 	move.l	(ram_C51A).w,d2
+loc_01B072:
 	neg.l	d2
+loc_01B074:
 	add.l	d2,d0
+loc_01B076:
 	move.l	d0,$8(a0)
+loc_01B07A:
 	move.l	$4(a0),d1
+loc_01B07E:
 	add.l	$C(a0),d1
+loc_01B082:
 	move.l	(ram_C508).w,d2
+loc_01B086:
 	neg.l	d2
+loc_01B088:
 	add.l	d2,d1
+loc_01B08A:
 	move.l	d1,$4(a0)
+loc_01B08E:
 	swap	d0
+loc_01B090:
 	swap	d1
+loc_01B092:
 	moveq	#$0,d2
+loc_01B094:
 	cmp.w	$52(a0),d0
+loc_01B098:
 	beq.b	loc_01B0B2
+loc_01B09A:
 	movea.l	$28(a0),a2
+loc_01B09E:
 	movem.w	d1-d2,-(a7)
+loc_01B0A2:
 	bsr.w	sub_01B0E0
+loc_01B0A6:
 	movem.w	(a7)+,d1-d2
+loc_01B0AA:
 	tst.w	d0
+loc_01B0AC:
 	bne.b	loc_01B0B2
+loc_01B0AE:
 	moveq	#$1,d2
+loc_01B0B0:
 	bra.b	loc_01B0C8
 loc_01B0B2:
 	cmp.w	$50(a0),d1
+loc_01B0B6:
 	beq.b	loc_01B0C8
+loc_01B0B8:
 	movea.l	a3,a1
+loc_01B0BA:
 	move.w	d2,-(a7)
+loc_01B0BC:
 	bsr.w	sub_01B174
+loc_01B0C0:
 	move.w	(a7)+,d2
+loc_01B0C2:
 	tst.w	d0
+loc_01B0C4:
 	bne.b	loc_01B0C8
 	moveq	#$1,d2
 loc_01B0C8:
 	tst.w	d2
+loc_01B0CA:
 	bne.b	loc_01B0D2
+loc_01B0CC:
 	tst.b	(ram_C232).w
+loc_01B0D0:
 	beq.b	loc_01B0DA
 loc_01B0D2:
 	bsr.w	sub_01B238
+loc_01B0D6:
 	clr.b	(ram_C232).w
 loc_01B0DA:
 	rts
@@ -24277,41 +33398,68 @@ loc_01B0DC:
 	rts
 sub_01B0E0:
 	move.w	d0,d4
+loc_01B0E2:
 	move.w	#$80,d0
+loc_01B0E6:
 	sub.w	$8(a0),d0
+loc_01B0EA:
 	bmi.b	loc_01B138
+loc_01B0EC:
 	subq.w	#$8,d0
+loc_01B0EE:
 	bmi.w	loc_01B16C
+loc_01B0F2:
 	lsr.w	#$3,d0
+loc_01B0F4:
 	cmp.w	$56(a0),d0
+loc_01B0F8:
 	bgt.b	loc_01B11C
+loc_01B0FA:
 	move.w	$54(a0),d1
+loc_01B0FE:
 	move.w	d1,d2
+loc_01B100:
 	addq.w	#$1,d1
+loc_01B102:
 	add.w	d1,d1
+loc_01B104:
 	mulu.w	d1,d0
+loc_01B106:
 	adda.w	d0,a1
+loc_01B108:
 	move.w	d2,d1
+loc_01B10A:
 	move.w	d4,d3
+loc_01B10C:
 	sub.w	$52(a0),d3
+loc_01B110:
 	tst.w	d3
+loc_01B112:
 	beq.b	loc_01B124
+loc_01B114:
 	bpl.b	loc_01B124
 loc_01B116:
 	clr.w	(a1)+
 	dbra	d1,loc_01B116
 loc_01B11C:
 	move.w	d4,$52(a0)
+loc_01B120:
 	moveq	#$0,d0
+loc_01B122:
 	rts
 loc_01B124:
 	movea.l	$28(a0),a2
+loc_01B128:
 	adda.w	d0,a2
 loc_01B12A:
 	move.w	(a2)+,(a1)+
+loc_01B12C:
 	dbra	d1,loc_01B12A
+loc_01B130:
 	move.w	d4,$52(a0)
+loc_01B134:
 	moveq	#$0,d0
+loc_01B136:
 	rts
 loc_01B138:
 	addi.w	#$F0,d0
@@ -24339,21 +33487,37 @@ loc_01B16C:
 	rts
 sub_01B174:
 	move.w	d1,d4
+loc_01B176:
 	move.w	#$80,d1
+loc_01B17A:
 	sub.w	$4(a0),d1
+loc_01B17E:
 	bmi.b	loc_01B1E6
+loc_01B180:
 	subi.w	#$18,d1
+loc_01B184:
 	bmi.w	loc_01B230
+loc_01B188:
 	lsr.w	#$3,d1
+loc_01B18A:
 	add.w	d1,d1
+loc_01B18C:
 	move.w	$56(a0),d0
+loc_01B190:
 	move.w	$8(a0),d2
+loc_01B194:
 	subi.w	#$80,d2
+loc_01B198:
 	lsr.w	#$3,d2
+loc_01B19A:
 	add.w	d0,d2
+loc_01B19C:
 	subi.w	#$1D,d2
+loc_01B1A0:
 	bmi.b	loc_01B1A8
+loc_01B1A2:
 	sub.w	d2,d0
+loc_01B1A4:
 	bmi.w	loc_01B230
 loc_01B1A8:
 	move.w	$54(a0),d3
@@ -24415,38 +33579,63 @@ loc_01B222:
 	bra.b	loc_01B1D4
 loc_01B230:
 	move.w	d4,$50(a0)
+loc_01B234:
 	moveq	#-$1,d0
+loc_01B236:
 	rts
 sub_01B238:
 	lea	(ram_C210).w,a1
+loc_01B23C:
 	move.w	(a1),d0
+loc_01B23E:
 	add.w	d0,d0
+loc_01B240:
 	lea	dat_01B266(pc),a2
+loc_01B244:
 	move.w	(a2,d0.w),d0
+loc_01B248:
 	bmi.b	loc_01B262
+loc_01B24A:
 	addq.w	#$1,(a1)+
+loc_01B24C:
 	adda.w	d0,a1
+loc_01B24E:
 	moveq	#-$1,d0
+loc_01B250:
 	move.w	$2C(a0),d0
+loc_01B254:
 	move.l	d0,(a1)+
+loc_01B256:
 	move.w	$2E(a0),(a1)+
+loc_01B25A:
 	move.w	$54(a0),(a1)+
+loc_01B25E:
 	move.w	$56(a0),(a1)+
 loc_01B262:
 	moveq	#$0,d0
+loc_01B264:
 	rts
 dat_01B266:
 	dc.b	$00,$00,$00,$0A,$00,$14,$FF,$FF
 sub_01B26E:
 	bset.b	#$0,$2(a0)
+loc_01B274:
 	bne.b	loc_01B298
+loc_01B276:
 	bset.b	#$2,$2(a0)
+loc_01B27C:
 	bset.b	#$1,$2(a0)
+loc_01B282:
 	moveq	#$0,d0
+loc_01B284:
 	move.l	d0,$14(a0)
+loc_01B288:
 	move.l	d0,$C(a0)
+loc_01B28C:
 	move.l	d0,$10(a0)
+loc_01B290:
 	move.b	$1A(a0),d0
+loc_01B294:
 	jmp	loc_021636(pc)
 loc_01B298:
 	jsr	sub_021668(pc)
@@ -24456,15 +33645,23 @@ loc_01B2A0:
 	rts
 sub_01B2A2:
 	move.w	(ram_C328).w,d2
+loc_01B2A6:
 	add.w	d2,d2
+loc_01B2A8:
 	lea	dat_01B2F0(pc),a2
+loc_01B2AC:
 	adda.w	(a2,d2.w),a2
+loc_01B2B0:
 	moveq	#$0,d2
+loc_01B2B2:
 	moveq	#$0,d3
+loc_01B2B4:
 	lea	(ram_C240).w,a1
+loc_01B2B8:
 	move.w	(a2)+,d7
 loc_01B2BA:
 	tst.l	(a1)
+loc_01B2BC:
 	beq.b	loc_01B2CA
 	addq.w	#$2,d2
 	addq.w	#$1,d3
@@ -24473,18 +33670,29 @@ loc_01B2BA:
 	bra.b	loc_01B2EE
 loc_01B2CA:
 	move.l	a0,(a1)
+loc_01B2CC:
 	lea	(ram_DC00).w,a1
+loc_01B2D0:
 	adda.w	(a2,d2.w),a1
+loc_01B2D4:
 	movea.l	a1,a2
+loc_01B2D6:
 	move.w	$56(a0),d0
+loc_01B2DA:
 	move.w	$54(a0),d1
+loc_01B2DE:
 	addq.w	#$1,d0
+loc_01B2E0:
 	addq.w	#$1,d1
+loc_01B2E2:
 	mulu.w	d1,d0
+loc_01B2E4:
 	subq.w	#$1,d0
 loc_01B2E6:
 	clr.w	(a2)+
+loc_01B2E8:
 	dbra	d0,loc_01B2E6
+loc_01B2EC:
 	moveq	#$0,d0
 loc_01B2EE:
 	rts
@@ -24496,26 +33704,39 @@ dat_01B2F0:
 	dc.b	$00,$00,$00,$90
 sub_01B334:
 	bset.b	#$0,$2(a0)
+loc_01B33A:
 	bne.b	loc_01B35A
+loc_01B33C:
 	ori.b	#$26,$2(a0)
+loc_01B342:
 	clr.b	$28(a0)
+loc_01B346:
 	move.w	#$80,$8(a0)
+loc_01B34C:
 	move.w	#$80,$4(a0)
+loc_01B352:
 	clr.l	$10(a0)
+loc_01B356:
 	clr.l	$C(a0)
 loc_01B35A:
 	btst.b	#$4,(Flags_C61C).w
+loc_01B360:
 	bne.w	loc_01B400
+loc_01B364:
 	cmpi.w	#$1,(ram_C328).w
+loc_01B36A:
 	bne.b	loc_01B376
 	cmpi.w	#$8,(ram_E028).w
 	beq.w	loc_01B3FE
 loc_01B376:
 	lea	(ram_C240).w,a1
+loc_01B37A:
 	moveq	#$5,d7
+loc_01B37C:
 	moveq	#$0,d6
 loc_01B37E:
 	tst.l	(a1)
+loc_01B380:
 	beq.b	loc_01B3D4
 	movea.l	(a1),a2
 	tst.l	(a2)
@@ -24547,8 +33768,11 @@ loc_01B3D2:
 	addq.w	#$1,d6
 loc_01B3D4:
 	addq.w	#$4,a1
+loc_01B3D6:
 	dbra	d7,loc_01B37E
+loc_01B3DA:
 	tst.l	d6
+loc_01B3DC:
 	beq.b	loc_01B404
 	move.l	(ram_C508).w,d0
 	sub.l	d0,(ram_C234).w
@@ -24565,22 +33789,35 @@ loc_01B400:
 	rts
 loc_01B404:
 	clr.w	(ram_C556).w
+loc_01B408:
 	clr.w	(ram_C568).w
+loc_01B40C:
 	clr.l	(ram_C234).w
+loc_01B410:
 	clr.l	(ram_C238).w
+loc_01B414:
 	clr.b	$28(a0)
+loc_01B418:
 	rts
 	dc.b	$2F,$08,$41,$F8,$F0,$00
 	dc.b	$4E,$B9,$00,$01,$B0,$02,$20,$5F,$42,$90,$4E,$75
 sub_01B42C:
 	tst.b	$3F(a0)
+loc_01B430:
 	bne.b	loc_01B450
+loc_01B432:
 	jsr	sub_01BF5A(pc)
+loc_01B436:
 	move.w	(ram_C328).w,d0
+loc_01B43A:
 	lsl.w	#$2,d0
+loc_01B43C:
 	dc.w	$4CBB,$0003,$0016		; movem.w loc_01B454(pc,d0.w),d0-d1
+loc_01B442:
 	add.w	d0,$4(a2)
+loc_01B446:
 	add.w	d1,$8(a2)
+loc_01B44A:
 	move.b	#$29,$3F(a0)
 loc_01B450:
 	subq.b	#$1,$3F(a0)
@@ -24593,38 +33830,67 @@ loc_01B454:
 	dc.b	$FF,$E2,$00,$07,$FF,$E2
 sub_01B496:
 	bset.b	#$0,$2(a0)
+loc_01B49C:
 	bne.b	loc_01B4B0
+loc_01B49E:
 	bset.b	#$2,$2(a0)
+loc_01B4A4:
 	bset.b	#$5,$2(a0)
+loc_01B4AA:
 	move.b	#$29,$3F(a0)
 loc_01B4B0:
 	tst.b	(ram_C670).w
+loc_01B4B4:
 	bne.b	loc_01B50C
+loc_01B4B6:
 	subq.b	#$1,$3F(a0)
+loc_01B4BA:
 	bne.b	loc_01B50A
+loc_01B4BC:
 	move.b	#$29,$3F(a0)
+loc_01B4C2:
 	jsr	sub_01AC8A(pc)
+loc_01B4C6:
 	tst.w	d7
+loc_01B4C8:
 	bmi.b	loc_01B50A
+loc_01B4CA:
 	move.l	a0,-(a7)
+loc_01B4CC:
 	movea.l	a0,a4
+loc_01B4CE:
 	movea.l	a2,a0
+loc_01B4D0:
 	lsl.w	#$2,d7
+loc_01B4D2:
 	lea	dat_01B52E(pc),a1
+loc_01B4D6:
 	movea.l	(a1,d7.w),a1
+loc_01B4DA:
 	cmpa.w	#$0,a1
+loc_01B4DE:
 	beq.b	loc_01B506
+loc_01B4E0:
 	jsr	(a1)
+loc_01B4E2:
 	bset.b	#$6,$2(a0)
+loc_01B4E8:
 	move.b	#$60,$22(a0)
+loc_01B4EE:
 	move.w	$8(a4),d0
+loc_01B4F2:
 	addi.w	#$52,d0
+loc_01B4F6:
 	move.w	d0,$8(a0)
+loc_01B4FA:
 	move.w	$4(a4),d0
+loc_01B4FE:
 	addi.w	#$18,d0
+loc_01B502:
 	move.w	d0,$4(a0)
 loc_01B506:
 	movea.l	(a7)+,a0
+loc_01B508:
 	moveq	#$0,d0
 loc_01B50A:
 	rts
@@ -24646,37 +33912,63 @@ dat_01B52E:
 	dc.b	$00,$00
 sub_01B542:
 	bset.b	#$0,$2(a0)
+loc_01B548:
 	bne.b	loc_01B55C
+loc_01B54A:
 	bset.b	#$5,$2(a0)
+loc_01B550:
 	bset.b	#$2,$2(a0)
+loc_01B556:
 	move.b	#$29,$3F(a0)
 loc_01B55C:
 	tst.b	$3F(a0)
+loc_01B560:
 	bne.b	loc_01B5BE
+loc_01B562:
 	jsr	sub_01BF5A(pc)
+loc_01B566:
 	bne.b	loc_01B5AA
+loc_01B568:
 	bset.b	#$6,$56(a0)
+loc_01B56E:
 	moveq	#$10,d0
+loc_01B570:
 	move.b	d0,$28(a2)
+loc_01B574:
 	move.b	d0,$35(a2)
+loc_01B578:
 	move.b	d0,$28(a2)
+loc_01B57C:
 	move.w	#$21C,(a2)
+loc_01B580:
 	move.l	#$156E8,$30(a2)
+loc_01B588:
 	move.l	#$87000,$14(a2)
+loc_01B590:
 	jsr	sub_01ABA6(pc)
+loc_01B594:
 	move.w	(RNG_Seed).w,d0
+loc_01B598:
 	andi.w	#$8,d0
+loc_01B59C:
 	addi.w	#$50,d0
+loc_01B5A0:
 	sub.w	d0,$8(a2)
+loc_01B5A4:
 	addi.w	#$30,$4(a2)
 loc_01B5AA:
 	jsr	sub_01ABA6(pc)
+loc_01B5AE:
 	move.b	(RNG_Seed).w,d0
+loc_01B5B2:
 	andi.b	#$1F,d0
+loc_01B5B6:
 	addi.b	#$15,d0
+loc_01B5BA:
 	move.b	d0,$3F(a0)
 loc_01B5BE:
 	subq.b	#$1,$3F(a0)
+loc_01B5C2:
 	rts
 	dc.b	$30,$BC,$02,$08,$08,$E8,$00,$00,$00,$55,$11,$7C
 	dc.b	$00,$00,$00,$3B,$31,$7C,$02,$34,$06,$00,$11,$7C,$00,$01,$06,$28
@@ -24686,40 +33978,71 @@ dat_01B5E8:
 	dc.b	$00,$00,$01,$38,$00,$00
 sub_01B5F6:
 	bset.b	#$0,$2(a0)
+loc_01B5FC:
 	bne.b	loc_01B610
+loc_01B5FE:
 	bset.b	#$2,$2(a0)
+loc_01B604:
 	bset.b	#$5,$2(a0)
+loc_01B60A:
 	move.b	#$29,$3F(a0)
 loc_01B610:
 	tst.b	(ram_C5CC).w
+loc_01B614:
 	bne.b	loc_01B678
+loc_01B616:
 	subq.b	#$1,$3F(a0)
+loc_01B61A:
 	bne.b	loc_01B676
+loc_01B61C:
 	move.b	#$29,$3F(a0)
+loc_01B622:
 	jsr	sub_01AC8A(pc)
+loc_01B626:
 	tst.w	d7
+loc_01B628:
 	bmi.b	loc_01B676
+loc_01B62A:
 	movem.l	d7/a0,-(a7)
+loc_01B62E:
 	movea.l	a0,a4
+loc_01B630:
 	movea.l	a2,a0
+loc_01B632:
 	lea	dat_01B69A(pc),a1
+loc_01B636:
 	lsl.w	#$2,d7
+loc_01B638:
 	movea.l	(a1,d7.w),a1
+loc_01B63C:
 	cmpa.w	#$0,a1
+loc_01B640:
 	beq.b	loc_01B658
+loc_01B642:
 	jsr	(a1)
+loc_01B644:
 	bset.b	#$6,$2(a0)
+loc_01B64A:
 	bset.b	#$5,$2(a0)
+loc_01B650:
 	move.b	#$60,$22(a0)
+loc_01B656:
 	movea.l	a0,a2
 loc_01B658:
 	movem.l	(a7)+,d7/a0
+loc_01B65C:
 	lsl.w	#$2,d7
+loc_01B65E:
 	dc.w	$4CBB,$0003,$7088		; movem.w dat_01B5E8(pc,d7.w),d0-d1
+loc_01B664:
 	add.w	$4(a0),d0
+loc_01B668:
 	move.w	d0,$4(a2)
+loc_01B66C:
 	add.w	$8(a0),d1
+loc_01B670:
 	move.w	d1,$8(a2)
+loc_01B674:
 	moveq	#$0,d0
 loc_01B676:
 	rts
@@ -24745,50 +34068,112 @@ dat_01B69A:
 	dc.b	$00,$14,$35,$68,$00,$08,$00,$08,$35,$68,$00,$04,$00,$04,$06,$6A
 	dc.b	$00,$20,$00,$08,$06,$6A,$FF,$F9,$00,$04,$11,$7C,$00,$29,$00,$3F
 	dc.b	$53,$28,$00,$3F,$4E,$75,$30,$BC,$02,$08,$5C,$49,$4E,$FA,$F8,$0C
-	dc.b	$4A,$28,$00,$3F,$66,$4A,$4E,$BA,$08,$42,$66,$3E,$08,$EA,$00,$06
-	dc.b	$00,$56,$70,$08,$15,$40,$00,$28,$15,$40,$00,$35,$15,$40,$00,$28
-	dc.b	$34,$BC,$02,$3C,$25,$7C,$00,$01,$B9,$DE,$00,$30,$25,$7C,$00,$08
-	dc.b	$70,$00,$00,$14,$35,$68,$00,$08,$00,$08,$35,$68,$00,$04,$00,$04
-	dc.b	$06,$6A,$00,$20,$00,$08,$5E,$6A,$00,$04,$11,$7C,$00,$29,$00,$3F
-	dc.b	$53,$28,$00,$3F,$4E,$75
+loc_01B710:
+	tst.b	$3F(a0)
+loc_01B714:
+	bne.b	loc_01B760
+loc_01B716:
+	jsr	sub_01BF5A(pc)
+loc_01B71A:
+	bne.b	loc_01B75A
+loc_01B71C:
+	bset.b	#$6,$56(a2)
+loc_01B722:
+	moveq	#$8,d0
+loc_01B724:
+	move.b	d0,$28(a2)
+loc_01B728:
+	move.b	d0,$35(a2)
+loc_01B72C:
+	move.b	d0,$28(a2)
+loc_01B730:
+	move.w	#$23C,(a2)
+loc_01B734:
+	move.l	#$1B9DE,$30(a2)
+loc_01B73C:
+	move.l	#$87000,$14(a2)
+loc_01B744:
+	move.w	$8(a0),$8(a2)
+loc_01B74A:
+	move.w	$4(a0),$4(a2)
+loc_01B750:
+	addi.w	#$20,$8(a2)
+loc_01B756:
+	addq.w	#$7,$4(a2)
+loc_01B75A:
+	move.b	#$29,$3F(a0)
+loc_01B760:
+	subq.b	#$1,$3F(a0)
+loc_01B764:
+	rts
 sub_01B766:
 	bset.b	#$0,$2(a0)
+loc_01B76C:
 	bne.b	loc_01B780
+loc_01B76E:
 	bset.b	#$2,$2(a0)
+loc_01B774:
 	bset.b	#$5,$2(a0)
+loc_01B77A:
 	move.b	#$29,$3F(a0)
 loc_01B780:
 	subq.b	#$1,$3F(a0)
+loc_01B784:
 	bne.b	loc_01B7E6
+loc_01B786:
 	move.w	$8(a0),d0
+loc_01B78A:
 	addq.w	#$8,d0
+loc_01B78C:
 	sub.w	(ram_E008).w,d0
+loc_01B790:
 	bgt.b	loc_01B7E8
+loc_01B792:
 	move.b	#$29,$3F(a0)
+loc_01B798:
 	jsr	sub_01AC8A(pc)
+loc_01B79C:
 	tst.w	d7
+loc_01B79E:
 	bmi.b	loc_01B7E6
+loc_01B7A0:
 	lea	dat_01B7EC(pc),a1
+loc_01B7A4:
 	tst.b	$1A(a0)
+loc_01B7A8:
 	beq.b	loc_01B7AE
 	lea	dat_01B7F4(pc),a1
 loc_01B7AE:
 	lsl.w	#$2,d7
+loc_01B7B0:
 	movem.w	(a1,d7.w),d0-d1
+loc_01B7B6:
 	add.w	$4(a0),d0
+loc_01B7BA:
 	move.w	d0,$4(a2)
+loc_01B7BE:
 	add.w	$8(a0),d1
+loc_01B7C2:
 	move.w	d1,$8(a2)
+loc_01B7C6:
 	move.l	a0,-(a7)
+loc_01B7C8:
 	movea.l	a2,a0
+loc_01B7CA:
 	movea.l	dat_01B7FC(pc,d7.w),a1
+loc_01B7CE:
 	cmpa.w	#$0,a1
+loc_01B7D2:
 	beq.b	loc_01B7E2
+loc_01B7D4:
 	jsr	(a1)
+loc_01B7D6:
 	bset.b	#$6,$2(a0)
+loc_01B7DC:
 	move.b	#$60,$22(a0)
 loc_01B7E2:
 	movea.l	(a7)+,a0
+loc_01B7E4:
 	moveq	#$0,d0
 loc_01B7E6:
 	rts
@@ -24805,43 +34190,74 @@ dat_01B7FC:
 	dc.b	$00,$01,$85,$28,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 sub_01B810:
 	bset.b	#$0,$2(a0)
+loc_01B816:
 	bne.b	loc_01B82A
+loc_01B818:
 	bset.b	#$2,$2(a0)
+loc_01B81E:
 	bset.b	#$5,$2(a0)
+loc_01B824:
 	move.b	#$29,$3F(a0)
 loc_01B82A:
 	subq.b	#$1,$3F(a0)
+loc_01B82E:
 	bne.b	loc_01B896
+loc_01B830:
 	move.w	$8(a0),d0
+loc_01B834:
 	addq.w	#$8,d0
+loc_01B836:
 	sub.w	(ram_E008).w,d0
+loc_01B83A:
 	bgt.b	loc_01B898
+loc_01B83C:
 	move.b	#$29,$3F(a0)
+loc_01B842:
 	lea	(ram_EE20).w,a2
+loc_01B846:
 	tst.b	$1A(a0)
+loc_01B84A:
 	beq.b	loc_01B850
 	lea	(ram_EEE0).w,a2
 loc_01B850:
 	jsr	sub_01AC72(pc)
+loc_01B854:
 	tst.w	d7
+loc_01B856:
 	bmi.b	loc_01B896
+loc_01B858:
 	lsl.w	#$2,d7
+loc_01B85A:
 	dc.w	$4CBB,$0003,$703E		; movem.w loc_01B89A(pc,d7.w),d0-d1
+loc_01B860:
 	add.w	$4(a0),d0
+loc_01B864:
 	move.w	d0,$4(a2)
+loc_01B868:
 	add.w	$8(a0),d1
+loc_01B86C:
 	move.w	d1,$8(a2)
+loc_01B870:
 	move.l	a0,-(a7)
+loc_01B872:
 	movea.l	a2,a0
+loc_01B874:
 	movea.l	dat_01B8A4(pc,d7.w),a1
+loc_01B878:
 	cmpa.w	#$0,a1
+loc_01B87C:
 	beq.b	loc_01B892
+loc_01B87E:
 	jsr	(a1)
+loc_01B880:
 	bset.b	#$6,$2(a0)
+loc_01B886:
 	bset.b	#$5,$2(a0)
+loc_01B88C:
 	move.b	#$60,$22(a0)
 loc_01B892:
 	movea.l	(a7)+,a0
+loc_01B894:
 	moveq	#$0,d0
 loc_01B896:
 	rts
@@ -24855,15 +34271,25 @@ dat_01B8A4:
 	dc.b	$00,$01,$85,$28,$00,$01,$85,$1C
 sub_01B8AC:
 	lea	(ram_F060).w,a3
+loc_01B8B0:
 	move.w	$4(a3),d0
+loc_01B8B4:
 	move.w	$8(a3),d1
+loc_01B8B8:
 	addi.w	#$1F8,d0
+loc_01B8BC:
 	subq.w	#$8,d1
+loc_01B8BE:
 	move.w	d0,$4(a0)
+loc_01B8C2:
 	move.w	d1,$8(a0)
+loc_01B8C6:
 	cmpi.b	#$20,$37(a0)
+loc_01B8CC:
 	beq.w	loc_01B984
+loc_01B8D0:
 	cmpi.b	#$80,$37(a3)
+loc_01B8D6:
 	bne.w	loc_01B97E
 	tst.b	$44(a0)
 	bne.b	loc_01B908
@@ -24955,122 +34381,216 @@ dat_01B9CA:
 	dc.b	$FF,$FF,$00,$01,$4B,$B6
 sub_01BA76:
 	moveq	#$0,d0
+loc_01BA78:
 	move.w	(ram_C328).w,d0
+loc_01BA7C:
 	add.w	d0,d0
+loc_01BA7E:
 	lea	dat_01BAA0(pc),a1
+loc_01BA82:
 	move.w	(a1,d0.w),d0
+loc_01BA86:
 	lea	(ram_FFB800).l,a1
+loc_01BA8C:
 	lea	dat_01C382(pc),a2
+loc_01BA90:
 	move.w	(a2)+,d7
 loc_01BA92:
 	move.w	(a2)+,d1
+loc_01BA94:
 	add.w	d0,d1
+loc_01BA96:
 	move.w	d1,(a1)+
+loc_01BA98:
 	dbra	d7,loc_01BA92
+loc_01BA9C:
 	jmp	sub_01B002(pc)
 dat_01BAA0:
 	dc.b	$00,$00,$00,$00,$22,$49,$00,$00,$22,$16,$22,$16,$00,$00,$00,$00
 	dc.b	$22,$20,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$21,$D1
 sub_01BABE:
 	subi.w	#$48,$4(a0)
+loc_01BAC4:
 	bra.b	sub_01BACC
 sub_01BAC6:
 	addi.w	#$48,$4(a0)
 sub_01BACC:
 	moveq	#$0,d0
+loc_01BACE:
 	move.b	$19(a0),$49(a0)
+loc_01BAD4:
 	move.w	d0,$18(a0)
+loc_01BAD8:
 	move.b	#$20,$22(a0)
+loc_01BADE:
 	move.w	(ram_C328).w,d1
+loc_01BAE2:
 	add.w	d1,d1
+loc_01BAE4:
 	lea	dat_01BD10(pc),a1
+loc_01BAE8:
 	move.w	(a1,d1.w),$1C(a0)
+loc_01BAEE:
 	lea	dat_01BD2E(pc),a1
+loc_01BAF2:
 	move.w	(a1,d1.w),$1E(a0)
+loc_01BAF8:
 	move.l	d0,$C(a0)
+loc_01BAFC:
 	move.w	#$1,$10(a0)
+loc_01BB02:
 	move.w	d0,$12(a0)
+loc_01BB06:
 	move.b	#$1,$48(a0)
+loc_01BB0C:
 	bclr.b	#$7,$1A(a0)
+loc_01BB12:
 	beq.b	loc_01BB18
 	move.b	d0,$48(a0)
 loc_01BB18:
 	bclr.b	#$6,$1A(a0)
+loc_01BB1E:
 	beq.b	loc_01BB26
 	subi.w	#$20,$4(a0)
 loc_01BB26:
 	move.w	d0,$52(a0)
+loc_01BB2A:
 	move.w	d0,$50(a0)
+loc_01BB2E:
 	ori.b	#$6A,$2(a0)
+loc_01BB34:
 	move.b	#$1,$34(a0)
+loc_01BB3A:
 	move.b	#$8,$3C(a0)
+loc_01BB40:
 	move.b	#$E,$3A(a0)
+loc_01BB46:
 	move.b	#$4,$3D(a0)
+loc_01BB4C:
 	move.b	#$80,$37(a0)
+loc_01BB52:
 	move.l	#$1C2F6,$30(a0)
+loc_01BB5A:
 	move.l	#$894A2,$14(a0)
+loc_01BB62:
 	cmpi.b	#$0,$1A(a0)
+loc_01BB68:
 	beq.b	loc_01BB7A
 	move.l	#$1C2D0,$30(a0)
 	move.l	#$894A2,$14(a0)
 loc_01BB7A:
 	move.w	#$284,(a0)
+loc_01BB7E:
 	move.w	(ram_C328).w,d0
+loc_01BB82:
 	add.w	d0,d0
+loc_01BB84:
 	lea	dat_01C346(pc),a1
+loc_01BB88:
 	tst.w	(Hardware_Version).w
+loc_01BB8C:
 	beq.b	loc_01BB92
+loc_01BB8E:
 	lea	dat_01C364(pc),a1
 loc_01BB92:
 	move.w	(a1,d0.w),d0
+loc_01BB96:
 	move.w	d0,$38(a0)
+loc_01BB9A:
 	lea	(ram_C000).w,a2
+loc_01BB9E:
 	move.w	(a2),d0
+loc_01BBA0:
 	addq.w	#$1,(a2)+
+loc_01BBA2:
 	move.w	d0,d1
+loc_01BBA4:
 	lsl.w	#$3,d0
+loc_01BBA6:
 	sub.w	d1,d0
+loc_01BBA8:
 	add.w	d0,d0
+loc_01BBAA:
 	adda.w	d0,a2
+loc_01BBAC:
 	move.w	#$9320,d0
+loc_01BBB0:
 	move.w	#$9403,d1
+loc_01BBB4:
 	move.w	#$950F,d2
+loc_01BBB8:
 	move.w	#$960F,d3
+loc_01BBBC:
 	move.w	#$9705,d4
+loc_01BBC0:
 	movem.w	d0-d4,(a2)
+loc_01BBC4:
 	adda.w	#$A,a2
+loc_01BBC8:
 	move.w	(ram_C328).w,d0
+loc_01BBCC:
 	lsl.w	#$2,d0
+loc_01BBCE:
 	lea	dat_01BCD4(pc),a1
+loc_01BBD2:
 	movem.w	(a1,d0.w),d0-d1
+loc_01BBD8:
 	movem.w	d0-d1,(a2)
+loc_01BBDC:
 	jsr	sub_01D380(pc)
+loc_01BBE0:
 	subi.w	#$60,$8(a0)
+loc_01BBE6:
 	movea.l	a0,a2
+loc_01BBE8:
 	lea	$60(a0),a0
+loc_01BBEC:
 	lea	dat_01C586(pc),a1
+loc_01BBF0:
 	jsr	sub_01ADB0(pc)
+loc_01BBF4:
 	bsr.w	sub_01BC72
+loc_01BBF8:
 	move.l	#$1C75E,$30(a0)
+loc_01BC00:
 	move.b	#$52,$28(a0)
+loc_01BC06:
 	lea	$60(a0),a0
+loc_01BC0A:
 	lea	dat_01C596(pc),a1
+loc_01BC0E:
 	jsr	sub_01ADB0(pc)
+loc_01BC12:
 	bsr.w	sub_01BC72
+loc_01BC16:
 	move.l	#$1C7A2,$30(a0)
+loc_01BC1E:
 	move.b	#$4C,$28(a0)
+loc_01BC24:
 	movea.l	a2,a0
+loc_01BC26:
 	move.l	#$FFB800,$28(a0)
+loc_01BC2E:
 	jsr	sub_01B01C(pc)
+loc_01BC32:
 	move.w	d0,$2E(a0)
+loc_01BC36:
 	move.w	#$5,$54(a0)
+loc_01BC3C:
 	move.w	#$B,$56(a0)
+loc_01BC42:
 	jsr	sub_01B2A2(pc)
+loc_01BC46:
 	bne.b	loc_01BC5A
+loc_01BC48:
 	move.w	a1,$2C(a0)
+loc_01BC4C:
 	move.b	d3,$1B(a0)
+loc_01BC50:
 	jsr	sub_01B048(pc)
+loc_01BC54:
 	bne.b	loc_01BC6E
+loc_01BC56:
 	jmp	sub_01AF0E(pc)
 loc_01BC5A:
 	movea.l	a0,a2
@@ -25083,20 +34603,35 @@ loc_01BC6E:
 	jmp	sub_01B002(pc)
 sub_01BC72:
 	moveq	#$0,d0
+loc_01BC74:
 	move.w	d0,$18(a0)
+loc_01BC78:
 	move.l	d0,$10(a0)
+loc_01BC7C:
 	move.l	d0,$C(a0)
+loc_01BC80:
 	move.b	#$60,$22(a0)
+loc_01BC86:
 	move.b	#$10,$35(a0)
+loc_01BC8C:
 	bclr.b	#$3,$2(a0)
+loc_01BC92:
 	ori.b	#$62,$2(a0)
+loc_01BC98:
 	move.w	a2,$2C(a0)
+loc_01BC9C:
 	move.b	#$1,$2A(a0)
+loc_01BCA2:
 	move.w	#$298,(a0)
+loc_01BCA6:
 	move.w	(ram_C328).w,d0
+loc_01BCAA:
 	add.w	d0,d0
+loc_01BCAC:
 	move.w	dat_01BCB6(pc,d0.w),d0
+loc_01BCB0:
 	move.w	d0,$1E(a0)
+loc_01BCB4:
 	rts
 dat_01BCB6:
 	dc.b	$00,$00,$00,$00,$01,$7D,$00,$00,$01,$EF
@@ -25116,26 +34651,40 @@ dat_01BD2E:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$25
 sub_01BD4C:
 	addq.w	#$1,$58(a0)
+loc_01BD50:
 	cmpi.w	#$40,$58(a0)
+loc_01BD56:
 	bcc.b	loc_01BD7E
+loc_01BD58:
 	jsr	sub_01B048(pc)
+loc_01BD5C:
 	bne.w	loc_01BE26
+loc_01BD60:
 	bsr.w	sub_01C1D4
+loc_01BD64:
 	beq.b	loc_01BD6A
 	bra.w	sub_01C222
 loc_01BD6A:
 	move.l	$10(a0),d0
+loc_01BD6E:
 	sub.l	d0,$8(a0)
+loc_01BD72:
 	move.l	$C(a0),d0
+loc_01BD76:
 	sub.l	d0,$4(a0)
 loc_01BD7A:
 	jmp	sub_01AF0E(pc)
 loc_01BD7E:
 	move.b	#$1,$34(a0)
+loc_01BD84:
 	move.w	#$28C,(a0)
+loc_01BD88:
 	move.b	#$20,$5A(a0)
+loc_01BD8E:
 	move.l	#$1C52C,$30(a0)
+loc_01BD96:
 	cmpi.b	#$0,$1A(a0)
+loc_01BD9C:
 	beq.b	loc_01BD7A
 	move.l	#$1C31C,$30(a0)
 	move.b	#$40,$5C(a0)
@@ -25144,14 +34693,23 @@ loc_01BD7E:
 	bra.b	loc_01BD7A
 sub_01BDB8:
 	clr.l	$10(a0)
+loc_01BDBC:
 	clr.l	$C(a0)
+loc_01BDC0:
 	jsr	sub_01B048(pc)
+loc_01BDC4:
 	bne.b	loc_01BE26
+loc_01BDC6:
 	cmpi.b	#$20,$37(a0)
+loc_01BDCC:
 	beq.b	loc_01BE0C
+loc_01BDCE:
 	tst.b	$5C(a0)
+loc_01BDD2:
 	bne.b	loc_01BDFA
+loc_01BDD4:
 	tst.b	$5D(a0)
+loc_01BDD8:
 	beq.b	loc_01BDFA
 	cmpi.b	#$1,$1A(a0)
 	bne.b	loc_01BDEA
@@ -25167,7 +34725,9 @@ loc_01BDF4:
 	move.b	#$21,$5C(a0)
 loc_01BDFA:
 	subq.b	#$1,$5C(a0)
+loc_01BDFE:
 	bsr.w	sub_01C1D4
+loc_01BE02:
 	beq.b	loc_01BE08
 	bra.w	sub_01C222
 loc_01BE08:
@@ -25191,63 +34751,106 @@ loc_01BE26:
 	jmp	sub_01B002(pc)
 sub_01BE3E:
 	clr.l	$10(a0)
+loc_01BE42:
 	clr.l	$C(a0)
+loc_01BE46:
 	jsr	sub_01B048(pc)
+loc_01BE4A:
 	bne.b	loc_01BE26
+loc_01BE4C:
 	cmpi.b	#$20,$37(a0)
+loc_01BE52:
 	beq.b	loc_01BE0C
+loc_01BE54:
 	bsr.w	sub_01C1D4
+loc_01BE58:
 	beq.w	loc_01BE64
 	bra.w	sub_01C222
 	dc.b	$4E,$FA,$F0,$AC
 loc_01BE64:
 	tst.b	$5E(a0)
+loc_01BE68:
 	bne.b	loc_01BEC6
+loc_01BE6A:
 	move.b	#$5,$5E(a0)
+loc_01BE70:
 	move.w	$8(a0),d0
+loc_01BE74:
 	move.w	$4(a0),d1
+loc_01BE78:
 	movem.w	d0-d1,-(a7)
+loc_01BE7C:
 	addi.w	#$18,$4(a0)
+loc_01BE82:
 	addi.w	#$38,$8(a0)
+loc_01BE88:
 	lea	(Objects_A).w,a1
+loc_01BE8C:
 	jsr	sub_01ABCE(pc)
+loc_01BE90:
 	andi.w	#$1F,d0
+loc_01BE94:
 	move.b	d0,$35(a0)
+loc_01BE98:
 	movem.w	(a7)+,d1-d2
+loc_01BE9C:
 	move.w	d1,$8(a0)
+loc_01BEA0:
 	move.w	d2,$4(a0)
+loc_01BEA4:
 	lea	dat_01C4A0(pc),a1
+loc_01BEA8:
 	subq.w	#$8,d0
+loc_01BEAA:
 	bcc.b	loc_01BEAE
 	moveq	#$8,d0
 loc_01BEAE:
 	cmpi.w	#$10,d0
+loc_01BEB2:
 	bcs.b	loc_01BEB6
+loc_01BEB4:
 	moveq	#$10,d0
 loc_01BEB6:
 	add.w	d0,d0
+loc_01BEB8:
 	add.w	d0,d0
+loc_01BEBA:
 	move.l	(a1,d0.w),$30(a0)
+loc_01BEC0:
 	move.b	#$1,$34(a0)
 loc_01BEC6:
 	tst.b	$5A(a0)
+loc_01BECA:
 	bne.b	loc_01BEF8
+loc_01BECC:
 	move.b	$35(a0),d2
+loc_01BED0:
 	cmpi.b	#$8,d2
+loc_01BED4:
 	blt.b	loc_01BEF2
+loc_01BED6:
 	cmpi.b	#$18,d2
+loc_01BEDA:
 	bgt.b	loc_01BEF2
+loc_01BEDC:
 	move.b	#$39,d3
+loc_01BEE0:
 	lea	dat_01C414(pc),a1
+loc_01BEE4:
 	jsr	sub_01A326(pc)
+loc_01BEE8:
 	bne.b	loc_01BEF2
+loc_01BEEA:
 	moveq	#-$4E,d0
+loc_01BEEC:
 	jsr	(sub_00A068).l
 loc_01BEF2:
 	move.b	#$51,$5A(a0)
 loc_01BEF8:
 	subq.b	#$1,$5A(a0)
+loc_01BEFC:
 	subq.b	#$1,$5E(a0)
+loc_01BF00:
 	jmp	sub_01AF0E(pc)
 sub_01BF04:
 	jsr	sub_01AC8A(pc)
@@ -25276,42 +34879,79 @@ dat_01BF46:
 	dc.l	sub_0185A2
 sub_01BF5A:
 	jsr	sub_01AC8A(pc)
+loc_01BF5E:
 	bmi.w	loc_01BFFC
+loc_01BF62:
 	movea.l	a0,a6
+loc_01BF64:
 	movea.l	a2,a0
+loc_01BF66:
 	moveq	#$2,d0
+loc_01BF68:
 	jsr	sub_01AB5C(pc)
+loc_01BF6C:
 	bne.w	loc_01BFFE
+loc_01BF70:
 	move.b	#$41,$54(a0)
+loc_01BF76:
 	lea	dat_017E96(pc),a1
+loc_01BF7A:
 	jsr	sub_01ADB0(pc)
+loc_01BF7E:
 	ori.b	#$C,$48(a0)
+loc_01BF84:
 	clr.b	$55(a0)
+loc_01BF88:
 	clr.l	$28(a0)
+loc_01BF8C:
 	clr.l	$2C(a0)
+loc_01BF90:
 	clr.l	$50(a0)
+loc_01BF94:
 	clr.b	$56(a0)
+loc_01BF98:
 	clr.b	$57(a0)
+loc_01BF9C:
 	ori.b	#$48,$2(a0)
+loc_01BFA2:
 	bset.b	#$1,$55(a0)
+loc_01BFA8:
 	andi.b	#$1,$55(a0)
+loc_01BFAE:
 	moveq	#$10,d0
+loc_01BFB0:
 	move.b	#$60,$22(a0)
+loc_01BFB6:
 	move.b	d0,$28(a0)
+loc_01BFBA:
 	move.b	d0,$35(a0)
+loc_01BFBE:
 	move.b	#$4,$52(a0)
+loc_01BFC4:
 	move.b	#$1,$34(a0)
+loc_01BFCA:
 	move.w	#$23C,(a0)
+loc_01BFCE:
 	move.l	#$15618,$30(a0)
+loc_01BFD6:
 	move.l	#$147EA,$58(a0)
+loc_01BFDE:
 	move.w	$8(a6),d0
+loc_01BFE2:
 	addi.w	#$5A,d0
+loc_01BFE6:
 	move.w	d0,$8(a0)
+loc_01BFEA:
 	move.w	$4(a6),d0
+loc_01BFEE:
 	addi.w	#$18,d0
+loc_01BFF2:
 	move.w	d0,$4(a0)
+loc_01BFF6:
 	movea.l	a0,a2
+loc_01BFF8:
 	movea.l	a6,a0
+loc_01BFFA:
 	moveq	#$0,d0
 loc_01BFFC:
 	rts
@@ -25323,28 +34963,48 @@ loc_01BFFE:
 	dc.b	$8A,$8E,$4E,$FA,$EF,$06
 sub_01C016:
 	moveq	#-$1,d0
+loc_01C018:
 	move.w	$2C(a0),d0
+loc_01C01C:
 	movea.l	d0,a2
+loc_01C01E:
 	cmpi.b	#$20,$37(a2)
+loc_01C024:
 	beq.w	sub_01B002
+loc_01C028:
 	moveq	#-$1,d0
+loc_01C02A:
 	move.w	$2C(a0),d0
+loc_01C02E:
 	movea.l	d0,a2
+loc_01C030:
 	move.w	$4(a2),$4(a0)
+loc_01C036:
 	move.w	$8(a2),$8(a0)
+loc_01C03C:
 	moveq	#$0,d0
+loc_01C03E:
 	move.b	$35(a0),d0
+loc_01C042:
 	andi.b	#$1E,d0
+loc_01C046:
 	add.w	d0,d0
+loc_01C048:
 	lea	dat_01C62E(pc),a1
+loc_01C04C:
 	cmpi.b	#$52,$28(a0)
+loc_01C052:
 	bne.b	loc_01C058
 	lea	dat_01C66E(pc),a1
 loc_01C058:
 	move.w	(a1,d0.w),d1
+loc_01C05C:
 	add.w	d1,$4(a0)
+loc_01C060:
 	move.w	$2(a1,d0.w),d1
+loc_01C064:
 	add.w	d1,$8(a0)
+loc_01C068:
 	jmp	sub_01AF0E(pc)
 	dc.b	$70,$FF,$30,$28
 	dc.b	$00,$2C,$24,$40,$0C,$2A,$00,$20,$00,$37,$67,$00,$00,$84,$4A,$28
@@ -25357,27 +35017,122 @@ loc_01C058:
 	dc.b	$D2,$68,$00,$08,$35,$41,$00,$08,$11,$7C,$00,$02,$00,$29,$53,$28
 	dc.b	$00,$2A,$66,$0C,$11,$7C,$00,$03,$00,$2A,$11,$7C,$00,$14,$00,$29
 	dc.b	$10,$28,$00,$35,$02,$40,$00,$1E,$43,$FA,$05,$A4,$D2,$F1,$00,$00
-	dc.b	$21,$49,$00,$30,$11,$7C,$00,$01,$00,$34,$60,$00,$FF,$0C,$70,$FF
-	dc.b	$30,$28,$00,$2C,$24,$40,$0C,$2A,$00,$20,$00,$37,$67,$00,$00,$88
-	dc.b	$4A,$28,$00,$29,$67,$04,$53,$28,$00,$29,$43,$F8,$E0,$00,$4E,$BA
-	dc.b	$EA,$8E,$4A,$00,$67,$08,$0C,$00,$00,$10,$65,$00,$00,$6A,$14,$00
-	dc.b	$11,$40,$00,$35,$4A,$28,$00,$29,$66,$5C,$70,$03,$C0,$28,$00,$2A
-	dc.b	$43,$FA,$04,$44,$10,$31,$00,$00,$D4,$00,$02,$02,$00,$1F,$16,$3C
-	dc.b	$00,$4C,$7E,$00,$26,$47,$4E,$BA,$E0,$80,$66,$22,$47,$FA,$04,$70
-	dc.b	$70,$1E,$C0,$28,$00,$35,$D0,$40,$4C,$B3,$00,$03,$00,$00,$D0,$68
-	dc.b	$00,$04,$35,$40,$00,$04,$D2,$68,$00,$08,$35,$41,$00,$08,$11,$7C
-	dc.b	$00,$02,$00,$29,$53,$28,$00,$2A,$66,$0C,$11,$7C,$00,$03,$00,$2A
-	dc.b	$11,$7C,$00,$14,$00,$29,$10,$28,$00,$35,$02,$40,$00,$1E,$43,$FA
-	dc.b	$05,$B0,$D2,$F1,$00,$00,$21,$49,$00,$30,$11,$7C,$00,$01,$00,$34
-	dc.b	$60,$00,$FE,$56
+	dc.b	$21,$49,$00,$30,$11,$7C,$00,$01,$00,$34,$60,$00,$FF,$0C
+loc_01C11E:
+	moveq	#-$1,d0
+loc_01C120:
+	move.w	$2C(a0),d0
+loc_01C124:
+	movea.l	d0,a2
+loc_01C126:
+	cmpi.b	#$20,$37(a2)
+loc_01C12C:
+	beq.w	loc_01C1B6
+loc_01C130:
+	tst.b	$29(a0)
+loc_01C134:
+	beq.b	loc_01C13A
+loc_01C136:
+	subq.b	#$1,$29(a0)
+loc_01C13A:
+	lea	(Objects_A).w,a1
+loc_01C13E:
+	jsr	sub_01ABCE(pc)
+loc_01C142:
+	tst.b	d0
+loc_01C144:
+	beq.b	loc_01C14E
+loc_01C146:
+	cmpi.b	#$10,d0
+loc_01C14A:
+	bcs.w	loc_01C1B6
+loc_01C14E:
+	move.b	d0,d2
+loc_01C150:
+	move.b	d0,$35(a0)
+loc_01C154:
+	tst.b	$29(a0)
+loc_01C158:
+	bne.b	loc_01C1B6
+loc_01C15A:
+	moveq	#$3,d0
+loc_01C15C:
+	and.b	$2A(a0),d0
+loc_01C160:
+	lea	dat_01C5A6(pc),a1
+loc_01C164:
+	move.b	(a1,d0.w),d0
+loc_01C168:
+	add.b	d0,d2
+loc_01C16A:
+	andi.b	#$1F,d2
+loc_01C16E:
+	move.b	#$4C,d3
+loc_01C172:
+	moveq	#$0,d7
+loc_01C174:
+	movea.l	d7,a3
+loc_01C176:
+	jsr	sub_01A1F8(pc)
+loc_01C17A:
+	bne.b	loc_01C19E
+loc_01C17C:
+	lea	dat_01C5EE(pc),a3
+loc_01C180:
+	moveq	#$1E,d0
+loc_01C182:
+	and.b	$35(a0),d0
+loc_01C186:
+	add.w	d0,d0
+loc_01C188:
+	movem.w	(a3,d0.w),d0-d1
+loc_01C18E:
+	add.w	$4(a0),d0
+loc_01C192:
+	move.w	d0,$4(a2)
+loc_01C196:
+	add.w	$8(a0),d1
+loc_01C19A:
+	move.w	d1,$8(a2)
+loc_01C19E:
+	move.b	#$2,$29(a0)
+loc_01C1A4:
+	subq.b	#$1,$2A(a0)
+loc_01C1A8:
+	bne.b	loc_01C1B6
+loc_01C1AA:
+	move.b	#$3,$2A(a0)
+loc_01C1B0:
+	move.b	#$14,$29(a0)
+loc_01C1B6:
+	move.b	$35(a0),d0
+loc_01C1BA:
+	andi.w	#$1E,d0
+loc_01C1BE:
+	lea	dat_01C770(pc),a1
+loc_01C1C2:
+	adda.w	(a1,d0.w),a1
+loc_01C1C6:
+	move.l	a1,$30(a0)
+loc_01C1CA:
+	move.b	#$1,$34(a0)
+loc_01C1D0:
+	bra.w	loc_01C028
 sub_01C1D4:
 	jsr	(sub_00AF50).l
+loc_01C1DA:
 	tst.b	$44(a0)
+loc_01C1DE:
 	bne.w	loc_01C20E
+loc_01C1E2:
 	jsr	(sub_00E234).l
+loc_01C1E8:
 	jsr	(sub_00B036).l
+loc_01C1EE:
 	jsr	(sub_00E234).l
+loc_01C1F4:
 	jsr	(sub_00B298).l
+loc_01C1FA:
 	beq.b	loc_01C21A
 	tst.b	$44(a0)
 	bne.b	loc_01C20E
@@ -25390,6 +35145,7 @@ loc_01C20E:
 	subq.b	#$1,$44(a0)
 loc_01C21A:
 	moveq	#$0,d0
+loc_01C21C:
 	rts
 loc_01C21E:
 	moveq	#-$1,d0
@@ -25469,11 +35225,15 @@ dat_01C586:
 	dc.b	$1E,$00,$00,$01,$C6,$CE
 dat_01C596:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00
-	dc.b	$1E,$00,$00,$01,$C7,$90,$00,$FF,$00,$01,$00,$01,$00,$FF,$FF,$FC
+	dc.b	$1E,$00,$00,$01,$C7,$90
+dat_01C5A6:
+	dc.b	$00,$FF,$00,$01,$00,$01,$00,$FF,$FF,$FC
 	dc.b	$FF,$E8,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$12
 	dc.b	$FF,$F8,$00,$12,$FF,$F8,$00,$0E,$00,$06,$00,$0E,$00,$06,$00,$04
 	dc.b	$00,$0A,$FF,$F2,$00,$06,$FF,$F2,$00,$06,$FF,$EE,$FF,$F8,$FF,$EE
-	dc.b	$FF,$F8,$FF,$F4,$FF,$EE,$FF,$F4,$FF,$EE,$00,$04,$FF,$E8,$00,$04
+	dc.b	$FF,$F8,$FF,$F4,$FF,$EE,$FF,$F4,$FF,$EE,$00,$04,$FF,$E8
+dat_01C5EE:
+	dc.b	$00,$04
 	dc.b	$FF,$E8,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$12
 	dc.b	$FF,$F8,$00,$12,$FF,$F8,$00,$0E,$00,$06,$00,$0E,$00,$06,$FF,$FE
 	dc.b	$00,$08,$FF,$F2,$00,$06,$FF,$F2,$00,$06,$FF,$EE,$FF,$F8,$FF,$EE
@@ -25502,6 +35262,7 @@ dat_01C66E:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$C0,$6C,$00,$04,$00,$08
 	dc.b	$7E,$DC,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$C0,$6C,$00,$04
 	dc.b	$00,$08,$7F,$18,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$C0,$6C
+dat_01C770:
 	dc.b	$00,$20,$00,$32,$00,$32,$00,$32,$00,$32,$00,$32,$00,$32,$00,$32
 	dc.b	$00,$32,$00,$44,$00,$56,$00,$68,$00,$7A,$00,$8C,$00,$9E,$00,$B0
 	dc.b	$00,$04,$00,$08,$7E,$BE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
@@ -25518,25 +35279,45 @@ dat_01C66E:
 	dc.b	$00,$01,$C2,$54
 sub_01C844:
 	lea	dat_01CFF0(pc),a1
+loc_01C848:
 	jsr	sub_01ADB0(pc)
+loc_01C84C:
 	moveq	#$0,d0
+loc_01C84E:
 	move.w	d0,$18(a0)
+loc_01C852:
 	move.w	d0,$1C(a0)
+loc_01C856:
 	move.b	#$20,$22(a0)
+loc_01C85C:
 	move.l	d0,$C(a0)
+loc_01C860:
 	move.l	#$C000,$10(a0)
+loc_01C868:
 	ori.b	#$28,$2(a0)
+loc_01C86E:
 	move.l	#$1D056,$30(a0)
+loc_01C876:
 	move.w	#$294,(a0)
+loc_01C87A:
 	lea	dat_01D030(pc),a3
+loc_01C87E:
 	jsr	sub_01D368(pc)
+loc_01C882:
 	move.w	(ram_C328).w,d0
+loc_01C886:
 	add.w	d0,d0
+loc_01C888:
 	move.w	dat_01C8C0(pc,d0.w),d1
+loc_01C88C:
 	move.w	d1,$38(a0)
+loc_01C890:
 	move.w	dat_01C8A2(pc,d0.w),d0
+loc_01C894:
 	move.w	d0,$1E(a0)
+loc_01C898:
 	bset.b	#$6,$2(a0)
+loc_01C89E:
 	jmp	sub_01AF0E(pc)
 dat_01C8A2:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$02,$96,$00,$00,$00,$00
@@ -25546,29 +35327,48 @@ dat_01C8C0:
 	dc.b	$00,$00,$00,$96,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 sub_01C8DE:
 	addq.w	#$1,$58(a0)
+loc_01C8E2:
 	cmpi.w	#$50,$58(a0)
+loc_01C8E8:
 	bcc.b	loc_01C8FC
+loc_01C8EA:
 	bsr.w	sub_01C9C2
+loc_01C8EE:
 	bne.w	loc_01C998
+loc_01C8F2:
 	jsr	(sub_00AF50).l
+loc_01C8F8:
 	jmp	sub_01AF0E(pc)
 loc_01C8FC:
 	cmpi.b	#$20,$37(a0)
+loc_01C902:
 	beq.w	loc_01C998
+loc_01C906:
 	clr.l	$10(a0)
+loc_01C90A:
 	clr.l	$C(a0)
+loc_01C90E:
 	cmpi.w	#$1D0,$8(a0)
+loc_01C914:
 	ble.b	loc_01C91A
 	jmp	sub_01B002(pc)
 loc_01C91A:
 	cmpi.b	#$A,$5B(a0)
+loc_01C920:
 	bge.b	loc_01C948
+loc_01C922:
 	tst.b	$5A(a0)
+loc_01C926:
 	bne.b	loc_01C944
+loc_01C928:
 	jsr	(sub_0254EE).l
+loc_01C92E:
 	bne.b	loc_01C93E
+loc_01C930:
 	subq.w	#$8,$4(a2)
+loc_01C934:
 	subi.w	#$68,$8(a2)
+loc_01C93A:
 	addq.b	#$1,$5B(a0)
 loc_01C93E:
 	move.b	#$21,$5A(a0)
@@ -25576,8 +35376,11 @@ loc_01C944:
 	subq.b	#$1,$5A(a0)
 loc_01C948:
 	bsr.w	sub_01C9C2
+loc_01C94C:
 	bne.b	loc_01C998
+loc_01C94E:
 	tst.b	$1A(a0)
+loc_01C952:
 	beq.b	loc_01C98E
 	lea	(ram_F180).w,a1
 	cmpi.b	#$20,$37(a1)
@@ -25592,6 +35395,7 @@ loc_01C948:
 	bra.b	loc_01C998
 loc_01C98E:
 	jsr	(sub_00AF50).l
+loc_01C994:
 	jmp	sub_01AF0E(pc)
 loc_01C998:
 	bset.b	#$3,$2(a0)
@@ -25607,10 +35411,15 @@ loc_01C9B6:
 	rts
 sub_01C9C2:
 	tst.b	$44(a0)
+loc_01C9C6:
 	bne.w	loc_01C9F0
+loc_01C9CA:
 	jsr	(sub_00E234).l
+loc_01C9D0:
 	jsr	(sub_00B036).l
+loc_01C9D6:
 	jsr	(sub_00B298).l
+loc_01C9DC:
 	beq.b	loc_01CA2A
 	tst.b	$44(a0)
 	bne.b	loc_01C9F0
@@ -25633,26 +35442,47 @@ loc_01CA2A:
 	rts
 sub_01CA2C:
 	lea	dat_01CFF0(pc),a1
+loc_01CA30:
 	jsr	sub_01ADB0(pc)
+loc_01CA34:
 	moveq	#$0,d0
+loc_01CA36:
 	move.w	d0,$18(a0)
+loc_01CA3A:
 	move.w	d0,$1C(a0)
+loc_01CA3E:
 	move.b	#$20,$22(a0)
+loc_01CA44:
 	move.l	d0,$C(a0)
+loc_01CA48:
 	move.l	#$C000,$10(a0)
+loc_01CA50:
 	ori.b	#$28,$2(a0)
+loc_01CA56:
 	move.l	#$1D076,$30(a0)
+loc_01CA5E:
 	move.w	#$40C,(a0)
+loc_01CA62:
 	lea	dat_01D030(pc),a3
+loc_01CA66:
 	jsr	sub_01D368(pc)
+loc_01CA6A:
 	move.w	(ram_C328).w,d0
+loc_01CA6E:
 	subq.w	#$7,d0
+loc_01CA70:
 	add.w	d0,d0
+loc_01CA72:
 	move.w	dat_01CA9C(pc,d0.w),d1
+loc_01CA76:
 	move.w	d1,$38(a0)
+loc_01CA7A:
 	move.w	dat_01CA8C(pc,d0.w),d0
+loc_01CA7E:
 	move.w	d0,$1E(a0)
+loc_01CA82:
 	bset.b	#$6,$2(a0)
+loc_01CA88:
 	jmp	sub_01AF0E(pc)
 dat_01CA8C:
 	dc.b	$00,$00,$00,$00
@@ -25662,33 +35492,51 @@ dat_01CA9C:
 	dc.b	$00,$96,$00,$00,$00,$00,$01,$40,$01,$90,$00,$00
 sub_01CAAC:
 	addq.w	#$1,$58(a0)
+loc_01CAB0:
 	cmpi.w	#$50,$58(a0)
+loc_01CAB6:
 	bcc.b	loc_01CACA
+loc_01CAB8:
 	bsr.w	sub_01C9C2
+loc_01CABC:
 	bne.w	loc_01CB58
+loc_01CAC0:
 	jsr	(sub_00AF50).l
+loc_01CAC6:
 	jmp	sub_01AF0E(pc)
 loc_01CACA:
 	cmpi.b	#$20,$37(a0)
+loc_01CAD0:
 	beq.w	loc_01CB58
+loc_01CAD4:
 	clr.l	$10(a0)
+loc_01CAD8:
 	clr.l	$C(a0)
+loc_01CADC:
 	cmpi.w	#$1D0,$8(a0)
+loc_01CAE2:
 	ble.b	loc_01CAE8
 	jmp	sub_01B002(pc)
 loc_01CAE8:
 	tst.b	$5A(a0)
+loc_01CAEC:
 	bne.b	loc_01CB44
+loc_01CAEE:
 	addq.b	#$1,$5B(a0)
+loc_01CAF2:
 	cmpi.b	#$2,$5B(a0)
+loc_01CAF8:
 	bgt.b	loc_01CB3A
+loc_01CAFA:
 	tst.b	$1A(a0)
+loc_01CAFE:
 	beq.b	loc_01CB0A
 	move.b	#$17,$5A(a0)
 	bsr.b	sub_01CB86
 	bra.b	loc_01CB14
 loc_01CB0A:
 	move.b	#$5,$5A(a0)
+loc_01CB10:
 	bsr.w	sub_01CB9E
 loc_01CB14:
 	bne.b	loc_01CB44
@@ -25704,12 +35552,17 @@ loc_01CB14:
 	bra.b	loc_01CB44
 loc_01CB3A:
 	clr.b	$5B(a0)
+loc_01CB3E:
 	move.b	#$81,$5A(a0)
 loc_01CB44:
 	subq.b	#$1,$5A(a0)
+loc_01CB48:
 	bsr.w	sub_01C9C2
+loc_01CB4C:
 	bne.b	loc_01CB58
+loc_01CB4E:
 	jsr	(sub_00AF50).l
+loc_01CB54:
 	jmp	sub_01AF0E(pc)
 loc_01CB58:
 	bset.b	#$3,$2(a0)
@@ -25735,6 +35588,7 @@ loc_01CB9C:
 	rts
 sub_01CB9E:
 	bsr.b	sub_01CBFC
+loc_01CBA0:
 	bne.b	loc_01CBA8
 	jsr	sub_01AD58(pc)
 	beq.b	loc_01CBAA
@@ -25764,12 +35618,19 @@ dat_01CBEC:
 	dc.b	$00,$00,$00,$00,$00,$00,$02,$88,$02,$66,$00,$00
 sub_01CBFC:
 	move.w	$8(a0),d0
+loc_01CC00:
 	subi.w	#$80,d0
+loc_01CC04:
 	blt.b	loc_01CC20
+loc_01CC06:
 	subi.w	#$120,d0
+loc_01CC0A:
 	bgt.b	loc_01CC20
+loc_01CC0C:
 	move.w	$4(a0),d0
+loc_01CC10:
 	subi.w	#$60,d0
+loc_01CC14:
 	blt.b	loc_01CC20
 	subi.w	#$100,d0
 	bgt.b	loc_01CC20
@@ -25777,57 +35638,100 @@ sub_01CBFC:
 	rts
 loc_01CC20:
 	moveq	#-$1,d0
+loc_01CC22:
 	rts
 sub_01CC24:
 	tst.b	$2A(a0)
+loc_01CC28:
 	bne.b	loc_01CC84
+loc_01CC2A:
 	move.b	#$5,$2A(a0)
+loc_01CC30:
 	addq.b	#$1,$2B(a0)
+loc_01CC34:
 	cmpi.b	#$5,$2B(a0)
+loc_01CC3A:
 	bgt.b	loc_01CC84
+loc_01CC3C:
 	jsr	sub_01AD58(pc)
+loc_01CC40:
 	bne.b	loc_01CC84
+loc_01CC42:
 	lea	(dat_028434).l,a1
+loc_01CC48:
 	jsr	sub_01ADF6(pc)
+loc_01CC4C:
 	move.w	$4(a0),$4(a2)
+loc_01CC52:
 	move.w	$8(a0),$8(a2)
+loc_01CC58:
 	move.w	#$23C,(a2)
+loc_01CC5C:
 	move.l	#$8940C,$14(a2)
+loc_01CC64:
 	move.b	#$60,$22(a2)
+loc_01CC6A:
 	bset.b	#$6,$2(a2)
+loc_01CC70:
 	move.w	(ram_C328).w,d0
+loc_01CC74:
 	subq.w	#$7,d0
+loc_01CC76:
 	add.w	d0,d0
+loc_01CC78:
 	lea	dat_01CD00(pc),a1
+loc_01CC7C:
 	move.w	(a1,d0.w),d0
+loc_01CC80:
 	move.w	d0,$1E(a2)
 loc_01CC84:
 	subq.b	#$1,$2A(a0)
+loc_01CC88:
 	cmpi.w	#$48,$8(a0)
+loc_01CC8E:
 	bcs.b	loc_01CC96
 	jmp	(sub_01AF0E).l
 loc_01CC96:
 	move.w	#$41C,(a0)
+loc_01CC9A:
 	lea	(Objects_A).w,a2
+loc_01CC9E:
 	move.w	$4(a2),$4(a0)
+loc_01CCA4:
 	move.w	$8(a2),d0
+loc_01CCA8:
 	subi.w	#$10,d0
+loc_01CCAC:
 	cmpi.b	#$1,$28(a0)
+loc_01CCB2:
 	beq.b	loc_01CCD0
+loc_01CCB4:
 	jsr	(sub_01ABA6).l
+loc_01CCBA:
 	move.b	(RNG_Seed).w,d1
+loc_01CCBE:
 	andi.w	#$3,d1
+loc_01CCC2:
 	add.w	d1,d1
+loc_01CCC4:
 	move.w	dat_01CCF8(pc,d1.w),d1
+loc_01CCC8:
 	add.w	d1,$4(a0)
+loc_01CCCC:
 	subi.w	#$40,d0
 loc_01CCD0:
 	sub.w	$8(a0),d0
+loc_01CCD4:
 	lsr.w	#$3,d0
+loc_01CCD6:
 	move.b	d0,$29(a0)
+loc_01CCDA:
 	cmpi.b	#$45,$36(a0)
+loc_01CCE0:
 	beq.b	loc_01CCEA
+loc_01CCE2:
 	lea	dat_01D0AC(pc),a1
+loc_01CCE6:
 	jmp	sub_01AF1A(pc)
 loc_01CCEA:
 	lea	dat_01D0BE(pc),a1
@@ -25839,8 +35743,11 @@ dat_01CD00:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$26,$00,$1A,$00,$00
 sub_01CD10:
 	cmpi.b	#$45,$36(a0)
+loc_01CD16:
 	beq.b	loc_01CD1E
+loc_01CD18:
 	subq.b	#$1,$29(a0)
+loc_01CD1C:
 	beq.b	loc_01CD22
 loc_01CD1E:
 	jmp	sub_01AF0E(pc)
@@ -25867,26 +35774,47 @@ loc_01CD22:
 	dc.b	$00,$00,$02,$A8,$02,$A8,$00,$00
 sub_01CE08:
 	lea	dat_01CFF0(pc),a1
+loc_01CE0C:
 	jsr	sub_01ADB0(pc)
+loc_01CE10:
 	moveq	#$0,d0
+loc_01CE12:
 	move.w	d0,$18(a0)
+loc_01CE16:
 	move.w	d0,$1C(a0)
+loc_01CE1A:
 	move.b	#$20,$22(a0)
+loc_01CE20:
 	move.l	d0,$C(a0)
+loc_01CE24:
 	move.l	#$C000,$10(a0)
+loc_01CE2C:
 	ori.b	#$28,$2(a0)
+loc_01CE32:
 	move.l	#$1D088,$30(a0)
+loc_01CE3A:
 	move.w	#$414,(a0)
+loc_01CE3E:
 	lea	dat_01D030(pc),a3
+loc_01CE42:
 	jsr	sub_01D368(pc)
+loc_01CE46:
 	move.w	(ram_C328).w,d0
+loc_01CE4A:
 	subq.w	#$7,d0
+loc_01CE4C:
 	add.w	d0,d0
+loc_01CE4E:
 	move.w	dat_01CE78(pc,d0.w),d1
+loc_01CE52:
 	move.w	d1,$38(a0)
+loc_01CE56:
 	move.w	dat_01CE68(pc,d0.w),d0
+loc_01CE5A:
 	move.w	d0,$1E(a0)
+loc_01CE5E:
 	bset.b	#$6,$2(a0)
+loc_01CE64:
 	jmp	sub_01AF0E(pc)
 dat_01CE68:
 	dc.b	$00,$00,$00,$00,$02,$BC,$00,$00
@@ -25896,22 +35824,34 @@ dat_01CE78:
 	dc.b	$00,$00,$00,$C8,$00,$FA,$00,$00
 sub_01CE88:
 	addq.w	#$1,$58(a0)
+loc_01CE8C:
 	cmpi.w	#$50,$58(a0)
+loc_01CE92:
 	bcc.b	loc_01CEA6
+loc_01CE94:
 	bsr.w	sub_01C9C2
+loc_01CE98:
 	bne.w	loc_01CF12
+loc_01CE9C:
 	jsr	(sub_00AF50).l
+loc_01CEA2:
 	jmp	sub_01AF0E(pc)
 loc_01CEA6:
 	cmpi.b	#$20,$37(a0)
+loc_01CEAC:
 	beq.w	loc_01CF12
+loc_01CEB0:
 	clr.l	$10(a0)
+loc_01CEB4:
 	clr.l	$C(a0)
+loc_01CEB8:
 	cmpi.w	#$1D0,$8(a0)
+loc_01CEBE:
 	ble.b	loc_01CEC4
 	jmp	sub_01B002(pc)
 loc_01CEC4:
 	bsr.w	sub_01CBFC
+loc_01CEC8:
 	bne.b	loc_01CF02
 	tst.b	$5A(a0)
 	bne.b	loc_01CEFE
@@ -25931,8 +35871,11 @@ loc_01CEFE:
 	subq.b	#$1,$5A(a0)
 loc_01CF02:
 	bsr.w	sub_01C9C2
+loc_01CF06:
 	bne.b	loc_01CF12
+loc_01CF08:
 	jsr	(sub_00AF50).l
+loc_01CF0E:
 	jmp	sub_01AF0E(pc)
 loc_01CF12:
 	bset.b	#$3,$2(a0)
@@ -26050,29 +35993,43 @@ dat_01D17A:
 	dc.b	$FF,$FE
 sub_01D2F2:
 	lea	dat_01D332(pc),a1
+loc_01D2F6:
 	lea	dat_01DEDC(pc),a2
+loc_01D2FA:
 	bra.b	loc_01D30E
 sub_01D2FC:
 	lea	dat_01D33E(pc),a1
+loc_01D300:
 	lea	dat_01DF8E(pc),a2
+loc_01D304:
 	bra.b	loc_01D30E
 sub_01D306:
 	lea	dat_01D34A(pc),a1
+loc_01D30A:
 	lea	dat_01E098(pc),a2
 loc_01D30E:
 	moveq	#$0,d0
+loc_01D310:
 	move.w	(ram_C328).w,d0
+loc_01D314:
 	add.w	d0,d0
+loc_01D316:
 	move.w	(a1,d0.w),d0
+loc_01D31A:
 	lea	(ram_FFB800).l,a1
+loc_01D320:
 	move.w	(a2)+,d7
 loc_01D322:
 	move.w	(a2)+,d1
+loc_01D324:
 	beq.b	loc_01D328
+loc_01D326:
 	add.w	d0,d1
 loc_01D328:
 	move.w	d1,(a1)+
+loc_01D32A:
 	dbra	d7,loc_01D322
+loc_01D32E:
 	jmp	sub_01B002(pc)
 dat_01D332:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$22,$40,$00,$00
@@ -26085,36 +36042,59 @@ dat_01D34A:
 	dc.b	$22,$94,$00,$00,$00,$00,$00,$00
 sub_01D368:
 	lea	(ram_C700).w,a2
+loc_01D36C:
 	move.w	(a3)+,d7
 loc_01D36E:
 	move.w	(a3)+,d0
+loc_01D370:
 	move.w	(a3)+,(a2,d0.w)
+loc_01D374:
 	dbra	d7,loc_01D36E
+loc_01D378:
 	bset.b	#$0,(ram_C59A).w
+loc_01D37E:
 	rts
 sub_01D380:
 	lea	dat_01DEA0(pc),a3
+loc_01D384:
 	cmpi.w	#$5,(ram_C328).w
+loc_01D38A:
 	beq.b	loc_01D39C
+loc_01D38C:
 	lea	dat_01DEBE(pc),a3
+loc_01D390:
 	cmpi.w	#$4,(ram_C328).w
+loc_01D396:
 	beq.b	loc_01D39C
+loc_01D398:
 	lea	dat_01DE82(pc),a3
 loc_01D39C:
 	bra.b	sub_01D368
 sub_01D39E:
 	lea	dat_01DE72(pc),a1
+loc_01D3A2:
 	jsr	sub_01ADB0(pc)
+loc_01D3A6:
 	clr.w	$18(a0)
+loc_01D3AA:
 	clr.b	$1A(a0)
+loc_01D3AE:
 	ori.b	#$6B,$2(a0)
+loc_01D3B4:
 	move.l	a3,$2A(a0)
+loc_01D3B8:
 	move.b	#$1,$2E(a0)
+loc_01D3BE:
 	move.b	#$60,$22(a0)
+loc_01D3C4:
 	move.w	#$2B0,(a0)
+loc_01D3C8:
 	move.w	a2,$28(a0)
+loc_01D3CC:
 	move.w	dat_01D3D6(pc,d1.w),d2
+loc_01D3D0:
 	move.w	d2,$1E(a0)
+loc_01D3D4:
 	rts
 dat_01D3D6:
 	dc.b	$00,$00,$02,$D5,$00,$00,$00,$00,$01,$EF
@@ -26122,19 +36102,33 @@ dat_01D3D6:
 	dc.b	$00,$00,$00,$00
 sub_01D3F4:
 	lea	dat_01DE62(pc),a1
+loc_01D3F8:
 	jsr	sub_01ADB0(pc)
+loc_01D3FC:
 	clr.w	$18(a0)
+loc_01D400:
 	ori.b	#$6A,$2(a0)
+loc_01D406:
 	move.b	#$20,$22(a0)
+loc_01D40C:
 	move.b	#$1,$28(a0)
+loc_01D412:
 	move.l	#$1E368,$50(a0)
+loc_01D41A:
 	move.w	a2,$2C(a0)
+loc_01D41E:
 	move.w	#$5,$2A(a0)
+loc_01D424:
 	move.w	#$2AC,(a0)
+loc_01D428:
 	move.w	dat_01D458(pc,d1.w),d2
+loc_01D42C:
 	move.w	d2,$1C(a0)
+loc_01D430:
 	move.w	dat_01D43A(pc,d1.w),d2
+loc_01D434:
 	move.w	d2,$1E(a0)
+loc_01D438:
 	rts
 dat_01D43A:
 	dc.b	$00,$00,$00,$9F,$00,$00
@@ -26146,70 +36140,130 @@ dat_01D458:
 	dc.b	$00,$00,$00,$00,$00,$00
 sub_01D476:
 	moveq	#$0,d0
+loc_01D478:
 	move.w	d0,$18(a0)
+loc_01D47C:
 	move.w	d0,$52(a0)
+loc_01D480:
 	move.w	d0,$50(a0)
+loc_01D484:
 	bclr.b	#$3,$2(a0)
+loc_01D48A:
 	ori.b	#$26,$2(a0)
+loc_01D490:
 	lea	dat_01DE52(pc),a1
+loc_01D494:
 	jsr	sub_01ADB0(pc)
+loc_01D498:
 	moveq	#$0,d1
+loc_01D49A:
 	move.w	(ram_C328).w,d1
+loc_01D49E:
 	add.w	d1,d1
+loc_01D4A0:
 	movea.l	a0,a2
+loc_01D4A2:
 	lea	$60(a0),a0
+loc_01D4A6:
 	bsr.w	sub_01D39E
+loc_01D4AA:
 	lea	$60(a0),a0
+loc_01D4AE:
 	bsr.w	sub_01D3F4
+loc_01D4B2:
 	movea.l	a2,a0
+loc_01D4B4:
 	move.w	dat_01D4D0(pc,d1.w),d2
+loc_01D4B8:
 	move.w	d2,$38(a0)
+loc_01D4BC:
 	lea	(ram_C000).w,a2
+loc_01D4C0:
 	move.w	(a2),d0
+loc_01D4C2:
 	addq.w	#$1,(a2)+
+loc_01D4C4:
 	move.w	d0,d1
+loc_01D4C6:
 	lsl.w	#$3,d0
+loc_01D4C8:
 	sub.w	d1,d0
+loc_01D4CA:
 	add.w	d0,d0
+loc_01D4CC:
 	adda.w	d0,a2
+loc_01D4CE:
 	rts
 dat_01D4D0:
 	dc.b	$00,$00,$00,$C8,$01,$18,$01,$68,$01,$B8,$02,$08,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$01,$90,$00,$00,$00,$00,$00,$00
 sub_01D4EE:
 	move.b	#$41,$36(a0)
+loc_01D4F4:
 	move.w	#$4BE0,$1C(a0)
+loc_01D4FA:
 	move.w	#$2A0,(a0)
+loc_01D4FE:
 	lea	dat_01E4D4(pc),a3
+loc_01D502:
 	bsr.w	sub_01D476
+loc_01D506:
 	move.l	#$1E21A,$30(a0)
+loc_01D50E:
 	move.l	#$8000,$10(a0)
+loc_01D516:
 	move.w	#$9370,d0
+loc_01D51A:
 	move.w	#$9402,d1
+loc_01D51E:
 	move.w	#$95CF,d2
+loc_01D522:
 	move.w	#$9615,d3
+loc_01D526:
 	move.w	#$9705,d4
+loc_01D52A:
 	movem.w	d0-d4,(a2)
+loc_01D52E:
 	adda.w	#$A,a2
+loc_01D532:
 	move.w	#$4800,(a2)+
+loc_01D536:
 	move.w	#$81,(a2)+
+loc_01D53A:
 	bsr.w	sub_01D380
+loc_01D53E:
 	ori.b	#$1,$48(a0)
+loc_01D544:
 	clr.w	$8(a0)
+loc_01D548:
 	bset.b	#$6,$C2(a0)
+loc_01D54E:
 	move.w	#$42C0,$DC(a0)
+loc_01D554:
 	move.w	#$216,$DE(a0)
+loc_01D55A:
 	move.l	#$1E3E4,$110(a0)
+loc_01D562:
 	move.l	#$FFB800,$28(a0)
+loc_01D56A:
 	jsr	sub_01B01C(pc)
+loc_01D56E:
 	move.w	d0,$2E(a0)
+loc_01D572:
 	move.w	#$7,$54(a0)
+loc_01D578:
 	move.w	#$A,$56(a0)
+loc_01D57E:
 	jsr	sub_01B2A2(pc)
+loc_01D582:
 	bne.b	loc_01D592
+loc_01D584:
 	move.w	a1,$2C(a0)
+loc_01D588:
 	jsr	sub_01B048(pc)
+loc_01D58C:
 	bne.b	loc_01D596
+loc_01D58E:
 	jmp	sub_01AF0E(pc)
 loc_01D592:
 	jmp	loc_01AE32(pc)
@@ -26217,22 +36271,36 @@ loc_01D596:
 	jmp	sub_01B002(pc)
 sub_01D59A:
 	addq.w	#$1,$58(a0)
+loc_01D59E:
 	cmpi.w	#$80,$58(a0)
+loc_01D5A4:
 	bcs.b	loc_01D5C8
+loc_01D5A6:
 	move.b	#$1,$34(a0)
+loc_01D5AC:
 	move.l	#$1E240,$30(a0)
+loc_01D5B4:
 	clr.l	$10(a0)
+loc_01D5B8:
 	clr.l	$C(a0)
+loc_01D5BC:
 	cmpi.w	#$168,$8(a0)
+loc_01D5C2:
 	ble.b	loc_01D5C8
 	jmp	loc_01AE32(pc)
 loc_01D5C8:
 	jsr	sub_01B048(pc)
+loc_01D5CC:
 	move.l	$10(a0),d0
+loc_01D5D0:
 	sub.l	d0,$8(a0)
+loc_01D5D4:
 	move.l	$C(a0),d0
+loc_01D5D8:
 	sub.l	d0,$4(a0)
+loc_01D5DC:
 	bsr.w	sub_01D62A
+loc_01D5E0:
 	beq.b	loc_01D626
 	movea.l	a0,a6
 	lea	$60(a0),a0
@@ -26255,33 +36323,57 @@ loc_01D626:
 	jmp	sub_01AF0E(pc)
 sub_01D62A:
 	jsr	(sub_00AF50).l
+loc_01D630:
 	tst.b	$44(a0)
+loc_01D634:
 	bne.w	loc_01D6AA
+loc_01D638:
 	move.w	#$4C0,d4
+loc_01D63C:
 	cmpi.b	#$41,$36(a0)
+loc_01D642:
 	beq.b	loc_01D686
+loc_01D644:
 	move.w	#$4D0,d4
+loc_01D648:
 	cmpi.b	#$42,$36(a0)
+loc_01D64E:
 	beq.b	loc_01D66E
+loc_01D650:
 	move.w	#$4E0,d4
+loc_01D654:
 	cmpi.b	#$43,$36(a0)
+loc_01D65A:
 	beq.b	loc_01D686
+loc_01D65C:
 	move.w	#$A70,d4
+loc_01D660:
 	cmpi.b	#$45,$36(a0)
+loc_01D666:
 	beq.b	loc_01D686
+loc_01D668:
 	move.w	#$4E8,d4
+loc_01D66C:
 	bra.b	loc_01D686
 loc_01D66E:
 	jsr	(sub_00E238).l
+loc_01D674:
 	jsr	(sub_00B036).l
+loc_01D67A:
 	jsr	(sub_00B298).l
+loc_01D680:
 	bne.b	loc_01D69E
+loc_01D682:
 	move.w	#$4D8,d4
 loc_01D686:
 	move.w	d4,$24(a0)
+loc_01D68A:
 	jsr	(sub_00E238).l
+loc_01D690:
 	jsr	(sub_00B036).l
+loc_01D696:
 	jsr	(sub_00B298).l
+loc_01D69C:
 	beq.b	loc_01D6B4
 loc_01D69E:
 	addq.b	#$2,$44(a0)
@@ -26292,6 +36384,7 @@ loc_01D6AA:
 	andi.b	#$1,$44(a0)
 loc_01D6B4:
 	btst.b	#$0,$3(a0)
+loc_01D6BA:
 	rts
 	dc.b	$08,$B8,$00,$02
 	dc.b	$C5,$EB,$66,$04,$50,$F8,$C6,$25,$2F,$08,$41,$F8,$F0,$00,$42,$68
@@ -26300,37 +36393,69 @@ loc_01D6B4:
 	dc.b	$EB,$64
 sub_01D6F2:
 	move.b	#$42,$36(a0)
+loc_01D6F8:
 	move.w	#$2A0,(a0)
+loc_01D6FC:
 	move.w	#$5040,$1C(a0)
+loc_01D702:
 	lea	dat_01E514(pc),a3
+loc_01D706:
 	bsr.w	sub_01D476
+loc_01D70A:
 	move.l	#$1E252,$30(a0)
+loc_01D712:
 	move.l	#$8000,$C(a0)
+loc_01D71A:
 	move.l	#$8000,$10(a0)
+loc_01D722:
 	move.w	#$9320,d0
+loc_01D726:
 	move.w	#$9404,d1
+loc_01D72A:
 	move.w	#$95A8,d2
+loc_01D72E:
 	move.w	#$9623,d3
+loc_01D732:
 	move.w	#$9705,d4
+loc_01D736:
 	movem.w	d0-d4,(a2)
+loc_01D73A:
 	adda.w	#$A,a2
+loc_01D73E:
 	move.w	#$4800,(a2)+
+loc_01D742:
 	move.w	#$81,(a2)+
+loc_01D746:
 	bsr.w	sub_01D380
+loc_01D74A:
 	ori.b	#$1,$48(a0)
+loc_01D750:
 	clr.w	$8(a0)
+loc_01D754:
 	move.l	#$1E3E4,$110(a0)
+loc_01D75C:
 	move.w	#$42E0,$DC(a0)
+loc_01D762:
 	move.l	#$FFB800,$28(a0)
+loc_01D76A:
 	jsr	sub_01B01C(pc)
+loc_01D76E:
 	move.w	d0,$2E(a0)
+loc_01D772:
 	move.w	#$B,$54(a0)
+loc_01D778:
 	move.w	#$A,$56(a0)
+loc_01D77E:
 	jsr	sub_01B2A2(pc)
+loc_01D782:
 	bne.b	loc_01D792
+loc_01D784:
 	move.w	a1,$2C(a0)
+loc_01D788:
 	jsr	sub_01B048(pc)
+loc_01D78C:
 	bne.b	loc_01D796
+loc_01D78E:
 	jmp	sub_01AF0E(pc)
 loc_01D792:
 	jmp	loc_01AE32(pc)
@@ -26340,49 +36465,88 @@ sub_01D79A:
 	subi.w	#$60,$4(a0)
 sub_01D7A0:
 	clr.l	$10(a0)
+loc_01D7A4:
 	clr.l	$C(a0)
+loc_01D7A8:
 	subi.w	#$20,$8(a0)
+loc_01D7AE:
 	move.b	#$43,$36(a0)
+loc_01D7B4:
 	move.w	#$278,(a0)
+loc_01D7B8:
 	lea	dat_01E554(pc),a3
+loc_01D7BC:
 	lea	dat_01DE52(pc),a1
+loc_01D7C0:
 	jsr	sub_01ADB0(pc)
+loc_01D7C4:
 	move.l	#$1E308,$30(a0)
+loc_01D7CC:
 	move.b	#$20,$22(a0)
+loc_01D7D2:
 	ori.b	#$6A,$2(a0)
+loc_01D7D8:
 	moveq	#$0,d1
+loc_01D7DA:
 	move.w	(ram_C328).w,d1
+loc_01D7DE:
 	add.w	d1,d1
+loc_01D7E0:
 	lea	dat_01D4D0(pc),a1
+loc_01D7E4:
 	move.w	(a1,d1.w),d2
+loc_01D7E8:
 	move.w	d2,$38(a0)
+loc_01D7EC:
 	movea.l	a0,a2
+loc_01D7EE:
 	lea	$60(a0),a0
+loc_01D7F2:
 	bsr.w	sub_01D39E
+loc_01D7F6:
 	lea	$60(a0),a0
+loc_01D7FA:
 	bsr.w	sub_01D3F4
+loc_01D7FE:
 	movea.l	a2,a0
+loc_01D800:
 	bsr.w	sub_01D380
+loc_01D804:
 	move.l	#$FFB800,$28(a0)
+loc_01D80C:
 	jsr	sub_01B01C(pc)
+loc_01D810:
 	move.w	d0,$2E(a0)
+loc_01D814:
 	move.w	#$B,$54(a0)
+loc_01D81A:
 	move.w	#$7,$56(a0)
+loc_01D820:
 	jsr	sub_01B2A2(pc)
+loc_01D824:
 	move.w	a1,$2C(a0)
+loc_01D828:
 	jsr	sub_01B048(pc)
+loc_01D82C:
 	jmp	sub_01AF0E(pc)
 	dc.b	$4E,$FA,$D7,$D0
 sub_01D834:
 	cmpi.b	#$20,$37(a0)
+loc_01D83A:
 	beq.w	loc_01D8D6
+loc_01D83E:
 	cmpi.w	#$8,(ram_E028).w
+loc_01D844:
 	beq.b	loc_01D84C
+loc_01D846:
 	jsr	sub_01B048(pc)
+loc_01D84A:
 	bne.b	loc_01D856
 loc_01D84C:
 	bsr.w	sub_01D62A
+loc_01D850:
 	bne.b	loc_01D86A
+loc_01D852:
 	jmp	sub_01AF0E(pc)
 loc_01D856:
 	clr.l	(a0)
@@ -26426,25 +36590,74 @@ loc_01D8D6:
 	jsr	sub_01B048(pc)
 	bne.w	loc_01D856
 	jmp	sub_01AF0E(pc)
-	dc.b	$22,$3C,$00,$00,$40,$00,$30,$38,$E0,$04,$90,$68,$00,$04
-	dc.b	$6E,$30,$67,$42,$44,$40,$02,$40,$FF,$FC,$67,$3A,$0C,$68,$00,$44
-	dc.b	$00,$5A,$6C,$32,$44,$81,$52,$68,$00,$5A,$21,$41,$00,$0C,$43,$FA
-	dc.b	$09,$68,$0C,$28,$00,$44,$00,$36,$67,$04,$43,$FA,$09,$8C,$4E,$FA
-	dc.b	$D5,$FA,$02,$40,$FF,$FE,$67,$0E,$0C,$68,$00,$01,$00,$5A,$6D,$06
-	dc.b	$53,$68,$00,$5A,$60,$D4,$43,$FA,$09,$5E,$0C,$28,$00,$44,$00,$36
-	dc.b	$67,$04,$43,$FA,$09,$82,$42,$A8,$00,$0C,$4E,$FA,$D5,$CE
+loc_01D8E2:
+	move.l	#$4000,d1
+loc_01D8E8:
+	move.w	(ram_E004).w,d0
+loc_01D8EC:
+	sub.w	$4(a0),d0
+loc_01D8F0:
+	bgt.b	loc_01D922
+	beq.b	loc_01D936
+	neg.w	d0
+	andi.w	#$FFFC,d0
+	beq.b	loc_01D936
+	cmpi.w	#$44,$5A(a0)
+	bge.b	loc_01D936
+	neg.l	d1
+	addq.w	#$1,$5A(a0)
+loc_01D90A:
+	move.l	d1,$C(a0)
+	lea	dat_01E278(pc),a1
+	cmpi.b	#$44,$36(a0)
+	beq.b	loc_01D91E
+	lea	dat_01E2A8(pc),a1
+loc_01D91E:
+	jmp	sub_01AF1A(pc)
+loc_01D922:
+	andi.w	#$FFFE,d0
+loc_01D926:
+	beq.b	loc_01D936
+loc_01D928:
+	cmpi.w	#$1,$5A(a0)
+loc_01D92E:
+	blt.b	loc_01D936
+	subq.w	#$1,$5A(a0)
+	bra.b	loc_01D90A
+loc_01D936:
+	lea	dat_01E296(pc),a1
+loc_01D93A:
+	cmpi.b	#$44,$36(a0)
+loc_01D940:
+	beq.b	loc_01D946
+	lea	dat_01E2C6(pc),a1
+loc_01D946:
+	clr.l	$C(a0)
+loc_01D94A:
+	jmp	sub_01AF1A(pc)
 sub_01D94E:
 	clr.l	$10(a0)
+loc_01D952:
 	clr.l	$C(a0)
+loc_01D956:
 	subi.w	#$20,$8(a0)
+loc_01D95C:
 	move.w	#$358,(a0)
+loc_01D960:
 	lea	dat_01DE52(pc),a1
+loc_01D964:
 	jsr	sub_01ADB0(pc)
+loc_01D968:
 	bclr.b	#$7,$1A(a0)
+loc_01D96E:
 	bne.b	loc_01D994
+loc_01D970:
 	move.l	#$1E278,$30(a0)
+loc_01D978:
 	move.b	#$44,$36(a0)
+loc_01D97E:
 	tst.b	$19(a0)
+loc_01D982:
 	beq.b	loc_01D9A2
 	move.l	#$1E2D8,$30(a0)
 	move.b	#$44,$36(a0)
@@ -26454,36 +36667,62 @@ loc_01D994:
 	move.b	#$45,$36(a0)
 loc_01D9A2:
 	moveq	#$0,d1
+loc_01D9A4:
 	move.b	$1A(a0),d1
+loc_01D9A8:
 	move.w	d1,$5A(a0)
 loc_01D9AC:
 	move.b	#$20,$22(a0)
+loc_01D9B2:
 	ori.b	#$68,$2(a0)
+loc_01D9B8:
 	move.w	(ram_C328).w,d1
+loc_01D9BC:
 	add.w	d1,d1
+loc_01D9BE:
 	lea	dat_01D4D0(pc),a1
+loc_01D9C2:
 	move.w	(a1,d1.w),d2
+loc_01D9C6:
 	move.w	d2,$38(a0)
+loc_01D9CA:
 	lea	dat_01E554(pc),a3
+loc_01D9CE:
 	movea.l	a0,a2
+loc_01D9D0:
 	lea	$60(a0),a0
+loc_01D9D4:
 	bsr.w	sub_01D39E
+loc_01D9D8:
 	lea	$60(a0),a0
+loc_01D9DC:
 	bsr.w	sub_01D3F4
+loc_01D9E0:
 	cmpi.w	#$8,d1
+loc_01D9E4:
 	bne.b	loc_01D9EE
 	move.l	#$1E3E4,$50(a0)
 loc_01D9EE:
 	move.w	dat_01DA54(pc,d1.w),d2
+loc_01D9F2:
 	move.w	d2,$1C(a0)
+loc_01D9F6:
 	move.w	dat_01DA18(pc,d1.w),d2
+loc_01D9FA:
 	move.w	d2,$1E(a0)
+loc_01D9FE:
 	movea.l	a2,a0
+loc_01DA00:
 	move.w	dat_01DA36(pc,d1.w),d0
+loc_01DA04:
 	move.w	d0,$1E(a0)
+loc_01DA08:
 	move.w	dat_01DA72(pc,d1.w),d0
+loc_01DA0C:
 	move.w	d0,$1C(a0)
+loc_01DA10:
 	bsr.w	sub_01D380
+loc_01DA14:
 	jmp	sub_01AF0E(pc)
 dat_01DA18:
 	dc.b	$00,$00,$00,$9F,$00,$00,$00,$00
@@ -26502,13 +36741,21 @@ dat_01DA72:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$52,$80,$00,$00,$00,$00,$00,$00
 sub_01DA90:
 	cmpi.w	#$170,$8(a0)
+loc_01DA96:
 	bgt.w	loc_01DB42
+loc_01DA9A:
 	jsr	(sub_00AF50).l
+loc_01DAA0:
 	tst.b	$44(a0)
+loc_01DAA4:
 	bne.b	loc_01DAC6
+loc_01DAA6:
 	jsr	(sub_00E234).l
+loc_01DAAC:
 	jsr	(sub_00B036).l
+loc_01DAB2:
 	jsr	(sub_00B298).l
+loc_01DAB8:
 	beq.b	loc_01DAD0
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
@@ -26518,9 +36765,13 @@ loc_01DAC6:
 	andi.b	#$1,$44(a0)
 loc_01DAD0:
 	btst.b	#$0,$3(a0)
+loc_01DAD6:
 	bne.b	loc_01DAE4
+loc_01DAD8:
 	jsr	sub_01AF0E(pc)
+loc_01DADC:
 	move.w	#$1,$26(a0)
+loc_01DAE2:
 	rts
 loc_01DAE4:
 	move.b	#$20,$37(a0)
@@ -26552,106 +36803,184 @@ dat_01DB6C:
 	dc.b	$00,$10
 sub_01DB82:
 	moveq	#-$1,d0
+loc_01DB84:
 	move.w	$2C(a0),d0
+loc_01DB88:
 	movea.l	d0,a5
+loc_01DB8A:
 	cmpi.b	#$20,$37(a5)
+loc_01DB90:
 	beq.w	loc_01DC42
+loc_01DB94:
 	move.w	$4(a5),$4(a0)
+loc_01DB9A:
 	move.w	$8(a5),$8(a0)
+loc_01DBA0:
 	moveq	#$0,d0
+loc_01DBA2:
 	move.b	$36(a5),d0
+loc_01DBA6:
 	subi.w	#$41,d0
+loc_01DBAA:
 	lsl.w	#$2,d0
+loc_01DBAC:
 	dc.w	$4CBB,$0003,$00BE		; movem.w dat_01DB6C(pc,d0.w),d0-d1
+loc_01DBB2:
 	add.w	d0,$4(a0)
+loc_01DBB6:
 	add.w	d1,$8(a0)
+loc_01DBBA:
 	tst.b	$2A(a0)
+loc_01DBBE:
 	bne.w	loc_01DC3E
+loc_01DBC2:
 	move.b	$2B(a0),$2A(a0)
+loc_01DBC8:
 	lea	(Objects_A).w,a1
+loc_01DBCC:
 	move.w	$8(a1),d0
+loc_01DBD0:
 	sub.w	$8(a0),d0
+loc_01DBD4:
 	bmi.b	loc_01DC42
+loc_01DBD6:
 	jsr	sub_01ABCE(pc)
+loc_01DBDA:
 	cmpi.b	#$8,d0
+loc_01DBDE:
 	bcc.b	loc_01DBE4
+loc_01DBE0:
 	moveq	#$8,d0
+loc_01DBE2:
 	bra.b	loc_01DBEC
 loc_01DBE4:
 	cmpi.b	#$18,d0
+loc_01DBE8:
 	bcs.b	loc_01DBEC
+loc_01DBEA:
 	moveq	#$18,d0
 loc_01DBEC:
 	move.b	d0,$35(a0)
+loc_01DBF0:
 	move.b	d0,d2
+loc_01DBF2:
 	tst.b	$29(a0)
+loc_01DBF6:
 	beq.b	loc_01DBFE
+loc_01DBF8:
 	subq.b	#$1,$29(a0)
+loc_01DBFC:
 	bra.b	loc_01DC24
 loc_01DBFE:
 	bsr.w	sub_01DC4E
+loc_01DC02:
 	bne.b	loc_01DC1E
+loc_01DC04:
 	move.w	d2,d4
+loc_01DC06:
 	move.w	d0,d2
+loc_01DC08:
 	andi.w	#$1F,d2
+loc_01DC0C:
 	move.b	#$4C,d3
+loc_01DC10:
 	jsr	sub_01A276(pc)
+loc_01DC14:
 	move.w	d4,d2
+loc_01DC16:
 	moveq	#-$4F,d0
+loc_01DC18:
 	jsr	(sub_00A068).l
 loc_01DC1E:
 	move.b	#$14,$29(a0)
 loc_01DC24:
 	movea.l	$50(a0),a1
+loc_01DC28:
 	andi.w	#$1F,d2
+loc_01DC2C:
 	subq.w	#$8,d2
+loc_01DC2E:
 	add.w	d2,d2
+loc_01DC30:
 	adda.w	(a1,d2.w),a1
+loc_01DC34:
 	move.l	a1,$30(a0)
+loc_01DC38:
 	move.b	#$1,$34(a0)
 loc_01DC3E:
 	subq.b	#$1,$2A(a0)
 loc_01DC42:
 	jsr	sub_01AF0E(pc)
+loc_01DC46:
 	move.w	#$2,$26(a0)
+loc_01DC4C:
 	rts
 sub_01DC4E:
 	cmpi.w	#$60,$8(a0)
+loc_01DC54:
 	ble.b	loc_01DC6A
+loc_01DC56:
 	cmpi.w	#$70,$4(a0)
+loc_01DC5C:
 	ble.b	loc_01DC6A
+loc_01DC5E:
 	cmpi.w	#$180,$4(a0)
+loc_01DC64:
 	bge.b	loc_01DC6A
+loc_01DC66:
 	moveq	#$0,d7
+loc_01DC68:
 	rts
 loc_01DC6A:
 	moveq	#-$1,d7
+loc_01DC6C:
 	rts
 sub_01DC6E:
 	bset.b	#$0,$2(a0)
+loc_01DC74:
 	bne.w	loc_01DCF8
+loc_01DC78:
 	cmpi.w	#$1,(ram_C328).w
+loc_01DC7E:
 	bne.b	loc_01DC84
 	clr.b	(ram_C66F).w
 loc_01DC84:
 	lea	dat_01DE72(pc),a1
+loc_01DC88:
 	jsr	sub_01ADB0(pc)
+loc_01DC8C:
 	moveq	#$0,d0
+loc_01DC8E:
 	move.w	d0,$18(a0)
+loc_01DC92:
 	move.l	d0,$10(a0)
+loc_01DC96:
 	move.l	d0,$C(a0)
+loc_01DC9A:
 	move.b	#$60,$22(a0)
+loc_01DCA0:
 	move.w	d0,$2(a0)
+loc_01DCA4:
 	ori.b	#$69,$2(a0)
+loc_01DCAA:
 	move.w	(ram_C328).w,d0
+loc_01DCAE:
 	add.w	d0,d0
+loc_01DCB0:
 	move.w	dat_01DCDA(pc,d0.w),d0
+loc_01DCB4:
 	move.w	d0,$1E(a0)
+loc_01DCB8:
 	move.w	a2,$28(a0)
+loc_01DCBC:
 	move.l	#$1E594,$30(a0)
+loc_01DCC4:
 	move.l	#$1E474,$2A(a0)
+loc_01DCCC:
 	move.b	#$1,$2E(a0)
+loc_01DCD2:
 	move.w	#$2B0,(a0)
+loc_01DCD6:
 	jmp	sub_01AF0E(pc)
 dat_01DCDA:
 	dc.b	$00,$00,$02,$D5,$00,$00
@@ -26659,25 +36988,43 @@ dat_01DCDA:
 	dc.b	$00,$00,$00,$00,$00,$00,$02,$AD
 loc_01DCF8:
 	cmpi.w	#$170,$8(a0)
+loc_01DCFE:
 	bgt.b	loc_01DD5C
+loc_01DD00:
 	tst.b	$1A(a0)
+loc_01DD04:
 	bne.b	loc_01DD46
+loc_01DD06:
 	moveq	#-$1,d0
+loc_01DD08:
 	move.w	$28(a0),d0
+loc_01DD0C:
 	movea.l	d0,a2
+loc_01DD0E:
 	move.w	$4(a2),$4(a0)
+loc_01DD14:
 	move.w	$8(a2),$8(a0)
+loc_01DD1A:
 	lea	$60(a0),a2
+loc_01DD1E:
 	move.b	$35(a2),d0
+loc_01DD22:
 	andi.w	#$1E,d0
+loc_01DD26:
 	add.w	d0,d0
+loc_01DD28:
 	movea.l	$2A(a0),a1
+loc_01DD2C:
 	movem.w	(a1,d0.w),d0-d1
+loc_01DD32:
 	add.w	d0,$4(a0)
+loc_01DD36:
 	add.w	d1,$8(a0)
 loc_01DD3A:
 	jsr	sub_01AF0E(pc)
+loc_01DD3E:
 	move.w	#$3,$26(a0)
+loc_01DD44:
 	rts
 loc_01DD46:
 	cmpi.w	#$E,(ram_C328).w
@@ -26705,15 +37052,70 @@ loc_01DD86:
 	tst.b	-$1(a1,d0.w)
 	bne.b	loc_01DD5C
 	bra.b	loc_01DD3A
-	dc.b	$4A,$28,$00,$1A,$66,$12,$70,$FF
-	dc.b	$30,$28,$00,$28,$24,$40,$0C,$2A,$00,$20,$00,$37,$67,$00,$D2,$54
-	dc.b	$4A,$28,$00,$2F,$67,$04,$53,$28,$00,$2F,$43,$F8,$E0,$00,$4E,$BA
-	dc.b	$CE,$0E,$14,$00,$11,$40,$00,$35,$4A,$28,$00,$2F,$66,$28,$02,$42
-	dc.b	$00,$1F,$36,$3C,$00,$4C,$47,$FA,$00,$3A,$4E,$BA,$C4,$1C,$11,$7C
-	dc.b	$00,$02,$00,$2F,$53,$28,$00,$2E,$66,$0C,$11,$7C,$00,$03,$00,$2E
-	dc.b	$11,$7C,$00,$14,$00,$2F,$43,$FA,$06,$BC,$70,$1E,$C0,$28,$00,$35
-	dc.b	$D2,$F1,$00,$00,$21,$49,$00,$30,$11,$7C,$00,$01,$00,$34,$60,$00
-	dc.b	$FE,$5E
+loc_01DD98:
+	tst.b	$1A(a0)
+loc_01DD9C:
+	bne.b	loc_01DDB0
+loc_01DD9E:
+	moveq	#-$1,d0
+loc_01DDA0:
+	move.w	$28(a0),d0
+loc_01DDA4:
+	movea.l	d0,a2
+loc_01DDA6:
+	cmpi.b	#$20,$37(a2)
+loc_01DDAC:
+	beq.w	sub_01B002
+loc_01DDB0:
+	tst.b	$2F(a0)
+loc_01DDB4:
+	beq.b	loc_01DDBA
+loc_01DDB6:
+	subq.b	#$1,$2F(a0)
+loc_01DDBA:
+	lea	(Objects_A).w,a1
+loc_01DDBE:
+	jsr	sub_01ABCE(pc)
+loc_01DDC2:
+	move.b	d0,d2
+loc_01DDC4:
+	move.b	d0,$35(a0)
+loc_01DDC8:
+	tst.b	$2F(a0)
+loc_01DDCC:
+	bne.b	loc_01DDF6
+loc_01DDCE:
+	andi.w	#$1F,d2
+loc_01DDD2:
+	move.w	#$4C,d3
+loc_01DDD6:
+	lea	dat_01DE12(pc),a3
+loc_01DDDA:
+	jsr	sub_01A1F8(pc)
+loc_01DDDE:
+	move.b	#$2,$2F(a0)
+loc_01DDE4:
+	subq.b	#$1,$2E(a0)
+loc_01DDE8:
+	bne.b	loc_01DDF6
+loc_01DDEA:
+	move.b	#$3,$2E(a0)
+loc_01DDF0:
+	move.b	#$14,$2F(a0)
+loc_01DDF6:
+	lea	dat_01E4B4(pc),a1
+loc_01DDFA:
+	moveq	#$1E,d0
+loc_01DDFC:
+	and.b	$35(a0),d0
+loc_01DE00:
+	adda.w	(a1,d0.w),a1
+loc_01DE04:
+	move.l	a1,$30(a0)
+loc_01DE08:
+	move.b	#$1,$34(a0)
+loc_01DE0E:
+	bra.w	sub_01DC6E
 dat_01DE12:
 	dc.b	$00,$04,$FF,$E8,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$0C
 	dc.b	$FF,$EE,$00,$12,$FF,$F8,$00,$12,$FF,$F8,$00,$0E,$00,$06,$00,$0E
@@ -26804,12 +37206,20 @@ dat_01E15A:
 	dc.b	$00,$FF,$00,$08,$70,$00,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$01
 	dc.b	$E2,$40,$00,$04,$00,$08,$70,$00,$01,$C0,$00,$05,$27,$C8,$80,$00
 	dc.b	$00,$FF,$00,$04,$00,$08,$70,$00,$01,$C0,$00,$05,$29,$88,$80,$00
-	dc.b	$00,$FF,$FF,$FF,$00,$01,$E2,$52,$00,$04,$00,$08,$96,$74,$00,$00
+	dc.b	$00,$FF,$FF,$FF,$00,$01,$E2,$52
+dat_01E278:
+	dc.b	$00,$04,$00,$08,$96,$74,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$96,$B4,$00,$00,$80,$00,$00,$FF
-	dc.b	$00,$00,$00,$01,$D8,$E2,$00,$08,$00,$08,$96,$74,$00,$00,$80,$00
-	dc.b	$00,$FF,$00,$00,$00,$01,$D8,$E2,$00,$04,$00,$08,$96,$F4,$00,$00
+	dc.b	$00,$00,$00,$01,$D8,$E2
+dat_01E296:
+	dc.b	$00,$08,$00,$08,$96,$74,$00,$00,$80,$00
+	dc.b	$00,$FF,$00,$00,$00,$01,$D8,$E2
+dat_01E2A8:
+	dc.b	$00,$04,$00,$08,$96,$F4,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$97,$34,$00,$00,$80,$00,$00,$FF
-	dc.b	$00,$00,$00,$01,$D8,$E2,$00,$08,$00,$08,$96,$F4,$00,$00,$80,$00
+	dc.b	$00,$00,$00,$01,$D8,$E2
+dat_01E2C6:
+	dc.b	$00,$08,$00,$08,$96,$F4,$00,$00,$80,$00
 	dc.b	$00,$FF,$00,$00,$00,$01,$D8,$E2,$00,$04,$00,$08,$96,$74,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$96,$B4,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$01,$DB,$46,$00,$08,$00,$08,$96,$74,$00,$00,$80,$00
@@ -26842,7 +37252,9 @@ dat_01E32C:
 	dc.b	$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22
 	dc.b	$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22
 	dc.b	$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22
-	dc.b	$00,$0C,$00,$22,$00,$E0,$00,$F2,$01,$04,$01,$16,$01,$28,$01,$3A
+	dc.b	$00,$0C,$00,$22
+dat_01E4B4:
+	dc.b	$00,$E0,$00,$F2,$01,$04,$01,$16,$01,$28,$01,$3A
 	dc.b	$01,$4C,$01,$5E,$01,$70,$01,$82,$01,$94,$01,$A6,$01,$B8,$01,$CA
 	dc.b	$01,$DC,$01,$EE
 dat_01E4D4:
@@ -26883,9 +37295,13 @@ dat_01E554:
 	dc.b	$00,$01,$DD,$98
 sub_01E6B4:
 	moveq	#$0,d0
+loc_01E6B6:
 	move.w	d0,$1E(a0)
+loc_01E6BA:
 	move.b	#$1,$3F(a0)
+loc_01E6C0:
 	bclr.b	#$7,$1A(a0)
+loc_01E6C6:
 	beq.b	loc_01E70C
 	ori.b	#$40,$2(a0)
 	cmpi.w	#$1,(ram_C328).w
@@ -26906,34 +37322,122 @@ loc_01E702:
 	move.b	#$1,$3F(a0)
 loc_01E70C:
 	move.b	$1A(a0),d0
+loc_01E710:
 	add.w	d0,d0
+loc_01E712:
 	lea	dat_01E71C(pc),a1
+loc_01E716:
 	adda.w	(a1,d0.w),a1
+loc_01E71A:
 	jmp	(a1)
 dat_01E71C:
 	dc.b	$00,$3A,$00,$40
 	dc.b	$00,$58,$00,$6A,$00,$76,$43,$FA,$06,$9C,$31,$7C,$00,$00,$00,$1E
 	dc.b	$11,$7C,$00,$01,$00,$3F,$42,$28,$00,$20,$60,$00,$01,$3C,$43,$FA
 	dc.b	$06,$84,$31,$7C,$00,$2B,$00,$1E,$11,$7C,$00,$02,$00,$3F,$42,$28
-	dc.b	$00,$20,$60,$00,$01,$24,$43,$FA,$06,$1C,$60,$46,$43,$FA,$06,$26
+	dc.b	$00,$20,$60,$00,$01,$24
+loc_01E756:
+	lea	dat_01ED74(pc),a1
+loc_01E75A:
+	bra.b	loc_01E7A2
+	dc.b	$43,$FA,$06,$26
 	dc.b	$04,$68,$00,$10,$00,$08,$04,$68,$00,$10,$00,$04,$11,$7C,$00,$50
 	dc.b	$00,$36,$60,$2E,$43,$FA,$06,$1E,$04,$68,$00,$38,$00,$08,$06,$68
 	dc.b	$00,$A0,$00,$04,$60,$1C,$43,$FA,$06,$1C,$04,$68,$00,$40,$00,$08
 	dc.b	$60,$10,$43,$FA,$06,$20,$04,$68,$00,$40,$00,$08,$11,$7C,$00,$50
-	dc.b	$00,$36,$4E,$BA,$C6,$0C,$70,$00,$11,$40,$00,$35,$11,$40,$00,$95
-	dc.b	$11,$40,$00,$F5,$11,$7C,$00,$20,$00,$22,$31,$48,$00,$8A,$31,$48
-	dc.b	$00,$EA,$30,$BC,$02,$6C,$00,$28,$00,$28,$00,$02,$31,$7C,$00,$28
-	dc.b	$00,$38,$0C,$28,$00,$50,$00,$36,$66,$06,$31,$7C,$00,$14,$00,$38
-	dc.b	$11,$7C,$00,$08,$00,$3C,$26,$48,$41,$E8,$00,$60,$43,$FA,$06,$06
-	dc.b	$4E,$BA,$C5,$BE,$0C,$78,$00,$0B,$C3,$28,$66,$0C,$08,$E8,$00,$06
-	dc.b	$00,$02,$31,$7C,$FF,$B8,$00,$1E,$0C,$78,$00,$04,$C3,$28,$66,$0C
-	dc.b	$08,$E8,$00,$06,$00,$02,$31,$7C,$FF,$DE,$00,$1E,$00,$28,$00,$22
-	dc.b	$00,$02,$11,$7C,$00,$60,$00,$22,$30,$BC,$02,$64,$41,$E8,$00,$60
-	dc.b	$70,$03,$4E,$BA,$C3,$28,$66,$2A,$43,$FA,$05,$AA,$4E,$BA,$C5,$72
-	dc.b	$00,$28,$00,$62,$00,$02,$11,$7C,$00,$4A,$00,$36,$11,$7C,$00,$01
-	dc.b	$00,$28,$11,$7C,$00,$60,$00,$22,$31,$7C,$27,$10,$00,$38,$30,$BC
-	dc.b	$03,$14,$20,$4B,$0C,$78,$00,$0B,$C3,$28,$67,$08,$70,$DF,$4E,$B9
-	dc.b	$00,$00,$A0,$68,$4E,$FA,$C6,$98,$4E,$BA,$C5,$36,$70,$00,$11,$40
+	dc.b	$00,$36
+loc_01E7A2:
+	jsr	sub_01ADB0(pc)
+loc_01E7A6:
+	moveq	#$0,d0
+loc_01E7A8:
+	move.b	d0,$35(a0)
+loc_01E7AC:
+	move.b	d0,$95(a0)
+loc_01E7B0:
+	move.b	d0,$F5(a0)
+loc_01E7B4:
+	move.b	#$20,$22(a0)
+loc_01E7BA:
+	move.w	a0,$8A(a0)
+loc_01E7BE:
+	move.w	a0,$EA(a0)
+loc_01E7C2:
+	move.w	#$26C,(a0)
+loc_01E7C6:
+	ori.b	#$28,$2(a0)
+loc_01E7CC:
+	move.w	#$28,$38(a0)
+loc_01E7D2:
+	cmpi.b	#$50,$36(a0)
+loc_01E7D8:
+	bne.b	loc_01E7E0
+	move.w	#$14,$38(a0)
+loc_01E7E0:
+	move.b	#$8,$3C(a0)
+loc_01E7E6:
+	movea.l	a0,a3
+loc_01E7E8:
+	lea	$60(a0),a0
+loc_01E7EC:
+	lea	dat_01EDF4(pc),a1
+loc_01E7F0:
+	jsr	sub_01ADB0(pc)
+loc_01E7F4:
+	cmpi.w	#$B,(ram_C328).w
+loc_01E7FA:
+	bne.b	loc_01E808
+	bset.b	#$6,$2(a0)
+	move.w	#$FFB8,$1E(a0)
+loc_01E808:
+	cmpi.w	#$4,(ram_C328).w
+loc_01E80E:
+	bne.b	loc_01E81C
+	bset.b	#$6,$2(a0)
+	move.w	#$FFDE,$1E(a0)
+loc_01E81C:
+	ori.b	#$22,$2(a0)
+loc_01E822:
+	move.b	#$60,$22(a0)
+loc_01E828:
+	move.w	#$264,(a0)
+loc_01E82C:
+	lea	$60(a0),a0
+loc_01E830:
+	moveq	#$3,d0
+loc_01E832:
+	jsr	sub_01AB5C(pc)
+loc_01E836:
+	bne.b	loc_01E862
+loc_01E838:
+	lea	dat_01EDE4(pc),a1
+loc_01E83C:
+	jsr	sub_01ADB0(pc)
+loc_01E840:
+	ori.b	#$62,$2(a0)
+loc_01E846:
+	move.b	#$4A,$36(a0)
+loc_01E84C:
+	move.b	#$1,$28(a0)
+loc_01E852:
+	move.b	#$60,$22(a0)
+loc_01E858:
+	move.w	#$2710,$38(a0)
+loc_01E85E:
+	move.w	#$314,(a0)
+loc_01E862:
+	movea.l	a3,a0
+loc_01E864:
+	cmpi.w	#$B,(ram_C328).w
+loc_01E86A:
+	beq.b	loc_01E874
+loc_01E86C:
+	moveq	#-$21,d0
+loc_01E86E:
+	jsr	(sub_00A068).l
+loc_01E874:
+	jmp	sub_01AF0E(pc)
+	dc.b	$4E,$BA,$C5,$36,$70,$00,$11,$40
 	dc.b	$00,$35,$11,$40,$00,$95,$11,$40,$00,$F5,$11,$7C,$00,$20,$00,$22
 	dc.b	$31,$48,$00,$8A,$31,$48,$00,$EA,$30,$BC,$02,$6C,$00,$28,$00,$28
 	dc.b	$00,$02,$31,$7C,$00,$28,$00,$38,$11,$7C,$00,$08,$00,$3C,$26,$48
@@ -26943,11 +37447,17 @@ dat_01E71C:
 	dc.b	$67,$08,$70,$DF,$4E,$B9,$00,$00,$A0,$68,$4E,$FA,$C6,$22
 sub_01E8EE:
 	jsr	(sub_00AF50).l
+loc_01E8F4:
 	tst.b	$44(a0)
+loc_01E8F8:
 	bne.w	loc_01E922
+loc_01E8FC:
 	jsr	(sub_00E234).l
+loc_01E902:
 	jsr	(sub_00B036).l
+loc_01E908:
 	jsr	(sub_00B298).l
+loc_01E90E:
 	beq.b	loc_01E92E
 	tst.b	$44(a0)
 	bne.b	loc_01E922
@@ -26960,7 +37470,9 @@ loc_01E922:
 	subq.b	#$1,$44(a0)
 loc_01E92E:
 	cmpi.w	#$190,$8(a0)
+loc_01E934:
 	bgt.b	loc_01E97A
+loc_01E936:
 	jmp	sub_01AF0E(pc)
 loc_01E93A:
 	moveq	#-$23,d0
@@ -26989,29 +37501,51 @@ loc_01E97A:
 	dc.b	$51,$40,$02,$40,$00,$1F,$11,$40,$00,$20,$60,$00,$02,$78
 sub_01E9BE:
 	moveq	#-$1,d0
+loc_01E9C0:
 	move.w	$2A(a0),d0
+loc_01E9C4:
 	movea.l	d0,a2
+loc_01E9C6:
 	cmpi.b	#$20,$37(a2)
+loc_01E9CC:
 	beq.w	loc_01EA62
+loc_01E9D0:
 	tst.b	$37(a2)
+loc_01E9D4:
 	beq.b	loc_01EA1A
+loc_01E9D6:
 	move.l	$4(a2),$4(a0)
+loc_01E9DC:
 	move.l	$8(a2),$8(a0)
+loc_01E9E2:
 	move.b	$35(a2),$35(a0)
+loc_01E9E8:
 	move.b	$44(a2),$44(a0)
+loc_01E9EE:
 	lea	dat_01F0FE(pc),a1
+loc_01E9F2:
 	moveq	#$1E,d0
+loc_01E9F4:
 	and.b	$35(a0),d0
+loc_01E9F8:
 	adda.w	(a1,d0.w),a1
+loc_01E9FC:
 	move.l	a1,$30(a0)
+loc_01EA00:
 	move.b	#$1,$34(a0)
+loc_01EA06:
 	add.w	d0,d0
+loc_01EA08:
 	dc.w	$4CBB,$0006,$0016		; movem.w $1EA20(pc,d0.w),d1-d2
+loc_01EA0E:
 	add.w	d1,$4(a0)
+loc_01EA12:
 	add.w	d2,$8(a0)
+loc_01EA16:
 	jmp	sub_01AF0E(pc)
 loc_01EA1A:
 	lea	dat_01EFE4(pc),a1
+loc_01EA1E:
 	jmp	sub_01AF1A(pc)
 	dc.b	$00,$08,$00,$00,$00,$08,$00,$00,$00,$08,$00,$00,$00,$08
 	dc.b	$00,$00,$FF,$FD,$00,$07,$FF,$FE,$00,$04,$FF,$FE,$00,$04,$FF,$FE
@@ -27040,20 +37574,33 @@ loc_01EA7E:
 	dc.b	$00,$1E,$EB,$49,$31,$41,$00,$1C,$60,$DE
 sub_01EADA:
 	lea	dat_01EDD4(pc),a1
+loc_01EADE:
 	movea.l	a0,a2
+loc_01EAE0:
 	jsr	sub_01ADF6(pc)
+loc_01EAE4:
 	move.l	#$1F1C8,$30(a0)
+loc_01EAEC:
 	dc.w	$317C,$0314,$0000		; move.w #$314,$0(a0)
+loc_01EAF2:
 	clr.w	$2A(a0)
+loc_01EAF6:
 	move.b	#$1,$28(a0)
+loc_01EAFC:
 	ori.b	#$A8,$2(a0)
+loc_01EB02:
 	jmp	sub_01AF0E(pc)
 sub_01EB06:
 	moveq	#-$1,d0
+loc_01EB08:
 	move.w	$2A(a0),d0
+loc_01EB0C:
 	beq.b	loc_01EB58
+loc_01EB0E:
 	movea.l	d0,a1
+loc_01EB10:
 	cmpi.b	#$20,$37(a1)
+loc_01EB16:
 	bne.b	loc_01EB2E
 	move.l	-$5C(a0),$4(a0)
 	move.l	-$58(a0),$8(a0)
@@ -27061,21 +37608,35 @@ sub_01EB06:
 	bra.w	loc_01EA62
 loc_01EB2E:
 	move.l	$8(a1),$8(a0)
+loc_01EB34:
 	move.l	$4(a1),$4(a0)
+loc_01EB3A:
 	cmpi.b	#$4A,$36(a0)
+loc_01EB40:
 	bne.b	loc_01EB58
+loc_01EB42:
 	moveq	#$1F,d2
+loc_01EB44:
 	and.b	$35(a1),d2
+loc_01EB48:
 	lsl.w	#$2,d2
+loc_01EB4A:
 	dc.w	$4CBB,$0003,$2054		; movem.w $1EBA0(pc,d2.w),d0-d1
+loc_01EB50:
 	add.w	d0,$8(a0)
+loc_01EB54:
 	add.w	d1,$4(a0)
 loc_01EB58:
 	cmpi.w	#$180,$8(a0)
+loc_01EB5E:
 	bgt.b	loc_01EB9E
+loc_01EB60:
 	jsr	(sub_00E234).l
+loc_01EB66:
 	jsr	(sub_00B298).l
+loc_01EB6C:
 	btst.b	#$0,$3(a0)
+loc_01EB72:
 	beq.b	loc_01EB9A
 	move.b	#$1,$34(a0)
 	move.l	#$1F210,$30(a0)
@@ -27107,25 +37668,74 @@ sub_01EC34:
 	move.l	d0,$38(a0)
 	move.l	d0,$3C(a0)
 	rts
-	dc.b	$42,$90,$4E,$75,$43,$F8,$E0,$00,$4E,$BA,$BF,$74,$11,$40,$00,$35
-	dc.b	$14,$00,$4A,$28,$00,$29,$66,$42,$4E,$BA,$88,$84,$66,$36,$02,$42
-	dc.b	$00,$1F,$16,$3C,$00,$4C,$47,$FA,$00,$58,$0C,$28,$00,$4A,$00,$36
-	dc.b	$67,$04,$47,$FA,$00,$8C,$4E,$BA,$B5,$70,$70,$BB,$4E,$B9,$00,$00
-	dc.b	$A0,$68,$11,$7C,$00,$02,$00,$29,$53,$28,$00,$28,$66,$0C,$11,$7C
-	dc.b	$00,$04,$00,$28,$11,$7C,$00,$15,$00,$29,$53,$28,$00,$29,$43,$FA
-	dc.b	$05,$96,$0C,$28,$00,$4A,$00,$36,$67,$04,$43,$FA,$04,$A4,$70,$1E
-	dc.b	$C0,$28,$00,$35,$D2,$F1,$00,$00,$21,$49,$00,$30,$4E,$FA,$C2,$4C
+	dc.b	$42,$90,$4E,$75
+loc_01EC54:
+	lea	(Objects_A).w,a1
+loc_01EC58:
+	jsr	sub_01ABCE(pc)
+loc_01EC5C:
+	move.b	d0,$35(a0)
+loc_01EC60:
+	move.b	d0,d2
+loc_01EC62:
+	tst.b	$29(a0)
+loc_01EC66:
+	bne.b	loc_01ECAA
+loc_01EC68:
+	jsr	sub_0174EE(pc)
+loc_01EC6C:
+	bne.b	loc_01ECA4
+	andi.w	#$1F,d2
+	move.b	#$4C,d3
+	lea	dat_01ECD0(pc),a3
+	cmpi.b	#$4A,$36(a0)
+	beq.b	loc_01EC86
+	lea	dat_01ED10(pc),a3
+loc_01EC86:
+	jsr	sub_01A1F8(pc)
+	moveq	#-$45,d0
+	jsr	(sub_00A068).l
+	move.b	#$2,$29(a0)
+	subq.b	#$1,$28(a0)
+	bne.b	loc_01ECAA
+	move.b	#$4,$28(a0)
+loc_01ECA4:
+	move.b	#$15,$29(a0)
+loc_01ECAA:
+	subq.b	#$1,$29(a0)
+loc_01ECAE:
+	lea	dat_01F246(pc),a1
+loc_01ECB2:
+	cmpi.b	#$4A,$36(a0)
+loc_01ECB8:
+	beq.b	loc_01ECBE
+loc_01ECBA:
+	lea	dat_01F160(pc),a1
+loc_01ECBE:
+	moveq	#$1E,d0
+loc_01ECC0:
+	and.b	$35(a0),d0
+loc_01ECC4:
+	adda.w	(a1,d0.w),a1
+loc_01ECC8:
+	move.l	a1,$30(a0)
+loc_01ECCC:
+	jmp	sub_01AF1A(pc)
+dat_01ECD0:
 	dc.b	$00,$00,$FF,$D0,$00,$0C,$FF,$D8,$00,$0C,$FF,$D8,$00,$10,$FF,$EA
 	dc.b	$00,$10,$FF,$EA,$00,$0E,$FF,$F8,$00,$0E,$FF,$F8,$00,$0E,$FF,$F8
 	dc.b	$00,$00,$00,$02,$FF,$F4,$FF,$F8,$FF,$F4,$FF,$F8,$FF,$EE,$FF,$EA
 	dc.b	$FF,$EE,$FF,$EA,$FF,$F4,$FF,$D8,$FF,$F4,$FF,$D8,$FF,$F4,$FF,$D8
+dat_01ED10:
 	dc.b	$00,$00,$FF,$CE,$00,$0C,$FF,$D8,$00,$0C,$FF,$D8,$00,$12,$FF,$E6
 	dc.b	$00,$12,$FF,$E6,$00,$0E,$FF,$F5,$00,$0E,$FF,$F4,$00,$0E,$FF,$F4
 	dc.b	$00,$00,$FF,$FC,$FF,$F4,$FF,$F4,$FF,$F4,$FF,$F4,$FF,$EE,$FF,$E6
 	dc.b	$FF,$EE,$FF,$E6,$FF,$F4,$FF,$D8,$FF,$F4,$FF,$D8,$FF,$F4,$FF,$D8
 	dc.b	$2F,$09,$70,$DD,$4E,$B9,$00,$00,$A0,$68,$22,$5F,$08,$A8,$00,$05
 	dc.b	$00,$02,$08,$A8,$00,$05,$00,$62,$08,$A8,$00,$05,$00,$C2,$5C,$49
-	dc.b	$4E,$FA,$C1,$A8,$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
+	dc.b	$4E,$FA,$C1,$A8
+dat_01ED74:
+	dc.b	$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
 	dc.b	$00,$01,$EE,$04,$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
 	dc.b	$00,$01,$EE,$46,$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
 	dc.b	$00,$01,$EE,$64,$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
@@ -27134,8 +37744,12 @@ sub_01EC34:
 	dc.b	$00,$01,$EF,$D2
 dat_01EDD4:
 	dc.b	$80,$01,$04,$00,$07,$0C,$00,$00,$00,$19,$00,$00
-	dc.b	$00,$08,$83,$40,$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-	dc.b	$00,$01,$F1,$A4,$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	$00,$08,$83,$40
+dat_01EDE4:
+	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	$00,$01,$F1,$A4
+dat_01EDF4:
+	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$F1,$1E,$00,$0A,$00,$03,$86,$86,$00,$00,$80,$00,$00,$08
 	dc.b	$00,$05,$00,$03,$86,$86,$00,$00,$80,$00,$00,$07,$00,$05,$00,$03
 	dc.b	$87,$68,$00,$00,$80,$00,$00,$06,$00,$05,$00,$03,$87,$68,$00,$00
@@ -27195,6 +37809,7 @@ dat_01F0FE:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$FF,$00,$08,$97,$88,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$FF,$00,$08,$97,$7E,$00,$00,$00,$00,$00,$00,$00,$FF
 	dc.b	$00,$08,$97,$74,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$01,$F1,$1E
+dat_01F160:
 	dc.b	$00,$20,$00,$32,$00,$32,$00,$44,$00,$44,$00,$56,$00,$56,$00,$56
 	dc.b	$00,$68,$00,$7A,$00,$7A,$00,$8C,$00,$8C,$00,$9E,$00,$9E,$00,$9E
 	dc.b	$00,$04,$00,$08,$82,$E8,$00,$00,$80,$00,$00,$FF,$00,$00,$00,$01
@@ -27209,7 +37824,9 @@ dat_01F0FE:
 	dc.b	$00,$06,$00,$03,$A6,$34,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$A6,$4A,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A6,$60,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$A6,$76,$00,$00,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$01,$EC,$22,$00,$20,$00,$36,$00,$36,$00,$4C,$00,$4C
+	dc.b	$00,$00,$00,$01,$EC,$22
+dat_01F246:
+	dc.b	$00,$20,$00,$36,$00,$36,$00,$4C,$00,$4C
 	dc.b	$00,$62,$00,$62,$00,$62,$00,$78,$00,$8E,$00,$8E,$00,$A4,$00,$A4
 	dc.b	$00,$BA,$00,$BA,$00,$BA,$00,$04,$00,$08,$83,$98,$00,$C0,$00,$04
 	dc.b	$D7,$F2,$80,$00,$00,$FF,$00,$00,$00,$01,$EC,$54,$00,$04,$00,$08
@@ -27225,17 +37842,29 @@ dat_01F0FE:
 	dc.b	$00,$00,$00,$01,$EC,$54
 sub_01F316:
 	bset.b	#$0,$2(a0)
+loc_01F31C:
 	bne.w	loc_01F3AC
+loc_01F320:
 	ori.b	#$28,$2(a0)
+loc_01F326:
 	move.b	#$20,$22(a0)
+loc_01F32C:
 	lea	dat_01F4DC(pc),a1
+loc_01F330:
 	movea.l	a0,a2
+loc_01F332:
 	jsr	sub_01ADF6(pc)
+loc_01F336:
 	move.w	(ram_C328).w,d0
+loc_01F33A:
 	add.w	d0,d0
+loc_01F33C:
 	bset.b	#$6,$2(a0)
+loc_01F342:
 	move.w	dat_01F370(pc,d0.w),$1E(a0)
+loc_01F348:
 	move.w	dat_01F352(pc,d0.w),$38(a0)
+loc_01F34E:
 	jmp	sub_01AF0E(pc)
 dat_01F352:
 	dc.b	$00,$00,$00,$19,$00,$32,$00,$4B,$00,$64,$00,$7D,$00,$00
@@ -27249,37 +37878,59 @@ dat_01F38E:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$02,$52,$02,$DA
 loc_01F3AC:
 	tst.b	$36(a0)
+loc_01F3B0:
 	bne.w	loc_01F478
+loc_01F3B4:
 	cmpi.w	#$180,$8(a0)
+loc_01F3BA:
 	bgt.w	sub_01B002
+loc_01F3BE:
 	tst.b	$29(a0)
+loc_01F3C2:
 	bne.b	loc_01F410
+loc_01F3C4:
 	lea	(Objects_A).w,a1
+loc_01F3C8:
 	jsr	sub_01ABCE(pc)
+loc_01F3CC:
 	move.b	d0,$35(a0)
+loc_01F3D0:
 	andi.w	#$1F,d0
+loc_01F3D4:
 	cmpi.w	#$8,d0
+loc_01F3D8:
 	bcc.b	loc_01F3E4
 	move.b	#$8,d0
 	move.b	#$D,$28(a0)
 loc_01F3E4:
 	cmpi.w	#$19,d0
+loc_01F3E8:
 	bcs.b	loc_01F3F4
 	move.b	#$18,d0
 	move.b	#$D,$28(a0)
 loc_01F3F4:
 	subq.w	#$8,d0
+loc_01F3F6:
 	add.w	d0,d0
+loc_01F3F8:
 	lea	dat_01F56C(pc),a1
+loc_01F3FC:
 	adda.w	(a1,d0.w),a1
+loc_01F400:
 	move.l	a1,$30(a0)
+loc_01F404:
 	move.b	#$1,$34(a0)
+loc_01F40A:
 	move.b	#$7,$29(a0)
 loc_01F410:
 	subq.b	#$1,$29(a0)
+loc_01F414:
 	tst.b	$28(a0)
+loc_01F418:
 	bne.b	loc_01F440
+loc_01F41A:
 	jsr	sub_0174EE(pc)
+loc_01F41E:
 	bne.b	loc_01F43A
 	lea	dat_01F4EC(pc),a1
 	move.b	$35(a0),d2
@@ -27292,8 +37943,11 @@ loc_01F43A:
 	move.b	#$60,$28(a0)
 loc_01F440:
 	subq.b	#$1,$28(a0)
+loc_01F444:
 	jsr	(sub_00E234).l
+loc_01F44A:
 	jsr	(sub_00B298).l
+loc_01F450:
 	beq.b	loc_01F49A
 	moveq	#-$43,d0
 	jsr	(sub_00A068).l
@@ -27328,6 +37982,7 @@ loc_01F49E:
 	bra.b	loc_01F49A
 sub_01F4C6:
 	move.b	#$20,$37(a0)
+loc_01F4CC:
 	rts
 	dc.b	$4A,$28
 	dc.b	$00,$1A,$67,$04,$52,$38,$C6,$40,$4E,$FA,$BB,$28
@@ -27364,56 +38019,99 @@ dat_01F56C:
 	dc.b	$00,$00,$00,$01,$F4,$CE
 sub_01F666:
 	lea	dat_01FB46(pc),a1
+loc_01F66A:
 	jsr	sub_01ADB0(pc)
+loc_01F66E:
 	move.b	#$0,$2E(a0)
+loc_01F674:
 	bsr.b	sub_01F69A
+loc_01F676:
 	adda.w	#$60,a0
+loc_01F67A:
 	lea	dat_01FB56(pc),a1
+loc_01F67E:
 	jsr	sub_01ADB0(pc)
+loc_01F682:
 	move.b	#$0,$2E(a0)
+loc_01F688:
 	move.l	#$2014E,$50(a0)
+loc_01F690:
 	bsr.b	sub_01F6CA
+loc_01F692:
 	suba.w	#$60,a0
+loc_01F696:
 	jmp	sub_01AF0E(pc)
 sub_01F69A:
 	clr.b	$2B(a0)
+loc_01F69E:
 	clr.b	$2D(a0)
+loc_01F6A2:
 	clr.b	$2B(a0)
+loc_01F6A6:
 	move.b	#$FF,$29(a0)
+loc_01F6AC:
 	move.b	#$1,$2A(a0)
+loc_01F6B2:
 	move.b	#$1,$58(a0)
+loc_01F6B8:
 	move.b	#$20,$22(a0)
+loc_01F6BE:
 	move.w	#$308,(a0)
+loc_01F6C2:
 	bset.b	#$3,$2(a0)
+loc_01F6C8:
 	rts
 sub_01F6CA:
 	clr.w	$2(a0)
+loc_01F6CE:
 	ori.b	#$22,$2(a0)
+loc_01F6D4:
 	move.b	#$60,$22(a0)
+loc_01F6DA:
 	move.w	#$30C,(a0)
+loc_01F6DE:
 	move.l	-$58(a0),$8(a0)
+loc_01F6E4:
 	move.l	-$5C(a0),$4(a0)
+loc_01F6EA:
 	rts
 sub_01F6EC:
 	lea	dat_01FB46(pc),a1
+loc_01F6F0:
 	jsr	sub_01ADB0(pc)
+loc_01F6F4:
 	move.b	#$4,$2E(a0)
+loc_01F6FA:
 	bsr.b	sub_01F69A
+loc_01F6FC:
 	adda.w	#$60,a0
+loc_01F700:
 	lea	dat_01FB56(pc),a1
+loc_01F704:
 	jsr	sub_01ADB0(pc)
+loc_01F708:
 	move.l	#$201BA,$50(a0)
+loc_01F710:
 	move.b	#$4,$2E(a0)
+loc_01F716:
 	bsr.b	sub_01F6CA
+loc_01F718:
 	suba.w	#$60,a0
+loc_01F71C:
 	jmp	sub_01AF0E(pc)
 sub_01F720:
 	move.b	#$0,$B8(a0)
+loc_01F726:
 	jsr	(sub_00E234).l
+loc_01F72C:
 	jsr	(sub_00B036).l
+loc_01F732:
 	jsr	(sub_00B298).l
+loc_01F738:
 	btst.b	#$0,$3(a0)
+loc_01F73E:
 	bne.b	loc_01F748
+loc_01F740:
 	bsr.w	sub_01FA36
 loc_01F744:
 	jmp	sub_01AF0E(pc)
@@ -27479,36 +38177,70 @@ sub_01F7CE:
 	dc.b	$60,$84,$11,$7C,$00,$07,$00,$2A,$21,$7C,$00,$02,$02,$02,$00,$B0
 	dc.b	$60,$24,$11,$7C,$00,$08,$00,$2A,$08,$A8,$00,$05,$00,$62,$21,$7C
 	dc.b	$00,$02,$02,$14,$00,$B0,$60,$0E,$11,$7C,$00,$00,$00,$2B,$60,$06
-	dc.b	$11,$7C,$00,$03,$00,$2B,$5C,$49,$4E,$FA,$B5,$E0,$61,$00,$01,$46
-	dc.b	$43,$FA,$02,$3C,$70,$00,$10,$28,$00,$2E,$22,$71,$00,$00,$4E,$FA
-	dc.b	$B5,$CA,$53,$28,$00,$29,$67,$12,$30,$28,$00,$08,$32,$00,$34,$38
+	dc.b	$11,$7C,$00,$03,$00,$2B,$5C,$49,$4E,$FA,$B5,$E0
+loc_01F93C:
+	bsr.w	sub_01FA84
+loc_01F940:
+	lea	dat_01FB7E(pc),a1
+loc_01F944:
+	moveq	#$0,d0
+loc_01F946:
+	move.b	$2E(a0),d0
+loc_01F94A:
+	movea.l	(a1,d0.w),a1
+loc_01F94E:
+	jmp	sub_01AF1A(pc)
+	dc.b	$53,$28,$00,$29,$67,$12,$30,$28,$00,$08,$32,$00,$34,$38
 	dc.b	$E0,$08,$94,$41,$0C,$42,$00,$60,$6C,$D2,$43,$FA,$02,$1A,$70,$00
 	dc.b	$10,$28,$00,$2E,$22,$71,$00,$00,$11,$7C,$00,$08,$00,$3B,$4E,$FA
 	dc.b	$B5,$9A
 sub_01F982:
 	tst.b	$58(a0)
+loc_01F986:
 	bne.b	loc_01F9D4
+loc_01F988:
 	moveq	#$0,d0
+loc_01F98A:
 	move.b	-$36(a0),d0
+loc_01F98E:
 	lsl.w	#$3,d0
+loc_01F990:
 	moveq	#$0,d1
+loc_01F992:
 	move.b	-$32(a0),d1
+loc_01F996:
 	add.w	d1,d0
+loc_01F998:
 	lea	dat_01F9EE(pc),a3
+loc_01F99C:
 	move.l	-$5C(a0),d1
+loc_01F9A0:
 	swap	d1
+loc_01F9A2:
 	add.w	(a3,d0.w),d1
+loc_01F9A6:
 	swap	d1
+loc_01F9A8:
 	move.l	d1,$4(a0)
+loc_01F9AC:
 	move.l	-$58(a0),d1
+loc_01F9B0:
 	swap	d1
+loc_01F9B2:
 	add.w	$2(a3,d0.w),d1
+loc_01F9B6:
 	swap	d1
+loc_01F9B8:
 	move.l	d1,$8(a0)
+loc_01F9BC:
 	move.b	#$1,$58(a0)
+loc_01F9C2:
 	tst.b	-$33(a0)
+loc_01F9C6:
 	bne.b	loc_01F9D0
+loc_01F9C8:
 	movea.l	$50(a0),a1
+loc_01F9CC:
 	jmp	sub_01AF1A(pc)
 loc_01F9D0:
 	jmp	sub_01AF0E(pc)
@@ -27526,6 +38258,7 @@ dat_01F9EE:
 	dc.b	$FF,$F1,$00,$00,$FF,$F1
 sub_01FA36:
 	tst.b	$2B(a0)
+loc_01FA3A:
 	beq.b	loc_01FA82
 	jsr	sub_01AD58(pc)
 	bne.b	loc_01FA82
@@ -27548,13 +38281,59 @@ sub_01FA36:
 	move.w	#$23C,(a2)
 loc_01FA82:
 	rts
-	dc.b	$43,$F8,$E0,$00,$4E,$BA,$B1,$44,$02,$00,$00,$1E
-	dc.b	$11,$40,$00,$28,$4E,$BA,$85,$F4,$66,$48,$30,$28,$00,$04,$06,$40
-	dc.b	$00,$0A,$35,$40,$00,$04,$70,$00,$10,$28,$00,$2E,$55,$40,$E5,$48
-	dc.b	$D0,$68,$00,$08,$35,$40,$00,$08,$42,$28,$00,$2D,$11,$46,$00,$2C
-	dc.b	$11,$7C,$00,$01,$00,$2D,$21,$48,$00,$58,$11,$7C,$00,$03,$00,$2A
-	dc.b	$43,$FA,$07,$54,$4A,$28,$00,$2E,$67,$04,$43,$FA,$07,$6E,$21,$49
-	dc.b	$00,$90,$4E,$75,$48,$E7,$00,$C0,$41,$E8,$FF,$A0,$11,$7C,$00,$04
+sub_01FA84:
+	lea	(Objects_A).w,a1
+loc_01FA88:
+	jsr	sub_01ABCE(pc)
+loc_01FA8C:
+	andi.b	#$1E,d0
+loc_01FA90:
+	move.b	d0,$28(a0)
+loc_01FA94:
+	jsr	sub_01808A(pc)
+loc_01FA98:
+	bne.b	loc_01FAE2
+loc_01FA9A:
+	move.w	$4(a0),d0
+loc_01FA9E:
+	addi.w	#$A,d0
+loc_01FAA2:
+	move.w	d0,$4(a2)
+loc_01FAA6:
+	moveq	#$0,d0
+loc_01FAA8:
+	move.b	$2E(a0),d0
+loc_01FAAC:
+	subq.w	#$2,d0
+loc_01FAAE:
+	lsl.w	#$2,d0
+loc_01FAB0:
+	add.w	$8(a0),d0
+loc_01FAB4:
+	move.w	d0,$8(a2)
+loc_01FAB8:
+	clr.b	$2D(a0)
+loc_01FABC:
+	move.b	d6,$2C(a0)
+loc_01FAC0:
+	move.b	#$1,$2D(a0)
+loc_01FAC6:
+	move.l	a0,$58(a0)
+loc_01FACA:
+	move.b	#$3,$2A(a0)
+loc_01FAD0:
+	lea	dat_020226(pc),a1
+loc_01FAD4:
+	tst.b	$2E(a0)
+loc_01FAD8:
+	beq.b	loc_01FADE
+loc_01FADA:
+	lea	dat_02024A(pc),a1
+loc_01FADE:
+	move.l	a1,$90(a0)
+loc_01FAE2:
+	rts
+	dc.b	$48,$E7,$00,$C0,$41,$E8,$FF,$A0,$11,$7C,$00,$04
 	dc.b	$00,$2A,$28,$68,$00,$58,$42,$28,$00,$2D,$4C,$DF,$03,$00,$5C,$49
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
 dat_01FB06:
@@ -27571,7 +38350,9 @@ dat_01FB56:
 	dc.b	$00,$00,$00,$02,$01,$4E
 dat_01FB66:
 	dc.b	$80,$01,$04,$00,$00,$00,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$02,$06,$66,$00,$01,$FB,$8E,$00,$01,$FC,$60,$00,$01
+	dc.b	$00,$00,$00,$02,$06,$66,$00,$01,$FB,$8E,$00,$01,$FC,$60
+dat_01FB7E:
+	dc.b	$00,$01
 	dc.b	$FB,$94,$00,$01,$FC,$84,$00,$01,$FB,$A6,$00,$01,$FC,$96,$00,$00
 	dc.b	$00,$01,$F9,$3C,$00,$28,$00,$08,$80,$E2,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$F9,$52,$00,$00,$00,$01,$F8,$68,$00,$00,$00,$01
@@ -27680,9 +38461,13 @@ dat_020004:
 	dc.b	$00,$01,$00,$08,$80,$72,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02
 	dc.b	$01,$F0,$00,$01,$00,$08,$80,$7C,$00,$00,$00,$00,$00,$00,$FF,$FF
 	dc.b	$00,$02,$02,$02,$00,$01,$00,$08,$80,$90,$00,$00,$00,$00,$00,$00
-	dc.b	$FF,$FF,$00,$02,$02,$14,$00,$14,$00,$08,$80,$9A,$00,$00,$00,$00
+	dc.b	$FF,$FF,$00,$02,$02,$14
+dat_020226:
+	dc.b	$00,$14,$00,$08,$80,$9A,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$01,$FA,$E4,$00,$14,$00,$08,$80,$4A,$00,$00
-	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$01,$60,$00,$14,$00,$08,$80,$A4
+	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$01,$60
+dat_02024A:
+	dc.b	$00,$14,$00,$08,$80,$A4
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$FA,$E4,$00,$14,$00,$08
 	dc.b	$80,$54,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$01,$CC
 dat_02026E:
@@ -27767,38 +38552,67 @@ dat_0206AE:
 	dc.b	$00,$08,$70,$00,$00,$00,$80,$00,$00,$0C,$FF,$FF,$00,$02,$07,$12
 sub_020730:
 	move.b	#$10,$35(a0)
+loc_020736:
 	move.b	#$10,$5E(a0)
+loc_02073C:
 	lea	dat_020EA0(pc),a1
+loc_020740:
 	jsr	sub_01ADB0(pc)
+loc_020744:
 	move.b	#$20,$22(a0)
+loc_02074A:
 	clr.b	$49(a0)
+loc_02074E:
 	bclr.b	#$7,$1A(a0)
+loc_020754:
 	beq.b	loc_020760
 	addq.b	#$1,$49(a0)
 	move.b	#$40,$22(a0)
 loc_020760:
 	ori.b	#$28,$2(a0)
+loc_020766:
 	move.l	a0,$88(a0)
+loc_02076A:
 	move.l	a0,$E8(a0)
+loc_02076E:
 	movea.l	a0,a5
+loc_020770:
 	lea	$60(a0),a0
+loc_020774:
 	moveq	#$2,d0
+loc_020776:
 	jsr	sub_01AB5C(pc)
+loc_02077A:
 	bne.b	loc_0207BE
+loc_02077C:
 	lea	dat_020EB0(pc),a1
+loc_020780:
 	move.b	#$60,$22(a0)
+loc_020786:
 	jsr	sub_01ADB0(pc)
+loc_02078A:
 	ori.b	#$6A,$2(a0)
+loc_020790:
 	move.w	#$23C,(a0)
+loc_020794:
 	lea	$60(a0),a0
+loc_020798:
 	lea	dat_020EC0(pc),a1
+loc_02079C:
 	jsr	sub_01ADB0(pc)
+loc_0207A0:
 	ori.b	#$68,$2(a0)
+loc_0207A6:
 	move.b	#$20,$22(a0)
+loc_0207AC:
 	clr.b	$35(a0)
+loc_0207B0:
 	move.w	#$324,(a0)
+loc_0207B4:
 	movea.l	a5,a0
+loc_0207B6:
 	move.w	#$23C,(a0)
+loc_0207BA:
 	jmp	sub_01AF0E(pc)
 loc_0207BE:
 	tst.b	$49(a5)
@@ -27810,16 +38624,27 @@ loc_0207C8:
 	jmp	sub_01B002(pc)
 sub_0207D2:
 	cmpi.w	#$170,$8(a0)
+loc_0207D8:
 	bgt.b	loc_020808
+loc_0207DA:
 	jsr	(sub_00E234).l
+loc_0207E0:
 	jsr	(sub_00B036).l
+loc_0207E6:
 	jsr	(sub_00B298).l
+loc_0207EC:
 	btst.b	#$0,$3(a0)
+loc_0207F2:
 	bne.b	loc_02082C
+loc_0207F4:
 	bsr.w	sub_0209BA
+loc_0207F8:
 	bsr.w	sub_020868
+loc_0207FC:
 	bsr.w	sub_0208C4
+loc_020800:
 	bsr.w	sub_020906
+loc_020804:
 	jmp	sub_01AF0E(pc)
 loc_020808:
 	move.l	a0,-(a7)
@@ -27852,8 +38677,11 @@ loc_020864:
 	jmp	sub_01AF1A(pc)
 sub_020868:
 	tst.b	$51(a0)
+loc_02086C:
 	beq.b	loc_020876
+loc_02086E:
 	subq.b	#$1,$51(a0)
+loc_020872:
 	bra.w	loc_0208C2
 loc_020876:
 	move.b	#$10,$51(a0)
@@ -27880,23 +38708,37 @@ loc_0208C2:
 	rts
 sub_0208C4:
 	tst.b	$52(a0)
+loc_0208C8:
 	beq.b	loc_0208D0
+loc_0208CA:
 	subq.b	#$1,$52(a0)
+loc_0208CE:
 	bra.b	loc_020904
 loc_0208D0:
 	move.b	#$A,$52(a0)
+loc_0208D6:
 	lea	(Objects_A).w,a1
+loc_0208DA:
 	jsr	sub_01ABCE(pc)
+loc_0208DE:
 	andi.b	#$1F,d0
+loc_0208E2:
 	moveq	#-$1,d2
+loc_0208E4:
 	sub.b	$35(a0),d0
+loc_0208E8:
 	beq.b	loc_020900
+loc_0208EA:
 	andi.b	#$1F,d0
+loc_0208EE:
 	cmpi.b	#$10,d0
+loc_0208F2:
 	bcc.b	loc_0208F6
+loc_0208F4:
 	moveq	#$1,d2
 loc_0208F6:
 	add.b	d2,$35(a0)
+loc_0208FA:
 	andi.b	#$1F,$35(a0)
 loc_020900:
 	jsr	sub_01AE8E(pc)
@@ -27904,72 +38746,127 @@ loc_020904:
 	rts
 sub_020906:
 	tst.b	$53(a0)
+loc_02090A:
 	beq.b	loc_020914
+loc_02090C:
 	subq.b	#$1,$53(a0)
+loc_020910:
 	bra.w	loc_0209B8
 loc_020914:
 	move.b	#$C,$53(a0)
+loc_02091A:
 	lea	(Objects_A).w,a1
+loc_02091E:
 	move.w	$4(a1),d0
+loc_020922:
 	sub.w	$4(a0),d0
+loc_020926:
 	bcc.b	loc_02092A
+loc_020928:
 	neg.w	d0
 loc_02092A:
 	cmpi.w	#$30,d0
+loc_02092E:
 	bcs.w	loc_0209B8
+loc_020932:
 	move.w	$8(a1),d0
+loc_020936:
 	sub.w	$8(a0),d0
+loc_02093A:
 	bcc.b	loc_02093E
+loc_02093C:
 	neg.w	d0
 loc_02093E:
 	cmpi.w	#$30,d0
+loc_020942:
 	bcs.w	loc_0209B8
+loc_020946:
 	move.b	#$78,$53(a0)
+loc_02094C:
 	move.b	$5E(a0),d0
+loc_020950:
 	andi.w	#$1E,d0
+loc_020954:
 	lsl.w	#$2,d0
+loc_020956:
 	lea	dat_020DA0(pc),a2
+loc_02095A:
 	move.w	$4(a0),d1
+loc_02095E:
 	move.w	$8(a0),d2
+loc_020962:
 	add.w	(a2,d0.w),d1
+loc_020966:
 	add.w	$2(a2,d0.w),d2
+loc_02096A:
 	move.w	d1,(ram_FFC206).l
+loc_020970:
 	move.w	d2,(ram_FFC208).l
+loc_020976:
 	move.b	$5E(a0),d2
+loc_02097A:
 	movea.l	a0,a5
+loc_02097C:
 	bsr.w	sub_020BEA
+loc_020980:
 	movea.l	a5,a0
+loc_020982:
 	move.b	$5E(a0),d0
+loc_020986:
 	andi.w	#$1E,d0
+loc_02098A:
 	lsl.w	#$2,d0
+loc_02098C:
 	lea	dat_020DA0(pc),a2
+loc_020990:
 	move.w	$4(a0),d1
+loc_020994:
 	move.w	$8(a0),d2
+loc_020998:
 	add.w	$4(a2,d0.w),d1
+loc_02099C:
 	add.w	$6(a2,d0.w),d2
+loc_0209A0:
 	move.w	d1,(ram_FFC206).l
+loc_0209A6:
 	move.w	d2,(ram_FFC208).l
+loc_0209AC:
 	move.b	$5E(a0),d2
+loc_0209B0:
 	movea.l	a0,a5
+loc_0209B2:
 	bsr.w	sub_020BEA
+loc_0209B6:
 	movea.l	a5,a0
 loc_0209B8:
 	rts
 sub_0209BA:
 	tst.b	$54(a0)
+loc_0209BE:
 	beq.b	loc_0209C6
+loc_0209C0:
 	subq.b	#$1,$54(a0)
+loc_0209C4:
 	bra.b	loc_020A42
 loc_0209C6:
 	move.b	$35(a0),d0
+loc_0209CA:
 	andi.w	#$1C,d0
+loc_0209CE:
 	move.w	d0,d7
+loc_0209D0:
 	lea	dat_020D60(pc),a2
+loc_0209D4:
 	movem.w	(a2,d0.w),d0-d1
+loc_0209DA:
 	swap	d0
+loc_0209DC:
 	swap	d1
+loc_0209DE:
 	jsr	(sub_00B36C).l
+loc_0209E4:
 	cmpi.b	#$20,d0
+loc_0209E8:
 	bne.b	loc_020A0C
 	lea	dat_020D80(pc),a2
 	movem.w	(a2,d7.w),d0-d1
@@ -27982,15 +38879,23 @@ loc_0209C6:
 	beq.b	loc_020A44
 loc_020A0C:
 	bset.b	#$0,$59(a0)
+loc_020A12:
 	beq.b	loc_020A20
+loc_020A14:
 	subq.b	#$8,$35(a0)
+loc_020A18:
 	bclr.b	#$0,$59(a0)
+loc_020A1E:
 	bra.b	loc_020A3C
 loc_020A20:
 	move.b	#$1E,$51(a0)
+loc_020A26:
 	move.b	#$2,$54(a0)
+loc_020A2C:
 	move.b	#$10,$52(a0)
+loc_020A32:
 	clr.b	$52(a0)
+loc_020A36:
 	addi.b	#$10,$35(a0)
 loc_020A3C:
 	andi.b	#$1E,$35(a0)
@@ -27999,10 +38904,25 @@ loc_020A42:
 loc_020A44:
 	bclr.b	#$0,$59(a0)
 	rts
-	dc.b	$30,$BC,$03,$20
-	dc.b	$11,$68,$00,$35,$00,$5E,$02,$28,$00,$1E,$00,$5E,$31,$7C,$00,$10
-	dc.b	$00,$38,$43,$FA,$04,$AA,$10,$28,$00,$5E,$02,$40,$00,$1E,$D2,$F1
-	dc.b	$00,$00,$4E,$FA,$A4,$A6,$2F,$09,$43,$F8,$E0,$00,$4E,$BA,$A1,$50
+loc_020A4C:
+	move.w	#$320,(a0)
+loc_020A50:
+	move.b	$35(a0),$5E(a0)
+loc_020A56:
+	andi.b	#$1E,$5E(a0)
+loc_020A5C:
+	move.w	#$10,$38(a0)
+loc_020A62:
+	lea	dat_020F0E(pc),a1
+loc_020A66:
+	move.b	$5E(a0),d0
+loc_020A6A:
+	andi.w	#$1E,d0
+loc_020A6E:
+	adda.w	(a1,d0.w),a1
+loc_020A72:
+	jmp	sub_01AF1A(pc)
+	dc.b	$2F,$09,$43,$F8,$E0,$00,$4E,$BA,$A1,$50
 	dc.b	$11,$40,$00,$35,$22,$5F,$5C,$49,$4E,$FA,$A4,$90,$42,$90,$30,$BC
 	dc.b	$00,$AC,$00,$28,$00,$28,$00,$02,$10,$28,$00,$35,$50,$00,$02,$40
 	dc.b	$00,$1E,$11,$40,$00,$20,$4E,$FA,$E1,$8C,$24,$68,$00,$28,$0C,$2A
@@ -28021,58 +38941,100 @@ loc_020A44:
 	dc.b	$02,$40,$00,$01,$E5,$48,$22,$71,$00,$00,$4E,$FA,$A3,$9E
 sub_020B7E:
 	movea.l	$28(a0),a2
+loc_020B82:
 	cmpi.b	#$20,$37(a2)
+loc_020B88:
 	beq.b	loc_020BE2
+loc_020B8A:
 	move.b	$58(a2),$58(a0)
+loc_020B90:
 	move.w	$4(a2),$4(a0)
+loc_020B96:
 	move.w	$8(a2),$8(a0)
+loc_020B9C:
 	move.b	$5E(a2),d0
+loc_020BA0:
 	andi.w	#$1E,d0
+loc_020BA4:
 	cmp.b	$35(a0),d0
+loc_020BA8:
 	beq.b	loc_020BBC
+loc_020BAA:
 	move.b	d0,$35(a0)
+loc_020BAE:
 	lea	dat_0212E0(pc),a1
+loc_020BB2:
 	move.l	a1,$30(a0)
+loc_020BB6:
 	move.b	#$1,$34(a0)
 loc_020BBC:
 	moveq	#$1E,d0
+loc_020BBE:
 	and.b	$35(a0),d0
+loc_020BC2:
 	add.w	d0,d0
+loc_020BC4:
 	lea	dat_020E60(pc),a1
+loc_020BC8:
 	movem.w	(a1,d0.w),d0-d1
+loc_020BCE:
 	add.w	d0,$4(a0)
+loc_020BD2:
 	add.w	d1,$8(a0)
+loc_020BD6:
 	jsr	sub_01AF0E(pc)
+loc_020BDA:
 	move.w	#$1,$26(a0)
+loc_020BE0:
 	rts
 loc_020BE2:
 	lea	dat_0212FE(pc),a1
 	jmp	sub_01AF1A(pc)
 sub_020BEA:
 	jsr	(sub_01AD58).l
+loc_020BF0:
 	bne.b	loc_020C3E
+loc_020BF2:
 	lea	dat_020EE0(pc),a1
+loc_020BF6:
 	jsr	sub_01ADF6(pc)
+loc_020BFA:
 	move.w	(ram_FFC206).l,$4(a2)
+loc_020C02:
 	move.w	(ram_FFC208).l,$8(a2)
+loc_020C0A:
 	move.b	d2,$35(a2)
+loc_020C0E:
 	move.b	#$18,$29(a2)
+loc_020C14:
 	move.b	#$6,$2A(a2)
+loc_020C1A:
 	lea	dat_021300(pc),a1
+loc_020C1E:
 	move.b	$35(a2),d0
+loc_020C22:
 	andi.w	#$1E,d0
+loc_020C26:
 	adda.w	(a1,d0.w),a1
+loc_020C2A:
 	move.l	a1,$30(a2)
+loc_020C2E:
 	move.b	#$20,$22(a2)
+loc_020C34:
 	move.w	#$328,(a2)
+loc_020C38:
 	bset.b	#$3,$2(a2)
 loc_020C3E:
 	rts
 sub_020C40:
 	moveq	#$0,d0
+loc_020C42:
 	moveq	#$0,d1
+loc_020C44:
 	jsr	(sub_00B36C).l
+loc_020C4A:
 	cmpi.b	#$20,d0
+loc_020C4E:
 	bne.w	loc_020CEE
 	jsr	(sub_00E234).l
 	jsr	(sub_00B036).l
@@ -28116,7 +39078,9 @@ loc_020CBC:
 	dc.b	$61,$00,$00,$18,$4C,$DF,$03,$00,$5C,$49,$4E,$FA,$A2,$2E
 loc_020CEE:
 	move.w	#$23C,(a0)
+loc_020CF2:
 	lea	dat_0215C0(pc),a1
+loc_020CF6:
 	jmp	sub_01AF1A(pc)
 	dc.b	$4E,$B9,$00,$01,$AD,$58
 	dc.b	$66,$4A,$43,$FA,$01,$CC,$4E,$BA,$A0,$EE,$34,$BC,$02,$30,$35,$68
@@ -28287,35 +39251,46 @@ dat_0215C0:
 	dc.b	$00,$02,$0D,$4E,$FF,$FE
 loc_021636:
 	movem.l	a1-a2,-(a7)
+loc_02163A:
 	lea	(dat_0216D2).l,a1
+loc_021640:
 	add.w	d0,d0
+loc_021642:
 	move.w	(a1,d0.w),d0
+loc_021646:
 	lea	(a1,d0.w),a1
 loc_02164A:
 	lea	(ram_C100).w,a2
 loc_02164E:
 	tst.l	(a2)
+loc_021650:
 	beq.b	loc_021656
 	addq.w	#$6,a2
 	bra.b	loc_02164E
 loc_021656:
 	move.w	(a1)+,d0
+loc_021658:
 	bmi.b	loc_021662
 loc_02165A:
 	move.l	(a1)+,(a2)+
+loc_02165C:
 	move.w	(a1)+,(a2)+
+loc_02165E:
 	dbra	d0,loc_02165A
 loc_021662:
 	movem.l	(a7)+,a1-a2
+loc_021666:
 	rts
 sub_021668:
 	movem.l	d0-d2/d5-d7/a0-a3,-(a7)
+loc_02166C:
 	tst.l	(ram_C100).w
+loc_021670:
 	beq.b	loc_0216CA
 	tst.w	(ram_C158).w
 	bne.b	loc_0216C2
 	movea.l	(ram_C100).w,a0
-	lea	(dat_00A2D6).l,a3
+	lea	(loc_00A2D6).l,a3
 	lea	(ram_CE00).w,a1
 	move.w	(a0)+,d2
 	bpl.b	loc_02168E
@@ -28342,7 +39317,9 @@ loc_0216C2:
 	rts
 loc_0216CA:
 	movem.l	(a7)+,d0-d2/d5-d7/a0-a3
+loc_0216CE:
 	moveq	#-$1,d0
+loc_0216D0:
 	rts
 dat_0216D2:
 	dc.b	$00,$52,$00,$5A,$00,$62,$00,$7C,$00,$9C,$00,$AA,$00,$BE
@@ -28395,79 +39372,152 @@ dat_0218FA:
 	dc.b	$00,$0A,$28,$FE,$52,$C0
 sub_021986:
 	move.b	$34(a0),d0
+loc_02198A:
 	andi.b	#$3,d0
+loc_02198E:
 	bne.b	loc_02199A
+loc_021990:
 	bsr.b	sub_0219B8
+loc_021992:
 	moveq	#-$4C,d0
+loc_021994:
 	jsr	(sub_00A068).l
 loc_02199A:
 	jsr	sub_01AF0E(pc)
+loc_02199E:
 	cmpi.w	#$0,(ram_C328).w
+loc_0219A4:
 	beq.b	loc_0219B0
+loc_0219A6:
 	cmpi.w	#$7,(ram_C328).w
+loc_0219AC:
 	beq.b	loc_0219B0
 	rts
 loc_0219B0:
 	move.w	#$1,$26(a0)
+loc_0219B6:
 	rts
 sub_0219B8:
 	jsr	(sub_01AD84).l
+loc_0219BE:
 	bne.w	loc_021A58
+loc_0219C2:
 	lea	dat_021A8A(pc),a1
+loc_0219C6:
 	jsr	(sub_01ADF6).l
+loc_0219CC:
 	jsr	(sub_01ABA6).l
+loc_0219D2:
 	move.b	(RNG_Seed).w,d0
+loc_0219D6:
 	moveq	#$0,d1
+loc_0219D8:
 	move.b	$40(a0),d1
+loc_0219DC:
 	move.w	d1,d2
+loc_0219DE:
 	add.w	d1,d1
+loc_0219E0:
 	subq.w	#$1,d1
+loc_0219E2:
 	and.w	d1,d0
+loc_0219E4:
 	sub.w	d2,d0
+loc_0219E6:
 	move.w	$4(a0),d2
+loc_0219EA:
 	add.w	d2,d0
+loc_0219EC:
 	move.b	$42(a0),d2
+loc_0219F0:
 	ext.w	d2
+loc_0219F2:
 	add.w	d2,d0
+loc_0219F4:
 	move.w	d0,$4(a2)
+loc_0219F8:
 	move.b	(ram_C313).w,d0
+loc_0219FC:
 	moveq	#$0,d1
+loc_0219FE:
 	move.b	$41(a0),d1
+loc_021A02:
 	move.w	d1,d2
+loc_021A04:
 	add.w	d1,d1
+loc_021A06:
 	subq.w	#$1,d1
+loc_021A08:
 	and.w	d1,d0
+loc_021A0A:
 	sub.w	d2,d0
+loc_021A0C:
 	move.w	$8(a0),d2
+loc_021A10:
 	add.w	d2,d0
+loc_021A12:
 	move.b	$43(a0),d2
+loc_021A16:
 	ext.w	d2
+loc_021A18:
 	add.w	d2,d0
+loc_021A1A:
 	move.w	d0,$8(a2)
+loc_021A1E:
 	jsr	(sub_01ABA6).l
+loc_021A24:
 	move.b	(ram_C313).w,d0
+loc_021A28:
 	andi.b	#$F,d0
+loc_021A2C:
 	lea	dat_021B70(pc),a1
+loc_021A30:
 	cmpi.b	#$6,d0
+loc_021A34:
 	bcs.b	loc_021A3A
+loc_021A36:
 	lea	dat_021BA8(pc),a1
 loc_021A3A:
 	move.l	a1,$30(a2)
+loc_021A3E:
 	move.b	#$40,$22(a2)
+loc_021A44:
 	cmpi.w	#$0,(ram_C328).w
+loc_021A4A:
 	beq.b	loc_021A5A
+loc_021A4C:
 	cmpi.w	#$7,(ram_C328).w
+loc_021A52:
 	beq.b	loc_021A5A
 	move.w	#$23C,(a2)
 loc_021A58:
 	rts
 loc_021A5A:
 	move.w	#$3D4,(a2)
+loc_021A5E:
 	bset.b	#$3,$2(a2)
+loc_021A64:
 	rts
-	dc.b	$70,$B4,$08,$39,$00,$00,$00,$FF,$C2,$0C
-	dc.b	$67,$02,$70,$B3,$2F,$09,$4E,$B9,$00,$00,$A0,$68,$22,$5F,$52,$39
-	dc.b	$00,$FF,$C2,$0C,$5C,$49,$4E,$FA,$94,$92
+loc_021A66:
+	moveq	#-$4C,d0
+loc_021A68:
+	btst.b	#$0,(ram_FFC20C).l
+loc_021A70:
+	beq.b	loc_021A74
+loc_021A72:
+	moveq	#-$4D,d0
+loc_021A74:
+	move.l	a1,-(a7)
+loc_021A76:
+	jsr	(sub_00A068).l
+loc_021A7C:
+	movea.l	(a7)+,a1
+loc_021A7E:
+	addq.b	#$1,(ram_FFC20C).l
+loc_021A84:
+	addq.w	#$6,a1
+loc_021A86:
+	jmp	sub_01AF1A(pc)
 dat_021A8A:
 	dc.b	$80,$01,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$1A,$66
@@ -28574,29 +39624,51 @@ dat_021CF0:
 	dc.b	$04,$0C,$08,$09,$0C,$FF
 sub_021D56:
 	tst.b	$36(a0)
+loc_021D5A:
 	bne.b	loc_021D9A
+loc_021D5C:
 	movea.l	$28(a0),a2
+loc_021D60:
 	move.b	(a2)+,d0
+loc_021D62:
 	bmi.b	loc_021DB0
+loc_021D64:
 	move.b	d0,$36(a0)
+loc_021D68:
 	moveq	#$0,d0
+loc_021D6A:
 	move.b	(a2)+,d0
+loc_021D6C:
 	movea.l	dat_021DBA(pc,d0.w),a1
+loc_021D70:
 	lsr.w	#$2,d0
+loc_021D72:
 	move.b	dat_021DB6(pc,d0.w),d0
+loc_021D76:
 	move.b	d0,$3B(a0)
+loc_021D7A:
 	move.l	a1,$30(a0)
+loc_021D7E:
 	move.l	a2,$28(a0)
+loc_021D82:
 	jsr	(sub_01AE8E).l
+loc_021D88:
 	movem.w	$2C(a0),d0-d1
+loc_021D8E:
 	lsl.l	#$8,d0
+loc_021D90:
 	lsl.l	#$8,d1
+loc_021D92:
 	add.l	d0,$C(a0)
+loc_021D96:
 	add.l	d1,$10(a0)
 loc_021D9A:
 	jsr	(sub_00E234).l
+loc_021DA0:
 	jsr	(sub_00B036).l
+loc_021DA6:
 	subq.b	#$1,$36(a0)
+loc_021DAA:
 	jmp	(sub_01AF0E).l
 loc_021DB0:
 	jmp	(sub_01B002).l
@@ -28612,33 +39684,57 @@ dat_021DBA:
 	dc.b	$AF,$1A
 sub_021E12:
 	tst.b	$36(a0)
+loc_021E16:
 	bne.b	loc_021E5E
+loc_021E18:
 	movea.l	$28(a0),a2
+loc_021E1C:
 	move.b	(a2)+,d0
+loc_021E1E:
 	bmi.b	loc_021E74
+loc_021E20:
 	move.b	d0,$36(a0)
+loc_021E24:
 	moveq	#$0,d0
+loc_021E26:
 	move.b	(a2)+,d0
+loc_021E28:
 	movea.l	dat_021E7E(pc,d0.w),a1
+loc_021E2C:
 	tst.b	(a2)
+loc_021E2E:
 	bpl.b	loc_021E34
+loc_021E30:
 	movea.l	dat_021E8E(pc,d0.w),a1
 loc_021E34:
 	lsr.w	#$2,d0
+loc_021E36:
 	move.b	dat_021E7A(pc,d0.w),d0
+loc_021E3A:
 	move.b	d0,$3B(a0)
+loc_021E3E:
 	move.l	a1,$30(a0)
+loc_021E42:
 	move.l	a2,$28(a0)
+loc_021E46:
 	jsr	(sub_01AE8E).l
+loc_021E4C:
 	movem.w	$2C(a0),d0-d1
+loc_021E52:
 	lsl.l	#$8,d0
+loc_021E54:
 	lsl.l	#$8,d1
+loc_021E56:
 	add.l	d0,$C(a0)
+loc_021E5A:
 	add.l	d1,$10(a0)
 loc_021E5E:
 	jsr	(sub_00E234).l
+loc_021E64:
 	jsr	(sub_00B036).l
+loc_021E6A:
 	subq.b	#$1,$36(a0)
+loc_021E6E:
 	jmp	(sub_01AF0E).l
 loc_021E74:
 	jmp	(sub_01B002).l
@@ -28668,12 +39764,17 @@ dat_021E9E:
 	dc.b	$00,$08,$8C,$A2,$00,$00,$80,$00,$00,$FF,$FF,$FE
 sub_021F7C:
 	bset.b	#$0,$2(a0)
+loc_021F82:
 	bne.b	loc_021F96
+loc_021F84:
 	ori.b	#$2A,$2(a0)
+loc_021F8A:
 	move.l	#$87000,$14(a0)
+loc_021F92:
 	clr.b	$28(a0)
 loc_021F96:
 	btst.b	#$4,(Flags_C61C).w
+loc_021F9C:
 	beq.b	loc_021FC2
 	bset.b	#$0,$28(a0)
 	bne.b	loc_021FC4
@@ -28737,83 +39838,144 @@ loc_02208A:
 	clr.b	$28(a0)
 sub_022092:
 	tst.b	$28(a0)
+loc_022096:
 	bne.b	loc_0220A8
+loc_022098:
 	move.l	#$22CBA,$14(a0)
+loc_0220A0:
 	move.w	#$3,$26(a0)
+loc_0220A6:
 	rts
 loc_0220A8:
 	movea.l	$54(a0),a1
+loc_0220AC:
 	bclr.b	#$3,$2(a0)
+loc_0220B2:
 	movea.l	$50(a0),a3
+loc_0220B6:
 	moveq	#$8,d0
+loc_0220B8:
 	lea	dat_022CB0(pc),a2
+loc_0220BC:
 	move.w	$38(a3),d1
+loc_0220C0:
 	ble.b	loc_0220DA
+loc_0220C2:
 	sub.w	(a1)+,d1
+loc_0220C4:
 	bcs.b	loc_0220DA
+loc_0220C6:
 	subq.w	#$2,d0
+loc_0220C8:
 	sub.w	(a1)+,d1
+loc_0220CA:
 	bcs.b	loc_0220DA
+loc_0220CC:
 	subq.w	#$2,d0
+loc_0220CE:
 	sub.w	(a1)+,d1
+loc_0220D0:
 	bcs.b	loc_0220DA
+loc_0220D2:
 	subq.w	#$2,d0
+loc_0220D4:
 	sub.w	(a1)+,d1
+loc_0220D6:
 	bcs.b	loc_0220DA
+loc_0220D8:
 	subq.w	#$2,d0
 loc_0220DA:
 	adda.w	(a2,d0.w),a2
+loc_0220DE:
 	move.l	a2,$14(a0)
+loc_0220E2:
 	move.b	#$C0,$22(a0)
+loc_0220E8:
 	move.w	#$88,$8(a0)
+loc_0220EE:
 	move.w	#$128,$4(a0)
+loc_0220F4:
 	clr.l	$C(a0)
+loc_0220F8:
 	clr.l	$10(a0)
+loc_0220FC:
 	clr.w	$18(a0)
+loc_022100:
 	clr.w	$1C(a0)
+loc_022104:
 	rts
 sub_022106:
 	lea	(ram_C000).w,a2
+loc_02210A:
 	move.w	(a2),d0
+loc_02210C:
 	addq.w	#$1,(a2)+
+loc_02210E:
 	move.w	d0,d1
+loc_022110:
 	lsl.w	#$3,d0
+loc_022112:
 	sub.w	d1,d0
+loc_022114:
 	add.w	d0,d0
+loc_022116:
 	adda.w	d0,a2
+loc_022118:
 	move.w	#$9320,d0
+loc_02211C:
 	move.w	#$9400,d1
+loc_022120:
 	move.w	#$954B,d2
+loc_022124:
 	move.w	#$96E2,d3
+loc_022128:
 	move.w	#$9704,d4
+loc_02212C:
 	movem.w	d0-d4,(a2)
+loc_022130:
 	adda.w	#$A,a2
+loc_022134:
 	move.w	#$6880,(a2)+
+loc_022138:
 	move.w	#$81,(a2)+
+loc_02213C:
 	rts
 	dc.b	$52,$28
 	dc.b	$FF,$C8,$42,$28,$00,$48,$30,$BC,$02,$C4,$31,$7C,$02,$CC,$00,$60
 	dc.b	$31,$7C,$02,$CC,$00,$C0,$5C,$49,$4E,$FA,$8D,$C0
 sub_02215C:
 	tst.b	$29(a0)
+loc_022160:
 	bne.w	loc_022220
+loc_022164:
 	tst.b	$2A(a0)
+loc_022168:
 	beq.b	loc_022172
 	subq.b	#$1,$2A(a0)
 	bra.w	loc_02226A
 loc_022172:
 	move.b	#$4,$2A(a0)
+loc_022178:
 	move.b	(ram_C313).w,d0
+loc_02217C:
 	andi.b	#$F,d0
+loc_022180:
 	cmpi.b	#$4,d0
+loc_022184:
 	bcc.w	loc_02226A
+loc_022188:
 	lea	(Objects_A).w,a1
+loc_02218C:
 	move.w	$8(a0),d1
+loc_022190:
 	sub.w	$8(a1),d1
+loc_022194:
 	bcc.b	loc_022198
+loc_022196:
 	neg.w	d1
 loc_022198:
 	cmpi.w	#$10,d1
+loc_02219C:
 	bcc.b	loc_0221BA
 	move.w	$4(a0),d0
 	sub.w	$4(a1),d0
@@ -28827,33 +39989,56 @@ loc_0221AA:
 	bra.b	loc_0221FA
 loc_0221BA:
 	move.w	$8(a1),-(a7)
+loc_0221BE:
 	move.w	$8(a1),d0
+loc_0221C2:
 	subi.w	#$100,d0
+loc_0221C6:
 	neg.w	d0
+loc_0221C8:
 	addi.w	#$F0,d0
+loc_0221CC:
 	move.w	d0,$8(a1)
+loc_0221D0:
 	jsr	sub_01ABCE(pc)
+loc_0221D4:
 	move.w	(a7)+,$8(a1)
+loc_0221D8:
 	andi.w	#$1E,d0
+loc_0221DC:
 	move.b	d0,$35(a0)
+loc_0221E0:
 	add.w	d0,d0
+loc_0221E2:
 	lea	dat_0226EC(pc),a2
+loc_0221E6:
 	movem.w	(a2,d0.w),d0-d1
+loc_0221EC:
 	neg.l	d0
+loc_0221EE:
 	lsl.l	#$8,d0
+loc_0221F0:
 	lsl.l	#$8,d1
+loc_0221F2:
 	move.l	d1,$C(a0)
+loc_0221F6:
 	move.l	d0,$10(a0)
 loc_0221FA:
 	move.b	#$88,$2D(a0)
+loc_022200:
 	move.b	(RNG_Seed).w,d0
+loc_022204:
 	andi.w	#$F,d0
+loc_022208:
 	cmpi.b	#$E,d0
+loc_02220C:
 	bcs.b	loc_022212
 	clr.b	$2D(a0)
 loc_022212:
 	move.b	#$50,$29(a0)
+loc_022218:
 	lea	dat_0225C8(pc),a1
+loc_02221C:
 	jmp	sub_01AF1A(pc)
 loc_022220:
 	subq.b	#$1,$29(a0)
@@ -28879,10 +40064,15 @@ loc_022252:
 	jmp	sub_01AF1A(pc)
 loc_02226A:
 	move.w	#$80,d0
+loc_02226E:
 	tst.w	$C(a0)
+loc_022272:
 	bmi.b	loc_022284
+loc_022274:
 	addi.w	#$E0,d0
+loc_022278:
 	cmp.w	$4(a0),d0
+loc_02227C:
 	bcc.b	loc_022296
 	move.w	d0,$4(a0)
 	bra.b	loc_022292
@@ -28895,10 +40085,15 @@ loc_022292:
 	clr.l	$C(a0)
 loc_022296:
 	move.w	#$80,d0
+loc_02229A:
 	tst.w	$10(a0)
+loc_02229E:
 	bmi.b	loc_0222B0
+loc_0222A0:
 	addi.w	#$78,d0
+loc_0222A4:
 	cmp.w	$8(a0),d0
+loc_0222A8:
 	bcc.b	loc_0222C2
 	move.w	d0,$8(a0)
 	bra.b	loc_0222BE
@@ -28911,7 +40106,9 @@ loc_0222BE:
 	clr.l	$10(a0)
 loc_0222C2:
 	bsr.w	sub_0223AA
+loc_0222C6:
 	bne.b	loc_0222CC
+loc_0222C8:
 	jmp	sub_01AF0E(pc)
 loc_0222CC:
 	clr.b	$2D(a0)
@@ -28961,38 +40158,65 @@ loc_02237C:
 	jmp	sub_01D368(pc)
 sub_022392:
 	jsr	sub_01AF0E(pc)
+loc_022396:
 	move.w	#$1,$26(a0)
+loc_02239C:
 	rts
 sub_02239E:
 	jsr	sub_01AF0E(pc)
+loc_0223A2:
 	move.w	#$2,$26(a0)
+loc_0223A8:
 	rts
 sub_0223AA:
 	lea	dat_02272C(pc),a3
+loc_0223AE:
 	cmpi.w	#$0,(ram_C328).w
+loc_0223B4:
 	beq.b	loc_0223BA
+loc_0223B6:
 	lea	dat_02274A(pc),a3
 loc_0223BA:
 	tst.b	$44(a0)
+loc_0223BE:
 	bne.w	loc_022416
+loc_0223C2:
 	move.w	#$620,d4
+loc_0223C6:
 	jsr	(sub_00E238).l
+loc_0223CC:
 	jsr	(sub_00B298).l
+loc_0223D2:
 	bne.b	loc_022412
+loc_0223D4:
 	move.w	#$628,d4
+loc_0223D8:
 	jsr	(sub_00E238).l
+loc_0223DE:
 	jsr	(sub_00B298).l
+loc_0223E4:
 	bne.b	loc_022412
+loc_0223E6:
 	move.w	#$630,d4
+loc_0223EA:
 	jsr	(sub_00E238).l
+loc_0223F0:
 	jsr	(sub_00B298).l
+loc_0223F6:
 	bne.b	loc_022412
+loc_0223F8:
 	move.w	#$638,d4
+loc_0223FC:
 	jsr	(sub_00E238).l
+loc_022402:
 	jsr	(sub_00B298).l
+loc_022408:
 	bne.b	loc_022412
+loc_02240A:
 	tst.b	$44(a0)
+loc_02240E:
 	bne.b	loc_022416
+loc_022410:
 	bra.b	loc_022442
 loc_022412:
 	addq.b	#$2,$44(a0)
@@ -29012,6 +40236,7 @@ loc_022436:
 	jsr	(sub_00A068).l
 loc_022442:
 	moveq	#$0,d0
+loc_022444:
 	rts
 loc_022446:
 	jsr	sub_01D368(pc)
@@ -29021,55 +40246,91 @@ loc_022446:
 	dc.b	$00,$02,$C6,$1C,$5C,$49,$4E,$FA,$8A,$C2
 sub_02245A:
 	bset.b	#$3,$2(a0)
+loc_022460:
 	bne.b	loc_022498
+loc_022462:
 	movea.l	$28(a0),a2
+loc_022466:
 	move.b	$2C(a0),d6
+loc_02246A:
 	lea	dat_02259A(pc),a1
+loc_02246E:
 	jsr	sub_01ADB0(pc)
+loc_022472:
 	move.b	d6,$2C(a0)
+loc_022476:
 	lea	dat_022634(pc),a1
+loc_02247A:
 	cmpi.b	#$52,d6
+loc_02247E:
 	beq.b	loc_022484
+loc_022480:
 	lea	dat_022670(pc),a1
 loc_022484:
 	move.l	a1,$30(a0)
+loc_022488:
 	move.l	a2,$28(a0)
+loc_02248C:
 	ori.b	#$22,$2(a0)
+loc_022492:
 	move.b	#$20,$22(a0)
 loc_022498:
 	movea.l	$28(a0),a2
+loc_02249C:
 	move.l	$4(a2),$4(a0)
+loc_0224A2:
 	move.l	$8(a2),$8(a0)
+loc_0224A8:
 	addi.w	#$FFDC,$8(a0)
+loc_0224AE:
 	moveq	#$1F,d0
+loc_0224B0:
 	cmpi.b	#$52,$2C(a0)
+loc_0224B6:
 	beq.b	loc_0224BA
+loc_0224B8:
 	moveq	#-$1F,d0
 loc_0224BA:
 	add.w	d0,$4(a0)
+loc_0224BE:
 	jsr	sub_01AF0E(pc)
+loc_0224C2:
 	move.w	#$1,$26(a0)
+loc_0224C8:
 	rts
 sub_0224CA:
 	movea.l	$28(a0),a2
+loc_0224CE:
 	move.l	$4(a2),$4(a0)
+loc_0224D4:
 	move.l	$8(a2),$8(a0)
+loc_0224DA:
 	addi.w	#$FFDC,$8(a0)
+loc_0224E0:
 	moveq	#$1F,d0
+loc_0224E2:
 	cmpi.b	#$52,$2C(a0)
+loc_0224E8:
 	beq.b	loc_0224EC
+loc_0224EA:
 	moveq	#-$1F,d0
 loc_0224EC:
 	add.w	d0,$4(a0)
+loc_0224F0:
 	tst.b	$29(a2)
+loc_0224F4:
 	bne.b	loc_022514
 loc_0224F6:
 	clr.b	$2D(a0)
+loc_0224FA:
 	move.b	#$1,$34(a0)
 loc_022500:
 	lea	dat_022634(pc),a1
+loc_022504:
 	cmpi.b	#$52,$2C(a0)
+loc_02250A:
 	beq.b	loc_022510
+loc_02250C:
 	lea	dat_022670(pc),a1
 loc_022510:
 	jmp	sub_01AF1A(pc)
@@ -29296,11 +40557,15 @@ dat_022CB0:
 	dc.b	$03,$44,$00,$F0,$00,$04,$03,$44,$E8,$08,$00,$04,$03,$44,$D0,$20
 sub_022D50:
 	bset.b	#$2,$2(a0)
+loc_022D56:
 	bne.b	loc_022D64
+loc_022D58:
 	ori.b	#$26,$2(a0)
+loc_022D5E:
 	move.b	#$20,$5D(a0)
 loc_022D64:
 	btst.b	#$4,(Flags_C61C).w
+loc_022D6A:
 	beq.w	loc_022DEA
 	tst.b	$5D(a0)
 	beq.w	loc_022D7E
@@ -29442,15 +40707,25 @@ loc_022F1E:
 	dc.b	$05,$05,$05,$05,$05,$05,$05,$05,$05,$05
 sub_02306A:
 	jsr	(sub_01AF0E).l
+loc_023070:
 	move.l	$10(a0),d0
+loc_023074:
 	add.l	d0,d0
+loc_023076:
 	neg.l	d0
+loc_023078:
 	add.l	(ram_C51A).w,d0
+loc_02307C:
 	add.l	d0,(ram_C238).w
+loc_023080:
 	move.w	(ram_C238).w,d0
+loc_023084:
 	move.w	d0,(ram_C568).w
+loc_023088:
 	jsr	(sub_01B048).l
+loc_02308E:
 	tst.l	$10(a0)
+loc_023092:
 	beq.b	loc_0230EC
 	tst.b	$5E(a0)
 	bne.b	loc_0230E8
@@ -29492,13 +40767,21 @@ dat_0230EE:
 	dc.b	$97,$04,$64,$00,$00,$80
 sub_023116:
 	lea	(ram_F060).w,a2
+loc_02311A:
 	move.w	$4(a2),$4(a0)
+loc_023120:
 	move.w	$8(a2),$8(a0)
+loc_023126:
 	btst.b	#$0,$5A(a2)
+loc_02312C:
 	bne.b	loc_023168
+loc_02312E:
 	addi.w	#$3D,$8(a0)
+loc_023134:
 	addi.w	#$24,$4(a0)
+loc_02313A:
 	tst.b	$51(a0)
+loc_02313E:
 	beq.b	loc_023144
 	subq.b	#$1,$51(a0)
 loc_023144:
@@ -29535,19 +40818,30 @@ loc_023176:
 	dc.b	$07,$AC,$4C,$DF,$03,$00,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_0232AE:
 	lea	(ram_F060).w,a2
+loc_0232B2:
 	move.w	$4(a2),d1
+loc_0232B6:
 	addi.w	#$11,d1
+loc_0232BA:
 	cmpi.b	#$52,$36(a0)
+loc_0232C0:
 	bne.b	loc_0232C6
 	addi.w	#$26,d1
 loc_0232C6:
 	move.w	d1,$4(a0)
+loc_0232CA:
 	move.w	$8(a2),d2
+loc_0232CE:
 	addi.w	#$56,d2
+loc_0232D2:
 	move.w	d2,$8(a0)
+loc_0232D6:
 	tst.b	$50(a0)
+loc_0232DA:
 	bne.w	loc_023364
+loc_0232DE:
 	tst.b	$51(a0)
+loc_0232E2:
 	beq.w	loc_023368
 	tst.b	$54(a0)
 	bne.b	loc_02330E
@@ -29617,12 +40911,19 @@ dat_02337E:
 	dc.b	$60,$D2
 sub_023472:
 	lea	(ram_F060).w,a2
+loc_023476:
 	move.l	$4(a2),d1
+loc_02347A:
 	move.l	$8(a2),d2
+loc_02347E:
 	add.l	$54(a0),d1
+loc_023482:
 	add.l	$58(a0),d2
+loc_023486:
 	move.l	d1,$4(a0)
+loc_02348A:
 	move.l	d2,$8(a0)
+loc_02348E:
 	jmp	(sub_01AF0E).l
 	dc.b	$45,$F8,$F0,$60,$5C,$49,$08,$2A,$00,$00,$00,$5A
 	dc.b	$67,$10,$43,$FA,$10,$1C,$0C,$28,$00,$52,$00,$36,$67,$04,$43,$FA
@@ -29634,16 +40935,25 @@ sub_023472:
 	dc.b	$00,$36,$67,$04,$43,$FA,$10,$14,$4E,$F9,$00,$01,$AF,$1A
 sub_02350E:
 	lea	(ram_F060).w,a2
+loc_023512:
 	moveq	#$40,d0
+loc_023514:
 	cmpi.b	#$52,$36(a0)
+loc_02351A:
 	beq.b	loc_02351E
+loc_02351C:
 	moveq	#$8,d0
 loc_02351E:
 	add.w	$4(a2),d0
+loc_023522:
 	move.w	d0,$4(a0)
+loc_023526:
 	moveq	#$18,d1
+loc_023528:
 	add.w	$8(a2),d1
+loc_02352C:
 	move.w	d1,$8(a0)
+loc_023530:
 	jmp	(sub_01AF0E).l
 	dc.b	$45,$F8,$F0,$60,$4A,$2A,$00,$59,$67,$24
 	dc.b	$0C,$28,$00,$52,$00,$36,$67,$04,$42,$2A,$00,$59,$48,$E7,$00,$E0
@@ -29654,25 +40964,42 @@ loc_02351E:
 	dc.b	$34,$BC,$02,$3C,$4E,$75
 sub_023596:
 	lea	(ram_F060).w,a2
+loc_02359A:
 	moveq	#$24,d0
+loc_02359C:
 	add.w	$4(a2),d0
+loc_0235A0:
 	move.w	d0,$4(a0)
+loc_0235A4:
 	move.w	$8(a2),d0
+loc_0235A8:
 	subq.w	#$1,d0
+loc_0235AA:
 	add.w	$56(a0),d0
+loc_0235AE:
 	move.w	d0,$8(a0)
+loc_0235B2:
 	cmpi.b	#$20,$37(a2)
+loc_0235B8:
 	beq.w	loc_02362E
+loc_0235BC:
 	tst.b	$52(a0)
+loc_0235C0:
 	beq.b	loc_0235C6
 	subq.b	#$1,$52(a0)
 loc_0235C6:
 	lea	dat_023C7A(pc),a3
+loc_0235CA:
 	tst.b	$44(a0)
+loc_0235CE:
 	bne.w	loc_0235F4
+loc_0235D2:
 	jsr	(sub_00E234).l
+loc_0235D8:
 	jsr	(sub_00B036).l
+loc_0235DE:
 	jsr	(sub_00B298).l
+loc_0235E4:
 	beq.b	loc_023626
 	addq.b	#$2,$44(a0)
 	sub.w	d2,(ram_F098).w
@@ -29697,6 +41024,7 @@ loc_02361A:
 	jsr	(sub_00A068).l
 loc_023626:
 	btst.b	#$0,$3(a0)
+loc_02362C:
 	bne.b	loc_023634
 loc_02362E:
 	jmp	(sub_01AF0E).l
@@ -29833,21 +41161,37 @@ sub_023768:
 	dc.b	$12,$58,$12,$76,$12,$94,$12,$B2,$12,$D0
 sub_0239EA:
 	jsr	(sub_01AD58).l
+loc_0239F0:
 	bne.b	loc_023A4A
+loc_0239F2:
 	lea	dat_023BAE(pc),a1
+loc_0239F6:
 	jsr	(sub_01ADF6).l
+loc_0239FC:
 	move.b	d2,$35(a2)
+loc_023A00:
 	bset.b	#$3,$2(a2)
+loc_023A06:
 	exg	a0,a2
+loc_023A08:
 	jsr	(sub_01AE8E).l
+loc_023A0E:
 	exg	a0,a2
+loc_023A10:
 	move.b	#$40,$22(a2)
+loc_023A16:
 	move.b	#$FE,$3E(a2)
+loc_023A1C:
 	move.l	#$8889C,$14(a2)
+loc_023A24:
 	move.w	$4(a0),$4(a2)
+loc_023A2A:
 	move.w	$8(a0),$8(a2)
+loc_023A30:
 	move.w	#$274,(a2)
+loc_023A34:
 	cmpi.w	#$9,(ram_C328).w
+loc_023A3A:
 	bne.b	loc_023A48
 	bset.b	#$6,$2(a2)
 	move.w	#$98,$1E(a2)
@@ -30220,29 +41564,51 @@ dat_024278:
 	dc.b	$00,$FF,$FF,$FE
 sub_024DA4:
 	btst.b	#$0,$2(a0)
+loc_024DAA:
 	bne.b	loc_024DF0
+loc_024DAC:
 	move.l	#$87000,$14(a0)
+loc_024DB4:
 	ori.b	#$26,$2(a0)
+loc_024DBA:
 	lea	(ram_C000).w,a2
+loc_024DBE:
 	move.w	(a2),d0
+loc_024DC0:
 	addq.w	#$1,(a2)+
+loc_024DC2:
 	move.w	d0,d1
+loc_024DC4:
 	lsl.w	#$3,d0
+loc_024DC6:
 	sub.w	d1,d0
+loc_024DC8:
 	add.w	d0,d0
+loc_024DCA:
 	adda.w	d0,a2
+loc_024DCC:
 	move.w	#$9320,d0
+loc_024DD0:
 	move.w	#$9400,d1
+loc_024DD4:
 	move.w	#$954B,d2
+loc_024DD8:
 	move.w	#$96E2,d3
+loc_024DDC:
 	move.w	#$9704,d4
+loc_024DE0:
 	movem.w	d0-d4,(a2)
+loc_024DE4:
 	adda.w	#$A,a2
+loc_024DE8:
 	move.w	#$6B40,(a2)+
+loc_024DEC:
 	move.w	#$81,(a2)+
 loc_024DF0:
 	btst.b	#$4,(Flags_C61C).w
+loc_024DF6:
 	bne.b	loc_024DFA
+loc_024DF8:
 	rts
 loc_024DFA:
 	moveq	#-$76,d0
@@ -30322,6 +41688,7 @@ loc_024DFA:
 	rts
 sub_024F5C:
 	tst.b	$29(a0)
+loc_024F60:
 	beq.b	loc_024F7C
 	tst.b	$2B(a0)
 	bne.b	loc_024F78
@@ -30332,6 +41699,7 @@ loc_024F78:
 	subq.b	#$1,$2B(a0)
 loc_024F7C:
 	tst.b	$2A(a0)
+loc_024F80:
 	beq.b	loc_024F9C
 	tst.b	$2C(a0)
 	bne.b	loc_024F98
@@ -30342,6 +41710,7 @@ loc_024F98:
 	subq.b	#$1,$2C(a0)
 loc_024F9C:
 	cmpi.b	#$20,$37(a0)
+loc_024FA2:
 	bne.b	loc_024FC2
 	jsr	(sub_0219B8).l
 	move.b	$34(a0),d0
@@ -30353,17 +41722,29 @@ loc_024FBC:
 	jmp	(sub_01AF0E).l
 loc_024FC2:
 	lea	dat_0258B4(pc),a3
+loc_024FC6:
 	tst.b	$44(a0)
+loc_024FCA:
 	bne.w	loc_025002
+loc_024FCE:
 	move.w	#$888,d4
+loc_024FD2:
 	jsr	(sub_00E238).l
+loc_024FD8:
 	jsr	(sub_00B036).l
+loc_024FDE:
 	jsr	(sub_00B298).l
+loc_024FE4:
 	bne.b	loc_024FFE
+loc_024FE6:
 	move.w	#$890,d4
+loc_024FEA:
 	jsr	(sub_00E238).l
+loc_024FF0:
 	jsr	(sub_00B036).l
+loc_024FF6:
 	jsr	(sub_00B298).l
+loc_024FFC:
 	beq.b	loc_025032
 loc_024FFE:
 	addq.b	#$2,$44(a0)
@@ -30383,8 +41764,11 @@ loc_025024:
 	jsr	(sub_00A068).l
 loc_025032:
 	move.w	$2E(a0),d0
+loc_025036:
 	move.w	dat_025046(pc,d0.w),d0
+loc_02503A:
 	cmp.w	$38(a0),d0
+loc_02503E:
 	bcc.b	loc_025052
 loc_025040:
 	jmp	(sub_01AF0E).l
@@ -30393,16 +41777,25 @@ dat_025046:
 	dc.b	$00,$00
 loc_025052:
 	addq.w	#$2,$2E(a0)
+loc_025056:
 	tst.b	$29(a0)
+loc_02505A:
 	bne.b	loc_025074
+loc_02505C:
 	move.b	#$1,$29(a0)
+loc_025062:
 	moveq	#$10,d0
 loc_025064:
 	moveq	#$38,d1
+loc_025066:
 	moveq	#-$20,d2
+loc_025068:
 	swap	d1
+loc_02506A:
 	swap	d2
+loc_02506C:
 	jsr	(sub_01063C).l
+loc_025072:
 	bra.b	loc_025040
 loc_025074:
 	move.b	#$1,$2A(a0)
@@ -30452,18 +41845,31 @@ loc_02518C:
 	rts
 sub_02518E:
 	lea	(ram_F060).w,a1
+loc_025192:
 	movem.l	$4(a1),d0-d1
+loc_025198:
 	subi.l	#$10000,d0
+loc_02519E:
 	addi.l	#$250000,d1
+loc_0251A4:
 	movem.l	d0-d1,$4(a0)
+loc_0251AA:
 	lea	(ram_F2A0).w,a2
+loc_0251AE:
 	movem.l	$C(a1),d0-d1
+loc_0251B4:
 	movem.l	d0-d1,$C(a2)
+loc_0251BA:
 	cmpi.b	#$20,$37(a1)
+loc_0251C0:
 	beq.b	loc_0251D0
+loc_0251C2:
 	tst.b	$50(a0)
+loc_0251C6:
 	bne.b	loc_0251D6
+loc_0251C8:
 	move.b	#$3C,$29(a0)
+loc_0251CE:
 	bsr.b	sub_025232
 loc_0251D0:
 	jmp	(sub_01AF0E).l
@@ -30501,42 +41907,70 @@ loc_025222:
 	bra.b	loc_0251D0
 sub_025232:
 	tst.b	$28(a0)
+loc_025236:
 	bne.b	loc_02527E
+loc_025238:
 	move.b	#$B,$28(a0)
+loc_02523E:
 	lea	(Objects_A).w,a1
+loc_025242:
 	jsr	(sub_01ABCE).l
+loc_025248:
 	andi.w	#$1F,d0
+loc_02524C:
 	cmpi.b	#$C,d0
+loc_025250:
 	bcc.b	loc_025254
 	moveq	#$C,d0
 loc_025254:
 	cmpi.b	#$14,d0
+loc_025258:
 	bcs.b	loc_02525C
+loc_02525A:
 	moveq	#$14,d0
 loc_02525C:
 	cmp.b	$35(a0),d0
+loc_025260:
 	beq.b	loc_02527E
+loc_025262:
 	move.b	d0,$35(a0)
+loc_025266:
 	subi.w	#$C,d0
+loc_02526A:
 	lea	dat_025CDC(pc),a1
+loc_02526E:
 	add.w	d0,d0
+loc_025270:
 	adda.w	(a1,d0.w),a1
+loc_025274:
 	move.b	#$1,$34(a0)
+loc_02527A:
 	move.l	a1,$30(a0)
 loc_02527E:
 	subq.b	#$1,$28(a0)
+loc_025282:
 	rts
 sub_025284:
 	lea	(ram_F060).w,a1
+loc_025288:
 	movem.l	$4(a1),d0-d1
+loc_02528E:
 	addi.l	#$800000,d0
+loc_025294:
 	addi.l	#$1B0000,d1
+loc_02529A:
 	movem.l	d0-d1,$4(a0)
+loc_0252A0:
 	cmpi.b	#$20,$37(a1)
+loc_0252A6:
 	beq.b	loc_0252B6
+loc_0252A8:
 	tst.b	$50(a0)
+loc_0252AC:
 	bne.b	loc_0252BC
+loc_0252AE:
 	move.b	#$5A,$29(a0)
+loc_0252B4:
 	bsr.b	sub_025318
 loc_0252B6:
 	jmp	(sub_01AF0E).l
@@ -30574,45 +42008,73 @@ loc_025308:
 	bra.b	loc_0252B6
 sub_025318:
 	tst.b	$28(a0)
+loc_02531C:
 	bne.b	loc_025364
+loc_02531E:
 	move.b	#$B,$28(a0)
+loc_025324:
 	lea	(Objects_A).w,a1
+loc_025328:
 	jsr	(sub_01ABCE).l
+loc_02532E:
 	andi.w	#$1F,d0
+loc_025332:
 	cmpi.b	#$10,d0
+loc_025336:
 	bcc.b	loc_02533A
+loc_025338:
 	moveq	#$10,d0
 loc_02533A:
 	cmpi.b	#$14,d0
+loc_02533E:
 	bcs.b	loc_025342
 	moveq	#$14,d0
 loc_025342:
 	cmp.b	$35(a0),d0
+loc_025346:
 	beq.b	loc_025364
+loc_025348:
 	move.b	d0,$35(a0)
+loc_02534C:
 	subi.w	#$10,d0
+loc_025350:
 	lea	dat_025D90(pc),a1
+loc_025354:
 	add.w	d0,d0
+loc_025356:
 	adda.w	(a1,d0.w),a1
+loc_02535A:
 	move.b	#$1,$34(a0)
+loc_025360:
 	move.l	a1,$30(a0)
 loc_025364:
 	subq.b	#$1,$28(a0)
+loc_025368:
 	rts
 sub_02536A:
 	lea	(ram_F060).w,a1
+loc_02536E:
 	movem.l	$4(a1),d0-d1
+loc_025374:
 	addi.l	#$A60000,d0
+loc_02537A:
 	cmpi.b	#$4,$36(a0)
+loc_025380:
 	bne.b	loc_025388
 	addi.l	#$100000,d0
 loc_025388:
 	subi.l	#$100000,d1
+loc_02538E:
 	movem.l	d0-d1,$4(a0)
+loc_025394:
 	cmpi.b	#$20,$37(a1)
+loc_02539A:
 	beq.b	loc_0253A4
+loc_02539C:
 	tst.b	$50(a0)
+loc_0253A0:
 	bne.b	loc_0253AA
+loc_0253A2:
 	bsr.b	sub_025406
 loc_0253A4:
 	jmp	(sub_01AF0E).l
@@ -30650,38 +42112,62 @@ loc_0253F6:
 	bra.b	loc_0253A4
 sub_025406:
 	tst.b	$28(a0)
+loc_02540A:
 	bne.b	loc_025452
+loc_02540C:
 	move.b	#$B,$28(a0)
+loc_025412:
 	lea	(Objects_A).w,a1
+loc_025416:
 	jsr	(sub_01ABCE).l
+loc_02541C:
 	andi.w	#$1F,d0
+loc_025420:
 	cmpi.b	#$C,d0
+loc_025424:
 	bcc.b	loc_025428
+loc_025426:
 	moveq	#$C,d0
 loc_025428:
 	cmpi.b	#$14,d0
+loc_02542C:
 	bcs.b	loc_025430
 	moveq	#$14,d0
 loc_025430:
 	cmp.b	$35(a0),d0
+loc_025434:
 	beq.b	loc_025452
+loc_025436:
 	move.b	d0,$35(a0)
+loc_02543A:
 	subi.w	#$C,d0
+loc_02543E:
 	lea	dat_025DF4(pc),a1
+loc_025442:
 	add.w	d0,d0
+loc_025444:
 	adda.w	(a1,d0.w),a1
+loc_025448:
 	move.b	#$1,$34(a0)
+loc_02544E:
 	move.l	a1,$30(a0)
 loc_025452:
 	subq.b	#$1,$28(a0)
+loc_025456:
 	rts
 sub_025458:
 	lea	(ram_F060).w,a1
+loc_02545C:
 	movem.l	$4(a1),d0-d1
+loc_025462:
 	addi.l	#$460000,d0
+loc_025468:
 	subi.l	#$30000,d1
+loc_02546E:
 	movem.l	d0-d1,$4(a0)
+loc_025474:
 	tst.b	$50(a0)
+loc_025478:
 	beq.b	loc_0254A8
 	cmpi.b	#$20,$37(a1)
 	beq.b	loc_02549E
@@ -30699,7 +42185,9 @@ loc_0254A2:
 	jmp	(sub_01AF0E).l
 loc_0254A8:
 	move.b	#$3C,$29(a0)
+loc_0254AE:
 	clr.b	$28(a0)
+loc_0254B2:
 	jmp	(sub_01AF0E).l
 	dc.b	$45,$F8,$F1,$80,$52,$2A,$00,$50
 	dc.b	$15,$7C,$00,$01,$00,$34,$25,$7C,$00,$02,$5E,$BA,$00,$30,$5C,$49
@@ -30707,40 +42195,75 @@ loc_0254A8:
 	dc.b	$00,$01,$00,$34,$25,$7C,$00,$02,$5E,$A8,$00,$30,$60,$E0
 sub_0254EE:
 	jsr	(sub_01AC8A).l
+loc_0254F4:
 	bmi.w	loc_02558C
+loc_0254F8:
 	movea.l	a0,a6
+loc_0254FA:
 	movea.l	a2,a0
+loc_0254FC:
 	moveq	#$2,d0
+loc_0254FE:
 	jsr	(sub_01AB5C).l
+loc_025504:
 	bne.w	loc_02558E
+loc_025508:
 	move.b	#$41,$54(a0)
+loc_02550E:
 	lea	(dat_017E96).l,a1
+loc_025514:
 	jsr	(sub_01ADB0).l
+loc_02551A:
 	clr.b	$55(a0)
+loc_02551E:
 	clr.l	$28(a0)
+loc_025522:
 	clr.l	$2C(a0)
+loc_025526:
 	clr.l	$50(a0)
+loc_02552A:
 	clr.b	$56(a0)
+loc_02552E:
 	clr.b	$57(a0)
+loc_025532:
 	ori.b	#$48,$2(a0)
+loc_025538:
 	moveq	#$10,d0
+loc_02553A:
 	move.b	#$60,$22(a0)
+loc_025540:
 	move.b	#$C,$3B(a0)
+loc_025546:
 	move.b	d0,$28(a0)
+loc_02554A:
 	move.b	d0,$35(a0)
+loc_02554E:
 	move.b	#$4,$52(a0)
+loc_025554:
 	move.b	#$1,$34(a0)
+loc_02555A:
 	move.w	#$23C,(a0)
+loc_02555E:
 	move.l	#$1566E,$30(a0)
+loc_025566:
 	move.l	#$147EA,$58(a0)
+loc_02556E:
 	move.w	$8(a6),d0
+loc_025572:
 	addi.w	#$26,d0
+loc_025576:
 	move.w	d0,$8(a0)
+loc_02557A:
 	move.w	$4(a6),d0
+loc_02557E:
 	addi.w	#$15,d0
+loc_025582:
 	move.w	d0,$4(a0)
+loc_025586:
 	movea.l	a0,a2
+loc_025588:
 	movea.l	a6,a0
+loc_02558A:
 	moveq	#$0,d0
 loc_02558C:
 	rts
@@ -30863,24 +42386,36 @@ dat_025760:
 	dc.b	$00,$10,$20,$30
 sub_025764:
 	move.w	$8(a0),d0
+loc_025768:
 	cmp.w	$2E(a0),d0
+loc_02576C:
 	bge.b	loc_025780
 	jsr	(sub_00E234).l
 	jsr	(sub_00B036).l
 	jmp	(sub_01AF0E).l
 loc_025780:
 	bclr.b	#$0,$2(a0)
+loc_025786:
 	bset.b	#$6,$2(a0)
+loc_02578C:
 	move.w	#$34E,$1E(a0)
+loc_025792:
 	move.b	#$1,$34(a0)
+loc_025798:
 	move.w	#$23C,(a0)
+loc_02579C:
 	moveq	#-$35,d0
+loc_02579E:
 	jsr	(sub_00A068).l
+loc_0257A4:
 	lea	dat_026072(pc),a1
+loc_0257A8:
 	jmp	(sub_01AF1A).l
 sub_0257AE:
 	move.w	$8(a0),d0
+loc_0257B2:
 	cmp.w	$2E(a0),d0
+loc_0257B6:
 	bge.b	loc_0257D4
 	jsr	(sub_00E234).l
 	jsr	(sub_00B036).l
@@ -30890,28 +42425,45 @@ sub_0257AE:
 	jmp	(sub_01AF0E).l
 loc_0257D4:
 	andi.b	#$BE,$2(a0)
+loc_0257DA:
 	clr.w	$1E(a0)
+loc_0257DE:
 	move.w	#$220,(a0)
+loc_0257E2:
 	jmp	(sub_018238).l
 loc_0257E8:
 	jmp	(loc_01A498).l
 sub_0257EE:
 	lea	(ram_F060).w,a1
+loc_0257F2:
 	move.w	$8(a1),d0
+loc_0257F6:
 	subi.w	#$2A,d0
+loc_0257FA:
 	move.w	d0,$8(a0)
+loc_0257FE:
 	move.w	$4(a1),d0
+loc_025802:
 	addi.w	#$74,d0
+loc_025806:
 	move.w	d0,$4(a0)
+loc_02580A:
 	jmp	(sub_01AF0E).l
 sub_025810:
 	lea	(ram_F060).w,a1
+loc_025814:
 	move.w	$8(a1),d0
+loc_025818:
 	subi.w	#$34,d0
+loc_02581C:
 	move.w	d0,$8(a0)
+loc_025820:
 	move.w	$4(a1),d0
+loc_025824:
 	addi.w	#$110,d0
+loc_025828:
 	move.w	d0,$4(a0)
+loc_02582C:
 	jmp	(sub_01AF0E).l
 	dc.b	$11,$FC,$00,$01,$F1,$10,$60,$42,$42,$38,$F1,$10,$60,$3C
 	dc.b	$11,$FC,$00,$01,$F1,$70,$60,$34,$42,$38,$F1,$70,$60,$2E,$11,$FC
@@ -31072,11 +42624,15 @@ dat_026072:
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FE
 sub_026098:
 	bset.b	#$0,$2(a0)
+loc_02609E:
 	bne.b	loc_0260AE
+loc_0260A0:
 	move.l	#$87000,$14(a0)
+loc_0260A8:
 	ori.b	#$22,$2(a0)
 loc_0260AE:
 	btst.b	#$4,(Flags_C61C).w
+loc_0260B4:
 	beq.w	loc_026184
 	move.w	#$200,$4(a0)
 	clr.w	$6(a0)
@@ -31125,24 +42681,39 @@ loc_026184:
 	rts
 sub_026186:
 	tst.b	$5A(a0)
+loc_02618A:
 	bne.b	loc_0261BA
+loc_02618C:
 	moveq	#$0,d0
+loc_02618E:
 	eori.b	#$1,$5B(a0)
+loc_026194:
 	beq.b	loc_026198
+loc_026196:
 	moveq	#$8,d0
 loc_026198:
 	lea	dat_026874(pc),a1
+loc_02619C:
 	adda.w	d0,a1
+loc_02619E:
 	lea	(ram_C700).w,a2
+loc_0261A2:
 	move.w	(a1)+,d0
+loc_0261A4:
 	move.w	(a1)+,(a2,d0.w)
+loc_0261A8:
 	move.w	(a1)+,d0
+loc_0261AA:
 	move.w	(a1)+,(a2,d0.w)
+loc_0261AE:
 	bset.b	#$0,(ram_C59A).w
+loc_0261B4:
 	move.b	#$9,$5A(a0)
 loc_0261BA:
 	subq.b	#$1,$5A(a0)
+loc_0261BE:
 	tst.b	$97(a0)
+loc_0261C2:
 	beq.b	loc_02622C
 	tst.b	$5C(a0)
 	bne.b	loc_0261EE
@@ -31174,13 +42745,19 @@ loc_026228:
 	subq.b	#$1,$59(a0)
 loc_02622C:
 	tst.b	$50(a0)
+loc_026230:
 	bne.b	loc_026248
+loc_026232:
 	tst.b	$51(a0)
+loc_026236:
 	bne.b	loc_026242
+loc_026238:
 	clr.b	$54(a0)
+loc_02623C:
 	move.b	#$30,$50(a0)
 loc_026242:
 	subq.b	#$1,$51(a0)
+loc_026246:
 	bra.b	loc_026258
 loc_026248:
 	subq.b	#$1,$50(a0)
@@ -31189,6 +42766,7 @@ loc_026248:
 	bsr.w	sub_0264DA
 loc_026258:
 	subq.b	#$1,$28(a0)
+loc_02625C:
 	bne.b	loc_0262B8
 	move.b	#$A,$28(a0)
 	tst.b	$2A(a0)
@@ -31219,11 +42797,17 @@ loc_0262B4:
 	move.l	d0,$C(a0)
 loc_0262B8:
 	lea	dat_02683E(pc),a3
+loc_0262BC:
 	tst.b	$44(a0)
+loc_0262C0:
 	bne.b	loc_0262D8
+loc_0262C2:
 	move.w	#$850,d4
+loc_0262C6:
 	jsr	(sub_00E238).l
+loc_0262CC:
 	jsr	(sub_00B298).l
+loc_0262D2:
 	beq.b	loc_026306
 	addq.b	#$2,$44(a0)
 loc_0262D8:
@@ -31242,8 +42826,11 @@ loc_0262F8:
 	jsr	(sub_00A068).l
 loc_026306:
 	move.w	$56(a0),d0
+loc_02630A:
 	move.w	dat_026358(pc,d0.w),d0
+loc_02630E:
 	cmp.w	$38(a0),d0
+loc_026312:
 	bcc.b	loc_026374
 	jmp	(sub_01AF0E).l
 loc_02631A:
@@ -31267,31 +42854,57 @@ dat_026364:
 	dc.b	$EC,$00,$00,$61
 loc_026374:
 	addq.w	#$2,$56(a0)
+loc_026378:
 	move.w	$56(a0),d0
+loc_02637C:
 	andi.w	#$4,d0
+loc_026380:
 	bne.b	loc_0263DE
+loc_026382:
 	moveq	#$4,d0
+loc_026384:
 	moveq	#$0,d1
+loc_026386:
 	moveq	#$28,d2
+loc_026388:
 	swap	d2
+loc_02638A:
 	jsr	(sub_01063C).l
+loc_026390:
 	moveq	#$8,d0
+loc_026392:
 	move.w	#$80,d1
+loc_026396:
 	moveq	#$28,d2
+loc_026398:
 	swap	d1
+loc_02639A:
 	swap	d2
+loc_02639C:
 	jsr	(sub_01063C).l
+loc_0263A2:
 	lea	$120(a0),a2
+loc_0263A6:
 	move.w	#$64,$5A(a2)
+loc_0263AC:
 	move.w	#$A,$56(a2)
+loc_0263B2:
 	move.b	#$20,$97(a0)
+loc_0263B8:
 	move.b	#$20,$F7(a0)
+loc_0263BE:
 	lea	dat_026B76(pc),a1
+loc_0263C2:
 	move.l	a1,$90(a0)
+loc_0263C6:
 	move.l	a1,$F0(a0)
+loc_0263CA:
 	clr.b	$88(a0)
+loc_0263CE:
 	clr.b	$E8(a0)
+loc_0263D2:
 	move.b	#$20,$53(a0)
+loc_0263D8:
 	jmp	(sub_01AF0E).l
 loc_0263DE:
 	moveq	#$C,d0
@@ -31325,19 +42938,31 @@ sub_0264DA:
 	rts
 sub_0264EE:
 	lea	(ram_F060).w,a2
+loc_0264F2:
 	move.w	$8(a2),d0
+loc_0264F6:
 	addi.w	#$20,d0
+loc_0264FA:
 	move.w	d0,$8(a0)
+loc_0264FE:
 	move.w	#$9A,d0
+loc_026502:
 	cmpa.w	#$F0C0,a0
+loc_026506:
 	beq.b	loc_02650A
+loc_026508:
 	moveq	#$26,d0
 loc_02650A:
 	add.w	$4(a2),d0
+loc_02650E:
 	move.w	d0,$4(a0)
+loc_026512:
 	cmpi.b	#$20,$37(a0)
+loc_026518:
 	beq.w	loc_026572
+loc_02651C:
 	cmpi.b	#$80,$37(a0)
+loc_026522:
 	bne.b	loc_02656C
 	cmpi.b	#$4,$54(a2)
 	bne.b	loc_02656C
@@ -31377,18 +43002,31 @@ loc_0265A2:
 	jmp	(sub_01AF0E).l
 sub_0265AC:
 	lea	(ram_F060).w,a1
+loc_0265B0:
 	move.w	$8(a1),d0
+loc_0265B4:
 	addi.w	#$1C,d0
+loc_0265B8:
 	move.w	d0,$8(a0)
+loc_0265BC:
 	move.w	$4(a1),d0
+loc_0265C0:
 	addi.w	#$6A,d0
+loc_0265C4:
 	move.w	d0,$4(a0)
+loc_0265C8:
 	lea	(ram_F2A0).w,a2
+loc_0265CC:
 	movem.l	$C(a1),d0-d1
+loc_0265D2:
 	movem.l	d0-d1,$C(a2)
+loc_0265D8:
 	cmpi.b	#$20,(ram_F097).w
+loc_0265DE:
 	beq.b	loc_02664C
+loc_0265E0:
 	cmpi.b	#$20,-$29(a0)
+loc_0265E6:
 	bne.b	loc_02664C
 	tst.b	$52(a0)
 	bne.b	loc_02662E
@@ -31513,10 +43151,15 @@ loc_02678C:
 	rts
 sub_026790:
 	movem.w	$36(a0),d0
+loc_026796:
 	subi.l	#$B,d0
+loc_02679C:
 	move.w	d0,$36(a0)
+loc_0267A0:
 	lsl.l	#$8,d0
+loc_0267A2:
 	add.l	d0,$2C(a0)
+loc_0267A6:
 	ble.w	loc_026828
 	neg.l	d0
 	moveq	#$0,d1
@@ -31648,12 +43291,17 @@ dat_026B76:
 	dc.b	$00,$FF,$FF,$FF,$00,$02,$6C,$AA
 sub_026CC8:
 	bset.b	#$0,$2(a0)
+loc_026CCE:
 	bne.b	loc_026CE2
+loc_026CD0:
 	ori.b	#$2E,$2(a0)
+loc_026CD6:
 	move.w	#$80,$4(a0)
+loc_026CDC:
 	move.w	#$80,$8(a0)
 loc_026CE2:
 	btst.b	#$4,(Flags_C61C).w
+loc_026CE8:
 	beq.b	loc_026D1C
 	lea	dat_027AA6(pc),a1
 	jsr	(sub_01ADB0).l
@@ -31671,6 +43319,7 @@ loc_026D1C:
 	rts
 sub_026D1E:
 	subq.w	#$1,$2E(a0)
+loc_026D22:
 	bne.b	loc_026D70
 	movea.l	$50(a0),a1
 	cmpi.w	#$FFFF,(a1)
@@ -31705,14 +43354,19 @@ loc_026D72:
 	rts
 sub_026D9E:
 	jsr	(sub_00E234).l
+loc_026DA4:
 	jsr	(sub_00B036).l
+loc_026DAA:
 	tst.b	$2C(a0)
+loc_026DAE:
 	beq.b	loc_026DBA
 	subq.b	#$1,$2C(a0)
 	jmp	(sub_01AF0E).l
 loc_026DBA:
 	bclr.b	#$0,$2(a0)
+loc_026DC0:
 	move.w	#$220,(a0)
+loc_026DC4:
 	jmp	(sub_018238).l
 dat_026DCA:
 	dc.b	$00,$08,$00,$3A,$00,$6C
@@ -31731,107 +43385,207 @@ dat_026DCA:
 	dc.b	$00,$3C,$00,$28,$00,$D4,$00,$01,$FF,$FF
 sub_026E9A:
 	bset.b	#$2,$2(a0)
+loc_026EA0:
 	lea	dat_027A96(pc),a1
+loc_026EA4:
 	jsr	(sub_01ADB0).l
+loc_026EAA:
 	move.w	#$4E20,$38(a0)
+loc_026EB0:
 	movea.l	a0,a6
+loc_026EB2:
 	lea	$60(a0),a0
+loc_026EB6:
 	lea	dat_027AC6(pc),a1
+loc_026EBA:
 	jsr	(sub_01ADB0).l
+loc_026EC0:
 	ori.b	#$2E,$2(a0)
+loc_026EC6:
 	move.w	#$3A4,(a0)
+loc_026ECA:
 	lea	$60(a0),a0
+loc_026ECE:
 	lea	$60(a0),a0
+loc_026ED2:
 	lea	$60(a0),a0
+loc_026ED6:
 	lea	dat_027B36(pc),a1
+loc_026EDA:
 	jsr	(sub_01ADB0).l
+loc_026EE0:
 	move.b	#$46,$36(a0)
+loc_026EE6:
 	ori.b	#$2E,$2(a0)
+loc_026EEC:
 	move.b	#$80,$22(a0)
+loc_026EF2:
 	clr.b	$28(a0)
+loc_026EF6:
 	move.w	#$3C0,(a0)
+loc_026EFA:
 	lea	$60(a0),a0
+loc_026EFE:
 	lea	dat_027B36(pc),a1
+loc_026F02:
 	jsr	(sub_01ADB0).l
+loc_026F08:
 	move.b	#$52,$36(a0)
+loc_026F0E:
 	ori.b	#$2E,$2(a0)
+loc_026F14:
 	move.b	#$80,$22(a0)
+loc_026F1A:
 	clr.b	$28(a0)
+loc_026F1E:
 	move.w	#$3C0,(a0)
+loc_026F22:
 	lea	(ram_F300).w,a0
+loc_026F26:
 	bsr.w	sub_02704C
+loc_026F2A:
 	move.b	#$0,$36(a0)
+loc_026F30:
 	lea	$60(a0),a0
+loc_026F34:
 	bsr.w	sub_02704C
+loc_026F38:
 	move.b	#$4,$36(a0)
+loc_026F3E:
 	lea	$60(a0),a0
+loc_026F42:
 	bsr.w	sub_02704C
+loc_026F46:
 	move.b	#$8,$36(a0)
+loc_026F4C:
 	lea	$60(a0),a0
+loc_026F50:
 	bsr.w	sub_02704C
+loc_026F54:
 	move.b	#$C,$36(a0)
+loc_026F5A:
 	lea	$60(a0),a0
+loc_026F5E:
 	bsr.w	sub_02704C
+loc_026F62:
 	move.b	#$10,$36(a0)
+loc_026F68:
 	lea	$60(a0),a0
+loc_026F6C:
 	bsr.w	sub_02704C
+loc_026F70:
 	move.b	#$14,$36(a0)
+loc_026F76:
 	lea	$60(a0),a0
+loc_026F7A:
 	lea	dat_027B06(pc),a1
+loc_026F7E:
 	jsr	(sub_01ADB0).l
+loc_026F84:
 	clr.b	$36(a0)
+loc_026F88:
 	clr.w	$2(a0)
+loc_026F8C:
 	ori.b	#$2E,$2(a0)
+loc_026F92:
 	move.w	#$3AC,(a0)
+loc_026F96:
 	lea	$60(a0),a0
+loc_026F9A:
 	lea	dat_027B06(pc),a1
+loc_026F9E:
 	jsr	(sub_01ADB0).l
+loc_026FA4:
 	move.b	#$1,$36(a0)
+loc_026FAA:
 	clr.w	$2(a0)
+loc_026FAE:
 	ori.b	#$2E,$2(a0)
+loc_026FB4:
 	move.w	#$3AC,(a0)
+loc_026FB8:
 	lea	$60(a0),a0
+loc_026FBC:
 	lea	dat_027B06(pc),a1
+loc_026FC0:
 	jsr	(sub_01ADB0).l
+loc_026FC6:
 	move.b	#$2,$36(a0)
+loc_026FCC:
 	clr.w	$2(a0)
+loc_026FD0:
 	ori.b	#$2E,$2(a0)
+loc_026FD6:
 	move.w	#$3AC,(a0)
+loc_026FDA:
 	lea	(ram_EEE0).w,a0
+loc_026FDE:
 	lea	dat_027B26(pc),a1
+loc_026FE2:
 	jsr	(sub_01ADB0).l
+loc_026FE8:
 	clr.w	$2(a0)
+loc_026FEC:
 	ori.b	#$2E,$2(a0)
+loc_026FF2:
 	move.b	#$24,$36(a0)
+loc_026FF8:
 	move.w	#$3B0,(a0)
+loc_026FFC:
 	lea	$60(a0),a0
+loc_027000:
 	lea	dat_027B26(pc),a1
+loc_027004:
 	jsr	(sub_01ADB0).l
+loc_02700A:
 	clr.w	$2(a0)
+loc_02700E:
 	ori.b	#$2E,$2(a0)
+loc_027014:
 	move.b	#$28,$36(a0)
+loc_02701A:
 	move.w	#$3B0,(a0)
+loc_02701E:
 	lea	$60(a0),a0
+loc_027022:
 	lea	dat_027B26(pc),a1
+loc_027026:
 	jsr	(sub_01ADB0).l
+loc_02702C:
 	clr.w	$2(a0)
+loc_027030:
 	ori.b	#$2E,$2(a0)
+loc_027036:
 	move.b	#$2C,$36(a0)
+loc_02703C:
 	move.w	#$3B0,(a0)
+loc_027040:
 	movea.l	a6,a0
+loc_027042:
 	move.w	#$3A0,(a0)
+loc_027046:
 	jmp	(sub_01AF0E).l
 sub_02704C:
 	lea	dat_027AE6(pc),a1
+loc_027050:
 	jsr	(sub_01ADB0).l
+loc_027056:
 	move.b	#$18,$35(a0)
+loc_02705C:
 	move.b	#$20,$22(a0)
+loc_027062:
 	clr.b	$29(a0)
+loc_027066:
 	clr.b	$2A(a0)
+loc_02706A:
 	clr.b	$2B(a0)
+loc_02706E:
 	bset.b	#$5,$2(a0)
+loc_027074:
 	bset.b	#$1,$2(a0)
+loc_02707A:
 	move.w	#$3A8,(a0)
+loc_02707E:
 	rts
 	dc.b	$2F,$09,$43,$F8,$F0,$00,$23,$7C,$00,$02,$7A,$86,$00,$54,$31,$7C
 	dc.b	$03,$E8,$00,$38,$4A,$78,$FE,$48,$67,$0E,$23,$7C,$00,$02,$7A,$8E
@@ -31850,6 +43604,7 @@ sub_02704C:
 	dc.b	$FF,$B4
 sub_027162:
 	cmpi.w	#$4,$2A(a0)
+loc_027168:
 	bne.b	loc_0271B6
 	tst.b	$2C(a0)
 	bne.b	loc_0271B2
@@ -31871,13 +43626,21 @@ loc_0271B2:
 	subq.b	#$1,$2C(a0)
 loc_0271B6:
 	cmpi.b	#$20,$37(a0)
+loc_0271BC:
 	beq.b	loc_02721C
+loc_0271BE:
 	lea	dat_027A0A(pc),a3
+loc_0271C2:
 	tst.b	$44(a0)
+loc_0271C6:
 	bne.w	loc_0271E0
+loc_0271CA:
 	move.w	#$880,d4
+loc_0271CE:
 	jsr	(sub_00E238).l
+loc_0271D4:
 	jsr	(sub_00B298).l
+loc_0271DA:
 	beq.b	loc_02720E
 	addq.b	#$2,$44(a0)
 loc_0271E0:
@@ -31896,8 +43659,11 @@ loc_027200:
 	jsr	(sub_00A068).l
 loc_02720E:
 	move.w	$2A(a0),d0
+loc_027212:
 	move.w	dat_027222(pc,d0.w),d0
+loc_027216:
 	cmp.w	$38(a0),d0
+loc_02721A:
 	bcc.b	loc_02726A
 loc_02721C:
 	jmp	(sub_01AF0E).l
@@ -31917,8 +43683,11 @@ loc_02722E:
 	jmp	(sub_01AF0E).l
 loc_02726A:
 	addq.w	#$2,$2A(a0)
+loc_02726E:
 	move.w	$2A(a0),d0
+loc_027272:
 	andi.w	#$4,d0
+loc_027276:
 	beq.b	loc_027288
 	moveq	#$18,d0
 	moveq	#$1C,d1
@@ -31930,18 +43699,31 @@ loc_027288:
 	jmp	(sub_01AF0E).l
 sub_02728E:
 	lea	(ram_F060).w,a1
+loc_027292:
 	lea	(ram_F2A0).w,a2
+loc_027296:
 	movem.l	$C(a1),d0-d1
+loc_02729C:
 	movem.l	d0-d1,$C(a2)
+loc_0272A2:
 	cmpi.b	#$20,$37(a1)
+loc_0272A8:
 	beq.b	loc_0272E2
+loc_0272AA:
 	move.w	$4(a1),d0
+loc_0272AE:
 	addi.w	#$28,d0
+loc_0272B2:
 	move.w	d0,$4(a0)
+loc_0272B6:
 	move.w	$8(a1),d0
+loc_0272BA:
 	addi.w	#$60,d0
+loc_0272BE:
 	move.w	d0,$8(a0)
+loc_0272C2:
 	cmpi.b	#$4,$37(a0)
+loc_0272C8:
 	bne.b	loc_0272DC
 	tst.b	$2A(a0)
 	bne.b	loc_0272D8
@@ -31996,14 +43778,23 @@ loc_027382:
 	dc.b	$00,$08,$00,$4C,$00,$10,$00,$58
 sub_027398:
 	lea	(ram_F060).w,a1
+loc_02739C:
 	moveq	#$0,d0
+loc_02739E:
 	move.b	$36(a0),d0
+loc_0273A2:
 	dc.w	$4CBB,$0003,$0018		; movem.w loc_0273BC(pc,d0.w),d0-d1
+loc_0273A8:
 	swap	d0
+loc_0273AA:
 	swap	d1
+loc_0273AC:
 	add.l	$4(a1),d0
+loc_0273B0:
 	add.l	$8(a1),d1
+loc_0273B4:
 	move.l	d0,$4(a0)
+loc_0273B8:
 	move.l	d1,$8(a0)
 loc_0273BC:
 	bra.b	loc_0273D6
@@ -32012,55 +43803,90 @@ loc_0273BC:
 	dc.b	$01,$55,$00,$30,$01,$8D
 loc_0273D6:
 	cmpi.b	#$20,$37(a0)
+loc_0273DC:
 	beq.w	loc_0274A2
+loc_0273E0:
 	cmpi.b	#$20,$37(a1)
+loc_0273E6:
 	beq.w	loc_027488
+loc_0273EA:
 	tst.b	$28(a0)
+loc_0273EE:
 	bne.b	loc_027430
+loc_0273F0:
 	lea	(Objects_A).w,a1
+loc_0273F4:
 	jsr	(sub_01ABCE).l
+loc_0273FA:
 	cmpi.b	#$14,d0
+loc_0273FE:
 	bge.b	loc_027402
+loc_027400:
 	moveq	#$14,d0
 loc_027402:
 	cmpi.b	#$1C,d0
+loc_027406:
 	ble.b	loc_02740A
 	moveq	#$1C,d0
 loc_02740A:
 	move.b	d0,$35(a0)
+loc_02740E:
 	subi.b	#$14,d0
+loc_027412:
 	andi.w	#$1F,d0
+loc_027416:
 	add.w	d0,d0
+loc_027418:
 	lea	dat_027D80(pc),a1
+loc_02741C:
 	adda.w	(a1,d0.w),a1
+loc_027420:
 	move.l	a1,$30(a0)
+loc_027424:
 	move.b	#$1,$34(a0)
+loc_02742A:
 	move.b	#$9,$28(a0)
 loc_027430:
 	subq.b	#$1,$28(a0)
+loc_027434:
 	tst.b	$29(a0)
+loc_027438:
 	bne.b	loc_027466
+loc_02743A:
 	cmpi.w	#$80,$8(a0)
+loc_027440:
 	ble.b	loc_027460
+loc_027442:
 	cmpi.w	#$180,$8(a0)
+loc_027448:
 	bge.b	loc_027460
+loc_02744A:
 	jsr	(sub_01ABA6).l
+loc_027450:
 	move.b	(RNG_Seed).w,d0
+loc_027454:
 	andi.b	#$F,d0
+loc_027458:
 	cmpi.b	#$3,d0
+loc_02745C:
 	bcc.b	loc_027460
+loc_02745E:
 	bsr.b	sub_0274A8
 loc_027460:
 	move.b	#$31,$29(a0)
 loc_027466:
 	subq.b	#$1,$29(a0)
+loc_02746A:
 	jsr	(sub_00E234).l
+loc_027470:
 	jsr	(sub_00B298).l
+loc_027476:
 	beq.b	loc_027480
 	moveq	#-$43,d0
 	jsr	(sub_00A068).l
 loc_027480:
 	btst.b	#$0,$3(a0)
+loc_027486:
 	beq.b	loc_0274A2
 loc_027488:
 	move.b	#$40,$22(a0)
@@ -32071,23 +43897,41 @@ loc_0274A2:
 	jmp	(sub_01AF0E).l
 sub_0274A8:
 	jsr	(sub_01AD58).l
+loc_0274AE:
 	bne.b	loc_0274F6
+loc_0274B0:
 	lea	dat_027AF6(pc),a1
+loc_0274B4:
 	jsr	(sub_01ADF6).l
+loc_0274BA:
 	move.b	#$40,$22(a2)
+loc_0274C0:
 	move.b	$35(a0),d0
+loc_0274C4:
 	move.b	d0,$35(a2)
+loc_0274C8:
 	move.w	#$22C,(a2)
+loc_0274CC:
 	subi.b	#$14,d0
+loc_0274D0:
 	andi.w	#$1F,d0
+loc_0274D4:
 	lsl.w	#$2,d0
+loc_0274D6:
 	dc.w	$4CBB,$0003,$001E		; movem.w loc_0274F6(pc,d0.w),d0-d1
+loc_0274DC:
 	add.w	$4(a0),d0
+loc_0274E0:
 	add.w	$8(a0),d1
+loc_0274E4:
 	move.w	d0,$4(a2)
+loc_0274E8:
 	move.w	d1,$8(a2)
+loc_0274EC:
 	exg	a0,a2
+loc_0274EE:
 	jsr	(sub_01AE8E).l
+loc_0274F4:
 	exg	a0,a2
 loc_0274F6:
 	rts
@@ -32096,33 +43940,49 @@ loc_0274F6:
 	dc.b	$FF,$FC,$FF,$F8,$00,$0D,$FF,$F3,$00,$0E,$FF,$F6
 sub_02751C:
 	lea	(ram_F060).w,a1
+loc_027520:
 	moveq	#$0,d0
+loc_027522:
 	move.b	$36(a0),d0
+loc_027526:
 	lsl.w	#$2,d0
+loc_027528:
 	dc.w	$4CBB,$0003,$0014		; movem.w loc_02753E(pc,d0.w),d0-d1
+loc_02752E:
 	add.w	$4(a1),d0
+loc_027532:
 	add.w	$8(a1),d1
+loc_027536:
 	move.w	d0,$4(a0)
+loc_02753A:
 	move.w	d1,$8(a0)
 loc_02753E:
 	bra.b	loc_02754C
 	dc.b	$00,$34,$01,$B4,$00,$34,$02,$14,$00,$34,$02,$94
 loc_02754C:
 	cmpi.b	#$20,$37(a0)
+loc_027552:
 	beq.w	loc_0275B6
+loc_027556:
 	move.w	#$870,d4
+loc_02755A:
 	cmpi.b	#$4,$37(a0)
+loc_027560:
 	bne.b	loc_027566
 	move.w	#$878,d4
 loc_027566:
 	jsr	(sub_00E238).l
+loc_02756C:
 	jsr	(sub_00B036).l
+loc_027572:
 	jsr	(sub_00B298).l
+loc_027578:
 	beq.b	loc_027582
 	moveq	#-$43,d0
 	jsr	(sub_00A068).l
 loc_027582:
 	btst.b	#$0,$3(a0)
+loc_027588:
 	beq.b	loc_0275D4
 	move.b	#$20,$37(a0)
 	move.b	#$20,$40(a0)
@@ -32142,13 +44002,21 @@ loc_0275CE:
 	jmp	(sub_01AF0E).l
 loc_0275D4:
 	tst.b	$28(a0)
+loc_0275D8:
 	bne.b	loc_02761A
+loc_0275DA:
 	tst.b	$29(a0)
+loc_0275DE:
 	bne.b	loc_027616
+loc_0275E0:
 	move.b	#$1F,$29(a0)
+loc_0275E6:
 	cmpi.w	#$80,$8(a0)
+loc_0275EC:
 	ble.b	loc_02761A
+loc_0275EE:
 	cmpi.w	#$180,$8(a0)
+loc_0275F4:
 	bge.b	loc_02761A
 	move.w	$8(a0),d0
 	sub.w	(ram_E008).w,d0
@@ -32202,18 +44070,31 @@ loc_027698:
 	dc.b	$00,$01,$06,$3C,$4E,$F9,$00,$01,$B0,$02,$38,$44,$50,$00
 sub_02770E:
 	lea	(ram_F060).w,a1
+loc_027712:
 	moveq	#$0,d0
+loc_027714:
 	move.b	$36(a0),d0
+loc_027718:
 	subi.w	#$24,d0
+loc_02771C:
 	dc.w	$4CBB,$0003,$006A		; movem.w $27788(pc,d0.w),d0-d1
+loc_027722:
 	add.w	$4(a1),d0
+loc_027726:
 	add.w	$8(a1),d1
+loc_02772A:
 	move.w	d0,$4(a0)
+loc_02772E:
 	move.w	d1,$8(a0)
+loc_027732:
 	move.w	#$8A8,d4
+loc_027736:
 	jsr	(sub_00E238).l
+loc_02773C:
 	jsr	(sub_00B298).l
+loc_027742:
 	btst.b	#$0,$3(a0)
+loc_027748:
 	beq.b	loc_027784
 	moveq	#$0,d0
 	move.b	$36(a0),d0
@@ -32233,46 +44114,79 @@ loc_027784:
 	dc.b	$02,$34,$00,$1C,$02,$B4
 sub_027796:
 	tst.b	$28(a0)
+loc_02779A:
 	bne.b	loc_0277F2
+loc_02779C:
 	cmpi.b	#$A,$29(a0)
+loc_0277A2:
 	beq.b	loc_0277F6
+loc_0277A4:
 	jsr	(sub_01AD9A).l
+loc_0277AA:
 	bne.b	loc_0277FE
+loc_0277AC:
 	lea	dat_028434(pc),a1
+loc_0277B0:
 	jsr	(sub_01ADF6).l
+loc_0277B6:
 	move.l	#$27F70,$30(a2)
+loc_0277BE:
 	move.b	#$60,$22(a2)
+loc_0277C4:
 	move.l	#$87000,$14(a2)
+loc_0277CC:
 	move.w	#$23C,(a2)
+loc_0277D0:
 	move.w	$4(a0),d0
+loc_0277D4:
 	addi.w	#$0,d0
+loc_0277D8:
 	move.w	d0,$4(a2)
+loc_0277DC:
 	move.w	$8(a0),d0
+loc_0277E0:
 	addi.w	#$0,d0
+loc_0277E4:
 	move.w	d0,$8(a2)
+loc_0277E8:
 	addq.b	#$1,$29(a0)
+loc_0277EC:
 	move.b	#$3,$28(a0)
 loc_0277F2:
 	subq.b	#$1,$28(a0)
 loc_0277F6:
 	cmpi.w	#$68,$8(a0)
+loc_0277FC:
 	ble.b	loc_027804
 loc_0277FE:
 	jmp	(sub_01AF0E).l
 loc_027804:
 	moveq	#$0,d0
+loc_027806:
 	lea	(ram_F0C0).w,a1
+loc_02780A:
 	move.b	$2C(a1),d0
+loc_02780E:
 	add.w	d0,d0
+loc_027810:
 	lea	dat_02783A(pc),a1
+loc_027814:
 	adda.w	(a1,d0.w),a1
+loc_027818:
 	move.b	$2A(a0),d0
+loc_02781C:
 	lsl.w	#$2,d0
+loc_02781E:
 	movem.w	(a1,d0.w),d0-d1
+loc_027824:
 	move.w	d0,$2C(a0)
+loc_027828:
 	move.w	d1,$4(a0)
+loc_02782C:
 	move.w	#$3B8,(a0)
+loc_027830:
 	lea	dat_027EDC(pc),a1
+loc_027834:
 	jmp	(sub_01AF1A).l
 dat_02783A:
 	dc.b	$00,$08,$00,$1C,$00,$30
@@ -32284,7 +44198,9 @@ dat_02783A:
 	dc.b	$00,$B0
 sub_027892:
 	move.w	$8(a0),d0
+loc_027896:
 	cmp.w	$2C(a0),d0
+loc_02789A:
 	bge.b	loc_0278B6
 	jsr	(sub_00E234).l
 	jsr	(sub_00B036).l
@@ -32295,51 +44211,84 @@ loc_0278B6:
 	move.w	#$220,(a0)
 loc_0278BA:
 	bclr.b	#$0,$2(a0)
+loc_0278C0:
 	jmp	(sub_018238).l
 loc_0278C6:
 	move.w	#$23C,(a0)
 	bra.b	loc_0278BA
 sub_0278CC:
 	moveq	#$0,d0
+loc_0278CE:
 	moveq	#$0,d1
+loc_0278D0:
 	lea	(ram_F060).w,a1
+loc_0278D4:
 	move.w	#$12A,d0
+loc_0278D8:
 	cmpi.b	#$46,$36(a0)
+loc_0278DE:
 	beq.b	loc_0278E4
+loc_0278E0:
 	move.w	#$162,d0
 loc_0278E4:
 	move.w	#$30,d1
+loc_0278E8:
 	swap	d0
+loc_0278EA:
 	swap	d1
+loc_0278EC:
 	add.l	$8(a1),d0
+loc_0278F0:
 	add.l	$4(a1),d1
+loc_0278F4:
 	move.l	d0,$8(a0)
+loc_0278F8:
 	move.l	d1,$4(a0)
+loc_0278FC:
 	cmpi.b	#$20,$37(a1)
+loc_027902:
 	beq.b	loc_02795E
+loc_027904:
 	cmpi.b	#$20,$37(a0)
+loc_02790A:
 	beq.w	loc_02799E
+loc_02790E:
 	cmpi.b	#$4,$37(a0)
+loc_027914:
 	beq.w	loc_0279A4
+loc_027918:
 	tst.b	$28(a0)
+loc_02791C:
 	bne.b	loc_027940
+loc_02791E:
 	move.b	#$1F,$28(a0)
+loc_027924:
 	move.w	$8(a0),d0
+loc_027928:
 	lea	(Objects_A).w,a1
+loc_02792C:
 	sub.w	$8(a1),d0
+loc_027930:
 	bpl.b	loc_027934
+loc_027932:
 	neg.w	d0
 loc_027934:
 	cmpi.w	#$40,d0
+loc_027938:
 	bgt.b	loc_027940
+loc_02793A:
 	move.b	#$4,$37(a0)
 loc_027940:
 	subq.b	#$1,$28(a0)
 loc_027944:
 	move.w	#$860,d4
+loc_027948:
 	jsr	(sub_00E238).l
+loc_02794E:
 	jsr	(sub_00B298).l
+loc_027954:
 	btst.b	#$0,$3(a0)
+loc_02795A:
 	beq.w	loc_02799E
 loc_02795E:
 	move.b	#$20,$37(a0)
@@ -32363,31 +44312,53 @@ loc_02799E:
 	jmp	(sub_01AF0E).l
 loc_0279A4:
 	tst.b	$29(a0)
+loc_0279A8:
 	bne.b	loc_0279F4
+loc_0279AA:
 	move.b	#$7,$29(a0)
+loc_0279B0:
 	addq.b	#$1,$2A(a0)
+loc_0279B4:
 	cmpi.b	#$3,$2A(a0)
+loc_0279BA:
 	bgt.b	loc_0279FC
+loc_0279BC:
 	moveq	#$18,d2
+loc_0279BE:
 	moveq	#-$1,d3
+loc_0279C0:
 	moveq	#$0,d0
+loc_0279C2:
 	movea.l	d0,a1
+loc_0279C4:
 	jsr	(sub_01A326).l
+loc_0279CA:
 	move.w	$4(a0),$4(a2)
+loc_0279D0:
 	move.w	$8(a0),$8(a2)
+loc_0279D6:
 	move.b	$2A(a0),d0
+loc_0279DA:
 	add.w	d0,d0
+loc_0279DC:
 	add.w	d0,$8(a2)
+loc_0279E0:
 	move.w	#$288,$1E(a2)
+loc_0279E6:
 	ori.b	#$80,$22(a2)
+loc_0279EC:
 	moveq	#-$4E,d0
+loc_0279EE:
 	jsr	(sub_00A068).l
 loc_0279F4:
 	subq.b	#$1,$29(a0)
+loc_0279F8:
 	bra.w	loc_027944
 loc_0279FC:
 	move.b	#$80,$37(a0)
+loc_027A02:
 	clr.b	$2A(a0)
+loc_027A06:
 	bra.w	loc_027944
 dat_027A0A:
 	dc.b	$00,$0E,$00,$22,$00,$00
@@ -32533,36 +44504,65 @@ dat_027EDC:
 	dc.b	$00,$00,$FF,$FE
 sub_0280B4:
 	bset.b	#$0,$2(a0)
+loc_0280BA:
 	bne.w	loc_028138
+loc_0280BE:
 	ori.b	#$26,$2(a0)
+loc_0280C4:
 	clr.w	$8(a0)
+loc_0280C8:
 	move.w	$A(a0),d0
+loc_0280CC:
 	clr.w	(ram_C568).w
+loc_0280D0:
 	clr.w	(ram_C238).w
+loc_0280D4:
 	neg.w	d0
+loc_0280D6:
 	move.w	d0,(ram_C23A).w
+loc_0280DA:
 	subq.w	#$7,$4(a0)
+loc_0280DE:
 	move.l	$4(a0),d0
+loc_0280E2:
 	andi.l	#$7FFFF,d0
+loc_0280E8:
 	move.l	d0,(ram_C234).w
+loc_0280EC:
 	swap	d0
+loc_0280EE:
 	move.w	d0,(ram_C556).w
+loc_0280F2:
 	clr.w	$52(a0)
+loc_0280F6:
 	clr.w	$50(a0)
+loc_0280FA:
 	move.l	#$28444,$28(a0)
+loc_028102:
 	jsr	(sub_01B01C).l
+loc_028108:
 	move.w	d0,$2E(a0)
+loc_02810C:
 	move.w	#$B,$54(a0)
+loc_028112:
 	move.w	#$B,$56(a0)
+loc_028118:
 	lea	(ram_DC00).w,a1
+loc_02811C:
 	move.w	a1,$2C(a0)
+loc_028120:
 	lea	dat_028574(pc),a3
+loc_028124:
 	jsr	(sub_01D368).l
+loc_02812A:
 	lea	dat_028414(pc),a1
+loc_02812E:
 	jsr	(sub_01ADB0).l
+loc_028134:
 	jsr	sub_022106(pc)
 loc_028138:
 	btst.b	#$4,(Flags_C61C).w
+loc_02813E:
 	beq.b	loc_0281A4
 	lea	dat_0285F0(pc),a1
 	move.w	(a1),$50(a0)
@@ -32592,25 +44592,43 @@ loc_028180:
 	jmp	(sub_01AF0E).l
 loc_0281A4:
 	move.l	(ram_C508).w,d0
+loc_0281A8:
 	sub.l	d0,(ram_C234).w
+loc_0281AC:
 	move.w	(ram_C234).w,d0
+loc_0281B0:
 	move.w	d0,(ram_C556).w
+loc_0281B4:
 	move.l	(ram_C51A).w,d0
+loc_0281B8:
 	add.l	d0,(ram_C238).w
+loc_0281BC:
 	move.w	(ram_C238).w,d0
+loc_0281C0:
 	move.w	d0,(ram_C568).w
+loc_0281C4:
 	jsr	(sub_01B048).l
+loc_0281CA:
 	jmp	(sub_01AF0E).l
 sub_0281D0:
 	lea	dat_028574(pc),a3
+loc_0281D4:
 	tst.b	$44(a0)
+loc_0281D8:
 	bne.w	loc_0281FA
+loc_0281DC:
 	move.w	#$800,d4
+loc_0281E0:
 	jsr	(sub_00E238).l
+loc_0281E6:
 	jsr	(sub_00B298).l
+loc_0281EC:
 	bne.b	loc_0281F6
+loc_0281EE:
 	tst.b	$44(a0)
+loc_0281F2:
 	bne.b	loc_0281FA
+loc_0281F4:
 	bra.b	loc_028228
 loc_0281F6:
 	addq.b	#$2,$44(a0)
@@ -32630,8 +44648,11 @@ loc_02821A:
 	jsr	(sub_00A068).l
 loc_028228:
 	tst.b	$52(a0)
+loc_02822C:
 	bne.b	loc_02825A
+loc_02822E:
 	subq.w	#$1,$50(a0)
+loc_028232:
 	bne.b	loc_02825A
 	movea.l	$2C(a0),a1
 	move.w	(a1),d6
@@ -32663,27 +44684,50 @@ loc_028270:
 	move.w	#$260,(a0)
 	move.l	#$2872C,$30(a0)
 	bra.b	loc_02825A
-	dc.b	$42,$28,$00,$52,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
+loc_0282A4:
+	clr.b	$52(a0)
+loc_0282A8:
+	addq.w	#$6,a1
+loc_0282AA:
+	jmp	(sub_01AF1A).l
 	dc.b	$47,$FA,$03,$A0,$4E,$FA,$47,$9E
 sub_0282B8:
 	addq.b	#$1,$2A(a0)
+loc_0282BC:
 	cmpi.b	#$2,$2A(a0)
+loc_0282C2:
 	bne.b	loc_02832E
+loc_0282C4:
 	clr.b	$2A(a0)
+loc_0282C8:
 	cmpi.b	#$5,$2B(a0)
+loc_0282CE:
 	beq.b	loc_02832E
+loc_0282D0:
 	jsr	(sub_01AD9A).l
+loc_0282D6:
 	bne.b	loc_02832A
+loc_0282D8:
 	lea	dat_028434(pc),a1
+loc_0282DC:
 	jsr	(sub_01ADF6).l
+loc_0282E2:
 	move.w	$4(a0),$4(a2)
+loc_0282E8:
 	move.w	$8(a0),$8(a2)
+loc_0282EE:
 	move.w	#$23C,(a2)
+loc_0282F2:
 	move.l	#$8940C,$14(a2)
+loc_0282FA:
 	move.b	#$60,$22(a2)
+loc_028300:
 	cmpi.w	#$10,(ram_C328).w
+loc_028306:
 	beq.b	loc_02831E
+loc_028308:
 	cmpi.w	#$D,(ram_C328).w
+loc_02830E:
 	bne.b	loc_02832A
 	bset.b	#$6,$2(a2)
 	move.w	#$9B,$1E(a2)
@@ -32695,27 +44739,45 @@ loc_02832A:
 	addq.b	#$1,$2B(a0)
 loc_02832E:
 	cmpi.w	#$50,$8(a0)
+loc_028334:
 	bcs.b	loc_02833C
+loc_028336:
 	jmp	(sub_01AF0E).l
 loc_02833C:
 	move.w	#$34C,(a0)
+loc_028340:
 	lea	(Objects_A).w,a2
+loc_028344:
 	move.b	$28(a0),d0
+loc_028348:
 	andi.w	#$3,d0
+loc_02834C:
 	add.w	d0,d0
+loc_02834E:
 	lea	dat_028672(pc),a1
+loc_028352:
 	move.w	$4(a2),d1
+loc_028356:
 	add.w	(a1,d0.w),d1
+loc_02835A:
 	move.w	d1,$4(a0)
+loc_02835E:
 	move.b	$28(a0),d0
+loc_028362:
 	andi.w	#$3,d0
+loc_028366:
 	lsl.w	#$2,d0
+loc_028368:
 	lea	dat_0287B6(pc),a1
+loc_02836C:
 	movea.l	(a1,d0.w),a1
+loc_028370:
 	jmp	(sub_01AF1A).l
 sub_028376:
 	subq.b	#$1,$29(a0)
+loc_02837A:
 	beq.b	loc_028382
+loc_02837C:
 	jmp	(sub_01AF0E).l
 loc_028382:
 	cmpi.w	#$10,(ram_C328).w
@@ -32739,7 +44801,9 @@ loc_02839E:
 	dc.b	$00,$01,$AF,$1A
 dat_028414:
 	dc.b	$80,$01,$14,$00,$13,$00,$00,$00,$07,$D0,$00,$00
-	dc.b	$00,$02,$87,$1A,$80,$01,$14,$00,$01,$28,$00,$00,$00,$0A,$00,$04
+	dc.b	$00,$02,$87,$1A
+dat_028424:
+	dc.b	$80,$01,$14,$00,$01,$28,$00,$00,$00,$0A,$00,$04
 	dc.b	$00,$02,$87,$98
 dat_028434:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
@@ -32832,67 +44896,109 @@ dat_028832:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$68
 sub_02885C:
 	bset.b	#$2,$2(a0)
+loc_028862:
 	moveq	#$3,d0
+loc_028864:
 	jsr	(sub_01AB5C).l
+loc_02886A:
 	bne.b	loc_028892
+loc_02886C:
 	ori.b	#$48,$2(a0)
+loc_028872:
 	bclr.b	#$2,$2(a0)
+loc_028878:
 	lea	dat_028A8A(pc),a1
+loc_02887C:
 	jsr	(sub_01ADB0).l
+loc_028882:
 	move.b	#$60,$22(a0)
+loc_028888:
 	move.w	#$404,(a0)
+loc_02888C:
 	jmp	(sub_01AF0E).l
 loc_028892:
 	rts
 sub_028894:
 	jsr	(sub_00E234).l
+loc_02889A:
 	jsr	(sub_00B036).l
+loc_0288A0:
 	jsr	(sub_00B298).l
+loc_0288A6:
 	btst.b	#$0,$3(a0)
+loc_0288AC:
 	beq.b	loc_0288B2
+loc_0288AE:
 	bra.w	loc_028920
 loc_0288B2:
 	cmpi.b	#$4,$37(a0)
+loc_0288B8:
 	bne.b	loc_0288C0
+loc_0288BA:
 	jmp	(sub_01AF0E).l
 loc_0288C0:
 	tst.b	$2B(a0)
+loc_0288C4:
 	bne.b	loc_0288CA
+loc_0288C6:
 	bsr.w	sub_0289C2
 loc_0288CA:
 	jsr	(sub_0173EA).l
+loc_0288D0:
 	btst.b	#$0,$56(a0)
+loc_0288D6:
 	beq.b	loc_0288DC
+loc_0288D8:
 	clr.l	$C(a0)
 loc_0288DC:
 	btst.b	#$1,$56(a0)
+loc_0288E2:
 	beq.b	loc_0288E8
+loc_0288E4:
 	clr.l	$10(a0)
 loc_0288E8:
 	subq.b	#$1,$2B(a0)
+loc_0288EC:
 	cmpi.b	#$40,$37(a0)
+loc_0288F2:
 	beq.b	loc_0288F8
+loc_0288F4:
 	bsr.w	sub_028978
 loc_0288F8:
 	tst.b	$29(a0)
+loc_0288FC:
 	beq.b	loc_02891A
+loc_0288FE:
 	clr.b	$29(a0)
+loc_028902:
 	lea	dat_028A9A(pc),a1
+loc_028906:
 	move.b	$28(a0),d0
+loc_02890A:
 	andi.w	#$1C,d0
+loc_02890E:
 	lsr.w	#$1,d0
+loc_028910:
 	adda.w	(a1,d0.w),a1
+loc_028914:
 	jmp	(sub_01AF1A).l
 loc_02891A:
 	jmp	(sub_01AF0E).l
 loc_028920:
 	move.b	#$1,$34(a0)
+loc_028926:
 	move.w	#$23C,(a0)
+loc_02892A:
 	cmpi.b	#$1,$3E(a0)
+loc_028930:
 	beq.b	loc_028944
+loc_028932:
 	cmpi.b	#$2,$3E(a0)
+loc_028938:
 	beq.b	loc_028956
+loc_02893A:
 	lea	dat_028E1A(pc),a1
+loc_02893E:
 	jmp	(sub_01AF1A).l
 loc_028944:
 	move.b	#$40,$22(a0)
@@ -32900,78 +45006,137 @@ loc_028944:
 	jmp	(sub_01AF1A).l
 loc_028956:
 	bclr.b	#$3,$2(a0)
+loc_02895C:
 	jsr	(sub_016602).l
+loc_028962:
 	move.b	d0,$35(a0)
+loc_028966:
 	add.w	d0,d0
+loc_028968:
 	lea	(dat_016C14).l,a1
+loc_02896E:
 	adda.w	(a1,d0.w),a1
+loc_028972:
 	jmp	(sub_01AF1A).l
 sub_028978:
 	lea	(Objects_A).w,a1
+loc_02897C:
 	move.w	#$14,d1
+loc_028980:
 	move.w	#$10,d2
+loc_028984:
 	jsr	(sub_016626).l
+loc_02898A:
 	bne.b	loc_0289AC
+loc_02898C:
 	move.b	#$4,$37(a0)
+loc_028992:
 	lea	dat_028CDA(pc),a1
+loc_028996:
 	move.b	$28(a0),d0
+loc_02899A:
 	andi.w	#$1C,d0
+loc_02899E:
 	lsr.w	#$1,d0
+loc_0289A0:
 	adda.w	(a1,d0.w),a1
+loc_0289A4:
 	move.l	(a7)+,d0
+loc_0289A6:
 	jmp	(sub_01AF1A).l
 loc_0289AC:
 	rts
-	dc.b	$11,$7C
-	dc.b	$00,$40,$00,$37,$42,$28,$00,$2B,$11,$7C,$00,$04,$00,$3C,$60,$00
-	dc.b	$FF,$00
+loc_0289AE:
+	move.b	#$40,$37(a0)
+loc_0289B4:
+	clr.b	$2B(a0)
+loc_0289B8:
+	move.b	#$4,$3C(a0)
+loc_0289BE:
+	bra.w	loc_0288C0
 sub_0289C2:
 	lea	(Objects_A).w,a1
+loc_0289C6:
 	jsr	(sub_01ABCE).l
+loc_0289CC:
 	cmpi.b	#$40,$37(a0)
+loc_0289D2:
 	bne.b	loc_0289D8
+loc_0289D4:
 	addi.w	#$10,d0
 loc_0289D8:
 	andi.w	#$1E,d0
+loc_0289DC:
 	moveq	#$2,d1
+loc_0289DE:
 	sub.b	$35(a0),d0
+loc_0289E2:
 	beq.b	loc_028A04
+loc_0289E4:
 	addq.b	#$1,$29(a0)
+loc_0289E8:
 	andi.b	#$1E,d0
+loc_0289EC:
 	cmpi.b	#$10,d0
+loc_0289F0:
 	bmi.b	loc_0289F4
+loc_0289F2:
 	moveq	#-$2,d1
 loc_0289F4:
 	add.b	d1,$35(a0)
+loc_0289F8:
 	andi.b	#$1E,$35(a0)
+loc_0289FE:
 	move.b	$35(a0),$28(a0)
 loc_028A04:
 	move.b	#$A,$2B(a0)
+loc_028A0A:
 	jsr	(sub_0173EA).l
+loc_028A10:
 	btst.b	#$0,$56(a0)
+loc_028A16:
 	bne.b	loc_028A20
+loc_028A18:
 	btst.b	#$1,$56(a0)
+loc_028A1E:
 	beq.b	loc_028A6E
 loc_028A20:
 	move.b	$35(a0),d0
+loc_028A24:
 	andi.b	#$1C,d0
+loc_028A28:
 	lea	(dat_017BD6).l,a2
+loc_028A2E:
 	movea.l	(a2,d0.w),a2
+loc_028A32:
 	moveq	#$6,d4
 loc_028A34:
 	movem.w	(a2),d0-d1
+loc_028A38:
 	swap	d0
+loc_028A3A:
 	swap	d1
+loc_028A3C:
 	clr.w	d0
+loc_028A3E:
 	clr.w	d1
+loc_028A40:
 	movem.l	d2-d5/a0-a3,-(a7)
+loc_028A44:
 	jsr	(sub_00B36C).l
+loc_028A4A:
 	movem.l	(a7)+,d2-d5/a0-a3
+loc_028A4E:
 	cmpi.b	#$4,d0
+loc_028A52:
 	beq.b	loc_028A74
+loc_028A54:
 	cmpi.b	#$20,d0
+loc_028A58:
 	beq.b	loc_028A74
+loc_028A5A:
 	cmpi.b	#$24,d0
+loc_028A5E:
 	beq.b	loc_028A74
 	cmpi.b	#$44,d0
 	beq.b	loc_028A74
@@ -32981,9 +45146,13 @@ loc_028A6E:
 	jmp	(sub_01AE8E).l
 loc_028A74:
 	lea	$6(a2),a2
+loc_028A78:
 	dbra	d4,loc_028A34
+loc_028A7C:
 	bset.b	#$0,$3(a0)
+loc_028A82:
 	move.b	#$2,$3E(a0)
+loc_028A88:
 	rts
 dat_028A8A:
 	dc.b	$80,$01,$0A,$00,$03,$0C
@@ -33056,47 +45225,82 @@ dat_028E1A:
 	dc.b	$AE,$4A
 sub_028E52:
 	moveq	#$3,d0
+loc_028E54:
 	move.w	$18(a0),$20(a0)
+loc_028E5A:
 	move.b	#$49,$36(a0)
+loc_028E60:
 	jsr	(sub_01AB5C).l
+loc_028E66:
 	bne.b	loc_028EA6
+loc_028E68:
 	lea	dat_028F98(pc),a1
+loc_028E6C:
 	jsr	(sub_01ADB0).l
+loc_028E72:
 	move.b	$1A(a0),$35(a0)
+loc_028E78:
 	move.b	#$60,$22(a0)
+loc_028E7E:
 	move.w	#$3FC,(a0)
+loc_028E82:
 	ori.b	#$48,$2(a0)
+loc_028E88:
 	moveq	#$0,d0
+loc_028E8A:
 	move.b	$35(a0),d0
+loc_028E8E:
 	andi.w	#$18,d0
+loc_028E92:
 	lsr.w	#$2,d0
+loc_028E94:
 	lea	dat_028FA8(pc),a1
+loc_028E98:
 	adda.w	(a1,d0.w),a1
+loc_028E9C:
 	move.l	a1,$30(a0)
+loc_028EA0:
 	jmp	(sub_01AF0E).l
 loc_028EA6:
 	clr.l	(a0)
 	rts
 sub_028EAA:
 	moveq	#$0,d0
+loc_028EAC:
 	move.b	$35(a0),d0
+loc_028EB0:
 	andi.w	#$18,d0
+loc_028EB4:
 	lsr.w	#$1,d0
+loc_028EB6:
 	dc.w	$4CBB,$0003,$0034		; movem.w loc_028EEC(pc,d0.w),d0-d1
+loc_028EBC:
 	swap	d0
+loc_028EBE:
 	swap	d1
+loc_028EC0:
 	jsr	(sub_00B36C).l
+loc_028EC6:
 	cmpi.b	#$24,d0
+loc_028ECA:
 	beq.b	loc_028ED2
+loc_028ECC:
 	cmpi.b	#$4,d0
+loc_028ED0:
 	bne.b	loc_028EFE
 loc_028ED2:
 	bset.b	#$1,$28(a0)
+loc_028ED8:
 	move.b	$35(a0),d0
+loc_028EDC:
 	addq.b	#$8,d0
+loc_028EDE:
 	andi.w	#$18,d0
+loc_028EE2:
 	tst.w	d0
+loc_028EE4:
 	bne.b	loc_028EE8
+loc_028EE6:
 	moveq	#$8,d0
 loc_028EE8:
 	move.b	d0,$35(a0)
@@ -33106,10 +45310,15 @@ loc_028EEC:
 	dc.b	$00,$00,$00,$08,$00,$01,$00,$00,$00,$03,$FF,$F8,$00,$01
 loc_028EFE:
 	jsr	(sub_00E234).l
+loc_028F04:
 	jsr	(sub_00B298).l
+loc_028F0A:
 	bne.b	loc_028F3E
+loc_028F0C:
 	jsr	(sub_00B036).l
+loc_028F12:
 	bclr.b	#$1,$28(a0)
+loc_028F18:
 	beq.b	loc_028F38
 	moveq	#$0,d0
 	move.b	$35(a0),d0
@@ -33167,65 +45376,119 @@ dat_028FA8:
 	dc.b	$90,$3C
 sub_029082:
 	movea.l	a0,a2
+loc_029084:
 	lea	dat_0291D8(pc),a1
+loc_029088:
 	jsr	(sub_01ADF6).l
+loc_02908E:
 	clr.w	$18(a0)
+loc_029092:
 	clr.b	$1A(a0)
+loc_029096:
 	ori.b	#$69,$2(a0)
+loc_02909C:
 	move.b	#$1,$2A(a0)
+loc_0290A2:
 	move.b	#$60,$22(a0)
+loc_0290A8:
 	move.w	(ram_C328).w,d1
+loc_0290AC:
 	add.w	d1,d1
+loc_0290AE:
 	lea	(dat_01D3D6).l,a1
+loc_0290B4:
 	move.w	(a1,d1.w),d2
+loc_0290B8:
 	move.w	d2,$1E(a0)
+loc_0290BC:
 	move.w	#$3EC,(a0)
+loc_0290C0:
 	lea	$40(a0),a2
+loc_0290C4:
 	lea	dat_0291C8(pc),a1
+loc_0290C8:
 	jsr	(sub_01ADF6).l
+loc_0290CE:
 	clr.w	$18(a2)
+loc_0290D2:
 	clr.b	$1A(a2)
+loc_0290D6:
 	ori.b	#$29,$2(a2)
+loc_0290DC:
 	move.b	#$20,$22(a2)
+loc_0290E2:
 	movem.l	$4(a0),d0-d1
+loc_0290E8:
 	movem.l	d0-d1,$4(a2)
+loc_0290EE:
 	move.w	#$23C,(a2)
+loc_0290F2:
 	jmp	(sub_01AF0E).l
 sub_0290F8:
 	cmpi.w	#$170,$8(a0)
+loc_0290FE:
 	bgt.w	loc_0291C2
+loc_029102:
 	tst.b	$28(a0)
+loc_029106:
 	bne.b	loc_029132
+loc_029108:
 	lea	(Objects_A).w,a1
+loc_02910C:
 	jsr	(sub_01ABCE).l
+loc_029112:
 	move.b	d0,$35(a0)
+loc_029116:
 	lea	dat_0291E8(pc),a1
+loc_02911A:
 	andi.w	#$1E,d0
+loc_02911E:
 	adda.w	(a1,d0.w),a1
+loc_029122:
 	move.l	a1,$30(a0)
+loc_029126:
 	move.b	#$1,$34(a0)
+loc_02912C:
 	move.b	#$5,$28(a0)
 loc_029132:
 	subq.b	#$1,$28(a0)
+loc_029136:
 	tst.b	$29(a0)
+loc_02913A:
 	bne.b	loc_02916A
+loc_02913C:
 	moveq	#$1F,d2
+loc_02913E:
 	and.b	$35(a0),d2
+loc_029142:
 	move.w	#$4C,d3
+loc_029146:
 	lea	(dat_01DE12).l,a3
+loc_02914C:
 	jsr	(sub_01A1F8).l
+loc_029152:
 	move.b	#$6,$29(a0)
+loc_029158:
 	subq.b	#$1,$2A(a0)
+loc_02915C:
 	bne.b	loc_02916A
+loc_02915E:
 	move.b	#$4,$2A(a0)
+loc_029164:
 	move.b	#$31,$29(a0)
 loc_02916A:
 	subq.b	#$1,$29(a0)
+loc_02916E:
 	move.w	#$BB8,d4
+loc_029172:
 	jsr	(sub_00E238).l
+loc_029178:
 	jsr	(sub_00B036).l
+loc_02917E:
 	jsr	(sub_00B298).l
+loc_029184:
 	btst.b	#$0,$3(a0)
+loc_02918A:
 	beq.b	loc_0291BC
 	move.l	a0,-(a7)
 	lea	$40(a0),a0
@@ -33273,14 +45536,21 @@ dat_0291E8:
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$93,$28
 sub_02933A:
 	bset.b	#$0,$2(a0)
+loc_029340:
 	bne.w	loc_029360
+loc_029344:
 	lea	dat_02986A(pc),a1
+loc_029348:
 	jsr	(sub_01ADB0).l
+loc_02934E:
 	move.b	#$0,$22(a0)
+loc_029354:
 	move.b	#$10,$35(a0)
+loc_02935A:
 	bset.b	#$5,$2(a0)
 loc_029360:
 	btst.b	#$4,(Flags_C61C).w
+loc_029366:
 	beq.w	loc_029496
 	move.w	#$424,(a0)
 	jsr	sub_022106(pc)
@@ -33368,12 +45638,16 @@ sub_0294AC:
 	rts
 sub_0294E0:
 	tst.b	$2A(a0)
+loc_0294E4:
 	beq.b	loc_0294EA
 	bsr.w	sub_029692
 loc_0294EA:
 	cmpi.b	#$80,$37(a0)
+loc_0294F0:
 	beq.b	loc_029522
+loc_0294F2:
 	cmpi.b	#$20,$97(a0)
+loc_0294F8:
 	bne.w	loc_02956E
 	move.b	#$80,$37(a0)
 	lea	dat_029682(pc),a2
@@ -33408,34 +45682,61 @@ loc_029560:
 	jsr	(sub_00A068).l
 loc_02956E:
 	tst.b	$28(a0)
+loc_029572:
 	bne.b	loc_0295B8
+loc_029574:
 	move.b	#$79,$28(a0)
+loc_02957A:
 	moveq	#$0,d0
+loc_02957C:
 	move.l	d0,d2
+loc_02957E:
 	move.b	$35(a0),d2
+loc_029582:
 	moveq	#$7F,d3
+loc_029584:
 	movea.l	d0,a1
+loc_029586:
 	jsr	(sub_01A326).l
+loc_02958C:
 	move.b	$35(a0),d0
+loc_029590:
 	subi.w	#$C,d0
+loc_029594:
 	andi.w	#$1F,d0
+loc_029598:
 	lsl.w	#$2,d0
+loc_02959A:
 	lea	dat_02964C(pc),a1
+loc_02959E:
 	movem.w	(a1,d0.w),d0-d1
+loc_0295A4:
 	add.w	$4(a0),d0
+loc_0295A8:
 	add.w	$8(a0),d1
+loc_0295AC:
 	move.w	d0,$4(a2)
+loc_0295B0:
 	move.w	d1,$8(a2)
+loc_0295B4:
 	move.w	#$224,(a2)
 loc_0295B8:
 	subq.b	#$1,$28(a0)
+loc_0295BC:
 	tst.b	$29(a0)
+loc_0295C0:
 	bne.b	loc_029614
+loc_0295C2:
 	move.b	#$4,$29(a0)
+loc_0295C8:
 	lea	(Objects_A).w,a1
+loc_0295CC:
 	jsr	(sub_01ABCE).l
+loc_0295D2:
 	sub.b	$35(a0),d0
+loc_0295D6:
 	beq.b	loc_029618
+loc_0295D8:
 	bgt.b	loc_0295E0
 	subq.b	#$1,$35(a0)
 	bra.b	loc_0295E4
@@ -33443,20 +45744,30 @@ loc_0295E0:
 	addq.b	#$1,$35(a0)
 loc_0295E4:
 	move.b	$35(a0),d0
+loc_0295E8:
 	cmpi.b	#$C,d0
+loc_0295EC:
 	bge.b	loc_0295F0
+loc_0295EE:
 	moveq	#$C,d0
 loc_0295F0:
 	cmpi.b	#$14,d0
+loc_0295F4:
 	ble.b	loc_0295F8
 	moveq	#$14,d0
 loc_0295F8:
 	move.b	d0,$35(a0)
+loc_0295FC:
 	subi.b	#$C,d0
+loc_029600:
 	andi.w	#$1F,d0
+loc_029604:
 	add.w	d0,d0
+loc_029606:
 	lea	dat_029670(pc),a1
+loc_02960A:
 	adda.w	(a1,d0.w),a1
+loc_02960E:
 	jmp	(sub_01AF1A).l
 loc_029614:
 	subq.b	#$1,$29(a0)
@@ -33524,9 +45835,13 @@ dat_029702:
 	dc.b	$00,$80,$00,$00
 sub_029714:
 	bsr.b	sub_02975E
+loc_029716:
 	bne.b	loc_02972C
+loc_029718:
 	cmpi.b	#$41,$36(a0)
+loc_02971E:
 	beq.b	loc_029726
+loc_029720:
 	jsr	(sub_01B42C).l
 loc_029726:
 	jmp	(sub_01AF0E).l
@@ -33542,16 +45857,23 @@ loc_02972C:
 	jmp	(sub_01AF1A).l
 sub_02975E:
 	lea	(ram_F060).w,a3
+loc_029762:
 	cmpi.b	#$20,$37(a3)
+loc_029768:
 	bne.b	loc_029772
 	bset.b	#$0,$3(a0)
 	bra.b	loc_029798
 loc_029772:
 	tst.b	$44(a0)
+loc_029776:
 	bne.w	loc_029798
+loc_02977A:
 	move.w	#$930,d4
+loc_02977E:
 	jsr	(sub_00E238).l
+loc_029784:
 	jsr	(sub_00B298).l
+loc_02978A:
 	beq.b	loc_0297C4
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
@@ -33573,6 +45895,7 @@ loc_0297BC:
 	jsr	(sub_008C10).l
 loc_0297C4:
 	moveq	#$0,d0
+loc_0297C6:
 	rts
 loc_0297C8:
 	addq.w	#$8,a3
@@ -33620,16 +45943,25 @@ dat_029906:
 	dc.b	$00,$00,$FF,$FE
 sub_029914:
 	bset.b	#$0,$2(a0)
+loc_02991A:
 	bne.b	loc_029940
+loc_02991C:
 	lea	dat_029EA8(pc),a1
+loc_029920:
 	jsr	(sub_01ADB0).l
+loc_029926:
 	ori.b	#$2E,$2(a0)
+loc_02992C:
 	move.w	#$80,$4(a0)
+loc_029932:
 	move.w	#$80,$8(a0)
+loc_029938:
 	clr.w	$6(a0)
+loc_02993C:
 	clr.w	$A(a0)
 loc_029940:
 	btst.b	#$4,(Flags_C61C).w
+loc_029946:
 	beq.w	loc_029AB8
 	move.w	#$458,(a0)
 	lea	dat_029F6E(pc),a1
@@ -33715,20 +46047,35 @@ loc_029AB8:
 	dc.b	$00,$10,$43,$FA,$04,$6C,$4E,$F9,$00,$01,$AF,$1A
 sub_029B1C:
 	lea	dat_029EF8(pc),a3
+loc_029B20:
 	tst.b	$44(a0)
+loc_029B24:
 	bne.w	loc_029B64
+loc_029B28:
 	move.w	#$958,d4
+loc_029B2C:
 	jsr	(sub_00E238).l
+loc_029B32:
 	jsr	(sub_00B036).l
+loc_029B38:
 	jsr	(sub_00B298).l
+loc_029B3E:
 	bne.b	loc_029B60
+loc_029B40:
 	move.w	#$950,d4
+loc_029B44:
 	jsr	(sub_00E238).l
+loc_029B4A:
 	jsr	(sub_00B036).l
+loc_029B50:
 	jsr	(sub_00B298).l
+loc_029B56:
 	bne.b	loc_029B60
+loc_029B58:
 	tst.b	$44(a0)
+loc_029B5C:
 	bne.b	loc_029B64
+loc_029B5E:
 	bra.b	loc_029B94
 loc_029B60:
 	addq.b	#$2,$44(a0)
@@ -33748,25 +46095,38 @@ loc_029B86:
 	jsr	(sub_00A068).l
 loc_029B94:
 	tst.b	$2B(a0)
+loc_029B98:
 	bne.b	loc_029BCA
+loc_029B9A:
 	lea	dat_029F50(pc),a3
+loc_029B9E:
 	eori.b	#$1,$2C(a0)
+loc_029BA4:
 	tst.b	$2C(a0)
+loc_029BA8:
 	bne.b	loc_029BAE
 	lea	dat_029F56(pc),a3
 loc_029BAE:
 	jsr	(sub_01D368).l
+loc_029BB4:
 	moveq	#$7,d0
+loc_029BB6:
 	cmpi.b	#$80,$37(a0)
+loc_029BBC:
 	beq.b	loc_029BC6
+loc_029BBE:
 	tst.b	$2A(a0)
+loc_029BC2:
 	bne.b	loc_029BC6
+loc_029BC4:
 	moveq	#$3,d0
 loc_029BC6:
 	move.b	d0,$2B(a0)
 loc_029BCA:
 	subq.b	#$1,$2B(a0)
+loc_029BCE:
 	cmpi.b	#$80,$37(a0)
+loc_029BD4:
 	bne.w	loc_029C94
 	tst.b	$2A(a0)
 	bne.b	loc_029C0C
@@ -33846,26 +46206,43 @@ dat_029CCE:
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_029CF8:
 	lea	(ram_F060).w,a1
+loc_029CFC:
 	lea	(ram_F2A0).w,a2
+loc_029D00:
 	movem.l	$C(a1),d0-d1
+loc_029D06:
 	movem.l	d0-d1,$C(a2)
+loc_029D0C:
 	rts
 sub_029D0E:
 	lea	(ram_F060).w,a2
+loc_029D12:
 	moveq	#$1A,d1
+loc_029D14:
 	move.w	$4(a2),d0
+loc_029D18:
 	cmpi.b	#$52,$36(a0)
+loc_029D1E:
 	beq.b	loc_029D22
+loc_029D20:
 	neg.w	d1
 loc_029D22:
 	add.w	d1,d0
+loc_029D24:
 	move.w	d0,$4(a0)
+loc_029D28:
 	move.w	$8(a2),d0
+loc_029D2C:
 	subi.w	#$18,d0
+loc_029D30:
 	move.w	d0,$8(a0)
+loc_029D34:
 	cmpi.b	#$20,$37(a2)
+loc_029D3A:
 	beq.b	loc_029D42
+loc_029D3C:
 	tst.b	$2A(a2)
+loc_029D40:
 	bne.b	loc_029D48
 loc_029D42:
 	jmp	(sub_01AF0E).l
@@ -33909,19 +46286,31 @@ dat_029DE2:
 	dc.b	$FF,$D8
 sub_029E22:
 	lea	(ram_F060).w,a3
+loc_029E26:
 	cmpi.b	#$20,$37(a3)
+loc_029E2C:
 	beq.b	loc_029E92
+loc_029E2E:
 	move.w	$8(a3),d0
+loc_029E32:
 	subi.w	#$48,d0
+loc_029E36:
 	move.w	d0,$8(a0)
+loc_029E3A:
 	moveq	#$24,d1
+loc_029E3C:
 	cmpi.b	#$4C,$36(a0)
+loc_029E42:
 	beq.b	loc_029E46
+loc_029E44:
 	moveq	#-$24,d1
 loc_029E46:
 	add.w	$4(a3),d1
+loc_029E4A:
 	move.w	d1,$4(a0)
+loc_029E4E:
 	tst.b	$54(a3)
+loc_029E52:
 	beq.b	loc_029E72
 	bset.b	#$0,$28(a0)
 	bne.b	loc_029E8C
@@ -33933,6 +46322,7 @@ loc_029E6C:
 	jmp	(sub_01AF1A).l
 loc_029E72:
 	bclr.b	#$0,$28(a0)
+loc_029E78:
 	beq.b	loc_029E8C
 	lea	dat_02A256(pc),a1
 	cmpi.b	#$52,$36(a0)
@@ -34064,17 +46454,27 @@ dat_02A348:
 	dc.b	$00,$05,$4F,$A1,$00,$00,$00,$00,$FF,$FF,$00,$02,$A3,$C8
 sub_02A3EE:
 	bset.b	#$0,$2(a0)
+loc_02A3F4:
 	bne.b	loc_02A420
+loc_02A3F6:
 	lea	dat_02AC7A(pc),a1
+loc_02A3FA:
 	jsr	(sub_01ADB0).l
+loc_02A400:
 	ori.b	#$2E,$2(a0)
+loc_02A406:
 	move.w	#$80,$4(a0)
+loc_02A40C:
 	move.w	#$80,$8(a0)
+loc_02A412:
 	clr.w	$6(a0)
+loc_02A416:
 	clr.w	$A(a0)
+loc_02A41A:
 	jsr	(sub_022106).l
 loc_02A420:
 	btst.b	#$4,(Flags_C61C).w
+loc_02A426:
 	beq.w	loc_02A44E
 	lea	dat_02ABDA(pc),a3
 	jsr	(sub_01D368).l
@@ -34136,14 +46536,23 @@ loc_02A44E:
 	dc.b	$31,$4B,$00,$28,$4E,$75
 sub_02A746:
 	bsr.w	sub_02A80E
+loc_02A74A:
 	tst.b	$44(a0)
+loc_02A74E:
 	bne.w	loc_02A776
+loc_02A752:
 	jsr	(sub_00E234).l
+loc_02A758:
 	jsr	(sub_00B036).l
+loc_02A75E:
 	jsr	(sub_00B298).l
+loc_02A764:
 	bne.b	loc_02A76E
+loc_02A766:
 	tst.b	$44(a0)
+loc_02A76A:
 	bne.b	loc_02A776
+loc_02A76C:
 	bra.b	loc_02A7A4
 loc_02A76E:
 	addq.b	#$2,$44(a0)
@@ -34185,6 +46594,7 @@ loc_02A808:
 	jmp	(sub_01AF0E).l
 sub_02A80E:
 	cmpi.b	#$53,$36(a0)
+loc_02A814:
 	bne.b	loc_02A836
 	cmpi.w	#$90,$8(a0)
 	ble.b	loc_02A856
@@ -34196,6 +46606,7 @@ loc_02A822:
 	rts
 loc_02A836:
 	cmpi.b	#$4D,$36(a0)
+loc_02A83C:
 	bne.b	loc_02A856
 	tst.b	$35(a0)
 	bne.b	loc_02A84E
@@ -34215,130 +46626,218 @@ loc_02A856:
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
 sub_02A8A6:
 	moveq	#-$1,d0
+loc_02A8A8:
 	move.w	$28(a0),d0
+loc_02A8AC:
 	movea.l	d0,a1
+loc_02A8AE:
 	cmpi.b	#$20,$37(a1)
+loc_02A8B4:
 	beq.b	loc_02A8D4
+loc_02A8B6:
 	move.w	$4(a1),d0
+loc_02A8BA:
 	move.w	$8(a1),d1
+loc_02A8BE:
 	addi.w	#$10,d0
+loc_02A8C2:
 	addi.w	#$10,d1
+loc_02A8C6:
 	move.w	d0,$4(a0)
+loc_02A8CA:
 	move.w	d1,$8(a0)
+loc_02A8CE:
 	jmp	(sub_01AF0E).l
 loc_02A8D4:
 	jmp	(sub_01B002).l
 sub_02A8DA:
 	move.b	$35(a0),d2
+loc_02A8DE:
 	jsr	(sub_0239EA).l
+loc_02A8E4:
 	bset.b	#$6,$2(a2)
+loc_02A8EA:
 	move.w	#$64,$1E(a2)
+loc_02A8F0:
 	addq.w	#$8,$8(a2)
+loc_02A8F4:
 	rts
 sub_02A8F6:
 	moveq	#-$1,d0
+loc_02A8F8:
 	move.w	$28(a0),d0
+loc_02A8FC:
 	movea.l	d0,a1
+loc_02A8FE:
 	cmpi.b	#$20,$37(a1)
+loc_02A904:
 	beq.w	loc_02A9CA
+loc_02A908:
 	clr.b	$22(a0)
+loc_02A90C:
 	tst.b	$44(a1)
+loc_02A910:
 	beq.b	loc_02A918
 	move.b	#$20,$22(a0)
 loc_02A918:
 	move.w	$4(a1),d0
+loc_02A91C:
 	move.w	$8(a1),d1
+loc_02A920:
 	addi.w	#$18,d0
+loc_02A924:
 	addi.w	#$A,d1
+loc_02A928:
 	move.w	d0,$4(a0)
+loc_02A92C:
 	move.w	d1,$8(a0)
+loc_02A930:
 	tst.b	$2A(a0)
+loc_02A934:
 	bne.b	loc_02A96C
+loc_02A936:
 	bsr.b	sub_02A8DA
+loc_02A938:
 	move.b	#$B4,d0
+loc_02A93C:
 	move.b	(RNG_Seed).w,d1
+loc_02A940:
 	andi.b	#$7F,d1
+loc_02A944:
 	add.b	d1,d0
+loc_02A946:
 	cmpi.b	#$80,(ram_EF17).w
+loc_02A94C:
 	beq.b	loc_02A950
+loc_02A94E:
 	lsr.b	#$1,d0
 loc_02A950:
 	cmpi.b	#$80,(ram_F097).w
+loc_02A956:
 	beq.b	loc_02A95A
+loc_02A958:
 	lsr.b	#$1,d0
 loc_02A95A:
 	cmpi.b	#$80,(ram_F1B7).w
+loc_02A960:
 	beq.b	loc_02A964
+loc_02A962:
 	lsr.b	#$2,d0
 loc_02A964:
 	andi.w	#$7F,d0
+loc_02A968:
 	move.b	d0,$2A(a0)
 loc_02A96C:
 	subq.b	#$1,$2A(a0)
+loc_02A970:
 	tst.b	$2B(a0)
+loc_02A974:
 	bne.b	loc_02A9C0
+loc_02A976:
 	lea	(Objects_A).w,a1
+loc_02A97A:
 	jsr	(sub_01ABCE).l
+loc_02A980:
 	andi.w	#$1F,d0
+loc_02A984:
 	moveq	#$1,d1
+loc_02A986:
 	sub.b	$35(a0),d0
+loc_02A98A:
 	beq.b	loc_02A9BA
+loc_02A98C:
 	andi.b	#$1F,d0
+loc_02A990:
 	cmpi.b	#$10,d0
+loc_02A994:
 	bmi.b	loc_02A998
 	neg.w	d1
 loc_02A998:
 	add.b	d1,$35(a0)
+loc_02A99C:
 	andi.b	#$1F,$35(a0)
+loc_02A9A2:
 	moveq	#$1E,d0
+loc_02A9A4:
 	and.b	$35(a0),d0
+loc_02A9A8:
 	lea	dat_02AFDC(pc),a1
+loc_02A9AC:
 	adda.w	(a1,d0.w),a1
+loc_02A9B0:
 	move.l	a1,$30(a0)
+loc_02A9B4:
 	move.b	#$1,$34(a0)
 loc_02A9BA:
 	move.b	#$5,$2B(a0)
 loc_02A9C0:
 	subq.b	#$1,$2B(a0)
+loc_02A9C4:
 	jmp	(sub_01AF0E).l
 loc_02A9CA:
 	jmp	(sub_01B002).l
 sub_02A9D0:
 	move.b	$35(a0),d2
+loc_02A9D4:
 	move.b	#$39,d3
+loc_02A9D8:
 	lea	dat_02AADA(pc),a1
+loc_02A9DC:
 	eori.b	#$1,$2C(a0)
+loc_02A9E2:
 	beq.b	loc_02A9E8
+loc_02A9E4:
 	lea	dat_02AB5A(pc),a1
 loc_02A9E8:
 	jsr	(sub_01A326).l
+loc_02A9EE:
 	bne.b	loc_02A9F8
+loc_02A9F0:
 	moveq	#-$4E,d0
+loc_02A9F2:
 	jsr	(sub_00A068).l
 loc_02A9F8:
 	rts
 sub_02A9FA:
 	moveq	#-$1,d0
+loc_02A9FC:
 	move.w	$28(a0),d0
+loc_02AA00:
 	movea.l	d0,a1
+loc_02AA02:
 	cmpi.b	#$20,$37(a1)
+loc_02AA08:
 	beq.w	loc_02AAD4
+loc_02AA0C:
 	clr.b	$22(a0)
+loc_02AA10:
 	tst.b	$44(a1)
+loc_02AA14:
 	beq.b	loc_02AA1C
 	move.b	#$20,$22(a0)
 loc_02AA1C:
 	move.w	$4(a1),d0
+loc_02AA20:
 	move.w	$8(a1),d1
+loc_02AA24:
 	addi.w	#$18,d0
+loc_02AA28:
 	addi.w	#$E,d1
+loc_02AA2C:
 	move.w	d0,$4(a0)
+loc_02AA30:
 	move.w	d1,$8(a0)
+loc_02AA34:
 	tst.b	$2A(a0)
+loc_02AA38:
 	bne.b	loc_02AA6E
+loc_02AA3A:
 	bsr.b	sub_02A9D0
+loc_02AA3C:
 	move.b	#$4,$2A(a0)
+loc_02AA42:
 	tst.b	$2C(a0)
+loc_02AA46:
 	bne.b	loc_02AA6E
 	move.b	#$B4,d0
 	cmpi.b	#$80,(ram_EF17).w
@@ -34356,7 +46855,9 @@ loc_02AA6A:
 	move.b	d0,$2A(a0)
 loc_02AA6E:
 	subq.b	#$1,$2A(a0)
+loc_02AA72:
 	tst.b	$2C(a0)
+loc_02AA76:
 	bne.b	loc_02AACE
 	tst.b	$2B(a0)
 	bne.b	loc_02AACA
@@ -34528,12 +47029,17 @@ dat_02B11C:
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$B2,$6A
 sub_02B27C:
 	bset.b	#$0,$2(a0)
+loc_02B282:
 	bne.w	loc_02B296
+loc_02B286:
 	lea	dat_02B7D4(pc),a1
+loc_02B28A:
 	jsr	(sub_01ADB0).l
+loc_02B290:
 	bset.b	#$5,$2(a0)
 loc_02B296:
 	btst.b	#$4,(Flags_C61C).w
+loc_02B29C:
 	beq.w	loc_02B3D0
 	move.w	#$444,(a0)
 	jsr	(sub_022106).l
@@ -34628,6 +47134,7 @@ dat_02B3D6:
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
 sub_02B466:
 	cmpi.b	#$80,$37(a0)
+loc_02B46C:
 	bne.b	loc_02B4D4
 	move.w	#$948,d4
 	lea	dat_02B72C(pc),a4
@@ -34676,32 +47183,51 @@ loc_02B50C:
 	dc.b	$00,$20,$00,$38,$00,$20,$00,$28,$00,$30,$00,$38,$00,$30
 sub_02B51E:
 	cmpi.b	#$20,(ram_F097).w
+loc_02B524:
 	beq.b	loc_02B576
+loc_02B526:
 	move.w	#$938,d4
+loc_02B52A:
 	lea	dat_02B740(pc),a4
+loc_02B52E:
 	cmpi.b	#$4C,$36(a0)
+loc_02B534:
 	beq.b	loc_02B53A
+loc_02B536:
 	adda.w	#$14,a4
 loc_02B53A:
 	bsr.w	sub_02B620
+loc_02B53E:
 	bne.b	loc_02B576
+loc_02B540:
 	tst.b	$29(a0)
+loc_02B544:
 	bne.b	loc_02B56C
+loc_02B546:
 	jsr	(sub_01ABA6).l
+loc_02B54C:
 	move.b	(RNG_Seed).w,d0
+loc_02B550:
 	andi.b	#$F,d0
+loc_02B554:
 	moveq	#$5,d1
+loc_02B556:
 	cmpi.w	#$3,(ram_FE44).w
+loc_02B55C:
 	beq.b	loc_02B560
+loc_02B55E:
 	moveq	#$7,d1
 loc_02B560:
 	cmp.w	d1,d0
+loc_02B562:
 	bgt.b	loc_02B566
+loc_02B564:
 	bsr.b	sub_02B5C2
 loc_02B566:
 	move.b	#$1F,$29(a0)
 loc_02B56C:
 	subq.b	#$1,$29(a0)
+loc_02B570:
 	jmp	(sub_01AF0E).l
 loc_02B576:
 	lea	dat_02B740(pc),a3
@@ -34725,27 +47251,46 @@ loc_02B586:
 	jmp	(sub_01AF1A).l
 sub_02B5C2:
 	moveq	#$0,d0
+loc_02B5C4:
 	movea.l	d0,a1
+loc_02B5C6:
 	moveq	#$10,d2
+loc_02B5C8:
 	move.b	#$39,d3
+loc_02B5CC:
 	jsr	(sub_01A326).l
+loc_02B5D2:
 	bne.b	loc_02B612
+loc_02B5D4:
 	move.b	(RNG_Seed).w,d0
+loc_02B5D8:
 	andi.w	#$7,d0
+loc_02B5DC:
 	cmpi.w	#$6,d0
+loc_02B5E0:
 	blt.b	loc_02B5E4
 	subq.w	#$6,d0
 loc_02B5E4:
 	add.w	d0,d0
+loc_02B5E6:
 	move.w	dat_02B614(pc,d0.w),d0
+loc_02B5EA:
 	moveq	#$20,d1
+loc_02B5EC:
 	add.w	$4(a0),d0
+loc_02B5F0:
 	add.w	$8(a0),d1
+loc_02B5F4:
 	move.w	d0,$4(a2)
+loc_02B5F8:
 	move.w	d1,$8(a2)
+loc_02B5FC:
 	move.w	#$450,(a2)
+loc_02B600:
 	move.b	#$10,$28(a2)
+loc_02B606:
 	move.b	#$5,$29(a2)
+loc_02B60C:
 	move.b	#$0,$2A(a2)
 loc_02B612:
 	rts
@@ -34753,9 +47298,13 @@ dat_02B614:
 	dc.b	$00,$2C,$00,$04,$00,$0C,$00,$14,$00,$1C,$00,$24
 sub_02B620:
 	tst.b	$44(a0)
+loc_02B624:
 	bne.w	loc_02B648
+loc_02B628:
 	jsr	(sub_00E238).l
+loc_02B62E:
 	jsr	(sub_00B298).l
+loc_02B634:
 	beq.b	loc_02B666
 	tst.b	$44(a0)
 	bne.b	loc_02B648
@@ -34774,31 +47323,47 @@ loc_02B65E:
 	jsr	(sub_008C10).l
 loc_02B666:
 	moveq	#$0,d0
+loc_02B668:
 	rts
 loc_02B66A:
 	moveq	#-$1,d0
 	rts
 sub_02B66E:
 	cmpi.b	#$20,(ram_F097).w
+loc_02B674:
 	beq.b	loc_02B6BA
+loc_02B676:
 	move.w	#$940,d4
+loc_02B67A:
 	lea	dat_02B768(pc),a4
+loc_02B67E:
 	cmpi.b	#$4C,$36(a0)
+loc_02B684:
 	beq.b	loc_02B68A
+loc_02B686:
 	adda.w	#$14,a4
 loc_02B68A:
 	bsr.b	sub_02B620
+loc_02B68C:
 	bne.b	loc_02B6BA
+loc_02B68E:
 	clr.b	$28(a0)
+loc_02B692:
 	move.w	(ram_E004).w,d0
+loc_02B696:
 	sub.w	$4(a0),d0
+loc_02B69A:
 	addi.w	#$C,d0
+loc_02B69E:
 	bmi.b	loc_02B6AC
+loc_02B6A0:
 	subi.w	#$48,d0
+loc_02B6A4:
 	bgt.b	loc_02B6AC
 	move.b	#$4,$28(a0)
 loc_02B6AC:
 	cmpi.b	#$4,$28(a0)
+loc_02B6B2:
 	beq.b	loc_02B6C2
 loc_02B6B4:
 	jmp	(sub_01AF0E).l
@@ -34850,6 +47415,7 @@ dat_02B768:
 	dc.b	$00,$00,$00,$00,$00,$0D,$A0,$DC,$00,$0D,$A0,$AA,$00,$0D,$A0,$78
 sub_02B790:
 	subq.b	#$1,$28(a0)
+loc_02B794:
 	bne.b	loc_02B7CE
 	move.b	$2A(a0),$28(a0)
 	subq.b	#$1,$29(a0)
@@ -34900,29 +47466,51 @@ dat_02B8FE:
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FE
 sub_02B90C:
 	bset.b	#$0,$2(a0)
+loc_02B912:
 	bne.b	loc_02B95A
+loc_02B914:
 	lea	dat_02C666(pc),a1
+loc_02B918:
 	jsr	(sub_01ADB0).l
+loc_02B91E:
 	ori.b	#$2E,$2(a0)
+loc_02B924:
 	lea	(ram_C000).w,a2
+loc_02B928:
 	move.w	(a2),d0
+loc_02B92A:
 	addq.w	#$1,(a2)+
+loc_02B92C:
 	move.w	d0,d1
+loc_02B92E:
 	lsl.w	#$3,d0
+loc_02B930:
 	sub.w	d1,d0
+loc_02B932:
 	add.w	d0,d0
+loc_02B934:
 	adda.w	d0,a2
+loc_02B936:
 	move.w	#$9320,d0
+loc_02B93A:
 	move.w	#$9400,d1
+loc_02B93E:
 	move.w	#$954B,d2
+loc_02B942:
 	move.w	#$96E2,d3
+loc_02B946:
 	move.w	#$9704,d4
+loc_02B94A:
 	movem.w	d0-d4,(a2)
+loc_02B94E:
 	adda.w	#$A,a2
+loc_02B952:
 	move.w	#$7240,(a2)+
+loc_02B956:
 	move.w	#$81,(a2)+
 loc_02B95A:
 	btst.b	#$4,(Flags_C61C).w
+loc_02B960:
 	beq.w	loc_02BA60
 	move.w	#$46C,(a0)
 	move.w	#$1E0,$4(a0)
@@ -34994,15 +47582,23 @@ loc_02BA60:
 	dc.b	$00,$78,$00,$78,$00,$96,$00,$96,$00,$96,$00,$96
 sub_02BB1C:
 	bsr.w	sub_02BDCE
+loc_02BB20:
 	move.b	$28(a0),d0
+loc_02BB24:
 	add.b	$29(a0),d0
+loc_02BB28:
 	cmpi.b	#$2,d0
+loc_02BB2C:
 	beq.b	loc_02BB46
 loc_02BB2E:
 	jsr	(sub_01AF0E).l
+loc_02BB34:
 	lea	(ram_F2A0).w,a1
+loc_02BB38:
 	movem.l	$C(a0),d0-d1
+loc_02BB3E:
 	movem.l	d0-d1,$C(a1)
+loc_02BB44:
 	rts
 loc_02BB46:
 	clr.l	$28(a0)
@@ -35051,13 +47647,19 @@ loc_02BB80:
 	dc.b	$4C,$DF,$03,$00,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_02BD1C:
 	bsr.w	sub_02BDCE
+loc_02BD20:
 	tst.b	$2A(a0)
+loc_02BD24:
 	bne.b	loc_02BD3E
 loc_02BD26:
 	jsr	(sub_01AF0E).l
+loc_02BD2C:
 	lea	(ram_F2A0).w,a1
+loc_02BD30:
 	movem.l	$C(a0),d0-d1
+loc_02BD36:
 	movem.l	d0-d1,$C(a1)
+loc_02BD3C:
 	rts
 loc_02BD3E:
 	clr.l	$28(a0)
@@ -35081,13 +47683,19 @@ loc_02BD78:
 	bra.b	loc_02BD26
 sub_02BD86:
 	bsr.b	sub_02BDCE
+loc_02BD88:
 	tst.b	$28(a0)
+loc_02BD8C:
 	bne.b	loc_02BDA6
 loc_02BD8E:
 	jsr	(sub_01AF0E).l
+loc_02BD94:
 	lea	(ram_F2A0).w,a1
+loc_02BD98:
 	movem.l	$C(a0),d0-d1
+loc_02BD9E:
 	movem.l	d0-d1,$C(a1)
+loc_02BDA4:
 	rts
 loc_02BDA6:
 	move.b	#$1,$34(a0)
@@ -35100,43 +47708,73 @@ loc_02BDA6:
 	bra.b	loc_02BD8E
 sub_02BDCE:
 	tst.b	$51(a0)
+loc_02BDD2:
 	bne.b	loc_02BE16
+loc_02BDD4:
 	lea	dat_02C6F2(pc),a3
+loc_02BDD8:
 	tst.b	(ram_C3D4).w
+loc_02BDDC:
 	beq.b	loc_02BDE2
 	lea	dat_02C710(pc),a3
 loc_02BDE2:
 	moveq	#$0,d0
+loc_02BDE4:
 	move.b	$50(a0),d0
+loc_02BDE8:
 	addq.b	#$1,$50(a0)
+loc_02BDEC:
 	cmpi.b	#$2,$50(a0)
+loc_02BDF2:
 	ble.b	loc_02BDF8
 	clr.b	$50(a0)
 loc_02BDF8:
 	move.w	d0,d1
+loc_02BDFA:
 	lsl.w	#$3,d0
+loc_02BDFC:
 	add.w	d1,d0
+loc_02BDFE:
 	add.w	d1,d0
+loc_02BE00:
 	adda.w	d0,a3
+loc_02BE02:
 	jsr	(sub_01D368).l
+loc_02BE08:
 	move.b	(RNG_Seed).w,d0
+loc_02BE0C:
 	andi.b	#$3,d0
+loc_02BE10:
 	addq.b	#$7,d0
+loc_02BE12:
 	move.b	d0,$51(a0)
 loc_02BE16:
 	subq.b	#$1,$51(a0)
+loc_02BE1A:
 	tst.b	$54(a0)
+loc_02BE1E:
 	bne.b	loc_02BE4E
+loc_02BE20:
 	tst.b	$52(a0)
+loc_02BE24:
 	bne.b	loc_02BE4A
+loc_02BE26:
 	addq.b	#$1,$53(a0)
+loc_02BE2A:
 	andi.b	#$3,$53(a0)
+loc_02BE30:
 	moveq	#$0,d0
+loc_02BE32:
 	move.b	$53(a0),d0
+loc_02BE36:
 	lsl.w	#$2,d0
+loc_02BE38:
 	lea	dat_02BE50(pc),a1
+loc_02BE3C:
 	movem.w	(a1,d0.w),d0-d1
+loc_02BE42:
 	move.l	d0,$10(a0)
+loc_02BE46:
 	move.b	d1,$52(a0)
 loc_02BE4A:
 	subq.b	#$1,$52(a0)
@@ -35146,15 +47784,25 @@ dat_02BE50:
 	dc.b	$00,$00,$00,$11,$08,$00,$00,$61,$00,$00,$00,$11,$F8,$00,$00,$61
 sub_02BE60:
 	lea	(ram_F060).w,a1
+loc_02BE64:
 	move.w	$4(a1),d0
+loc_02BE68:
 	move.w	$8(a1),d1
+loc_02BE6C:
 	addi.w	#$220,d0
+loc_02BE70:
 	addi.w	#$40,d1
+loc_02BE74:
 	move.w	d0,$4(a0)
+loc_02BE78:
 	move.w	d1,$8(a0)
+loc_02BE7C:
 	cmpi.b	#$20,$37(a0)
+loc_02BE82:
 	beq.b	loc_02BEF4
+loc_02BE84:
 	cmpi.b	#$80,$37(a0)
+loc_02BE8A:
 	bne.b	loc_02BEBE
 	move.w	#$A20,d4
 	jsr	(sub_00E238).l
@@ -35211,13 +47859,21 @@ loc_02BF2A:
 	dc.b	$50,$F8,$C3,$D4,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_02BF40:
 	lea	(ram_F060).w,a3
+loc_02BF44:
 	move.w	#$150,d0
+loc_02BF48:
 	moveq	#$1B,d1
+loc_02BF4A:
 	add.w	$4(a3),d0
+loc_02BF4E:
 	add.w	$8(a3),d1
+loc_02BF52:
 	move.w	d0,$4(a0)
+loc_02BF56:
 	move.w	d1,$8(a0)
+loc_02BF5A:
 	cmpi.b	#$80,$37(a0)
+loc_02BF60:
 	bne.w	loc_02C026
 	lea	dat_02C6A6(pc),a3
 	tst.b	$44(a0)
@@ -35324,20 +47980,33 @@ dat_02C09E:
 	dc.b	$FF,$F5
 sub_02C0C2:
 	move.w	#$10C,d0
+loc_02C0C6:
 	cmpi.b	#$4C,$36(a0)
+loc_02C0CC:
 	beq.b	loc_02C0D2
+loc_02C0CE:
 	move.w	#$194,d0
 loc_02C0D2:
 	lea	(ram_F060).w,a3
+loc_02C0D6:
 	moveq	#$6,d1
+loc_02C0D8:
 	swap	d0
+loc_02C0DA:
 	swap	d1
+loc_02C0DC:
 	clr.w	d0
+loc_02C0DE:
 	add.l	$4(a3),d0
+loc_02C0E2:
 	add.l	$8(a3),d1
+loc_02C0E6:
 	move.l	d0,$4(a0)
+loc_02C0EA:
 	move.l	d1,$8(a0)
+loc_02C0EE:
 	cmpi.b	#$80,$37(a0)
+loc_02C0F4:
 	bne.w	loc_02C18C
 	cmpi.b	#$20,$37(a3)
 	beq.w	loc_02C1AA
@@ -35388,8 +48057,11 @@ loc_02C188:
 	subq.b	#$1,$29(a0)
 loc_02C18C:
 	moveq	#$0,d0
+loc_02C18E:
 	lea	dat_02C2D0(pc),a1
+loc_02C192:
 	cmpi.b	#$10,$35(a0)
+loc_02C198:
 	blt.b	loc_02C1A0
 	beq.b	loc_02C19E
 	addq.w	#$2,d0
@@ -35397,6 +48069,7 @@ loc_02C19E:
 	addq.w	#$2,d0
 loc_02C1A0:
 	adda.w	(a1,d0.w),a1
+loc_02C1A4:
 	jmp	(sub_01AF1A).l
 loc_02C1AA:
 	move.b	#$14,$40(a0)
@@ -35450,19 +48123,33 @@ dat_02C2D4:
 	dc.b	$FF,$D1
 sub_02C2E2:
 	moveq	#$0,d0
+loc_02C2E4:
 	move.b	$36(a0),d0
+loc_02C2E8:
 	lsl.w	#$2,d0
+loc_02C2EA:
 	dc.w	$4CBB,$0003,$00E8		; movem.w dat_02C2D4(pc,d0.w),d0-d1
+loc_02C2F0:
 	lea	(ram_F060).w,a3
+loc_02C2F4:
 	swap	d0
+loc_02C2F6:
 	swap	d1
+loc_02C2F8:
 	clr.w	d0
+loc_02C2FA:
 	clr.w	d1
+loc_02C2FC:
 	add.l	$4(a3),d0
+loc_02C300:
 	add.l	$8(a3),d1
+loc_02C304:
 	move.l	d0,$4(a0)
+loc_02C308:
 	move.l	d1,$8(a0)
+loc_02C30C:
 	cmpi.b	#$80,$37(a3)
+loc_02C312:
 	bne.w	loc_02C3A0
 	tst.b	$44(a0)
 	bne.w	loc_02C33C
@@ -35561,17 +48248,29 @@ dat_02C430:
 	dc.b	$00,$40,$01,$74,$00,$40,$01,$CC,$00,$40,$02,$14,$00,$40
 sub_02C44E:
 	moveq	#$0,d0
+loc_02C450:
 	move.b	$36(a0),d0
+loc_02C454:
 	lsl.w	#$2,d0
+loc_02C456:
 	dc.w	$4CBB,$0003,$00D8		; movem.w dat_02C430(pc,d0.w),d0-d1
+loc_02C45C:
 	lea	(ram_F060).w,a3
+loc_02C460:
 	add.w	$4(a3),d0
+loc_02C464:
 	add.w	$8(a3),d1
+loc_02C468:
 	move.w	d0,$4(a0)
+loc_02C46C:
 	move.w	d1,$8(a0)
+loc_02C470:
 	cmpi.b	#$20,$37(a0)
+loc_02C476:
 	beq.w	loc_02C55A
+loc_02C47A:
 	cmpi.b	#$80,$37(a0)
+loc_02C480:
 	bne.w	loc_02C554
 	cmpi.b	#$20,$37(a3)
 	beq.w	loc_02C55A
@@ -35736,76 +48435,179 @@ dat_02C8AA:
 	dc.b	$C9,$60
 sub_02C972:
 	ori.b	#$26,$2(a0)
+loc_02C978:
 	lea	dat_02CB14(pc),a3
+loc_02C97C:
 	jsr	(sub_01D368).l
+loc_02C982:
 	lea	dat_02CAF4(pc),a1
+loc_02C986:
 	jsr	(sub_01ADB0).l
+loc_02C98C:
 	jsr	(sub_022106).l
+loc_02C992:
 	lea	dat_02CB20(pc),a1
+loc_02C996:
 	move.w	(a1),$50(a0)
+loc_02C99A:
 	move.l	a1,$2C(a0)
+loc_02C99E:
 	clr.b	$53(a0)
+loc_02C9A2:
 	move.w	#$7D0,d0
+loc_02C9A6:
 	lea	dat_02CB04(pc),a2
+loc_02C9AA:
 	cmpi.w	#$4,(ram_FE44).w
+loc_02C9B0:
 	beq.b	loc_02C9BA
+loc_02C9B2:
 	lea	dat_02CB0C(pc),a2
+loc_02C9B6:
 	move.w	#$640,d0
 loc_02C9BA:
 	move.w	d0,$38(a0)
+loc_02C9BE:
 	lea	(ram_F000).w,a1
+loc_02C9C2:
 	move.l	#$FFE6C0,$50(a1)
+loc_02C9CA:
 	move.l	a2,$54(a1)
+loc_02C9CE:
 	move.l	#$87000,$14(a1)
+loc_02C9D6:
 	addq.b	#$1,$28(a1)
+loc_02C9DA:
 	move.w	#$2D0,(a1)
+loc_02C9DE:
 	move.b	#$1,$34(a0)
+loc_02C9E4:
 	move.w	#$3BC,(a0)
+loc_02C9E8:
 	jmp	(sub_01AF0E).l
 sub_02C9EE:
 	lea	(ram_E6C0).w,a3
+loc_02C9F2:
 	btst.b	#$0,$3(a3)
+loc_02C9F8:
 	bne.b	loc_02CA20
+loc_02C9FA:
 	tst.b	$52(a0)
+loc_02C9FE:
 	bne.b	loc_02CA0A
+loc_02CA00:
 	subq.w	#$1,$50(a0)
+loc_02CA04:
 	bne.b	loc_02CA0A
+loc_02CA06:
 	bsr.b	sub_02CA2A
+loc_02CA08:
 	bne.b	loc_02CA10
 loc_02CA0A:
 	jmp	(sub_01AF0E).l
 loc_02CA10:
 	move.b	#$41,$52(a0)
+loc_02CA16:
 	lea	dat_02CBC8(pc),a1
+loc_02CA1A:
 	jmp	(sub_01AF1A).l
 loc_02CA20:
 	clr.l	(ram_F000).w
 	jmp	(sub_01B002).l
 sub_02CA2A:
 	movea.l	$2C(a0),a1
+loc_02CA2E:
 	move.w	(a1),d6
+loc_02CA30:
 	move.w	$2(a1),d7
+loc_02CA34:
 	cmpi.w	#$FFFF,$4(a1)
+loc_02CA3A:
 	bne.b	loc_02CA42
 	movea.l	$6(a1),a1
 	subq.w	#$4,a1
 loc_02CA42:
 	move.w	d6,$50(a0)
+loc_02CA46:
 	addq.w	#$4,a1
+loc_02CA48:
 	move.l	a1,$2C(a0)
+loc_02CA4C:
 	tst.w	d7
+loc_02CA4E:
 	rts
-	dc.b	$47,$FA,$01,$44,$2F,$09,$4E,$B9,$00,$01,$AD,$58,$66,$00,$00,$82
-	dc.b	$43,$FA,$B9,$C2,$4E,$B9,$00,$01,$AD,$F6,$15,$7C,$00,$40,$00,$22
-	dc.b	$34,$BC,$03,$48,$15,$7C,$00,$10,$00,$3C,$70,$00,$10,$28,$00,$53
-	dc.b	$15,$40,$00,$28,$E5,$48,$4C,$B3,$00,$03,$00,$00,$D0,$68,$00,$04
-	dc.b	$35,$40,$00,$04,$D2,$68,$00,$08,$35,$41,$00,$08,$42,$2A,$00,$29
-	dc.b	$42,$2A,$00,$2B,$42,$2A,$00,$2A,$08,$EA,$00,$05,$00,$02,$0C,$78
-	dc.b	$00,$10,$C3,$28,$67,$16,$0C,$78,$00,$0D,$C3,$28,$66,$1A,$08,$EA
-	dc.b	$00,$06,$00,$02,$35,$7C,$01,$EF,$00,$1E,$60,$0C,$08,$EA,$00,$06
-	dc.b	$00,$02,$35,$7C,$01,$0C,$00,$1E,$70,$B2,$4E,$B9,$00,$00,$A0,$68
-	dc.b	$22,$5F,$52,$28,$00,$53,$02,$28,$00,$07,$00,$53,$5C,$49,$4E,$F9
-	dc.b	$00,$01,$AF,$1A
+loc_02CA50:
+	lea	dat_02CB96(pc),a3
+loc_02CA54:
+	move.l	a1,-(a7)
+loc_02CA56:
+	jsr	(sub_01AD58).l
+loc_02CA5C:
+	bne.w	loc_02CAE0
+loc_02CA60:
+	lea	dat_028424(pc),a1
+loc_02CA64:
+	jsr	(sub_01ADF6).l
+loc_02CA6A:
+	move.b	#$40,$22(a2)
+loc_02CA70:
+	move.w	#$348,(a2)
+loc_02CA74:
+	move.b	#$10,$3C(a2)
+loc_02CA7A:
+	moveq	#$0,d0
+loc_02CA7C:
+	move.b	$53(a0),d0
+loc_02CA80:
+	move.b	d0,$28(a2)
+loc_02CA84:
+	lsl.w	#$2,d0
+loc_02CA86:
+	movem.w	(a3,d0.w),d0-d1
+loc_02CA8C:
+	add.w	$4(a0),d0
+loc_02CA90:
+	move.w	d0,$4(a2)
+loc_02CA94:
+	add.w	$8(a0),d1
+loc_02CA98:
+	move.w	d1,$8(a2)
+loc_02CA9C:
+	clr.b	$29(a2)
+loc_02CAA0:
+	clr.b	$2B(a2)
+loc_02CAA4:
+	clr.b	$2A(a2)
+loc_02CAA8:
+	bset.b	#$5,$2(a2)
+loc_02CAAE:
+	cmpi.w	#$10,(ram_C328).w
+loc_02CAB4:
+	beq.b	loc_02CACC
+loc_02CAB6:
+	cmpi.w	#$D,(ram_C328).w
+loc_02CABC:
+	bne.b	loc_02CAD8
+	bset.b	#$6,$2(a2)
+	move.w	#$1EF,$1E(a2)
+	bra.b	loc_02CAD8
+loc_02CACC:
+	bset.b	#$6,$2(a2)
+	move.w	#$10C,$1E(a2)
+loc_02CAD8:
+	moveq	#-$4E,d0
+loc_02CADA:
+	jsr	(sub_00A068).l
+loc_02CAE0:
+	movea.l	(a7)+,a1
+loc_02CAE2:
+	addq.b	#$1,$53(a0)
+loc_02CAE6:
+	andi.b	#$7,$53(a0)
+loc_02CAEC:
+	addq.w	#$6,a1
+loc_02CAEE:
+	jmp	(sub_01AF1A).l
 dat_02CAF4:
 	dc.b	$80,$01,$14,$00,$13,$00,$00,$00,$4E,$20,$00,$00
 	dc.b	$00,$02,$CB,$B6
@@ -35824,7 +48626,9 @@ dat_02CB20:
 	dc.b	$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$64,$00,$00
 	dc.b	$00,$1E,$00,$04,$00,$64,$00,$00,$00,$1E,$00,$04,$00,$64,$00,$00
 	dc.b	$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$64,$00,$00
-	dc.b	$FF,$FF,$00,$02,$CB,$20,$FF,$CC,$FF,$E4,$FF,$D6,$FF,$E4,$00,$6C
+	dc.b	$FF,$FF,$00,$02,$CB,$20
+dat_02CB96:
+	dc.b	$FF,$CC,$FF,$E4,$FF,$D6,$FF,$E4,$00,$6C
 	dc.b	$FF,$E4,$00,$76,$FF,$E4,$FF,$CC,$FF,$EA,$FF,$D6,$FF,$EA,$00,$6C
 	dc.b	$FF,$EA,$00,$76,$FF,$EA,$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$CB,$B6
@@ -36154,10 +48958,12 @@ dat_02D000:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+dat_02E000:
 	dc.b	$00,$00,$00,$AA,$00,$0A,$AA,$AA,$0A,$AA,$AA,$AA,$AA,$AA,$AA,$AA
 	dc.b	$AA,$AA,$AA,$AA,$0A,$AA,$AA,$AA,$00,$0A,$AA,$AA,$00,$00,$00,$AA
 	dc.b	$AA,$00,$00,$00,$AA,$AA,$A0,$00,$AA,$AA,$AA,$A0,$AA,$AA,$AA,$AA
 	dc.b	$AA,$AA,$AA,$AA,$AA,$AA,$AA,$A0,$AA,$AA,$A0,$00,$AA,$00,$00,$00
+dat_02E040:
 	dc.b	$00,$77,$80,$04,$07,$14,$08,$25,$16,$35,$1A,$45,$19,$56,$38,$67
 	dc.b	$76,$73,$02,$81,$03,$00,$14,$09,$26,$36,$37,$78,$47,$7A,$82,$03
 	dc.b	$01,$14,$0A,$26,$39,$37,$79,$83,$04,$06,$15,$17,$26,$37,$37,$77
@@ -38042,105 +50848,44 @@ dat_034D14:
 	dc.b	$2A,$01,$00,$00,$E8,$0F,$0F,$E0,$F0,$F0,$F0,$00,$0F,$F0,$E8,$10
 	dc.b	$2B,$00,$00,$00,$E8,$0F,$0F,$E0,$EE,$F2,$2C,$01,$00,$00,$E8,$0D
 	dc.b	$0F,$E0,$EA,$F6,$F8,$0A,$0F,$E8,$FA,$EE,$2D,$00,$00,$00,$F0,$0F
-	dc.b	$0F,$E0,$F0,$F0,$2E,$00,$0B,$C0,$EC,$05,$07,$E0,$F8,$F8
-dat_034F6E:
-	dc.l	dat_034F8E,dat_034F98,dat_034FA2,dat_034FAC
-	dc.l	dat_034FB6,dat_034FC0,dat_034FCA,dat_034FD4
-dat_034F8E:
-	dc.b	$31,$00
-	dc.b	$04,$00,$F4,$05,$0F,$E0,$F9,$F7
-dat_034F98:
-	dc.b	$32,$00,$04,$08,$F2,$05,$0F,$E0
-	dc.b	$F3,$FD
-dat_034FA2:
-	dc.b	$33,$00,$04,$10,$F6,$05,$07,$E0,$F9,$F7
-dat_034FAC:
-	dc.b	$32,$00,$04,$08
-	dc.b	$F2,$05,$07,$E0,$FD,$F3
-dat_034FB6:
-	dc.b	$31,$00,$04,$00,$F4,$05,$07,$E0,$F7,$F9
-dat_034FC0:
-	dc.b	$30,$00,$04,$18,$EE,$06,$07,$E0,$FB,$F5
-dat_034FCA:
-	dc.b	$2F,$00,$04,$10,$F5,$05
-	dc.b	$07,$E0,$F8,$F8
-dat_034FD4:
-	dc.b	$30,$00,$04,$18,$EE,$06,$0F,$E0,$F5,$FB
-dat_034FDE:
-	dc.l	dat_03501E,dat_035034,dat_03504A,dat_035060
-	dc.l	dat_035070,dat_035080,dat_035090,dat_0350A6
-	dc.l	dat_0350BC,dat_0350D2,dat_0350E8,dat_0350F8
-	dc.l	dat_035108,dat_035118,dat_035128,dat_035138
-dat_03501E:
-	dc.b	$38,$02
+	dc.b	$0F,$E0,$F0,$F0,$2E,$00,$0B,$C0,$EC,$05,$07,$E0,$F8,$F8,$00,$03
+	dc.b	$4F,$8E,$00,$03,$4F,$98,$00,$03,$4F,$A2,$00,$03,$4F,$AC,$00,$03
+	dc.b	$4F,$B6,$00,$03,$4F,$C0,$00,$03,$4F,$CA,$00,$03,$4F,$D4,$31,$00
+	dc.b	$04,$00,$F4,$05,$0F,$E0,$F9,$F7,$32,$00,$04,$08,$F2,$05,$0F,$E0
+	dc.b	$F3,$FD,$33,$00,$04,$10,$F6,$05,$07,$E0,$F9,$F7,$32,$00,$04,$08
+	dc.b	$F2,$05,$07,$E0,$FD,$F3,$31,$00,$04,$00,$F4,$05,$07,$E0,$F7,$F9
+	dc.b	$30,$00,$04,$18,$EE,$06,$07,$E0,$FB,$F5,$2F,$00,$04,$10,$F5,$05
+	dc.b	$07,$E0,$F8,$F8,$30,$00,$04,$18,$EE,$06,$0F,$E0,$F5,$FB,$00,$03
+	dc.b	$50,$1E,$00,$03,$50,$34,$00,$03,$50,$4A,$00,$03,$50,$60,$00,$03
+	dc.b	$50,$70,$00,$03,$50,$80,$00,$03,$50,$90,$00,$03,$50,$A6,$00,$03
+	dc.b	$50,$BC,$00,$03,$50,$D2,$00,$03,$50,$E8,$00,$03,$50,$F8,$00,$03
+	dc.b	$51,$08,$00,$03,$51,$18,$00,$03,$51,$28,$00,$03,$51,$38,$38,$02
 	dc.b	$03,$48,$C9,$0D,$0F,$E0,$F1,$EF,$D9,$09,$0F,$E8,$F1,$F7,$E9,$04
-	dc.b	$0F,$EE,$F1,$FF
-dat_035034:
-	dc.b	$39,$02,$03,$48,$D1,$05,$0F,$E0,$03,$ED,$C9,$07
-	dc.b	$0F,$E4,$F3,$FD,$E9,$00,$0F,$EC,$F3,$05
-dat_03504A:
-	dc.b	$3A,$02,$03,$50,$C2,$04
+	dc.b	$0F,$EE,$F1,$FF,$39,$02,$03,$48,$D1,$05,$0F,$E0,$03,$ED,$C9,$07
+	dc.b	$0F,$E4,$F3,$FD,$E9,$00,$0F,$EC,$F3,$05,$3A,$02,$03,$50,$C2,$04
 	dc.b	$0F,$E0,$F1,$FF,$CA,$0B,$0F,$E2,$F1,$F7,$DA,$00,$0F,$EE,$09,$EF
-dat_035060:
 	dc.b	$3B,$01,$03,$58,$C1,$00,$0F,$E0,$F9,$FF,$C9,$0B,$0F,$E1,$F1,$F7
-dat_035070:
 	dc.b	$3C,$01,$03,$58,$C1,$07,$07,$E0,$F7,$F9,$E1,$04,$07,$E8,$F7,$F9
-dat_035080:
 	dc.b	$3B,$01,$03,$58,$C1,$00,$07,$E0,$FF,$F9,$C9,$0B,$07,$E1,$F7,$F1
-dat_035090:
 	dc.b	$3A,$02,$03,$60,$C2,$04,$07,$E0,$FF,$F1,$CA,$0B,$07,$E2,$F7,$F1
-	dc.b	$DA,$00,$07,$EE,$EF,$09
-dat_0350A6:
-	dc.b	$39,$02,$03,$68,$D1,$05,$07,$E0,$ED,$03
-	dc.b	$C9,$07,$07,$E4,$FD,$F3,$E9,$00,$07,$EC,$05,$F3
-dat_0350BC:
-	dc.b	$38,$02,$03,$68
+	dc.b	$DA,$00,$07,$EE,$EF,$09,$39,$02,$03,$68,$D1,$05,$07,$E0,$ED,$03
+	dc.b	$C9,$07,$07,$E4,$FD,$F3,$E9,$00,$07,$EC,$05,$F3,$38,$02,$03,$68
 	dc.b	$C9,$0D,$07,$E0,$EF,$F1,$D9,$09,$07,$E8,$F7,$F1,$E9,$04,$07,$EE
-	dc.b	$FF,$F1
-dat_0350D2:
-	dc.b	$37,$02,$03,$68,$C9,$0D,$07,$E0,$EF,$F1,$D9,$09,$07,$E8
-	dc.b	$F7,$F1,$E9,$00,$07,$EE,$FF,$F9
-dat_0350E8:
-	dc.b	$36,$01,$03,$70,$C5,$09,$07,$E0
-	dc.b	$F3,$F5,$D5,$06,$07,$E6,$FB,$F5
-dat_0350F8:
-	dc.b	$35,$01,$03,$78,$C1,$07,$07,$E0
-	dc.b	$F9,$F7,$E1,$05,$07,$E8,$F9,$F7
-dat_035108:
-	dc.b	$34,$01,$03,$78,$C1,$07,$07,$E0
-	dc.b	$F7,$F9,$E1,$05,$07,$E8,$F7,$F9
-dat_035118:
-	dc.b	$35,$01,$03,$78,$C1,$07,$0F,$E0
-	dc.b	$F7,$F9,$E1,$05,$0F,$E8,$F7,$F9
-dat_035128:
-	dc.b	$36,$01,$03,$80,$C5,$09,$0F,$E0
-	dc.b	$F5,$F3,$D5,$06,$0F,$E6,$F5,$FB
-dat_035138:
-	dc.b	$37,$02,$03,$48,$C9,$0D,$0F,$E0
-	dc.b	$F1,$EF,$D9,$09,$0F,$E8,$F1,$F7,$E9,$00,$0F,$EE,$F9,$FF
-dat_03514E:
-	dc.l	dat_03516E,dat_03517E,dat_035188,dat_035192
-	dc.l	dat_03519C,dat_0351A6,dat_0351B0,dat_0351BA
-dat_03516E:
-	dc.b	$43,$01
-	dc.b	$03,$18,$E0,$09,$07,$E0,$F2,$F6,$F0,$04,$07,$E6,$F2,$FE
-dat_03517E:
-	dc.b	$42,$00
-	dc.b	$03,$10,$E6,$06,$07,$E0,$FD,$F3
-dat_035188:
-	dc.b	$41,$00,$03,$08,$EA,$06,$07,$E0
-	dc.b	$00,$F0
-dat_035192:
-	dc.b	$40,$00,$03,$10,$EC,$0A,$07,$E0,$F5,$F3
-dat_03519C:
-	dc.b	$3F,$00,$03,$18
-	dc.b	$E9,$0A,$07,$E0,$F0,$F8
-dat_0351A6:
-	dc.b	$3E,$00,$03,$10,$E8,$07,$07,$E0,$FB,$F5
-dat_0351B0:
-	dc.b	$3D,$00,$03,$08,$ED,$06,$07,$E0,$F2,$FE
-dat_0351BA:
-	dc.b	$44,$01,$03,$10,$E5,$09
+	dc.b	$FF,$F1,$37,$02,$03,$68,$C9,$0D,$07,$E0,$EF,$F1,$D9,$09,$07,$E8
+	dc.b	$F7,$F1,$E9,$00,$07,$EE,$FF,$F9,$36,$01,$03,$70,$C5,$09,$07,$E0
+	dc.b	$F3,$F5,$D5,$06,$07,$E6,$FB,$F5,$35,$01,$03,$78,$C1,$07,$07,$E0
+	dc.b	$F9,$F7,$E1,$05,$07,$E8,$F9,$F7,$34,$01,$03,$78,$C1,$07,$07,$E0
+	dc.b	$F7,$F9,$E1,$05,$07,$E8,$F7,$F9,$35,$01,$03,$78,$C1,$07,$0F,$E0
+	dc.b	$F7,$F9,$E1,$05,$0F,$E8,$F7,$F9,$36,$01,$03,$80,$C5,$09,$0F,$E0
+	dc.b	$F5,$F3,$D5,$06,$0F,$E6,$F5,$FB,$37,$02,$03,$48,$C9,$0D,$0F,$E0
+	dc.b	$F1,$EF,$D9,$09,$0F,$E8,$F1,$F7,$E9,$00,$0F,$EE,$F9,$FF,$00,$03
+	dc.b	$51,$6E,$00,$03,$51,$7E,$00,$03,$51,$88,$00,$03,$51,$92,$00,$03
+	dc.b	$51,$9C,$00,$03,$51,$A6,$00,$03,$51,$B0,$00,$03,$51,$BA,$43,$01
+	dc.b	$03,$18,$E0,$09,$07,$E0,$F2,$F6,$F0,$04,$07,$E6,$F2,$FE,$42,$00
+	dc.b	$03,$10,$E6,$06,$07,$E0,$FD,$F3,$41,$00,$03,$08,$EA,$06,$07,$E0
+	dc.b	$00,$F0,$40,$00,$03,$10,$EC,$0A,$07,$E0,$F5,$F3,$3F,$00,$03,$18
+	dc.b	$E9,$0A,$07,$E0,$F0,$F8,$3E,$00,$03,$10,$E8,$07,$07,$E0,$FB,$F5
+	dc.b	$3D,$00,$03,$08,$ED,$06,$07,$E0,$F2,$FE,$44,$01,$03,$10,$E5,$09
 	dc.b	$07,$E0,$F2,$F6,$F5,$04,$07,$E6,$F2,$FE,$00,$03,$4F,$64,$00,$03
 	dc.b	$52,$DE,$00,$03,$52,$E0,$00,$03,$52,$E2,$00,$03,$52,$E4,$00,$03
 	dc.b	$52,$E6,$00,$03,$52,$E8,$00,$03,$52,$EA,$00,$03,$52,$EC,$00,$03
@@ -39296,7 +52041,9 @@ dat_039136:
 	dc.b	$9A,$A4,$33,$0B,$10,$E9,$0C,$FA,$58,$87,$F7,$A3,$3E,$B5,$83,$FD
 	dc.b	$7E,$D3,$5F,$14,$92,$49,$24,$D2,$FF,$03,$5F,$14,$92,$49,$24,$92
 	dc.b	$49,$38,$84,$5F,$A9,$AE,$F1,$0B,$BC,$42,$2F,$D4,$D7,$78,$85,$DE
-	dc.b	$21,$17,$EA,$6B,$BC,$42,$92,$00,$00,$09,$80,$03,$04,$35,$1B,$44
+	dc.b	$21,$17,$EA,$6B,$BC,$42,$92,$00
+dat_039208:
+	dc.b	$00,$09,$80,$03,$04,$35,$1B,$44
 	dc.b	$0B,$54,$0C,$65,$1E,$72,$00,$81,$04,$0E,$55,$1A,$89,$04,$0A,$8A
 	dc.b	$02,$01,$16,$3E,$FF,$FC,$87,$EE,$BF,$40,$FE,$C5,$8E,$BE,$D7,$DA
 	dc.b	$FB,$4C,$7F,$62,$FE,$83,$F7,$40,$04,$6D,$25,$6D,$95,$DB,$65,$77
@@ -40928,13 +53675,9 @@ dat_03E62A:
 	dc.b	$67,$20,$00,$81,$93,$90,$94,$00,$95,$2D,$96,$F1,$97,$01,$68,$40
 	dc.b	$00,$81,$93,$90,$94,$00,$95,$2D,$96,$F1,$97,$01,$69,$60,$00,$81
 	dc.b	$93,$90,$94,$00,$95,$2D,$96,$F1,$97,$01,$6A,$80,$00,$81,$93,$90
-	dc.b	$94,$00,$95,$2D,$96,$F1,$97,$01,$6B,$A0,$00,$81
-dat_03F0FC:
-	dc.b	$FF,$E3,$FF,$F6
+	dc.b	$94,$00,$95,$2D,$96,$F1,$97,$01,$6B,$A0,$00,$81,$FF,$E3,$FF,$F6
 	dc.b	$FF,$E7,$FF,$ED,$FF,$F4,$FF,$E8,$00,$01,$FF,$ED,$00,$05,$FF,$F6
-	dc.b	$00,$02,$FF,$FD,$FF,$F4,$00,$08,$FF,$E8,$FF,$FD
-dat_03F11C:
-	dc.b	$00,$00,$20,$00
+	dc.b	$00,$02,$FF,$FD,$FF,$F4,$00,$08,$FF,$E8,$FF,$FD,$00,$00,$20,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$16,$9F,$00,$00,$16,$9F,$00,$00,$00,$00
 	dc.b	$00,$00,$20,$00,$FF,$FF,$E9,$61,$00,$00,$16,$9F,$FF,$FF,$E0,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$E9,$61,$FF,$FF,$E9,$61,$00,$00,$00,$00
@@ -40942,63 +53685,36 @@ dat_03F11C:
 dat_03F15C:
 	dc.b	$00,$04,$00,$00
 	dc.b	$00,$04,$00,$04,$00,$00,$00,$04,$FF,$FC,$00,$04,$FF,$FC,$00,$00
-	dc.b	$FF,$FC,$FF,$FC,$00,$00,$FF,$FC,$00,$04,$FF,$FC
-dat_03F17C:
-	dc.l	dat_03F19C,dat_03F1BC,dat_03F1DC,dat_03F1FC
-	dc.l	dat_03F21C,dat_03F23C,dat_03F25C,dat_03F27C
-dat_03F19C:
-	dc.b	$00,$1C,$00,$00
+	dc.b	$FF,$FC,$FF,$FC,$00,$00,$FF,$FC,$00,$04,$FF,$FC,$00,$03,$F1,$9C
+	dc.b	$00,$03,$F1,$BC,$00,$03,$F1,$DC,$00,$03,$F1,$FC,$00,$03,$F2,$1C
+	dc.b	$00,$03,$F2,$3C,$00,$03,$F2,$5C,$00,$03,$F2,$7C,$00,$1C,$00,$00
 	dc.b	$FF,$EC,$00,$00,$00,$1C,$00,$00,$FF,$F4,$00,$00,$00,$1C,$00,$00
-	dc.b	$FF,$FC,$00,$00,$00,$1C,$00,$00,$00,$04,$00,$00
-dat_03F1BC:
-	dc.b	$00,$1C,$00,$00
+	dc.b	$FF,$FC,$00,$00,$00,$1C,$00,$00,$00,$04,$00,$00,$00,$1C,$00,$00
 	dc.b	$00,$0A,$00,$00,$00,$18,$00,$00,$00,$12,$00,$00,$00,$12,$00,$00
-	dc.b	$00,$18,$00,$00,$00,$0C,$00,$00,$00,$1C,$00,$00
-dat_03F1DC:
-	dc.b	$FF,$F4,$00,$00
+	dc.b	$00,$18,$00,$00,$00,$0C,$00,$00,$00,$1C,$00,$00,$FF,$F4,$00,$00
 	dc.b	$00,$1B,$00,$00,$FF,$FC,$00,$00,$00,$1B,$00,$00,$00,$04,$00,$00
-	dc.b	$00,$1B,$00,$00,$00,$0C,$00,$00,$00,$1B,$00,$00
-dat_03F1FC:
-	dc.b	$FF,$E4,$00,$00
+	dc.b	$00,$1B,$00,$00,$00,$0C,$00,$00,$00,$1B,$00,$00,$FF,$E4,$00,$00
 	dc.b	$00,$0A,$00,$00,$FF,$E8,$00,$00,$00,$12,$00,$00,$FF,$EE,$00,$00
-	dc.b	$00,$18,$00,$00,$FF,$F4,$00,$00,$00,$1C,$00,$00
-dat_03F21C:
-	dc.b	$FF,$E4,$00,$00
+	dc.b	$00,$18,$00,$00,$FF,$F4,$00,$00,$00,$1C,$00,$00,$FF,$E4,$00,$00
 	dc.b	$FF,$EC,$00,$00,$FF,$E4,$00,$00,$FF,$F4,$00,$00,$FF,$E4,$00,$00
-	dc.b	$FF,$FC,$00,$00,$FF,$E4,$00,$00,$00,$04,$00,$00
-dat_03F23C:
-	dc.b	$FF,$E2,$00,$00
+	dc.b	$FF,$FC,$00,$00,$FF,$E4,$00,$00,$00,$04,$00,$00,$FF,$E2,$00,$00
 	dc.b	$FF,$F4,$00,$00,$FF,$E8,$00,$00,$FF,$EE,$00,$00,$FF,$EE,$00,$00
-	dc.b	$FF,$E8,$00,$00,$FF,$F4,$00,$00,$FF,$E2,$00,$00
-dat_03F25C:
-	dc.b	$FF,$F4,$00,$00
+	dc.b	$FF,$E8,$00,$00,$FF,$F4,$00,$00,$FF,$E2,$00,$00,$FF,$F4,$00,$00
 	dc.b	$FF,$E5,$00,$00,$FF,$FC,$00,$00,$FF,$E5,$00,$00,$00,$04,$00,$00
-	dc.b	$FF,$E5,$00,$00,$00,$0C,$00,$00,$FF,$E5,$00,$00
-dat_03F27C:
-	dc.b	$00,$1E,$00,$00
+	dc.b	$FF,$E5,$00,$00,$00,$0C,$00,$00,$FF,$E5,$00,$00,$00,$1E,$00,$00
 	dc.b	$FF,$F4,$00,$00,$00,$18,$00,$00,$FF,$EE,$00,$00,$00,$12,$00,$00
-	dc.b	$FF,$E8,$00,$00,$00,$0C,$00,$00,$FF,$E2,$00,$00
-dat_03F29C:
-	dc.l	dat_03F2BC,dat_03F2EC,dat_03F31C
-	dc.b	$00,$03,$F2,$EC,$00,$03,$F2,$BC
-	dc.b	$00,$03,$F2,$EC,$00,$03,$F3,$1C,$00,$03,$F2,$EC
-dat_03F2BC:
-	dc.b	$FF,$ED,$00,$00
+	dc.b	$FF,$E8,$00,$00,$00,$0C,$00,$00,$FF,$E2,$00,$00,$00,$03,$F2,$BC
+	dc.b	$00,$03,$F2,$EC,$00,$03,$F3,$1C,$00,$03,$F2,$EC,$00,$03,$F2,$BC
+	dc.b	$00,$03,$F2,$EC,$00,$03,$F3,$1C,$00,$03,$F2,$EC,$FF,$ED,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$F8,$00,$00,$FF,$F8,$00,$00,$00,$08,$00,$00
 	dc.b	$FF,$F8,$00,$00,$00,$13,$00,$00,$00,$00,$00,$00,$00,$08,$00,$00
-	dc.b	$00,$08,$00,$00,$FF,$F8,$00,$00,$00,$08,$00,$00
-dat_03F2EC:
-	dc.b	$FF,$F0,$00,$00
+	dc.b	$00,$08,$00,$00,$FF,$F8,$00,$00,$00,$08,$00,$00,$FF,$F0,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$F8,$00,$00,$FF,$F4,$00,$00,$00,$08,$00,$00
 	dc.b	$FF,$F4,$00,$00,$00,$10,$00,$00,$00,$00,$00,$00,$00,$08,$00,$00
-	dc.b	$00,$08,$00,$00,$FF,$F8,$00,$00,$00,$10,$00,$00
-dat_03F31C:
-	dc.b	$FF,$F4,$00,$00
+	dc.b	$00,$08,$00,$00,$FF,$F8,$00,$00,$00,$10,$00,$00,$FF,$F4,$00,$00
 	dc.b	$00,$08,$00,$00,$FF,$F4,$00,$00,$FF,$F8,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$F0,$00,$00,$00,$0C,$00,$00,$FF,$F8,$00,$00,$00,$0C,$00,$00
-	dc.b	$00,$08,$00,$00,$00,$00,$00,$00,$00,$10,$00,$00
-dat_03F34C:
-	dc.b	$00,$03,$F3,$6C
+	dc.b	$00,$08,$00,$00,$00,$00,$00,$00,$00,$10,$00,$00,$00,$03,$F3,$6C
 	dc.b	$00,$03,$F3,$6C,$00,$03,$F3,$9C,$00,$03,$F3,$9C,$00,$03,$F3,$CC
 	dc.b	$00,$03,$F3,$CC,$00,$03,$F3,$FC,$00,$03,$F3,$FC,$00,$1C,$00,$00
 	dc.b	$FF,$E4,$00,$00,$00,$1C,$00,$00,$FF,$F4,$00,$00,$00,$1C,$00,$00
@@ -47400,7 +60116,9 @@ dat_057C76:
 	dc.b	$23,$24,$25,$26,$27,$28,$29,$4D,$4E,$4F,$50,$51,$52,$53,$0D,$0C
 	dc.b	$91,$2A,$2B,$2C,$2D,$2E,$2F,$30,$31,$32,$33,$54,$55,$56,$57,$58
 	dc.b	$59,$5A,$10,$0C,$87,$34,$35,$36,$37,$38,$39,$3A,$18,$0C,$85,$3B
-	dc.b	$3C,$3D,$3E,$3F,$29,$0C,$00,$00,$00,$10,$00,$00,$00,$11,$00,$00
+	dc.b	$3C,$3D,$3E,$3F,$29,$0C,$00,$00
+dat_057D08:
+	dc.b	$00,$10,$00,$00,$00,$11,$00,$00
 	dc.b	$00,$11,$10,$00,$00,$99,$99,$F0,$00,$99,$9F,$00,$00,$99,$F0,$00
 	dc.b	$00,$9F,$00,$00,$00,$F0,$00,$00
 dat_057D28:
@@ -47887,13 +60605,17 @@ dat_05971A:
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
-	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$11,$11,$11,$11,$FF,$FF
+	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
+dat_05994A:
+	dc.b	$11,$11,$11,$11,$FF,$FF
 	dc.b	$FF,$FF,$33,$33,$33,$33,$23,$23,$23,$23,$32,$32,$32,$32,$22,$22
 	dc.b	$22,$22,$22,$22,$22,$22,$21,$21,$21,$21,$11,$11,$1F,$FF,$FF,$FF
 	dc.b	$1F,$FF,$FF,$FF,$1F,$FF,$FF,$FF,$1F,$FF,$FF,$FF,$1F,$FF,$FF,$FF
 	dc.b	$1F,$FF,$FF,$FF,$1F,$FF,$FF,$FF,$1F,$FF,$11,$11,$11,$11,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$80,$24,$80,$03,$01,$14
+	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+dat_0599AA:
+	dc.b	$80,$24,$80,$03,$01,$14
 	dc.b	$0A,$25,$19,$36,$34,$45,$17,$56,$39,$65,$18,$73,$00,$81,$04,$07
 	dc.b	$14,$09,$27,$6F,$83,$07,$7B,$28,$F4,$84,$04,$08,$16,$35,$37,$79
 	dc.b	$85,$06,$3B,$87,$07,$70,$27,$71,$37,$78,$8A,$07,$74,$8B,$04,$06
@@ -47926,7 +60648,9 @@ dat_05971A:
 	dc.b	$CF,$1E,$AB,$3B,$58,$DB,$A2,$E5,$E1,$A4,$CC,$71,$85,$1C,$17,$A2
 	dc.b	$2B,$D9,$FA,$CA,$00,$7F,$31,$1F,$5F,$E3,$96,$E1,$3F,$A4,$33,$9F
 	dc.b	$AA,$B7,$57,$46,$DA,$75,$55,$BE,$FD,$11,$B1,$B1,$ED,$5E,$62,$4C
-	dc.b	$C7,$18,$51,$C1,$7A,$22,$BD,$80,$00,$0B,$80,$03,$04,$14,$0B,$25
+	dc.b	$C7,$18,$51,$C1,$7A,$22,$BD,$80
+dat_059BB8:
+	dc.b	$00,$0B,$80,$03,$04,$14,$0B,$25
 	dc.b	$1E,$74,$0C,$89,$05,$1D,$17,$7D,$8A,$04,$0A,$15,$1A,$27,$7C,$8B
 	dc.b	$03,$03,$15,$1B,$8F,$02,$00,$13,$02,$25,$1C,$FF,$CC,$CC,$CB,$53
 	dc.b	$90,$DA,$6B,$63,$1A,$D8,$C6,$B5,$CA,$21,$A5,$AE,$68,$A5,$46,$8A
@@ -47960,8 +60684,12 @@ dat_059D34:
 	dc.b	$C9,$82,$37,$34,$41,$B9,$A1,$1F,$DB,$7D,$87,$E9,$BC,$F6,$6D,$FD
 	dc.b	$36,$F2,$5C,$84,$35,$72,$10,$D5,$C8,$43,$F6,$DE,$09,$3C,$9E,$13
 	dc.b	$FB,$F3,$D9,$E4,$77,$BF,$E7,$FF,$84,$78,$8F,$11,$E2,$3C,$47,$88
-	dc.b	$F3,$FE,$3F,$3A,$F5,$EB,$D7,$AF,$7F,$E2,$80,$03,$80,$71,$00,$8E
-	dc.b	$02,$02,$FF,$FF,$F8,$08,$07,$F8,$2F,$D0,$40,$3F,$40,$00,$82,$14
+	dc.b	$F3,$FE,$3F,$3A,$F5,$EB,$D7,$AF,$7F,$E2
+dat_059DBA:
+	dc.b	$80,$03,$80,$71,$00,$8E
+	dc.b	$02,$02,$FF,$FF,$F8,$08,$07,$F8,$2F,$D0,$40,$3F,$40,$00
+dat_059DCE:
+	dc.b	$82,$14
 	dc.b	$80,$03,$00,$14,$04,$25,$10,$35,$18,$46,$34,$56,$36,$67,$76,$76
 	dc.b	$2F,$81,$03,$01,$15,$15,$27,$74,$82,$05,$11,$17,$78,$83,$04,$05
 	dc.b	$16,$32,$27,$75,$38,$F5,$84,$06,$35,$85,$05,$12,$18,$F2,$86,$07
@@ -49430,7 +62158,9 @@ dat_05A32C:
 	dc.b	$31,$11,$11,$11,$11,$11,$31,$11,$13,$11,$11,$11,$11,$13,$13,$11
 	dc.b	$11,$11,$11,$31,$11,$11,$11,$11,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$09,$80,$15,$1A,$55,$1D,$73
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
+dat_05F978:
+	dc.b	$00,$09,$80,$15,$1A,$55,$1D,$73
 	dc.b	$02,$82,$04,$09,$16,$3D,$37,$7D,$84,$17,$7C,$85,$03,$03,$86,$03
 	dc.b	$01,$15,$18,$25,$1C,$87,$04,$08,$14,$0B,$25,$19,$46,$3C,$88,$03
 	dc.b	$00,$14,$0A,$25,$1B,$FF,$49,$7F,$80,$FE,$83,$8F,$F0,$9C,$FD,$A3
@@ -49441,7 +62171,9 @@ dat_05A32C:
 	dc.b	$7B,$5D,$81,$D8,$1D,$81,$D8,$1F,$C0,$98,$13,$F8,$09,$13,$FB,$89
 	dc.b	$D7,$BF,$80,$9F,$D8,$71,$FE,$10,$17,$FB,$42,$3E,$3B,$C0,$FD,$BF
 	dc.b	$28,$C1,$C8,$FE,$14,$11,$F4,$60,$7E,$88,$62,$07,$A0,$D9,$12,$0D
-	dc.b	$98,$A3,$66,$28,$DE,$F5,$B4,$92,$49,$24,$97,$F0,$00,$00,$00,$35
+	dc.b	$98,$A3,$66,$28,$DE,$F5,$B4,$92,$49,$24,$97,$F0,$00,$00
+dat_05FA2E:
+	dc.b	$00,$35
 	dc.b	$80,$05,$17,$15,$18,$25,$1C,$35,$13,$46,$3A,$57,$78,$75,$14,$82
 	dc.b	$03,$02,$15,$19,$28,$F8,$86,$07,$79,$87,$06,$36,$88,$05,$16,$17
 	dc.b	$77,$8C,$05,$15,$8D,$03,$03,$15,$1A,$27,$7A,$8E,$03,$01,$14,$08
@@ -49505,7 +62237,9 @@ dat_05A32C:
 	dc.b	$2D,$95,$96,$16,$CA,$D9,$C6,$6D,$F1,$CF,$D9,$52,$9F,$E0,$F3,$E3
 	dc.b	$CD,$BA,$B2,$B6,$36,$BD,$BE,$3F,$51,$E7,$6C,$ED,$65,$7E,$FE,$55
 	dc.b	$96,$3F,$51,$E7,$38,$5F,$97,$B6,$71,$65,$B5,$B3,$85,$DF,$6C,$E2
-	dc.b	$CB,$65,$65,$85,$B2,$B6,$71,$9B,$7C,$73,$F6,$54,$C0,$00,$00,$0D
+	dc.b	$CB,$65,$65,$85,$B2,$B6,$71,$9B,$7C,$73,$F6,$54,$C0,$00
+dat_05FE2E:
+	dc.b	$00,$0D
 	dc.b	$80,$03,$03,$14,$0D,$25,$19,$35,$1D,$48,$FA,$76,$3D,$85,$04,$0A
 	dc.b	$86,$03,$02,$14,$0B,$25,$1C,$87,$02,$00,$13,$04,$25,$18,$36,$3C
 	dc.b	$47,$7C,$58,$FB,$FF,$F7,$EA,$7A,$76,$33,$3F,$32,$28,$9C,$A8,$8D
@@ -49521,6 +62255,7 @@ dat_05A32C:
 	dc.b	$23,$70,$85,$91,$08,$DF,$2D,$C4,$21,$6E,$1C,$EC,$DF,$34,$62,$C3
 	dc.b	$A1,$0B,$C7,$62,$14,$E4,$52,$CB,$C5,$58,$84,$7E,$57,$82,$2B,$91
 	dc.b	$1C,$9F,$C6,$10,$B0,$8A,$C3,$54,$A3,$A8,$B1,$43,$FF,$3B,$8C,$E8
+dat_05FF20:
 	dc.b	$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11
 	dc.b	$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11,$11
 	dc.b	$00,$00,$00,$00,$E8,$0A,$02,$43,$F4,$F4,$00,$09,$00,$00,$88,$04
@@ -49532,7 +62267,9 @@ dat_05A32C:
 	dc.b	$FF,$BE,$00,$05,$FF,$B4,$00,$05,$FF,$C8,$00,$00,$00,$00,$F4,$0A
 	dc.b	$06,$F0,$F4,$F4,$00,$00,$00,$00,$F8,$05,$06,$F9,$F8,$F8,$00,$00
 	dc.b	$00,$00,$F4,$0A,$0E,$F0,$F4,$F4,$00,$00,$00,$00,$F8,$05,$16,$F9
-	dc.b	$F8,$F8,$00,$90,$81,$05,$11,$17,$69,$28,$DF,$38,$E2,$48,$F0,$58
+	dc.b	$F8,$F8
+dat_05FFD2:
+	dc.b	$00,$90,$81,$05,$11,$17,$69,$28,$DF,$38,$E2,$48,$F0,$58
 	dc.b	$F3,$68,$F5,$77,$6E,$82,$06,$2E,$18,$DE,$83,$07,$6D,$84,$03,$02
 	dc.b	$16,$30,$27,$6A,$37,$74,$48,$EF,$78,$F2,$85,$03,$01,$16,$31,$27
 	dc.b	$72,$38,$EA,$48,$F1,$86,$03,$00
@@ -49756,7 +62493,9 @@ dat_060008:
 	dc.b	$86,$D8,$ED,$D8,$76,$C7,$1D,$9B,$63,$88,$20,$ED,$8E,$23,$11,$B6
 	dc.b	$27,$61,$DB,$12,$08,$23,$6C,$71,$04,$1D,$B1,$F1,$1B,$62,$76,$1D
 	dc.b	$B1,$39,$18,$C1,$FD,$DE,$1A,$60,$F0,$79,$C3,$7E,$1A,$1E,$1C,$50
-	dc.b	$78,$4F,$C3,$B7,$9C,$27,$EB,$0D,$C0,$00,$00,$E8,$81,$07,$6E,$18
+	dc.b	$78,$4F,$C3,$B7,$9C,$27,$EB,$0D,$C0,$00
+dat_060DBA:
+	dc.b	$00,$E8,$81,$07,$6E,$18
 	dc.b	$EB,$82,$05,$15,$18,$E9,$38,$F1,$78,$F4,$83,$05,$12,$17,$72,$84
 	dc.b	$08,$E6,$85,$04,$06,$15,$14,$27,$70,$86,$03,$00,$15,$16,$26,$34
 	dc.b	$38,$ED,$87,$05,$11,$17,$6A,$27,$71,$48,$EF,$78,$EC,$88,$04,$05
@@ -50128,7 +62867,9 @@ dat_060008:
 	dc.b	$30,$A0,$E4,$28,$29,$DB,$4D,$3A,$69,$6A,$09,$5A,$83,$90,$A0,$E5
 	dc.b	$DB,$CB,$48,$A4,$B4,$8B,$C4,$DB,$53,$C5,$D3,$28,$BC,$5C,$1E,$E8
 	dc.b	$E8,$92,$DE,$60,$08,$43,$88,$21,$0C,$0F,$F3,$4A,$6B,$80,$98,$81
-	dc.b	$81,$09,$3C,$46,$21,$0A,$14,$20,$00,$06,$86,$03,$04,$8D,$02,$01
+	dc.b	$81,$09,$3C,$46,$21,$0A,$14,$20
+dat_0624F8:
+	dc.b	$00,$06,$86,$03,$04,$8D,$02,$01
 	dc.b	$13,$05,$24,$0D,$35,$1D,$45,$1E,$77,$7D,$8E,$02,$00,$14,$0C,$25
 	dc.b	$1C,$57,$7C,$FF,$3F,$DB,$1C,$62,$58,$8F,$C4,$85,$1C,$A5,$FC,$B1
 	dc.b	$A5,$27,$EF,$91,$F9,$34,$61,$79,$FD,$D2,$27,$D6,$5C,$44,$4E,$CC
@@ -57572,7 +70313,9 @@ dat_07E0F2:
 	dc.b	$FB,$48,$EC,$7E,$D6,$18,$FE,$73,$49,$FC,$5B,$67,$F1,$DC,$3F,$9D
 	dc.b	$B8,$47,$8E,$E9,$78,$EE,$05,$FB,$77,$10,$FD,$A1,$A5,$8E,$DB,$FB
 	dc.b	$6E,$3D,$B6,$23,$B6,$FA,$E2,$08,$37,$FE,$C6,$E2,$0D,$CD,$FD,$BA
-	dc.b	$E9,$15,$8A,$C7,$EA,$95,$C6,$C0,$80,$24,$80,$03,$00,$13,$01,$25
+	dc.b	$E9,$15,$8A,$C7,$EA,$95,$C6,$C0
+dat_07F5B8:
+	dc.b	$80,$24,$80,$03,$00,$13,$01,$25
 	dc.b	$15,$36,$32,$46,$3A,$55,$16,$67,$79,$75,$1A,$81,$07,$7A,$83,$05
 	dc.b	$12,$17,$77,$84,$05,$13,$85,$07,$7B,$86,$04,$04,$15,$17,$87,$04
 	dc.b	$05,$15,$14,$27,$78,$88,$04,$07,$8B,$04,$06,$15,$18,$8D,$06,$36
@@ -58257,6 +71000,7 @@ dat_0817A0:
 	dc.b	$AF,$1E,$AB,$D7,$7F,$CE,$7B,$F1,$E9,$1C,$1E,$DC,$DC,$EA,$6D,$F9
 	dc.b	$B5,$AB,$EA,$17,$E2,$A9,$97,$8F,$65,$91,$AF,$0B,$7A,$C5,$1F,$C5
 	dc.b	$57,$51,$95,$DD,$B8,$FD,$75,$F3,$6E,$80,$00,$00,$00,$02,$40,$00
+dat_082040:
 	dc.b	$82,$6F,$80,$03,$00,$15,$12,$25,$18,$36,$2E,$46,$2F,$55,$16,$67
 	dc.b	$6B,$74,$06,$81,$03,$01,$15,$15,$27,$6A,$37,$6F,$47,$70,$58,$EE
 	dc.b	$78,$EA,$82,$04,$07,$16,$33,$83,$03,$02,$16,$36,$27,$72,$38,$F2
@@ -58879,7 +71623,9 @@ dat_0817A0:
 	dc.b	$AB,$A9,$99,$8E,$B3,$AF,$A6,$BA,$2B,$7E,$2F,$F1,$4A,$FF,$C5,$83
 	dc.b	$D2,$FF,$C5,$89,$DD,$A9,$A7,$77,$B3,$1B,$B5,$36,$57,$72,$D7,$4B
 	dc.b	$4F,$BA,$9C,$27,$D2,$D3,$E9,$DD,$2F,$FB,$33,$33,$3D,$3F,$6F,$C6
-	dc.b	$7D,$0D,$D1,$2F,$F0,$FF,$D9,$99,$98,$00,$82,$9D,$80,$03,$01,$14
+	dc.b	$7D,$0D,$D1,$2F,$F0,$FF,$D9,$99,$98,$00
+dat_08472A:
+	dc.b	$82,$9D,$80,$03,$01,$14
 	dc.b	$09,$24,$0A,$35,$16,$45,$17,$55,$1B,$66,$39,$74,$06,$81,$03,$02
 	dc.b	$14,$07,$25,$1A,$36,$38,$46,$3B,$58,$F8,$68,$F6,$8E,$04,$08,$15
 	dc.b	$19,$26,$3C,$37,$7A,$8F,$03,$00,$15,$18,$26,$3A,$38,$F7,$FF,$66
@@ -64317,6 +77063,7 @@ dat_086C92:
 	dc.b	$0F,$00,$F0,$F0,$F0,$FF,$0F,$0F,$0F,$00,$00,$00,$F0,$00,$F0,$00
 	dc.b	$F0,$00,$00,$00,$0F,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+dat_099AC0:
 	dc.b	$80,$40,$80,$04,$05,$15,$16,$25,$18,$35,$17,$44,$09,$54,$06,$65
 	dc.b	$19,$73,$00,$81,$04,$04,$82,$07,$78,$83,$04,$08,$16,$3B,$86,$06
 	dc.b	$3A,$87,$06,$36,$88,$06,$37,$8A,$03,$01,$16,$39,$8B,$04,$07,$17
@@ -64370,7 +77117,9 @@ dat_086C92:
 	dc.b	$B7,$2F,$25,$5D,$5F,$1C,$D9,$E5,$D8,$BB,$1C,$A0,$64,$76,$70,$00
 	dc.b	$03,$1F,$AB,$6F,$C8,$9C,$A6,$1D,$21,$5D,$92,$E9,$0A,$F3,$BC,$5D
 	dc.b	$D7,$74,$BA,$3F,$87,$BC,$6F,$25,$7C,$3D,$D2,$19,$CB,$80,$07,$A1
-	dc.b	$94,$C9,$97,$F1,$98,$64,$22,$5E,$19,$3F,$12,$25,$D2,$40,$00,$16
+	dc.b	$94,$C9,$97,$F1,$98,$64,$22,$5E,$19,$3F,$12,$25,$D2,$40
+dat_099E1E:
+	dc.b	$00,$16
 	dc.b	$80,$05,$1D,$16,$3C,$26,$3D,$35,$1B,$44,$08,$55,$18,$65,$1C,$73
 	dc.b	$02,$81,$05,$17,$86,$04,$07,$17,$7C,$87,$04,$06,$88,$04,$09,$89
 	dc.b	$05,$19,$8A,$04,$0A,$18,$FB,$8B,$05,$16,$8F,$02,$00,$15,$1A,$28
@@ -64433,7 +77182,9 @@ dat_086C92:
 	dc.b	$26,$4C,$ED,$26,$7E,$9F,$6D,$FD,$16,$FF,$0B,$B7,$F4,$5B,$6C,$FD
 	dc.b	$3C,$D9,$D8,$93,$6C,$8D,$4C,$56,$2B,$23,$5C,$B1,$27,$F9,$FB,$B7
 	dc.b	$F2,$06,$AB,$F6,$EA,$A3,$F9,$03,$5F,$CF,$DD,$89,$27,$E7,$F5,$3F
-	dc.b	$3B,$7F,$D8,$FE,$67,$F5,$5F,$A9,$F9,$27,$60,$00,$00,$27,$80,$06
+	dc.b	$3B,$7F,$D8,$FE,$67,$F5,$5F,$A9,$F9,$27,$60,$00
+dat_09A20C:
+	dc.b	$00,$27,$80,$06
 	dc.b	$3B,$15,$17,$24,$07,$34,$08,$46,$36,$56,$37,$67,$7B,$73,$01,$82
 	dc.b	$05,$19,$83,$05,$18,$84,$04,$06,$18,$F8,$85,$04,$05,$16,$39,$87
 	dc.b	$05,$16,$18,$F9,$8A,$03,$00,$14,$09,$25,$1A,$36,$3C,$47,$7A,$8B
@@ -64783,7 +77534,9 @@ dat_086C92:
 	dc.b	$00,$33,$23,$A5,$00,$22,$30,$0A,$00,$33,$00,$0A,$00,$00,$00,$0A
 	dc.b	$00,$00,$00,$00,$7A,$A3,$32,$00,$AA,$A3,$22,$00,$4A,$A3,$21,$00
 	dc.b	$7A,$A3,$23,$00,$AA,$A0,$32,$20,$A5,$A0,$03,$30,$45,$A0,$00,$00
-	dc.b	$00,$00,$00,$00,$80,$34,$80,$04,$07,$14,$0A,$25,$1A,$35,$19,$45
+	dc.b	$00,$00,$00,$00
+dat_09B7E4:
+	dc.b	$80,$34,$80,$04,$07,$14,$0A,$25,$1A,$35,$19,$45
 	dc.b	$18,$54,$09,$66,$38,$73,$00,$81,$03,$01,$16,$39,$82,$04,$06,$15
 	dc.b	$17,$27,$79,$83,$06,$37,$84,$07,$76,$18,$F7,$85,$04,$08,$16,$36
 	dc.b	$86,$05,$16,$18,$F8,$87,$03,$02,$16,$3A,$89,$07,$7A,$8A,$07,$77
@@ -64825,7 +77578,9 @@ dat_086C92:
 	dc.b	$3C,$E2,$DC,$E1,$70,$88,$38,$B2,$B4,$FA,$5C,$78,$92,$04,$B0,$EE
 	dc.b	$3B,$80,$00,$03,$8F,$EA,$57,$F5,$6B,$FA,$B5,$FD,$1A,$FE,$BD,$7F
 	dc.b	$48,$0F,$FA,$7F,$D7,$FE,$BF,$F1,$FF,$BF,$FC,$80,$FD,$A6,$7F,$6B
-	dc.b	$9F,$DA,$E7,$F6,$39,$FD,$BE,$40,$80,$14,$80,$35,$1D,$45,$1C,$54
+	dc.b	$9F,$DA,$E7,$F6,$39,$FD,$BE,$40
+dat_09BA88:
+	dc.b	$80,$14,$80,$35,$1D,$45,$1C,$54
 	dc.b	$0C,$65,$1E,$71,$00,$81,$02,$02,$14,$0D,$36,$3E,$FF,$0F,$59,$32
 	dc.b	$64,$00,$65,$96,$59,$07,$BE,$49,$9B,$DD,$E5,$90,$00,$00,$00,$3F
 	dc.b	$41,$F7,$75,$20,$00,$00,$00,$FF,$88,$91,$10,$00,$49,$21,$DF,$BF
@@ -66368,7 +79123,9 @@ dat_086C92:
 	dc.b	$D9,$CB,$39,$72,$E6,$CE,$7B,$76,$DD,$31,$B6,$CE,$E6,$58,$D9,$ED
 	dc.b	$C6,$EC,$6E,$5E,$EF,$6A,$7F,$97,$D5,$68,$B1,$D5,$4C,$CC,$CE,$9F
 	dc.b	$4F,$7D,$CC,$BC,$BD,$DE,$5E,$5A,$9F,$E4,$D9,$E9,$8B,$F7,$41,$F5
-	dc.b	$5D,$97,$0F,$6F,$DD,$EB,$7D,$BE,$9F,$E3,$7D,$FE,$B2,$6E,$80,$39
+	dc.b	$5D,$97,$0F,$6F,$DD,$EB,$7D,$BE,$9F,$E3,$7D,$FE,$B2,$6E
+dat_0A1AFE:
+	dc.b	$80,$39
 	dc.b	$80,$03,$01,$15,$13,$24,$08,$35,$18,$45,$17,$55,$16,$66,$39,$73
 	dc.b	$00,$81,$04,$05,$15,$1A,$28,$F5,$82,$04,$04,$16,$3A,$28,$F2,$83
 	dc.b	$05,$12,$16,$37,$88,$04,$0A,$16,$36,$89,$04,$07,$16,$38,$27,$76
@@ -67502,7 +80259,9 @@ dat_086C92:
 	dc.b	$8F,$70,$6C,$EB,$B1,$68,$78,$2C,$31,$C1,$14,$EC,$45,$10,$A1,$54
 	dc.b	$42,$85,$78,$93,$66,$3C,$1F,$F4,$96,$3D,$CC,$B1,$60,$C8,$41,$8B
 	dc.b	$32,$8A,$1B,$17,$50,$C3,$2D,$05,$91,$1F,$DB,$23,$75,$BA,$DD,$EE
-	dc.b	$F7,$18,$84,$72,$44,$30,$C3,$96,$18,$61,$CB,$0C,$30,$00,$00,$13
+	dc.b	$F7,$18,$84,$72,$44,$30,$C3,$96,$18,$61,$CB,$0C,$30,$00
+dat_0A61DE:
+	dc.b	$00,$13
 	dc.b	$80,$04,$0A,$16,$36,$25,$1A,$36,$3B,$46,$33,$56,$39,$68,$F9,$75
 	dc.b	$16,$81,$04,$09,$16,$37,$82,$03,$02,$16,$3C,$83,$03,$03,$18,$FA
 	dc.b	$84,$07,$7B,$85,$06,$32,$87,$05,$17,$8A,$03,$01,$16,$38,$27,$7A
@@ -69265,6 +82024,7 @@ dat_086C92:
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+dat_0AD000:
 	dc.b	$00,$10,$80,$04,$08,$18,$FA,$27,$7A,$38,$F8,$43,$03,$58,$FB,$76
 	dc.b	$36,$82,$06,$37,$84,$07,$7B,$85,$06,$3C,$15,$1A,$86,$02,$00,$14
 	dc.b	$0B,$26,$38,$35,$1D,$87,$03,$02,$15,$18,$26,$39,$36,$32,$78,$F9
@@ -69283,7 +82043,9 @@ dat_086C92:
 	dc.b	$25,$9F,$E5,$EF,$F1,$CC,$7F,$59,$1C,$F5,$5F,$22,$30,$2C,$EB,$76
 	dc.b	$7F,$97,$BF,$C7,$31,$FD,$64,$73,$D5,$7C,$88,$C0,$B3,$AD,$DA,$A6
 	dc.b	$A9,$8A,$58,$A6,$0F,$58,$92,$0F,$A1,$4C,$10,$42,$98,$20,$FA,$20
-	dc.b	$83,$6F,$40,$00,$00,$5B,$80,$78,$F5,$82,$04,$06,$15,$18,$27,$70
+	dc.b	$83,$6F,$40,$00
+dat_0AD124:
+	dc.b	$00,$5B,$80,$78,$F5,$82,$04,$06,$15,$18,$27,$70
 	dc.b	$85,$04,$07,$16,$32,$27,$75,$37,$74,$48,$F2,$78,$F3,$86,$03,$01
 	dc.b	$15,$17,$26,$36,$37,$71,$78,$F6,$87,$04,$0A,$16,$35,$27,$77,$88
 	dc.b	$04,$09,$16,$33,$27,$73,$37,$78,$8C,$06,$34,$8D,$03,$02,$17,$6E
@@ -69414,6 +82176,7 @@ dat_086C92:
 	dc.b	$FD,$56,$FF,$35,$4F,$F5,$9A,$A5,$F6,$79,$33,$D0,$D4,$D4,$E4,$5E
 	dc.b	$B9,$B9,$73,$AE,$7C,$67,$84,$9C,$BC,$34,$DE,$8D,$1E,$77,$73,$AB
 	dc.b	$4B,$FF,$61,$CF,$EC,$B9,$BF,$87,$97,$32,$64,$CE,$DD,$2F,$90,$00
+dat_0AD950:
 	dc.b	$80,$0C,$80,$03,$02,$14,$0A,$24,$0C,$37,$7C,$45,$1B,$54,$09,$64
 	dc.b	$0B,$73,$00,$81,$05,$1A,$82,$04,$07,$83,$06,$3B,$84,$06,$3D,$85
 	dc.b	$04,$08,$86,$03,$01,$87,$06,$3A,$8A,$04,$06,$16,$3C,$8C,$07,$7D
@@ -69425,7 +82188,9 @@ dat_086C92:
 	dc.b	$2E,$FE,$42,$EA,$7F,$2A,$B5,$30,$B5,$30,$20,$00,$00,$0E,$2C,$D3
 	dc.b	$CF,$DE,$3E,$15,$E7,$1E,$8B,$8A,$62,$05,$1B,$29,$83,$7B,$BF,$39
 	dc.b	$6C,$00,$03,$0D,$95,$E4,$B2,$F7,$7D,$B7,$B9,$AA,$FC,$9F,$CE,$94
-	dc.b	$7C,$FD,$2A,$8F,$68,$00,$81,$B6,$80,$03,$00,$14,$06,$25,$12,$36
+	dc.b	$7C,$FD,$2A,$8F,$68,$00
+dat_0ADA06:
+	dc.b	$81,$B6,$80,$03,$00,$14,$06,$25,$12,$36
 	dc.b	$32,$46,$37,$57,$74,$67,$75,$76,$2E,$81,$03,$01,$15,$15,$27,$73
 	dc.b	$38,$F5,$82,$05,$11,$17,$77,$83,$04,$07,$16,$38,$28,$F2,$84,$06
 	dc.b	$35,$85,$05,$16,$86,$05,$10,$18,$F3,$87,$03,$02,$16,$31,$27,$76
@@ -81630,7 +94395,9 @@ dat_0DD33C:
 	dc.b	$80,$13,$80,$14,$80,$15,$80,$16,$80,$17,$80,$18,$80,$19,$80,$1A
 	dc.b	$80,$1B,$80,$1C,$80,$1D,$80,$1E,$80,$1F,$80,$20,$80,$21,$80,$22
 	dc.b	$80,$23,$80,$24,$80,$25,$80,$26,$80,$27,$80,$28,$80,$29,$80,$2A
-	dc.b	$80,$2B,$80,$2C,$80,$2D,$80,$2E,$80,$2F,$80,$30,$83,$2B,$80,$03
+	dc.b	$80,$2B,$80,$2C,$80,$2D,$80,$2E,$80,$2F,$80,$30
+dat_0DD39C:
+	dc.b	$83,$2B,$80,$03
 	dc.b	$01,$14,$07,$25,$13,$35,$16,$46,$32,$55,$18,$66,$35,$75,$12,$81
 	dc.b	$03,$00,$15,$14,$26,$38,$38,$F1,$82,$04,$06,$17,$75,$83,$04,$04
 	dc.b	$16,$37,$28,$F0,$84,$05,$17,$18,$F2,$85,$05,$15,$18,$F3,$86,$04
@@ -82713,7 +95480,9 @@ dat_0E14E6:
 	dc.b	$03,$0C,$03,$0D,$03,$0E,$03,$0F,$03,$10,$03,$11,$03,$12,$03,$13
 	dc.b	$03,$14,$03,$15,$03,$16,$03,$17,$03,$18,$03,$19,$03,$1A,$03,$1B
 	dc.b	$03,$1C,$03,$1D,$03,$1E,$03,$1F,$03,$20,$03,$21,$03,$22,$03,$23
-	dc.b	$03,$24,$03,$25,$03,$26,$03,$27,$03,$28,$03,$29,$03,$2A,$00,$2F
+	dc.b	$03,$24,$03,$25,$03,$26,$03,$27,$03,$28,$03,$29,$03,$2A
+dat_0E16EE:
+	dc.b	$00,$2F
 	dc.b	$80,$05,$0B,$16,$2A,$25,$11,$35,$16,$45,$14,$55,$0F,$65,$12,$73
 	dc.b	$00,$81,$06,$2F,$16,$36,$27,$71,$82,$05,$10,$17,$7B,$83,$03,$01
 	dc.b	$16,$2B,$27,$72,$58,$F5,$78,$EF,$84,$05,$0A,$16,$26,$28,$F0,$37
@@ -82757,7 +95526,9 @@ dat_0E14E6:
 	dc.b	$FF,$DC,$AB,$B3,$1D,$57,$76,$BA,$8A,$FF,$59,$57,$BD,$76,$81,$A7
 	dc.b	$E2,$AB,$57,$F2,$AB,$BF,$87,$18,$2A,$FE,$1F,$9A,$49,$8F,$EE,$BA
 	dc.b	$76,$99,$68,$00,$02,$E6,$50,$DC,$FA,$DE,$C9,$16,$3C,$89,$2A,$4A
-	dc.b	$00,$09,$00,$00,$80,$DB,$80,$02,$00,$14,$07,$25,$14,$36,$2F,$47
+	dc.b	$00,$09,$00,$00
+dat_0E19A4:
+	dc.b	$80,$DB,$80,$02,$00,$14,$07,$25,$14,$36,$2F,$47
 	dc.b	$6A,$57,$75,$68,$F2,$75,$15,$81,$03,$02,$14,$09,$26,$2E,$37,$78
 	dc.b	$82,$04,$06,$15,$16,$27,$76,$83,$04,$08,$16,$31,$28,$F6,$84,$06
 	dc.b	$36,$18,$EE,$85,$07,$73,$86,$07,$6B,$87,$07,$72,$18,$EF,$88,$07
@@ -83057,7 +95828,9 @@ dat_0E2B86:
 	dc.b	$2C,$1A,$00,$0E,$2C,$2A,$00,$0E,$2C,$3A,$00,$01,$00,$00,$00,$0A
 	dc.b	$00,$E3,$00,$E8,$00,$05,$00,$EC,$18,$D8,$00,$01,$00,$00,$00,$0A
 	dc.b	$00,$F0,$00,$E8,$00,$05,$00,$F9,$18,$D8,$00,$01,$00,$00,$00,$0A
-	dc.b	$00,$FD,$00,$E8,$00,$05,$01,$06,$18,$D8,$80,$2F,$80,$03,$01,$14
+	dc.b	$00,$FD,$00,$E8,$00,$05,$01,$06,$18,$D8
+dat_0E2C4A:
+	dc.b	$80,$2F,$80,$03,$01,$14
 	dc.b	$08,$25,$14,$35,$1A,$45,$15,$55,$0F,$65,$12,$74,$04,$81,$04,$05
 	dc.b	$82,$06,$3B,$83,$05,$16,$84,$06,$36,$85,$05,$1C,$86,$06,$3A,$87
 	dc.b	$03,$00,$16,$3D,$28,$F8,$88,$05,$13,$89,$05,$19,$8A,$04,$06,$8B
@@ -83109,7 +95882,9 @@ dat_0E2B86:
 	dc.b	$05,$2B,$4E,$B6,$B7,$76,$A0,$96,$C8,$92,$72,$22,$22,$24,$9C,$89
 	dc.b	$5E,$B8,$8F,$9C,$AF,$C4,$44,$4B,$BB,$1F,$AC,$C3,$A1,$81,$F2,$4D
 	dc.b	$17,$3E,$50,$43,$66,$FD,$DF,$2C,$67,$B4,$6C,$67,$02,$36,$B5,$27
-	dc.b	$8B,$E2,$77,$00,$00,$92,$80,$08,$F1,$78,$EC,$81,$07,$6C,$82,$06
+	dc.b	$8B,$E2,$77,$00
+dat_0E2F84:
+	dc.b	$00,$92,$80,$08,$F1,$78,$EC,$81,$07,$6C,$82,$06
 	dc.b	$31,$18,$E7,$83,$05,$12,$16,$34,$28,$EB,$84,$04,$06,$16,$30,$28
 	dc.b	$F3,$85,$04,$05,$16,$2F,$38,$F4,$86,$04,$04,$15,$13,$25,$16,$37
 	dc.b	$67,$48,$E8,$58,$E6,$78,$EE,$87,$03,$01,$15,$14,$27,$66,$37,$72
@@ -84057,7 +96832,9 @@ dat_0E5F7E:
 	dc.b	$C4,$6F,$C4,$6F,$C4,$6F,$C4,$6F,$F4,$6A,$F4,$6B,$F4,$6B,$F4,$6B
 	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B
 	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B
-	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$FC,$6A,$C4,$6F,$80,$EC
+	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$FC,$6A,$C4,$6F
+dat_0E683E:
+	dc.b	$80,$EC
 	dc.b	$80,$03,$00,$14,$05,$25,$10,$35,$12,$45,$14,$55,$16,$66,$33,$74
 	dc.b	$06,$81,$06,$2F,$18,$F0,$82,$03,$01,$15,$13,$26,$38,$38,$EE,$48
 	dc.b	$F2,$83,$04,$07,$16,$31,$27,$6E,$38,$EF,$48,$F1,$84,$06,$34,$85
@@ -84324,12 +97101,16 @@ dat_0E5F7E:
 	dc.b	$B5,$AC,$46,$B0,$AD,$FA,$8B,$D7,$5E,$83,$51,$FB,$AF,$CC,$5D,$D0
 	dc.b	$A9,$06,$06,$1C,$54,$DA,$A2,$E1,$5C,$96,$B1,$4C,$84,$6A,$BB,$7E
 	dc.b	$87,$F3,$11,$BF,$51,$BE,$ED,$F7,$25,$D1,$BB,$FE,$7F,$E3,$57,$0E
-	dc.b	$1D,$99,$99,$40,$80,$09,$80,$04,$0C,$24,$0A,$35,$1A,$64,$0B,$71
+	dc.b	$1D,$99,$99,$40
+dat_0E78E4:
+	dc.b	$80,$09,$80,$04,$0C,$24,$0A,$35,$1A,$64,$0B,$71
 	dc.b	$00,$82,$03,$04,$46,$3E,$8C,$35,$1E,$8E,$04,$0E,$15,$1B,$FF,$00
 	dc.b	$FF,$64,$7E,$43,$F9,$DA,$F8,$6F,$FA,$1F,$AE,$F4,$7F,$3A,$BE,$0D
 	dc.b	$FF,$43,$F4,$45,$FE,$30,$57,$B5,$FB,$ED,$7E,$C8,$75,$C0,$41,$7D
 	dc.b	$FA,$C9,$5F,$BE,$FE,$07,$EC,$85,$42,$FF,$39,$02,$FB,$D1,$FE,$EC
-	dc.b	$FB,$61,$9F,$CC,$57,$FB,$B0,$00,$00,$24,$80,$03,$00,$14,$0A,$25
+	dc.b	$FB,$61,$9F,$CC,$57,$FB,$B0,$00
+dat_0E7938:
+	dc.b	$00,$24,$80,$03,$00,$14,$0A,$25
 	dc.b	$19,$36,$38,$45,$1A,$57,$79,$66,$3A,$75,$1B,$82,$04,$09,$85,$03
 	dc.b	$03,$86,$03,$01,$15,$17,$27,$7B,$87,$03,$02,$15,$18,$28,$F8,$88
 	dc.b	$04,$08,$16,$3B,$89,$05,$16,$17,$78,$8C,$07,$7A,$16,$39,$FF,$DE
@@ -84459,7 +97240,9 @@ dat_0E7C4C:
 	dc.b	$F4,$F4,$04,$00,$00,$0E,$80,$F4,$00,$0E,$80,$FE,$00,$0E,$81,$08
 	dc.b	$00,$0E,$81,$12,$00,$00,$00,$00,$F8,$05,$03,$66,$F8,$F8,$00,$00
 	dc.b	$00,$00,$F0,$0F,$03,$6A,$F0,$F0,$00,$00,$00,$00,$F0,$0F,$03,$7A
-	dc.b	$F0,$F0,$00,$00,$00,$00,$F0,$0F,$03,$8A,$F0,$F0,$00,$08,$80,$12
+	dc.b	$F0,$F0,$00,$00,$00,$00,$F0,$0F,$03,$8A,$F0,$F0
+dat_0E811C:
+	dc.b	$00,$08,$80,$12
 	dc.b	$01,$24,$0A,$35,$17,$73,$04,$81,$06,$39,$15,$1D,$25,$16,$86,$05
 	dc.b	$19,$15,$1E,$26,$38,$87,$05,$18,$8F,$02,$00,$15,$1A,$27,$7C,$37
 	dc.b	$7D,$55,$1B,$FF,$91,$DA,$7F,$19,$D7,$05,$16,$28,$B1,$45,$8A,$2C
@@ -84468,7 +97251,9 @@ dat_0E7C4C:
 	dc.b	$1F,$B6,$4F,$DB,$09,$62,$8B,$17,$2C,$5C,$CF,$6B,$E6,$32,$9C,$9F
 	dc.b	$80,$D2,$67,$05,$CF,$63,$49,$83,$F4,$EE,$E4,$9B,$7F,$8C,$3A,$E0
 	dc.b	$B9,$D3,$F8,$07,$23,$B7,$9C,$E0,$BF,$EC,$4A,$31,$9E,$95,$AF,$0F
-	dc.b	$CC,$E0,$7F,$6E,$57,$D9,$70,$00,$82,$13,$80,$03,$00,$14,$05,$24
+	dc.b	$CC,$E0,$7F,$6E,$57,$D9,$70,$00
+dat_0E81A8:
+	dc.b	$82,$13,$80,$03,$00,$14,$05,$24
 	dc.b	$08,$35,$13,$45,$15,$55,$18,$66,$2F,$74,$02,$81,$04,$06,$16,$33
 	dc.b	$27,$76,$82,$05,$16,$18,$F1,$83,$04,$03,$16,$32,$27,$74,$38,$F2
 	dc.b	$84,$06,$2E,$18,$EE,$85,$04,$07,$17,$6F,$28,$F4,$86,$08,$EF,$87
@@ -85135,7 +97920,9 @@ dat_0EA544:
 	dc.b	$A3,$10,$A2,$CC,$A2,$5D,$A1,$82,$A1,$82,$A1,$82,$A1,$82,$A2,$6B
 	dc.b	$A2,$6C,$A3,$11,$A2,$CE,$A3,$12,$A3,$13,$A3,$14,$A3,$15,$A1,$82
 	dc.b	$A1,$82,$A1,$82,$BA,$4A,$A2,$7A,$A2,$7B,$A2,$7C,$A1,$82,$A3,$16
-	dc.b	$A2,$D3,$A3,$17,$A3,$18,$A3,$19,$A3,$1A,$A3,$1B,$A3,$1C,$00,$08
+	dc.b	$A2,$D3,$A3,$17,$A3,$18,$A3,$19,$A3,$1A,$A3,$1B,$A3,$1C
+dat_0EAB2E:
+	dc.b	$00,$08
 	dc.b	$80,$04,$0B,$14,$0C,$25,$1D,$35,$1C,$44,$09,$56,$3E,$74,$0D,$8E
 	dc.b	$03,$02,$14,$08,$25,$1E,$8F,$02,$00,$13,$03,$24,$0A,$FF,$E9,$07
 	dc.b	$08,$24,$46,$3B,$15,$43,$F5,$9F,$BE,$79,$48,$91,$3D,$DB,$A9,$20
@@ -85144,7 +97931,9 @@ dat_0EA544:
 	dc.b	$6E,$CE,$90,$2E,$10,$4D,$7C,$29,$11,$D6,$9D,$BF,$E7,$3F,$A0,$92
 	dc.b	$0E,$27,$26,$FF,$3F,$0F,$E7,$17,$EA,$C3,$D4,$84,$EC,$8B,$3A,$22
 	dc.b	$44,$48,$89,$23,$E7,$A9,$C9,$BB,$FE,$03,$FC,$0A,$B9,$FB,$E3,$BF
-	dc.b	$BF,$E0,$80,$04,$80,$44,$0E,$53,$06,$62,$01,$73,$04,$89,$03,$05
+	dc.b	$BF,$E0
+dat_0EABB2:
+	dc.b	$80,$04,$80,$44,$0E,$53,$06,$62,$01,$73,$04,$89,$03,$05
 	dc.b	$8F,$02,$00,$FF,$92,$26,$2F,$15,$FC,$BF,$1F,$8E,$9F,$86,$98,$FC
 	dc.b	$42,$26,$2C,$C5,$49,$06,$8D,$3B,$F2,$EF,$E3,$8E,$FC,$34,$7F,$10
 	dc.b	$61,$1A,$4D,$4C,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
@@ -90473,9 +103262,7 @@ dat_0FE7A8:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$04,$AA
 	dc.b	$00,$6A,$00,$28,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$0E,$EE
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$04,$C6,$00,$82,$00,$00,$0E,$C8
-	dc.b	$0E,$A6,$0C,$84,$00,$00,$00,$00,$00,$00,$02,$00
-dat_0FF71C:
-	dc.b	$00,$00,$0E,$EE
+	dc.b	$0E,$A6,$0C,$84,$00,$00,$00,$00,$00,$00,$02,$00,$00,$00,$0E,$EE
 	dc.b	$0A,$EE,$08,$CE,$04,$8C,$02,$6A,$00,$48,$00,$46,$00,$24,$0E,$CC
 	dc.b	$0C,$AA,$0A,$88,$08,$66,$06,$44,$04,$22,$00,$00,$0C,$CC,$0E,$EE
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$08,$EE

@@ -46,3 +46,21 @@ offers `Game(rom)` with `step(n, START=True, ...)`, `b/w/l(addr)` RAM reads and 
 | `28` | intro story text |
 | `0C` | gameplay (Mission 1) |
 | `18` | attract-mode demo |
+
+## PC trace (`tools/trace/`)
+
+`mdtrace` runs the ROM on the Musashi 68000 core with just enough Mega Drive hardware (VDP status
+and registers, Z80 bus handshake, joypads, VBlank interrupt) and logs every executed instruction.
+Build and run (Musashi is a separate checkout, not part of this repo):
+
+    git clone --depth 1 https://github.com/kstenerud/musashi ~/musashi
+    MUSASHI=~/musashi tools/trace/build.sh && tools/trace/run_all.sh
+
+* `coverage.cov` - 1 bit per ROM byte: an instruction starts here. `tools/disasm.py` loads it
+  and uses every executed address as a code entry, and reports any that would fall inside a
+  decoded instruction (currently 0 of 15,832).
+* `dataread.map` - 1 bit per ROM byte read as data after boot (the boot-time checksum sweep of
+  the whole ROM is dropped).
+* An autopilot taps Start and mashes buttons; `-types N` snapshots gameplay and forces each of the
+  292 object types onto a free slot for N frames. A run that jumps into data (odd PC, `$200`,
+  zero word, `ori.b #imm,Dn`) is stopped and the instructions just before it are discarded.

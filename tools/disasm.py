@@ -453,7 +453,21 @@ def main():
         hint_code = [int(x, 16) for x in h.get('code', [])]
         for key, kind in (('long_tables', 'l'), ('word_tables', 'w'), ('ptr_tables', 'p')):
             hint_tb += [(int(a, 16), kind, n) for a, n in h.get(key, [])]
+    # executed instruction addresses from tools/trace (mdtrace) are ground-truth code entries
+    trace_path = os.path.join(os.path.dirname(args.hints), 'trace', 'coverage.cov')
+    traced = []
+    if os.path.exists(trace_path):
+        bits = open(trace_path, 'rb').read()
+        traced = [a for a in range(0x200, min(len(bits) * 8, rom.size), 2) if bits[a >> 3] >> (a & 7) & 1]
+        hint_code += traced
     rom.discover(roots, hint_code, hint_tb)
+    if traced:
+        inside = set()
+        for a, ins in rom.code.items():
+            inside.update(range(a + 1, a + ins.n))
+        bad = [a for a in traced if a in inside]
+        print('trace: %d executed instruction addresses, %d fall inside a decoded instruction'
+              % (len(traced), len(bad)))
 
     # symbols for hardware and RAM operands (only addresses the code really uses)
     custom, rom_names = {}, {}
