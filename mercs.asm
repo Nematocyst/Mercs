@@ -191,7 +191,7 @@ ram_C351	equ	$FFFFC351
 ram_C352	equ	$FFFFC352
 ram_C354	equ	$FFFFC354
 ram_C355	equ	$FFFFC355
-Flags_C356	equ	$FFFFC356
+Mode_Flags	equ	$FFFFC356
 ram_C357	equ	$FFFFC357
 ram_C359	equ	$FFFFC359
 ram_C35A	equ	$FFFFC35A
@@ -223,14 +223,14 @@ ram_C504	equ	$FFFFC504
 ram_C508	equ	$FFFFC508
 ram_C50C	equ	$FFFFC50C
 ram_C50E	equ	$FFFFC50E
-ram_C510	equ	$FFFFC510
+HScroll_A	equ	$FFFFC510
 ram_C512	equ	$FFFFC512
 ram_C514	equ	$FFFFC514
 Camera_Y	equ	$FFFFC516
 ram_C51A	equ	$FFFFC51A
 ram_C51E	equ	$FFFFC51E
 ram_C520	equ	$FFFFC520
-ram_C522	equ	$FFFFC522
+VScroll_A	equ	$FFFFC522
 ram_C524	equ	$FFFFC524
 ram_C526	equ	$FFFFC526
 ram_C528	equ	$FFFFC528
@@ -248,13 +248,13 @@ ram_C54A	equ	$FFFFC54A
 ram_C54E	equ	$FFFFC54E
 ram_C552	equ	$FFFFC552
 ram_C554	equ	$FFFFC554
-ram_C556	equ	$FFFFC556
+HScroll_B	equ	$FFFFC556
 ram_C558	equ	$FFFFC558
 ram_C55C	equ	$FFFFC55C
 ram_C560	equ	$FFFFC560
 ram_C564	equ	$FFFFC564
 ram_C566	equ	$FFFFC566
-ram_C568	equ	$FFFFC568
+VScroll_B	equ	$FFFFC568
 ram_C56A	equ	$FFFFC56A
 ram_C56C	equ	$FFFFC56C
 ram_C56E	equ	$FFFFC56E
@@ -348,7 +348,7 @@ ram_C63A	equ	$FFFFC63A
 ram_C63C	equ	$FFFFC63C
 ram_C642	equ	$FFFFC642
 ram_C643	equ	$FFFFC643
-ram_C644	equ	$FFFFC644
+Scroll_Update_Disable	equ	$FFFFC644
 ram_C645	equ	$FFFFC645
 ram_C646	equ	$FFFFC646
 ram_C648	equ	$FFFFC648
@@ -361,9 +361,9 @@ ram_C656	equ	$FFFFC656
 ram_C65A	equ	$FFFFC65A
 ram_C65C	equ	$FFFFC65C
 ram_C65E	equ	$FFFFC65E
-ram_C667	equ	$FFFFC667
+SoundTest_BGM	equ	$FFFFC667
 ram_C668	equ	$FFFFC668
-ram_C669	equ	$FFFFC669
+SoundTest_SE	equ	$FFFFC669
 ram_C66D	equ	$FFFFC66D
 ram_C66F	equ	$FFFFC66F
 ram_C670	equ	$FFFFC670
@@ -441,8 +441,8 @@ ram_DC02	equ	$FFFFDC02
 Objects_A	equ	$FFFFE000
 ram_E002	equ	$FFFFE002
 ram_E003	equ	$FFFFE003
-ram_E004	equ	$FFFFE004
-ram_E008	equ	$FFFFE008
+Player1_X	equ	$FFFFE004
+Player1_Y	equ	$FFFFE008
 ram_E00C	equ	$FFFFE00C
 ram_E00E	equ	$FFFFE00E
 ram_E010	equ	$FFFFE010
@@ -534,8 +534,8 @@ Game_State	equ	$FFFFFE04
 VDP_Reg1_Shadow	equ	$FFFFFE06
 VDP_Status_Copy	equ	$FFFFFE08
 ram_FE0A	equ	$FFFFFE0A
-ram_FE42	equ	$FFFFFE42
-ram_FE44	equ	$FFFFFE44
+Control_Config	equ	$FFFFFE42
+Game_Mode	equ	$FFFFFE44
 ram_FE46	equ	$FFFFFE46
 Hardware_Version	equ	$FFFFFE48
 ram_FE50	equ	$FFFFFE50
@@ -547,8 +547,8 @@ ram_FE60	equ	$FFFFFE60
 ram_FE62	equ	$FFFFFE62
 ram_FE64	equ	$FFFFFE64
 ram_FE80	equ	$FFFFFE80
-ram_FE81	equ	$FFFFFE81
-ram_FE82	equ	$FFFFFE82
+Rapid_Fire	equ	$FFFFFE81
+Difficulty	equ	$FFFFFE82
 ram_FE84	equ	$FFFFFE84
 ram_FE96	equ	$FFFFFE96
 ram_FE9A	equ	$FFFFFE9A
@@ -774,11 +774,11 @@ loc_00036E:
 loc_000370:
 	dbra	d6,loc_00036E
 loc_000374:
-	move.w	#$2,(ram_FE82).w
+	move.w	#$2,(Difficulty).w
 loc_00037A:
 	clr.w	(ram_FE84).w
 loc_00037E:
-	move.b	#$2,(ram_FE81).w
+	move.b	#$2,(Rapid_Fire).w
 loc_000384:
 	lea	(ram_FE96).w,a1
 loc_000388:
@@ -841,10 +841,10 @@ loc_0003FE:
 	bra.b	MainLoop
 GameStateTable:
 	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,sub_000650
-	dc.l	GameState_Title,GameState_Demo,sub_00085A,sub_002D80
+	dc.l	GameState_Title,GameState_Demo,GameState_Options,sub_002D80
 	dc.l	sub_00440E,GameState_Intro,sub_0050FC,sub_00578C
 	dc.l	sub_005D48,GameState_ModeSelect,sub_00666A,sub_006BD2
-	dc.l	sub_006FDE,sub_00798C,sub_006AAE
+	dc.l	sub_006FDE,GameState_OriginalIntro,sub_006AAE
 dat_00044C:
 	dc.b	$00,$20,$00,$00
 	dc.b	$00,$10,$00,$00,$00,$05,$00,$00,$00,$04,$00,$00,$00,$03,$00,$00
@@ -1052,14 +1052,14 @@ loc_0006DE:
 	lea	(ram_C328).w,a1
 	bsr.w	sub_000724
 	subq.w	#$1,(ram_C328).w
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	beq.b	loc_0006FC
 	addq.w	#$7,(ram_C328).w
 	cmpi.w	#$E,(ram_C328).w
 	bhi.b	loc_000716
 loc_0006FC:
 	move.w	#$28,(Game_NextState).w
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	beq.b	loc_00070E
 	move.w	#$34,(Game_NextState).w
 loc_00070E:
@@ -1111,7 +1111,7 @@ sub_00075C:
 	bra.b	loc_0007B0
 loc_000798:
 	moveq	#$7,d0
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	beq.b	loc_0007A2
 	moveq	#$10,d0
 loc_0007A2:
@@ -1167,7 +1167,7 @@ dat_00083E:
 	dc.b	$25,$43,$00,$00,$00,$00,$88,$02,$00,$00,$08,$4E,$A3,$10
 	dc.b	'ROUND    1',0
 	dc.b	$00
-sub_00085A:
+GameState_Options:
 	move.w	#$2700,sr
 loc_00085E:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -1250,9 +1250,9 @@ loc_00091E:
 loc_000924:
 	move.w	#$B0,Obj_Y(a0)
 loc_00092A:
-	move.b	#$1,(ram_C667).w
+	move.b	#$1,(SoundTest_BGM).w
 loc_000930:
-	move.b	#$1,(ram_C669).w
+	move.b	#$1,(SoundTest_SE).w
 loc_000936:
 	move.b	(Joy1_Pressed).w,d6
 loc_00093A:
@@ -1279,7 +1279,7 @@ loc_000966:
 loc_00096A:
 	beq.w	loc_0007EA
 loc_00096E:
-	bchg.b	#$2,(Flags_C356).w
+	bchg.b	#$2,(Mode_Flags).w
 sub_000974:
 	bsr.w	sub_000B7C
 loc_000978:
@@ -1287,7 +1287,7 @@ loc_000978:
 loc_00097E:
 	moveq	#$0,d0
 loc_000980:
-	move.b	(Flags_C356).w,d0
+	move.b	(Mode_Flags).w,d0
 loc_000984:
 	lsr.w	#$1,d0
 loc_000986:
@@ -1295,7 +1295,7 @@ loc_000986:
 loc_00098A:
 	moveq	#$0,d0
 loc_00098C:
-	move.b	(Flags_C356).w,d0
+	move.b	(Mode_Flags).w,d0
 loc_000990:
 	lea	($D6C).l,a2
 loc_000996:
@@ -1307,7 +1307,7 @@ loc_0009A0:
 loc_0009A2:
 	moveq	#$0,d0
 loc_0009A4:
-	move.b	(Flags_C356).w,d0
+	move.b	(Mode_Flags).w,d0
 loc_0009A8:
 	lea	($D6C).l,a2
 loc_0009AE:
@@ -1351,7 +1351,7 @@ loc_0009E0:
 dat_0009E4:
 	dc.b	$03,$66,$03,$74
 loc_0009E8:
-	lea	(ram_FE42).w,a2
+	lea	(Control_Config).w,a2
 loc_0009EC:
 	move.w	(a2),d0
 loc_0009EE:
@@ -1393,7 +1393,7 @@ loc_000A20:
 sub_000A32:
 	moveq	#$0,d0
 loc_000A34:
-	move.b	(ram_FE81).w,d0
+	move.b	(Rapid_Fire).w,d0
 loc_000A38:
 	lea	(dat_000D62).l,a1
 loc_000A3E:
@@ -1415,7 +1415,7 @@ loc_000A7C:
 	moveq	#$34,d1
 loc_000A7E:
 	bsr.w	sub_000B18
-	lea	(ram_C669).w,a1
+	lea	(SoundTest_SE).w,a1
 	lea	(ram_A99C).w,a2
 	bra.w	loc_000B0A
 loc_000A8E:
@@ -1559,7 +1559,7 @@ loc_000B7A:
 sub_000B7C:
 	moveq	#$0,d0
 loc_000B7E:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_000B82:
 	beq.b	loc_000B86
 loc_000B84:
@@ -1604,7 +1604,7 @@ loc_000BCC:
 loc_000BD0:
 	bsr.w	sub_000974
 loc_000BD4:
-	move.w	(ram_FE42).w,d0
+	move.w	(Control_Config).w,d0
 loc_000BD8:
 	bsr.w	sub_000A12
 loc_000BDC:
@@ -2336,7 +2336,7 @@ loc_001504:
 loc_001508:
 	jsr	(Decompress_ToRAM).l
 loc_00150E:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_001512:
 	beq.b	loc_00153C
 loc_001514:
@@ -2519,7 +2519,7 @@ loc_0016BC:
 	bra.b	loc_00168E
 loc_0016BE:
 	move.w	#$20,(Game_NextState).w
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	beq.b	loc_0016D4
 	move.w	#$34,(Game_NextState).w
 	addq.w	#$1,(ram_C328).w
@@ -2535,7 +2535,7 @@ loc_0016DA:
 loc_0016E6:
 	move.w	#$2C,(Game_NextState).w
 loc_0016EC:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0016F0:
 	beq.b	loc_0016F8
 loc_0016F2:
@@ -2549,7 +2549,7 @@ loc_0016FE:
 loc_001704:
 	move.w	#$20,(ram_C348).w
 loc_00170A:
-	move.w	(ram_FE44).w,d0
+	move.w	(Game_Mode).w,d0
 loc_00170E:
 	add.w	d0,d0
 loc_001710:
@@ -2557,7 +2557,7 @@ loc_001710:
 loc_001716:
 	clr.l	(ram_FE50).w
 loc_00171A:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00171E:
 	beq.b	loc_00173C
 loc_001720:
@@ -2618,9 +2618,9 @@ loc_0017C6:
 loc_0017CA:
 	move.l	(a6)+,(ram_C5B4).w
 loc_0017CE:
-	move.w	(a6)+,(ram_E004).w
+	move.w	(a6)+,(Player1_X).w
 loc_0017D2:
-	move.w	(a6)+,(ram_E008).w
+	move.w	(a6)+,(Player1_Y).w
 loc_0017D6:
 	movea.l	(a6)+,a1
 loc_0017D8:
@@ -2630,11 +2630,11 @@ loc_0017DE:
 loc_0017E0:
 	moveq	#$0,d0
 loc_0017E2:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0017E6:
 	beq.b	loc_001804
 loc_0017E8:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_0017EE:
 	beq.b	loc_0017FA
 loc_0017F0:
@@ -2931,7 +2931,7 @@ loc_001A1A:
 	dc.b	$C3,$44,$66,$0E,$31,$F8,$FE,$60,$FE,$44,$31,$F8,$FE,$62,$FE,$42
 	dc.b	$4E,$75,$31,$FC,$00,$01,$FE,$44,$42,$78,$FE,$42,$4E,$75
 loc_001A3E:
-	bsr.w	sub_003442
+	bsr.w	Update_Scroll
 loc_001A42:
 	bsr.w	sub_003522
 loc_001A46:
@@ -2975,7 +2975,7 @@ loc_001A94:
 loc_001A98:
 	bsr.w	sub_001E6A
 loc_001A9C:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_001AA0:
 	beq.b	loc_001AB6
 loc_001AA2:
@@ -3097,7 +3097,7 @@ sub_001B7E:
 loc_001B84:
 	beq.b	loc_001BA0
 loc_001B86:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_001B8A:
 	bne.b	loc_001BA2
 loc_001B8C:
@@ -3416,7 +3416,7 @@ loc_001E90:
 loc_001E94:
 	move.w	#$9180,(VDP_Control).l
 loc_001E9C:
-	tst.b	(ram_C644).w
+	tst.b	(Scroll_Update_Disable).w
 loc_001EA0:
 	beq.b	loc_001EB2
 	move.w	#$8230,(VDP_Control).l
@@ -3560,7 +3560,7 @@ loc_002010:
 loc_002018:
 	move.w	#$918F,(VDP_Control).l
 loc_002020:
-	tst.b	(ram_C644).w
+	tst.b	(Scroll_Update_Disable).w
 loc_002024:
 	beq.b	loc_002036
 	move.w	#$8238,(VDP_Control).l
@@ -3576,7 +3576,7 @@ loc_002044:
 loc_002046:
 	jsr	(sub_00A11A).l
 loc_00204C:
-	bsr.w	sub_003442
+	bsr.w	Update_Scroll
 loc_002050:
 	bsr.w	sub_001A02
 loc_002054:
@@ -3813,7 +3813,7 @@ dat_00239E:
 	dc.b	$82,$83
 	dc.b	$84,$85,$86,$87,$8A,$93,$94,$95,$96,$97,$98,$99,$9A,$9A,$A2,$87
 sub_0023B0:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0023B4:
 	beq.w	loc_00193A
 loc_0023B8:
@@ -4029,10 +4029,10 @@ GameState_Demo:
 	moveq	#$0,d0
 	move.w	#$100,(ram_FE5E).w
 	move.w	#$FFFF,(ram_FE64).w
-	move.w	(ram_FE44).w,(ram_FE60).w
-	move.w	(ram_FE42).w,(ram_FE62).w
-	clr.w	(ram_FE44).w
-	clr.w	(ram_FE42).w
+	move.w	(Game_Mode).w,(ram_FE60).w
+	move.w	(Control_Config).w,(ram_FE62).w
+	clr.w	(Game_Mode).w
+	clr.w	(Control_Config).w
 	move.w	#$2000,sr
 	bsr.w	GameState_Gameplay
 	st.b	(ram_C5C9).w
@@ -4055,8 +4055,8 @@ loc_002CF2:
 	clr.w	(ram_C344).w
 	clr.b	(ram_C5C9).w
 	clr.b	(ram_C5CD).w
-	move.w	(ram_FE60).w,(ram_FE44).w
-	move.w	(ram_FE62).w,(ram_FE42).w
+	move.w	(ram_FE60).w,(Game_Mode).w
+	move.w	(ram_FE62).w,(Control_Config).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
@@ -4205,7 +4205,7 @@ loc_002F1C:
 	lea	(dat_0032B0).l,a1
 	move.w	(a1,d0.w),d0
 	lea	(a1,d0.w),a1
-	move.w	(ram_FE44).w,d0
+	move.w	(Game_Mode).w,d0
 	lsl.w	#$2,d0
 	move.l	(a1,d0.w),(ram_C67C).w
 	moveq	#$5,d0
@@ -4566,36 +4566,36 @@ loc_003438:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_003440:
 	rts
-sub_003442:
-	tst.b	(ram_C644).w
+Update_Scroll:
+	tst.b	(Scroll_Update_Disable).w
 loc_003446:
 	bne.b	loc_00347E
 loc_003448:
 	move.l	#$40000010,(VDP_Control).l
 loc_003452:
-	move.w	(ram_C522).w,(VDP_Data).l
+	move.w	(VScroll_A).w,(VDP_Data).l
 loc_00345A:
-	move.w	(ram_C568).w,(VDP_Data).l
+	move.w	(VScroll_B).w,(VDP_Data).l
 loc_003462:
 	move.l	#$50000003,(VDP_Control).l
 loc_00346C:
-	move.w	(ram_C510).w,(VDP_Data).l
+	move.w	(HScroll_A).w,(VDP_Data).l
 loc_003474:
-	move.w	(ram_C556).w,(VDP_Data).l
+	move.w	(HScroll_B).w,(VDP_Data).l
 loc_00347C:
 	rts
 loc_00347E:
 	move.l	#$40000010,(VDP_Control).l
 loc_003488:
-	move.w	(ram_C568).w,(VDP_Data).l
+	move.w	(VScroll_B).w,(VDP_Data).l
 loc_003490:
-	move.w	(ram_C522).w,(VDP_Data).l
+	move.w	(VScroll_A).w,(VDP_Data).l
 loc_003498:
 	move.l	#$50000003,(VDP_Control).l
 loc_0034A2:
-	move.w	(ram_C556).w,(VDP_Data).l
+	move.w	(HScroll_B).w,(VDP_Data).l
 loc_0034AA:
-	move.w	(ram_C510).w,(VDP_Data).l
+	move.w	(HScroll_A).w,(VDP_Data).l
 loc_0034B2:
 	rts
 sub_0034B4:
@@ -4614,7 +4614,7 @@ loc_0034BC:
 	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$40000010,(VDP_Control).l
-	move.w	(ram_C522).w,(VDP_Data).l
+	move.w	(VScroll_A).w,(VDP_Data).l
 	rts
 loc_00350A:
 	lea	(HW_Port1_Data).l,a0
@@ -6483,9 +6483,9 @@ loc_00542A:
 loc_00542C:
 	bset.b	#$2,Obj_Flags(a0)
 loc_005432:
-	move.w	(ram_E004).w,Obj_X(a0)
+	move.w	(Player1_X).w,Obj_X(a0)
 loc_005438:
-	move.w	(ram_E008).w,Obj_Y(a0)
+	move.w	(Player1_Y).w,Obj_Y(a0)
 loc_00543E:
 	rts
 loc_005440:
@@ -6852,7 +6852,7 @@ loc_005950:
 loc_005956:
 	bne.b	loc_005984
 loc_005958:
-	cmpi.w	#$320,(ram_C522).w
+	cmpi.w	#$320,(VScroll_A).w
 loc_00595E:
 	bcs.b	loc_005966
 loc_005960:
@@ -6868,7 +6868,7 @@ loc_005974:
 loc_00597A:
 	add.l	d0,Obj_AnimPtr(a0)
 loc_00597E:
-	move.w	Obj_AnimPtr(a0),(ram_C522).w
+	move.w	Obj_AnimPtr(a0),(VScroll_A).w
 loc_005984:
 	subq.w	#$1,Obj_Timer(a0)
 loc_005988:
@@ -7741,7 +7741,7 @@ dat_0064F0:
 dat_0064F6:
 	dc.b	$00,$10,$00,$10,$00,$1C
 sub_0064FC:
-	move.w	(ram_FE82).w,d0
+	move.w	(Difficulty).w,d0
 loc_006500:
 	lsr.w	#$1,d0
 loc_006502:
@@ -7749,7 +7749,7 @@ loc_006502:
 loc_006506:
 	lsr.w	#$1,d1
 loc_006508:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00650C:
 	beq.b	loc_006512
 loc_00650E:
@@ -7757,7 +7757,7 @@ loc_00650E:
 loc_006510:
 	move.w	d1,d0
 loc_006512:
-	move.w	d0,(ram_FE44).w
+	move.w	d0,(Game_Mode).w
 loc_006516:
 	rts
 sub_006518:
@@ -7789,7 +7789,7 @@ loc_006546:
 loc_00654A:
 	bne.b	loc_006554
 loc_00654C:
-	bclr.b	#$2,(Flags_C356).w
+	bclr.b	#$2,(Mode_Flags).w
 loc_006552:
 	rts
 loc_006554:
@@ -7797,7 +7797,7 @@ loc_006554:
 loc_006556:
 	bne.b	loc_00655E
 loc_006558:
-	bset.b	#$2,(Flags_C356).w
+	bset.b	#$2,(Mode_Flags).w
 loc_00655E:
 	rts
 sub_006560:
@@ -7935,7 +7935,7 @@ loc_0066AA:
 loc_0066AE:
 	lea	(ram_FEB2).w,a2
 loc_0066B2:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0066B6:
 	beq.b	loc_0066C0
 loc_0066B8:
@@ -7967,7 +7967,7 @@ loc_0066DA:
 	lea	(ram_FEB2).w,a4
 	lea	(ram_FEB8).w,a5
 	lea	(ram_FEB9).w,a6
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	beq.b	loc_006700
 	lea	(ram_FED2).w,a3
 	lea	(ram_FED6).w,a4
@@ -8077,7 +8077,7 @@ loc_0067D2:
 loc_0067D8:
 	lea	(ram_FEB2).w,a5
 loc_0067DC:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0067E0:
 	beq.b	loc_0067E6
 loc_0067E2:
@@ -8117,7 +8117,7 @@ loc_00681A:
 loc_00681C:
 	lea	(ram_FE96).w,a1
 loc_006820:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_006824:
 	beq.b	loc_00682A
 loc_006826:
@@ -8135,7 +8135,7 @@ loc_00683A:
 loc_00683C:
 	lea	(ram_FE9A).w,a1
 loc_006840:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_006844:
 	beq.b	loc_00684A
 loc_006846:
@@ -8153,7 +8153,7 @@ loc_00685A:
 loc_00685C:
 	lea	(ram_FE9E).w,a1
 loc_006860:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_006864:
 	beq.b	loc_00686A
 loc_006866:
@@ -8171,7 +8171,7 @@ loc_00687A:
 loc_00687C:
 	lea	(ram_FEA2).w,a1
 loc_006880:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_006884:
 	beq.b	loc_00688A
 loc_006886:
@@ -8189,7 +8189,7 @@ loc_00689A:
 loc_00689C:
 	lea	(ram_FEA6).w,a1
 loc_0068A0:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0068A4:
 	beq.b	loc_0068AA
 loc_0068A6:
@@ -8207,7 +8207,7 @@ loc_0068BA:
 loc_0068BC:
 	lea	(ram_FEAA).w,a1
 loc_0068C0:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0068C4:
 	beq.b	loc_0068CA
 loc_0068C6:
@@ -8225,7 +8225,7 @@ loc_0068DA:
 loc_0068DC:
 	lea	(ram_FEAE).w,a1
 loc_0068E0:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0068E4:
 	beq.b	loc_0068EA
 loc_0068E6:
@@ -8994,7 +8994,7 @@ loc_007242:
 loc_007246:
 	rts
 loc_007248:
-	bsr.w	sub_003442
+	bsr.w	Update_Scroll
 	bsr.w	sub_003522
 	bsr.w	sub_001AB8
 	bsr.w	sub_002350
@@ -9116,7 +9116,7 @@ dat_00725A:
 	dc.b	$05,$43,$18,$E0,$00,$05,$00,$00,$00,$01,$05,$43,$00,$F8,$00,$01
 	dc.b	$05,$45,$08,$F0,$00,$01,$05,$47,$10,$E8,$00,$01,$05,$53,$18,$E0
 	dc.b	$00,$00,$05,$53,$20,$D8,$08,$00,$05,$55,$20,$D8
-sub_00798C:
+GameState_OriginalIntro:
 	move.w	#$2700,sr
 loc_007990:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -9177,7 +9177,7 @@ loc_007A1E:
 loc_007A24:
 	jsr	(sub_0084CA).l
 loc_007A2A:
-	addi.l	#$4000,(ram_C522).w
+	addi.l	#$4000,(VScroll_A).w
 loc_007A32:
 	bsr.w	sub_007A62
 loc_007A36:
@@ -9283,7 +9283,7 @@ loc_007B18:
 loc_007B1A:
 	bsr.w	sub_003522
 loc_007B1E:
-	bsr.w	sub_003442
+	bsr.w	Update_Scroll
 loc_007B22:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_007B28:
@@ -9417,7 +9417,7 @@ loc_007E54:
 loc_007E58:
 	bsr.w	sub_008226
 loc_007E5C:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_007E60:
 	bne.b	loc_007E68
 loc_007E62:
@@ -9526,7 +9526,7 @@ loc_007F34:
 loc_007F3A:
 	rts
 sub_007F3C:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_007F40:
 	bne.w	loc_007FDC
 loc_007F44:
@@ -9710,7 +9710,7 @@ loc_0080CA:
 	beq.b	loc_0080FA
 	move.w	(ram_C34A).w,d1
 	add.w	d0,d1
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	bne.b	loc_0080DE
 	moveq	#$8,d2
 	bra.w	loc_0080EC
@@ -9973,9 +9973,9 @@ sub_008438:
 	move.w	Obj_VelY(a0),d1
 	bra.w	loc_008454
 sub_008444:
-	move.w	(ram_E004).w,d0
+	move.w	(Player1_X).w,d0
 loc_008448:
-	move.w	(ram_E008).w,d1
+	move.w	(Player1_Y).w,d1
 loc_00844C:
 	sub.w	Obj_X(a0),d0
 loc_008450:
@@ -10483,7 +10483,7 @@ loc_008768:
 loc_00876C:
 	beq.b	loc_00878C
 loc_00876E:
-	move.w	(ram_FE42).w,d2
+	move.w	(Control_Config).w,d2
 loc_008772:
 	beq.b	loc_00878C
 loc_008774:
@@ -11523,7 +11523,7 @@ loc_008ECE:
 loc_008ED2:
 	move.w	(a1,d1.w),d0
 loc_008ED6:
-	move.b	d0,(ram_C644).w
+	move.b	d0,(Scroll_Update_Disable).w
 loc_008EDA:
 	lea	(dat_008F7A).l,a2
 loc_008EE0:
@@ -11834,8 +11834,8 @@ loc_00937C:
 loc_00937E:
 	bset.b	#$0,(Flags_C5EB).w
 	bset.b	#$0,(ram_C5FE).w
-	clr.w	(ram_C556).w
-	clr.w	(ram_C568).w
+	clr.w	(HScroll_B).w
+	clr.w	(VScroll_B).w
 	rts
 dat_009394:
 	dc.b	$00,$00,$94,$1C,$00,$00,$94,$28,$00,$00,$94,$2C
@@ -12600,7 +12600,7 @@ loc_009FC8:
 loc_009FCC:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_009FD4:
-	jsr	(sub_003442).l
+	jsr	(Update_Scroll).l
 loc_009FDA:
 	bsr.w	InitVDP
 loc_009FDE:
@@ -12721,7 +12721,7 @@ sub_00A0C6:
 loc_00A0CA:
 	bne.b	loc_00A116
 loc_00A0CC:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00A0D0:
 	bne.b	loc_00A116
 loc_00A0D2:
@@ -13474,7 +13474,7 @@ loc_00A50C:
 loc_00A510:
 	bsr.w	sub_00A82E
 loc_00A514:
-	move.w	d4,(ram_C510).w
+	move.w	d4,(HScroll_A).w
 loc_00A518:
 	swap	d3
 loc_00A51A:
@@ -13562,7 +13562,7 @@ loc_00A5A6:
 loc_00A5AA:
 	bsr.w	sub_00A824
 loc_00A5AE:
-	move.w	d4,(ram_C522).w
+	move.w	d4,(VScroll_A).w
 loc_00A5B2:
 	swap	d3
 loc_00A5B4:
@@ -13642,7 +13642,7 @@ loc_00A634:
 loc_00A638:
 	bsr.w	sub_00A82E
 loc_00A63C:
-	move.w	d4,(ram_C556).w
+	move.w	d4,(HScroll_B).w
 loc_00A640:
 	swap	d3
 loc_00A642:
@@ -13722,7 +13722,7 @@ loc_00A6C2:
 loc_00A6C6:
 	bsr.w	sub_00A824
 loc_00A6CA:
-	move.w	d4,(ram_C568).w
+	move.w	d4,(VScroll_B).w
 loc_00A6CE:
 	swap	d3
 loc_00A6D0:
@@ -14080,11 +14080,11 @@ loc_00A8C4:
 loc_00A8C8:
 	moveq	#$0,d7
 loc_00A8CA:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00A8CE:
 	beq.b	loc_00A8EC
 loc_00A8D0:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00A8D6:
 	beq.b	loc_00A8E2
 loc_00A8D8:
@@ -14150,11 +14150,11 @@ loc_00A926:
 loc_00A928:
 	moveq	#$0,d7
 loc_00A92A:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00A92E:
 	beq.b	loc_00A94C
 loc_00A930:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00A936:
 	beq.b	loc_00A942
 loc_00A938:
@@ -14228,11 +14228,11 @@ loc_00A996:
 loc_00A998:
 	moveq	#$0,d7
 loc_00A99A:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00A99E:
 	beq.b	loc_00A9BC
 loc_00A9A0:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00A9A6:
 	beq.b	loc_00A9B2
 loc_00A9A8:
@@ -14310,11 +14310,11 @@ loc_00AA0A:
 loc_00AA0C:
 	moveq	#$0,d7
 loc_00AA0E:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00AA12:
 	beq.b	loc_00AA30
 loc_00AA14:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00AA1A:
 	beq.b	loc_00AA26
 	addq.w	#$1,a1
@@ -14389,11 +14389,11 @@ loc_00AAA6:
 loc_00AAAA:
 	moveq	#$0,d7
 loc_00AAAC:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00AAB0:
 	beq.b	loc_00AACE
 loc_00AAB2:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00AAB8:
 	beq.b	loc_00AAC4
 loc_00AABA:
@@ -14461,11 +14461,11 @@ loc_00AB0A:
 loc_00AB0C:
 	moveq	#$0,d7
 loc_00AB0E:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00AB12:
 	beq.b	loc_00AB30
 loc_00AB14:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_00AB1A:
 	beq.b	loc_00AB26
 loc_00AB1C:
@@ -14774,7 +14774,7 @@ loc_00AD4A:
 loc_00AD50:
 	lea	(Objects_B).w,a4
 loc_00AD54:
-	move.w	(ram_FE44).w,d0
+	move.w	(Game_Mode).w,d0
 loc_00AD58:
 	add.w	d0,d0
 loc_00AD5A:
@@ -14885,13 +14885,13 @@ loc_00AF2E:
 	rts
 sub_00AF30:
 	bsr.w	sub_00E234
-	cmp.w	(ram_E004).w,d4
+	cmp.w	(Player1_X).w,d4
 	bhi.b	loc_00AF2C
-	cmp.w	(ram_E004).w,d5
+	cmp.w	(Player1_X).w,d5
 	bcs.b	loc_00AF2C
-	cmp.w	(ram_E008).w,d6
+	cmp.w	(Player1_Y).w,d6
 	bhi.b	loc_00AF2C
-	cmp.w	(ram_E008).w,d7
+	cmp.w	(Player1_Y).w,d7
 	bcs.b	loc_00AF2C
 	moveq	#$1,d1
 	rts
@@ -15092,9 +15092,9 @@ loc_00B118:
 loc_00B11E:
 	move.w	#$FF01,(ram_E01C).w
 loc_00B124:
-	move.l	(ram_E004).w,(ram_C694).w
+	move.l	(Player1_X).w,(ram_C694).w
 loc_00B12A:
-	move.l	(ram_E008).w,(ram_C698).w
+	move.l	(Player1_Y).w,(ram_C698).w
 loc_00B130:
 	moveq	#$0,d0
 loc_00B132:
@@ -15512,7 +15512,7 @@ sub_00B462:
 	adda.w	d0,a2
 	rts
 sub_00B490:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00B494:
 	beq.w	loc_00BC26
 loc_00B498:
@@ -15715,14 +15715,14 @@ loc_00B634:
 	beq.b	loc_00B65A
 	cmpi.w	#$F,(ram_C328).w
 	bne.b	loc_00B646
-	addq.w	#$4,(ram_E008).w
+	addq.w	#$4,(Player1_Y).w
 	bra.w	loc_00B64C
 loc_00B646:
-	move.w	#$140,(ram_E008).w
+	move.w	#$140,(Player1_Y).w
 loc_00B64C:
 	cmpi.w	#$C,(ram_C328).w
 	bne.b	loc_00B65A
-	move.w	#$F8,(ram_E004).w
+	move.w	#$F8,(Player1_X).w
 loc_00B65A:
 	move.w	(ram_C36E).w,d0
 loc_00B65E:
@@ -15758,13 +15758,13 @@ loc_00B6A2:
 loc_00B6A6:
 	lea	(ram_C5B0).w,a1
 loc_00B6AA:
-	move.w	(a1)+,(ram_C510).w
+	move.w	(a1)+,(HScroll_A).w
 loc_00B6AE:
-	move.w	(a1)+,(ram_C522).w
+	move.w	(a1)+,(VScroll_A).w
 loc_00B6B2:
-	move.w	(a1)+,(ram_C556).w
+	move.w	(a1)+,(HScroll_B).w
 loc_00B6B6:
-	move.w	(a1)+,(ram_C568).w
+	move.w	(a1)+,(VScroll_B).w
 loc_00B6BA:
 	bset.b	#$1,(ram_C5C8).w
 loc_00B6C0:
@@ -15886,21 +15886,21 @@ sub_00B7CE:
 sub_00B812:
 	lea	(ram_C5B0).w,a1
 loc_00B816:
-	move.w	(ram_C510).w,(a1)+
+	move.w	(HScroll_A).w,(a1)+
 loc_00B81A:
-	move.w	(ram_C522).w,(a1)+
+	move.w	(VScroll_A).w,(a1)+
 loc_00B81E:
-	move.w	(ram_C556).w,(a1)+
+	move.w	(HScroll_B).w,(a1)+
 loc_00B822:
-	move.w	(ram_C568).w,(a1)+
+	move.w	(VScroll_B).w,(a1)+
 loc_00B826:
-	clr.w	(ram_C510).w
+	clr.w	(HScroll_A).w
 loc_00B82A:
-	clr.w	(ram_C522).w
+	clr.w	(VScroll_A).w
 loc_00B82E:
-	clr.w	(ram_C556).w
+	clr.w	(HScroll_B).w
 loc_00B832:
-	clr.w	(ram_C568).w
+	clr.w	(VScroll_B).w
 loc_00B836:
 	jmp	(sub_00D94C).l
 sub_00B83C:
@@ -18232,9 +18232,9 @@ loc_00D1B0:
 	dc.b	$08,$E8,$00,$02,$00,$02,$4E,$75,$21,$7C,$00,$03,$87,$DA,$00,$18
 	dc.b	$60,$00,$70,$46
 loc_00D204:
-	move.w	(ram_E004).w,Obj_X(a0)
+	move.w	(Player1_X).w,Obj_X(a0)
 loc_00D20A:
-	move.w	(ram_E008).w,Obj_Y(a0)
+	move.w	(Player1_Y).w,Obj_Y(a0)
 loc_00D210:
 	rts
 loc_00D212:
@@ -18260,7 +18260,7 @@ loc_00D22E:
 loc_00D234:
 	st.b	(ram_C357).w
 loc_00D238:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_00D23C:
 	bne.w	loc_00D290
 loc_00D240:
@@ -18412,7 +18412,7 @@ loc_00D398:
 loc_00D3E0:
 	lea	(ram_C5A8).w,a1
 	move.b	(a1)+,d0
-	tst.b	(ram_FE81).w
+	tst.b	(Rapid_Fire).w
 	beq.b	loc_00D3EE
 	move.b	(a1)+,d0
 loc_00D3EE:
@@ -19594,7 +19594,7 @@ loc_00DE7A:
 loc_00DE7E:
 	move.b	(a1)+,d0
 loc_00DE80:
-	tst.b	(ram_FE81).w
+	tst.b	(Rapid_Fire).w
 loc_00DE84:
 	beq.b	loc_00DE90
 loc_00DE86:
@@ -21504,9 +21504,9 @@ loc_00F240:
 loc_00F242:
 	move.w	(a1)+,d3
 loc_00F244:
-	move.w	(ram_E004).w,Obj_X(a0)
+	move.w	(Player1_X).w,Obj_X(a0)
 loc_00F24A:
-	move.w	(ram_E008).w,Obj_Y(a0)
+	move.w	(Player1_Y).w,Obj_Y(a0)
 loc_00F250:
 	add.w	d2,Obj_X(a0)
 loc_00F254:
@@ -21645,9 +21645,9 @@ loc_00F362:
 loc_00F366:
 	bclr.b	#$2,Obj_Flags(a0)
 loc_00F36C:
-	move.l	(ram_E004).w,Obj_X(a0)
+	move.l	(Player1_X).w,Obj_X(a0)
 loc_00F372:
-	move.l	(ram_E008).w,Obj_Y(a0)
+	move.l	(Player1_Y).w,Obj_Y(a0)
 loc_00F378:
 	moveq	#$0,d0
 loc_00F37A:
@@ -21790,9 +21790,9 @@ loc_00F49A:
 loc_00F49C:
 	rts
 sub_00F49E:
-	move.w	(ram_E004).w,d0
+	move.w	(Player1_X).w,d0
 loc_00F4A2:
-	move.w	(ram_E008).w,d1
+	move.w	(Player1_Y).w,d1
 loc_00F4A6:
 	move.w	Obj_Timer(a0),d2
 loc_00F4AA:
@@ -22737,9 +22737,9 @@ loc_00FF58:
 loc_00FF5E:
 	move.b	#$18,(ram_E020).w
 loc_00FF64:
-	move.l	(ram_C694).w,(ram_E004).w
+	move.l	(ram_C694).w,(Player1_X).w
 loc_00FF6A:
-	move.l	(ram_C698).w,(ram_E008).w
+	move.l	(ram_C698).w,(Player1_Y).w
 loc_00FF70:
 	move.b	#$E0,(ram_E022).w
 loc_00FF76:
@@ -22854,7 +22854,7 @@ loc_010096:
 loc_01009A:
 	move.w	(a1)+,Obj_Y(a0)
 loc_01009E:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0100A2:
 	beq.b	loc_0100BE
 loc_0100A4:
@@ -23151,7 +23151,7 @@ loc_0103C6:
 	dc.b	$51,$CF,$FF,$EA,$4E,$75
 sub_0103E6:
 	bsr.w	sub_0104A6
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 	bne.b	loc_0103FE
 	moveq	#$0,d0
 	lea	(ram_E040).w,a1
@@ -23207,8 +23207,8 @@ sub_0104A6:
 	clr.l	(ram_C54A).w
 	clr.l	(ram_C558).w
 	clr.l	(ram_C55C).w
-	clr.w	(ram_C556).w
-	clr.w	(ram_C568).w
+	clr.w	(HScroll_B).w
+	clr.w	(VScroll_B).w
 	rts
 sub_0104C0:
 	bset.b	#$0,Obj_Flags(a0)
@@ -24068,7 +24068,7 @@ loc_0111F2:
 loc_0111F8:
 	swap	d1
 loc_0111FA:
-	move.w	d1,(ram_C556).w
+	move.w	d1,(HScroll_B).w
 loc_0111FE:
 	move.l	Obj_Y(a0),d1
 loc_011202:
@@ -24080,7 +24080,7 @@ loc_01120C:
 loc_01120E:
 	neg.w	d1
 loc_011210:
-	move.w	d1,(ram_C568).w
+	move.w	d1,(VScroll_B).w
 loc_011214:
 	rts
 sub_011216:
@@ -24099,10 +24099,10 @@ loc_011236:
 	beq.b	loc_011282
 	move.l	(ram_C546).w,d1
 	bsr.w	sub_00A82E
-	move.w	d4,(ram_C556).w
+	move.w	d4,(HScroll_B).w
 	move.l	(ram_C558).w,d1
 	bsr.w	sub_00A824
-	move.w	d4,(ram_C568).w
+	move.w	d4,(VScroll_B).w
 	lea	(dat_04416C).l,a1
 	moveq	#$0,d0
 	moveq	#$0,d1
@@ -24883,13 +24883,13 @@ loc_011C76:
 loc_011C7A:
 	add.l	d0,Obj_AnimPtr(a0)
 loc_011C7E:
-	move.w	Obj_AnimPtr(a0),(ram_C556).w
+	move.w	Obj_AnimPtr(a0),(HScroll_B).w
 loc_011C84:
 	add.l	(ram_C51A).w,d1
 loc_011C88:
 	add.l	d1,Obj_AnimTimer(a0)
 loc_011C8C:
-	move.w	Obj_AnimTimer(a0),(ram_C568).w
+	move.w	Obj_AnimTimer(a0),(VScroll_B).w
 loc_011C92:
 	tst.b	$20(a0)
 loc_011C96:
@@ -25160,7 +25160,7 @@ loc_011FA6:
 	move.b	#$40,$2F(a0)
 	move.w	#$4,Obj_State(a0)
 	move.b	#$6,$3B(a0)
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 	sub.w	Obj_Y(a0),d0
 	bcc.b	loc_011FE0
 	moveq	#$1,d0
@@ -25383,12 +25383,12 @@ loc_01229A:
 	addi.l	#$FFFFF800,d0
 	move.l	d0,(ram_C634).w
 	swap	d0
-	add.w	d0,(ram_C522).w
+	add.w	d0,(VScroll_A).w
 	rts
 loc_0122B0:
 	addq.w	#$4,$28(a0)
 	move.w	(ram_C634).w,d0
-	add.w	d0,(ram_C522).w
+	add.w	d0,(VScroll_A).w
 	rts
 sub_0122BE:
 	moveq	#$0,d0
@@ -25655,8 +25655,8 @@ loc_0125A2:
 	cmpi.w	#$24,(ram_E028).w
 	bne.b	loc_0125EA
 	bsr.w	sub_00E1FE
-	move.l	(ram_E004).w,$4(a0)
-	move.l	(ram_E008).w,$8(a0)
+	move.l	(Player1_X).w,$4(a0)
+	move.l	(Player1_Y).w,$8(a0)
 sub_0125CC:
 	move.b	(ram_E020).w,d0
 loc_0125D0:
@@ -25706,7 +25706,7 @@ loc_01264E:
 loc_012650:
 	sub.l	d0,Obj_AnimPtr(a0)
 loc_012654:
-	move.w	Obj_AnimPtr(a0),(ram_C556).w
+	move.w	Obj_AnimPtr(a0),(HScroll_B).w
 loc_01265A:
 	move.l	(ram_C51A).w,d1
 loc_01265E:
@@ -25714,7 +25714,7 @@ loc_01265E:
 loc_012660:
 	add.l	d1,Obj_AnimTimer(a0)
 loc_012664:
-	move.w	Obj_AnimTimer(a0),(ram_C568).w
+	move.w	Obj_AnimTimer(a0),(VScroll_B).w
 loc_01266A:
 	rts
 sub_01266C:
@@ -26346,7 +26346,7 @@ loc_012C82:
 	move.l	d1,(ram_C512).w
 	move.l	d3,(Camera_Y).w
 	jsr	(sub_00A824).l
-	move.w	d4,(ram_C522).w
+	move.w	d4,(VScroll_A).w
 	tst.b	$20(a0)
 	bne.b	loc_012CCA
 	lea	(ram_D000).w,a1
@@ -26433,7 +26433,7 @@ loc_012D96:
 	dc.b	$00,$5C,$60,$00,$00,$74,$60,$00,$00,$94,$60,$00,$00,$B4,$60,$00
 	dc.b	$00,$C8
 loc_012DB2:
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 loc_012DB6:
 	moveq	#$28,d1
 loc_012DB8:
@@ -26653,8 +26653,8 @@ loc_01306C:
 	btst.b	#$0,(ram_E003).w
 	bne.w	loc_011B36
 	bsr.w	sub_00E1FE
-	move.l	(ram_E004).w,Obj_X(a0)
-	move.l	(ram_E008).w,Obj_Y(a0)
+	move.l	(Player1_X).w,Obj_X(a0)
+	move.l	(Player1_Y).w,Obj_Y(a0)
 loc_01308E:
 	rts
 sub_013090:
@@ -26823,7 +26823,7 @@ loc_013296:
 loc_01329C:
 	move.b	#$4,$3D(a0)
 loc_0132A2:
-	tst.b	(Flags_C356).w
+	tst.b	(Mode_Flags).w
 loc_0132A6:
 	beq.b	loc_0132B4
 loc_0132A8:
@@ -26852,7 +26852,7 @@ loc_0132DE:
 	bra.w	loc_0132EA
 	dc.b	$60,$00,$00,$26,$60,$00,$00,$46
 loc_0132EA:
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 loc_0132EE:
 	sub.w	Obj_Y(a0),d0
 loc_0132F2:
@@ -26995,7 +26995,7 @@ loc_013492:
 	bra.w	loc_01349E
 	dc.b	$60,$00,$00,$20,$60,$00,$00,$20
 loc_01349E:
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 loc_0134A2:
 	sub.w	Obj_Y(a0),d0
 loc_0134A6:
@@ -27458,7 +27458,7 @@ loc_013996:
 	bsr.w	sub_0113F4
 	bra.w	sub_014220
 sub_0139A6:
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 loc_0139AA:
 	sub.w	Obj_Y(a0),d0
 loc_0139AE:
@@ -27500,8 +27500,8 @@ loc_0139FC:
 	move.l	(Camera_Y).w,(ram_C55C).w
 	move.l	(ram_C500).w,(ram_C546).w
 	move.l	(ram_C512).w,(ram_C558).w
-	move.w	(ram_C510).w,(ram_C556).w
-	move.w	(ram_C522).w,(ram_C568).w
+	move.w	(HScroll_A).w,(HScroll_B).w
+	move.w	(VScroll_A).w,(VScroll_B).w
 	bset.b	#$0,(ram_C5FE).w
 	bclr.b	#$0,(Flags_C5EB).w
 	bra.w	sub_014220
@@ -27579,7 +27579,7 @@ loc_013AD0:
 loc_013AD2:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_013AD8:
-	move.w	(ram_E008).w,Obj_AnimPtr(a0)
+	move.w	(Player1_Y).w,Obj_AnimPtr(a0)
 loc_013ADE:
 	moveq	#$0,d0
 loc_013AE0:
@@ -29256,7 +29256,7 @@ loc_016284:
 loc_016288:
 	lea	dat_0162E4(pc),a1
 loc_01628C:
-	move.w	(ram_FE44).w,d1
+	move.w	(Game_Mode).w,d1
 loc_016290:
 	cmpi.w	#$2,d1
 loc_016294:
@@ -32209,7 +32209,7 @@ loc_018830:
 loc_018834:
 	move.w	d0,d1
 loc_018836:
-	sub.w	(ram_E008).w,d1
+	sub.w	(Player1_Y).w,d1
 loc_01883A:
 	cmp.w	$2E(a0),d1
 loc_01883E:
@@ -33467,7 +33467,7 @@ loc_01AD06:
 	dc.b	$70,$07,$45,$F8,$F6,$60
 	dc.b	$60,$14
 sub_01AD12:
-	move.w	(ram_FE44).w,d1
+	move.w	(Game_Mode).w,d1
 loc_01AD16:
 	add.w	d1,d1
 loc_01AD18:
@@ -33516,7 +33516,7 @@ sub_01AD58:
 loc_01AD5C:
 	bra.b	loc_01AD6C
 sub_01AD5E:
-	move.w	(ram_FE44).w,d1
+	move.w	(Game_Mode).w,d1
 loc_01AD62:
 	add.w	d1,d1
 loc_01AD64:
@@ -33886,9 +33886,9 @@ loc_01B024:
 loc_01B028:
 	subi.w	#$80,d1
 loc_01B02C:
-	add.w	(ram_C568).w,d0
+	add.w	(VScroll_B).w,d0
 loc_01B030:
-	sub.w	(ram_C556).w,d1
+	sub.w	(HScroll_B).w,d1
 loc_01B034:
 	lsr.w	#$2,d1
 loc_01B036:
@@ -34386,20 +34386,20 @@ loc_01B3DC:
 	move.l	(ram_C508).w,d0
 	sub.l	d0,(ram_C234).w
 	move.w	(ram_C234).w,d0
-	move.w	d0,(ram_C556).w
+	move.w	d0,(HScroll_B).w
 	move.l	(ram_C51A).w,d0
 	add.l	d0,(ram_C238).w
 	move.w	(ram_C238).w,d0
-	move.w	d0,(ram_C568).w
+	move.w	d0,(VScroll_B).w
 loc_01B3FE:
 	rts
 loc_01B400:
 	clr.l	(a0)
 	rts
 loc_01B404:
-	clr.w	(ram_C556).w
+	clr.w	(HScroll_B).w
 loc_01B408:
-	clr.w	(ram_C568).w
+	clr.w	(VScroll_B).w
 loc_01B40C:
 	clr.l	(ram_C234).w
 loc_01B410:
@@ -34734,7 +34734,7 @@ loc_01B786:
 loc_01B78A:
 	addq.w	#$8,d0
 loc_01B78C:
-	sub.w	(ram_E008).w,d0
+	sub.w	(Player1_Y).w,d0
 loc_01B790:
 	bgt.b	loc_01B7E8
 loc_01B792:
@@ -34816,7 +34816,7 @@ loc_01B830:
 loc_01B834:
 	addq.w	#$8,d0
 loc_01B836:
-	sub.w	(ram_E008).w,d0
+	sub.w	(Player1_Y).w,d0
 loc_01B83A:
 	bgt.b	loc_01B898
 loc_01B83C:
@@ -37249,7 +37249,7 @@ loc_01D8D6:
 loc_01D8E2:
 	move.l	#$4000,d1
 loc_01D8E8:
-	move.w	(ram_E004).w,d0
+	move.w	(Player1_X).w,d0
 loc_01D8EC:
 	sub.w	$4(a0),d0
 loc_01D8F0:
@@ -41229,8 +41229,8 @@ loc_022D6A:
 loc_022D7E:
 	bset.b	#$0,Obj_Flags(a0)
 	bne.b	loc_022DEC
-	clr.w	(ram_C556).w
-	clr.w	(ram_C568).w
+	clr.w	(HScroll_B).w
+	clr.w	(VScroll_B).w
 	clr.l	(ram_C234).w
 	clr.l	(ram_C238).w
 	move.l	#$FFF70000,Obj_Y(a0)
@@ -41375,7 +41375,7 @@ loc_02307C:
 loc_023080:
 	move.w	(ram_C238).w,d0
 loc_023084:
-	move.w	d0,(ram_C568).w
+	move.w	d0,(VScroll_B).w
 loc_023088:
 	jsr	(sub_01B048).l
 loc_02308E:
@@ -42653,7 +42653,7 @@ loc_0251E4:
 	bne.b	loc_02521C
 	tst.b	$2B(a0)
 	bne.b	loc_02520E
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 	subi.w	#$20,d0
 	cmpi.w	#$120,d0
 	bge.b	loc_02520A
@@ -42754,7 +42754,7 @@ loc_0252CA:
 	bne.b	loc_025302
 	tst.b	$2B(a0)
 	bne.b	loc_0252F4
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 	subi.w	#$10,d0
 	cmpi.w	#$120,d0
 	bge.b	loc_0252F0
@@ -42858,7 +42858,7 @@ loc_0253B8:
 	bne.b	loc_0253F0
 	tst.b	$2B(a0)
 	bne.b	loc_0253E2
-	move.w	(ram_E008).w,d0
+	move.w	(Player1_Y).w,d0
 	subi.w	#$20,d0
 	cmpi.w	#$120,d0
 	bge.b	loc_0253DE
@@ -44824,7 +44824,7 @@ loc_0275EE:
 loc_0275F4:
 	bge.b	loc_02761A
 	move.w	Obj_Y(a0),d0
-	sub.w	(ram_E008).w,d0
+	sub.w	(Player1_Y).w,d0
 	bpl.b	loc_027602
 	neg.w	d0
 loc_027602:
@@ -45318,7 +45318,7 @@ loc_0280C4:
 loc_0280C8:
 	move.w	$A(a0),d0
 loc_0280CC:
-	clr.w	(ram_C568).w
+	clr.w	(VScroll_B).w
 loc_0280D0:
 	clr.w	(ram_C238).w
 loc_0280D4:
@@ -45336,7 +45336,7 @@ loc_0280E8:
 loc_0280EC:
 	swap	d0
 loc_0280EE:
-	move.w	d0,(ram_C556).w
+	move.w	d0,(HScroll_B).w
 loc_0280F2:
 	clr.w	$52(a0)
 loc_0280F6:
@@ -45402,7 +45402,7 @@ loc_0281A8:
 loc_0281AC:
 	move.w	(ram_C234).w,d0
 loc_0281B0:
-	move.w	d0,(ram_C556).w
+	move.w	d0,(HScroll_B).w
 loc_0281B4:
 	move.l	(ram_C51A).w,d0
 loc_0281B8:
@@ -45410,7 +45410,7 @@ loc_0281B8:
 loc_0281BC:
 	move.w	(ram_C238).w,d0
 loc_0281C0:
-	move.w	d0,(ram_C568).w
+	move.w	d0,(VScroll_B).w
 loc_0281C4:
 	jsr	(sub_01B048).l
 loc_0281CA:
@@ -46360,7 +46360,7 @@ loc_029366:
 	move.w	#$424,(a0)
 	jsr	sub_022106(pc)
 	moveq	#$0,d6
-	move.w	(ram_FE44).w,d6
+	move.w	(Game_Mode).w,d6
 	subq.w	#$3,d6
 	andi.w	#$1,d6
 	lsl.w	#$3,d6
@@ -46427,7 +46427,7 @@ ObjData_02949C:
 	dc.b	$00,$96,$00,$96
 	dc.b	$00,$96,$00,$FA,$00,$C8,$00,$C8,$00,$C8,$01,$2C
 sub_0294AC:
-	move.w	(ram_FE44).w,d0
+	move.w	(Game_Mode).w,d0
 	subq.w	#$3,d0
 	lsl.w	#$3,d0
 	adda.w	d0,a2
@@ -46458,7 +46458,7 @@ loc_0294F8:
 	lea	dat_029682(pc),a2
 	bsr.w	sub_0294AC
 	move.w	#$C8,d1
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 	beq.b	loc_02951A
 	move.w	#$FA,d1
 loc_02951A:
@@ -47321,7 +47321,7 @@ sub_02A598:
 	clr.b	$22(a0)
 	move.b	#$53,$36(a0)
 	move.w	#$28A,$38(a0)
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 	beq.b	loc_02A5CC
 	move.w	#$2EE,$38(a0)
 loc_02A5CC:
@@ -47363,7 +47363,7 @@ loc_02A618:
 	lea	(ram_F000).w,a1
 	move.l	#$2ACFA,$54(a1)
 	move.w	#$4B0,$38(a1)
-	cmpi.b	#$3,(ram_FE44).w
+	cmpi.b	#$3,(Game_Mode).w
 	beq.b	loc_02A682
 	move.l	#$2AD02,$54(a1)
 	move.w	#$578,$38(a1)
@@ -47386,7 +47386,7 @@ sub_02A6A8:
 	move.b	#$0,$22(a0)
 	move.b	#$53,$36(a0)
 	move.w	#$15E,$38(a0)
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 	beq.b	loc_02A6E6
 	move.w	#$190,$38(a0)
 loc_02A6E6:
@@ -47936,7 +47936,7 @@ loc_02B29C:
 	move.b	#$1,Obj_AnimTimer(a0)
 	movea.l	a0,a3
 	moveq	#$0,d6
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 	beq.b	loc_02B2CC
 	moveq	#$8,d6
 loc_02B2CC:
@@ -48099,7 +48099,7 @@ loc_02B550:
 loc_02B554:
 	moveq	#$5,d1
 loc_02B556:
-	cmpi.w	#$3,(ram_FE44).w
+	cmpi.w	#$3,(Game_Mode).w
 loc_02B55C:
 	beq.b	loc_02B560
 loc_02B55E:
@@ -48236,7 +48236,7 @@ loc_02B68C:
 loc_02B68E:
 	clr.b	Obj_State(a0)
 loc_02B692:
-	move.w	(ram_E004).w,d0
+	move.w	(Player1_X).w,d0
 loc_02B696:
 	sub.w	Obj_X(a0),d0
 loc_02B69A:
@@ -49345,7 +49345,7 @@ loc_02C9A2:
 loc_02C9A6:
 	lea	dat_02CB04(pc),a2
 loc_02C9AA:
-	cmpi.w	#$4,(ram_FE44).w
+	cmpi.w	#$4,(Game_Mode).w
 loc_02C9B0:
 	beq.b	loc_02C9BA
 loc_02C9B2:

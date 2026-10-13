@@ -116,3 +116,22 @@ instruction that loads `a0` with something else (15,410 instructions). Evidence 
 
 `tools/emu/field_profile.py` prints, per field, the immediates the code writes and how the field behaves
 across all active objects at runtime (distinct values, counts down/up by 1, stays put).
+
+## RAM names (evidence)
+
+Verified in the emulator or by decoding VDP commands (see `_notes` in `tools/names.json` for every name):
+
+| Variable | Evidence |
+|---|---|
+| `Game_State` `$FE04`, `Game_NextState` `$C5A2` | state flow logged with screenshots; state `08` is a hub |
+| `Joy1_Held/Pressed` `$C300/1`, `Joy2_*` `$C302/3` | `ReadJoypads`; bits B `$10`, C `$20`, Right `$08`, Start `$80` |
+| `RNG_Seed` `$C312` | seeded with `$2A6D365A`; changes every gameplay frame |
+| `DMA_Trigger_Word` `$C318` | final DMA command word is written from RAM |
+| `VScroll_A/B` `$C522/$C568`, `HScroll_A/B` `$C510/$C556` | written by `Update_Scroll` to VSRAM (`$40000010`) and the VRAM scroll table `$D000` (`$50000003`) |
+| `Game_Mode` `$FE44` | menu choice: ARCADE sets 1, ORIGINAL sets 3 |
+| `Difficulty` `$FE82` | `$FE83` 2 -> 4 when LEVEL changes; boot value 2 |
+| `Control_Config` `$FE42`, `Rapid_Fire` `$FE81`, `Mode_Flags` `$C356` (bit 2 = Original) | each changes when its Options row changes |
+| `SoundTest_BGM/SE` `$C667/$C669` | follow the numbers on the Options screen |
+| `Player1_X/Y` `$E004/$E008` | `Objects_A[0]` follows pad 1 |
+
+`tools/emu/ram_profile.py` ranks unnamed variables and shows how each one behaves while the game runs.
