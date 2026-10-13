@@ -38,6 +38,7 @@ for f in range(9000):
         continue
     g.step(1, START=((f % 100) < 6 and st not in (0, 4, 8)))
 g.step(200)
+if os.environ.get('LOAD_STATE'): g.env.em.set_state(open(os.environ['LOAD_STATE'], 'rb').read())
 ARR = [('A', 0xE000, 0x40, 52), ('B', 0xED00, 0x60, 25), ('C', 0xF660, 0x40, 22)]
 prev = {}; first = {}; count = collections.Counter(); pending = []
 random.seed(5); pad = {}; had_play = False
@@ -97,7 +98,7 @@ for fr in range(frames):
         visited[pos_cell()] += 1
         pad = {k: True for k in choose()}; pad['B'] = True
     elif explore:
-        pass
+        pad['C'] = (fr % 20) < 10            # grenades break fences / crates that bullets cannot
     elif fr % 15 == 0:
         pad = {'UP': random.random() < 0.8, 'LEFT': random.random() < 0.3, 'RIGHT': random.random() < 0.3,
                'DOWN': random.random() < 0.1, 'B': random.random() < 0.7, 'C': random.random() < 0.4, 'A': random.random() < 0.2}
@@ -111,6 +112,8 @@ for fr in range(frames):
         continue
     had_play = True
     g.step(1, **pad)
+    if os.environ.get('SNAP_EVERY') and fr % int(os.environ['SNAP_EVERY']) == 0:
+        g.save_png(os.path.join(out, 'snap_%05d.png' % fr))
     if g.w(0xFFFE04) != 0x0C and not original:
         break
     for nm, base, stride, n in ARR:
