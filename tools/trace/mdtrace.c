@@ -24,6 +24,18 @@ static int vblank, vint_pending, busreq, vdp_reg1, cmd_pending;
 static uint8_t io_data[3] = {0x7F, 0x7F, 0x7F}, io_ctrl[3];
 static unsigned buttons[2];                         /* UP=1 DOWN=2 LEFT=4 RIGHT=8 B=10 C=20 A=40 START=80 */
 static unsigned long frame_instr, total_instr;
+#define MAXW 8
+static unsigned watch_lo[MAXW], watch_hi[MAXW]; static int nwatch, watch_logged[MAXW]; static long cur_frame;
+static unsigned ramw(unsigned a);
+static void watch_hit(unsigned a, unsigned size, unsigned v) {
+    for (int i = 0; i < nwatch; i++)
+        if ((a & 0xFFFFFF) + size > watch_lo[i] && (a & 0xFFFFFF) <= watch_hi[i] && watch_logged[i] < 400) {
+            watch_logged[i]++;
+            printf("W %06X.%c = %0*X  pc=%06X  frame %ld  Game_State %02X\n", a & 0xFFFFFF, size == 1 ? 'b' : size == 2 ? 'w' : 'l',
+                   size * 2, v, m68k_get_reg(NULL, M68K_REG_PPC), cur_frame, ramw(0xFE04));
+        }
+}
+
 
 /* Derailment: the game jumped into data. Detected by an odd PC, execution outside ROM, the error
  * trap at $200, a zero opcode word, or "ori.b #imm,Dn" (pointer tables like 0003xxxx decode as
@@ -130,15 +142,17 @@ unsigned m68k_read_disassembler_8(unsigned a)  { return rd8(a, 0); }
 unsigned m68k_read_disassembler_16(unsigned a) { return m68k_read_immediate_16(a); }
 unsigned m68k_read_disassembler_32(unsigned a) { return m68k_read_immediate_32(a); }
 
-void m68k_write_memory_8(unsigned a, unsigned v) { wr8(a, v); }
+void m68k_write_memory_8(unsigned a, unsigned v) { if (nwatch) watch_hit(a, 1, v & 0xFF); wr8(a, v); }
 void m68k_write_memory_16(unsigned a, unsigned v) {
     unsigned x = a & 0xFFFFFF;
+    if (nwatch) watch_hit(a, 2, v & 0xFFFF);
     if (x == 0xA11100) { busreq = (v >> 8) & 1; return; }
     if (x >= 0xC00000 && x < 0xC00020 && ((x & 0x1F) == 4 || (x & 0x1F) == 6)) { vdp_ctrl_word(v & 0xFFFF); return; }
     wr8(a, v >> 8); wr8(a + 1, v);
 }
 void m68k_write_memory_32(unsigned a, unsigned v) {
     unsigned x = a & 0xFFFFFF;
+    if (nwatch) watch_hit(a, 4, v);
     if (x >= 0xC00000 && x < 0xC00020 && (x & 0x1F) == 4) { vdp_ctrl_word(v >> 16); vdp_ctrl_word(v & 0xFFFF); return; }
     m68k_write_memory_16(a, v >> 16); m68k_write_memory_16(a + 2, v & 0xFFFF);
 }
@@ -157,6 +171,8 @@ int main(int argc, char **argv) {
         if (!strcmp(argv[i], "-v")) verbose = 1;
         else if (!strcmp(argv[i], "-types") && i + 1 < argc) type_frames = atoi(argv[++i]);
         else if (!strcmp(argv[i], "-maxtype") && i + 1 < argc) type_max = atoi(argv[++i]);
+        else if (!strcmp(argv[i], "-watch") && i + 1 < argc && nwatch < MAXW) {   /* -watch FFC328[-FFC32B] */
+            char *e; watch_lo[nwatch] = strtoul(argv[++i], &e, 16); watch_hi[nwatch] = *e == '-' ? strtoul(e + 1, NULL, 16) : watch_lo[nwatch]; nwatch++; }
         else if (!strcmp(argv[i], "-probe") && i + 1 < argc) { probe_file = argv[++i]; type_frames = 1; }
     }
     m68k_init(); m68k_set_cpu_type(M68K_CPU_TYPE_68000); m68k_pulse_reset();
@@ -166,6 +182,7 @@ int main(int argc, char **argv) {
     int have_snap = 0, snap_busreq = 0, snap_reg1 = 0;
     unsigned snap_rng = 0;
     for (long fr = 0; fr < frames; fr++) {
+        cur_frame = fr;
         unsigned st = ramw(0xFE04);
         if (st != last_state) { if (verbose) { long nd = 0; for (unsigned i = 0; i < sizeof dread; i++) for (int b = 0; b < 8; b++) nd += (dread[i] >> b) & 1;
                                     printf("frame %6ld  Game_State %02X  Game_NextState %02X  rom bytes read as data so far %ld\n", fr, st, ramw(0xC5A2), nd); }

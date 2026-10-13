@@ -61,6 +61,8 @@ Build and run (Musashi is a separate checkout, not part of this repo):
   decoded instruction (currently 0 of 15,832).
 * `dataread.map` - 1 bit per ROM byte read as data after boot (the boot-time checksum sweep of
   the whole ROM is dropped).
+* `-watch FFC328[-FFC32B]` (up to 8) logs every write to a RAM range with the writing instruction, value and
+  Game_State, which shows who owns a variable (it showed that `$FDC0..` is the stack).
 * An autopilot taps Start and mashes buttons; `-types N` snapshots gameplay and forces each of the
   292 object types onto a free slot for N frames. A run that jumps into data (odd PC, `$200`,
   zero word, `ori.b #imm,Dn`) is stopped and the instructions just before it are discarded.

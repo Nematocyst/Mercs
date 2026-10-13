@@ -225,9 +225,9 @@ ram_C50C	equ	$FFFFC50C
 ram_C50E	equ	$FFFFC50E
 HScroll_A	equ	$FFFFC510
 ram_C512	equ	$FFFFC512
-ram_C514	equ	$FFFFC514
+Camera_Y_Frac	equ	$FFFFC514
 Camera_Y	equ	$FFFFC516
-ram_C51A	equ	$FFFFC51A
+Camera_VelY	equ	$FFFFC51A
 ram_C51E	equ	$FFFFC51E
 ram_C520	equ	$FFFFC520
 VScroll_A	equ	$FFFFC522
@@ -843,7 +843,7 @@ GameStateTable:
 	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,sub_000650
 	dc.l	GameState_Title,GameState_Demo,GameState_Options,sub_002D80
 	dc.l	sub_00440E,GameState_Intro,sub_0050FC,sub_00578C
-	dc.l	sub_005D48,GameState_ModeSelect,sub_00666A,sub_006BD2
+	dc.l	GameState_MissionMap,GameState_ModeSelect,sub_00666A,sub_006BD2
 	dc.l	sub_006FDE,GameState_OriginalIntro,sub_006AAE
 dat_00044C:
 	dc.b	$00,$20,$00,$00
@@ -7083,7 +7083,7 @@ dat_005BBC:
 	dc.b	'PRESENTED',0
 	dc.b	$42,$59
 	dc.b	$00,$00,$53,$45,$47,$41,$00,$00
-sub_005D48:
+GameState_MissionMap:
 	move.w	#$2700,sr
 loc_005D4C:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -8935,7 +8935,7 @@ sub_00719C:
 	ext.w	d0
 	cmpi.b	#$68,(a1)+
 	beq.b	loc_0071BE
-	move.w	d0,(ram_C51A).w
+	move.w	d0,(Camera_VelY).w
 	move.w	d0,(ram_C560).w
 	bra.w	loc_0071C6
 loc_0071BE:
@@ -8968,7 +8968,7 @@ loc_0071EC:
 	dbra	d7,loc_0071EC
 sub_007218:
 	clr.l	(ram_C508).w
-	clr.l	(ram_C51A).w
+	clr.l	(Camera_VelY).w
 	clr.l	(ram_C54E).w
 	clr.l	(ram_C560).w
 	rts
@@ -13520,7 +13520,7 @@ loc_00A566:
 loc_00A56C:
 	rts
 sub_00A56E:
-	move.l	(ram_C51A).w,d0
+	move.l	(Camera_VelY).w,d0
 loc_00A572:
 	beq.w	loc_00A834
 loc_00A576:
@@ -14000,7 +14000,7 @@ loc_00A84C:
 loc_00A850:
 	swap	d3
 loc_00A852:
-	move.w	(ram_C514).w,d3
+	move.w	(Camera_Y_Frac).w,d3
 loc_00A856:
 	move.w	(ram_C520).w,d1
 loc_00A85A:
@@ -14358,7 +14358,7 @@ loc_00AA70:
 loc_00AA74:
 	move.w	(ram_C520).w,d0
 loc_00AA78:
-	tst.l	(ram_C51A).w
+	tst.l	(Camera_VelY).w
 loc_00AA7C:
 	beq.w	loc_00AB9E
 loc_00AA80:
@@ -14566,7 +14566,7 @@ loc_00ABA2:
 loc_00ABA4:
 	swap	d4
 loc_00ABA6:
-	tst.w	(ram_C51A).w
+	tst.w	(Camera_VelY).w
 loc_00ABAA:
 	bmi.b	loc_00ABC0
 	sub.l	d3,d4
@@ -15850,7 +15850,7 @@ sub_00B75E:
 loc_00B78A:
 	cmpi.w	#$F,(ram_C328).w
 	beq.b	loc_00B7AA
-	move.l	#$FFF00000,(ram_C51A).w
+	move.l	#$FFF00000,(Camera_VelY).w
 	cmpi.w	#$9,(ram_C328).w
 	beq.b	loc_00B7AA
 	move.l	#$FFF00000,(ram_C560).w
@@ -18715,7 +18715,7 @@ loc_00D76E:
 loc_00D796:
 	sub.w	d2,(ram_C560).w
 loc_00D79A:
-	sub.w	d2,(ram_C51A).w
+	sub.w	d2,(Camera_VelY).w
 loc_00D79E:
 	rts
 	dc.b	$95,$78,$C5,$1A,$30,$02,$08,$38,$00,$01,$C5,$EB,$66,$02,$E2,$40
@@ -18906,7 +18906,7 @@ loc_00D94A:
 sub_00D94C:
 	clr.l	(ram_C508).w
 loc_00D950:
-	clr.l	(ram_C51A).w
+	clr.l	(Camera_VelY).w
 loc_00D954:
 	clr.l	(ram_C54E).w
 loc_00D958:
@@ -19414,7 +19414,7 @@ loc_00DD06:
 loc_00DD08:
 	move.l	d3,(ram_C560).w
 loc_00DD0C:
-	move.l	d3,(ram_C51A).w
+	move.l	d3,(Camera_VelY).w
 loc_00DD10:
 	rts
 	dc.b	$08,$38,$00,$02,$C5,$EB,$66,$8E,$21,$C3,$C5,$1A,$20,$03
@@ -19473,7 +19473,7 @@ loc_00DD7E:
 loc_00DDC2:
 	move.l	d4,(ram_C560).w
 loc_00DDC6:
-	move.l	d4,(ram_C51A).w
+	move.l	d4,(Camera_VelY).w
 loc_00DDCA:
 	rts
 loc_00DDCC:
@@ -19490,7 +19490,7 @@ loc_00DDEC:
 	moveq	#$0,d4
 	rts
 loc_00DDF0:
-	move.l	d4,(ram_C51A).w
+	move.l	d4,(Camera_VelY).w
 	move.l	d4,d0
 	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00DE00
@@ -20011,7 +20011,7 @@ loc_00E266:
 loc_00E268:
 	move.w	d0,$6(a0)
 loc_00E26C:
-	move.w	(ram_C514).w,d0
+	move.w	(Camera_Y_Frac).w,d0
 loc_00E270:
 	neg.w	d0
 loc_00E272:
@@ -24064,7 +24064,7 @@ loc_0111FA:
 loc_0111FE:
 	move.l	Obj_Y(a0),d1
 loc_011202:
-	sub.l	(ram_C51A).w,d1
+	sub.l	(Camera_VelY).w,d1
 loc_011206:
 	subi.l	#$800000,d1
 loc_01120C:
@@ -24877,7 +24877,7 @@ loc_011C7A:
 loc_011C7E:
 	move.w	Obj_AnimPtr(a0),(HScroll_B).w
 loc_011C84:
-	add.l	(ram_C51A).w,d1
+	add.l	(Camera_VelY).w,d1
 loc_011C88:
 	add.l	d1,Obj_AnimTimer(a0)
 loc_011C8C:
@@ -25700,7 +25700,7 @@ loc_012650:
 loc_012654:
 	move.w	Obj_AnimPtr(a0),(HScroll_B).w
 loc_01265A:
-	move.l	(ram_C51A).w,d1
+	move.l	(Camera_VelY).w,d1
 loc_01265E:
 	asr.l	#$1,d1
 loc_012660:
@@ -27978,7 +27978,7 @@ loc_013FBA:
 loc_013FC0:
 	bne.b	loc_013FC6
 loc_013FC2:
-	sub.l	(ram_C51A).w,d2
+	sub.l	(Camera_VelY).w,d2
 loc_013FC6:
 	btst.b	#$5,Obj_Flags(a0)
 loc_013FCC:
@@ -28028,7 +28028,7 @@ loc_014024:
 loc_01402A:
 	bne.b	loc_014030
 loc_01402C:
-	sub.l	(ram_C51A).w,d2
+	sub.l	(Camera_VelY).w,d2
 loc_014030:
 	btst.b	#$5,Obj_Flags(a0)
 loc_014036:
@@ -33918,7 +33918,7 @@ loc_01B066:
 loc_01B06A:
 	add.l	Obj_VelY(a0),d0
 loc_01B06E:
-	move.l	(ram_C51A).w,d2
+	move.l	(Camera_VelY).w,d2
 loc_01B072:
 	neg.l	d2
 loc_01B074:
@@ -34357,7 +34357,7 @@ loc_01B38C:
 	moveq	#$0,d1
 	move.w	$A(a2),d1
 	neg.l	d1
-	sub.l	(ram_C51A).w,d1
+	sub.l	(Camera_VelY).w,d1
 	move.l	d1,(ram_C238).w
 loc_01B3C0:
 	move.l	$10(a2),d0
@@ -34379,7 +34379,7 @@ loc_01B3DC:
 	sub.l	d0,(ram_C234).w
 	move.w	(ram_C234).w,d0
 	move.w	d0,(HScroll_B).w
-	move.l	(ram_C51A).w,d0
+	move.l	(Camera_VelY).w,d0
 	add.l	d0,(ram_C238).w
 	move.w	(ram_C238).w,d0
 	move.w	d0,(VScroll_B).w
@@ -41347,7 +41347,7 @@ loc_023074:
 loc_023076:
 	neg.l	d0
 loc_023078:
-	add.l	(ram_C51A).w,d0
+	add.l	(Camera_VelY).w,d0
 loc_02307C:
 	add.l	d0,(ram_C238).w
 loc_023080:
@@ -45387,7 +45387,7 @@ loc_0281AC:
 loc_0281B0:
 	move.w	d0,(HScroll_B).w
 loc_0281B4:
-	move.l	(ram_C51A).w,d0
+	move.l	(Camera_VelY).w,d0
 loc_0281B8:
 	add.l	d0,(ram_C238).w
 loc_0281BC:

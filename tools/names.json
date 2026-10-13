@@ -56,7 +56,12 @@
     "Mode_Flags": "medium - bit 2 is set when MODE is switched to ORIGINAL in Options; other bits unknown",
     "Scroll_Update_Disable": "medium - Update_Scroll returns early when nonzero",
     "GameState_Options/OriginalIntro": "high - states 1C and 48, from screenshots",
-    "Player1_X/Y": "high - Objects_A[0] is the object that follows pad 1 (diffed with/without input); +$04/+$08 are its 16.16 X/Y"
+    "Player1_X/Y": "high - Objects_A[0] is the object that follows pad 1 (diffed with/without input); +$04/+$08 are its 16.16 X/Y",
+    "Camera_VelY": "high - becomes $FFFECCCD (-1.2 px/frame) while walking up and 0 on release; Camera_Y falls by that each frame",
+    "Camera_Y_Frac": "high - fractional half of the camera Y (the integer is Camera_Y at $C516)",
+    "GameState_MissionMap": "high - state 34, the 'MISSION 1 / COAST' island map; only reached in Original mode",
+    "stack": "$FFFDC0..$FFFDFF is the stack (top $FFFE00): the VBlank handler's movem.l pushes there. Not variables.",
+    "ram_C328 (unnamed)": "set to 7 when the Original-mode intro ends; 0 throughout Arcade; 1 at the start of state 10 and stepped by 7 there; compared with $16 in state 40; tested by object handlers. A selection index with several roles - not named yet."
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -90,5 +95,8 @@
   "00085A": "GameState_Options",
   "00798C": "GameState_OriginalIntro",
   "FFFFE004": "Player1_X",
-  "FFFFE008": "Player1_Y"
+  "FFFFE008": "Player1_Y",
+  "FFFFC51A": "Camera_VelY",
+  "FFFFC514": "Camera_Y_Frac",
+  "005D48": "GameState_MissionMap"
 }
