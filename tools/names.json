@@ -100,7 +100,11 @@
     "Object_CollideStandard": "medium - hitbox, then Collision_HitPlayer and Collision_FindHit_E1C0",
     "ObjType_xx": "generated - handler names from the type number (index in ObjectTypeTable); handlers shared by several types keep the lowest number",
     "ObjType_01_Player": "high - Objects_A[0] has type $04 (= index 1) and is the only object that follows pad 1 (diffed with and without input)",
-    "ObjType_05_Crate": "medium - spawned alone it draws a small wooden crate like the ones along the Mission 1 road (tools/emu/spawn_types.py)"
+    "ObjType_05_Crate": "medium - spawned alone it draws a small wooden crate like the ones along the Mission 1 road (tools/emu/spawn_types.py)",
+    "ObjType_03_PlayerShot": "high - spawned 261 times at X=$C0,Y=$109, just above the player ($130), crop shows blue bullets (tools/emu/watch_spawns.py)",
+    "ObjType_80_Explosion": "medium-high - 19 spawns in array B; crop shows a large orange explosion",
+    "ObjType_8F_Shadow": "medium-high - 47 spawns in array B beside the soldiers; crop shows a black oval under a figure",
+    "ObjType_82/83/8E_EnemySoldier": "medium - green infantry in the crops; 22, 14 and 29 spawns in arrays B/C"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -156,7 +160,7 @@
   "00A11A": "Write_TileMap",
   "01B002": "Object_Free",
   "01ADF6": "Object_LoadTemplateA2",
-  "01AF0E": "Object_AnimTick",
+  "01AF0E": "ObjType_8F_Shadow",
   "00AF0A": "Collision_BoxTest",
   "00E238": "Object_GetHitbox",
   "00E234": "Object_GetHitbox_FromSize",
@@ -191,5 +195,10 @@
   "01C9C2": "Object_CollideStandard",
   "FFFFC646": "Camera_Bounds",
   "00CD78": "ObjType_01_Player",
-  "00F844": "ObjType_05_Crate"
+  "00F844": "ObjType_05_Crate",
+  "00ED82": "ObjType_03_PlayerShot",
+  "016262": "ObjType_80_Explosion",
+  "01705C": "ObjType_82_EnemySoldier",
+  "017768": "ObjType_83_EnemySoldier",
+  "01A3E4": "ObjType_8E_EnemySoldier"
 }
