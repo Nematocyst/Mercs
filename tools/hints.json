@@ -363,7 +363,9 @@
     "0C": "Obj_VelX",
     "10": "Obj_VelY",
     "22": "Obj_TileAttr",
-    "24": "Obj_SpriteSize"
+    "24": "Obj_SpriteSize",
+    "35": "Obj_Direction",
+    "3B": "Obj_SpeedClass"
   },
   "object_routines": [
     "13F82",
@@ -373,9 +375,11 @@
     "1ABCE",
     "1ADB0",
     "1ADF6",
+    "1AE8E",
     "1AF0E",
     "1AF1A",
     "1B002",
+    "1C9C2",
     "AF50",
     "B36C",
     "D96C",

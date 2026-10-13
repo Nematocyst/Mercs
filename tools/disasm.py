@@ -700,6 +700,14 @@ def main():
             if label.get(a, 'dat_').startswith('dat_') or a not in label:
                 label[a] = '%s_%06X' % (pre, a)
             TYPED[a] = (size, ln)
+    if 0x1435A in rom.tables:              # object handlers are named after their type number
+        k_, n_, _ = rom.tables[0x1435A]
+        done = set()
+        for j in range(n_):
+            t = struct.unpack('>I', rom.d[0x1435A + 4 * j:0x1435E + 4 * j])[0]
+            if t in rom.code and t not in done and label.get(t, 'sub_')[:4] in ('sub_', 'loc_'):
+                label[t] = 'ObjType_%02X' % j
+                done.add(t)
     for a, nm in rom_names.items():        # hand-chosen names win over generated ones
         if a >= 0x200:
             label[a] = nm

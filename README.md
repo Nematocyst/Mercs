@@ -198,3 +198,6 @@ The `Ending*` names are medium-low confidence: they rest on the graph, not on a 
 | Objects | `ObjectUpdate`, `Object_AllocC*/AllocA*`, `Object_Free`, `Object_LoadTemplate/A2`, `Object_RunAnimScript`, `Object_AnimTick`, `Anim_Set/Step/Restart`, `Object_ToScreen`, `Object_DirectionTo` |
 | Collision | `Object_GetHitbox*`, `Collision_BoxTest`, `Collision_FindHit_E1C0`, `Collision_HitPlayer` |
 | Misc | `Random_Update`, `ReadJoypads`, `InitVDP`, `InitIOPorts`, `Camera_Reset`, `Clear_GameVars` |
+
+Object handlers are labelled `ObjType_xx` after their type number (the index in `ObjectTypeTable`; a word
+`Obj_Type` of `$04` is type 1). Only `ObjType_01_Player` has a verified role so far.

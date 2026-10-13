@@ -90,7 +90,16 @@
     "Collision_HitPlayer": "medium - tests the box in d4-d7 against Objects_A (the player slot) unless ram_C5C9 / Player_Invuln_Timer are set (42 calls)",
     "Player_Invuln_Timer": "medium - a nonzero word suppresses Collision_HitPlayer and counts down (profile: 18% decrements)",
     "Anim_Restart": "medium - sets the reload byte $1E and restarts Anim_Step",
-    "Alloc_C0E0Slot": "medium-low - finds a zero byte in the 30-byte table at ram_C0E0 and returns its index in d1"
+    "Alloc_C0E0Slot": "medium-low - finds a zero byte in the 30-byte table at ram_C0E0 and returns its index in d1",
+    "Object_SetVelocityFromDir": "high - Obj_Direction & $1F x4 indexes a table of (x,y) words chosen by Obj_SpeedClass; shifted into the velocity",
+    "Text_ToTiles": "medium-high - reads a string until 0, subtracts $2F per character and adds a base to make tile words",
+    "DMA_ToVRAM": "medium-high - takes the Z80 bus and programs a VDP DMA: length d0, VRAM destination d1, source d2 (used with the $FF0800 tile buffer)",
+    "Decompress_RLE2": "medium - sequential variant of Decompress_RLE",
+    "Camera_SetBounds / Camera_Bounds": "medium - copies four longs into ram_C646, which Camera_Follow compares Obj_Y against",
+    "Camera_Follow": "medium-low - compares Obj_Y with Camera_Y and Camera_Bounds",
+    "Object_CollideStandard": "medium - hitbox, then Collision_HitPlayer and Collision_FindHit_E1C0",
+    "ObjType_xx": "generated - handler names from the type number (index in ObjectTypeTable); handlers shared by several types keep the lowest number",
+    "ObjType_01_Player": "high - Objects_A[0] has type $04 (= index 1) and is the only object that follows pad 1 (diffed with and without input)"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -171,5 +180,14 @@
   "00B036": "Collision_HitPlayer",
   "00D95E": "Anim_Restart",
   "01AB5C": "Alloc_C0E0Slot",
-  "FFFFC5C2": "Player_Invuln_Timer"
+  "FFFFC5C2": "Player_Invuln_Timer",
+  "01AE8E": "Object_SetVelocityFromDir",
+  "0087E2": "Text_ToTiles",
+  "0085FE": "DMA_ToVRAM",
+  "00855A": "Decompress_RLE2",
+  "00D69C": "Camera_SetBounds",
+  "00DC6A": "Camera_Follow",
+  "01C9C2": "Object_CollideStandard",
+  "FFFFC646": "Camera_Bounds",
+  "00CD78": "ObjType_01_Player"
 }

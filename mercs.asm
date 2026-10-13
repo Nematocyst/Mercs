@@ -17,6 +17,8 @@ Obj_State	equ	$28
 Obj_Timer	equ	$2C
 Obj_AnimPtr	equ	$30
 Obj_AnimTimer	equ	$34
+Obj_Direction	equ	$35
+Obj_SpeedClass	equ	$3B
 
 ; ---- Hardware registers ----
 Z80_RAM	equ	$A00000
@@ -350,7 +352,7 @@ ram_C642	equ	$FFFFC642
 ram_C643	equ	$FFFFC643
 Scroll_Update_Disable	equ	$FFFFC644
 ram_C645	equ	$FFFFC645
-ram_C646	equ	$FFFFC646
+Camera_Bounds	equ	$FFFFC646
 ram_C648	equ	$FFFFC648
 ram_C64A	equ	$FFFFC64A
 ram_C64C	equ	$FFFFC64C
@@ -884,7 +886,7 @@ loc_0004B4:
 loc_0004B8:
 	move.l	#$FF0800,d2
 loc_0004BE:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_0004C4:
 	lea	(Map_0DD33C).l,a1
 loc_0004CA:
@@ -986,7 +988,7 @@ Pal_00058E:
 	dc.w	$0A00,$0800,$0600,$0800,$0A00,$0C00,$0E00,$0E20
 	dc.w	$0E40,$0E60,$0E80,$0EA0,$0EC0,$0EA0,$0E80,$0E60
 	dc.w	$0E40,$0E20,$0E00,$0C00,$0A00,$0800,$0600
-sub_0005CC:
+ObjType_71:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0005D2:
 	bne.b	loc_0005EE
@@ -1195,7 +1197,7 @@ loc_00089C:
 loc_0008A0:
 	move.l	#$FF0020,d2
 loc_0008A6:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_0008AC:
 	bsr.w	sub_000BA2
 loc_0008B0:
@@ -1238,7 +1240,7 @@ loc_000906:
 	move.w	#$8,(Game_State).w
 loc_00090C:
 	rts
-sub_00090E:
+ObjType_58:
 	bset.b	#$0,Obj_Flags(a0)
 loc_000914:
 	bne.b	loc_000936
@@ -1571,7 +1573,7 @@ loc_000B8E:
 loc_000B92:
 	moveq	#$0,d6
 loc_000B94:
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 loc_000B98:
 	rts
 dat_000B9A:
@@ -1958,7 +1960,7 @@ loc_0010F6:
 loc_0010FA:
 	moveq	#$0,d6
 loc_0010FC:
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 loc_001100:
 	lea	(dat_001368).l,a1
 loc_001106:
@@ -1968,7 +1970,7 @@ loc_00110A:
 loc_00110E:
 	moveq	#$0,d6
 loc_001110:
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 loc_001114:
 	lea	(dat_001376).l,a1
 loc_00111A:
@@ -1978,7 +1980,7 @@ loc_00111E:
 loc_001122:
 	moveq	#$0,d6
 loc_001124:
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 loc_001128:
 	move.b	#$20,(Timer_C605).w
 loc_00112E:
@@ -2161,7 +2163,7 @@ loc_0012FA:
 	lea	(ram_A916).w,a2
 	move.w	#$4517,d1
 	moveq	#$0,d6
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001318:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -2725,7 +2727,7 @@ loc_001880:
 loc_001884:
 	moveq	#$1,d0
 loc_001886:
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 loc_00188C:
 	lea	(Decomp_Buffer).w,a0
 loc_001890:
@@ -3012,7 +3014,7 @@ loc_001AE4:
 loc_001AE8:
 	move.w	#$C900,d2
 loc_001AEC:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_001AF2:
 	bclr.b	#$0,(ram_C56C).w
 loc_001AF8:
@@ -3038,7 +3040,7 @@ loc_001B1E:
 loc_001B22:
 	move.w	#$CC00,d2
 loc_001B26:
-	jmp	(sub_0085FE).l
+	jmp	(DMA_ToVRAM).l
 sub_001B2C:
 	move.b	(ram_C598).w,d5
 loc_001B30:
@@ -3365,7 +3367,7 @@ loc_001DD8:
 loc_001DDA:
 	move.l	(a0)+,d2
 loc_001DDC:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_001DE2:
 	rts
 Words_001DE4:
@@ -4243,7 +4245,7 @@ loc_002FBA:
 	lea	(ram_A78E).w,a2
 	move.w	#$2517,d1
 	moveq	#$0,d6
-	bsr.w	sub_0087E2
+	bsr.w	Text_ToTiles
 	lea	(dat_0032E8).l,a1
 	lea	(ram_A89A).w,a2
 	move.w	#$2543,d1
@@ -5849,7 +5851,7 @@ loc_004A44:
 	move.w	#$8,(Game_State).w
 loc_004A4A:
 	rts
-sub_004A4C:
+ObjType_3D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_004A52:
 	bne.b	loc_004A82
@@ -5918,7 +5920,7 @@ loc_004AE8:
 	dc.b	$0C,$68,$00,$A0,$00,$08
 	dc.b	$64,$14,$58,$68,$00,$28,$21,$7C,$FF,$FF,$80,$00,$00,$0C,$21,$7C
 	dc.b	$FF,$FF,$E8,$00,$00,$10,$4E,$75,$4E,$75
-sub_004B0A:
+ObjType_3E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_004B10:
 	bne.b	loc_004B30
@@ -6306,7 +6308,7 @@ loc_0051F0:
 	move.w	#$30,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
-sub_00520E:
+ObjType_3F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_005214:
 	bne.b	loc_00523C
@@ -6459,7 +6461,7 @@ loc_005354:
 	dc.b	$43,$F9,$00,$00,$57,$64,$45,$F8,$A8,$14,$22,$3C,$E3,$55,$E3,$55
 	dc.b	$7C,$00,$4E,$B9,$00,$00,$89,$A6,$60,$90,$08,$F8,$00,$01,$C6,$1C
 	dc.b	$4E,$75
-sub_005402:
+ObjType_40:
 	bset.b	#$0,Obj_Flags(a0)
 loc_005408:
 	bne.b	loc_005418
@@ -6488,7 +6490,7 @@ loc_00543E:
 loc_005440:
 	bclr.b	#$2,Obj_Flags(a0)
 	rts
-sub_005448:
+ObjType_41:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00544E:
 	bne.b	loc_00546A
@@ -6525,7 +6527,7 @@ loc_005496:
 dat_0054AE:
 	dc.b	$00,$F8
 	dc.b	$01,$50,$01,$38,$01,$48
-sub_0054B6:
+ObjType_42:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0054BC:
 	bne.b	loc_0054E2
@@ -6563,7 +6565,7 @@ loc_0054FE:
 loc_005502:
 	moveq	#$1,d0
 loc_005504:
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 loc_00550A:
 	lea	(Decomp_Buffer).w,a0
 loc_00550E:
@@ -6579,7 +6581,7 @@ loc_005520:
 loc_005524:
 	moveq	#$1,d0
 loc_005526:
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 loc_00552C:
 	lea	(Decomp_Buffer).w,a0
 loc_005530:
@@ -6828,9 +6830,9 @@ loc_00590E:
 	move.w	#$3C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
-sub_00592C:
+ObjType_45:
 	rts
-sub_00592E:
+ObjType_44:
 	bset.b	#$0,Obj_Flags(a0)
 loc_005934:
 	bne.b	loc_005950
@@ -6903,7 +6905,7 @@ loc_0059B0:
 	move.w	Obj_Y(a0),$8(a1)
 	move.l	#$E451C,$14(a1)
 	rts
-sub_0059D0:
+ObjType_43:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0059D6:
 	bne.b	loc_005A00
@@ -6986,7 +6988,7 @@ sub_005AA0:
 	lea	(dat_0E4464).l,a0
 	lea	(Decomp_Buffer).w,a4
 	moveq	#$1,d0
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 	lea	(Decomp_Buffer).w,a0
 	lea	(ram_8000).w,a4
 	moveq	#$2,d0
@@ -7106,7 +7108,7 @@ loc_005D74:
 loc_005D78:
 	move.l	#$FF0000,d2
 loc_005D7E:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_005D84:
 	move.w	#$8D20,d0
 loc_005D88:
@@ -7114,7 +7116,7 @@ loc_005D88:
 loc_005D8C:
 	move.l	#$8D20,d2
 loc_005D92:
-	jsr	(sub_0085FE).l
+	jsr	(DMA_ToVRAM).l
 loc_005D98:
 	move.l	#$70C00002,(VDP_Control).l
 loc_005DA2:
@@ -7166,7 +7168,7 @@ loc_005E18:
 loc_005E1C:
 	moveq	#$1,d0
 loc_005E1E:
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 loc_005E24:
 	lea	(Decomp_Buffer).w,a0
 loc_005E28:
@@ -7211,7 +7213,7 @@ loc_005E74:
 	bset.b	#$0,(Flags_C5AF).w
 loc_005E7A:
 	rts
-sub_005E7C:
+ObjType_55:
 	bset.b	#$0,Obj_Flags(a0)
 loc_005E82:
 	bne.b	loc_005EB0
@@ -7433,7 +7435,7 @@ dat_00608E:
 	dc.b	$01,$20,$01,$78,$01,$20,$01,$60,$00,$E0,$01,$48,$01,$00,$01,$28
 	dc.b	$01,$08,$01,$20,$00,$E0,$00,$F8,$00,$E0,$00,$D0,$01,$08,$00,$90
 	dc.b	$01,$08
-sub_0060B2:
+ObjType_59:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0060B8:
 	bne.b	loc_0060D2
@@ -7468,7 +7470,7 @@ loc_0060F2:
 	bra.w	sub_006192
 loc_006110:
 	jmp	(Anim_Step).l
-sub_006116:
+ObjType_56:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00611C:
 	bne.b	loc_00614C
@@ -7757,7 +7759,7 @@ loc_006512:
 	move.w	d0,(Game_Mode).w
 loc_006516:
 	rts
-sub_006518:
+ObjType_57:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00651E:
 	bne.b	loc_00652A
@@ -8495,7 +8497,7 @@ loc_006CA2:
 	move.w	#$44,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
-sub_006CB6:
+ObjType_6D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_006CBC:
 	bne.b	loc_006CE2
@@ -8654,7 +8656,7 @@ dat_006DDE:
 	dc.b	$A5,$EE,$00,$0E,$A6,$96,$00,$0E,$A7,$3E,$00,$0E,$A7,$E6,$00,$0E
 	dc.b	$A8,$8E,$00,$0E,$A9,$36,$00,$0E,$A9,$DE,$00,$0E,$AA,$86,$00,$0E
 	dc.b	$A9,$DE,$00,$0E,$AA,$86,$00,$0E,$A9,$DE,$00,$0E,$AA,$86
-sub_006E0E:
+ObjType_6E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_006E14:
 	bne.b	loc_006E42
@@ -8972,7 +8974,7 @@ sub_007218:
 	clr.l	(ram_C54E).w
 	clr.l	(ram_C560).w
 	rts
-sub_00722A:
+ObjType_6F:
 	move.w	Obj_X(a0),d0
 loc_00722E:
 	tst.w	Obj_VelX(a0)
@@ -9380,7 +9382,7 @@ dat_007D74:
 	dc.b	$0E,$28,$34,$30,$45,$30,$39,$3D,$FF,$2C,$13,$A8,$A9,$14,$5C,$8D
 	dc.b	$1F,$8E,$8F,$25,$FF,$31,$2B,$27,$34,$AA,$AB,$14,$47,$AC,$1F,$FF
 	dc.b	$AD,$0A,$0E,$14,$23,$01,$1C,$26,$FE,$00
-sub_007E0A:
+ObjType_5D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_007E10:
 	bne.b	loc_007E32
@@ -10166,7 +10168,7 @@ loc_008556:
 	bhi.b	loc_008528
 loc_008558:
 	rts
-sub_00855A:
+Decompress_RLE2:
 	clr.w	d2
 loc_00855C:
 	move.b	(a0)+,d2
@@ -10183,7 +10185,7 @@ loc_008568:
 loc_00856A:
 	dbra	d2,loc_008568
 loc_00856E:
-	bra.b	sub_00855A
+	bra.b	Decompress_RLE2
 loc_008570:
 	subq.b	#$1,d2
 loc_008572:
@@ -10195,7 +10197,7 @@ loc_008576:
 loc_008578:
 	dbra	d2,loc_008574
 loc_00857C:
-	bra.b	sub_00855A
+	bra.b	Decompress_RLE2
 loc_00857E:
 	rts
 sub_008580:
@@ -10252,7 +10254,7 @@ dat_0085BE:
 	dc.b	$02,$00,$00,$03,$51,$CE,$00,$02,$E6,$9E,$4A,$20,$02,$B0,$00,$03
 	dc.b	$53,$C6,$00,$03,$53,$E4,$4F,$80,$02,$B0,$00,$03,$53,$C6,$00,$03
 	dc.b	$53,$E4,$57,$40,$02,$B0,$00,$03,$53,$C6,$00,$03,$53,$E4
-sub_0085FE:
+DMA_ToVRAM:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_008606:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -10530,7 +10532,7 @@ loc_0087DC:
 	dbra	d7,loc_0087D6
 loc_0087E0:
 	rts
-sub_0087E2:
+Text_ToTiles:
 	moveq	#$0,d0
 loc_0087E4:
 	move.b	(a1)+,d0
@@ -10547,7 +10549,7 @@ loc_0087F2:
 loc_0087F4:
 	move.w	d0,(a2)+
 loc_0087F6:
-	bra.w	sub_0087E2
+	bra.w	Text_ToTiles
 loc_0087FA:
 	move.w	#$40,d3
 loc_0087FE:
@@ -12089,7 +12091,7 @@ loc_0097DE:
 loc_0097E4:
 	rts
 loc_0097E6:
-	jsr	(sub_021668).l
+	jsr	(ObjType_B5).l
 	bne.b	loc_0097DE
 	rts
 dat_0097F0:
@@ -15216,7 +15218,7 @@ loc_00B256:
 	lea	(dat_03F554).l,a1
 	move.l	(a1,d1.w),(ram_C34C).w
 	lea	(dat_00D6AA).l,a1
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 	move.w	(ram_C65A).w,(ram_C352).w
 	bset.b	#$7,(Flags_C5C0).w
 	bclr.b	#$1,(ram_E02A).w
@@ -15870,7 +15872,7 @@ sub_00B7CE:
 	lea	(dat_0CF50E).l,a0
 	lea	(ram_FF6000).l,a4
 	moveq	#$1,d0
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 	lea	(ram_FF6000).l,a0
 	lea	(ram_8000).w,a4
 	moveq	#$2,d0
@@ -16286,7 +16288,7 @@ loc_00BB58:
 loc_00BB5A:
 	move.w	#$C517,d1
 loc_00BB5E:
-	jmp	(sub_0087E2).l
+	jmp	(Text_ToTiles).l
 sub_00BB64:
 	movea.l	(a6)+,a1
 loc_00BB66:
@@ -16476,7 +16478,7 @@ loc_00BCB6:
 	bset.b	#$0,(Palette_Dirty).w
 loc_00BCBC:
 	rts
-sub_00BCBE:
+ObjType_4F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00BCC4:
 	bne.b	loc_00BCE8
@@ -16511,7 +16513,7 @@ loc_00BCFC:
 	move.b	#$60,Obj_TileAttr(a0)
 loc_00BD04:
 	rts
-sub_00BD06:
+ObjType_62:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00BD0C:
 	bne.b	loc_00BD4E
@@ -16571,7 +16573,7 @@ loc_00BD7E:
 	move.w	(a1)+,Obj_Y(a0)
 loc_00BD82:
 	rts
-sub_00BD84:
+ObjType_63:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00BD8A:
 	bne.w	loc_00BC26
@@ -16601,7 +16603,7 @@ loc_00BDC4:
 	bsr.w	sub_00F98C
 loc_00BDC8:
 	bra.b	sub_00BD6E
-sub_00BDCA:
+ObjType_53:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00BDD0:
 	bne.b	loc_00BDF8
@@ -16803,7 +16805,7 @@ loc_00C13E:
 	move.b	#$7,(Timer_C5A4).w
 	addq.w	#$2,(ram_C3C6).w
 	rts
-sub_00C15A:
+ObjType_5C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C160:
 	bne.b	loc_00C192
@@ -17041,7 +17043,7 @@ loc_00C3AC:
 	move.b	d1,(ram_C3C0).w
 	cmp.b	d2,d1
 	bcs.b	loc_00C3E2
-	st.b	$3B(a0)
+	st.b	Obj_SpeedClass(a0)
 loc_00C3E2:
 	bsr.w	sub_0088B8
 	bra.b	loc_00C39E
@@ -17432,7 +17434,7 @@ loc_00C7AA:
 	dc.b	$00,$F0,$00,$BA
 	dc.b	$01,$20,$00,$BA,$01,$50,$00,$BA,$01,$80,$00,$BA,$00,$F0,$00,$DF
 	dc.b	$01,$20,$00,$DF,$01,$50,$00,$DF,$01,$80,$00,$DF
-sub_00C7CC:
+ObjType_5B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C7D2:
 	bne.b	loc_00C7E8
@@ -17517,7 +17519,7 @@ loc_00C8C0:
 	moveq	#$1,d4
 loc_00C8C2:
 	bra.w	loc_008A3C
-sub_00C8C6:
+ObjType_54:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C8CC:
 	bne.b	loc_00C8F0
@@ -17564,7 +17566,7 @@ loc_00C914:
 	clr.l	(ram_E010).w
 	clr.l	(ram_E00C).w
 	bra.w	sub_014220
-sub_00C936:
+ObjType_64:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C93C:
 	bne.b	loc_00C97A
@@ -17606,7 +17608,7 @@ loc_00C990:
 	ori.b	#$4,Obj_Flags(a0)
 loc_00C996:
 	rts
-sub_00C998:
+ObjType_65:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C99E:
 	bne.b	loc_00C9DA
@@ -17634,7 +17636,7 @@ loc_00C9D6:
 	bsr.w	sub_00F98C
 loc_00C9DA:
 	rts
-sub_00C9DC:
+ObjType_5A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00C9E2:
 	bne.b	loc_00CA28
@@ -17775,7 +17777,7 @@ dat_00CD4A:
 	dc.b	$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$26,$00,$26,$00,$28
 	dc.b	$00,$2C,$02,$0A,$0C,$00,$02,$10,$20,$00,$04,$12,$16,$14,$22,$00
 	dc.b	$01,$18,$02,$1A,$1C,$00,$01,$1E
-sub_00CD78:
+ObjType_01_Player:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00CD7E:
 	bne.b	loc_00CDBE
@@ -17796,7 +17798,7 @@ loc_00CDA0:
 loc_00CDA6:
 	lea	(dat_00D6AA).l,a1
 loc_00CDAC:
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 loc_00CDB0:
 	ori.b	#$28,Obj_Flags(a0)
 loc_00CDB6:
@@ -17848,7 +17850,7 @@ loc_00CE18:
 loc_00CE1C:
 	moveq	#$0,d3
 loc_00CE1E:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CE22:
 	bsr.w	sub_00E2BA
 loc_00CE26:
@@ -17880,7 +17882,7 @@ loc_00CE54:
 loc_00CE58:
 	bsr.w	sub_00DB50
 loc_00CE5C:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CE60:
 	bsr.w	sub_00D9F2
 loc_00CE64:
@@ -17894,7 +17896,7 @@ loc_00CE70:
 loc_00CE74:
 	moveq	#$0,d3
 loc_00CE76:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CE7A:
 	bsr.w	Anim_Step
 loc_00CE7E:
@@ -17910,7 +17912,7 @@ loc_00CE90:
 loc_00CE94:
 	moveq	#$0,d3
 loc_00CE96:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CE9A:
 	bsr.w	sub_00E2BA
 loc_00CE9E:
@@ -17922,7 +17924,7 @@ loc_00CEA6:
 loc_00CEAC:
 	moveq	#$0,d3
 loc_00CEAE:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CEB2:
 	move.w	Obj_Timer(a0),d0
 loc_00CEB6:
@@ -17932,7 +17934,7 @@ loc_00CEBA:
 loc_00CEBE:
 	bra.w	loc_00CF06
 loc_00CEC2:
-	tst.b	$3B(a0)
+	tst.b	Obj_SpeedClass(a0)
 loc_00CEC6:
 	beq.b	loc_00CEDA
 loc_00CEC8:
@@ -17950,7 +17952,7 @@ loc_00CEDE:
 loc_00CEE2:
 	bsr.w	sub_00D982
 loc_00CEE6:
-	tst.b	$3B(a0)
+	tst.b	Obj_SpeedClass(a0)
 loc_00CEEA:
 	beq.b	loc_00CEF2
 loc_00CEEC:
@@ -17964,7 +17966,7 @@ loc_00CEFE:
 loc_00CF02:
 	bra.w	loc_00D0AA
 loc_00CF06:
-	tst.b	$3B(a0)
+	tst.b	Obj_SpeedClass(a0)
 loc_00CF0A:
 	bne.b	loc_00CF12
 loc_00CF0C:
@@ -18000,7 +18002,7 @@ loc_00CF4A:
 loc_00CF4E:
 	bsr.w	sub_00DB50
 loc_00CF52:
-	bsr.w	sub_00DC6A
+	bsr.w	Camera_Follow
 loc_00CF56:
 	cmp.l	(ram_C60A).w,d2
 loc_00CF5A:
@@ -18056,7 +18058,7 @@ loc_00CFB8:
 loc_00CFBC:
 	bsr.w	sub_00E2BA
 loc_00CFC0:
-	tst.b	$3B(a0)
+	tst.b	Obj_SpeedClass(a0)
 loc_00CFC4:
 	bne.b	loc_00CFD4
 loc_00CFC6:
@@ -18118,7 +18120,7 @@ loc_00D0B6:
 	bsr.w	sub_00D6FA
 loc_00D0BA:
 	rts
-sub_00D0BC:
+ObjType_02:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00D0C2:
 	bne.b	loc_00D0D8
@@ -18474,7 +18476,7 @@ loc_00D4E4:
 	add.l	d1,$8(a0)
 	move.l	#$3F568,(ram_C34C).w
 	lea	(dat_00D6AA).l,a1
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 	move.l	a5,d2
 	move.l	a6,d3
 	rts
@@ -18630,8 +18632,8 @@ loc_00D684:
 	rts
 	dc.b	$10,$28,$00,$20,$02,$40,$00,$1C,$43,$F9
 	dc.b	$00,$03,$51,$4E,$21,$71,$00,$00,$00,$14,$4E,$75
-sub_00D69C:
-	lea	(ram_C646).w,a2
+Camera_SetBounds:
+	lea	(Camera_Bounds).w,a2
 loc_00D6A0:
 	moveq	#$3,d7
 loc_00D6A2:
@@ -18848,7 +18850,7 @@ loc_00D8DE:
 loc_00D8E2:
 	move.l	#$34AE2,$18(a0)
 loc_00D8EA:
-	tst.b	$3B(a0)
+	tst.b	Obj_SpeedClass(a0)
 loc_00D8EE:
 	beq.b	loc_00D8F8
 loc_00D8F0:
@@ -18946,7 +18948,7 @@ loc_00D994:
 sub_00D996:
 	moveq	#$0,d0
 loc_00D998:
-	move.b	$3B(a0),d0
+	move.b	Obj_SpeedClass(a0),d0
 loc_00D99C:
 	moveq	#$0,d1
 loc_00D99E:
@@ -18972,7 +18974,7 @@ loc_00D9B6:
 loc_00D9BA:
 	moveq	#$0,d0
 loc_00D9BC:
-	move.b	$3B(a0),d0
+	move.b	Obj_SpeedClass(a0),d0
 loc_00D9C0:
 	btst.b	#$1,$2A(a0)
 loc_00D9C6:
@@ -19004,7 +19006,7 @@ loc_00D9F6:
 loc_00D9FA:
 	moveq	#$0,d0
 loc_00D9FC:
-	move.b	$3B(a0),d0
+	move.b	Obj_SpeedClass(a0),d0
 loc_00DA00:
 	lsr.w	#$1,d0
 loc_00DA02:
@@ -19339,7 +19341,7 @@ loc_00DC62:
 	clr.l	Obj_VelX(a0)
 	moveq	#$1,d4
 	rts
-sub_00DC6A:
+Camera_Follow:
 	tst.b	(ram_C626).w
 loc_00DC6E:
 	bne.w	loc_00DD30
@@ -19354,7 +19356,7 @@ loc_00DC7C:
 loc_00DC7E:
 	bpl.b	loc_00DC98
 loc_00DC80:
-	cmp.w	(ram_C646).w,d0
+	cmp.w	(Camera_Bounds).w,d0
 loc_00DC84:
 	bls.b	loc_00DCAA
 loc_00DC86:
@@ -19563,7 +19565,7 @@ loc_00DE54:
 loc_00DE56:
 	moveq	#$0,d7
 loc_00DE58:
-	clr.b	$3B(a0)
+	clr.b	Obj_SpeedClass(a0)
 loc_00DE5C:
 	bsr.w	sub_00E2BA
 loc_00DE60:
@@ -20118,7 +20120,7 @@ loc_00E32C:
 loc_00E332:
 	bra.w	loc_00E33C
 loc_00E336:
-	move.b	#$40,$3B(a0)
+	move.b	#$40,Obj_SpeedClass(a0)
 loc_00E33C:
 	move.w	d1,(ram_C616).w
 loc_00E340:
@@ -20284,7 +20286,7 @@ dat_00E526:
 	dc.b	$E6,$16,$FF,$01,$06,$00,$03,$00,$00,$03,$85,$EE,$00,$03,$85,$F8
 	dc.b	$00,$03,$85,$EE,$04,$00,$00,$03,$85,$EE,$00,$03,$85,$F8,$00,$03
 	dc.b	$86,$08,$00,$03,$86,$1E,$02,$00,$00,$0D,$49,$A8,$00,$0D,$49,$F4
-sub_00E620:
+ObjType_52:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00E626:
 	bne.b	loc_00E690
@@ -20561,7 +20563,7 @@ loc_00E8E6:
 	move.l	d2,Obj_VelY(a0)
 loc_00E8EA:
 	rts
-sub_00E8EC:
+ObjType_3A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00E8F2:
 	bne.b	loc_00E91E
@@ -20596,7 +20598,7 @@ loc_00E91E:
 Longs_00E93C:
 	dc.l	$00000000,$FFD0FFD0,$FFD00030,$0030FFD0
 	dc.l	$00300030
-sub_00E950:
+ObjType_39:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00E956:
 	bne.b	loc_00E986
@@ -20645,7 +20647,7 @@ loc_00E9B6:
 	lea	(ram_E240).w,a1
 	bsr.w	sub_00E1AE
 	bra.w	sub_014220
-sub_00E9D0:
+ObjType_2D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00E9D6:
 	bne.b	loc_00E9F8
@@ -20692,7 +20694,7 @@ loc_00EA50:
 	rts
 Longs_00EA52:
 	dc.l	$00038AA2,$00038AA2,$00038A98
-sub_00EA5E:
+ObjType_2C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EA64:
 	bne.b	loc_00EABC
@@ -20808,7 +20810,7 @@ dat_00EB78:
 	dc.b	$FF,$F6,$00,$09,$FF,$FE,$00,$0E,$FF,$E4,$FF,$FC,$FF,$E4,$00,$06
 	dc.b	$FF,$F2,$FF,$FA,$FF,$FA,$FF,$F3,$FF,$FA,$FF,$FE,$00,$05,$FF,$FE
 	dc.b	$00,$0D,$FF,$FA,$00,$05,$FF,$F3
-sub_00EBB8:
+ObjType_25:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EBBE:
 	bne.b	loc_00EBF8
@@ -20875,7 +20877,7 @@ dat_00EC48:
 	dc.b	$FF,$F2,$FF,$E2,$FF,$EE,$FF,$DE,$FF,$EB,$FF,$D3,$FF,$EE,$FF,$CD
 	dc.b	$FF,$F1,$FF,$C4,$FF,$F9,$FF,$BE,$FF,$FF,$FF,$BE,$00,$07,$FF,$BE
 	dc.b	$00,$0F,$FF,$C3,$00,$12,$FF,$CD
-sub_00EC88:
+ObjType_23:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EC8E:
 	bne.b	loc_00ECCA
@@ -20967,7 +20969,7 @@ loc_00ED7A:
 	lea	(a1,d2.w),a1
 loc_00ED7E:
 	bra.w	loc_00EC3A
-sub_00ED82:
+ObjType_03:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00ED88:
 	bne.b	loc_00EDC8
@@ -21085,7 +21087,7 @@ loc_00EE58:
 	bne.w	sub_014220
 loc_00EE5C:
 	rts
-sub_00EE5E:
+ObjType_13:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EE64:
 	bne.b	loc_00EEA4
@@ -21136,7 +21138,7 @@ loc_00EED2:
 	move.w	#$4,Obj_State(a0)
 	bsr.w	sub_00F628
 	bra.w	loc_00EE34
-sub_00EEE4:
+ObjType_14:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EEEA:
 	bne.b	loc_00EF28
@@ -21235,7 +21237,7 @@ loc_00EFEC:
 	bsr.w	Anim_Step
 	bne.w	sub_014220
 	bra.b	loc_00EF9A
-sub_00EFF6:
+ObjType_51:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00EFFC:
 	bne.b	loc_00F058
@@ -21323,7 +21325,7 @@ loc_00F0E0:
 	bra.w	sub_00E202
 Words_00F0F2:
 	dc.w	$0C00,$0C08,$0C10,$0C18,$0C20,$0C28,$0C30,$0C38
-sub_00F102:
+ObjType_15:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F108:
 	bne.b	loc_00F14C
@@ -21616,7 +21618,7 @@ loc_00F32A:
 	move.w	d4,Obj_X(a0)
 	move.w	d5,Obj_Y(a0)
 	rts
-sub_00F338:
+ObjType_04:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F33E:
 	bne.b	loc_00F356
@@ -21685,7 +21687,7 @@ loc_00F3D0:
 	andi.w	#$1E,d2
 	add.w	d2,d2
 	bra.b	loc_00F3C8
-sub_00F3D8:
+ObjType_06:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F3DE:
 	bne.b	loc_00F402
@@ -21711,7 +21713,7 @@ loc_00F406:
 	bne.w	sub_014220
 loc_00F40A:
 	rts
-sub_00F40C:
+ObjType_07:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F412:
 	bne.b	loc_00F456
@@ -21809,7 +21811,7 @@ loc_00F4C8:
 	move.w	d1,Obj_Y(a0)
 loc_00F4CC:
 	rts
-sub_00F4CE:
+ObjType_08:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F4D4:
 	bne.b	loc_00F4F2
@@ -22212,7 +22214,7 @@ loc_00F81A:
 	subq.b	#$1,d1
 	bne.b	loc_00F81A
 	rts
-sub_00F844:
+ObjType_05:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00F84A:
 	bne.b	loc_00F86C
@@ -22600,7 +22602,7 @@ dat_00FD3C:
 	dc.b	$00,$00,$00,$01,$C5,$D2,$00,$04,$00,$0C,$00,$04,$C5,$D2,$00,$06
 	dc.b	$00,$0E,$00,$04,$C5,$D2,$00,$02,$00,$07,$00,$04,$C6,$BC,$00,$01
 	dc.b	$00,$00,$00,$01
-sub_00FE24:
+ObjType_4D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00FE2A:
 	bne.b	loc_00FE4A
@@ -22630,7 +22632,7 @@ Longs_00FE62:
 	dc.l	dat_0581D0,dat_0581DA,dat_0581E4,dat_0581EE
 	dc.l	dat_0581F8,dat_058202,dat_05820C,dat_058216
 	dc.l	dat_058220,dat_05822A
-sub_00FE8A:
+ObjType_4C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00FE90:
 	bne.b	loc_00FEC8
@@ -22791,7 +22793,7 @@ loc_00FFF2:
 	dbra	d6,loc_00FFF0
 loc_00FFF6:
 	rts
-sub_00FFF8:
+ObjType_4B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00FFFE:
 	bne.b	loc_010028
@@ -22827,7 +22829,7 @@ dat_010036:
 	dc.b	$82,$8E,$00,$D8,$00,$D0,$00,$05,$82,$5C,$00,$E8,$00,$D0,$00,$05
 	dc.b	$82,$70,$00,$F8,$00,$D0,$00,$05,$82,$98,$01,$08,$00,$D0,$00,$05
 	dc.b	$82,$48,$01,$18,$00,$D0
-sub_010076:
+ObjType_4E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01007C:
 	bne.b	loc_0100D4
@@ -22941,7 +22943,7 @@ loc_010184:
 	addq.w	#$4,a7
 loc_010186:
 	rts
-sub_010188:
+ObjType_37:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01018E:
 	bne.b	loc_0101A0
@@ -22965,7 +22967,7 @@ loc_0101B0:
 	move.l	d0,(ram_C560).w
 loc_0101B4:
 	rts
-sub_0101B6:
+ObjType_26:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0101BC:
 	bne.b	loc_0101DE
@@ -22986,7 +22988,7 @@ loc_0101E4:
 loc_0101E8:
 	move.b	(ram_C68F).w,d0
 loc_0101EC:
-	cmp.b	$3B(a0),d0
+	cmp.b	Obj_SpeedClass(a0),d0
 loc_0101F0:
 	beq.w	sub_014220
 loc_0101F4:
@@ -22999,7 +23001,7 @@ loc_010200:
 	bchg.b	#$2,Obj_Flags(a0)
 loc_010206:
 	rts
-sub_010208:
+ObjType_10:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01020E:
 	bne.b	loc_010224
@@ -23034,7 +23036,7 @@ loc_010254:
 	rts
 	dc.b	$4A,$78,$E7,$6C,$67,$00,$3F,$C4,$4E,$75
 	dc.b	$4A,$38,$C6,$7B,$67,$08,$42,$38,$C6,$7B,$60,$00,$3F,$B4,$4E,$75
-sub_010270:
+ObjType_11:
 	bset.b	#$0,Obj_Flags(a0)
 loc_010276:
 	bne.b	loc_01027E
@@ -23172,7 +23174,7 @@ loc_0103FE:
 	movea.l	(a6)+,a0
 	lea	(ram_FF5400).l,a4
 	moveq	#$1,d0
-	jsr	(sub_00855A).l
+	jsr	(Decompress_RLE2).l
 	lea	(ram_FF5400).l,a0
 	movea.w	(a6)+,a4
 	moveq	#$2,d0
@@ -23202,7 +23204,7 @@ sub_0104A6:
 	clr.w	(HScroll_B).w
 	clr.w	(VScroll_B).w
 	rts
-sub_0104C0:
+ObjType_12:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0104C6:
 	bne.b	loc_0104E8
@@ -23310,7 +23312,7 @@ dat_01069E:
 	dc.b	$A3,$D6,$00,$0D,$A4,$6E,$00,$0D,$A5,$06,$00,$0D,$A5,$9E,$00,$0D
 	dc.b	$A6,$36,$00,$0D,$A6,$CE,$00,$0D,$A7,$66,$00,$0D,$A7,$B8,$00,$0D
 	dc.b	$A8,$0A,$00,$0D,$A8,$5C,$00,$0D,$A8,$AE,$00,$0D,$A9,$00
-sub_01072E:
+ObjType_31:
 	bset.b	#$0,Obj_Flags(a0)
 loc_010734:
 	bne.b	loc_010740
@@ -23379,7 +23381,7 @@ dat_0107B2:
 dat_0107CC:
 	dc.b	$00,$04,$55,$2A
 	dc.b	$00,$01,$17,$26,$00,$00,$8C,$0C,$C6,$70,$00,$04,$01,$00
-sub_0107DE:
+ObjType_30:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0107E4:
 	bne.b	loc_0107F0
@@ -23494,7 +23496,7 @@ dat_01097C:
 	dc.b	$00,$0D,$A2,$3E
 	dc.b	$00,$01,$17,$F6,$00,$00,$8C,$0C,$02,$00,$03,$B8,$C6,$6E,$00,$02
 	dc.b	$01,$00
-sub_010992:
+ObjType_2A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_010998:
 	bne.b	loc_0109A4
@@ -23508,7 +23510,7 @@ loc_0109A8:
 	tst.b	$1B(a0)
 loc_0109AC:
 	beq.b	loc_0109B4
-	jsr	(sub_01B42C).l
+	jsr	(ObjType_90).l
 loc_0109B4:
 	bclr.b	#$5,$2A(a0)
 loc_0109BA:
@@ -23753,7 +23755,7 @@ dat_010EEC:
 	dc.b	$00,$04,$00,$01,$00,$0D,$AC,$CA,$00,$0D,$AB,$EC,$00,$0D,$AD,$A8
 	dc.b	$00,$01,$17,$76,$00,$00,$8C,$0C,$00,$60,$0D,$18,$C6,$C7,$00,$04
 	dc.b	$00,$01
-sub_010F82:
+ObjType_09:
 	bset.b	#$0,Obj_Flags(a0)
 loc_010F88:
 	bne.b	loc_010FAE
@@ -23844,7 +23846,7 @@ loc_011040:
 	rts
 dat_011042:
 	dc.b	$01,$38,$01,$40,$01,$48,$01,$50,$01,$58
-sub_01104C:
+ObjType_0F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011052:
 	bne.b	loc_01106E
@@ -23858,7 +23860,7 @@ loc_011068:
 	move.w	#$1,Obj_SortKey(a0)
 loc_01106E:
 	rts
-sub_011070:
+ObjType_0A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011076:
 	bne.b	loc_0110B8
@@ -24075,7 +24077,7 @@ loc_011210:
 	move.w	d1,(VScroll_B).w
 loc_011214:
 	rts
-sub_011216:
+ObjType_0B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01121C:
 	bne.b	loc_011230
@@ -24111,7 +24113,7 @@ loc_011236:
 	bra.w	sub_014220
 loc_011282:
 	rts
-sub_011284:
+ObjType_0C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01128A:
 	bne.b	loc_0112AE
@@ -24189,7 +24191,7 @@ loc_011314:
 	move.w	d3,Obj_Y(a0)
 loc_011318:
 	rts
-sub_01131A:
+ObjType_0D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011320:
 	bne.b	loc_01133E
@@ -24399,7 +24401,7 @@ dat_0115E2:
 	dc.b	$00,$01,$15,$EE,$00,$01,$15,$FA,$00,$01,$16,$06,$00,$04
 	dc.b	$45,$E8,$00,$04,$44,$B2,$00,$04,$43,$7C,$00,$04,$49,$8A,$00,$04
 	dc.b	$48,$54,$00,$04,$47,$1E,$00,$04,$4B,$24
-sub_01160A:
+ObjType_0E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011610:
 	bne.b	loc_01164E
@@ -24559,7 +24561,7 @@ dat_0118A6:
 dat_0118BA:
 	dc.b	$00,$28,$00,$68,$00,$40
 	dc.b	$00,$70,$00,$38,$00,$58,$00,$10,$00,$70,$00,$38,$00,$70
-sub_0118CE:
+ObjType_22:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0118D4:
 	bne.b	loc_011914
@@ -24606,7 +24608,7 @@ loc_011938:
 dat_01193A:
 	dc.l	dat_038686,dat_0386A2,dat_0386D0,dat_0386E0
 	dc.l	dat_03870E,dat_03872A,dat_038758,dat_038768
-sub_01195A:
+ObjType_21:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011960:
 	bne.b	loc_0119A6
@@ -24682,9 +24684,9 @@ sub_011A06:
 	bclr.b	#$4,$2(a1)
 	move.l	(a3)+,(ram_C34C).w
 	movea.l	(a3)+,a1
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 	move.b	#$1,(ram_E09D).w
-	move.b	$3B(a0),(ram_C68F).w
+	move.b	Obj_SpeedClass(a0),(ram_C68F).w
 	bset.b	#$6,(Flags_C5C0).w
 	bset.b	#$1,Obj_Flags(a0)
 	move.b	(a3)+,(ram_C642).w
@@ -24771,10 +24773,10 @@ loc_011B80:
 loc_011B84:
 	move.b	d2,$3B(a1)
 loc_011B88:
-	move.b	d2,$3B(a0)
+	move.b	d2,Obj_SpeedClass(a0)
 loc_011B8C:
 	rts
-sub_011B8E:
+ObjType_61:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011B94:
 	bne.b	loc_011BAA
@@ -24817,7 +24819,7 @@ loc_011BEE:
 	addq.w	#$4,Obj_State(a0)
 	subq.w	#$8,Obj_Y(a0)
 	bra.w	loc_0124F8
-sub_011BFA:
+ObjType_5E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011C00:
 	bne.b	loc_011C4E
@@ -24980,7 +24982,7 @@ dat_011D68:
 	dc.b	$FF,$F0,$FF,$FF,$FF,$0F,$FF,$FF,$FF,$FF,$0F,$FF,$0F,$FF,$FF,$FF
 	dc.b	$FF,$FF,$F0,$FF,$FF,$FF,$FF,$F0,$00,$00,$00,$E8,$00,$0A,$03,$03
 	dc.b	$00,$E8
-sub_011D92:
+ObjType_24:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011D98:
 	bne.b	loc_011DC0
@@ -25048,7 +25050,7 @@ loc_011E50:
 	bsr.w	Anim_Step
 	bne.w	sub_014220
 	rts
-sub_011E5A:
+ObjType_1D:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011E60:
 	bne.b	loc_011E68
@@ -25065,7 +25067,7 @@ loc_011E6E:
 	bra.w	sub_014220
 loc_011E84:
 	rts
-sub_011E86:
+ObjType_19:
 	bset.b	#$0,Obj_Flags(a0)
 loc_011E8C:
 	bne.b	loc_011EB4
@@ -25151,7 +25153,7 @@ loc_011FA6:
 	jsr	(LoadPalette).l
 	move.b	#$40,$2F(a0)
 	move.w	#$4,Obj_State(a0)
-	move.b	#$6,$3B(a0)
+	move.b	#$6,Obj_SpeedClass(a0)
 	move.w	(Player1_Y).w,d0
 	sub.w	Obj_Y(a0),d0
 	bcc.b	loc_011FE0
@@ -25164,7 +25166,7 @@ loc_011FEC:
 	subq.b	#$1,$1C(a0)
 	bne.w	loc_012086
 	move.b	#$3,$1C(a0)
-	subq.b	#$1,$3B(a0)
+	subq.b	#$1,Obj_SpeedClass(a0)
 	beq.w	loc_012088
 	move.w	$1E(a0),d4
 	addq.w	#$5,$1E(a0)
@@ -25208,7 +25210,7 @@ loc_012088:
 	clr.w	Obj_State(a0)
 loc_01208C:
 	rts
-sub_01208E:
+ObjType_1A:
 	bsr.w	Object_GetHitbox_FromSize
 loc_012092:
 	bsr.w	Collision_HitPlayer
@@ -25241,7 +25243,7 @@ loc_0120D6:
 	rts
 	dc.b	$61,$00,$21,$6E,$66,$00,$21,$42
 	dc.b	$4E,$75
-sub_0120E2:
+ObjType_17:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0120E8:
 	bne.b	loc_012100
@@ -25282,7 +25284,7 @@ loc_012134:
 loc_012156:
 	move.l	d7,(a6)+
 	dbra	d6,loc_012156
-	move.b	$3B(a0),(ram_C68F).w
+	move.b	Obj_SpeedClass(a0),(ram_C68F).w
 	moveq	#$0,d0
 	move.b	$19(a0),d0
 	jmp	loc_01216C(pc,d0.w)
@@ -25303,7 +25305,7 @@ loc_012184:
 	st.b	(ram_C67A).w
 	move.w	#$200,(ram_C5BC).w
 	lea	(dat_00D6CA).l,a1
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 	move.l	(ram_C504).w,(ram_C53E).w
 	move.l	(ram_C504).w,(ram_C536).w
 	bsr.w	Camera_Reset
@@ -25412,7 +25414,7 @@ dat_0122E2:
 	dc.b	$00,$20,$00,$20,$00,$07,$09,$5E,$40,$00,$0A,$10,$FF,$E0,$00,$20
 	dc.b	$00,$38,$00,$0D,$49,$A8,$40,$00,$04,$90,$FF,$E0,$00,$00,$00,$28
 	dc.b	$00,$0D,$80,$94,$00,$00,$04,$00,$00,$00,$00,$20,$00,$28
-sub_01234E:
+ObjType_16:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012354:
 	bne.b	loc_01236E
@@ -25466,7 +25468,7 @@ loc_0123CE:
 	bclr.b	#$2,(Flags_C5EB).w
 	rts
 	dc.b	$00,$00,$00,$00,$00,$06,$03,$03,$F8,$F8
-sub_0123E0:
+ObjType_6A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0123E6:
 	bne.b	loc_012404
@@ -25519,7 +25521,7 @@ loc_012458:
 	bra.w	loc_0124F8
 	dc.b	$61,$00,$1D,$E2,$67,$00,$01,$36,$31,$68,$00,$2C
 	dc.b	$00,$18,$60,$00,$D7,$7A
-sub_012476:
+ObjType_5F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01247C:
 	bne.b	loc_012498
@@ -25590,7 +25592,7 @@ loc_01251E:
 	bne.w	sub_014220
 loc_012522:
 	rts
-sub_012524:
+ObjType_2B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01252A:
 	bne.b	loc_01254E
@@ -25683,7 +25685,7 @@ loc_01260E:
 loc_01262E:
 	clr.b	(ram_C68C).w
 	bra.w	loc_01422E
-sub_012636:
+ObjType_60:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01263C:
 	bne.b	loc_01264A
@@ -25709,7 +25711,7 @@ loc_012664:
 	move.w	Obj_AnimTimer(a0),(VScroll_B).w
 loc_01266A:
 	rts
-sub_01266C:
+ObjType_66:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012672:
 	bne.b	loc_01267A
@@ -25728,7 +25730,7 @@ loc_01268A:
 	st.b	(ram_C5CD).w
 	bset.b	#$1,(Flags_C61C).w
 	rts
-sub_01269A:
+ObjType_67:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0126A0:
 	bne.b	loc_0126C2
@@ -26014,7 +26016,7 @@ loc_012986:
 	move.w	#$138,d0
 loc_01298A:
 	bra.w	loc_00D2B6
-sub_01298E:
+ObjType_73:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012994:
 	bne.b	loc_0129BC
@@ -26032,7 +26034,7 @@ loc_0129B6:
 	move.w	#$2,Obj_SortKey(a0)
 loc_0129BC:
 	rts
-sub_0129BE:
+ObjType_68:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0129C4:
 	bne.b	loc_012A08
@@ -26073,7 +26075,7 @@ loc_012A08:
 	jsr	(sub_0086E2).l
 	lea	(ram_D010).w,a1
 	jmp	(sub_0086E2).l
-sub_012A24:
+ObjType_69:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012A2A:
 	bne.b	loc_012A38
@@ -26143,7 +26145,7 @@ loc_012ABC:
 	clr.l	(ram_EA00).w
 loc_012AD0:
 	rts
-sub_012AD2:
+ObjType_6B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012AD8:
 	bne.b	loc_012AF6
@@ -26205,7 +26207,7 @@ loc_012B3E:
 	move.w	Obj_Y(a0),$8(a1)
 loc_012B44:
 	rts
-sub_012B46:
+ObjType_6C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012B4C:
 	bne.b	loc_012B74
@@ -26281,14 +26283,14 @@ loc_012BF2:
 	addi.w	#$18,Obj_Y(a0)
 loc_012BF8:
 	bra.w	loc_0124F8
-sub_012BFC:
+ObjType_70:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012C02:
 	bne.b	loc_012C10
 loc_012C04:
 	ori.b	#$C,Obj_Flags(a0)
 loc_012C0A:
-	move.w	#$118,(ram_C646).w
+	move.w	#$118,(Camera_Bounds).w
 loc_012C10:
 	btst.b	#$4,(Flags_C61C).w
 loc_012C16:
@@ -26353,7 +26355,7 @@ loc_012CCC:
 	addq.w	#$4,$28(a0)
 	rts
 	dc.b	$4E,$75
-sub_012CD4:
+ObjType_72:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012CDA:
 	bne.b	loc_012CFE
@@ -26396,7 +26398,7 @@ loc_012D26:
 	dc.b	$00,$06,$03,$03,$F8,$F8,$00,$05,$00,$00,$00,$03,$00,$00,$00,$F8
 	dc.b	$00,$03,$00,$00,$00,$F8,$20,$03,$00,$00,$00,$F8,$20,$03,$00,$00
 	dc.b	$00,$F8,$40,$03,$00,$00,$00,$F8,$40,$03,$00,$00,$00,$F8
-sub_012D5E:
+ObjType_50:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012D64:
 	bne.b	loc_012D82
@@ -26469,7 +26471,7 @@ loc_012E96:
 	rts
 Longs_012E98:
 	dc.l	$0014005D,$00140069,$001400C5,$001400D1
-sub_012EA8:
+ObjType_4A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012EAE:
 	bne.b	loc_012ECA
@@ -26513,7 +26515,7 @@ loc_012F14:
 dat_012F16:
 	dc.b	$00,$04,$7C,$9A,$00,$04,$7D,$74,$00,$04
 	dc.b	$7E,$4E
-sub_012F22:
+ObjType_46:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012F28:
 	bne.b	loc_012F54
@@ -26567,7 +26569,7 @@ loc_012F96:
 	rts
 	dc.b	$61,$00
 	dc.b	$12,$98,$66,$00,$12,$6C,$4E,$75
-sub_012FB8:
+ObjType_3B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_012FBE:
 	bne.b	loc_012FE2
@@ -26600,7 +26602,7 @@ loc_012FEA:
 dat_012FEC:
 	dc.b	$00,$01,$2F,$F4
 	dc.b	$00,$01,$2F,$FA,$00,$00,$00,$10,$20,$60,$00,$00,$FF,$D8,$40,$68
-sub_013000:
+ObjType_38:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013006:
 	bne.b	loc_01302A
@@ -26647,7 +26649,7 @@ loc_01306C:
 	move.l	(Player1_Y).w,Obj_Y(a0)
 loc_01308E:
 	rts
-sub_013090:
+ObjType_47:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013096:
 	bne.b	loc_0130A4
@@ -26696,7 +26698,7 @@ loc_013104:
 	dc.b	$B1,$18,$43,$F8,$E0,$00,$4E,$B9,$00,$00,$AF,$0A,$67,$18,$50,$F8
 	dc.b	$C6,$8D,$48,$E7,$80,$40,$70,$DD,$4E,$B9,$00,$00,$A0,$68,$4C,$DF
 	dc.b	$02,$01,$60,$00,$10,$DC,$4E,$75
-sub_013148:
+ObjType_2E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01314E:
 	bne.b	loc_01317E
@@ -26743,7 +26745,7 @@ loc_0131AA:
 	dc.b	$21,$7C,$00,$03,$84,$82,$00,$14,$31,$7C,$00,$04,$00,$10,$31,$7C
 	dc.b	$FF,$FA,$00,$0C,$4A,$28,$00,$2E,$67,$0A,$44,$68,$00,$0C,$00,$28
 	dc.b	$00,$10,$00,$02,$4E,$75,$61,$00,$B0,$5C,$4E,$F9,$00,$00,$B0,$36
-sub_0131E0:
+ObjType_28:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0131E6:
 	bne.b	loc_01320E
@@ -26802,7 +26804,7 @@ dat_01327C:
 	dc.b	$C6,$75,$C6,$76
 dat_013280:
 	dc.b	$00,$01,$B7,$10,$00,$01,$B6,$AE
-sub_013288:
+ObjType_27:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01328E:
 	bne.b	loc_0132CC
@@ -26858,7 +26860,7 @@ loc_013308:
 	dc.b	$61,$00,$AF,$22,$4E,$B9,$00,$00,$B0,$36,$60,$00,$0F,$2C,$58,$68
 	dc.b	$00,$28,$11,$7C,$00,$40,$00,$2F,$00,$28,$00,$04,$00,$02,$53,$28
 	dc.b	$00,$2F,$66,$04,$42,$68,$00,$28,$4E,$75
-sub_01333A:
+ObjType_1F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013340:
 	bne.b	loc_013382
@@ -26905,7 +26907,7 @@ loc_013388:
 	move.l	#$11776,d4
 	bsr.w	sub_0113F4
 	bra.w	sub_014220
-sub_0133DA:
+ObjType_20:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0133E0:
 	bne.b	loc_01341A
@@ -26943,7 +26945,7 @@ loc_013430:
 	neg.l	Obj_VelX(a0)
 loc_013434:
 	rts
-sub_013436:
+ObjType_48:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01343C:
 	bne.b	loc_013478
@@ -27065,7 +27067,7 @@ loc_01357A:
 	move.b	$19(a0),$19(a1)
 	move.w	a0,$30(a1)
 	rts
-sub_01359E:
+ObjType_1E:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0135A4:
 	bne.b	loc_0135D6
@@ -27156,7 +27158,7 @@ loc_01365C:
 	move.l	#$3855A,Obj_FramePtr(a0)
 loc_013664:
 	bra.w	sub_014220
-sub_013668:
+ObjType_1C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01366E:
 	bne.b	loc_0136C2
@@ -27234,7 +27236,7 @@ loc_013732:
 	rts
 Words_013734:
 	dc.w	$0040,$0010,$0010,$0040,$0010,$0040,$0010
-sub_013742:
+ObjType_1B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013748:
 	bne.b	loc_013766
@@ -27349,7 +27351,7 @@ loc_013880:
 	rts
 	dc.b	$03,$00,$00,$04,$93,$20,$00,$04,$94,$3C,$00,$04,$95,$58
 	dc.b	$03,$00,$00,$04,$95,$58,$00,$04,$94,$3C,$00,$04,$93,$20
-sub_01389E:
+ObjType_18:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0138A4:
 	bne.b	loc_0138EE
@@ -27468,7 +27470,7 @@ loc_0139B8:
 	bsr.w	sub_00E1AE
 loc_0139DA:
 	rts
-sub_0139DC:
+ObjType_29:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0139E2:
 	bne.b	loc_0139EA
@@ -27496,7 +27498,7 @@ loc_0139FC:
 loc_013A32:
 	rts
 	dc.b	$00,$00,$00,$00,$49,$05,$0A,$D5,$7F,$71
-sub_013A3E:
+ObjType_3C:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013A44:
 	bne.b	loc_013A4E
@@ -27516,7 +27518,7 @@ loc_013A5E:
 	bra.w	loc_013F44
 Words_013A62:
 	dc.w	$0BD8,$0BE0,$0BE8,$0BF0
-sub_013A6A:
+ObjType_36:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013A70:
 	bne.b	loc_013A94
@@ -27560,7 +27562,7 @@ loc_013AC2:
 	bsr.w	Anim_Step
 loc_013AC6:
 	bra.w	loc_013F44
-sub_013ACA:
+ObjType_35:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013AD0:
 	bne.b	loc_013B30
@@ -27644,7 +27646,7 @@ dat_013B8E:
 	dc.b	$00,$19
 	dc.b	$00,$19,$00,$15,$00,$1D,$00,$04,$00,$22,$FF,$F4,$00,$1C,$FF,$EF
 	dc.b	$00,$19
-sub_013BA2:
+ObjType_34:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013BA8:
 	bne.b	loc_013BD2
@@ -27729,7 +27731,7 @@ loc_013C5E:
 	move.l	(a1,d3.w),Obj_FramePtr(a0)
 loc_013C64:
 	rts
-sub_013C66:
+ObjType_33:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013C6C:
 	bne.b	loc_013CA4
@@ -27798,7 +27800,7 @@ loc_013CF6:
 	bra.w	sub_00E1AE
 	dc.b	$4A,$38,$C6,$78,$66,$00,$05,$2C,$61,$00
 	dc.b	$A5,$14,$4E,$B9,$00,$00,$B0,$36,$60,$00,$05,$1E
-sub_013D2C:
+ObjType_32:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013D32:
 	bne.b	loc_013D82
@@ -27817,7 +27819,7 @@ loc_013D50:
 loc_013D54:
 	lea	(dat_00D6BA).l,a1
 loc_013D5A:
-	bsr.w	sub_00D69C
+	bsr.w	Camera_SetBounds
 loc_013D5E:
 	lea	(Objects_B).w,a1
 loc_013D62:
@@ -28238,7 +28240,7 @@ loc_01415E:
 sub_014160:
 	move.l	Obj_FramePtr(a0),d0
 loc_014164:
-	beq.w	sub_014358
+	beq.w	ObjType_00
 loc_014168:
 	movea.l	d0,a1
 loc_01416A:
@@ -28494,11 +28496,11 @@ loc_0142F4:
 loc_0142F8:
 	tst.b	(ram_C5BE).w
 loc_0142FC:
-	bne.b	sub_014358
+	bne.b	ObjType_00
 loc_0142FE:
 	btst.b	#$6,(Flags_C61C).w
 loc_014304:
-	bne.b	sub_014358
+	bne.b	ObjType_00
 loc_014306:
 	lea	(Objects_B).w,a0
 loc_01430A:
@@ -28557,82 +28559,82 @@ loc_014352:
 	move.l	(a7)+,d7
 loc_014354:
 	dbra	d7,loc_014332
-sub_014358:
+ObjType_00:
 	rts
 ObjectTypeTable:
-	dc.l	sub_014358,sub_00CD78,sub_00D0BC,sub_00ED82
-	dc.l	sub_00F338,sub_00F844,sub_00F3D8,sub_00F40C
-	dc.l	sub_00F4CE,sub_010F82,sub_011070,sub_011216
-	dc.l	sub_011284,sub_01131A,sub_01160A,sub_01104C
-	dc.l	sub_010208,sub_010270,sub_0104C0,sub_00EE5E
-	dc.l	sub_00EEE4,sub_00F102,sub_01234E,sub_0120E2
-	dc.l	sub_01389E,sub_011E86,sub_01208E,sub_013742
-	dc.l	sub_013668,sub_011E5A,sub_01359E,sub_01333A
-	dc.l	sub_0133DA,sub_01195A,sub_0118CE,sub_00EC88
-	dc.l	sub_011D92,sub_00EBB8,sub_0101B6,sub_013288
-	dc.l	sub_0131E0,sub_0139DC,sub_010992,sub_012524
-	dc.l	sub_00EA5E,sub_00E9D0,sub_013148,sub_014358
-	dc.l	sub_0107DE,sub_01072E,sub_013D2C,sub_013C66
-	dc.l	sub_013BA2,sub_013ACA,sub_013A6A,sub_010188
-	dc.l	sub_013000,sub_00E950,sub_00E8EC,sub_012FB8
-	dc.l	sub_013A3E,sub_004A4C,sub_004B0A,sub_00520E
-	dc.l	sub_005402,sub_005448,sub_0054B6,sub_0059D0
-	dc.l	sub_00592E,sub_00592C,sub_012F22,sub_013090
-	dc.l	sub_013436,dat_010652,sub_012EA8,sub_00FFF8
-	dc.l	sub_00FE8A,sub_00FE24,sub_010076,sub_00BCBE
-	dc.l	sub_012D5E,sub_00EFF6,sub_00E620,sub_00BDCA
-	dc.l	sub_00C8C6,sub_005E7C,sub_006116,sub_006518
-	dc.l	sub_00090E,sub_0060B2,sub_00C9DC,sub_00C7CC
-	dc.l	sub_00C15A,sub_007E0A,sub_011BFA,sub_012476
-	dc.l	sub_012636,sub_011B8E,sub_00BD06,sub_00BD84
-	dc.l	sub_00C936,sub_00C998,sub_01266C,sub_01269A
-	dc.l	sub_0129BE,sub_012A24,sub_0123E0,sub_012AD2
-	dc.l	sub_012B46,sub_006CB6,sub_006E0E,sub_00722A
-	dc.l	sub_012BFC,sub_0005CC,sub_012CD4,sub_01298E
-	dc.l	sub_014358,sub_014358,sub_014358,sub_014358
-	dc.l	sub_014358,sub_014358,sub_014358,sub_014358
-	dc.l	sub_014358,sub_014358,sub_014358,sub_014358
-	dc.l	sub_016262,sub_01705C,sub_01705C,sub_017768
-	dc.l	sub_01797A,sub_0181AA,sub_0178F8,sub_017146
-	dc.l	sub_018238,sub_01A478,sub_01A41A,sub_01AFF2
-	dc.l	sub_022392,sub_017AD6,sub_01A3E4,Object_AnimTick
-	dc.l	sub_01B42C,sub_01B496,sub_01B542,sub_01B5F6
-	dc.l	sub_01843E,sub_0163FA,sub_0162FC,sub_01642C
-	dc.l	sub_021986,sub_01E9BE,sub_01E6B4,sub_01E8EE
-	dc.l	sub_01A448,sub_01A432,sub_01D834,sub_01B26E
-	dc.l	sub_01BACC,sub_01BD4C,sub_01BDB8,sub_01BE3E
-	dc.l	sub_01C844,sub_01C8DE,sub_01C016,sub_01D4EE
-	dc.l	sub_01D59A,sub_01D6F2,sub_01D7A0,sub_01DB82
-	dc.l	sub_01DC6E,sub_01F316,sub_01F4C6,sub_01C222
-	dc.l	sub_021F7C,sub_02215C,sub_02245A,sub_0224CA
-	dc.l	sub_022092,sub_021668,sub_022D50,sub_023596
-	dc.l	sub_023116,sub_0232AE,sub_01852E,sub_023472
-	dc.l	sub_018534,sub_02350E,sub_02C972,sub_02306A
-	dc.l	sub_01F666,sub_01F6EC,sub_01F720,sub_01F982
-	dc.l	sub_01EADA,sub_01EB06,sub_020730,sub_020730
-	dc.l	sub_0207D2,sub_020B7E,sub_020C40,sub_01BA76
-	dc.l	sub_01D2F2,sub_01D2FC,sub_01D306,sub_021D56
-	dc.l	sub_0280B4,sub_0281D0,sub_0282B8,sub_028376
-	dc.l	sub_01B334,sub_01D94E,sub_01DA90,sub_026098
-	dc.l	sub_026186,sub_0264EE,sub_026790,sub_0265AC
-	dc.l	sub_024DA4,sub_024F5C,sub_02518E,sub_025284
-	dc.l	sub_02536A,sub_025458,sub_0257EE,sub_025810
-	dc.l	sub_026CC8,sub_026D1E,sub_026D9E,sub_026E9A
-	dc.l	sub_027162,sub_02728E,sub_027398,sub_02751C
-	dc.l	sub_02770E,sub_027796,sub_027892,sub_02C9EE
-	dc.l	sub_0278CC,sub_025764,sub_0257AE,sub_01B766
-	dc.l	sub_01B810,sub_02239E,sub_01D79A,sub_01BABE
-	dc.l	sub_01BAC6,sub_021E12,sub_029082,sub_0290F8
-	dc.l	sub_014358,sub_014358,sub_028E52,sub_028EAA
-	dc.l	sub_02885C,sub_028894,sub_01CA2C,sub_01CAAC
-	dc.l	sub_01CE08,sub_01CE88,sub_01CC24,sub_01CD10
-	dc.l	sub_02933A,sub_0294E0,sub_029714,sub_02A3EE
-	dc.l	sub_02A746,sub_02A8A6,sub_02A8F6,sub_02A9FA
-	dc.l	sub_02B27C,sub_02B466,sub_02B51E,sub_02B66E
-	dc.l	sub_02B790,sub_029914,sub_029B1C,sub_029CF8
-	dc.l	sub_029D0E,sub_029E22,sub_02B90C,sub_02BB1C
-	dc.l	sub_02BD1C,sub_02BD86,sub_02C2E2,sub_02C44E
-	dc.l	sub_02BF40,sub_02C0C2,sub_01B8AC,sub_02BE60
+	dc.l	ObjType_00,ObjType_01_Player,ObjType_02,ObjType_03
+	dc.l	ObjType_04,ObjType_05,ObjType_06,ObjType_07
+	dc.l	ObjType_08,ObjType_09,ObjType_0A,ObjType_0B
+	dc.l	ObjType_0C,ObjType_0D,ObjType_0E,ObjType_0F
+	dc.l	ObjType_10,ObjType_11,ObjType_12,ObjType_13
+	dc.l	ObjType_14,ObjType_15,ObjType_16,ObjType_17
+	dc.l	ObjType_18,ObjType_19,ObjType_1A,ObjType_1B
+	dc.l	ObjType_1C,ObjType_1D,ObjType_1E,ObjType_1F
+	dc.l	ObjType_20,ObjType_21,ObjType_22,ObjType_23
+	dc.l	ObjType_24,ObjType_25,ObjType_26,ObjType_27
+	dc.l	ObjType_28,ObjType_29,ObjType_2A,ObjType_2B
+	dc.l	ObjType_2C,ObjType_2D,ObjType_2E,ObjType_00
+	dc.l	ObjType_30,ObjType_31,ObjType_32,ObjType_33
+	dc.l	ObjType_34,ObjType_35,ObjType_36,ObjType_37
+	dc.l	ObjType_38,ObjType_39,ObjType_3A,ObjType_3B
+	dc.l	ObjType_3C,ObjType_3D,ObjType_3E,ObjType_3F
+	dc.l	ObjType_40,ObjType_41,ObjType_42,ObjType_43
+	dc.l	ObjType_44,ObjType_45,ObjType_46,ObjType_47
+	dc.l	ObjType_48,dat_010652,ObjType_4A,ObjType_4B
+	dc.l	ObjType_4C,ObjType_4D,ObjType_4E,ObjType_4F
+	dc.l	ObjType_50,ObjType_51,ObjType_52,ObjType_53
+	dc.l	ObjType_54,ObjType_55,ObjType_56,ObjType_57
+	dc.l	ObjType_58,ObjType_59,ObjType_5A,ObjType_5B
+	dc.l	ObjType_5C,ObjType_5D,ObjType_5E,ObjType_5F
+	dc.l	ObjType_60,ObjType_61,ObjType_62,ObjType_63
+	dc.l	ObjType_64,ObjType_65,ObjType_66,ObjType_67
+	dc.l	ObjType_68,ObjType_69,ObjType_6A,ObjType_6B
+	dc.l	ObjType_6C,ObjType_6D,ObjType_6E,ObjType_6F
+	dc.l	ObjType_70,ObjType_71,ObjType_72,ObjType_73
+	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
+	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
+	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
+	dc.l	ObjType_80,ObjType_81,ObjType_81,ObjType_83
+	dc.l	ObjType_84,ObjType_85,ObjType_86,ObjType_87
+	dc.l	ObjType_88,ObjType_89,ObjType_8A,ObjType_8B
+	dc.l	ObjType_8C,ObjType_8D,ObjType_8E,Object_AnimTick
+	dc.l	ObjType_90,ObjType_91,ObjType_92,ObjType_93
+	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97
+	dc.l	ObjType_98,ObjType_99,ObjType_9A,ObjType_9B
+	dc.l	ObjType_9C,ObjType_9D,ObjType_9E,ObjType_9F
+	dc.l	ObjType_A0,ObjType_A1,ObjType_A2,ObjType_A3
+	dc.l	ObjType_A4,ObjType_A5,ObjType_A6,ObjType_A7
+	dc.l	ObjType_A8,ObjType_A9,ObjType_AA,ObjType_AB
+	dc.l	ObjType_AC,ObjType_AD,ObjType_AE,ObjType_AF
+	dc.l	ObjType_B0,ObjType_B1,ObjType_B2,ObjType_B3
+	dc.l	ObjType_B4,ObjType_B5,ObjType_B6,ObjType_B7
+	dc.l	ObjType_B8,ObjType_B9,ObjType_BA,ObjType_BB
+	dc.l	ObjType_BC,ObjType_BD,ObjType_BE,ObjType_BF
+	dc.l	ObjType_C0,ObjType_C1,ObjType_C2,ObjType_C3
+	dc.l	ObjType_C4,ObjType_C5,ObjType_C6,ObjType_C6
+	dc.l	ObjType_C8,ObjType_C9,ObjType_CA,ObjType_CB
+	dc.l	ObjType_CC,ObjType_CD,ObjType_CE,ObjType_CF
+	dc.l	ObjType_D0,ObjType_D1,ObjType_D2,ObjType_D3
+	dc.l	ObjType_D4,ObjType_D5,ObjType_D6,ObjType_D7
+	dc.l	ObjType_D8,ObjType_D9,ObjType_DA,ObjType_DB
+	dc.l	ObjType_DC,ObjType_DD,ObjType_DE,ObjType_DF
+	dc.l	ObjType_E0,ObjType_E1,ObjType_E2,ObjType_E3
+	dc.l	ObjType_E4,ObjType_E5,ObjType_E6,ObjType_E7
+	dc.l	ObjType_E8,ObjType_E9,ObjType_EA,ObjType_EB
+	dc.l	ObjType_EC,ObjType_ED,ObjType_EE,ObjType_EF
+	dc.l	ObjType_F0,ObjType_F1,ObjType_F2,ObjType_F3
+	dc.l	ObjType_F4,ObjType_F5,ObjType_F6,ObjType_F7
+	dc.l	ObjType_F8,ObjType_F9,ObjType_FA,ObjType_FB
+	dc.l	ObjType_00,ObjType_00,ObjType_FE,ObjType_FF
+	dc.l	ObjType_100,ObjType_101,ObjType_102,ObjType_103
+	dc.l	ObjType_104,ObjType_105,ObjType_106,ObjType_107
+	dc.l	ObjType_108,ObjType_109,ObjType_10A,ObjType_10B
+	dc.l	ObjType_10C,ObjType_10D,ObjType_10E,ObjType_10F
+	dc.l	ObjType_110,ObjType_111,ObjType_112,ObjType_113
+	dc.l	ObjType_114,ObjType_115,ObjType_116,ObjType_117
+	dc.l	ObjType_118,ObjType_119,ObjType_11A,ObjType_11B
+	dc.l	ObjType_11C,ObjType_11D,ObjType_11E,ObjType_11F
+	dc.l	ObjType_120,ObjType_121,ObjType_122,ObjType_123
 dat_0147EA:
 	dc.l	$0001482E,dat_014CCE,dat_014F9E,dat_01513E
 	dc.l	dat_0152DE,dat_0152DE,dat_01542E,dat_01542E
@@ -29227,7 +29229,7 @@ loc_01625C:
 	dbra	d7,loc_016246
 loc_016260:
 	rts
-sub_016262:
+ObjType_80:
 	move.l	#$87028,Obj_FramePtr(a0)
 loc_01626A:
 	move.b	#$60,Obj_TileAttr(a0)
@@ -29300,7 +29302,7 @@ dat_0162D0:
 dat_0162E4:
 	dc.b	$08,$08,$08,$08,$06,$06,$0E,$06,$05,$05,$11,$05
 	dc.b	$08,$08,$08,$08,$07,$07,$07,$07,$00,$00,$00,$00
-sub_0162FC:
+ObjType_96:
 	bset.b	#$0,Obj_Flags(a0)
 loc_016302:
 	bne.w	loc_016310
@@ -29440,7 +29442,7 @@ loc_0163F4:
 	subq.b	#$1,Obj_State(a0)
 loc_0163F8:
 	rts
-sub_0163FA:
+ObjType_95:
 	bset.b	#$2,Obj_Flags(a0)
 loc_016400:
 	moveq	#$3,d0
@@ -29464,7 +29466,7 @@ loc_016426:
 	jmp	Object_AnimTick(pc)
 loc_01642A:
 	rts
-sub_01642C:
+ObjType_97:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_016432:
 	jsr	(Collision_HitPlayer).l
@@ -29485,7 +29487,7 @@ loc_016454:
 loc_016458:
 	bsr.w	sub_016534
 loc_01645C:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_016460:
 	moveq	#$0,d0
 loc_016462:
@@ -29579,7 +29581,7 @@ loc_016504:
 loc_016508:
 	andi.b	#$1F,d0
 loc_01650C:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_016510:
 	beq.b	loc_0164F8
 loc_016512:
@@ -29589,14 +29591,14 @@ loc_016516:
 loc_01651A:
 	bcc.b	loc_016528
 loc_01651C:
-	addq.b	#$1,$35(a0)
+	addq.b	#$1,Obj_Direction(a0)
 loc_016520:
-	andi.b	#$1F,$35(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 loc_016526:
 	rts
 loc_016528:
-	subq.b	#$1,$35(a0)
-	andi.b	#$1F,$35(a0)
+	subq.b	#$1,Obj_Direction(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 	rts
 sub_016534:
 	tst.b	$2A(a0)
@@ -29679,7 +29681,7 @@ loc_0165DA:
 loc_0165E8:
 	bclr.b	#$3,Obj_Flags(a0)
 	bsr.b	sub_016602
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	add.w	d0,d0
 	lea	ObjData_016C14(pc),a1
 	adda.w	(a1,d0.w),a1
@@ -29945,7 +29947,7 @@ ObjData_016FFC:
 	dc.b	$00,$0C,$00,$08,$7A,$D4,$00,$C0,$00,$04,$BF,$40,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$AE,$4A,$00,$0C,$00,$08,$7A,$B6,$00,$C0,$00,$04
 	dc.b	$BF,$40,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
-sub_01705C:
+ObjType_81:
 	lea	(Objects_A).w,a1
 loc_017060:
 	jsr	Object_DirectionTo(pc)
@@ -29988,7 +29990,7 @@ loc_0170A0:
 loc_0170A4:
 	bra.w	loc_01712C
 loc_0170A8:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_0170AC:
 	moveq	#$0,d7
 loc_0170AE:
@@ -30022,13 +30024,13 @@ loc_0170DE:
 loc_0170E0:
 	bclr.b	#$0,$55(a0)
 loc_0170E6:
-	move.b	#$4,$3B(a0)
+	move.b	#$4,Obj_SpeedClass(a0)
 loc_0170EC:
 	cmpi.b	#$45,$54(a0)
 loc_0170F2:
 	bne.b	loc_0170FA
 loc_0170F4:
-	move.b	#$24,$3B(a0)
+	move.b	#$24,Obj_SpeedClass(a0)
 loc_0170FA:
 	bset.b	#$6,$56(a0)
 loc_017100:
@@ -30042,7 +30044,7 @@ loc_01710C:
 loc_01710E:
 	bset.b	#$0,$55(a0)
 loc_017114:
-	move.b	#$0,$3B(a0)
+	move.b	#$0,Obj_SpeedClass(a0)
 loc_01711A:
 	bset.b	#$6,$56(a0)
 loc_017120:
@@ -30052,16 +30054,16 @@ loc_017126:
 loc_01712C:
 	btst.b	#$2,$55(a0)
 loc_017132:
-	bne.b	sub_017146
+	bne.b	ObjType_87
 loc_017134:
 	btst.b	#$6,$56(a0)
 loc_01713A:
-	beq.b	sub_017146
+	beq.b	ObjType_87
 loc_01713C:
 	bclr.b	#$6,$56(a0)
 loc_017142:
 	bsr.w	sub_017720
-sub_017146:
+ObjType_87:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_01714C:
 	jsr	(Collision_HitPlayer).l
@@ -30320,7 +30322,7 @@ loc_01730E:
 sub_017310:
 	moveq	#$0,d0
 loc_017312:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_017316:
 	andi.b	#$1C,d0
 loc_01731A:
@@ -30360,7 +30362,7 @@ loc_01734E:
 loc_017350:
 	move.w	$4(a2),d0
 loc_017354:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_017358:
 	clr.b	$57(a0)
 loc_01735C:
@@ -30454,7 +30456,7 @@ loc_0173E2:
 	subq.b	#$1,$2A(a0)
 	rts
 sub_0173EA:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_0173EE:
 	andi.b	#$18,d0
 loc_0173F2:
@@ -30503,7 +30505,7 @@ loc_017428:
 loc_01742C:
 	lea	dat_017B96(pc),a4
 loc_017430:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_017434:
 	andi.w	#$1E,d0
 loc_017438:
@@ -30563,7 +30565,7 @@ loc_017494:
 loc_01749A:
 	lea	dat_017B96(pc),a4
 loc_01749E:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_0174A2:
 	andi.w	#$1E,d0
 loc_0174A6:
@@ -30685,7 +30687,7 @@ loc_017564:
 loc_017568:
 	bne.b	loc_017584
 loc_01756A:
-	move.b	Obj_State(a0),$35(a0)
+	move.b	Obj_State(a0),Obj_Direction(a0)
 loc_017570:
 	bclr.b	#$3,$55(a0)
 loc_017576:
@@ -30741,7 +30743,7 @@ loc_0175CE:
 loc_0175D2:
 	andi.b	#$1F,d0
 loc_0175D6:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_0175DA:
 	beq.b	loc_0175B8
 loc_0175DC:
@@ -30753,17 +30755,17 @@ loc_0175E4:
 loc_0175E6:
 	bclr.b	#$2,$56(a0)
 loc_0175EC:
-	addq.b	#$1,$35(a0)
+	addq.b	#$1,Obj_Direction(a0)
 loc_0175F0:
-	andi.b	#$1F,$35(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 loc_0175F6:
 	rts
 loc_0175F8:
 	bset.b	#$2,$56(a0)
 loc_0175FE:
-	subq.b	#$1,$35(a0)
+	subq.b	#$1,Obj_Direction(a0)
 loc_017602:
-	andi.b	#$1F,$35(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 loc_017608:
 	rts
 sub_01760A:
@@ -30829,7 +30831,7 @@ loc_017674:
 loc_01767A:
 	beq.b	loc_017682
 loc_01767C:
-	move.b	Obj_State(a0),$35(a0)
+	move.b	Obj_State(a0),Obj_Direction(a0)
 loc_017682:
 	bset.b	#$1,$55(a0)
 loc_017688:
@@ -30878,7 +30880,7 @@ loc_0176D0:
 loc_0176FC:
 	bclr.b	#$2,$55(a0)
 loc_017702:
-	move.b	Obj_State(a0),$35(a0)
+	move.b	Obj_State(a0),Obj_Direction(a0)
 loc_017708:
 	bset.b	#$6,$56(a0)
 loc_01770E:
@@ -30922,7 +30924,7 @@ loc_01775C:
 	move.b	#$20,$37(a0)
 loc_017762:
 	move.b	#$2,$3E(a0)
-sub_017768:
+ObjType_83:
 	move.w	#$23C,(a0)
 loc_01776C:
 	movea.l	$58(a0),a2
@@ -30982,7 +30984,7 @@ loc_0177DC:
 loc_0177E0:
 	add.w	d0,d0
 loc_0177E2:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_0177E6:
 	move.b	d0,$635(a0)
 loc_0177EA:
@@ -31108,10 +31110,10 @@ loc_0178E8:
 loc_0178EC:
 	move.b	d0,$28(a0)
 loc_0178F0:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_0178F4:
 	bra.w	sub_017720
-sub_0178F8:
+ObjType_86:
 	moveq	#$2,d0
 loc_0178FA:
 	jsr	Alloc_C0E0Slot(pc)
@@ -31156,7 +31158,7 @@ loc_017956:
 loc_01795A:
 	andi.b	#$1E,d0
 loc_01795E:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_017962:
 	move.b	d0,Obj_State(a0)
 loc_017966:
@@ -31167,7 +31169,7 @@ loc_017972:
 	lea	ObjData_0155C0(pc),a1
 loc_017976:
 	jmp	Object_RunAnimScript(pc)
-sub_01797A:
+ObjType_84:
 	subq.b	#$1,$2B(a0)
 loc_01797E:
 	jsr	(Object_GetHitbox_FromSize).l
@@ -31193,7 +31195,7 @@ loc_0179AC:
 loc_0179B0:
 	andi.b	#$1E,d0
 loc_0179B4:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_0179B8:
 	move.b	d0,Obj_State(a0)
 loc_0179BC:
@@ -31224,7 +31226,7 @@ loc_0179E6:
 	jmp	Object_RunAnimScript(pc)
 loc_0179EA:
 	clr.b	Obj_State(a0)
-	clr.b	$35(a0)
+	clr.b	Obj_Direction(a0)
 	bset.b	#$4,$55(a0)
 	bsr.w	sub_017720
 	move.w	#$208,(a0)
@@ -31331,7 +31333,7 @@ loc_017ACE:
 	movea.l	(a1,d0.w),a1
 loc_017AD2:
 	jmp	Object_RunAnimScript(pc)
-sub_017AD6:
+ObjType_8D:
 	movea.l	a0,a1
 loc_017AD8:
 	suba.w	#$600,a1
@@ -31680,7 +31682,7 @@ loc_0181A6:
 	moveq	#-$1,d7
 loc_0181A8:
 	rts
-sub_0181AA:
+ObjType_85:
 	movem.w	$36(a0),d0
 loc_0181B0:
 	subq.l	#$8,d0
@@ -31691,7 +31693,7 @@ loc_0181B6:
 loc_0181B8:
 	add.l	d0,Obj_Timer(a0)
 loc_0181BC:
-	ble.b	sub_018238
+	ble.b	ObjType_88
 loc_0181BE:
 	neg.l	d0
 loc_0181C0:
@@ -31709,9 +31711,9 @@ loc_0181D2:
 loc_0181D8:
 	ble.b	loc_0181F2
 loc_0181DA:
-	andi.b	#$4,$35(a0)
+	andi.b	#$4,Obj_Direction(a0)
 loc_0181E0:
-	bset.b	#$2,$35(a0)
+	bset.b	#$2,Obj_Direction(a0)
 loc_0181E6:
 	bne.b	loc_018226
 loc_0181E8:
@@ -31719,9 +31721,9 @@ loc_0181E8:
 loc_0181F0:
 	bra.b	loc_018220
 loc_0181F2:
-	andi.b	#$2,$35(a0)
+	andi.b	#$2,Obj_Direction(a0)
 loc_0181F8:
-	bset.b	#$1,$35(a0)
+	bset.b	#$1,Obj_Direction(a0)
 loc_0181FE:
 	bne.b	loc_018226
 loc_018200:
@@ -31729,9 +31731,9 @@ loc_018200:
 loc_018208:
 	bra.b	loc_018220
 loc_01820A:
-	andi.b	#$1,$35(a0)
+	andi.b	#$1,Obj_Direction(a0)
 loc_018210:
-	bset.b	#$0,$35(a0)
+	bset.b	#$0,Obj_Direction(a0)
 loc_018216:
 	bne.b	loc_018226
 loc_018218:
@@ -31748,7 +31750,7 @@ loc_018230:
 	move.l	d0,Obj_VelY(a0)
 loc_018234:
 	jmp	Object_AnimTick(pc)
-sub_018238:
+ObjType_88:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01823E:
 	bne.b	loc_018274
@@ -31826,7 +31828,7 @@ ObjData_018406:
 	dc.b	$00,$00,$00,$06,$00,$03,$A5,$BE,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$82,$88,$00,$06,$00,$03,$A5,$D4,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$06,$00,$03,$A5,$F0,$00,$00,$00,$00,$00,$00,$FF,$FE
-sub_01843E:
+ObjType_94:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_018444:
 	jsr	(Collision_HitPlayer).l
@@ -31853,7 +31855,7 @@ loc_01847A:
 	beq.b	loc_018486
 	addq.w	#$8,d0
 loc_018486:
-	cmpi.b	#$10,$35(a0)
+	cmpi.b	#$10,Obj_Direction(a0)
 	bcs.b	loc_018490
 	addq.w	#$4,d0
 loc_018490:
@@ -31884,11 +31886,11 @@ loc_018528:
 	lea	dat_018C60(pc),a3
 loc_01852C:
 	bra.b	loc_018538
-sub_01852E:
+ObjType_BA:
 	lea	dat_018BB4(pc),a3
 loc_018532:
 	bra.b	loc_018538
-sub_018534:
+ObjType_BC:
 	lea	dat_018D7C(pc),a3
 loc_018538:
 	moveq	#$0,d0
@@ -31917,7 +31919,7 @@ loc_018564:
 loc_018568:
 	move.b	#$FF,$55(a0)
 loc_01856E:
-	move.b	#$10,$3B(a0)
+	move.b	#$10,Obj_SpeedClass(a0)
 loc_018574:
 	move.b	#$60,Obj_TileAttr(a0)
 loc_01857A:
@@ -32790,7 +32792,7 @@ loc_01A266:
 loc_01A268:
 	move.l	a1,-(a7)
 loc_01A26A:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_01A26E:
 	movea.l	(a7)+,a1
 loc_01A270:
@@ -32967,7 +32969,7 @@ dat_01A3B6:
 Words_01A3C6:
 	dc.w	$0000,$0000,$0219,$0000,$01BE,$01BE,$0000,$0000
 	dc.w	$02EA,$02A6,$015D,$01F4,$01D6,$028D,$02EE
-sub_01A3E4:
+ObjType_8E:
 	subq.b	#$1,$3E(a0)
 loc_01A3E8:
 	beq.b	loc_01A40C
@@ -32995,7 +32997,7 @@ loc_01A410:
 	lea	ObjData_01A6A2(pc),a1
 loc_01A414:
 	jmp	(Object_RunAnimScript).l
-sub_01A41A:
+ObjType_8A:
 	subq.b	#$1,$3E(a0)
 loc_01A41E:
 	beq.b	loc_01A40C
@@ -33007,7 +33009,7 @@ loc_01A42C:
 	bne.b	loc_01A40C
 loc_01A42E:
 	jmp	Object_AnimTick(pc)
-sub_01A432:
+ObjType_9D:
 	subq.b	#$1,$3E(a0)
 loc_01A436:
 	beq.b	loc_01A498
@@ -33017,7 +33019,7 @@ loc_01A43E:
 	jsr	(Collision_HitPlayer).l
 loc_01A444:
 	jmp	Object_AnimTick(pc)
-sub_01A448:
+ObjType_9C:
 	subq.b	#$1,$3E(a0)
 loc_01A44C:
 	beq.b	loc_01A498
@@ -33043,7 +33045,7 @@ loc_01A472:
 	bne.b	loc_01A498
 loc_01A474:
 	jmp	Object_AnimTick(pc)
-sub_01A478:
+ObjType_89:
 	subq.b	#$1,$3E(a0)
 loc_01A47C:
 	beq.b	loc_01A498
@@ -33572,7 +33574,7 @@ loc_01ADBC:
 loc_01ADBE:
 	move.b	(a1)+,$3A(a0)
 loc_01ADC2:
-	move.b	(a1)+,$3B(a0)
+	move.b	(a1)+,Obj_SpeedClass(a0)
 loc_01ADC6:
 	move.b	(a1)+,$3C(a0)
 loc_01ADCA:
@@ -33660,14 +33662,14 @@ loc_01AE64:
 	dc.b	$11,$7C,$00,$09,$00,$3E,$60,$06
 	dc.b	$11,$7C,$00,$11,$00,$3E,$53,$28,$00,$3E,$67,$0E,$0A,$28,$00,$04
 	dc.b	$00,$02,$43,$FA,$4F,$C2,$4E,$FA,$00,$92,$4E,$FA,$01,$76
-sub_01AE8E:
+Object_SetVelocityFromDir:
 	moveq	#$0,d0
 loc_01AE90:
-	move.b	$3B(a0),d0
+	move.b	Obj_SpeedClass(a0),d0
 loc_01AE94:
 	movea.l	dat_01AEB8(pc,d0.w),a1
 loc_01AE98:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_01AE9C:
 	andi.w	#$1F,d0
 loc_01AEA0:
@@ -33836,14 +33838,14 @@ loc_01AFDC:
 loc_01AFE0:
 	beq.b	loc_01AFEA
 loc_01AFE2:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_01AFE6:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_01AFEA:
 	move.w	Obj_Y(a0),Obj_SortKey(a0)
 loc_01AFF0:
 	rts
-sub_01AFF2:
+ObjType_8B:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_01AFF8:
 	jsr	(Collision_HitPlayer).l
@@ -34218,7 +34220,7 @@ loc_01B264:
 	rts
 dat_01B266:
 	dc.b	$00,$00,$00,$0A,$00,$14,$FF,$FF
-sub_01B26E:
+ObjType_9F:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B274:
 	bne.b	loc_01B298
@@ -34239,7 +34241,7 @@ loc_01B290:
 loc_01B294:
 	jmp	loc_021636(pc)
 loc_01B298:
-	jsr	sub_021668(pc)
+	jsr	ObjType_B5(pc)
 	beq.b	loc_01B2A0
 	clr.l	(a0)
 loc_01B2A0:
@@ -34303,7 +34305,7 @@ dat_01B2F0:
 	dc.b	$00,$00,$00,$EA,$01,$D4,$02,$BE,$03,$A8,$00,$05,$00,$00,$00,$A8
 	dc.b	$01,$F8,$02,$A0,$03,$48,$03,$F0,$00,$01,$00,$00,$00,$00,$00,$01
 	dc.b	$00,$00,$00,$90
-sub_01B334:
+ObjType_D4:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B33A:
 	bne.b	loc_01B35A
@@ -34402,7 +34404,7 @@ loc_01B418:
 	rts
 	dc.b	$2F,$08,$41,$F8,$F0,$00
 	dc.b	$4E,$B9,$00,$01,$B0,$02,$20,$5F,$42,$90,$4E,$75
-sub_01B42C:
+ObjType_90:
 	tst.b	$3F(a0)
 loc_01B430:
 	bne.b	loc_01B450
@@ -34429,7 +34431,7 @@ loc_01B454:
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FA,$FF,$C8,$00,$08,$FF,$FC,$00,$00
 	dc.b	$00,$00,$00,$18,$FF,$FC,$00,$00,$00,$00,$00,$00,$00,$00,$00,$07
 	dc.b	$FF,$E2,$00,$07,$FF,$E2
-sub_01B496:
+ObjType_91:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B49C:
 	bne.b	loc_01B4B0
@@ -34511,7 +34513,7 @@ dat_01B52E:
 	dc.l	sub_018664,sub_01866A,sub_018670,sub_018676
 	dc.b	$00,$00
 	dc.b	$00,$00
-sub_01B542:
+ObjType_92:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B548:
 	bne.b	loc_01B55C
@@ -34577,7 +34579,7 @@ loc_01B5C2:
 dat_01B5E8:
 	dc.b	$F9,$32,$FF,$90,$00,$00,$FF,$78
 	dc.b	$00,$00,$01,$38,$00,$00
-sub_01B5F6:
+ObjType_93:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B5FC:
 	bne.b	loc_01B610
@@ -34707,7 +34709,7 @@ loc_01B760:
 	subq.b	#$1,$3F(a0)
 loc_01B764:
 	rts
-sub_01B766:
+ObjType_F3:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B76C:
 	bne.b	loc_01B780
@@ -34789,7 +34791,7 @@ dat_01B7F4:
 dat_01B7FC:
 	dc.b	$00,$01,$85,$28
 	dc.b	$00,$01,$85,$28,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-sub_01B810:
+ObjType_F4:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01B816:
 	bne.b	loc_01B82A
@@ -34870,7 +34872,7 @@ loc_01B89A:
 	dc.b	$01,$48,$FF,$F8
 dat_01B8A4:
 	dc.b	$00,$01,$85,$28,$00,$01,$85,$1C
-sub_01B8AC:
+ObjType_122:
 	lea	(ram_F060).w,a3
 loc_01B8B0:
 	move.w	$4(a3),d0
@@ -34980,7 +34982,7 @@ dat_01B9CA:
 	dc.b	$00,$C0,$00,$04,$68,$40,$80,$00,$00,$FF,$00,$06,$00,$08,$70,$8C
 	dc.b	$00,$C0,$00,$04,$67,$80,$80,$00,$00,$FF,$00,$00,$00,$01,$B7,$06
 	dc.b	$FF,$FF,$00,$01,$4B,$B6
-sub_01BA76:
+ObjType_CB:
 	moveq	#$0,d0
 loc_01BA78:
 	move.w	(ram_C328).w,d0
@@ -35009,13 +35011,13 @@ loc_01BA9C:
 dat_01BAA0:
 	dc.b	$00,$00,$00,$00,$22,$49,$00,$00,$22,$16,$22,$16,$00,$00,$00,$00
 	dc.b	$22,$20,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$21,$D1
-sub_01BABE:
+ObjType_F7:
 	subi.w	#$48,Obj_X(a0)
 loc_01BAC4:
-	bra.b	sub_01BACC
-sub_01BAC6:
+	bra.b	ObjType_A0
+ObjType_F8:
 	addi.w	#$48,Obj_X(a0)
-sub_01BACC:
+ObjType_A0:
 	moveq	#$0,d0
 loc_01BACE:
 	move.b	$19(a0),$49(a0)
@@ -35213,7 +35215,7 @@ loc_01BC7C:
 loc_01BC80:
 	move.b	#$60,Obj_TileAttr(a0)
 loc_01BC86:
-	move.b	#$10,$35(a0)
+	move.b	#$10,Obj_Direction(a0)
 loc_01BC8C:
 	bclr.b	#$3,Obj_Flags(a0)
 loc_01BC92:
@@ -35249,7 +35251,7 @@ dat_01BD2E:
 	dc.b	$00,$00
 	dc.b	$00,$00,$02,$8D,$00,$00,$02,$5A,$02,$5A,$00,$00,$00,$00,$02,$74
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$25
-sub_01BD4C:
+ObjType_A1:
 	addq.w	#$1,$58(a0)
 loc_01BD50:
 	cmpi.w	#$40,$58(a0)
@@ -35263,7 +35265,7 @@ loc_01BD60:
 	bsr.w	sub_01C1D4
 loc_01BD64:
 	beq.b	loc_01BD6A
-	bra.w	sub_01C222
+	bra.w	ObjType_AF
 loc_01BD6A:
 	move.l	Obj_VelY(a0),d0
 loc_01BD6E:
@@ -35291,7 +35293,7 @@ loc_01BD9C:
 	move.b	#$A,$5D(a0)
 	move.w	#$288,(a0)
 	bra.b	loc_01BD7A
-sub_01BDB8:
+ObjType_A2:
 	clr.l	Obj_VelY(a0)
 loc_01BDBC:
 	clr.l	Obj_VelX(a0)
@@ -35329,7 +35331,7 @@ loc_01BDFE:
 	bsr.w	sub_01C1D4
 loc_01BE02:
 	beq.b	loc_01BE08
-	bra.w	sub_01C222
+	bra.w	ObjType_AF
 loc_01BE08:
 	jmp	Object_AnimTick(pc)
 loc_01BE0C:
@@ -35349,7 +35351,7 @@ loc_01BE26:
 	jsr	Object_Free(pc)
 	movea.l	a2,a0
 	jmp	Object_Free(pc)
-sub_01BE3E:
+ObjType_A3:
 	clr.l	Obj_VelY(a0)
 loc_01BE42:
 	clr.l	Obj_VelX(a0)
@@ -35365,7 +35367,7 @@ loc_01BE54:
 	bsr.w	sub_01C1D4
 loc_01BE58:
 	beq.w	loc_01BE64
-	bra.w	sub_01C222
+	bra.w	ObjType_AF
 	dc.b	$4E,$FA,$F0,$AC
 loc_01BE64:
 	tst.b	$5E(a0)
@@ -35390,7 +35392,7 @@ loc_01BE8C:
 loc_01BE90:
 	andi.w	#$1F,d0
 loc_01BE94:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_01BE98:
 	movem.w	(a7)+,d1-d2
 loc_01BE9C:
@@ -35423,7 +35425,7 @@ loc_01BEC6:
 loc_01BECA:
 	bne.b	loc_01BEF8
 loc_01BECC:
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 loc_01BED0:
 	cmpi.b	#$8,d2
 loc_01BED4:
@@ -35561,7 +35563,7 @@ loc_01BFFE:
 	rts
 	dc.b	$30,$BC,$02,$08,$11,$7C,$00,$04,$00,$3B,$43,$FA
 	dc.b	$8A,$8E,$4E,$FA,$EF,$06
-sub_01C016:
+ObjType_A6:
 	moveq	#-$1,d0
 loc_01C018:
 	move.w	Obj_Timer(a0),d0
@@ -35584,7 +35586,7 @@ loc_01C036:
 loc_01C03C:
 	moveq	#$0,d0
 loc_01C03E:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_01C042:
 	andi.b	#$1E,d0
 loc_01C046:
@@ -35750,7 +35752,7 @@ loc_01C21C:
 loc_01C21E:
 	moveq	#-$1,d0
 	rts
-sub_01C222:
+ObjType_AF:
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.b	#$C,$40(a0)
@@ -35914,7 +35916,7 @@ dat_01C770:
 	dc.b	$00,$04,$00,$08,$7E,$BE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$C1,$1E,$00,$3C,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$C2,$54
-sub_01C844:
+ObjType_A4:
 	lea	ObjData_01CFF0(pc),a1
 loc_01C848:
 	jsr	Object_LoadTemplate(pc)
@@ -35962,14 +35964,14 @@ Words_01C8A2:
 Words_01C8C0:
 	dc.w	$0032,$004B,$0064,$007D,$0096,$00C8,$0000,$0000
 	dc.w	$0000,$0096,$0000,$0000,$0000,$0000,$0000
-sub_01C8DE:
+ObjType_A5:
 	addq.w	#$1,$58(a0)
 loc_01C8E2:
 	cmpi.w	#$50,$58(a0)
 loc_01C8E8:
 	bcc.b	loc_01C8FC
 loc_01C8EA:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01C8EE:
 	bne.w	loc_01C998
 loc_01C8F2:
@@ -36012,7 +36014,7 @@ loc_01C93E:
 loc_01C944:
 	subq.b	#$1,$5A(a0)
 loc_01C948:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01C94C:
 	bne.b	loc_01C998
 loc_01C94E:
@@ -36046,7 +36048,7 @@ loc_01C9B6:
 	jsr	Object_AnimTick(pc)
 	move.w	#$1,Obj_SortKey(a0)
 	rts
-sub_01C9C2:
+Object_CollideStandard:
 	tst.b	$44(a0)
 loc_01C9C6:
 	bne.w	loc_01C9F0
@@ -36077,7 +36079,7 @@ loc_01C9F0:
 	moveq	#-$1,d0
 loc_01CA2A:
 	rts
-sub_01CA2C:
+ObjType_102:
 	lea	ObjData_01CFF0(pc),a1
 loc_01CA30:
 	jsr	Object_LoadTemplate(pc)
@@ -36125,14 +36127,14 @@ Words_01CA8C:
 	dc.w	$0000,$0000,$0000,$0000,$0000,$0218,$01FA,$0000
 Words_01CA9C:
 	dc.w	$0000,$0000,$0096,$0000,$0000,$0140,$0190,$0000
-sub_01CAAC:
+ObjType_103:
 	addq.w	#$1,$58(a0)
 loc_01CAB0:
 	cmpi.w	#$50,$58(a0)
 loc_01CAB6:
 	bcc.b	loc_01CACA
 loc_01CAB8:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01CABC:
 	bne.w	loc_01CB58
 loc_01CAC0:
@@ -36192,7 +36194,7 @@ loc_01CB3E:
 loc_01CB44:
 	subq.b	#$1,$5A(a0)
 loc_01CB48:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01CB4C:
 	bne.b	loc_01CB58
 loc_01CB4E:
@@ -36274,7 +36276,7 @@ loc_01CC20:
 	moveq	#-$1,d0
 loc_01CC22:
 	rts
-sub_01CC24:
+ObjType_106:
 	tst.b	$2A(a0)
 loc_01CC28:
 	bne.b	loc_01CC84
@@ -36375,7 +36377,7 @@ Words_01CCF8:
 	dc.w	$0000,$FFC0,$0040,$0000
 ObjData_01CD00:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$26,$00,$1A,$00,$00
-sub_01CD10:
+ObjType_107:
 	cmpi.b	#$45,$36(a0)
 loc_01CD16:
 	beq.b	loc_01CD1E
@@ -36406,7 +36408,7 @@ loc_01CD22:
 	dc.b	$00,$40,$00,$22,$11,$7C,$00,$08,$00,$3D,$11,$7C,$00,$01,$00,$3C
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$02,$A8,$02,$A8,$00,$00
-sub_01CE08:
+ObjType_104:
 	lea	ObjData_01CFF0(pc),a1
 loc_01CE0C:
 	jsr	Object_LoadTemplate(pc)
@@ -36454,14 +36456,14 @@ Words_01CE68:
 	dc.w	$0000,$0000,$02BC,$0000,$0000,$01F4,$01D6,$0000
 Words_01CE78:
 	dc.w	$0000,$0000,$0096,$0000,$0000,$00C8,$00FA,$0000
-sub_01CE88:
+ObjType_105:
 	addq.w	#$1,$58(a0)
 loc_01CE8C:
 	cmpi.w	#$50,$58(a0)
 loc_01CE92:
 	bcc.b	loc_01CEA6
 loc_01CE94:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01CE98:
 	bne.w	loc_01CF12
 loc_01CE9C:
@@ -36502,7 +36504,7 @@ loc_01CEF4:
 loc_01CEFE:
 	subq.b	#$1,$5A(a0)
 loc_01CF02:
-	bsr.w	sub_01C9C2
+	bsr.w	Object_CollideStandard
 loc_01CF06:
 	bne.b	loc_01CF12
 loc_01CF08:
@@ -36623,19 +36625,19 @@ ObjData_01D17A:
 	dc.b	$94,$5C,$00,$00,$00,$00,$00,$00,$00,$04,$00,$08,$94,$66,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$04,$00,$08,$94,$70,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$FE
-sub_01D2F2:
+ObjType_CC:
 	lea	dat_01D332(pc),a1
 loc_01D2F6:
 	lea	dat_01DEDC(pc),a2
 loc_01D2FA:
 	bra.b	loc_01D30E
-sub_01D2FC:
+ObjType_CD:
 	lea	dat_01D33E(pc),a1
 loc_01D300:
 	lea	dat_01DF8E(pc),a2
 loc_01D304:
 	bra.b	loc_01D30E
-sub_01D306:
+ObjType_CE:
 	lea	dat_01D34A(pc),a1
 loc_01D30A:
 	lea	dat_01E098(pc),a2
@@ -36826,7 +36828,7 @@ loc_01D4CE:
 Words_01D4D0:
 	dc.w	$0000,$00C8,$0118,$0168,$01B8,$0208,$0000,$0000
 	dc.w	$0000,$0000,$0000,$0190,$0000,$0000,$0000
-sub_01D4EE:
+ObjType_A7:
 	move.b	#$41,$36(a0)
 loc_01D4F4:
 	move.w	#$4BE0,$1C(a0)
@@ -36898,7 +36900,7 @@ loc_01D592:
 	jmp	loc_01AE32(pc)
 loc_01D596:
 	jmp	Object_Free(pc)
-sub_01D59A:
+ObjType_A8:
 	addq.w	#$1,$58(a0)
 loc_01D59E:
 	cmpi.w	#$80,$58(a0)
@@ -36944,7 +36946,7 @@ loc_01D5E0:
 	move.w	#$260,(a0)
 	cmpi.b	#$41,$36(a0)
 	beq.b	loc_01D61E
-	jmp	sub_01C222(pc)
+	jmp	ObjType_AF(pc)
 loc_01D61E:
 	lea	ObjData_01E32C(pc),a1
 	jmp	Object_RunAnimScript(pc)
@@ -37027,10 +37029,10 @@ loc_01D6C8:
 	move.b	#$28,$1A(a0)
 	move.w	#$80,$4(a0)
 	move.w	#$80,$8(a0)
-	jsr	sub_01B26E(pc)
+	jsr	ObjType_9F(pc)
 	movea.l	(a7)+,a0
 	jmp	loc_01C254(pc)
-sub_01D6F2:
+ObjType_A9:
 	move.b	#$42,$36(a0)
 loc_01D6F8:
 	move.w	#$2A0,(a0)
@@ -37100,9 +37102,9 @@ loc_01D792:
 	jmp	loc_01AE32(pc)
 loc_01D796:
 	jmp	Object_Free(pc)
-sub_01D79A:
+ObjType_F6:
 	subi.w	#$60,Obj_X(a0)
-sub_01D7A0:
+ObjType_AA:
 	clr.l	Obj_VelY(a0)
 loc_01D7A4:
 	clr.l	Obj_VelX(a0)
@@ -37169,7 +37171,7 @@ loc_01D828:
 loc_01D82C:
 	jmp	Object_AnimTick(pc)
 	dc.b	$4E,$FA,$D7,$D0
-sub_01D834:
+ObjType_9E:
 	cmpi.b	#$20,$37(a0)
 loc_01D83A:
 	beq.w	loc_01D8D6
@@ -37274,7 +37276,7 @@ loc_01D946:
 	clr.l	$C(a0)
 loc_01D94A:
 	jmp	Object_RunAnimScript(pc)
-sub_01D94E:
+ObjType_D5:
 	clr.l	Obj_VelY(a0)
 loc_01D952:
 	clr.l	Obj_VelX(a0)
@@ -37375,7 +37377,7 @@ Words_01DA54:
 Words_01DA72:
 	dc.w	$0000,$0000,$0000,$0000,$42C0,$5180,$0000,$0000
 	dc.w	$0000,$0000,$0000,$5280,$0000,$0000,$0000
-sub_01DA90:
+ObjType_D6:
 	cmpi.w	#$170,Obj_Y(a0)
 loc_01DA96:
 	bgt.w	loc_01DB42
@@ -37437,7 +37439,7 @@ dat_01DB6C:
 	dc.b	$D3,$AE,$00,$20
 	dc.b	$00,$30,$00,$3A,$00,$2C,$00,$1A,$00,$12,$00,$1A,$00,$12,$00,$1B
 	dc.b	$00,$10
-sub_01DB82:
+ObjType_AB:
 	moveq	#-$1,d0
 loc_01DB84:
 	move.w	Obj_Timer(a0),d0
@@ -37496,7 +37498,7 @@ loc_01DBE8:
 loc_01DBEA:
 	moveq	#$18,d0
 loc_01DBEC:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_01DBF0:
 	move.b	d0,d2
 loc_01DBF2:
@@ -37571,7 +37573,7 @@ loc_01DC6A:
 	moveq	#-$1,d7
 loc_01DC6C:
 	rts
-sub_01DC6E:
+ObjType_AC:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01DC74:
 	bne.w	loc_01DCF8
@@ -37750,7 +37752,7 @@ loc_01DE04:
 loc_01DE08:
 	move.b	#$1,$34(a0)
 loc_01DE0E:
-	bra.w	sub_01DC6E
+	bra.w	ObjType_AC
 dat_01DE12:
 	dc.b	$00,$04,$FF,$E8,$00,$0C,$FF,$EE,$00,$0C,$FF,$EE,$00,$0C
 	dc.b	$FF,$EE,$00,$12,$FF,$F8,$00,$12,$FF,$F8,$00,$0E,$00,$06,$00,$0E
@@ -37927,7 +37929,7 @@ ObjData_01E554:
 	dc.b	$00,$04,$00,$08,$7F,$68,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$DD,$98,$00,$04,$00,$08,$7F,$22,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$DD,$98
-sub_01E6B4:
+ObjType_9A:
 	moveq	#$0,d0
 loc_01E6B6:
 	move.w	d0,$1E(a0)
@@ -38079,7 +38081,7 @@ loc_01E874:
 	dc.b	$00,$02,$31,$7C,$FF,$B8,$00,$1E,$00,$28,$00,$22,$00,$02,$11,$7C
 	dc.b	$00,$60,$00,$22,$30,$BC,$02,$64,$20,$4B,$0C,$78,$00,$0B,$C3,$28
 	dc.b	$67,$08,$70,$DF,$4E,$B9,$00,$00,$A0,$68,$4E,$FA,$C6,$22
-sub_01E8EE:
+ObjType_9B:
 	jsr	(sub_00AF50).l
 loc_01E8F4:
 	tst.b	$44(a0)
@@ -38133,7 +38135,7 @@ loc_01E97A:
 	dc.b	$0C,$28,$00,$50,$00,$36,$67,$04
 	dc.b	$4E,$FA,$C6,$60,$42,$90,$31,$7C,$00,$84,$00,$00,$10,$28,$00,$35
 	dc.b	$51,$40,$02,$40,$00,$1F,$11,$40,$00,$20,$60,$00,$02,$78
-sub_01E9BE:
+ObjType_99:
 	moveq	#-$1,d0
 loc_01E9C0:
 	move.w	$2A(a0),d0
@@ -38152,7 +38154,7 @@ loc_01E9D6:
 loc_01E9DC:
 	move.l	$8(a2),Obj_Y(a0)
 loc_01E9E2:
-	move.b	$35(a2),$35(a0)
+	move.b	$35(a2),Obj_Direction(a0)
 loc_01E9E8:
 	move.b	$44(a2),$44(a0)
 loc_01E9EE:
@@ -38160,7 +38162,7 @@ loc_01E9EE:
 loc_01E9F2:
 	moveq	#$1E,d0
 loc_01E9F4:
-	and.b	$35(a0),d0
+	and.b	Obj_Direction(a0),d0
 loc_01E9F8:
 	adda.w	(a1,d0.w),a1
 loc_01E9FC:
@@ -38206,7 +38208,7 @@ loc_01EA7E:
 	dc.b	$00,$1E,$EB,$49,$31,$41,$00,$1C,$5C,$49,$4E,$FA,$C4,$5E,$32,$3C
 	dc.b	$02,$C2,$0C,$78,$00,$04,$C3,$28,$66,$04,$32,$3C,$02,$9B,$31,$41
 	dc.b	$00,$1E,$EB,$49,$31,$41,$00,$1C,$60,$DE
-sub_01EADA:
+ObjType_C4:
 	lea	ObjData_01EDD4(pc),a1
 loc_01EADE:
 	movea.l	a0,a2
@@ -38224,7 +38226,7 @@ loc_01EAFC:
 	ori.b	#$A8,Obj_Flags(a0)
 loc_01EB02:
 	jmp	Object_AnimTick(pc)
-sub_01EB06:
+ObjType_C5:
 	moveq	#-$1,d0
 loc_01EB08:
 	move.w	$2A(a0),d0
@@ -38474,7 +38476,7 @@ ObjData_01F246:
 	dc.b	$01,$00,$00,$04,$D9,$82,$80,$00,$00,$FF,$00,$00,$00,$01,$EC,$54
 	dc.b	$00,$04,$00,$08,$83,$A8,$00,$D0,$00,$04,$D8,$B2,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$01,$EC,$54
-sub_01F316:
+ObjType_AD:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01F31C:
 	bne.w	loc_01F3AC
@@ -38527,7 +38529,7 @@ loc_01F3C4:
 loc_01F3C8:
 	jsr	Object_DirectionTo(pc)
 loc_01F3CC:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_01F3D0:
 	andi.w	#$1F,d0
 loc_01F3D4:
@@ -38567,7 +38569,7 @@ loc_01F41A:
 loc_01F41E:
 	bne.b	loc_01F43A
 	lea	dat_01F4EC(pc),a1
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 	move.b	#$2D,d3
 	jsr	sub_01A326(pc)
 	bne.b	loc_01F43A
@@ -38614,7 +38616,7 @@ loc_01F49E:
 	moveq	#-$4C,d0
 	jsr	(PlaySound).l
 	bra.b	loc_01F49A
-sub_01F4C6:
+ObjType_AE:
 	move.b	#$20,$37(a0)
 loc_01F4CC:
 	rts
@@ -38651,7 +38653,7 @@ dat_01F56C:
 	dc.b	$A5,$BE,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A5,$D4,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$A5,$F0,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$F4,$CE
-sub_01F666:
+ObjType_C0:
 	lea	ObjData_01FB46(pc),a1
 loc_01F66A:
 	jsr	Object_LoadTemplate(pc)
@@ -38709,7 +38711,7 @@ loc_01F6E4:
 	move.l	-$5C(a0),$4(a0)
 loc_01F6EA:
 	rts
-sub_01F6EC:
+ObjType_C1:
 	lea	ObjData_01FB46(pc),a1
 loc_01F6F0:
 	jsr	Object_LoadTemplate(pc)
@@ -38733,7 +38735,7 @@ loc_01F718:
 	suba.w	#$60,a0
 loc_01F71C:
 	jmp	Object_AnimTick(pc)
-sub_01F720:
+ObjType_C2:
 	move.b	#$0,$B8(a0)
 loc_01F726:
 	jsr	(Object_GetHitbox_FromSize).l
@@ -38828,7 +38830,7 @@ loc_01F94E:
 	dc.b	$E0,$08,$94,$41,$0C,$42,$00,$60,$6C,$D2,$43,$FA,$02,$1A,$70,$00
 	dc.b	$10,$28,$00,$2E,$22,$71,$00,$00,$11,$7C,$00,$08,$00,$3B,$4E,$FA
 	dc.b	$B5,$9A
-sub_01F982:
+ObjType_C3:
 	tst.b	$58(a0)
 loc_01F986:
 	bne.b	loc_01F9D4
@@ -39184,8 +39186,8 @@ ObjData_0206AE:
 	dc.b	$00,$01,$00,$08,$70,$00,$00,$00,$80,$00,$00,$14,$FF,$FF,$00,$02
 	dc.b	$06,$F4,$00,$01,$00,$02,$EF,$FE,$00,$00,$80,$00,$00,$0C,$00,$01
 	dc.b	$00,$08,$70,$00,$00,$00,$80,$00,$00,$0C,$FF,$FF,$00,$02,$07,$12
-sub_020730:
-	move.b	#$10,$35(a0)
+ObjType_C6:
+	move.b	#$10,Obj_Direction(a0)
 loc_020736:
 	move.b	#$10,$5E(a0)
 loc_02073C:
@@ -39239,7 +39241,7 @@ loc_0207A0:
 loc_0207A6:
 	move.b	#$20,Obj_TileAttr(a0)
 loc_0207AC:
-	clr.b	$35(a0)
+	clr.b	Obj_Direction(a0)
 loc_0207B0:
 	move.w	#$324,(a0)
 loc_0207B4:
@@ -39256,7 +39258,7 @@ loc_0207C8:
 	jsr	Object_Free(pc)
 	movea.l	a5,a0
 	jmp	Object_Free(pc)
-sub_0207D2:
+ObjType_C8:
 	cmpi.w	#$170,Obj_Y(a0)
 loc_0207D8:
 	bgt.b	loc_020808
@@ -39359,7 +39361,7 @@ loc_0208DE:
 loc_0208E2:
 	moveq	#-$1,d2
 loc_0208E4:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_0208E8:
 	beq.b	loc_020900
 loc_0208EA:
@@ -39371,11 +39373,11 @@ loc_0208F2:
 loc_0208F4:
 	moveq	#$1,d2
 loc_0208F6:
-	add.b	d2,$35(a0)
+	add.b	d2,Obj_Direction(a0)
 loc_0208FA:
-	andi.b	#$1F,$35(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 loc_020900:
-	jsr	sub_01AE8E(pc)
+	jsr	Object_SetVelocityFromDir(pc)
 loc_020904:
 	rts
 sub_020906:
@@ -39483,7 +39485,7 @@ loc_0209C0:
 loc_0209C4:
 	bra.b	loc_020A42
 loc_0209C6:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_0209CA:
 	andi.w	#$1C,d0
 loc_0209CE:
@@ -39516,7 +39518,7 @@ loc_020A0C:
 loc_020A12:
 	beq.b	loc_020A20
 loc_020A14:
-	subq.b	#$8,$35(a0)
+	subq.b	#$8,Obj_Direction(a0)
 loc_020A18:
 	bclr.b	#$0,$59(a0)
 loc_020A1E:
@@ -39530,9 +39532,9 @@ loc_020A2C:
 loc_020A32:
 	clr.b	$52(a0)
 loc_020A36:
-	addi.b	#$10,$35(a0)
+	addi.b	#$10,Obj_Direction(a0)
 loc_020A3C:
-	andi.b	#$1E,$35(a0)
+	andi.b	#$1E,Obj_Direction(a0)
 loc_020A42:
 	rts
 loc_020A44:
@@ -39573,7 +39575,7 @@ loc_020A72:
 	dc.b	$66,$16,$08,$A8,$00,$06,$00,$02,$11,$7C,$00,$20,$00,$22,$43,$F9
 	dc.b	$00,$01,$60,$56,$4E,$FA,$A3,$B4,$43,$FA,$07,$42,$10,$28,$00,$35
 	dc.b	$02,$40,$00,$01,$E5,$48,$22,$71,$00,$00,$4E,$FA,$A3,$9E
-sub_020B7E:
+ObjType_C9:
 	movea.l	Obj_State(a0),a2
 loc_020B82:
 	cmpi.b	#$20,$37(a2)
@@ -39590,11 +39592,11 @@ loc_020B9C:
 loc_020BA0:
 	andi.w	#$1E,d0
 loc_020BA4:
-	cmp.b	$35(a0),d0
+	cmp.b	Obj_Direction(a0),d0
 loc_020BA8:
 	beq.b	loc_020BBC
 loc_020BAA:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_020BAE:
 	lea	dat_0212E0(pc),a1
 loc_020BB2:
@@ -39604,7 +39606,7 @@ loc_020BB6:
 loc_020BBC:
 	moveq	#$1E,d0
 loc_020BBE:
-	and.b	$35(a0),d0
+	and.b	Obj_Direction(a0),d0
 loc_020BC2:
 	add.w	d0,d0
 loc_020BC4:
@@ -39660,7 +39662,7 @@ loc_020C38:
 	bset.b	#$3,$2(a2)
 loc_020C3E:
 	rts
-sub_020C40:
+ObjType_CA:
 	moveq	#$0,d0
 loc_020C42:
 	moveq	#$0,d1
@@ -39690,7 +39692,7 @@ loc_020C86:
 	move.b	#$A,$29(a0)
 	lea	(Objects_A).w,a1
 	jsr	Object_DirectionTo(pc)
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 	andi.w	#$1E,d0
 	beq.b	loc_020CBC
 	moveq	#-$2,d1
@@ -39698,11 +39700,11 @@ loc_020C86:
 	bcc.b	loc_020CB2
 	neg.w	d1
 loc_020CB2:
-	add.b	d1,$35(a0)
-	andi.b	#$1E,$35(a0)
+	add.b	d1,Obj_Direction(a0)
+	andi.b	#$1E,Obj_Direction(a0)
 loc_020CBC:
 	lea	ObjData_021300(pc),a1
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1E,d0
 	adda.w	(a1,d0.w),a1
 	jsr	Object_RunAnimScript(pc)
@@ -39915,7 +39917,7 @@ loc_021662:
 	movem.l	(a7)+,a1-a2
 loc_021666:
 	rts
-sub_021668:
+ObjType_B5:
 	movem.l	d0-d2/d5-d7/a0-a3,-(a7)
 loc_02166C:
 	tst.l	(ram_C100).w
@@ -40004,7 +40006,7 @@ dat_0218FA:
 	dc.b	$C1,$88,$55,$00,$00,$00,$00,$09,$A2,$0C,$55,$A0,$00,$03,$00,$0A
 	dc.b	$1A,$FE,$4B,$40,$00,$09,$9E,$1E,$37,$C0,$00,$09,$A2,$0C,$3D,$E0
 	dc.b	$00,$0A,$28,$FE,$52,$C0
-sub_021986:
+ObjType_98:
 	move.b	Obj_AnimTimer(a0),d0
 loc_02198A:
 	andi.b	#$3,d0
@@ -40211,11 +40213,11 @@ loc_021C3A:
 	move.b	dat_021CE0(pc,d0.w),d0
 	move.b	d0,$3C(a2)
 	move.b	#$40,$22(a2)
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1F,d0
 	move.b	d0,$35(a2)
 	exg	a0,a2
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 	exg	a0,a2
 	add.l	d4,$C(a2)
 	add.l	d5,$10(a2)
@@ -40256,7 +40258,7 @@ dat_021CF0:
 	dc.b	$0C,$FF,$03,$00,$09,$04,$06,$08,$06,$0C,$FF,$03,$00,$09,$04,$09
 	dc.b	$08,$06,$0C,$FF,$03,$00,$09,$04,$09,$08,$09,$0C,$FF,$03,$00,$09
 	dc.b	$04,$0C,$08,$09,$0C,$FF
-sub_021D56:
+ObjType_CF:
 	tst.b	$36(a0)
 loc_021D5A:
 	bne.b	loc_021D9A
@@ -40279,13 +40281,13 @@ loc_021D70:
 loc_021D72:
 	move.b	dat_021DB6(pc,d0.w),d0
 loc_021D76:
-	move.b	d0,$3B(a0)
+	move.b	d0,Obj_SpeedClass(a0)
 loc_021D7A:
 	move.l	a1,Obj_AnimPtr(a0)
 loc_021D7E:
 	move.l	a2,Obj_State(a0)
 loc_021D82:
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 loc_021D88:
 	movem.w	Obj_Timer(a0),d0-d1
 loc_021D8E:
@@ -40316,7 +40318,7 @@ dat_021DBA:
 	dc.b	$00,$01,$AE,$8E,$4C,$A8,$00,$03,$00,$2C,$E1,$88,$E1,$89,$D1,$A8
 	dc.b	$00,$0C,$D3,$A8,$00,$10,$22,$5F,$43,$E9,$FF,$E8,$4E,$F9,$00,$01
 	dc.b	$AF,$1A
-sub_021E12:
+ObjType_F9:
 	tst.b	$36(a0)
 loc_021E16:
 	bne.b	loc_021E5E
@@ -40345,13 +40347,13 @@ loc_021E34:
 loc_021E36:
 	move.b	dat_021E7A(pc,d0.w),d0
 loc_021E3A:
-	move.b	d0,$3B(a0)
+	move.b	d0,Obj_SpeedClass(a0)
 loc_021E3E:
 	move.l	a1,Obj_AnimPtr(a0)
 loc_021E42:
 	move.l	a2,Obj_State(a0)
 loc_021E46:
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 loc_021E4C:
 	movem.w	Obj_Timer(a0),d0-d1
 loc_021E52:
@@ -40396,7 +40398,7 @@ ObjData_021E9E:
 	dc.b	$FF,$FE,$00,$01,$00,$08,$8C,$84,$00,$00,$80,$00,$00,$FF,$FF,$FE
 	dc.b	$00,$01,$00,$08,$8C,$A2,$00,$00,$80,$00,$00,$FF,$FF,$FE,$00,$01
 	dc.b	$00,$08,$8C,$A2,$00,$00,$80,$00,$00,$FF,$FF,$FE
-sub_021F7C:
+ObjType_B0:
 	bset.b	#$0,Obj_Flags(a0)
 loc_021F82:
 	bne.b	loc_021F96
@@ -40424,7 +40426,7 @@ loc_021FB2:
 loc_021FC2:
 	rts
 loc_021FC4:
-	jsr	sub_021668(pc)
+	jsr	ObjType_B5(pc)
 	beq.b	loc_021FC2
 	adda.w	#$60,a0
 	ori.b	#$28,$2(a0)
@@ -40470,7 +40472,7 @@ loc_022022:
 loc_02208A:
 	move.l	a1,$54(a0)
 	clr.b	$28(a0)
-sub_022092:
+ObjType_B4:
 	tst.b	Obj_State(a0)
 loc_022096:
 	bne.b	loc_0220A8
@@ -40577,7 +40579,7 @@ loc_02213C:
 	dc.b	$52,$28
 	dc.b	$FF,$C8,$42,$28,$00,$48,$30,$BC,$02,$C4,$31,$7C,$02,$CC,$00,$60
 	dc.b	$31,$7C,$02,$CC,$00,$C0,$5C,$49,$4E,$FA,$8D,$C0
-sub_02215C:
+ObjType_B1:
 	tst.b	$29(a0)
 loc_022160:
 	bne.w	loc_022220
@@ -40640,7 +40642,7 @@ loc_0221D4:
 loc_0221D8:
 	andi.w	#$1E,d0
 loc_0221DC:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_0221E0:
 	add.w	d0,d0
 loc_0221E2:
@@ -40678,7 +40680,7 @@ loc_022220:
 	subq.b	#$1,$29(a0)
 	cmpi.b	#$34,$29(a0)
 	bcc.b	loc_022252
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	addi.b	#$10,d0
 	andi.w	#$1E,d0
 	add.w	d0,d0
@@ -40790,13 +40792,13 @@ loc_02237C:
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	jmp	LoadColorList(pc)
-sub_022392:
+ObjType_8C:
 	jsr	Object_AnimTick(pc)
 loc_022396:
 	move.w	#$1,Obj_SortKey(a0)
 loc_02239C:
 	rts
-sub_02239E:
+ObjType_F5:
 	jsr	Object_AnimTick(pc)
 loc_0223A2:
 	move.w	#$2,Obj_SortKey(a0)
@@ -40878,7 +40880,7 @@ loc_022446:
 	rts
 	dc.b	$08,$F8
 	dc.b	$00,$02,$C6,$1C,$5C,$49,$4E,$FA,$8A,$C2
-sub_02245A:
+ObjType_B2:
 	bset.b	#$3,Obj_Flags(a0)
 loc_022460:
 	bne.b	loc_022498
@@ -40932,7 +40934,7 @@ loc_0224C2:
 	move.w	#$1,Obj_SortKey(a0)
 loc_0224C8:
 	rts
-sub_0224CA:
+ObjType_B3:
 	movea.l	Obj_State(a0),a2
 loc_0224CE:
 	move.l	$4(a2),Obj_X(a0)
@@ -41188,7 +41190,7 @@ dat_022CB0:
 	dc.b	$18,$D8,$00,$04,$03,$44,$00,$F0,$00,$04,$03,$44,$E8,$08,$00,$04
 	dc.b	$00,$00,$00,$04,$03,$44,$30,$C0,$00,$04,$03,$44,$18,$D8,$00,$04
 	dc.b	$03,$44,$00,$F0,$00,$04,$03,$44,$E8,$08,$00,$04,$03,$44,$D0,$20
-sub_022D50:
+ObjType_B6:
 	bset.b	#$2,Obj_Flags(a0)
 loc_022D56:
 	bne.b	loc_022D64
@@ -41239,7 +41241,7 @@ loc_022DE6:
 loc_022DEA:
 	rts
 loc_022DEC:
-	jsr	sub_021668(pc)
+	jsr	ObjType_B5(pc)
 	beq.b	loc_022DEA
 	lea	ObjData_023B3E(pc),a1
 	jsr	(Object_LoadTemplate).l
@@ -41252,7 +41254,7 @@ loc_022E0C:
 	lea	$60(a0),a0
 	lea	ObjData_023B4E(pc),a1
 	jsr	(Object_LoadTemplate).l
-	move.b	#$10,$35(a0)
+	move.b	#$10,Obj_Direction(a0)
 	move.b	#$20,Obj_TileAttr(a0)
 	move.w	#$18,$54(a0)
 	ori.b	#$6A,Obj_Flags(a0)
@@ -41294,7 +41296,7 @@ loc_022E0C:
 	lea	ObjData_023B9E(pc),a1
 	jsr	(Object_LoadTemplate).l
 	move.b	#$20,Obj_TileAttr(a0)
-	move.b	#$10,$35(a0)
+	move.b	#$10,Obj_Direction(a0)
 	ori.b	#$6A,Obj_Flags(a0)
 	move.w	#$6,$56(a0)
 	move.w	d6,$1E(a0)
@@ -41338,7 +41340,7 @@ loc_022F1E:
 	dc.b	$17,$8E,$17,$8E,$17,$EE,$17,$EE,$19,$92,$03,$03,$01,$01,$03,$01
 	dc.b	$03,$01,$03,$03,$01,$01,$03,$01,$03,$01,$05,$05,$05,$05,$05,$05
 	dc.b	$05,$05,$05,$05,$05,$05,$05,$05,$05,$05
-sub_02306A:
+ObjType_BF:
 	jsr	(Object_AnimTick).l
 loc_023070:
 	move.l	Obj_VelY(a0),d0
@@ -41398,7 +41400,7 @@ dat_0230EE:
 	dc.b	$96,$E2,$97,$04,$51,$00,$00,$80,$95,$DB,$96,$E2,$97,$04,$51,$00
 	dc.b	$00,$80,$95,$6B,$96,$E2,$97,$04,$64,$00,$00,$80,$95,$DB,$96,$E2
 	dc.b	$97,$04,$64,$00,$00,$80
-sub_023116:
+ObjType_B8:
 	lea	(ram_F060).w,a2
 loc_02311A:
 	move.w	$4(a2),Obj_X(a0)
@@ -41449,7 +41451,7 @@ loc_023176:
 	dc.b	$00,$C0,$61,$00,$07,$C8,$4C,$DF,$03,$00,$2E,$3C,$00,$30,$00,$28
 	dc.b	$DE,$68,$00,$04,$48,$47,$DE,$68,$00,$08,$48,$E7,$00,$C0,$61,$00
 	dc.b	$07,$AC,$4C,$DF,$03,$00,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
-sub_0232AE:
+ObjType_B9:
 	lea	(ram_F060).w,a2
 loc_0232B2:
 	move.w	$4(a2),d1
@@ -41494,7 +41496,7 @@ loc_02330E:
 	subq.b	#$1,$52(a0)
 	bne.b	loc_023368
 	moveq	#$1E,d3
-	and.b	$35(a0),d3
+	and.b	Obj_Direction(a0),d3
 	cmpi.b	#$52,$36(a0)
 	bne.b	loc_023330
 	subq.b	#$2,d3
@@ -41541,7 +41543,7 @@ Longs_02337E:
 	dc.l	$66025500,$0240001E,$43FA0EDA,$D2F10000
 	dc.l	$4EF90001,$AF1A117C,$00010050,$60D84228
 	dc.l	$005160D2
-sub_023472:
+ObjType_BB:
 	lea	(ram_F060).w,a2
 loc_023476:
 	move.l	$4(a2),d1
@@ -41565,7 +41567,7 @@ loc_02348E:
 	dc.b	$00,$52,$00,$36,$67,$02,$44,$81,$D3,$A8,$00,$54,$D5,$A8,$00,$58
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A,$43,$FA,$0F,$DE,$0C,$28,$00,$52
 	dc.b	$00,$36,$67,$04,$43,$FA,$10,$14,$4E,$F9,$00,$01,$AF,$1A
-sub_02350E:
+ObjType_BD:
 	lea	(ram_F060).w,a2
 loc_023512:
 	moveq	#$40,d0
@@ -41594,7 +41596,7 @@ loc_023530:
 	dc.b	$AD,$58,$66,$20,$43,$FA,$05,$F8,$4E,$B9,$00,$01,$AD,$F6,$35,$68
 	dc.b	$00,$04,$00,$04,$35,$68,$00,$08,$00,$08,$15,$7C,$00,$40,$00,$22
 	dc.b	$34,$BC,$02,$3C,$4E,$75
-sub_023596:
+ObjType_B7:
 	lea	(ram_F060).w,a2
 loc_02359A:
 	moveq	#$24,d0
@@ -41883,7 +41885,7 @@ loc_023A00:
 loc_023A06:
 	exg	a0,a2
 loc_023A08:
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 loc_023A0E:
 	exg	a0,a2
 loc_023A10:
@@ -41946,7 +41948,7 @@ sub_023A8A:
 	add.w	d1,$4(a2)
 	add.w	d2,$8(a2)
 	exg	a0,a2
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 	exg	a0,a2
 	cmpi.w	#$9,(ram_C328).w
 	bne.b	loc_023AFA
@@ -42310,7 +42312,7 @@ ObjData_024556:
 	dc.b	$00,$08,$94,$0C,$00,$00,$80,$00,$00,$FF,$00,$01,$00,$08,$70,$00
 	dc.b	$00,$00,$80,$00,$00,$FF,$00,$02,$00,$08,$94,$0C,$00,$00,$80,$00
 	dc.b	$00,$FF,$FF,$FE
-sub_024DA4:
+ObjType_DC:
 	btst.b	#$0,Obj_Flags(a0)
 loc_024DAA:
 	bne.b	loc_024DF0
@@ -42434,7 +42436,7 @@ loc_024DFA:
 	movea.l	a6,a0
 	move.w	#$374,(a0)
 	rts
-sub_024F5C:
+ObjType_DD:
 	tst.b	$29(a0)
 loc_024F60:
 	beq.b	loc_024F7C
@@ -42590,7 +42592,7 @@ sub_025156:
 	move.w	#$23C,(a2)
 loc_02518C:
 	rts
-sub_02518E:
+ObjType_DE:
 	lea	(ram_F060).w,a1
 loc_025192:
 	movem.l	$4(a1),d0-d1
@@ -42676,11 +42678,11 @@ loc_025258:
 loc_02525A:
 	moveq	#$14,d0
 loc_02525C:
-	cmp.b	$35(a0),d0
+	cmp.b	Obj_Direction(a0),d0
 loc_025260:
 	beq.b	loc_02527E
 loc_025262:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_025266:
 	subi.w	#$C,d0
 loc_02526A:
@@ -42697,7 +42699,7 @@ loc_02527E:
 	subq.b	#$1,Obj_State(a0)
 loc_025282:
 	rts
-sub_025284:
+ObjType_DF:
 	lea	(ram_F060).w,a1
 loc_025288:
 	movem.l	$4(a1),d0-d1
@@ -42777,11 +42779,11 @@ loc_02533E:
 	bcs.b	loc_025342
 	moveq	#$14,d0
 loc_025342:
-	cmp.b	$35(a0),d0
+	cmp.b	Obj_Direction(a0),d0
 loc_025346:
 	beq.b	loc_025364
 loc_025348:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_02534C:
 	subi.w	#$10,d0
 loc_025350:
@@ -42798,7 +42800,7 @@ loc_025364:
 	subq.b	#$1,Obj_State(a0)
 loc_025368:
 	rts
-sub_02536A:
+ObjType_E0:
 	lea	(ram_F060).w,a1
 loc_02536E:
 	movem.l	$4(a1),d0-d1
@@ -42881,11 +42883,11 @@ loc_02542C:
 	bcs.b	loc_025430
 	moveq	#$14,d0
 loc_025430:
-	cmp.b	$35(a0),d0
+	cmp.b	Obj_Direction(a0),d0
 loc_025434:
 	beq.b	loc_025452
 loc_025436:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_02543A:
 	subi.w	#$C,d0
 loc_02543E:
@@ -42902,7 +42904,7 @@ loc_025452:
 	subq.b	#$1,Obj_State(a0)
 loc_025456:
 	rts
-sub_025458:
+ObjType_E1:
 	lea	(ram_F060).w,a1
 loc_02545C:
 	movem.l	$4(a1),d0-d1
@@ -43025,7 +43027,7 @@ sub_025594:
 	jsr	(Object_LoadTemplateA2).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1F,d0
 	move.b	d0,$35(a2)
 	subi.w	#$C,d0
@@ -43045,7 +43047,7 @@ sub_025594:
 	add.w	Obj_Timer(a0),d0
 	move.w	d0,$2E(a2)
 	exg	a0,a2
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 	exg	a0,a2
 	moveq	#-$41,d0
 	jsr	(PlaySound).l
@@ -43065,7 +43067,7 @@ sub_02563A:
 	jsr	(Object_LoadTemplateA2).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1F,d0
 	move.b	d0,$35(a2)
 	subi.w	#$C,d0
@@ -43085,7 +43087,7 @@ sub_02563A:
 	add.w	Obj_Timer(a0),d0
 	move.w	d0,$2E(a2)
 	exg	a0,a2
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 	exg	a0,a2
 	moveq	#-$41,d0
 	jsr	(PlaySound).l
@@ -43098,7 +43100,7 @@ loc_0256B2:
 sub_0256D8:
 	moveq	#$0,d2
 	movea.l	d2,a1
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 	moveq	#-$1,d3
 	jsr	(sub_01A326).l
 	bne.b	loc_02574A
@@ -43106,7 +43108,7 @@ sub_0256D8:
 	move.w	#$304,$1E(a2)
 	move.b	#$10,$3C(a2)
 	move.b	$2B(a0),$36(a2)
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1F,d0
 	move.b	d0,$35(a2)
 	subi.w	#$10,d0
@@ -43131,7 +43133,7 @@ loc_02574A:
 	dc.b	$00,$00,$00,$20,$00,$02,$00,$20,$00,$00,$00,$1C,$FF,$FE,$00,$18
 dat_025760:
 	dc.b	$00,$10,$20,$30
-sub_025764:
+ObjType_F1:
 	move.w	Obj_Y(a0),d0
 loc_025768:
 	cmp.w	$2E(a0),d0
@@ -43158,7 +43160,7 @@ loc_0257A4:
 	lea	ObjData_026072(pc),a1
 loc_0257A8:
 	jmp	(Object_RunAnimScript).l
-sub_0257AE:
+ObjType_F2:
 	move.w	Obj_Y(a0),d0
 loc_0257B2:
 	cmp.w	$2E(a0),d0
@@ -43177,10 +43179,10 @@ loc_0257DA:
 loc_0257DE:
 	move.w	#$220,(a0)
 loc_0257E2:
-	jmp	(sub_018238).l
+	jmp	(ObjType_88).l
 loc_0257E8:
 	jmp	(loc_01A498).l
-sub_0257EE:
+ObjType_E2:
 	lea	(ram_F060).w,a1
 loc_0257F2:
 	move.w	$8(a1),d0
@@ -43196,7 +43198,7 @@ loc_025806:
 	move.w	d0,Obj_X(a0)
 loc_02580A:
 	jmp	(Object_AnimTick).l
-sub_025810:
+ObjType_E3:
 	lea	(ram_F060).w,a1
 loc_025814:
 	move.w	$8(a1),d0
@@ -43370,7 +43372,7 @@ ObjData_026072:
 	dc.b	$00,$02,$00,$08,$93,$F8,$00,$00,$00,$00,$00,$00,$00,$02
 	dc.b	$00,$08,$94,$02,$00,$00,$00,$00,$00,$00,$00,$01,$00,$08,$93,$F8
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FE
-sub_026098:
+ObjType_D7:
 	bset.b	#$0,Obj_Flags(a0)
 loc_02609E:
 	bne.b	loc_0260AE
@@ -43427,7 +43429,7 @@ loc_0260B4:
 	jmp	(Object_AnimTick).l
 loc_026184:
 	rts
-sub_026186:
+ObjType_D8:
 	tst.b	$5A(a0)
 loc_02618A:
 	bne.b	loc_0261BA
@@ -43683,7 +43685,7 @@ sub_0264DA:
 	move.b	#$A,$B0(a0)
 	move.b	#$A,$110(a0)
 	rts
-sub_0264EE:
+ObjType_D9:
 	lea	(ram_F060).w,a2
 loc_0264F2:
 	move.w	$8(a2),d0
@@ -43718,7 +43720,7 @@ loc_026522:
 	move.b	#$C,$50(a0)
 	lea	(Objects_A).w,a1
 	jsr	(Object_DirectionTo).l
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	bsr.w	sub_0266C2
 	bne.b	loc_02656C
 	move.w	$52(a0),d0
@@ -43747,7 +43749,7 @@ loc_026572:
 loc_0265A2:
 	subq.b	#$1,Obj_State(a0)
 	jmp	(Object_AnimTick).l
-sub_0265AC:
+ObjType_DB:
 	lea	(ram_F060).w,a1
 loc_0265B0:
 	move.w	$8(a1),d0
@@ -43787,7 +43789,7 @@ loc_026600:
 	ble.b	loc_026608
 	moveq	#$12,d0
 loc_026608:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	subi.b	#$E,d0
 	andi.w	#$F,d0
 	add.w	d0,d0
@@ -43816,7 +43818,7 @@ loc_02665C:
 	bne.b	loc_0266A0
 	subq.b	#$1,$54(a0)
 	moveq	#$0,d3
-	move.b	$35(a0),d3
+	move.b	Obj_Direction(a0),d3
 	subi.w	#$E,d3
 	lsl.w	#$2,d3
 	move.l	Longs_0266AE(pc,d3.w),d3
@@ -43857,7 +43859,7 @@ loc_0266F4:
 	add.w	d0,d0
 	lea	dat_02692A(pc),a4
 	move.w	(a4,d0.w),d2
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$1E,d0
 	move.w	d0,d1
 	add.w	d0,d0
@@ -43895,7 +43897,7 @@ loc_0266F4:
 loc_02678C:
 	moveq	#-$1,d7
 	rts
-sub_026790:
+ObjType_DA:
 	movem.w	$36(a0),d0
 loc_026796:
 	subi.l	#$B,d0
@@ -43916,20 +43918,20 @@ loc_0267A6:
 	ble.b	loc_0267F8
 	cmpi.w	#$5A,Obj_Timer(a0)
 	ble.b	loc_0267E0
-	andi.b	#$4,$35(a0)
-	bset.b	#$2,$35(a0)
+	andi.b	#$4,Obj_Direction(a0)
+	bset.b	#$2,Obj_Direction(a0)
 	bne.b	loc_026814
 	move.l	#$26C06,Obj_AnimPtr(a0)
 	bra.b	loc_02680E
 loc_0267E0:
-	andi.b	#$2,$35(a0)
-	bset.b	#$1,$35(a0)
+	andi.b	#$2,Obj_Direction(a0)
+	bset.b	#$1,Obj_Direction(a0)
 	bne.b	loc_026814
 	move.l	#$26BF4,Obj_AnimPtr(a0)
 	bra.b	loc_02680E
 loc_0267F8:
-	andi.b	#$1,$35(a0)
-	bset.b	#$0,$35(a0)
+	andi.b	#$1,Obj_Direction(a0)
+	bset.b	#$0,Obj_Direction(a0)
 	bne.b	loc_026814
 	move.l	#$26BE2,Obj_AnimPtr(a0)
 loc_02680E:
@@ -43941,7 +43943,7 @@ loc_026814:
 	move.l	d0,Obj_VelY(a0)
 	jmp	(Object_AnimTick).l
 loc_026828:
-	jmp	(sub_018238).l
+	jmp	(ObjType_88).l
 	dc.b	$01,$04
 	dc.b	$00,$F0,$01,$04,$01,$04,$00,$DC,$00,$DC,$00,$DC,$00,$DC
 ObjData_02683E:
@@ -44037,7 +44039,7 @@ ObjData_026B76:
 	dc.b	$94,$2A,$00,$00,$80,$00,$00,$08,$FF,$FE,$00,$01,$00,$08,$7C,$16
 	dc.b	$00,$00,$80,$00,$00,$FF,$00,$01,$00,$08,$70,$00,$00,$00,$80,$00
 	dc.b	$00,$FF,$FF,$FF,$00,$02,$6C,$AA
-sub_026CC8:
+ObjType_E4:
 	bset.b	#$0,Obj_Flags(a0)
 loc_026CCE:
 	bne.b	loc_026CE2
@@ -44065,7 +44067,7 @@ loc_026CE8:
 	jsr	(PlaySound).l
 loc_026D1C:
 	rts
-sub_026D1E:
+ObjType_E5:
 	subq.w	#$1,$2E(a0)
 loc_026D22:
 	bne.b	loc_026D70
@@ -44100,7 +44102,7 @@ loc_026D72:
 	ori.b	#$2A,Obj_Flags(a0)
 	bclr.b	#$2,Obj_Flags(a0)
 	rts
-sub_026D9E:
+ObjType_E6:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_026DA4:
 	jsr	(Collision_HitPlayer).l
@@ -44115,7 +44117,7 @@ loc_026DBA:
 loc_026DC0:
 	move.w	#$220,(a0)
 loc_026DC4:
-	jmp	(sub_018238).l
+	jmp	(ObjType_88).l
 dat_026DCA:
 	dc.b	$00,$08,$00,$3A,$00,$6C
 	dc.b	$00,$9E,$00,$0F,$01,$28,$00,$3C,$00,$28,$00,$E0,$00,$3C,$00,$14
@@ -44131,7 +44133,7 @@ dat_026DCA:
 	dc.b	$00,$E0,$00,$3C,$00,$14,$00,$F8,$00,$3C,$00,$2D,$00,$B0,$00,$3C
 	dc.b	$00,$1E,$00,$98,$00,$3C,$00,$2D,$00,$C8,$00,$3C,$00,$23,$01,$28
 	dc.b	$00,$3C,$00,$28,$00,$D4,$00,$01,$FF,$FF
-sub_026E9A:
+ObjType_E7:
 	bset.b	#$2,Obj_Flags(a0)
 loc_026EA0:
 	lea	ObjData_027A96(pc),a1
@@ -44383,7 +44385,7 @@ loc_0270A8:
 	dc.b	$7E,$03,$32,$80,$23,$68,$00,$04,$00,$04,$23,$68,$00,$08,$00,$08
 	dc.b	$33,$41,$00,$2C,$58,$41,$43,$E9,$00,$60,$51,$CF,$FF,$E6,$60,$00
 	dc.b	$FF,$B4
-sub_027162:
+ObjType_E8:
 	cmpi.w	#$4,$2A(a0)
 loc_027168:
 	bne.b	loc_0271B6
@@ -44478,7 +44480,7 @@ loc_027276:
 	jsr	(sub_01063C).l
 loc_027288:
 	jmp	(Object_AnimTick).l
-sub_02728E:
+ObjType_E9:
 	lea	(ram_F060).w,a1
 loc_027292:
 	lea	(ram_F2A0).w,a2
@@ -44562,7 +44564,7 @@ loc_027382:
 	rts
 	dc.b	$00,$10,$00,$28,$00,$08,$00,$34,$00,$10,$00,$40
 	dc.b	$00,$08,$00,$4C,$00,$10,$00,$58
-sub_027398:
+ObjType_EA:
 	lea	(ram_F060).w,a1
 loc_02739C:
 	moveq	#$0,d0
@@ -44615,7 +44617,7 @@ loc_027406:
 	ble.b	loc_02740A
 	moveq	#$1C,d0
 loc_02740A:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_02740E:
 	subi.b	#$14,d0
 loc_027412:
@@ -44692,7 +44694,7 @@ loc_0274B4:
 loc_0274BA:
 	move.b	#$40,$22(a2)
 loc_0274C0:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_0274C4:
 	move.b	d0,$35(a2)
 loc_0274C8:
@@ -44716,7 +44718,7 @@ loc_0274E8:
 loc_0274EC:
 	exg	a0,a2
 loc_0274EE:
-	jsr	(sub_01AE8E).l
+	jsr	(Object_SetVelocityFromDir).l
 loc_0274F4:
 	exg	a0,a2
 loc_0274F6:
@@ -44724,7 +44726,7 @@ loc_0274F6:
 	dc.b	$FF,$F7,$00,$00,$FF,$F6,$FF,$FA
 	dc.b	$FF,$F6,$FF,$FA,$FF,$FA,$FF,$F1,$FF,$F8,$FF,$F4,$FF,$FC,$FF,$EF
 	dc.b	$FF,$FC,$FF,$F8,$00,$0D,$FF,$F3,$00,$0E,$FF,$F6
-sub_02751C:
+ObjType_EB:
 	lea	(ram_F060).w,a1
 loc_027520:
 	moveq	#$0,d0
@@ -44854,7 +44856,7 @@ loc_027698:
 	dc.b	$00,$28,$43,$FA,$07,$50,$4E,$F9,$00,$01,$AF,$1A,$70,$00,$10,$28
 	dc.b	$00,$36,$10,$3B,$00,$16,$72,$88,$74,$E0,$48,$41,$48,$42,$4E,$B9
 	dc.b	$00,$01,$06,$3C,$4E,$F9,$00,$01,$B0,$02,$38,$44,$50,$00
-sub_02770E:
+ObjType_EC:
 	lea	(ram_F060).w,a1
 loc_027712:
 	moveq	#$0,d0
@@ -44898,7 +44900,7 @@ loc_027784:
 	jmp	(Object_AnimTick).l
 	dc.b	$00,$40,$01,$E0,$00,$1C
 	dc.b	$02,$34,$00,$1C,$02,$B4
-sub_027796:
+ObjType_ED:
 	tst.b	Obj_State(a0)
 loc_02779A:
 	bne.b	loc_0277F2
@@ -44982,7 +44984,7 @@ dat_02783A:
 	dc.b	$00,$A0,$00,$B8,$00,$E0,$01,$48,$00,$C8,$00,$D0,$00,$B0,$01,$30
 	dc.b	$00,$88,$00,$D0,$00,$A0,$01,$00,$00,$E0,$00,$B8,$00,$C8,$01,$48
 	dc.b	$00,$B0
-sub_027892:
+ObjType_EE:
 	move.w	Obj_Y(a0),d0
 loc_027896:
 	cmp.w	Obj_Timer(a0),d0
@@ -44998,11 +45000,11 @@ loc_0278B6:
 loc_0278BA:
 	bclr.b	#$0,Obj_Flags(a0)
 loc_0278C0:
-	jmp	(sub_018238).l
+	jmp	(ObjType_88).l
 loc_0278C6:
 	move.w	#$23C,(a0)
 	bra.b	loc_0278BA
-sub_0278CC:
+ObjType_F0:
 	moveq	#$0,d0
 loc_0278CE:
 	moveq	#$0,d1
@@ -45290,7 +45292,7 @@ ObjData_027EDC:
 	dc.b	$00,$03,$A5,$BE,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A5,$D4
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$05,$00,$03,$A5,$F0,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FE
-sub_0280B4:
+ObjType_D0:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0280BA:
 	bne.w	loc_028138
@@ -45398,7 +45400,7 @@ loc_0281C4:
 	jsr	(sub_01B048).l
 loc_0281CA:
 	jmp	(Object_AnimTick).l
-sub_0281D0:
+ObjType_D1:
 	lea	ObjData_028574(pc),a3
 loc_0281D4:
 	tst.b	$44(a0)
@@ -45479,7 +45481,7 @@ loc_0282A8:
 loc_0282AA:
 	jmp	(Object_RunAnimScript).l
 	dc.b	$47,$FA,$03,$A0,$4E,$FA,$47,$9E
-sub_0282B8:
+ObjType_D2:
 	addq.b	#$1,$2A(a0)
 loc_0282BC:
 	cmpi.b	#$2,$2A(a0)
@@ -45561,7 +45563,7 @@ loc_02836C:
 	movea.l	(a1,d0.w),a1
 loc_028370:
 	jmp	(Object_RunAnimScript).l
-sub_028376:
+ObjType_D3:
 	subq.b	#$1,$29(a0)
 loc_02837A:
 	beq.b	loc_028382
@@ -45579,7 +45581,7 @@ loc_02839E:
 	move.w	#$220,(a0)
 	bclr.b	#$0,Obj_Flags(a0)
 	bclr.b	#$6,Obj_Flags(a0)
-	jmp	(sub_018238).l
+	jmp	(ObjType_88).l
 	dc.b	$2F,$09,$45,$F8,$E0,$00,$10,$28,$00,$28,$02,$40
 	dc.b	$00,$03,$32,$2A,$00,$08,$04,$41,$00,$E0,$0C,$41,$00,$E0,$65,$04
 	dc.b	$32,$3C,$00,$E0,$02,$41,$00,$E0,$E2,$49,$E5,$48,$D0,$41,$43,$FA
@@ -45683,7 +45685,7 @@ dat_028832:
 	dc.b	$00,$00,$00,$02,$83,$B4,$00,$06,$00,$08,$93,$EE,$00,$00
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$02,$88,$38,$00,$01,$00,$08,$94,$0C
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$68
-sub_02885C:
+ObjType_100:
 	bset.b	#$2,Obj_Flags(a0)
 loc_028862:
 	moveq	#$3,d0
@@ -45707,7 +45709,7 @@ loc_02888C:
 	jmp	(Object_AnimTick).l
 loc_028892:
 	rts
-sub_028894:
+ObjType_101:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_02889A:
 	jsr	(Collision_HitPlayer).l
@@ -45798,7 +45800,7 @@ loc_028956:
 loc_02895C:
 	jsr	(sub_016602).l
 loc_028962:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_028966:
 	add.w	d0,d0
 loc_028968:
@@ -45858,7 +45860,7 @@ loc_0289D8:
 loc_0289DC:
 	moveq	#$2,d1
 loc_0289DE:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_0289E2:
 	beq.b	loc_028A04
 loc_0289E4:
@@ -45872,11 +45874,11 @@ loc_0289F0:
 loc_0289F2:
 	moveq	#-$2,d1
 loc_0289F4:
-	add.b	d1,$35(a0)
+	add.b	d1,Obj_Direction(a0)
 loc_0289F8:
-	andi.b	#$1E,$35(a0)
+	andi.b	#$1E,Obj_Direction(a0)
 loc_0289FE:
-	move.b	$35(a0),Obj_State(a0)
+	move.b	Obj_Direction(a0),Obj_State(a0)
 loc_028A04:
 	move.b	#$A,$2B(a0)
 loc_028A0A:
@@ -45890,7 +45892,7 @@ loc_028A18:
 loc_028A1E:
 	beq.b	loc_028A6E
 loc_028A20:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_028A24:
 	andi.b	#$1C,d0
 loc_028A28:
@@ -45930,9 +45932,9 @@ loc_028A5E:
 	cmpi.b	#$44,d0
 	beq.b	loc_028A74
 	move.w	$4(a2),d0
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_028A6E:
-	jmp	(sub_01AE8E).l
+	jmp	(Object_SetVelocityFromDir).l
 loc_028A74:
 	lea	$6(a2),a2
 loc_028A78:
@@ -46012,7 +46014,7 @@ ObjData_028E1A:
 	dc.b	$00,$08,$FF,$FF,$FF,$FF,$00,$00,$01,$00,$00,$00,$00,$02,$00,$08
 	dc.b	$99,$A6,$00,$90,$00,$05,$43,$31,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$AE,$4A
-sub_028E52:
+ObjType_FE:
 	moveq	#$3,d0
 loc_028E54:
 	move.w	$18(a0),$20(a0)
@@ -46027,7 +46029,7 @@ loc_028E68:
 loc_028E6C:
 	jsr	(Object_LoadTemplate).l
 loc_028E72:
-	move.b	$1A(a0),$35(a0)
+	move.b	$1A(a0),Obj_Direction(a0)
 loc_028E78:
 	move.b	#$60,Obj_TileAttr(a0)
 loc_028E7E:
@@ -46037,7 +46039,7 @@ loc_028E82:
 loc_028E88:
 	moveq	#$0,d0
 loc_028E8A:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_028E8E:
 	andi.w	#$18,d0
 loc_028E92:
@@ -46053,10 +46055,10 @@ loc_028EA0:
 loc_028EA6:
 	clr.l	(a0)
 	rts
-sub_028EAA:
+ObjType_FF:
 	moveq	#$0,d0
 loc_028EAC:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_028EB0:
 	andi.w	#$18,d0
 loc_028EB4:
@@ -46080,7 +46082,7 @@ loc_028ED0:
 loc_028ED2:
 	bset.b	#$1,Obj_State(a0)
 loc_028ED8:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_028EDC:
 	addq.b	#$8,d0
 loc_028EDE:
@@ -46092,9 +46094,9 @@ loc_028EE4:
 loc_028EE6:
 	moveq	#$8,d0
 loc_028EE8:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_028EEC:
-	bra.b	sub_028EAA
+	bra.b	ObjType_FF
 	dc.b	$00,$00
 	dc.b	$00,$00,$00,$08,$00,$01,$00,$00,$00,$03,$FF,$F8,$00,$01
 loc_028EFE:
@@ -46110,7 +46112,7 @@ loc_028F12:
 loc_028F18:
 	beq.b	loc_028F38
 	moveq	#$0,d0
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 	andi.w	#$18,d0
 	lsr.w	#$2,d0
 	lea	ObjData_028FA8(pc),a1
@@ -46128,7 +46130,7 @@ loc_028F3E:
 	bra.b	loc_028F60
 loc_028F54:
 	addq.w	#$4,d0
-	cmpi.b	#$10,$35(a0)
+	cmpi.b	#$10,Obj_Direction(a0)
 	bcs.b	loc_028F60
 	addq.w	#$4,d0
 loc_028F60:
@@ -46163,7 +46165,7 @@ ObjData_028FA8:
 	dc.b	$9A,$9A,$00,$A0,$00,$05,$45,$32,$80,$00,$00,$18,$00,$06,$00,$08
 	dc.b	$9A,$8A,$00,$90,$00,$05,$44,$A2,$80,$00,$00,$18,$FF,$FF,$00,$02
 	dc.b	$90,$3C
-sub_029082:
+ObjType_FA:
 	movea.l	a0,a2
 loc_029084:
 	lea	ObjData_0291D8(pc),a1
@@ -46213,7 +46215,7 @@ loc_0290EE:
 	move.w	#$23C,(a2)
 loc_0290F2:
 	jmp	(Object_AnimTick).l
-sub_0290F8:
+ObjType_FB:
 	cmpi.w	#$170,Obj_Y(a0)
 loc_0290FE:
 	bgt.w	loc_0291C2
@@ -46226,7 +46228,7 @@ loc_029108:
 loc_02910C:
 	jsr	(Object_DirectionTo).l
 loc_029112:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_029116:
 	lea	dat_0291E8(pc),a1
 loc_02911A:
@@ -46248,7 +46250,7 @@ loc_02913A:
 loc_02913C:
 	moveq	#$1F,d2
 loc_02913E:
-	and.b	$35(a0),d2
+	and.b	Obj_Direction(a0),d2
 loc_029142:
 	move.w	#$4C,d3
 loc_029146:
@@ -46323,7 +46325,7 @@ dat_0291E8:
 	dc.b	$FF,$FF,$00,$02,$93,$04,$00,$04,$00,$08,$7F,$68,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$93,$16,$00,$04,$00,$08,$7F,$22,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$93,$28
-sub_02933A:
+ObjType_108:
 	bset.b	#$0,Obj_Flags(a0)
 loc_029340:
 	bne.w	loc_029360
@@ -46334,7 +46336,7 @@ loc_029348:
 loc_02934E:
 	move.b	#$0,Obj_TileAttr(a0)
 loc_029354:
-	move.b	#$10,$35(a0)
+	move.b	#$10,Obj_Direction(a0)
 loc_02935A:
 	bset.b	#$5,Obj_Flags(a0)
 loc_029360:
@@ -46425,7 +46427,7 @@ sub_0294AC:
 	clr.l	$C(a1)
 	clr.l	$10(a1)
 	rts
-sub_0294E0:
+ObjType_109:
 	tst.b	$2A(a0)
 loc_0294E4:
 	beq.b	loc_0294EA
@@ -46480,7 +46482,7 @@ loc_02957A:
 loc_02957C:
 	move.l	d0,d2
 loc_02957E:
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 loc_029582:
 	moveq	#$7F,d3
 loc_029584:
@@ -46488,7 +46490,7 @@ loc_029584:
 loc_029586:
 	jsr	(sub_01A326).l
 loc_02958C:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_029590:
 	subi.w	#$C,d0
 loc_029594:
@@ -46522,17 +46524,17 @@ loc_0295C8:
 loc_0295CC:
 	jsr	(Object_DirectionTo).l
 loc_0295D2:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_0295D6:
 	beq.b	loc_029618
 loc_0295D8:
 	bgt.b	loc_0295E0
-	subq.b	#$1,$35(a0)
+	subq.b	#$1,Obj_Direction(a0)
 	bra.b	loc_0295E4
 loc_0295E0:
-	addq.b	#$1,$35(a0)
+	addq.b	#$1,Obj_Direction(a0)
 loc_0295E4:
-	move.b	$35(a0),d0
+	move.b	Obj_Direction(a0),d0
 loc_0295E8:
 	cmpi.b	#$C,d0
 loc_0295EC:
@@ -46545,7 +46547,7 @@ loc_0295F4:
 	ble.b	loc_0295F8
 	moveq	#$14,d0
 loc_0295F8:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 loc_0295FC:
 	subi.b	#$C,d0
 loc_029600:
@@ -46622,7 +46624,7 @@ dat_0296F0:
 dat_029702:
 	dc.b	$00,$00,$FF,$78,$00,$00,$FF,$78,$00,$00,$00,$80,$00,$00
 	dc.b	$00,$80,$00,$00
-sub_029714:
+ObjType_10A:
 	bsr.b	sub_02975E
 loc_029716:
 	bne.b	loc_02972C
@@ -46631,7 +46633,7 @@ loc_029718:
 loc_02971E:
 	beq.b	loc_029726
 loc_029720:
-	jsr	(sub_01B42C).l
+	jsr	(ObjType_90).l
 loc_029726:
 	jmp	(Object_AnimTick).l
 loc_02972C:
@@ -46730,7 +46732,7 @@ ObjData_02988A:
 ObjData_029906:
 	dc.b	$00,$50,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FE
-sub_029914:
+ObjType_115:
 	bset.b	#$0,Obj_Flags(a0)
 loc_02991A:
 	bne.b	loc_029940
@@ -46834,7 +46836,7 @@ loc_029AB8:
 	dc.b	$00,$14,$52,$29,$00,$28,$42,$69,$00,$02,$32,$BC,$02,$D0,$4E,$BA
 	dc.b	$86,$06,$11,$7C,$00,$80,$00,$37,$42,$28,$00,$2A,$21,$68,$00,$50
 	dc.b	$00,$10,$43,$FA,$04,$6C,$4E,$F9,$00,$01,$AF,$1A
-sub_029B1C:
+ObjType_116:
 	lea	ColorList_029EF8(pc),a3
 loc_029B20:
 	tst.b	$44(a0)
@@ -46993,7 +46995,7 @@ dat_029CCE:
 	dc.b	$00,$01,$28,$00,$00,$31,$00,$00,$00,$01,$D8,$00,$00,$31,$45,$F8
 	dc.b	$E9,$00,$42,$2A,$00,$28,$42,$2A,$00,$68,$60,$04,$42,$28,$00,$54
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A
-sub_029CF8:
+ObjType_117:
 	lea	(ram_F060).w,a1
 loc_029CFC:
 	lea	(ram_F2A0).w,a2
@@ -47003,7 +47005,7 @@ loc_029D06:
 	movem.l	d0-d1,$C(a2)
 loc_029D0C:
 	rts
-sub_029D0E:
+ObjType_118:
 	lea	(ram_F060).w,a2
 loc_029D12:
 	moveq	#$1A,d1
@@ -47073,7 +47075,7 @@ dat_029DE2:
 	dc.b	$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8
 	dc.b	$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8,$FF,$D8,$FF,$F8
 	dc.b	$FF,$D8
-sub_029E22:
+ObjType_119:
 	lea	(ram_F060).w,a3
 loc_029E26:
 	cmpi.b	#$20,$37(a3)
@@ -47243,7 +47245,7 @@ ObjData_02A348:
 	dc.b	$00,$05,$4F,$A1,$00,$00,$00,$00,$00,$02,$00,$08,$9B,$0E,$00,$10
 	dc.b	$00,$05,$4F,$71,$00,$00,$00,$00,$00,$02,$00,$08,$9B,$1E,$00,$10
 	dc.b	$00,$05,$4F,$A1,$00,$00,$00,$00,$FF,$FF,$00,$02,$A3,$C8
-sub_02A3EE:
+ObjType_10B:
 	bset.b	#$0,Obj_Flags(a0)
 loc_02A3F4:
 	bne.b	loc_02A420
@@ -47397,7 +47399,7 @@ loc_02A6E6:
 	move.b	#$40,$22(a0)
 	move.w	a3,$28(a0)
 	rts
-sub_02A746:
+ObjType_10C:
 	bsr.w	sub_02A80E
 loc_02A74A:
 	tst.b	$44(a0)
@@ -47471,7 +47473,7 @@ loc_02A836:
 	cmpi.b	#$4D,$36(a0)
 loc_02A83C:
 	bne.b	loc_02A856
-	tst.b	$35(a0)
+	tst.b	Obj_Direction(a0)
 	bne.b	loc_02A84E
 	cmpi.w	#$90,Obj_Y(a0)
 	ble.b	loc_02A822
@@ -47487,7 +47489,7 @@ loc_02A856:
 	dc.b	$00,$01,$43,$FA,$07,$0E,$4A,$40,$66,$16,$11,$7C,$00,$4D,$00,$36
 	dc.b	$43,$FA,$04,$E4,$0C,$68,$00,$98,$00,$08,$6F,$04,$43,$FA,$05,$E6
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
-sub_02A8A6:
+ObjType_10D:
 	moveq	#-$1,d0
 loc_02A8A8:
 	move.w	Obj_State(a0),d0
@@ -47514,7 +47516,7 @@ loc_02A8CE:
 loc_02A8D4:
 	jmp	(Object_Free).l
 sub_02A8DA:
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 loc_02A8DE:
 	jsr	(sub_0239EA).l
 loc_02A8E4:
@@ -47525,7 +47527,7 @@ loc_02A8F0:
 	addq.w	#$8,$8(a2)
 loc_02A8F4:
 	rts
-sub_02A8F6:
+ObjType_10E:
 	moveq	#-$1,d0
 loc_02A8F8:
 	move.w	Obj_State(a0),d0
@@ -47605,7 +47607,7 @@ loc_02A980:
 loc_02A984:
 	moveq	#$1,d1
 loc_02A986:
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 loc_02A98A:
 	beq.b	loc_02A9BA
 loc_02A98C:
@@ -47616,13 +47618,13 @@ loc_02A994:
 	bmi.b	loc_02A998
 	neg.w	d1
 loc_02A998:
-	add.b	d1,$35(a0)
+	add.b	d1,Obj_Direction(a0)
 loc_02A99C:
-	andi.b	#$1F,$35(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 loc_02A9A2:
 	moveq	#$1E,d0
 loc_02A9A4:
-	and.b	$35(a0),d0
+	and.b	Obj_Direction(a0),d0
 loc_02A9A8:
 	lea	ObjData_02AFDC(pc),a1
 loc_02A9AC:
@@ -47640,7 +47642,7 @@ loc_02A9C4:
 loc_02A9CA:
 	jmp	(Object_Free).l
 sub_02A9D0:
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 loc_02A9D4:
 	move.b	#$39,d3
 loc_02A9D8:
@@ -47661,7 +47663,7 @@ loc_02A9F2:
 	jsr	(PlaySound).l
 loc_02A9F8:
 	rts
-sub_02A9FA:
+ObjType_10F:
 	moveq	#-$1,d0
 loc_02A9FC:
 	move.w	Obj_State(a0),d0
@@ -47728,17 +47730,17 @@ loc_02AA76:
 	jsr	(Object_DirectionTo).l
 	andi.w	#$1F,d0
 	moveq	#$1,d1
-	sub.b	$35(a0),d0
+	sub.b	Obj_Direction(a0),d0
 	beq.b	loc_02AAC4
 	andi.b	#$1F,d0
 	cmpi.b	#$10,d0
 	bmi.b	loc_02AAA0
 	neg.w	d1
 loc_02AAA0:
-	add.b	d1,$35(a0)
-	andi.b	#$1F,$35(a0)
+	add.b	d1,Obj_Direction(a0)
+	andi.b	#$1F,Obj_Direction(a0)
 	moveq	#$1F,d0
-	and.b	$35(a0),d0
+	and.b	Obj_Direction(a0),d0
 	add.w	d0,d0
 	lea	ObjData_02B11C(pc),a1
 	adda.w	(a1,d0.w),a1
@@ -47902,7 +47904,7 @@ ObjData_02B11C:
 	dc.b	$00,$00,$FF,$FF,$00,$02,$B2,$46,$00,$04,$00,$08,$9C,$3A,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$B2,$58,$00,$04,$00,$08,$9C,$44
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$B2,$6A
-sub_02B27C:
+ObjType_110:
 	bset.b	#$0,Obj_Flags(a0)
 loc_02B282:
 	bne.w	loc_02B296
@@ -48007,7 +48009,7 @@ ObjData_02B3D6:
 	dc.b	$00,$80,$00,$37,$47,$F9,$00,$0D,$9C,$BE,$22,$5F,$70,$00,$72,$F8
 	dc.b	$48,$41,$42,$41,$2F,$09,$4E,$B9,$00,$00,$8C,$10,$22,$5F,$5C,$49
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
-sub_02B466:
+ObjType_111:
 	cmpi.b	#$80,$37(a0)
 loc_02B46C:
 	bne.b	loc_02B4D4
@@ -48056,7 +48058,7 @@ loc_02B50C:
 	bra.b	loc_02B4D4
 	dc.b	$00,$28
 	dc.b	$00,$20,$00,$38,$00,$20,$00,$28,$00,$30,$00,$38,$00,$30
-sub_02B51E:
+ObjType_112:
 	cmpi.b	#$20,(ram_F097).w
 loc_02B524:
 	beq.b	loc_02B576
@@ -48203,7 +48205,7 @@ loc_02B668:
 loc_02B66A:
 	moveq	#-$1,d0
 	rts
-sub_02B66E:
+ObjType_113:
 	cmpi.b	#$20,(ram_F097).w
 loc_02B674:
 	beq.b	loc_02B6BA
@@ -48288,7 +48290,7 @@ dat_02B768:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$0D,$A0,$46,$00,$0D,$A0,$14,$00,$0D,$9F,$E2,$00,$08,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$0D,$A0,$DC,$00,$0D,$A0,$AA,$00,$0D,$A0,$78
-sub_02B790:
+ObjType_114:
 	subq.b	#$1,Obj_State(a0)
 loc_02B794:
 	bne.b	loc_02B7CE
@@ -48307,7 +48309,7 @@ loc_02B794:
 loc_02B7C8:
 	move.b	#$FF,Obj_State(a0)
 loc_02B7CE:
-	jmp	(sub_01A448).l
+	jmp	(ObjType_9C).l
 ObjData_02B7D4:
 	dc.b	$00,$01,$05,$00,$0E,$00,$00,$00,$4E,$20,$00,$00
 	dc.b	$00,$02,$B8,$1A
@@ -48339,7 +48341,7 @@ dat_02B82C:
 ObjData_02B8FE:
 	dc.b	$00,$64
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FE
-sub_02B90C:
+ObjType_11A:
 	bset.b	#$0,Obj_Flags(a0)
 loc_02B912:
 	bne.b	loc_02B95A
@@ -48455,7 +48457,7 @@ loc_02BA60:
 	dc.b	$31,$7C,$02,$58,$00,$38,$0C,$78,$00,$03,$FE,$44,$67,$06,$31,$7C
 	dc.b	$02,$EE,$00,$38,$4C,$DF,$03,$00,$60,$00,$FF,$74,$00,$78,$00,$78
 	dc.b	$00,$78,$00,$78,$00,$96,$00,$96,$00,$96,$00,$96
-sub_02BB1C:
+ObjType_11B:
 	bsr.w	sub_02BDCE
 loc_02BB20:
 	move.b	Obj_State(a0),d0
@@ -48520,7 +48522,7 @@ loc_02BB80:
 	dc.b	$00,$40,$43,$FA,$E1,$C4,$4E,$B9,$00,$01,$AD,$B0,$30,$BC,$04,$8C
 	dc.b	$21,$4C,$00,$14,$00,$28,$00,$2A,$00,$02,$31,$7C,$00,$32,$00,$38
 	dc.b	$4C,$DF,$03,$00,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
-sub_02BD1C:
+ObjType_11C:
 	bsr.w	sub_02BDCE
 loc_02BD20:
 	tst.b	$2A(a0)
@@ -48556,7 +48558,7 @@ loc_02BD78:
 	beq.b	loc_02BD26
 	move.b	#$20,$F7(a1)
 	bra.b	loc_02BD26
-sub_02BD86:
+ObjType_11D:
 	bsr.b	sub_02BDCE
 loc_02BD88:
 	tst.b	Obj_State(a0)
@@ -48657,7 +48659,7 @@ loc_02BE4E:
 	rts
 dat_02BE50:
 	dc.b	$00,$00,$00,$11,$08,$00,$00,$61,$00,$00,$00,$11,$F8,$00,$00,$61
-sub_02BE60:
+ObjType_123:
 	lea	(ram_F060).w,a1
 loc_02BE64:
 	move.w	$4(a1),d0
@@ -48732,7 +48734,7 @@ loc_02BF2A:
 	subq.b	#$1,$29(a0)
 	jmp	(Object_AnimTick).l
 	dc.b	$50,$F8,$C3,$D4,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
-sub_02BF40:
+ObjType_120:
 	lea	(ram_F060).w,a3
 loc_02BF44:
 	move.w	#$150,d0
@@ -48796,7 +48798,7 @@ loc_02BFEE:
 	ble.b	loc_02BFF6
 	moveq	#$14,d0
 loc_02BFF6:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	move.b	#$21,Obj_State(a0)
 	cmpi.b	#$10,d0
 	blt.b	loc_02C00E
@@ -48830,7 +48832,7 @@ loc_02C04A:
 	bne.b	loc_02C090
 	subq.b	#$1,$54(a0)
 	moveq	#$0,d3
-	move.b	$35(a0),d3
+	move.b	Obj_Direction(a0),d3
 	subi.w	#$C,d3
 	lsl.w	#$2,d3
 	move.l	Longs_02C09E(pc,d3.w),d3
@@ -48852,7 +48854,7 @@ Longs_02C09E:
 	dc.l	$FFF9000C,$FFF9000D,$FFF9000D,$FFF9000E
 	dc.l	$FFFB0000,$FFF9FFF4,$FFFAFFF5,$FFFAFFF4
 	dc.l	$FFFAFFF5
-sub_02C0C2:
+ObjType_121:
 	move.w	#$10C,d0
 loc_02C0C6:
 	cmpi.b	#$4C,$36(a0)
@@ -48898,7 +48900,7 @@ loc_02C124:
 	ble.b	loc_02C12C
 	moveq	#$14,d0
 loc_02C12C:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	move.b	#$11,Obj_State(a0)
 loc_02C136:
 	subq.b	#$1,Obj_State(a0)
@@ -48934,7 +48936,7 @@ loc_02C18C:
 loc_02C18E:
 	lea	ObjData_02C2D0(pc),a1
 loc_02C192:
-	cmpi.b	#$10,$35(a0)
+	cmpi.b	#$10,Obj_Direction(a0)
 loc_02C198:
 	blt.b	loc_02C1A0
 	beq.b	loc_02C19E
@@ -48964,7 +48966,7 @@ sub_02C1E6:
 	lea	dat_02C28C(pc),a3
 loc_02C1EA:
 	moveq	#$0,d2
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 	move.b	#$4C,d3
 	jsr	(sub_01A27A).l
 	bne.b	loc_02C202
@@ -48995,7 +48997,7 @@ ObjData_02C2D0:
 dat_02C2D4:
 	dc.b	$05,$6E,$00,$20,$FF,$F1,$00,$98,$FF,$F1,$02,$30
 	dc.b	$FF,$D1
-sub_02C2E2:
+ObjType_11E:
 	moveq	#$0,d0
 loc_02C2E4:
 	move.b	$36(a0),d0
@@ -49120,7 +49122,7 @@ loc_02C408:
 dat_02C430:
 	dc.b	$CA,$54,$00,$5C,$00,$40,$00,$8C,$00,$40,$00,$BC,$00,$40,$01,$2C
 	dc.b	$00,$40,$01,$74,$00,$40,$01,$CC,$00,$40,$02,$14,$00,$40
-sub_02C44E:
+ObjType_11F:
 	moveq	#$0,d0
 loc_02C450:
 	move.b	$36(a0),d0
@@ -49175,7 +49177,7 @@ loc_02C4DC:
 	ble.b	loc_02C4E4
 	moveq	#$14,d0
 loc_02C4E4:
-	move.b	d0,$35(a0)
+	move.b	d0,Obj_Direction(a0)
 	move.b	d0,d2
 	andi.w	#$1E,d0
 	subi.w	#$C,d0
@@ -49192,7 +49194,7 @@ loc_02C514:
 	subq.b	#$1,Obj_State(a0)
 	tst.b	$29(a0)
 	bne.b	loc_02C550
-	move.b	$35(a0),d2
+	move.b	Obj_Direction(a0),d2
 	andi.w	#$1F,d2
 	move.w	#$4C,d3
 	lea	dat_02C584(pc),a3
@@ -49307,7 +49309,7 @@ dat_02C8AA:
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$BF,$34
 	dc.b	$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02
 	dc.b	$C9,$60
-sub_02C972:
+ObjType_BE:
 	ori.b	#$26,Obj_Flags(a0)
 loc_02C978:
 	lea	ObjData_02CB14(pc),a3
@@ -49359,7 +49361,7 @@ loc_02C9E4:
 	move.w	#$3BC,(a0)
 loc_02C9E8:
 	jmp	(Object_AnimTick).l
-sub_02C9EE:
+ObjType_EF:
 	lea	(ram_E6C0).w,a3
 loc_02C9F2:
 	btst.b	#$0,$3(a3)
