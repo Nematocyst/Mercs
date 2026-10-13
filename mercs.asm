@@ -200,16 +200,16 @@ ram_C35A	equ	$FFFFC35A
 ram_C35C	equ	$FFFFC35C
 ram_C368	equ	$FFFFC368
 ram_C36C	equ	$FFFFC36C
-ram_C36E	equ	$FFFFC36E
+Current_Merc	equ	$FFFFC36E
 ram_C370	equ	$FFFFC370
 ram_C3B6	equ	$FFFFC3B6
-ram_C3B8	equ	$FFFFC3B8
+Merc_Flags	equ	$FFFFC3B8
 ram_C3BE	equ	$FFFFC3BE
 ram_C3BF	equ	$FFFFC3BF
 ram_C3C0	equ	$FFFFC3C0
 ram_C3C2	equ	$FFFFC3C2
 ram_C3C4	equ	$FFFFC3C4
-ram_C3C6	equ	$FFFFC3C6
+Party_Last_Offset	equ	$FFFFC3C6
 ram_C3C7	equ	$FFFFC3C7
 ram_C3C8	equ	$FFFFC3C8
 ram_C3CC	equ	$FFFFC3CC
@@ -9436,7 +9436,7 @@ loc_007E78:
 	move.w	(ram_C3B6).w,d1
 	addq.w	#$1,d1
 	lea	(dat_00CD36).l,a1
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a1
 	cmp.w	$6(a1),d1
@@ -9664,7 +9664,7 @@ loc_00806A:
 	beq.b	loc_008092
 	clr.w	(ram_C5D6).w
 	add.w	(ram_C346).w,d0
-	move.w	(ram_C36E).w,d1
+	move.w	(Current_Merc).w,d1
 	add.w	d1,d1
 	lea	(dat_00CD0E).l,a1
 	movea.l	(a1,d1.w),a1
@@ -9713,7 +9713,7 @@ loc_0080CA:
 	moveq	#$8,d2
 	bra.w	loc_0080EC
 loc_0080DE:
-	move.w	(ram_C36E).w,d2
+	move.w	(Current_Merc).w,d2
 	lea	(dat_00842E).l,a1
 	move.w	(a1,d2.w),d2
 loc_0080EC:
@@ -15655,7 +15655,7 @@ loc_00B5B8:
 	btst.b	#$0,(ram_C61D).w
 loc_00B5BE:
 	beq.b	loc_00B5D8
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 	moveq	#$0,d0
 	moveq	#$4,d7
 loc_00B5C8:
@@ -15665,7 +15665,7 @@ loc_00B5C8:
 	dbra	d7,loc_00B5C8
 	moveq	#$0,d0
 loc_00B5D4:
-	move.w	d0,(ram_C36E).w
+	move.w	d0,(Current_Merc).w
 loc_00B5D8:
 	move.b	#$4,(Timer_C605).w
 loc_00B5DE:
@@ -15722,7 +15722,7 @@ loc_00B64C:
 	bne.b	loc_00B65A
 	move.w	#$F8,(Player1_X).w
 loc_00B65A:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00B65E:
 	lsl.w	#$1,d0
 loc_00B660:
@@ -15789,7 +15789,7 @@ loc_00B6E4:
 	st.b	(ram_C61B).w
 	bra.b	loc_00B6DE
 sub_00B6EA:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00B6EE:
 	lea	(dat_00BE62).l,a1
 loc_00B6F4:
@@ -15823,7 +15823,7 @@ loc_00B728:
 sub_00B72A:
 	lea	(ColorList_00BFB0).l,a1
 loc_00B730:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00B734:
 	add.w	d0,d0
 loc_00B736:
@@ -15915,7 +15915,7 @@ loc_00B85A:
 	lea	(dat_0E5F7E).l,a1
 	bsr.w	sub_00BA36
 	bsr.w	sub_00BA52
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 	lea	(dat_00CA6E).l,a1
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a6
@@ -15997,7 +15997,7 @@ loc_00B97C:
 loc_00B980:
 	move.w	#$13C,d2
 loc_00B984:
-	move.w	(ram_C3C6).w,d7
+	move.w	(Party_Last_Offset).w,d7
 loc_00B988:
 	lsr.w	#$1,d7
 loc_00B98A:
@@ -16007,7 +16007,7 @@ loc_00B98E:
 loc_00B992:
 	move.w	#$14C,d2
 loc_00B996:
-	move.w	(ram_C3C6).w,d7
+	move.w	(Party_Last_Offset).w,d7
 loc_00B99A:
 	lsr.w	#$1,d7
 loc_00B99C:
@@ -16017,7 +16017,7 @@ loc_00B9A0:
 loc_00B9A4:
 	move.w	#$188,d2
 loc_00B9A8:
-	move.w	(ram_C3C6).w,d7
+	move.w	(Party_Last_Offset).w,d7
 loc_00B9AC:
 	lsr.w	#$1,d7
 loc_00B9AE:
@@ -16027,7 +16027,7 @@ loc_00B9B2:
 loc_00B9B6:
 	move.w	#$18C,d2
 loc_00B9BA:
-	move.w	(ram_C3C6).w,d7
+	move.w	(Party_Last_Offset).w,d7
 loc_00B9BE:
 	lsr.w	#$1,d7
 loc_00B9C0:
@@ -16079,7 +16079,7 @@ loc_00BA10:
 loc_00BA14:
 	bsr.w	sub_00BA52
 loc_00BA18:
-	move.w	(ram_C3C6).w,d0
+	move.w	(Party_Last_Offset).w,d0
 loc_00BA1C:
 	lea	(dat_00BE6C).l,a6
 loc_00BA22:
@@ -16115,7 +16115,7 @@ loc_00BA4C:
 loc_00BA50:
 	rts
 sub_00BA52:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00BA56:
 	lea	(dat_00BE62).l,a1
 loc_00BA5C:
@@ -16393,9 +16393,9 @@ loc_00BC2C:
 loc_00BC30:
 	beq.b	loc_00BC76
 loc_00BC32:
-	move.w	(ram_C36E).w,d1
+	move.w	(Current_Merc).w,d1
 loc_00BC36:
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 loc_00BC3A:
 	btst.b	#$1,d0
 loc_00BC3E:
@@ -16405,7 +16405,7 @@ loc_00BC40:
 loc_00BC42:
 	bpl.b	loc_00BC48
 loc_00BC44:
-	move.w	(ram_C3C6).w,d1
+	move.w	(Party_Last_Offset).w,d1
 loc_00BC48:
 	bsr.w	sub_00BC78
 loc_00BC4C:
@@ -16415,7 +16415,7 @@ loc_00BC4E:
 loc_00BC52:
 	addq.w	#$2,d1
 loc_00BC54:
-	cmp.w	(ram_C3C6).w,d1
+	cmp.w	(Party_Last_Offset).w,d1
 loc_00BC58:
 	bls.b	loc_00BC5C
 loc_00BC5A:
@@ -16425,7 +16425,7 @@ loc_00BC5C:
 loc_00BC60:
 	bne.b	loc_00BC52
 loc_00BC62:
-	move.w	d1,(ram_C36E).w
+	move.w	d1,(Current_Merc).w
 loc_00BC66:
 	lea	(ram_C716).w,a1
 loc_00BC6A:
@@ -16467,7 +16467,7 @@ loc_00BC9C:
 loc_00BC9E:
 	move.b	d0,(ram_C5CE).w
 loc_00BCA2:
-	move.w	(ram_C36E).w,d1
+	move.w	(Current_Merc).w,d1
 loc_00BCA6:
 	lea	(Palette_Buffer).w,a1
 loc_00BCAA:
@@ -16501,7 +16501,7 @@ loc_00BCE2:
 loc_00BCE8:
 	move.b	#$E0,Obj_TileAttr(a0)
 loc_00BCEE:
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 loc_00BCF2:
 	move.w	Obj_Timer(a0),d0
 loc_00BCF6:
@@ -16628,7 +16628,7 @@ loc_00BDFC:
 loc_00BDFE:
 	bset.b	#$2,Obj_Flags(a0)
 loc_00BE04:
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 loc_00BE08:
 	move.w	Obj_Timer(a0),d0
 loc_00BE0C:
@@ -16803,7 +16803,7 @@ loc_00C13E:
 	andi.w	#$7F,(ram_C6B8).w
 	move.w	#$8,(Timer_C606).w
 	move.b	#$7,(Timer_C5A4).w
-	addq.w	#$2,(ram_C3C6).w
+	addq.w	#$2,(Party_Last_Offset).w
 	rts
 ObjType_5C:
 	bset.b	#$0,Obj_Flags(a0)
@@ -16818,7 +16818,7 @@ loc_00C170:
 loc_00C176:
 	move.b	#$10,$3E(a0)
 loc_00C17C:
-	move.w	(ram_C36E).w,Obj_AnimPtr(a0)
+	move.w	(Current_Merc).w,Obj_AnimPtr(a0)
 loc_00C182:
 	clr.l	(ram_C3C8).w
 loc_00C186:
@@ -16949,7 +16949,7 @@ loc_00C270:
 loc_00C2CC:
 	move.w	#$8,Obj_State(a0)
 	move.w	(ram_C6BE).w,(ram_C3BE).w
-	move.w	(ram_C36E).w,d1
+	move.w	(Current_Merc).w,d1
 	move.w	d1,Obj_AnimPtr(a0)
 	bsr.w	sub_00C652
 	lea	(ram_C3BF).w,a1
@@ -17199,7 +17199,7 @@ loc_00C5C8:
 	ori.b	#$80,(ram_E022).w
 	bset.b	#$2,(ram_E082).w
 	move.w	Obj_AnimPtr(a0),d0
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 	lsr.w	#$1,d0
 	tst.b	(a1,d0.w)
 	beq.w	loc_00C512
@@ -17221,7 +17221,7 @@ loc_00C610:
 loc_00C614:
 	move.w	Obj_AnimPtr(a0),d1
 loc_00C618:
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 loc_00C61C:
 	cmpi.b	#$50,$1F(a0)
 loc_00C622:
@@ -17232,7 +17232,7 @@ loc_00C62A:
 	bne.b	loc_00C640
 loc_00C62C:
 	addq.w	#$2,d1
-	cmp.w	(ram_C3C6).w,d1
+	cmp.w	(Party_Last_Offset).w,d1
 	bls.b	loc_00C636
 	moveq	#$0,d1
 loc_00C636:
@@ -17244,7 +17244,7 @@ loc_00C640:
 loc_00C642:
 	bcc.b	loc_00C648
 loc_00C644:
-	move.w	(ram_C3C6).w,d1
+	move.w	(Party_Last_Offset).w,d1
 loc_00C648:
 	bsr.w	sub_00BC78
 loc_00C64C:
@@ -17293,7 +17293,7 @@ loc_00C6A6:
 	btst.b	#$0,d0
 	bne.b	loc_00C6CC
 	addq.w	#$2,d1
-	cmp.w	(ram_C3C6).w,d1
+	cmp.w	(Party_Last_Offset).w,d1
 	bls.b	loc_00C6B6
 	moveq	#$0,d1
 loc_00C6B6:
@@ -17306,7 +17306,7 @@ loc_00C6BC:
 loc_00C6CC:
 	subq.w	#$2,d1
 	bcc.b	loc_00C6D4
-	move.w	(ram_C3C6).w,d1
+	move.w	(Party_Last_Offset).w,d1
 loc_00C6D4:
 	bsr.w	sub_00BC78
 	bne.b	loc_00C6BC
@@ -17595,7 +17595,7 @@ loc_00C976:
 loc_00C97A:
 	rts
 sub_00C97C:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00C980:
 	lea	(dat_00BE62).l,a1
 loc_00C986:
@@ -17659,7 +17659,7 @@ loc_00CA08:
 	andi.b	#$7F,d0
 	bra.w	loc_00CA20
 loc_00CA1C:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00CA20:
 	add.w	d0,d0
 loc_00CA22:
@@ -18302,15 +18302,15 @@ loc_00D288:
 loc_00D28C:
 	bra.w	loc_00D2B6
 loc_00D290:
-	move.w	(ram_C36E).w,d0
+	move.w	(Current_Merc).w,d0
 loc_00D294:
 	lsr.w	#$1,d0
 loc_00D296:
-	lea	(ram_C3B8).w,a1
+	lea	(Merc_Flags).w,a1
 loc_00D29A:
 	st.b	(a1,d0.w)
 loc_00D29E:
-	move.w	(ram_C3C6).w,d7
+	move.w	(Party_Last_Offset).w,d7
 loc_00D2A2:
 	lsr.w	#$1,d7
 loc_00D2A4:
