@@ -102,15 +102,15 @@ ram_C234	equ	$FFFFC234
 ram_C238	equ	$FFFFC238
 ram_C23A	equ	$FFFFC23A
 ram_C240	equ	$FFFFC240
-ram_C300	equ	$FFFFC300
-ram_C301	equ	$FFFFC301
-ram_C302	equ	$FFFFC302
+Joy1_Held	equ	$FFFFC300
+Joy1_Pressed	equ	$FFFFC301
+Joy2_Held	equ	$FFFFC302
 ram_C304	equ	$FFFFC304
 ram_C30E	equ	$FFFFC30E
 ram_C310	equ	$FFFFC310
-ram_C312	equ	$FFFFC312
+RNG_Seed	equ	$FFFFC312
 ram_C313	equ	$FFFFC313
-ram_C318	equ	$FFFFC318
+DMA_Trigger_Word	equ	$FFFFC318
 ram_C328	equ	$FFFFC328
 ram_C329	equ	$FFFFC329
 ram_C32A	equ	$FFFFC32A
@@ -119,7 +119,7 @@ ram_C336	equ	$FFFFC336
 VBlank_Counter	equ	$FFFFC33E
 ram_C342	equ	$FFFFC342
 ram_C344	equ	$FFFFC344
-ram_C346	equ	$FFFFC346
+Menu_Cursor	equ	$FFFFC346
 ram_C347	equ	$FFFFC347
 ram_C348	equ	$FFFFC348
 ram_C34A	equ	$FFFFC34A
@@ -129,7 +129,7 @@ ram_C351	equ	$FFFFC351
 ram_C352	equ	$FFFFC352
 ram_C354	equ	$FFFFC354
 ram_C355	equ	$FFFFC355
-ram_C356	equ	$FFFFC356
+Flags_C356	equ	$FFFFC356
 ram_C357	equ	$FFFFC357
 ram_C359	equ	$FFFFC359
 ram_C35A	equ	$FFFFC35A
@@ -207,20 +207,20 @@ ram_C598	equ	$FFFFC598
 ram_C59A	equ	$FFFFC59A
 ram_C59E	equ	$FFFFC59E
 ram_C5A0	equ	$FFFFC5A0
-ram_C5A2	equ	$FFFFC5A2
-ram_C5A4	equ	$FFFFC5A4
+Game_SubState	equ	$FFFFC5A2
+Timer_C5A4	equ	$FFFFC5A4
 ram_C5A6	equ	$FFFFC5A6
 ram_C5A8	equ	$FFFFC5A8
 ram_C5A9	equ	$FFFFC5A9
 ram_C5AA	equ	$FFFFC5AA
 ram_C5AE	equ	$FFFFC5AE
-ram_C5AF	equ	$FFFFC5AF
+Flags_C5AF	equ	$FFFFC5AF
 ram_C5B0	equ	$FFFFC5B0
 ram_C5B4	equ	$FFFFC5B4
 ram_C5BC	equ	$FFFFC5BC
 ram_C5BE	equ	$FFFFC5BE
 ram_C5BF	equ	$FFFFC5BF
-ram_C5C0	equ	$FFFFC5C0
+Flags_C5C0	equ	$FFFFC5C0
 ram_C5C1	equ	$FFFFC5C1
 ram_C5C2	equ	$FFFFC5C2
 ram_C5C8	equ	$FFFFC5C8
@@ -245,7 +245,7 @@ ram_C5E2	equ	$FFFFC5E2
 ram_C5E6	equ	$FFFFC5E6
 ram_C5E8	equ	$FFFFC5E8
 ram_C5EA	equ	$FFFFC5EA
-ram_C5EB	equ	$FFFFC5EB
+Flags_C5EB	equ	$FFFFC5EB
 ram_C5EC	equ	$FFFFC5EC
 ram_C5ED	equ	$FFFFC5ED
 ram_C5F8	equ	$FFFFC5F8
@@ -255,8 +255,8 @@ ram_C5FF	equ	$FFFFC5FF
 ram_C601	equ	$FFFFC601
 ram_C602	equ	$FFFFC602
 ram_C604	equ	$FFFFC604
-ram_C605	equ	$FFFFC605
-ram_C606	equ	$FFFFC606
+Timer_C605	equ	$FFFFC605
+Timer_C606	equ	$FFFFC606
 ram_C60A	equ	$FFFFC60A
 ram_C60E	equ	$FFFFC60E
 ram_C612	equ	$FFFFC612
@@ -267,7 +267,7 @@ ram_C618	equ	$FFFFC618
 ram_C619	equ	$FFFFC619
 ram_C61A	equ	$FFFFC61A
 ram_C61B	equ	$FFFFC61B
-ram_C61C	equ	$FFFFC61C
+Flags_C61C	equ	$FFFFC61C
 ram_C61D	equ	$FFFFC61D
 ram_C61E	equ	$FFFFC61E
 ram_C620	equ	$FFFFC620
@@ -681,9 +681,9 @@ loc_0003C0:
 	dbra	d6,loc_0003C0
 	move.b	(HW_Version).l,(Hardware_Version).w
 	move.w	#$2700,sr
-	jsr	(sub_009D96).l
+	jsr	(InitIOPorts).l
 	jsr	(sub_009FF6).l
-	jsr	(sub_009E04).l
+	jsr	(InitVDP).l
 	move.w	#$2000,sr
 	move.w	#$4,(Game_State).w
 MainLoop:
@@ -748,15 +748,15 @@ loc_000510:
 	jsr	(sub_000558).l
 	tst.w	(ram_C304).w
 	beq.w	loc_00053C
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.b	loc_000510
 loc_00053C:
-	move.b	(ram_C302).w,d0
+	move.b	(Joy2_Held).w,d0
 	cmpi.b	#$76,d0
 	bne.b	loc_00054A
 	st.b	(ram_FE58).w
 loc_00054A:
-	move.w	#$14,(ram_C5A2).w
+	move.w	#$14,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_000558:
@@ -829,11 +829,11 @@ loc_0006A4:
 	jsr	(sub_014056).l
 	jsr	(sub_00075C).l
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_0006CE
 	bra.w	loc_0006A4
 loc_0006CE:
-	btst.b	#$6,(ram_C300).w
+	btst.b	#$6,(Joy1_Held).w
 	beq.b	loc_0006DE
 	st.b	(ram_C355).w
 	st.b	(ram_FE59).w
@@ -841,21 +841,21 @@ loc_0006DE:
 	lea	(ram_C328).w,a1
 	bsr.w	sub_000724
 	subq.w	#$1,(ram_C328).w
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0006FC
 	addq.w	#$7,(ram_C328).w
 	cmpi.w	#$E,(ram_C328).w
 	bhi.b	loc_000716
 loc_0006FC:
-	move.w	#$28,(ram_C5A2).w
-	tst.b	(ram_C356).w
+	move.w	#$28,(Game_SubState).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00070E
-	move.w	#$34,(ram_C5A2).w
+	move.w	#$34,(Game_SubState).w
 loc_00070E:
 	move.w	#$8,(Game_State).w
 	rts
 loc_000716:
-	move.w	#$C,(ram_C5A2).w
+	move.w	#$C,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_000724:
@@ -881,12 +881,12 @@ sub_000724:
 loc_00075A:
 	rts
 sub_00075C:
-	move.w	(ram_C300).w,d0
+	move.w	(Joy1_Held).w,d0
 	beq.w	loc_0007C6
 	move.w	d0,d1
 	andi.w	#$C,d0
 	beq.w	loc_0007C6
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	moveq	#$0,d1
 	addq.w	#$1,d1
 	lea	(dat_00083E).l,a1
@@ -900,7 +900,7 @@ sub_00075C:
 	bra.b	loc_0007B0
 loc_000798:
 	moveq	#$7,d0
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0007A2
 	moveq	#$10,d0
 loc_0007A2:
@@ -927,12 +927,12 @@ loc_0007D2:
 	dbra	d6,loc_0007D2
 	lea	(dat_00083E).l,a6
 	jsr	(sub_0087C6).l
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_0007EA:
 	rts
 loc_0007EC:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_00083A
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000800:
@@ -945,8 +945,8 @@ loc_000800:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00083A:
 	rts
@@ -981,9 +981,9 @@ loc_0008C4:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_0008F0
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_0008F0
 	bra.w	loc_0008C4
 loc_0008F0:
@@ -991,7 +991,7 @@ loc_0008F0:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$38,(ram_C5A2).w
+	move.w	#$38,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00090E:
@@ -1003,9 +1003,9 @@ sub_00090E:
 	move.b	#$1,(ram_C667).w
 	move.b	#$1,(ram_C669).w
 loc_000936:
-	move.b	(ram_C301).w,d6
+	move.b	(Joy1_Pressed).w,d6
 	beq.w	loc_0007EA
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	bsr.w	sub_000A9C
 	move.w	$28(a0),d0
 	move.w	dat_000956(pc,d0.w),d0
@@ -1019,11 +1019,11 @@ sub_000974:
 	bsr.w	sub_000B7C
 	lea	(dat_000D40).l,a1
 	moveq	#$0,d0
-	move.b	(ram_C356).w,d0
+	move.b	(Flags_C356).w,d0
 	lsr.w	#$1,d0
 	bsr.w	sub_000B54
 	moveq	#$0,d0
-	move.b	(ram_C356).w,d0
+	move.b	(Flags_C356).w,d0
 	lea	($D6C).l,a2
 	movem.w	(a2,d0.w),d1/a2
 	bsr.w	sub_0009D4
@@ -1114,7 +1114,7 @@ loc_000B66:
 	rts
 sub_000B7C:
 	moveq	#$0,d0
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_000B86
 	moveq	#$4,d0
 loc_000B86:
@@ -1144,11 +1144,11 @@ loc_000BAC:
 	move.w	(ram_FE42).w,d0
 	bsr.w	sub_000A12
 	bsr.w	sub_000A32
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_000BE8:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_000C36
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000BFC:
@@ -1161,8 +1161,8 @@ loc_000BFC:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_000C36:
 	rts
@@ -1231,8 +1231,8 @@ loc_000E6E:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000EB0:
@@ -1245,8 +1245,8 @@ loc_000EB0:
 	move.w	#$96D1,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$62E0,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	btst.b	#$7,(Hardware_Version).w
 	bne.b	loc_000F0C
@@ -1278,7 +1278,7 @@ loc_000F46:
 	dbra	d6,loc_000F46
 	tst.b	(ram_FE80).w
 	beq.b	loc_000F7E
-	move.b	#$1,(ram_C605).w
+	move.b	#$1,(Timer_C605).w
 	move.w	#$18,(ram_C602).w
 	move.w	#$168,d0
 	jsr	(sub_008508).l
@@ -1296,16 +1296,16 @@ loc_000F8C:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	bsr.b	sub_001002
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_000FF6
-	btst.b	#$0,(ram_C61C).w
+	btst.b	#$0,(Flags_C61C).w
 	bne.b	loc_000FE0
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_000FC2
 	bra.w	loc_000F8C
 loc_000FC2:
-	move.w	#$38,(ram_C5A2).w
+	move.w	#$38,(Game_SubState).w
 loc_000FC8:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
@@ -1317,19 +1317,19 @@ loc_000FE0:
 	st.b	(ram_C344).w
 	st.b	(ram_C5CD).w
 	move.w	#$FFFF,(ram_C5C2).w
-	move.w	#$18,(ram_C5A2).w
+	move.w	#$18,(Game_SubState).w
 	bra.b	loc_000FC8
 loc_000FF6:
 	st.b	(ram_FE80).w
-	move.w	#$14,(ram_C5A2).w
+	move.w	#$14,(Game_SubState).w
 	bra.b	loc_000FC8
 sub_001002:
 	move.w	(ram_C602).w,d0
 	cmpi.w	#$14,d0
 	bhi.b	loc_00101A
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.b	loc_00101A
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 loc_00101A:
 	jmp	loc_00101E(pc,d0.w)
 loc_00101E:
@@ -1348,10 +1348,10 @@ loc_001042:
 	tst.w	d7
 	beq.b	loc_001088
 	move.w	#$4,(ram_C602).w
-	move.b	#$8,(ram_C605).w
+	move.b	#$8,(Timer_C605).w
 	rts
 loc_00105C:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_001088
 	move.w	#$8,(ram_C602).w
 	bset.b	#$0,(ram_C604).w
@@ -1362,11 +1362,11 @@ loc_001070:
 	tst.w	d7
 	beq.b	loc_001088
 	move.w	#$C,(ram_C602).w
-	move.b	#$40,(ram_C605).w
+	move.b	#$40,(Timer_C605).w
 loc_001088:
 	rts
 loc_00108A:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_001088
 	move.w	#$10,(ram_C602).w
 	rts
@@ -1382,17 +1382,17 @@ loc_0010B2:
 	move.l	(a1)+,(a2)+
 	dbra	d0,loc_0010B2
 	move.w	#$14,(ram_C602).w
-	move.b	#$20,(ram_C605).w
+	move.b	#$20,(Timer_C605).w
 	rts
 loc_0010C6:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_001088
 	move.w	#$18,(ram_C602).w
 	bset.b	#$1,(ram_C604).w
-	move.b	#$10,(ram_C605).w
+	move.b	#$10,(Timer_C605).w
 	rts
 loc_0010E0:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_00113A
 	move.w	#$1C,(ram_C602).w
 	lea	(dat_001354).l,a1
@@ -1410,29 +1410,29 @@ loc_0010E0:
 	move.w	#$4517,d1
 	moveq	#$0,d6
 	bsr.w	sub_0087E2
-	move.b	#$20,(ram_C605).w
-	move.w	#$100,(ram_C606).w
+	move.b	#$20,(Timer_C605).w
+	move.w	#$100,(Timer_C606).w
 	bset.b	#$2,(ram_C604).w
 loc_00113A:
 	rts
 loc_00113C:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	beq.b	loc_00115C
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_00115A
 	move.w	#$20,(ram_C602).w
-	move.b	#$20,(ram_C605).w
+	move.b	#$20,(Timer_C605).w
 	bset.b	#$3,(ram_C604).w
 loc_00115A:
 	rts
 loc_00115C:
-	bset.b	#$0,(ram_C61C).w
+	bset.b	#$0,(Flags_C61C).w
 	rts
 loc_001164:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_00117C
 	move.w	#$1C,(ram_C602).w
-	move.b	#$20,(ram_C605).w
+	move.b	#$20,(Timer_C605).w
 	bset.b	#$4,(ram_C604).w
 loc_00117C:
 	rts
@@ -1463,8 +1463,8 @@ loc_0011DA:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_0011DA
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(dat_0E0EEA).l,a1
 	move.l	#$61140003,d0
@@ -1506,8 +1506,8 @@ loc_00125C:
 	move.w	#$96D4,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4800,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001296:
 	rts
@@ -1531,8 +1531,8 @@ loc_0012B8:
 	move.w	#$96D4,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4800,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0012F2:
 	rts
@@ -1555,8 +1555,8 @@ loc_001318:
 	move.w	#$96D4,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4800,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001352:
 	rts
@@ -1592,8 +1592,8 @@ loc_0013C4:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001406:
@@ -1606,8 +1606,8 @@ loc_001406:
 	move.w	#$96DF,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$5E00,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$72800003,(VDP_Control).l
 	lea	(dat_0591E0).l,a0
@@ -1626,8 +1626,8 @@ loc_001474:
 	move.w	#$9627,(a6)
 	move.w	#$9706,(a6)
 	move.w	#$5200,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_00178E
 	bsr.w	sub_0018D2
@@ -1648,7 +1648,7 @@ loc_001474:
 	lea	(dat_0817A0).l,a0
 	lea	(ram_B0C0).w,a4
 	jsr	(sub_00A22A).l
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00153C
 	lea	(dat_03B45A).l,a0
 	lea	(ram_BB00).w,a4
@@ -1690,7 +1690,7 @@ sub_00159C:
 	bsr.w	sub_001648
 	btst.b	#$0,(ram_C693).w
 	beq.b	loc_0015D6
-	bset.b	#$6,(ram_C61C).w
+	bset.b	#$6,(Flags_C61C).w
 loc_0015D6:
 	jsr	(sub_00A4D4).l
 	jsr	(sub_00A56E).l
@@ -1713,7 +1713,7 @@ loc_0015D6:
 	beq.w	loc_00193A
 	bra.w	loc_00158C
 sub_001648:
-	move.b	(ram_C61C).w,d0
+	move.b	(Flags_C61C).w,d0
 	beq.b	loc_001682
 	move.b	d0,d1
 	andi.b	#$8F,d0
@@ -1734,7 +1734,7 @@ loc_001682:
 loc_001684:
 	addq.w	#$1,(ram_C328).w
 loc_001688:
-	move.w	#$C,(ram_C5A2).w
+	move.w	#$C,(Game_SubState).w
 loc_00168E:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
@@ -1749,13 +1749,13 @@ loc_0016A8:
 	bls.b	loc_0016B6
 	move.l	d0,(ram_FE50).w
 loc_0016B6:
-	move.w	#$3C,(ram_C5A2).w
+	move.w	#$3C,(Game_SubState).w
 	bra.b	loc_00168E
 loc_0016BE:
-	move.w	#$20,(ram_C5A2).w
-	tst.b	(ram_C356).w
+	move.w	#$20,(Game_SubState).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0016D4
-	move.w	#$34,(ram_C5A2).w
+	move.w	#$34,(Game_SubState).w
 	addq.w	#$1,(ram_C328).w
 loc_0016D4:
 	move.l	#$69827,d0
@@ -1767,10 +1767,10 @@ loc_0016DA:
 	bne.b	loc_0016DA
 	bra.b	loc_00168E
 loc_0016E6:
-	move.w	#$2C,(ram_C5A2).w
-	tst.b	(ram_C356).w
+	move.w	#$2C,(Game_SubState).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0016F8
-	move.w	#$40,(ram_C5A2).w
+	move.w	#$40,(Game_SubState).w
 loc_0016F8:
 	bra.b	loc_00168E
 sub_0016FA:
@@ -1781,7 +1781,7 @@ sub_0016FA:
 	add.w	d0,d0
 	move.w	dat_00173E(pc,d0.w),(ram_C342).w
 	clr.l	(ram_FE50).w
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00173C
 	move.w	#$1,(ram_C350).w
 	lea	(dat_001748).l,a1
@@ -1825,7 +1825,7 @@ sub_00178E:
 	cmpi.w	#$44,(Game_State).w
 	beq.b	loc_00181C
 	moveq	#$0,d0
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_001804
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_0017FA
@@ -1919,8 +1919,8 @@ loc_001900:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00193A:
 	rts
@@ -1948,8 +1948,8 @@ loc_001970:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0019AA:
 	rts
@@ -1979,7 +1979,7 @@ sub_0019D4:
 	moveq	#$1B,d2
 	jsr	(sub_00A11A).l
 	bsr.w	sub_001A02
-	bset.b	#$7,(ram_C5AF).w
+	bset.b	#$7,(Flags_C5AF).w
 	bsr.w	sub_001DBE
 	rts
 sub_001A02:
@@ -2016,7 +2016,7 @@ loc_001A3E:
 	bsr.w	sub_001CEA
 	bsr.w	sub_001E1C
 	bsr.w	sub_001E6A
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_001AB6
 	bsr.w	sub_001E8A
 	bsr.w	sub_001FBC
@@ -2079,7 +2079,7 @@ sub_001B56:
 	lea	(ram_D070).w,a1
 	jmp	(loc_016168).l
 sub_001B60:
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_001B7C
 	lea	(ram_D800).w,a1
 	move.l	#$52400003,d0
@@ -2089,9 +2089,9 @@ sub_001B60:
 loc_001B7C:
 	rts
 sub_001B7E:
-	bclr.b	#$1,(ram_C5AF).w
+	bclr.b	#$1,(Flags_C5AF).w
 	beq.b	loc_001BA0
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.b	loc_001BA2
 	lea	(ram_D810).w,a1
 	move.l	#$56400003,d0
@@ -2108,7 +2108,7 @@ loc_001BA2:
 	jsr	(sub_00A11A).l
 	rts
 sub_001BB8:
-	bclr.b	#$2,(ram_C5AF).w
+	bclr.b	#$2,(Flags_C5AF).w
 	beq.b	loc_001C02
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001BC8:
@@ -2121,20 +2121,20 @@ loc_001BC8:
 	move.w	#$96EC,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$54C0,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001C02:
 	rts
 sub_001C04:
-	bclr.b	#$3,(ram_C5AF).w
+	bclr.b	#$3,(Flags_C5AF).w
 	beq.b	loc_001C1E
 	move.l	#$5A420003,(VDP_Control).l
 	move.l	(ram_D838).w,(VDP_Data).l
 loc_001C1E:
 	rts
 sub_001C20:
-	bclr.b	#$4,(ram_C5AF).w
+	bclr.b	#$4,(Flags_C5AF).w
 	beq.b	loc_001C3E
 	move.w	#$D83E,d0
 	move.w	#$8,d1
@@ -2142,7 +2142,7 @@ sub_001C20:
 	lea	(ram_D83C).w,a1
 	jsr	(sub_00A118).l
 loc_001C3E:
-	bclr.b	#$5,(ram_C5AF).w
+	bclr.b	#$5,(Flags_C5AF).w
 	beq.b	loc_001C88
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001C4E:
@@ -2155,13 +2155,13 @@ loc_001C4E:
 	move.w	#$96EC,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4C20,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001C88:
 	rts
 sub_001C8A:
-	bclr.b	#$6,(ram_C5AF).w
+	bclr.b	#$6,(Flags_C5AF).w
 	beq.b	loc_001CA8
 	move.w	#$DBBE,d0
 	move.w	#$7,d1
@@ -2232,8 +2232,8 @@ loc_001D56:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_001D56
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001D70:
 	rts
@@ -2251,13 +2251,13 @@ loc_001D82:
 	move.w	#$96D8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_001DBC:
 	rts
 sub_001DBE:
-	bclr.b	#$7,(ram_C5AF).w
+	bclr.b	#$7,(Flags_C5AF).w
 	beq.b	loc_001DE2
 	move.w	(ram_C352).w,d0
 	lsr.w	#$1,d0
@@ -2288,8 +2288,8 @@ loc_001E2C:
 	move.w	#$96AA,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	nop
 loc_001E68:
@@ -2332,8 +2332,8 @@ loc_001EFC:
 	move.w	#$96AC,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$5C00,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$5CA00002,(VDP_Control).l
 	lea	(dat_0E4538).l,a0
@@ -2349,8 +2349,8 @@ loc_001F54:
 	move.w	#$96B0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$5000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(VDP_Control).l,a6
 	lea	(VDP_Data).l,a1
@@ -2383,8 +2383,8 @@ loc_001FFE:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_001FFE
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$918F,(VDP_Control).l
 	tst.b	(ram_C644).w
@@ -2413,10 +2413,10 @@ loc_002072:
 	move.w	#$96FF,(a6)
 	move.w	#$9702,(a6)
 	move.w	#$5FA0,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_0020FE
 	cmpi.w	#$9,(ram_C328).w
 	beq.w	loc_0020E4
@@ -2523,8 +2523,8 @@ loc_0022D2:
 	move.w	#$96B0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$5000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002314:
@@ -2537,8 +2537,8 @@ loc_002314:
 	move.w	#$96AC,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$5C00,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 sub_002350:
@@ -2555,15 +2555,15 @@ loc_002362:
 	move.w	#$96AE,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$7D40,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 dat_00239E:
 	dc.b	$82,$83
 	dc.b	$84,$85,$86,$87,$8A,$93,$94,$95,$96,$97,$98,$99,$9A,$9A,$A2,$87
 sub_0023B0:
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.w	loc_00193A
 	move.w	(ram_C328).w,d0
 	subq.w	#$7,d0
@@ -2794,7 +2794,7 @@ loc_002CDE:
 	cmpi.w	#$4,(ram_FE64).w
 	beq.w	loc_002D22
 	st.b	(ram_FE80).w
-	move.w	#$14,(ram_C5A2).w
+	move.w	#$14,(Game_SubState).w
 loc_002CF2:
 	clr.w	(ram_C344).w
 	clr.b	(ram_C5C9).w
@@ -2808,11 +2808,11 @@ loc_002CF2:
 	move.w	#$8,(Game_State).w
 	rts
 loc_002D22:
-	move.w	#$4,(ram_C5A2).w
+	move.w	#$4,(Game_SubState).w
 	bra.b	loc_002CF2
 loc_002D2A:
-	jsr	(sub_009DAC).l
-	btst.b	#$7,(ram_C301).w
+	jsr	(ReadJoypads).l
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.b	loc_002D40
 	move.w	#$14,(ram_FE64).w
 	rts
@@ -2835,10 +2835,10 @@ loc_002D5E:
 	eor.w	d1,d2
 	and.w	d1,d2
 loc_002D6C:
-	move.b	d2,(ram_C301).w
+	move.b	d2,(Joy1_Pressed).w
 	move.w	d1,(ram_FE5E).w
 	move.b	d0,(ram_FE5E).w
-	move.b	d1,(ram_C300).w
+	move.b	d1,(Joy1_Held).w
 	bra.w	loc_001A3E
 sub_002D80:
 	move.w	#$2700,sr
@@ -2860,8 +2860,8 @@ loc_002DB0:
 	move.w	#$96BA,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$7280,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002DF2:
@@ -2874,8 +2874,8 @@ loc_002DF2:
 	move.w	#$96C4,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$49A0,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$70C00002,(VDP_Control).l
 	lea	(dat_0589FA).l,a0
@@ -2887,7 +2887,7 @@ loc_002DF2:
 	lea	(dat_0582AC).l,a0
 	jsr	(sub_00A218).l
 	bsr.w	sub_00317A
-	move.w	#$20,(ram_C606).w
+	move.w	#$20,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -2899,14 +2899,14 @@ loc_002E86:
 	bsr.w	sub_002EE4
 	bsr.w	sub_0080BC
 	bsr.w	sub_00805E
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_002EB6
 	bra.w	loc_002E86
 loc_002EB6:
-	move.w	#$24,(ram_C5A2).w
+	move.w	#$24,(Game_SubState).w
 	cmpi.w	#$6,(ram_C328).w
 	bne.b	loc_002EDC
-	move.w	#$2C,(ram_C5A2).w
+	move.w	#$2C,(Game_SubState).w
 	move.l	(ram_C332).w,d0
 	cmp.l	(ram_FE50).w,d0
 	bls.b	loc_002ED8
@@ -2933,10 +2933,10 @@ loc_002EEC:
 	bra.w	loc_002F8C
 	bra.w	loc_003122
 loc_002F1C:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.w	loc_002F8A
 	addq.w	#$4,(ram_C602).w
-	move.w	#$20,(ram_C606).w
+	move.w	#$20,(Timer_C606).w
 	lea	(dat_003288).l,a6
 	bsr.w	sub_0087C6
 	move.l	#$25862586,d1
@@ -2958,11 +2958,11 @@ loc_002F1C:
 	lea	(ram_C67D).w,a1
 	lea	(ram_A588).w,a2
 	bsr.w	sub_008B32
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_002F8A:
 	rts
 loc_002F8C:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.b	loc_002F96
 	addq.w	#$4,(ram_C602).w
 loc_002F96:
@@ -2975,13 +2975,13 @@ loc_002F98:
 	lea	(ram_C67D).w,a1
 	lea	(ram_A588).w,a2
 	bsr.w	sub_008B32
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_002FBA:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.w	loc_00305E
 	addq.w	#$4,(ram_C602).w
-	move.w	#$18,(ram_C606).w
+	move.w	#$18,(Timer_C606).w
 	lea	(dat_0032EA).l,a1
 	lea	(ram_A70A).w,a2
 	move.l	(a1)+,(a2)
@@ -3026,7 +3026,7 @@ loc_003044:
 	lea	(ram_C67C).w,a1
 	lea	(ram_A88A).w,a2
 	bsr.w	sub_008A7A
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_00305E:
 	rts
 	dc.b	$00,$00,$03,$00
@@ -3038,15 +3038,15 @@ loc_003064:
 	lea	(ram_C67C).w,a1
 	lea	(ram_A88A).w,a2
 	bsr.w	sub_008A7A
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_003084:
 	addq.w	#$4,(ram_C602).w
-	move.w	#$20,(ram_C606).w
+	move.w	#$20,(Timer_C606).w
 	cmpi.w	#$3,(ram_C350).w
 	bcc.b	loc_0030B2
 	move.w	#$3,(ram_C350).w
-	bset.b	#$3,(ram_C5C0).w
+	bset.b	#$3,(Flags_C5C0).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3E,d0
 	jsr	(sub_00A068).l
@@ -3054,7 +3054,7 @@ loc_003084:
 loc_0030B2:
 	rts
 loc_0030B4:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.b	loc_00310C
 	addq.w	#$4,(ram_C602).w
 	lea	(dat_0032F2).l,a6
@@ -3073,20 +3073,20 @@ loc_0030B4:
 	moveq	#-$3A,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	bset.b	#$4,(ram_C5C0).w
+	bset.b	#$4,(Flags_C5C0).w
 loc_003106:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_00310C:
 	rts
 loc_00310E:
-	btst.b	#$4,(ram_C5C0).w
+	btst.b	#$4,(Flags_C5C0).w
 	bne.b	loc_003120
 	addq.w	#$4,(ram_C602).w
-	move.w	#$18,(ram_C606).w
+	move.w	#$18,(Timer_C606).w
 loc_003120:
 	rts
 loc_003122:
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 	rts
 sub_00312A:
 	lea	(VInt).l,a1
@@ -3098,7 +3098,7 @@ loc_003138:
 	dbra	d7,loc_003138
 	bcc.b	loc_003150
 	addq.w	#$4,(ram_C602).w
-	move.w	#$20,(ram_C606).w
+	move.w	#$20,(Timer_C606).w
 	clr.l	(ram_C67C).w
 	rts
 loc_003150:
@@ -3150,11 +3150,11 @@ loc_0031D2:
 	lea	(ram_A128).w,a2
 	bsr.w	sub_008B32
 loc_0031FC:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_003204:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_003252
 	move.w	#$100,(Z80_Bus_Request).l
 loc_003218:
@@ -3167,8 +3167,8 @@ loc_003218:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_003252:
 	bsr.w	sub_001BB8
@@ -3265,8 +3265,8 @@ loc_003406:
 	move.w	#$96E3,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$C000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_003440:
 	rts
@@ -3300,8 +3300,8 @@ loc_0034BC:
 	move.w	#$96EE,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$7400,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$40000010,(VDP_Control).l
 	move.w	(ram_C522).w,(VDP_Data).l
@@ -3312,7 +3312,7 @@ loc_0034BC:
 sub_003522:
 	cmpi.w	#$18,(Game_State).w
 	beq.b	loc_003530
-	jsr	(sub_009DAC).l
+	jsr	(ReadJoypads).l
 loc_003530:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_003538:
@@ -3325,8 +3325,8 @@ loc_003538:
 	move.w	#$96E8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$7000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bra.w	loc_0033E8
 HInt:
@@ -3343,13 +3343,13 @@ loc_003586:
 	dc.b	$80,$01,$E2,$09,$66,$EE,$14,$81,$4E,$75,$40,$0C,$40,$03,$00,$0C
 	dc.b	$00,$03
 sub_0035C2:
-	clr.w	(ram_C61C).w
-	bset.b	#$0,(ram_C61C).w
+	clr.w	(Flags_C61C).w
+	bset.b	#$0,(Flags_C61C).w
 	bsr.w	sub_0084CA
-	move.b	#$6,(ram_C5A4).w
+	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	move.b	#$1,(ram_C59E).w
-	move.w	(ram_C5A2).w,d0
+	move.w	(Game_SubState).w,d0
 loc_0035E4:
 	jmp	loc_0035E4(pc,d0.w)
 	dc.b	$60,$00,$00,$4A,$60,$00,$00,$46
@@ -3612,7 +3612,7 @@ sub_0042E4:
 	move.w	(ram_C68A).w,d1
 	bsr.b	sub_0042A2
 	bset.b	#$0,(ram_C59A).w
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 loc_004308:
 	rts
 loc_00430A:
@@ -3633,10 +3633,10 @@ loc_00432A:
 	move.w	#$96E3,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$C000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 	bpl.b	loc_004370
 	move.b	#$0,(ram_C59E).w
 loc_004370:
@@ -3672,16 +3672,16 @@ sub_0043A0:
 	move.w	(ram_C68A).w,d1
 	bsr.b	sub_004372
 	bset.b	#$0,(ram_C59A).w
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 loc_0043C0:
 	rts
 loc_0043C2:
-	bclr.b	#$0,(ram_C61C).w
+	bclr.b	#$0,(Flags_C61C).w
 	beq.b	loc_0043D6
 	move.w	#$8174,(VDP_Control).l
 	move.w	#$2000,sr
 loc_0043D6:
-	bclr.b	#$1,(ram_C61C).w
+	bclr.b	#$1,(Flags_C61C).w
 	beq.b	loc_0043E6
 	move.w	#$8154,(VDP_Control).l
 loc_0043E6:
@@ -3709,12 +3709,12 @@ loc_00443E:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_004538
-	move.w	#$400,(ram_C606).w
-	move.b	#$1,(ram_C605).w
+	move.w	#$400,(Timer_C606).w
+	move.b	#$1,(Timer_C605).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -3724,33 +3724,33 @@ loc_004496:
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
 	bsr.w	sub_0044D8
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_0044C6
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_0044C6
 	bra.w	loc_004496
 loc_0044C6:
 	addq.w	#$1,(ram_C328).w
-	move.w	#$C,(ram_C5A2).w
+	move.w	#$C,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_0044D8:
 	tst.b	(ram_C359).w
 	beq.b	loc_0044EC
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.b	loc_004512
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 	rts
 loc_0044EC:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_004512
-	move.b	#$4,(ram_C605).w
+	move.b	#$4,(Timer_C605).w
 	bsr.w	sub_004514
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3C,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_004512:
 	rts
 sub_004514:
@@ -3815,11 +3815,11 @@ loc_0045B4:
 	moveq	#$0,d6
 	jsr	(sub_0089A6).l
 loc_0045D6:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_0045DE:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_00462C
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0045F2:
@@ -3832,8 +3832,8 @@ loc_0045F2:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00462C:
 	rts
@@ -3923,8 +3923,8 @@ loc_00497E:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_004BFA
 	lea	(dat_0FE438).l,a1
@@ -3935,7 +3935,7 @@ loc_0049CA:
 	dbra	d0,loc_0049CA
 	move.w	#$F4,(Objects_A).w
 	move.w	#$F8,(ram_E080).w
-	move.w	#$F0,(ram_C606).w
+	move.w	#$F0,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -3949,7 +3949,7 @@ loc_004A00:
 	jsr	(sub_014056).l
 	bsr.w	sub_004B36
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_004A28
 	bra.w	loc_004A00
 loc_004A28:
@@ -3958,7 +3958,7 @@ loc_004A28:
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$1,(ram_C3B6).w
-	move.w	#$C,(ram_C5A2).w
+	move.w	#$C,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_004A4C:
@@ -4036,13 +4036,13 @@ loc_004B46:
 	bra.w	loc_004B8A
 	bra.w	loc_004BE8
 loc_004B52:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bpl.b	loc_004B80
 	addq.b	#$4,(ram_C5BF).w
 	cmpi.b	#$18,(ram_C5BF).w
 	beq.b	loc_004B82
 	addq.w	#$4,(ram_C602).w
-	move.b	#$6,(ram_C5A4).w
+	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	lea	(ram_C740).w,a1
 	move.w	a1,(ram_C688).w
@@ -4050,7 +4050,7 @@ loc_004B52:
 loc_004B80:
 	rts
 loc_004B82:
-	bset.b	#$7,(ram_C301).w
+	bset.b	#$7,(Joy1_Pressed).w
 	rts
 loc_004B8A:
 	bsr.w	sub_0043A0
@@ -4071,19 +4071,19 @@ loc_004BB4:
 	movea.l	(a1,d0.w),a1
 	bsr.w	sub_004D0C
 loc_004BC8:
-	move.b	#$6,(ram_C5A4).w
+	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	lea	(ram_C740).w,a1
 	move.w	a1,(ram_C688).w
 	move.w	#$F,(ram_C68A).w
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_004BE6:
 	rts
 loc_004BE8:
 	bsr.w	sub_0042E4
 	bpl.b	loc_004BF8
 	clr.w	(ram_C602).w
-	move.w	#$F0,(ram_C606).w
+	move.w	#$F0,(Timer_C606).w
 loc_004BF8:
 	rts
 sub_004BFA:
@@ -4116,8 +4116,8 @@ loc_004C30:
 	move.w	#$96D8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(ram_A000).w,a6
 	moveq	#$0,d7
@@ -4149,7 +4149,7 @@ loc_004CC8:
 	lea	(dat_005046).l,a1
 	bsr.w	sub_004D0C
 loc_004CD2:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 sub_004CDA:
 	lea	(ram_A98C).w,a2
@@ -4187,7 +4187,7 @@ loc_004D16:
 	jmp	(sub_0089A6).l
 loc_004D2E:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_004D7C
 	move.w	#$100,(Z80_Bus_Request).l
 loc_004D42:
@@ -4200,8 +4200,8 @@ loc_004D42:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_004D7C:
 	rts
@@ -4288,8 +4288,8 @@ loc_00512C:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_0054F8
 	lea	(dat_0FE308).l,a1
@@ -4318,7 +4318,7 @@ loc_0051CC:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_0051F0
 	bra.w	loc_0051CC
 loc_0051F0:
@@ -4326,7 +4326,7 @@ loc_0051F0:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$30,(ram_C5A2).w
+	move.w	#$30,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00520E:
@@ -4372,7 +4372,7 @@ loc_0052A2:
 	cmpi.w	#$E0,$8(a0)
 	bcc.b	loc_0052CC
 	addq.w	#$4,$38(a0)
-	move.b	#$6,(ram_C5A4).w
+	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	lea	(ram_C740).w,a1
 	move.w	a1,(ram_C688).w
@@ -4394,7 +4394,7 @@ loc_0052F8:
 	subq.w	#$1,$2C(a0)
 	bpl.b	loc_005320
 	addq.w	#$4,$38(a0)
-	move.b	#$6,(ram_C5A4).w
+	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	lea	(ram_C740).w,a1
 	move.w	a1,(ram_C688).w
@@ -4442,7 +4442,7 @@ loc_005386:
 	bsr.w	sub_0087C6
 loc_00538A:
 	addq.w	#$4,$38(a0)
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_005396:
 	lea	(dat_005746).l,a1
@@ -4476,7 +4476,7 @@ loc_0053D2:
 	jsr	(sub_0089A6).l
 	bra.b	loc_00538A
 loc_0053FA:
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 	rts
 sub_005402:
 	bset.b	#$0,$2(a0)
@@ -4598,8 +4598,8 @@ loc_005594:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(ram_A000).w,a1
 	lea	(ram_FF0000).l,a2
@@ -4611,12 +4611,12 @@ loc_005594:
 	lea	(ram_A000).w,a1
 	move.w	#$3FF,d0
 	bsr.w	sub_0019C0
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_0055FE:
 	bsr.w	sub_003522
 	bsr.w	sub_001B2C
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_005650
 	move.w	#$100,(Z80_Bus_Request).l
 loc_005616:
@@ -4629,8 +4629,8 @@ loc_005616:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_005650:
 	rts
@@ -4686,8 +4686,8 @@ loc_0057F4:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_0057F4
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(ram_DB00).w,a6
 	moveq	#$0,d7
@@ -4709,8 +4709,8 @@ loc_005836:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_005878:
@@ -4723,8 +4723,8 @@ loc_005878:
 	move.w	#$96D8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$70C0,(a6)
-	move.w	#$82,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$82,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_005AA0
 	move.w	#$110,(Objects_A).w
@@ -4743,7 +4743,7 @@ loc_0058E0:
 	bsr.w	sub_005A6E
 	jsr	(sub_0084E2).l
 	jsr	(sub_00426C).l
-	btst.b	#$1,(ram_C61C).w
+	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_00590E
 	bra.w	loc_0058E0
 loc_00590E:
@@ -4751,7 +4751,7 @@ loc_00590E:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$3C,(ram_C5A2).w
+	move.w	#$3C,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00592C:
@@ -4765,14 +4765,14 @@ sub_00592E:
 	move.w	#$40,$2C(a0)
 	rts
 loc_005950:
-	btst.b	#$3,(ram_C61C).w
+	btst.b	#$3,(Flags_C61C).w
 	bne.b	loc_005984
 	cmpi.w	#$320,(ram_C522).w
 	bcs.b	loc_005966
-	bset.b	#$3,(ram_C61C).w
+	bset.b	#$3,(Flags_C61C).w
 loc_005966:
 	move.l	#$1900,d0
-	btst.b	#$5,(ram_C300).w
+	btst.b	#$5,(Joy1_Held).w
 	beq.b	loc_00597A
 	move.l	#$20000,d0
 loc_00597A:
@@ -4781,7 +4781,7 @@ loc_00597A:
 loc_005984:
 	subq.w	#$1,$2C(a0)
 	bne.b	loc_00599E
-	move.w	(ram_C312).w,d0
+	move.w	(RNG_Seed).w,d0
 	andi.w	#$F0,d0
 	bne.b	loc_005996
 	moveq	#$10,d0
@@ -4823,7 +4823,7 @@ loc_005A0C:
 	bra.w	loc_005A14
 	bra.w	loc_005A38
 loc_005A14:
-	btst.b	#$3,(ram_C61C).w
+	btst.b	#$3,(Flags_C61C).w
 	beq.b	loc_005A36
 	addq.w	#$4,$28(a0)
 	move.w	#$FFFF,$C(a0)
@@ -4836,7 +4836,7 @@ loc_005A36:
 loc_005A38:
 	cmpi.w	#$10,$4(a0)
 	bcc.b	loc_005A46
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 loc_005A46:
 	rts
 sub_005A48:
@@ -4905,8 +4905,8 @@ loc_005B06:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(ram_A000).w,a6
 	moveq	#$0,d7
@@ -4927,8 +4927,8 @@ loc_005B62:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 loc_005B9E:
@@ -4999,11 +4999,11 @@ loc_005DE0:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_005E04
 	bra.w	loc_005DE0
 loc_005E04:
-	move.w	#$C,(ram_C5A2).w
+	move.w	#$C,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_005E12:
@@ -5032,7 +5032,7 @@ sub_005E12:
 loc_005E6E:
 	move.l	d7,(a6)+
 	dbra	d6,loc_005E6E
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 sub_005E7C:
 	bset.b	#$0,$2(a0)
@@ -5090,7 +5090,7 @@ loc_005F2E:
 loc_005F36:
 	move.b	#$80,$2F(a0)
 	addq.w	#$4,$28(a0)
-	bset.b	#$1,(ram_C5AF).w
+	bset.b	#$1,(Flags_C5AF).w
 	lea	(dat_0062BC).l,a6
 	bsr.w	sub_0087C6
 	moveq	#$2,d0
@@ -5117,7 +5117,7 @@ loc_005F78:
 	sub.l	$8(a0),d0
 	asr.l	#$5,d0
 	move.l	d0,$10(a0)
-	bset.b	#$1,(ram_C5AF).w
+	bset.b	#$1,(Flags_C5AF).w
 	lea	(ram_A000).w,a6
 	moveq	#$0,d7
 	move.w	#$1FF,d6
@@ -5132,7 +5132,7 @@ loc_005FB6:
 loc_005FBE:
 	addq.w	#$4,$28(a0)
 	move.b	#$FF,$2F(a0)
-	bset.b	#$1,(ram_C5AF).w
+	bset.b	#$1,(Flags_C5AF).w
 	clr.l	$C(a0)
 	clr.l	$10(a0)
 	lea	(dat_0062F4).l,a1
@@ -5156,7 +5156,7 @@ loc_00600E:
 	rts
 loc_006016:
 	addq.w	#$4,$28(a0)
-	bset.b	#$7,(ram_C301).w
+	bset.b	#$7,(Joy1_Pressed).w
 	rts
 loc_006022:
 	rts
@@ -5314,7 +5314,7 @@ dat_0061FA:
 	dc.b	$01,$1C
 loc_006222:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_006270
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006236:
@@ -5327,11 +5327,11 @@ loc_006236:
 	move.w	#$96D8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006270:
-	bclr.b	#$1,(ram_C5AF).w
+	bclr.b	#$1,(Flags_C5AF).w
 	beq.b	loc_0062BA
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006280:
@@ -5344,8 +5344,8 @@ loc_006280:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0062BA:
 	rts
@@ -5407,17 +5407,17 @@ loc_00649E:
 	bne.b	loc_0064C0
 	bra.w	loc_00649E
 loc_0064C0:
-	move.b	(ram_C300).w,d0
+	move.b	(Joy1_Held).w,d0
 	cmpi.b	#$F0,d0
 	bne.b	loc_0064CE
 	st.b	(ram_C3D5).w
 loc_0064CE:
 	bsr.w	sub_0064FC
 	move.w	(ram_E028).w,d0
-	move.w	dat_0064F0(pc,d0.w),(ram_C5A2).w
+	move.w	dat_0064F0(pc,d0.w),(Game_SubState).w
 	tst.b	(ram_FE58).w
 	beq.b	loc_0064E8
-	move.w	dat_0064F6(pc,d0.w),(ram_C5A2).w
+	move.w	dat_0064F6(pc,d0.w),(Game_SubState).w
 loc_0064E8:
 	move.w	#$8,(Game_State).w
 	rts
@@ -5430,7 +5430,7 @@ sub_0064FC:
 	lsr.w	#$1,d0
 	move.w	(ram_FE84).w,d1
 	lsr.w	#$1,d1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_006512
 	addq.w	#$3,d1
 	move.w	d1,d0
@@ -5447,23 +5447,23 @@ loc_00652A:
 	bsr.w	sub_006560
 	bra.w	loc_006594
 sub_006536:
-	move.b	(ram_C301).w,d0
+	move.b	(Joy1_Pressed).w,d0
 	beq.b	loc_006590
 	andi.b	#$80,d0
 	beq.b	loc_00655E
 	st.b	(ram_C604).w
 	move.w	$28(a0),d0
 	bne.b	loc_006554
-	bclr.b	#$2,(ram_C356).w
+	bclr.b	#$2,(Flags_C356).w
 	rts
 loc_006554:
 	subq.w	#$2,d0
 	bne.b	loc_00655E
-	bset.b	#$2,(ram_C356).w
+	bset.b	#$2,(Flags_C356).w
 loc_00655E:
 	rts
 sub_006560:
-	move.b	(ram_C301).w,d0
+	move.b	(Joy1_Pressed).w,d0
 	andi.b	#$3,d0
 	beq.b	loc_00658E
 	move.w	$28(a0),d1
@@ -5486,7 +5486,7 @@ loc_006590:
 	addq.w	#$4,a7
 	rts
 loc_006594:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	move.w	$28(a0),d0
 	lea	(dat_0065A8).l,a1
 	bra.w	sub_000B54
@@ -5502,11 +5502,11 @@ loc_0065C0:
 	dbra	d6,loc_0065C0
 	lea	(dat_00662A).l,a6
 	jsr	(sub_0087C6).l
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_0065DA:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_006628
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0065EE:
@@ -5519,8 +5519,8 @@ loc_0065EE:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006628:
 	rts
@@ -5545,7 +5545,7 @@ sub_00666A:
 	moveq	#$0,d1
 	lea	(ram_FE96).w,a1
 	lea	(ram_FEB2).w,a2
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0066C0
 	lea	(ram_FEBA).w,a1
 	lea	(ram_FED6).w,a2
@@ -5566,7 +5566,7 @@ loc_0066DA:
 	lea	(ram_FEB2).w,a4
 	lea	(ram_FEB8).w,a5
 	lea	(ram_FEB9).w,a6
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_006700
 	lea	(ram_FED2).w,a3
 	lea	(ram_FED6).w,a4
@@ -5596,7 +5596,7 @@ loc_006724:
 loc_006738:
 	move.l	(a1)+,(a2)+
 	dbra	d0,loc_006738
-	move.w	#$200,(ram_C606).w
+	move.w	#$200,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -5613,13 +5613,13 @@ loc_006762:
 	jsr	(sub_0086E2).l
 	lea	(ram_D010).w,a1
 	jsr	(sub_0086E2).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_0067A0
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	beq.b	loc_0067A0
 	bra.w	loc_006762
 loc_0067A0:
-	move.w	#$4,(ram_C5A2).w
+	move.w	#$4,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_0067AE:
@@ -5635,7 +5635,7 @@ loc_0067B8:
 	bsr.w	sub_0087C6
 	lea	(dat_006A56).l,a6
 	lea	(ram_FEB2).w,a5
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0067E6
 	lea	(ram_FED6).w,a5
 loc_0067E6:
@@ -5659,7 +5659,7 @@ loc_006800:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FE96).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00682A
 	lea	(ram_FEBA).w,a1
 loc_00682A:
@@ -5669,7 +5669,7 @@ loc_00682A:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FE9A).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00684A
 	lea	(ram_FEBE).w,a1
 loc_00684A:
@@ -5679,7 +5679,7 @@ loc_00684A:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FE9E).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00686A
 	lea	(ram_FEC2).w,a1
 loc_00686A:
@@ -5689,7 +5689,7 @@ loc_00686A:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FEA2).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00688A
 	lea	(ram_FEC6).w,a1
 loc_00688A:
@@ -5699,7 +5699,7 @@ loc_00688A:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FEA6).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0068AA
 	lea	(ram_FECA).w,a1
 loc_0068AA:
@@ -5709,7 +5709,7 @@ loc_0068AA:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FEAA).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0068CA
 	lea	(ram_FECE).w,a1
 loc_0068CA:
@@ -5719,7 +5719,7 @@ loc_0068CA:
 	move.l	#$25862586,d3
 	moveq	#$0,d6
 	lea	(ram_FEAE).w,a1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0068EA
 	lea	(ram_FED2).w,a1
 loc_0068EA:
@@ -5743,7 +5743,7 @@ loc_006914:
 	move.l	d2,(a2)+
 	dbra	d7,loc_006914
 loc_006924:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 dat_00692C:
 	dc.b	$60,$00,$60,$00
@@ -5753,7 +5753,7 @@ dat_00692C:
 	dc.b	$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00
 loc_00696C:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_0069BA
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006980:
@@ -5766,8 +5766,8 @@ loc_006980:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0069BA:
 	rts
@@ -5823,7 +5823,7 @@ sub_006AAE:
 	lea	(dat_0589FA).l,a0
 	jsr	(sub_00A218).l
 	bsr.w	sub_006B4C
-	move.w	#$200,(ram_C606).w
+	move.w	#$200,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -5836,13 +5836,13 @@ loc_006B14:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_006B3E
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	beq.b	loc_006B3E
 	bra.w	loc_006B14
 loc_006B3E:
-	move.w	#$4,(ram_C5A2).w
+	move.w	#$4,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_006B4C:
@@ -5854,11 +5854,11 @@ loc_006B56:
 	dbra	d6,loc_006B56
 	lea	(dat_006BBE).l,a6
 	bsr.w	sub_0087C6
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_006B6E:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_006BBC
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006B82:
@@ -5871,8 +5871,8 @@ loc_006B82:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006BBC:
 	rts
@@ -5900,11 +5900,11 @@ loc_006C02:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_006ED2
-	move.w	#$200,(ram_C606).w
+	move.w	#$200,(Timer_C606).w
 	lea	(dat_0FE438).l,a1
 	lea	(ram_D000).w,a2
 	move.w	#$3,d0
@@ -5924,12 +5924,12 @@ loc_006C7E:
 	jsr	(ObjectUpdate).l
 	jsr	(sub_014056).l
 	jsr	(sub_00426C).l
-	btst.b	#$0,(ram_C61C).w
+	btst.b	#$0,(Flags_C61C).w
 	bne.b	loc_006CA2
 	bra.w	loc_006C7E
 loc_006CA2:
 	move.w	#$11,(ram_C328).w
-	move.w	#$44,(ram_C5A2).w
+	move.w	#$44,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_006CB6:
@@ -6018,7 +6018,7 @@ loc_006DB6:
 	beq.b	loc_006DBE
 	rts
 loc_006DBE:
-	bset.b	#$0,(ram_C61C).w
+	bset.b	#$0,(Flags_C61C).w
 	rts
 sub_006DC6:
 	movea.l	dat_006DDE(pc,d0.w),a1
@@ -6026,7 +6026,7 @@ sub_006DC6:
 	moveq	#$B,d0
 	moveq	#$6,d1
 	bsr.w	sub_008BCE
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 dat_006DDE:
 	dc.b	$00,$0E
@@ -6093,11 +6093,11 @@ loc_006EEC:
 	moveq	#$1E,d0
 	moveq	#$14,d1
 	bsr.w	sub_008BCE
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_006F4A:
 	bsr.w	sub_003522
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.w	loc_006FDC
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006F60:
@@ -6110,8 +6110,8 @@ loc_006F60:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006FA2:
@@ -6124,8 +6124,8 @@ loc_006FA2:
 	move.w	#$96D8,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006FDC:
 	rts
@@ -6147,8 +6147,8 @@ loc_007004:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$70C00002,(VDP_Control).l
 	lea	(dat_0589FA).l,a0
@@ -6211,15 +6211,15 @@ loc_0070EE:
 	subi.w	#$A,d3
 	jsr	(sub_009020).l
 	jsr	(sub_00426C).l
-	btst.b	#$3,(ram_C61C).w
+	btst.b	#$3,(Flags_C61C).w
 	bne.b	loc_007156
 	bra.w	loc_0070EE
 loc_007156:
 	addq.w	#$1,(ram_C328).w
-	move.w	#$44,(ram_C5A2).w
+	move.w	#$44,(Game_SubState).w
 	cmpi.w	#$19,(ram_C328).w
 	bls.b	loc_00716E
-	move.w	#$3C,(ram_C5A2).w
+	move.w	#$3C,(Game_SubState).w
 loc_00716E:
 	move.w	#$8,(Game_State).w
 	rts
@@ -6230,13 +6230,13 @@ loc_00717E:
 	bra.w	loc_007186
 	bra.w	loc_00718E
 loc_007186:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	beq.b	sub_00719C
 	rts
 loc_00718E:
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	bne.b	loc_00719A
-	bset.b	#$3,(ram_C61C).w
+	bset.b	#$3,(Flags_C61C).w
 loc_00719A:
 	rts
 sub_00719C:
@@ -6255,12 +6255,12 @@ loc_0071BE:
 	move.w	d0,(ram_C508).w
 	move.w	d0,(ram_C54E).w
 loc_0071C6:
-	move.w	(a1)+,(ram_C606).w
+	move.w	(a1)+,(Timer_C606).w
 	move.l	a1,(ram_C65E).w
 	rts
 loc_0071D0:
 	addq.w	#$4,(ram_C602).w
-	move.w	#$1B0,(ram_C606).w
+	move.w	#$1B0,(Timer_C606).w
 	addq.w	#$1,a1
 	move.b	(a1)+,(ram_C604).w
 	move.b	(a1)+,d0
@@ -6444,12 +6444,12 @@ loc_0079CC:
 	move.w	#$9680,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	bsr.w	sub_007AA6
-	move.w	#$E00,(ram_C606).w
-	move.b	#$30,(ram_C605).w
+	move.w	#$E00,(Timer_C606).w
+	move.b	#$30,(Timer_C605).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -6458,18 +6458,18 @@ loc_007A24:
 	addi.l	#$4000,(ram_C522).w
 	bsr.w	sub_007A62
 	jsr	(sub_00426C).l
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_007A4E
-	subq.w	#$1,(ram_C606).w
+	subq.w	#$1,(Timer_C606).w
 	beq.b	loc_007A4E
 	bra.w	loc_007A24
 loc_007A4E:
 	move.w	#$7,(ram_C328).w
-	move.w	#$34,(ram_C5A2).w
+	move.w	#$34,(Game_SubState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_007A62:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_007A9E
 	moveq	#$0,d0
 	move.b	(ram_C604).w,d0
@@ -6479,7 +6479,7 @@ sub_007A62:
 	moveq	#$0,d0
 loc_007A78:
 	move.b	d0,(ram_C604).w
-	move.b	dat_007AA0(pc,d0.w),(ram_C605).w
+	move.b	dat_007AA0(pc,d0.w),(Timer_C605).w
 	move.w	#$228,d0
 	bchg.b	#$0,(ram_C602).w
 	beq.b	loc_007A92
@@ -6527,12 +6527,12 @@ loc_007B08:
 	lea	(dat_007BB2).l,a6
 	bsr.w	sub_0087C6
 loc_007B12:
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_007B1A:
 	bsr.w	sub_003522
 	bsr.w	sub_003442
-	bclr.b	#$0,(ram_C5AF).w
+	bclr.b	#$0,(Flags_C5AF).w
 	beq.w	loc_007BB0
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007B34:
@@ -6545,8 +6545,8 @@ loc_007B34:
 	move.w	#$96C0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$4000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007B76:
@@ -6559,8 +6559,8 @@ loc_007B76:
 	move.w	#$96D0,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$6000,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_007BB0:
 	rts
@@ -6625,7 +6625,7 @@ sub_007E3E:
 	bsr.w	sub_0080BC
 	bsr.w	sub_0081E0
 	bsr.w	sub_008226
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.b	loc_007E68
 	bsr.w	sub_007F5C
 loc_007E66:
@@ -6635,7 +6635,7 @@ loc_007E68:
 	bsr.w	sub_007E72
 	rts
 sub_007E72:
-	bclr.b	#$5,(ram_C5C0).w
+	bclr.b	#$5,(Flags_C5C0).w
 	beq.b	loc_007EA8
 	move.w	(ram_C3B6).w,d1
 	addq.w	#$1,d1
@@ -6652,7 +6652,7 @@ sub_007E72:
 loc_007EA8:
 	rts
 sub_007EAA:
-	bclr.b	#$1,(ram_C5C0).w
+	bclr.b	#$1,(Flags_C5C0).w
 	beq.b	loc_007ED4
 	moveq	#$0,d0
 	addq.w	#$1,d0
@@ -6665,11 +6665,11 @@ sub_007EC2:
 	moveq	#$1,d4
 	lea	(ram_D810).w,a2
 	bsr.w	sub_0089F2
-	bset.b	#$1,(ram_C5AF).w
+	bset.b	#$1,(Flags_C5AF).w
 loc_007ED4:
 	rts
 sub_007ED6:
-	btst.b	#$0,(ram_C5C0).w
+	btst.b	#$0,(Flags_C5C0).w
 	beq.b	loc_007F0A
 sub_007EDE:
 	moveq	#$2,d0
@@ -6684,25 +6684,25 @@ sub_007EDE:
 loc_007EFC:
 	lea	(ram_D800).w,a2
 	bsr.w	sub_008AD8
-	bset.b	#$0,(ram_C5AF).w
+	bset.b	#$0,(Flags_C5AF).w
 loc_007F0A:
 	rts
 dat_007F0C:
 	dc.b	$01,$02,$03,$04
 	dc.b	$05,$06,$07,$01,$02,$03,$04,$05,$06,$07,$08,$08,$08,$00
 sub_007F1E:
-	bclr.b	#$2,(ram_C5C0).w
+	bclr.b	#$2,(Flags_C5C0).w
 	beq.b	loc_007F3A
 sub_007F26:
 	moveq	#$7,d0
 	lea	(ram_C332).w,a1
 	lea	(ram_D828).w,a2
 	bsr.w	sub_0089F2
-	bset.b	#$2,(ram_C5AF).w
+	bset.b	#$2,(Flags_C5AF).w
 loc_007F3A:
 	rts
 sub_007F3C:
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.w	loc_007FDC
 	move.w	(ram_C328).w,d0
 	add.w	d0,d0
@@ -6739,7 +6739,7 @@ loc_007FA6:
 	lea	(ram_C5BC).w,a1
 	lea	(ram_D810).w,a2
 	bsr.w	sub_008ADA
-	bset.b	#$1,(ram_C5AF).w
+	bset.b	#$1,(Flags_C5AF).w
 loc_007FBC:
 	rts
 dat_007FBE:
@@ -6759,8 +6759,8 @@ loc_007FEA:
 	move.w	#$96E8,(a6)
 	move.w	#$9701,(a6)
 	move.w	#$5E00,(a6)
-	move.w	#$83,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$83,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	lea	(ram_C3BE).w,a1
 	bsr.w	sub_007EC2
@@ -6778,19 +6778,19 @@ loc_008056:
 	dbra	d7,loc_008056
 	rts
 sub_00805E:
-	bclr.b	#$3,(ram_C5C0).w
+	bclr.b	#$3,(Flags_C5C0).w
 	beq.b	loc_0080BA
 	move.w	(ram_C5D6).w,d0
 	beq.b	loc_008092
 	clr.w	(ram_C5D6).w
-	add.w	(ram_C346).w,d0
+	add.w	(Menu_Cursor).w,d0
 	move.w	(ram_C36E).w,d1
 	add.w	d1,d1
 	lea	(dat_00CD0E).l,a1
 	movea.l	(a1,d1.w),a1
 	cmp.w	$6(a1),d0
 	bcc.b	loc_0080BA
-	move.w	d0,(ram_C346).w
+	move.w	d0,(Menu_Cursor).w
 	bra.w	loc_0080BA
 loc_008092:
 	moveq	#$0,d4
@@ -6805,17 +6805,17 @@ sub_0080A4:
 	lea	(ram_C351).w,a1
 	lea	(ram_D838).w,a2
 	bsr.w	sub_0089F4
-	bset.b	#$3,(ram_C5AF).w
+	bset.b	#$3,(Flags_C5AF).w
 loc_0080BA:
 	rts
 sub_0080BC:
-	btst.b	#$4,(ram_C5C0).w
+	btst.b	#$4,(Flags_C5C0).w
 	beq.w	loc_0081DE
 	move.w	(ram_C5D8).w,d0
 	beq.b	loc_0080FA
 	move.w	(ram_C34A).w,d1
 	add.w	d0,d1
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.b	loc_0080DE
 	moveq	#$8,d2
 	bra.w	loc_0080EC
@@ -6844,7 +6844,7 @@ loc_00810C:
 	bpl.b	sub_008138
 loc_008116:
 	clr.w	(ram_C5D2).w
-	bclr.b	#$4,(ram_C5C0).w
+	bclr.b	#$4,(Flags_C5C0).w
 	cmpi.w	#$20,(Game_State).w
 	bne.b	sub_008138
 	movem.l	d0/a1,-(a7)
@@ -6901,7 +6901,7 @@ loc_0081AE:
 	dbra	d7,loc_0081AE
 loc_0081B6:
 	move.w	#$C461,(a1)
-	bset.b	#$5,(ram_C5AF).w
+	bset.b	#$5,(Flags_C5AF).w
 loc_0081C0:
 	lea	(ram_D83C).w,a2
 	lea	(ram_D84E).w,a3
@@ -6912,11 +6912,11 @@ loc_0081CE:
 	eor.w	d1,d0
 	move.w	d0,(a3)+
 	dbra	d7,loc_0081CE
-	bset.b	#$4,(ram_C5AF).w
+	bset.b	#$4,(Flags_C5AF).w
 loc_0081DE:
 	rts
 sub_0081E0:
-	btst.b	#$6,(ram_C5C0).w
+	btst.b	#$6,(Flags_C5C0).w
 	beq.w	loc_008224
 	lea	(ram_D880).w,a1
 	lea	(ram_D890).w,a2
@@ -6939,14 +6939,14 @@ loc_008216:
 	addq.w	#$2,a1
 	addq.w	#$2,a2
 	dbra	d7,loc_008206
-	bset.b	#$6,(ram_C5AF).w
+	bset.b	#$6,(Flags_C5AF).w
 loc_008224:
 	rts
 sub_008226:
-	bclr.b	#$7,(ram_C5C0).w
+	bclr.b	#$7,(Flags_C5C0).w
 	beq.b	loc_008238
 	bsr.w	sub_00823A
-	bset.b	#$7,(ram_C5AF).w
+	bset.b	#$7,(Flags_C5AF).w
 loc_008238:
 	rts
 sub_00823A:
@@ -7102,7 +7102,7 @@ loc_0084D4:
 	beq.b	loc_0084D4
 	jmp	(VInt_Handler).w
 sub_0084E2:
-	move.l	(ram_C312).w,d1
+	move.l	(RNG_Seed).w,d1
 	bne.b	loc_0084EE
 	move.l	#$2A6D365A,d1
 loc_0084EE:
@@ -7116,7 +7116,7 @@ loc_0084EE:
 	add.w	d1,d0
 	move.w	d0,d1
 	swap	d1
-	move.l	d1,(ram_C312).w
+	move.l	d1,(RNG_Seed).w
 	rts
 sub_008508:
 	lea	(dat_0FE7A8).l,a1
@@ -7240,8 +7240,8 @@ loc_008606:
 	ori.l	#$804000,d0
 	move.w	d0,(a2)
 	swap	d0
-	move.w	d0,(ram_C318).w
-	move.w	(ram_C318).w,(a2)
+	move.w	d0,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a2)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 sub_00866C:
@@ -7274,8 +7274,8 @@ loc_008674:
 	ori.l	#$804000,d0
 	move.w	d0,(a2)
 	swap	d0
-	move.w	d0,(ram_C318).w
-	move.w	(ram_C318).w,(a2)
+	move.w	d0,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a2)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 sub_0086E2:
@@ -7323,7 +7323,7 @@ loc_008742:
 sub_008744:
 	moveq	#$0,d0
 	moveq	#$0,d1
-	lea	(ram_C300).w,a1
+	lea	(Joy1_Held).w,a1
 	move.b	(a1),d0
 	bsr.b	sub_008760
 	lea	(ram_C5A8).w,a2
@@ -8231,14 +8231,14 @@ loc_0091C8:
 	cmp.b	(ram_C5FF).w,d1
 	beq.b	loc_0091F4
 	move.b	d1,(ram_C5FF).w
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	tst.b	(ram_C625).w
 	bne.b	loc_0091F6
 	lea	(dat_009240).l,a1
 	movea.l	(a1,d3.w),a1
 	move.w	(a1,d1.w),d0
 	beq.b	loc_0091F4
-	bset.b	#$2,(ram_C5EB).w
+	bset.b	#$2,(Flags_C5EB).w
 loc_0091F4:
 	rts
 loc_0091F6:
@@ -8317,7 +8317,7 @@ loc_009350:
 	cmp.b	(ram_C5EC).w,d1
 	beq.b	loc_00937C
 	move.b	d1,(ram_C5EC).w
-	bset.b	#$1,(ram_C5EB).w
+	bset.b	#$1,(Flags_C5EB).w
 	lea	(dat_0093D8).l,a1
 	movea.l	(a1,d3.w),a1
 	move.w	(a1,d1.w),d0
@@ -8326,11 +8326,11 @@ loc_009350:
 	bne.b	loc_00937E
 	rts
 loc_009376:
-	bclr.b	#$1,(ram_C5EB).w
+	bclr.b	#$1,(Flags_C5EB).w
 loc_00937C:
 	rts
 loc_00937E:
-	bset.b	#$0,(ram_C5EB).w
+	bset.b	#$0,(Flags_C5EB).w
 	bset.b	#$0,(ram_C5FE).w
 	clr.w	(ram_C556).w
 	clr.w	(ram_C568).w
@@ -8752,22 +8752,22 @@ dat_009D90:
 	dc.b	$00,$00,$00,$00
 dat_009D94:
 	dc.b	$00,$00
-sub_009D96:
+InitIOPorts:
 	moveq	#$40,d0
 	move.b	d0,(HW_Port1_Ctrl).l
 	move.b	d0,(HW_Port2_Ctrl).l
 	move.b	d0,(HW_Expansion_Ctrl).l
 	rts
-sub_009DAC:
+ReadJoypads:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009DB4:
 	btst.b	#$0,(Z80_Bus_Request).l
 	bne.b	loc_009DB4
-	lea	(ram_C300).w,a0
+	lea	(Joy1_Held).w,a0
 	lea	(HW_Port1_Data).l,a1
-	bsr.b	sub_009DCC
+	bsr.b	ReadJoypad_Port
 	addq.w	#$2,a1
-sub_009DCC:
+ReadJoypad_Port:
 	move.b	#$0,(a1)
 	nop
 	nop
@@ -8790,7 +8790,7 @@ sub_009DCC:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_009E02:
 	rts
-sub_009E04:
+InitVDP:
 	lea	(VDP_Control).l,a0
 	tst.w	(a0)
 	lea	(VDP_Data).l,a1
@@ -8826,8 +8826,8 @@ loc_009E8E:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_009E8E
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 dat_009EAA:
@@ -8835,7 +8835,7 @@ dat_009EAA:
 	dc.b	$83,$34,$84,$07,$85,$78,$86,$00,$87,$00,$88,$00,$89,$00,$8A,$90
 	dc.b	$8B,$00,$8C,$81,$8D,$34,$8E,$00,$8F,$02,$90,$01,$91,$00,$92,$00
 sub_009ED0:
-	lea	(ram_C300).w,a6
+	lea	(Joy1_Held).w,a6
 	moveq	#$0,d7
 	move.w	#$7F,d6
 loc_009EDA:
@@ -8889,8 +8889,8 @@ loc_009F68:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_009F68
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.w	#$100,(Z80_Bus_Request).l
 loc_009F8A:
@@ -8908,11 +8908,11 @@ loc_009FBA:
 	move.w	(a6),d7
 	andi.w	#$2,d7
 	bne.b	loc_009FBA
-	move.w	#$8F02,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$8F02,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	jsr	(sub_003442).l
-	bsr.w	sub_009E04
+	bsr.w	InitVDP
 	lea	(Objects_A).w,a6
 	moveq	#$0,d7
 	move.w	#$6FF,d6
@@ -8987,11 +8987,11 @@ loc_00A0AA:
 sub_00A0C6:
 	tst.b	(ram_C5CD).w
 	bne.b	loc_00A116
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.b	loc_00A116
 	tst.b	(ram_C344).w
 	bne.b	loc_00A116
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.b	loc_00A116
 	moveq	#$1,d0
 	bsr.b	sub_00A0A2
@@ -9005,7 +9005,7 @@ loc_00A0EE:
 	subq.b	#$1,(ram_C3D6).w
 	bne.b	loc_00A0EE
 loc_00A106:
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.b	loc_00A0EE
 	moveq	#-$80,d0
 	bsr.b	sub_00A0A2
@@ -9513,7 +9513,7 @@ sub_00A606:
 	add.l	d0,d3
 	move.l	d1,(ram_C546).w
 	move.l	d3,(ram_C54A).w
-	btst.b	#$0,(ram_C5EB).w
+	btst.b	#$0,(Flags_C5EB).w
 	bne.w	loc_00A834
 	bsr.w	sub_00A82E
 	move.w	d4,(ram_C556).w
@@ -9555,7 +9555,7 @@ sub_00A694:
 	add.l	d0,d3
 	move.l	d1,(ram_C558).w
 	move.l	d3,(ram_C55C).w
-	btst.b	#$0,(ram_C5EB).w
+	btst.b	#$0,(Flags_C5EB).w
 	bne.w	loc_00A834
 	bsr.w	sub_00A824
 	move.w	d4,(ram_C568).w
@@ -9761,7 +9761,7 @@ loc_00A8B6:
 	cmpi.l	#$400000,d3
 	bcc.w	loc_00A926
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00A8EC
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00A8E2
@@ -9804,7 +9804,7 @@ loc_00A922:
 loc_00A926:
 	exg	a2,a1
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00A94C
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00A942
@@ -9852,7 +9852,7 @@ loc_00A986:
 	beq.w	loc_00AA74
 	exg	a3,a1
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00A9BC
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00A9B2
@@ -9902,7 +9902,7 @@ loc_00A9F6:
 	bls.b	loc_00AA74
 	exg	a4,a1
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00AA30
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00AA26
@@ -9965,7 +9965,7 @@ loc_00AA98:
 	movea.l	(a0,d0.w),a1
 	movea.l	$4(a0,d0.w),a2
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00AACE
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00AAC4
@@ -10009,7 +10009,7 @@ loc_00AB00:
 	beq.b	loc_00AB62
 	exg	a2,a1
 	moveq	#$0,d7
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_00AB30
 	cmpi.w	#$3,(ram_FE44).w
 	beq.b	loc_00AB26
@@ -10138,7 +10138,7 @@ loc_00AC3E:
 	beq.b	loc_00AC4E
 	lea	(dat_00AE0A).l,a3
 loc_00AC4E:
-	move.w	(ram_C312).w,d0
+	move.w	(RNG_Seed).w,d0
 	andi.w	#$3C,d0
 	add.w	d0,d0
 	lea	$4(a3),a5
@@ -10472,7 +10472,7 @@ loc_00B124:
 	bsr.w	sub_008138
 	move.w	#$2328,(ram_C5C2).w
 	bset.b	#$0,(ram_E003).w
-	bclr.b	#$4,(ram_C5C0).w
+	bclr.b	#$4,(Flags_C5C0).w
 	st.b	(ram_C6B4).w
 	clr.l	(ram_E00C).w
 	clr.l	(ram_E010).w
@@ -10488,9 +10488,9 @@ sub_00B160:
 	bclr.b	#$3,(ram_E002).w
 	bsr.w	sub_00DB1C
 	clr.w	(ram_C612).w
-	bset.b	#$2,(ram_C5EB).w
+	bset.b	#$2,(Flags_C5EB).w
 	bne.b	loc_00B192
-	bset.b	#$4,(ram_C5EB).w
+	bset.b	#$4,(Flags_C5EB).w
 loc_00B192:
 	bra.b	loc_00B124
 dat_00B194:
@@ -10519,7 +10519,7 @@ sub_00B1C2:
 sub_00B1F2:
 	rts
 sub_00B1F4:
-	bset.b	#$6,(ram_C5C0).w
+	bset.b	#$6,(Flags_C5C0).w
 	move.w	#$16,(ram_C5C2).w
 	cmpi.b	#$4,(ram_C642).w
 	beq.b	loc_00B20E
@@ -10559,7 +10559,7 @@ loc_00B256:
 	lea	(dat_00D6AA).l,a1
 	bsr.w	sub_00D69C
 	move.w	(ram_C65A).w,(ram_C352).w
-	bset.b	#$7,(ram_C5C0).w
+	bset.b	#$7,(Flags_C5C0).w
 	bclr.b	#$1,(ram_E02A).w
 	rts
 sub_00B298:
@@ -10597,7 +10597,7 @@ loc_00B2FA:
 	moveq	#$0,d0
 	move.b	$3A(a0),d0
 	jsr	(sub_008B8C).l
-	bset.b	#$2,(ram_C5C0).w
+	bset.b	#$2,(Flags_C5C0).w
 	bset.b	#$0,$3(a0)
 	bra.w	loc_00AF28
 loc_00B316:
@@ -10734,7 +10734,7 @@ sub_00B462:
 	adda.w	d0,a2
 	rts
 sub_00B490:
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.w	loc_00BC26
 	tst.b	(ram_C642).w
 	bne.w	loc_00BC26
@@ -10750,7 +10750,7 @@ loc_00B4A8:
 loc_00B4C0:
 	btst.b	#$0,(ram_C61D).w
 	bne.b	loc_00B4EC
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	beq.w	loc_00BC26
 	tst.b	(ram_C6B4).w
 	bne.w	loc_00BC26
@@ -10767,9 +10767,9 @@ loc_00B4F8:
 	dbra	d0,loc_00B4F8
 loc_00B4FE:
 	addq.w	#$4,(ram_C602).w
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 loc_00B508:
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 	bmi.b	loc_00B520
 	lea	(ram_C700).w,a2
 	moveq	#$3F,d1
@@ -10777,14 +10777,14 @@ loc_00B508:
 	bsr.w	sub_00BBD0
 	bra.b	loc_00B508
 loc_00B520:
-	move.w	(ram_C606).w,d0
+	move.w	(Timer_C606).w,d0
 	move.w	dat_00B52E(pc,d0.w),d1
 	lea	dat_00B52E(pc,d1.w),a1
 	jmp	(a1)
 dat_00B52E:
 	dc.w	sub_00B586-dat_00B52E,sub_00B60E-dat_00B52E,sub_00B75E-dat_00B52E,sub_00B73E-dat_00B52E,sub_00B8BE-dat_00B52E
 loc_00B538:
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 	bmi.b	loc_00B554
 	lea	(ram_C780).w,a1
 	lea	(ram_C700).w,a2
@@ -10793,23 +10793,23 @@ loc_00B538:
 	bsr.w	sub_00BBD0
 	bra.b	loc_00B538
 loc_00B554:
-	move.w	(ram_C606).w,d0
+	move.w	(Timer_C606).w,d0
 	move.w	dat_00B562(pc,d0.w),d1
 	lea	dat_00B562(pc,d1.w),a1
 	jmp	(a1)
 dat_00B562:
 	dc.w	sub_00BB88-dat_00B562,sub_00BBAC-dat_00B562,sub_00BB8E-dat_00B562,sub_00BB9A-dat_00B562,sub_00BB8E-dat_00B562
 loc_00B56C:
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_00B57C
 	bsr.w	sub_00BC28
 	bra.w	loc_00BC82
 loc_00B57C:
-	move.w	#$2,(ram_C606).w
+	move.w	#$2,(Timer_C606).w
 	bra.w	loc_00B4FE
 sub_00B586:
 	addq.w	#$4,(ram_C602).w
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	move.w	#$120,d0
 	jsr	(sub_008508).l
 	lea	(ram_FF6000).l,a6
@@ -10835,7 +10835,7 @@ loc_00B5C8:
 loc_00B5D4:
 	move.w	d0,(ram_C36E).w
 loc_00B5D8:
-	move.b	#$4,(ram_C605).w
+	move.b	#$4,(Timer_C605).w
 	jsr	(sub_00D94C).l
 	bset.b	#$0,(ram_C5C8).w
 	st.b	(ram_C5CD).w
@@ -10853,7 +10853,7 @@ sub_00B60E:
 	addq.w	#$4,(ram_C602).w
 	clr.b	(ram_C6BB).w
 loc_00B616:
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	lea	(ram_FF5400).l,a1
 	lea	(Objects_A).w,a2
 	move.w	#$13F,d0
@@ -10878,7 +10878,7 @@ loc_00B65A:
 	cmp.w	(ram_C352).w,d0
 	beq.b	loc_00B67A
 	move.w	d0,(ram_C352).w
-	bset.b	#$7,(ram_C5AF).w
+	bset.b	#$7,(Flags_C5AF).w
 	bsr.w	sub_00823A
 	andi.b	#$FC,(ram_E02A).w
 loc_00B67A:
@@ -10906,7 +10906,7 @@ loc_00B6A2:
 	clr.b	(ram_C5C9).w
 	tst.b	(ram_C5CB).w
 	bne.b	loc_00B6DE
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	bne.b	loc_00B6E4
 	clr.b	(ram_C61B).w
 loc_00B6DE:
@@ -10920,7 +10920,7 @@ sub_00B6EA:
 	lea	(dat_00BE62).l,a1
 	movea.w	(a1,d0.w),a2
 	move.w	a2,(ram_C3D0).w
-	move.w	(a2)+,(ram_C346).w
+	move.w	(a2)+,(Menu_Cursor).w
 	move.w	(a2)+,d1
 	move.w	d1,(ram_C3B6).w
 	lsl.w	#$2,d1
@@ -10948,7 +10948,7 @@ sub_00B73E:
 	bra.w	loc_00B616
 sub_00B75E:
 	addq.w	#$4,(ram_C6B6).w
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$65,d0
 	jsr	(sub_00A068).l
@@ -10965,7 +10965,7 @@ loc_00B78A:
 	beq.b	loc_00B7AA
 	move.l	#$FFF00000,(ram_C560).w
 loc_00B7AA:
-	move.b	#$4,(ram_C605).w
+	move.b	#$4,(Timer_C605).w
 	st.b	(ram_C357).w
 	st.b	(ram_C5CD).w
 	st.b	(ram_C5D1).w
@@ -10976,7 +10976,7 @@ loc_00B7AA:
 	rts
 sub_00B7CE:
 	move.b	#$10,(ram_C618).w
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	lea	(dat_0CF50E).l,a0
 	lea	(ram_FF6000).l,a4
 	moveq	#$1,d0
@@ -11041,7 +11041,7 @@ loc_00B8B0:
 	rts
 sub_00B8BE:
 	addq.w	#$4,(ram_C6B6).w
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	bsr.w	sub_00B942
 	bclr.b	#$0,(ram_E002).w
 	bset.b	#$7,(ram_C5C8).w
@@ -11167,7 +11167,7 @@ sub_00BA52:
 	move.w	(ram_C36E).w,d0
 	lea	(dat_00BE62).l,a1
 	movea.w	(a1,d0.w),a2
-	move.w	(ram_C346).w,(a2)+
+	move.w	(Menu_Cursor).w,(a2)+
 	move.w	(ram_C3B6).w,(a2)+
 	move.w	(ram_C348).w,(a2)+
 	move.w	(ram_C34A).w,(a2)+
@@ -11293,7 +11293,7 @@ sub_00BB88:
 	rts
 sub_00BB8E:
 	addq.w	#$4,(ram_C6B6).w
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	rts
 sub_00BB9A:
 	clr.w	(ram_C6B6).w
@@ -11302,11 +11302,11 @@ sub_00BB9A:
 	move.w	#$5A,(ram_C5C2).w
 sub_00BBAC:
 	clr.w	(ram_C602).w
-	clr.w	(ram_C606).w
+	clr.w	(Timer_C606).w
 	clr.b	(ram_C5BE).w
 	clr.b	(ram_C6C8).w
 	clr.b	(ram_C5CD).w
-	clr.w	(ram_C300).w
+	clr.w	(Joy1_Held).w
 	bclr.b	#$0,(ram_C61D).w
 	bne.w	loc_00FF50
 	rts
@@ -11327,13 +11327,13 @@ loc_00BBEC:
 	move.w	#$96E3,(a6)
 	move.w	#$977F,(a6)
 	move.w	#$C000,(a6)
-	move.w	#$80,(ram_C318).w
-	move.w	(ram_C318).w,(a6)
+	move.w	#$80,(DMA_Trigger_Word).w
+	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 loc_00BC26:
 	rts
 sub_00BC28:
-	move.b	(ram_C301).w,d0
+	move.b	(Joy1_Pressed).w,d0
 	andi.b	#$3,d0
 	beq.b	loc_00BC76
 	move.w	(ram_C36E).w,d1
@@ -11372,9 +11372,9 @@ sub_00BC78:
 	tst.b	(a1,d3.w)
 	rts
 loc_00BC82:
-	subq.b	#$1,(ram_C605).w
+	subq.b	#$1,(Timer_C605).w
 	bne.b	loc_00BCBC
-	move.b	#$4,(ram_C605).w
+	move.b	#$4,(Timer_C605).w
 	moveq	#$0,d0
 	move.b	(ram_C5CE).w,d0
 	addq.b	#$2,d0
@@ -11556,20 +11556,20 @@ loc_00C012:
 	move.l	(a1)+,(a2)+
 	dbra	d0,loc_00C012
 	addq.w	#$4,(ram_C6B6).w
-	move.b	#$7,(ram_C5A4).w
-	move.w	#$4,(ram_C606).w
+	move.b	#$7,(Timer_C5A4).w
+	move.w	#$4,(Timer_C606).w
 	bra.w	loc_00B508
 loc_00C02C:
 	cmpi.w	#$1C,(ram_E06E).w
 	bne.w	loc_00CA28
-	move.b	(ram_C301).w,d0
+	move.b	(Joy1_Pressed).w,d0
 	andi.b	#$70,d0
 	bne.b	loc_00C042
 	rts
 loc_00C042:
 	addq.w	#$4,(ram_C6B6).w
-	move.b	#$7,(ram_C5A4).w
-	move.w	#$6,(ram_C606).w
+	move.b	#$7,(Timer_C5A4).w
+	move.w	#$6,(Timer_C606).w
 	bra.w	loc_00B508
 loc_00C056:
 	subq.b	#$1,(ram_C618).w
@@ -11644,8 +11644,8 @@ loc_00C136:
 loc_00C13E:
 	addq.w	#$4,(ram_C6B6).w
 	andi.w	#$7F,(ram_C6B8).w
-	move.w	#$8,(ram_C606).w
-	move.b	#$7,(ram_C5A4).w
+	move.w	#$8,(Timer_C606).w
+	move.b	#$7,(Timer_C5A4).w
 	addq.w	#$2,(ram_C3C6).w
 	rts
 sub_00C15A:
@@ -11682,7 +11682,7 @@ loc_00C1C8:
 loc_00C1CA:
 	subq.b	#$1,$3E(a0)
 	beq.b	loc_00C1F0
-	move.b	(ram_C301).w,d6
+	move.b	(Joy1_Pressed).w,d6
 	andi.b	#$F,d6
 	beq.w	loc_00CA28
 	movem.l	d0/a1,-(a7)
@@ -11694,7 +11694,7 @@ loc_00C1F0:
 	addq.w	#$4,$28(a0)
 	bra.w	loc_00C222
 loc_00C1F8:
-	move.b	(ram_C301).w,d6
+	move.b	(Joy1_Pressed).w,d6
 	move.b	d6,d0
 	andi.b	#$60,d0
 	bne.w	loc_00C336
@@ -11711,7 +11711,7 @@ loc_00C222:
 	bsr.w	sub_00C798
 	bra.w	loc_00C6EE
 loc_00C22E:
-	move.b	(ram_C301).w,d0
+	move.b	(Joy1_Pressed).w,d0
 	btst.b	#$4,d0
 	bne.w	loc_00C2CC
 	btst.b	#$5,d0
@@ -12755,7 +12755,7 @@ loc_00D228:
 	dbra	d6,loc_00D228
 	bset.b	#$0,(ram_C693).w
 	st.b	(ram_C357).w
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.w	loc_00D290
 	tst.b	(ram_C61B).w
 	beq.b	loc_00D24A
@@ -13195,7 +13195,7 @@ sub_00D6FA:
 	move.w	$8(a0),d0
 	cmp.w	(ram_C64E).w,d0
 	bcc.b	loc_00D724
-	btst.b	#$2,(ram_C5EB).w
+	btst.b	#$2,(Flags_C5EB).w
 	bne.b	loc_00D724
 	move.w	(ram_C516).w,d1
 	subq.w	#$2,d1
@@ -13249,7 +13249,7 @@ loc_00D79E:
 loc_00D7A0:
 	sub.w	d2,(ram_C51A).w
 	move.w	d2,d0
-	btst.b	#$1,(ram_C5EB).w
+	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00D7B0
 	asr.w	#$1,d0
 loc_00D7B0:
@@ -13288,7 +13288,7 @@ loc_00D80A:
 loc_00D814:
 	move.w	d1,(ram_C508).w
 	move.w	d1,d0
-	btst.b	#$1,(ram_C5EB).w
+	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00D824
 	asr.w	#$1,d0
 loc_00D824:
@@ -13308,7 +13308,7 @@ sub_00D84E:
 	beq.w	loc_00D0BA
 	tst.w	(ram_C350).w
 	beq.w	loc_00D0BA
-	btst.b	#$5,(ram_C61C).w
+	btst.b	#$5,(Flags_C61C).w
 	bne.w	loc_00D0BA
 	move.w	#$8,$28(a0)
 	move.b	#$18,$20(a0)
@@ -13583,7 +13583,7 @@ loc_00DB9C:
 	moveq	#$1,d4
 	rts
 sub_00DBA4:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	bne.b	loc_00DB9A
 	move.w	(ram_C328).w,d0
 	lsl.w	#$2,d0
@@ -13609,7 +13609,7 @@ loc_00DBB6:
 loc_00DBFA:
 	move.l	d2,(ram_C508).w
 	move.l	d2,d0
-	btst.b	#$1,(ram_C5EB).w
+	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00DC0A
 	asr.l	#$1,d0
 loc_00DC0A:
@@ -13714,7 +13714,7 @@ loc_00DCBC:
 	bra.w	loc_00DD12
 	bra.w	loc_00DD10
 loc_00DD00:
-	btst.b	#$2,(ram_C5EB).w
+	btst.b	#$2,(Flags_C5EB).w
 	bne.b	loc_00DCA8
 	move.l	d3,(ram_C560).w
 loc_00DD0C:
@@ -13722,11 +13722,11 @@ loc_00DD0C:
 loc_00DD10:
 	rts
 loc_00DD12:
-	btst.b	#$2,(ram_C5EB).w
+	btst.b	#$2,(Flags_C5EB).w
 	bne.b	loc_00DCA8
 	move.l	d3,(ram_C51A).w
 	move.l	d3,d0
-	btst.b	#$1,(ram_C5EB).w
+	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00DD2A
 	asr.l	#$1,d0
 loc_00DD2A:
@@ -13805,7 +13805,7 @@ loc_00DDEC:
 loc_00DDF0:
 	move.l	d4,(ram_C51A).w
 	move.l	d4,d0
-	btst.b	#$1,(ram_C5EB).w
+	btst.b	#$1,(Flags_C5EB).w
 	bne.b	loc_00DE00
 	asr.l	#$1,d0
 loc_00DE00:
@@ -13912,7 +13912,7 @@ loc_00DF1C:
 	andi.b	#$1F,d2
 	lea	(dat_00DF4C).l,a1
 	bsr.w	sub_00E17A
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lea	(dat_00DF42).l,a2
 	move.b	(a2,d0.w),d4
 	move.w	#$C,d0
@@ -13954,7 +13954,7 @@ loc_00DFBC:
 	andi.b	#$1C,d2
 	lea	(dat_00DFF2).l,a1
 	bsr.w	sub_00E17A
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lea	(dat_00DFE8).l,a2
 	move.b	(a2,d0.w),d4
 	move.w	#$4C,d0
@@ -13972,7 +13972,7 @@ loc_00E006:
 	bne.b	loc_00E02C
 	moveq	#$1,d0
 	moveq	#$1,d7
-	cmpi.w	#$4,(ram_C346).w
+	cmpi.w	#$4,(Menu_Cursor).w
 	bcs.b	loc_00E01C
 	moveq	#$2,d7
 loc_00E01C:
@@ -13991,7 +13991,7 @@ loc_00E036:
 	andi.b	#$1C,d2
 	moveq	#$1,d4
 	moveq	#$1,d7
-	cmpi.w	#$4,(ram_C346).w
+	cmpi.w	#$4,(Menu_Cursor).w
 	bcs.b	loc_00E058
 	moveq	#$2,d7
 loc_00E058:
@@ -14035,7 +14035,7 @@ loc_00E09A:
 loc_00E0C0:
 	rts
 loc_00E0C2:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	moveq	#$0,d7
 	move.b	dat_00E0FA(pc,d0.w),d7
 	bsr.w	sub_00E0FE
@@ -14046,7 +14046,7 @@ loc_00E0C2:
 	move.b	$20(a0),d2
 	andi.b	#$1C,d2
 	move.w	(a7)+,d4
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	moveq	#$0,d7
 	move.b	dat_00E0FA(pc,d0.w),d7
 	move.w	#$148,d0
@@ -14115,7 +14115,7 @@ loc_00E16E:
 	moveq	#$1,d7
 	rts
 sub_00E17A:
-	move.w	(ram_C346).w,d1
+	move.w	(Menu_Cursor).w,d1
 	add.w	d1,d1
 	lea	(a1,d1.w),a1
 	moveq	#$0,d0
@@ -15076,7 +15076,7 @@ loc_00EF9A:
 loc_00EF9C:
 	move.w	#$8,$28(a0)
 	move.l	#$3A56E,$18(a0)
-	cmpi.w	#$4,(ram_C346).w
+	cmpi.w	#$4,(Menu_Cursor).w
 	bcc.b	loc_00EFBA
 	move.l	#$3A55C,$18(a0)
 loc_00EFBA:
@@ -15092,7 +15092,7 @@ loc_00EFCA:
 	bra.b	loc_00EFEC
 loc_00EFD8:
 	move.w	#$290,d0
-	cmpi.w	#$4,(ram_C346).w
+	cmpi.w	#$4,(Menu_Cursor).w
 	bcs.b	loc_00EFE8
 	move.w	#$298,d0
 loc_00EFE8:
@@ -15161,7 +15161,7 @@ loc_00F0A6:
 	move.w	d0,$10(a0)
 	swap	d0
 	move.w	d0,$C(a0)
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	add.w	d0,d0
 	lea	(dat_03B5DE).l,a1
 	move.b	$1(a1,d0.w),$3C(a0)
@@ -15283,7 +15283,7 @@ loc_00F226:
 	move.w	$2C(a0),d0
 	beq.b	loc_00F27E
 	lea	(dat_040712).l,a1
-	move.w	(ram_C346).w,d1
+	move.w	(Menu_Cursor).w,d1
 	lsl.w	#$2,d1
 	movea.l	(a1,d1.w),a1
 	movea.l	(a1,d0.w),a1
@@ -15548,7 +15548,7 @@ loc_00F554:
 	dc.b	$C5,$4E,$4E,$75
 sub_00F5A4:
 	lea	(dat_03F908).l,a1
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	movea.l	(a1,d0.w),a1
 	move.w	$2C(a0),d0
@@ -15564,11 +15564,11 @@ loc_00F5D0:
 	lea	(a1,d2.w),a1
 	bra.w	loc_00EC3A
 sub_00F5DC:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	movea.l	dat_00F5F6(pc,d0.w),a1
 	bsr.w	sub_00F690
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	move.b	dat_00F61E(pc,d0.w),$2F(a0)
 loc_00F5F4:
 	rts
@@ -15580,7 +15580,7 @@ dat_00F61E:
 	dc.b	$12,$14
 	dc.b	$16,$16,$18,$18,$1A,$1B,$1D,$24
 sub_00F628:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	move.w	d0,d3
 loc_00F62E:
 	moveq	#$0,d2
@@ -15602,7 +15602,7 @@ dat_00F660:
 sub_00F66A:
 	lea	(dat_040174).l,a1
 	bsr.w	sub_00F690
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	move.b	dat_00F680(pc,d0.w),$2F(a0)
 	rts
 dat_00F680:
@@ -15619,7 +15619,7 @@ sub_00F690:
 	move.l	(a1)+,$10(a0)
 	rts
 sub_00F6AA:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038B68).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15632,7 +15632,7 @@ sub_00F6AA:
 	move.l	(a1,d2.w),$14(a0)
 	rts
 sub_00F6D8:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038C4E).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15643,7 +15643,7 @@ sub_00F6D8:
 	move.b	d2,$3C(a0)
 	rts
 sub_00F6FE:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038DB6).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15654,7 +15654,7 @@ sub_00F6FE:
 	move.l	(a1,d2.w),$14(a0)
 	rts
 sub_00F724:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	add.w	d0,d0
 	lea	(dat_03B5DE).l,a1
 	moveq	#$0,d1
@@ -15674,7 +15674,7 @@ sub_00F724:
 	move.l	(a1),$14(a0)
 	rts
 sub_00F770:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038E66).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15682,7 +15682,7 @@ sub_00F770:
 	move.l	(a1,d0.w),$18(a0)
 	rts
 sub_00F78C:
-	move.w	(ram_C346).w,d0
+	move.w	(Menu_Cursor).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038F7E).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15777,11 +15777,11 @@ sub_00F912:
 	cmpi.b	#$74,d0
 	bne.b	loc_00F940
 	lea	(dat_00FCC0).l,a2
-	move.l	(ram_C312).w,d1
+	move.l	(RNG_Seed).w,d1
 	andi.w	#$7,d1
 	move.b	(a2,d1.w),d0
 	rol.l	#$1,d1
-	move.l	d1,(ram_C312).w
+	move.l	d1,(RNG_Seed).w
 	move.b	d0,$19(a0)
 loc_00F940:
 	move.l	(a1,d0.w),$14(a0)
@@ -15889,16 +15889,16 @@ loc_00FAB0:
 	bne.b	loc_00FAC4
 	move.w	(a1)+,d0
 	beq.w	sub_014220
-	bset.b	d0,(ram_C5C0).w
+	bset.b	d0,(Flags_C5C0).w
 	bra.w	sub_014220
 loc_00FAC4:
 	movea.l	a1,a3
 	jsr	(sub_008B8C).l
 	movea.l	a3,a1
-	bset.b	#$2,(ram_C5C0).w
+	bset.b	#$2,(Flags_C5C0).w
 	move.w	(a1)+,d0
 	beq.b	loc_00FADC
-	bset.b	d0,(ram_C5C0).w
+	bset.b	d0,(Flags_C5C0).w
 loc_00FADC:
 	moveq	#$0,d1
 	move.b	$19(a0),d1
@@ -16067,7 +16067,7 @@ loc_00FEC8:
 	andi.b	#$FB,$2(a0)
 loc_00FED4:
 	bsr.w	sub_00D94C
-	btst.b	#$7,(ram_C301).w
+	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_00FF20
 	subq.b	#$1,$2F(a0)
 	bne.b	loc_00FF02
@@ -16105,7 +16105,7 @@ loc_00FF2E:
 	move.w	#$3,(ram_C350).w
 loc_00FF50:
 	bsr.w	sub_00D914
-	clr.b	(ram_C301).w
+	clr.b	(Joy1_Pressed).w
 	move.w	#$2C,(ram_E028).w
 	move.b	#$18,(ram_E020).w
 	move.l	(ram_C694).w,(ram_E004).w
@@ -16123,20 +16123,20 @@ loc_00FF50:
 	clr.b	(ram_C61B).w
 loc_00FFA4:
 	clr.b	(ram_C5CB).w
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.b	loc_00FFB4
 	st.b	(ram_C61B).w
 loc_00FFB4:
-	bclr.b	#$4,(ram_C5EB).w
+	bclr.b	#$4,(Flags_C5EB).w
 	beq.b	loc_00FFC2
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 loc_00FFC2:
 	jsr	(sub_007F3C).l
-	bset.b	#$4,(ram_C5C0).w
-	bset.b	#$3,(ram_C5C0).w
-	bset.b	#$7,(ram_C5AF).w
-	bset.b	#$2,(ram_C5C0).w
-	bclr.b	#$6,(ram_C61C).w
+	bset.b	#$4,(Flags_C5C0).w
+	bset.b	#$3,(Flags_C5C0).w
+	bset.b	#$7,(Flags_C5AF).w
+	bset.b	#$2,(Flags_C5C0).w
+	bclr.b	#$6,(Flags_C61C).w
 	lea	(ram_E1C0).w,a6
 	moveq	#$0,d7
 	move.w	#$9F,d6
@@ -16178,7 +16178,7 @@ sub_010076:
 	move.l	(a1)+,$14(a0)
 	move.w	(a1)+,$4(a0)
 	move.w	(a1)+,$8(a0)
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0100BE
 	movem.l	d0/a1,-(a7)
 	moveq	#-$60,d0
@@ -16220,7 +16220,7 @@ loc_01014A:
 loc_01014C:
 	subq.w	#$1,$2C(a0)
 	bne.b	loc_010158
-	bset.b	#$0,(ram_C61C).w
+	bset.b	#$0,(Flags_C61C).w
 loc_010158:
 	rts
 sub_01015A:
@@ -16328,7 +16328,7 @@ loc_01027E:
 	bcs.b	loc_0102E2
 	cmp.w	d3,d5
 	bhi.b	loc_0102E2
-	bset.b	#$4,(ram_C61C).w
+	bset.b	#$4,(Flags_C61C).w
 	st.b	(ram_C61B).w
 	st.b	(ram_C65C).w
 	st.b	(ram_C5AE).w
@@ -16407,7 +16407,7 @@ loc_0103C6:
 	dc.b	$51,$CF,$FF,$EA,$4E,$75
 sub_0103E6:
 	bsr.w	sub_0104A6
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	bne.b	loc_0103FE
 	moveq	#$0,d0
 	lea	(ram_E040).w,a1
@@ -16721,7 +16721,7 @@ loc_0109FE:
 	tst.b	(ram_C5D0).w
 	beq.b	loc_010A1A
 	clr.b	(ram_C5D0).w
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	bne.b	loc_010A1A
 	st.b	(ram_C625).w
 loc_010A1A:
@@ -16971,7 +16971,7 @@ sub_011070:
 	bne.w	sub_014220
 	or.b	d1,(ram_C5F8).w
 	ori.b	#$24,$2(a0)
-	bset.b	#$0,(ram_C5EB).w
+	bset.b	#$0,(Flags_C5EB).w
 	subi.w	#$80,$8(a0)
 	move.w	#$30,d0
 	moveq	#$0,d1
@@ -17117,7 +17117,7 @@ loc_011230:
 	move.w	d1,(a5)+
 	move.w	(a1)+,(a5)+
 	move.w	(a1)+,(a5)+
-	bclr.b	#$0,(ram_C5EB).w
+	bclr.b	#$0,(Flags_C5EB).w
 	bra.w	sub_014220
 loc_011282:
 	rts
@@ -17556,12 +17556,12 @@ sub_011A06:
 	bsr.w	sub_00D69C
 	move.b	#$1,(ram_E09D).w
 	move.b	$3B(a0),(ram_C68F).w
-	bset.b	#$6,(ram_C5C0).w
+	bset.b	#$6,(Flags_C5C0).w
 	bset.b	#$1,$2(a0)
 	move.b	(a3)+,(ram_C642).w
 	move.b	#$8,(ram_C5C1).w
 	move.w	(ram_C352).w,(ram_C65A).w
-	bset.b	#$7,(ram_C5C0).w
+	bset.b	#$7,(Flags_C5C0).w
 	rts
 dat_011A64:
 	dc.b	$00,$1C,$00,$03,$51,$4E,$00,$03,$F7,$E8,$00,$00
@@ -17698,7 +17698,7 @@ loc_011C16:
 	movea.l	(a7)+,a0
 	move.b	#$4,$2F(a0)
 	move.b	#$20,$2E(a0)
-	bset.b	#$0,(ram_C5EB).w
+	bset.b	#$0,(Flags_C5EB).w
 loc_011C4E:
 	cmpi.w	#$40,(ram_C516).w
 	bcc.b	loc_011C5A
@@ -17725,7 +17725,7 @@ loc_011C6A:
 	bset.b	#$6,(ram_C5C8).w
 	subq.b	#$1,$2E(a0)
 	bne.b	loc_011CC6
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.b	#$3F,d0
 	move.b	#$20,$2E(a0)
 	bchg.b	#$0,$2A(a0)
@@ -17820,7 +17820,7 @@ loc_011DD4:
 	bsr.w	sub_0119F0
 	clr.l	(ram_E00C).w
 	clr.l	(ram_E010).w
-	bset.b	#$6,(ram_C5C0).w
+	bset.b	#$6,(Flags_C5C0).w
 loc_011E08:
 	rts
 loc_011E0A:
@@ -17915,7 +17915,7 @@ dat_011F50:
 	dc.b	$00,$07,$0A,$BA
 loc_011F74:
 	st.b	(ram_C670).w
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	bne.b	loc_011F84
 	st.b	(ram_C625).w
 loc_011F84:
@@ -18073,7 +18073,7 @@ loc_012184:
 	move.w	#$C,$28(a0)
 	moveq	#$0,d0
 	bset.b	#$1,$2(a0)
-	bset.b	#$4,(ram_C61C).w
+	bset.b	#$4,(Flags_C61C).w
 	st.b	(ram_C61B).w
 	st.b	(ram_C65C).w
 	st.b	(ram_C67A).w
@@ -18097,7 +18097,7 @@ loc_0121E4:
 sub_0121EA:
 	move.b	#$1,(ram_C626).w
 	clr.b	(ram_C625).w
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	move.l	d0,(ram_C634).w
 	move.l	d0,$10(a0)
 loc_012202:
@@ -18206,21 +18206,21 @@ loc_012394:
 dat_0123A0:
 	dc.b	$02,$C8,$0C,$D8
 loc_0123A4:
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	beq.b	loc_0123B2
-	bset.b	#$3,(ram_C5EB).w
+	bset.b	#$3,(Flags_C5EB).w
 loc_0123B2:
 	move.b	#$1,(ram_C625).w
 	rts
 loc_0123BA:
-	btst.b	#$3,(ram_C5EB).w
+	btst.b	#$3,(Flags_C5EB).w
 	beq.b	loc_0123C8
-	bset.b	#$2,(ram_C5EB).w
+	bset.b	#$2,(Flags_C5EB).w
 loc_0123C8:
 	clr.b	(ram_C625).w
 	rts
 loc_0123CE:
-	bclr.b	#$2,(ram_C5EB).w
+	bclr.b	#$2,(Flags_C5EB).w
 	rts
 	dc.b	$00,$00,$00,$00,$00,$06,$03,$03,$F8,$F8
 sub_0123E0:
@@ -18395,7 +18395,7 @@ sub_012636:
 	bset.b	#$0,$2(a0)
 	bne.b	loc_01264A
 	ori.b	#$26,$2(a0)
-	bset.b	#$0,(ram_C5EB).w
+	bset.b	#$0,(Flags_C5EB).w
 loc_01264A:
 	move.l	(ram_C508).w,d0
 	asr.l	#$1,d0
@@ -18417,7 +18417,7 @@ loc_01267A:
 	bsr.w	sub_00AF0A
 	beq.w	loc_0125A0
 	st.b	(ram_C5CD).w
-	bset.b	#$1,(ram_C61C).w
+	bset.b	#$1,(Flags_C61C).w
 	rts
 sub_01269A:
 	bset.b	#$0,$2(a0)
@@ -18426,7 +18426,7 @@ sub_01269A:
 	move.l	#$10,$34(a0)
 	move.w	#$3E8,$38(a0)
 	move.b	#$16,$3A(a0)
-	bset.b	#$4,(ram_C61C).w
+	bset.b	#$4,(Flags_C61C).w
 loc_0126C2:
 	cmpi.w	#$1E0,(ram_C55C).w
 	bcs.b	loc_01271C
@@ -18525,13 +18525,13 @@ loc_0127E8:
 loc_0127F0:
 	addq.w	#$4,$28(a0)
 	move.b	#$8,$2F(a0)
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	bra.b	loc_0127C2
 loc_012802:
 	subq.b	#$1,$2F(a0)
 	bne.w	loc_0125A0
 	move.b	#$4,$2F(a0)
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 	bmi.b	loc_012828
 	bset.b	#$0,(ram_C59A).w
 	lea	(ram_C700).w,a2
@@ -18539,14 +18539,14 @@ loc_012802:
 	jmp	(sub_004372).l
 loc_012828:
 	addq.w	#$4,$28(a0)
-	move.b	#$7,(ram_C5A4).w
+	move.b	#$7,(Timer_C5A4).w
 	move.b	#$4,$2F(a0)
 	bsr.w	sub_012940
 loc_01283C:
 	subq.b	#$1,$2F(a0)
 	bne.w	loc_0125A0
 	move.b	#$4,$2F(a0)
-	subq.b	#$1,(ram_C5A4).w
+	subq.b	#$1,(Timer_C5A4).w
 	bmi.w	sub_014220
 	bset.b	#$0,(ram_C59A).w
 	lea	(ram_C780).w,a1
@@ -18559,7 +18559,7 @@ loc_012868:
 	move.w	#$200,$2E(a0)
 	clr.l	$10(a0)
 	st.b	(ram_C5C9).w
-	bset.b	#$5,(ram_C61C).w
+	bset.b	#$5,(Flags_C61C).w
 	st.b	(ram_C6B4).w
 	subi.w	#$18,$4(a0)
 	subi.w	#$40,$8(a0)
@@ -18604,7 +18604,7 @@ loc_012918:
 	dbra	d7,loc_012918
 	rts
 loc_012926:
-	bset.b	#$3,(ram_C61C).w
+	bset.b	#$3,(Flags_C61C).w
 	move.l	(ram_C332).w,d0
 	cmp.l	(ram_FE50).w,d0
 	bls.b	loc_01293A
@@ -18749,10 +18749,10 @@ loc_012AF6:
 	beq.b	loc_012B08
 	rts
 loc_012B08:
-	move.l	(ram_C312).w,d0
+	move.l	(RNG_Seed).w,d0
 	move.w	d0,d1
 	rol.l	#$1,d0
-	move.l	d0,(ram_C312).w
+	move.l	d0,(RNG_Seed).w
 	andi.w	#$60,d1
 	bne.b	loc_012B1C
 	moveq	#$40,d1
@@ -18826,7 +18826,7 @@ sub_012BFC:
 	ori.b	#$C,$2(a0)
 	move.w	#$118,(ram_C646).w
 loc_012C10:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.b	loc_012C32
 	addq.b	#$1,$2F(a0)
 	move.b	$2F(a0),d0
@@ -19304,7 +19304,7 @@ sub_013288:
 	ori.b	#$2C,$2(a0)
 	move.b	#$7F,$3C(a0)
 	move.b	#$4,$3D(a0)
-	tst.b	(ram_C356).w
+	tst.b	(Flags_C356).w
 	beq.b	loc_0132B4
 	move.b	#$19,$3C(a0)
 	move.b	#$0,$3D(a0)
@@ -19823,7 +19823,7 @@ loc_0139EA:
 	move.w	(ram_C510).w,(ram_C556).w
 	move.w	(ram_C522).w,(ram_C568).w
 	bset.b	#$0,(ram_C5FE).w
-	bclr.b	#$0,(ram_C5EB).w
+	bclr.b	#$0,(Flags_C5EB).w
 	bra.w	sub_014220
 loc_013A32:
 	rts
@@ -19955,9 +19955,9 @@ sub_013BDE:
 	move.w	#$4,$2E(a0)
 	subq.b	#$1,$3F(a0)
 	bne.b	loc_013C22
-	move.l	(ram_C312).w,d0
+	move.l	(RNG_Seed).w,d0
 	rol.l	#$1,d0
-	move.l	d0,(ram_C312).w
+	move.l	d0,(RNG_Seed).w
 	andi.w	#$1C0,d0
 	bne.b	loc_013C18
 	moveq	#$70,d0
@@ -20115,13 +20115,13 @@ loc_013E12:
 loc_013E3C:
 	subq.w	#$1,$36(a0)
 	bne.b	loc_013E48
-	bset.b	#$2,(ram_C61C).w
+	bset.b	#$2,(Flags_C61C).w
 loc_013E48:
 	bra.w	loc_013F3C
 loc_013E4C:
 	subq.w	#$1,$2C(a0)
 	bne.b	loc_013E58
-	bset.b	#$7,(ram_C61C).w
+	bset.b	#$7,(Flags_C61C).w
 loc_013E58:
 	rts
 sub_013E5A:
@@ -20163,7 +20163,7 @@ loc_013EDC:
 	st.b	(ram_C357).w
 	st.b	(ram_C5CF).w
 	st.b	(ram_C678).w
-	bset.b	#$5,(ram_C61C).w
+	bset.b	#$5,(Flags_C61C).w
 	clr.l	(Objects_B).w
 	moveq	#$14,d0
 	jsr	(sub_008B8C).l
@@ -20278,7 +20278,7 @@ loc_014076:
 loc_014086:
 	lea	(Objects_A).w,a0
 	moveq	#$33,d7
-	btst.b	#$6,(ram_C61C).w
+	btst.b	#$6,(Flags_C61C).w
 	beq.b	loc_01409A
 	lea	(ram_E140).w,a0
 	moveq	#$2E,d7
@@ -20507,7 +20507,7 @@ ObjectUpdate:
 loc_0142BE:
 	lea	(Objects_A).w,a0
 	moveq	#$33,d7
-	btst.b	#$6,(ram_C61C).w
+	btst.b	#$6,(Flags_C61C).w
 	beq.b	loc_0142D2
 	lea	(ram_E1C0).w,a0
 	moveq	#$B,d7
@@ -20528,7 +20528,7 @@ loc_0142EE:
 	dbra	d7,loc_0142D2
 	tst.b	(ram_C5BE).w
 	bne.b	sub_014358
-	btst.b	#$6,(ram_C61C).w
+	btst.b	#$6,(Flags_C61C).w
 	bne.b	sub_014358
 	lea	(Objects_B).w,a0
 	moveq	#$18,d7
@@ -21206,7 +21206,7 @@ sub_016262:
 	bset.b	#$3,$2(a0)
 	lea	(Objects_A).w,a1
 	jsr	(sub_01ABA6).l
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.w	#$1F,d0
 	lea	dat_0162E4(pc),a1
 	move.w	(ram_FE44).w,d1
@@ -21253,7 +21253,7 @@ loc_016310:
 	bne.w	loc_0163F4
 	move.b	#$15,$28(a0)
 	jsr	sub_01ABA6(pc)
-	move.w	(ram_C312).w,d0
+	move.w	(RNG_Seed).w,d0
 	andi.w	#$7F,d0
 	subi.w	#$40,d0
 	move.w	d0,d1
@@ -21263,7 +21263,7 @@ loc_016334:
 	cmpi.w	#$F,d1
 	ble.w	loc_0163F4
 	jsr	sub_01ABA6(pc)
-	move.w	(ram_C312).w,d2
+	move.w	(RNG_Seed).w,d2
 	andi.w	#$7F,d2
 	subi.w	#$40,d2
 	move.w	d2,d1
@@ -21273,7 +21273,7 @@ loc_016352:
 	cmpi.w	#$F,d1
 	ble.w	loc_0163F4
 	jsr	sub_01ABA6(pc)
-	move.w	(ram_C312).w,d1
+	move.w	(RNG_Seed).w,d1
 	andi.w	#$F,d1
 	cmpi.w	#$3,d0
 	bge.w	loc_0163F4
@@ -21848,7 +21848,7 @@ loc_017246:
 	lea	dat_018016(pc),a2
 loc_017286:
 	jsr	sub_01ABA6(pc)
-	move.b	(ram_C312).w,d1
+	move.b	(RNG_Seed).w,d1
 	andi.b	#$1F,d1
 	moveq	#$0,d3
 	move.b	(a2,d0.w),d2
@@ -23857,11 +23857,11 @@ loc_01AB9C:
 	rts
 sub_01ABA6:
 	move.l	d7,-(a7)
-	move.w	(ram_C312).w,d7
+	move.w	(RNG_Seed).w,d7
 	rol.w	#$2,d7
-	add.w	(ram_C312).w,d7
+	add.w	(RNG_Seed).w,d7
 	addi.w	#$3753,d7
-	move.w	d7,(ram_C312).w
+	move.w	d7,(RNG_Seed).w
 	move.l	(a7)+,d7
 	rts
 	dc.b	$43,$F8
@@ -24504,7 +24504,7 @@ sub_01B334:
 	clr.l	$10(a0)
 	clr.l	$C(a0)
 loc_01B35A:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	bne.w	loc_01B400
 	cmpi.w	#$1,(ram_C328).w
 	bne.b	loc_01B376
@@ -24664,14 +24664,14 @@ loc_01B55C:
 	move.l	#$156E8,$30(a2)
 	move.l	#$87000,$14(a2)
 	jsr	sub_01ABA6(pc)
-	move.w	(ram_C312).w,d0
+	move.w	(RNG_Seed).w,d0
 	andi.w	#$8,d0
 	addi.w	#$50,d0
 	sub.w	d0,$8(a2)
 	addi.w	#$30,$4(a2)
 loc_01B5AA:
 	jsr	sub_01ABA6(pc)
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.b	#$1F,d0
 	addi.b	#$15,d0
 	move.b	d0,$3F(a0)
@@ -25815,7 +25815,7 @@ loc_01CC96:
 	cmpi.b	#$1,$28(a0)
 	beq.b	loc_01CCD0
 	jsr	(sub_01ABA6).l
-	move.b	(ram_C312).w,d1
+	move.b	(RNG_Seed).w,d1
 	andi.w	#$3,d1
 	add.w	d1,d1
 	move.w	dat_01CCF8(pc,d1.w),d1
@@ -28416,7 +28416,7 @@ sub_0219B8:
 	lea	dat_021A8A(pc),a1
 	jsr	(sub_01ADF6).l
 	jsr	(sub_01ABA6).l
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	moveq	#$0,d1
 	move.b	$40(a0),d1
 	move.w	d1,d2
@@ -28673,7 +28673,7 @@ sub_021F7C:
 	move.l	#$87000,$14(a0)
 	clr.b	$28(a0)
 loc_021F96:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.b	loc_021FC2
 	bset.b	#$0,$28(a0)
 	bne.b	loc_021FC4
@@ -28846,7 +28846,7 @@ loc_0221BA:
 	move.l	d0,$10(a0)
 loc_0221FA:
 	move.b	#$88,$2D(a0)
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.w	#$F,d0
 	cmpi.b	#$E,d0
 	bcs.b	loc_022212
@@ -28948,7 +28948,7 @@ loc_022350:
 sub_02235A:
 	move.b	#$1,(ram_C357).w
 	move.b	#$FF,(ram_C5C9).w
-	bset.b	#$5,(ram_C61C).w
+	bset.b	#$5,(Flags_C61C).w
 	st.b	(ram_C6B4).w
 	moveq	#-$72,d0
 	cmpi.w	#$7,(ram_C328).w
@@ -29300,7 +29300,7 @@ sub_022D50:
 	ori.b	#$26,$2(a0)
 	move.b	#$20,$5D(a0)
 loc_022D64:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_022DEA
 	tst.b	$5D(a0)
 	beq.w	loc_022D7E
@@ -30241,7 +30241,7 @@ sub_024DA4:
 	move.w	#$6B40,(a2)+
 	move.w	#$81,(a2)+
 loc_024DF0:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	bne.b	loc_024DFA
 	rts
 loc_024DFA:
@@ -31076,7 +31076,7 @@ sub_026098:
 	move.l	#$87000,$14(a0)
 	ori.b	#$22,$2(a0)
 loc_0260AE:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_026184
 	move.w	#$200,$4(a0)
 	clr.w	$6(a0)
@@ -31480,7 +31480,7 @@ loc_0266F4:
 	add.w	d1,d0
 	lea	dat_02693C(pc),a4
 	movem.w	(a4,d0.w),d0-d1/d3
-	move.b	(ram_C312).w,d4
+	move.b	(RNG_Seed).w,d4
 	andi.w	#$3F,d4
 	subi.w	#$20,d4
 	add.w	d4,d0
@@ -31653,7 +31653,7 @@ sub_026CC8:
 	move.w	#$80,$4(a0)
 	move.w	#$80,$8(a0)
 loc_026CE2:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.b	loc_026D1C
 	lea	dat_027AA6(pc),a1
 	jsr	(sub_01ADB0).l
@@ -32045,7 +32045,7 @@ loc_027430:
 	cmpi.w	#$180,$8(a0)
 	bge.b	loc_027460
 	jsr	(sub_01ABA6).l
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.b	#$F,d0
 	cmpi.b	#$3,d0
 	bcc.b	loc_027460
@@ -32562,7 +32562,7 @@ sub_0280B4:
 	jsr	(sub_01ADB0).l
 	jsr	sub_022106(pc)
 loc_028138:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.b	loc_0281A4
 	lea	dat_0285F0(pc),a1
 	move.w	(a1),$50(a0)
@@ -33280,7 +33280,7 @@ sub_02933A:
 	move.b	#$10,$35(a0)
 	bset.b	#$5,$2(a0)
 loc_029360:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_029496
 	move.w	#$424,(a0)
 	jsr	sub_022106(pc)
@@ -33629,7 +33629,7 @@ sub_029914:
 	clr.w	$6(a0)
 	clr.w	$A(a0)
 loc_029940:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_029AB8
 	move.w	#$458,(a0)
 	lea	dat_029F6E(pc),a1
@@ -33810,7 +33810,7 @@ loc_029C4E:
 	bne.b	loc_029C94
 	move.b	#$4,$37(a0)
 	move.l	$10(a0),$50(a0)
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.w	#$3,d0
 	tst.b	d0
 	beq.b	loc_029C7E
@@ -34074,7 +34074,7 @@ sub_02A3EE:
 	clr.w	$A(a0)
 	jsr	(sub_022106).l
 loc_02A420:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_02A44E
 	lea	dat_02ABDA(pc),a3
 	jsr	(sub_01D368).l
@@ -34256,7 +34256,7 @@ loc_02A918:
 	bne.b	loc_02A96C
 	bsr.b	sub_02A8DA
 	move.b	#$B4,d0
-	move.b	(ram_C312).w,d1
+	move.b	(RNG_Seed).w,d1
 	andi.b	#$7F,d1
 	add.b	d1,d0
 	cmpi.b	#$80,(ram_EF17).w
@@ -34533,7 +34533,7 @@ sub_02B27C:
 	jsr	(sub_01ADB0).l
 	bset.b	#$5,$2(a0)
 loc_02B296:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_02B3D0
 	move.w	#$444,(a0)
 	jsr	(sub_022106).l
@@ -34688,7 +34688,7 @@ loc_02B53A:
 	tst.b	$29(a0)
 	bne.b	loc_02B56C
 	jsr	(sub_01ABA6).l
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.b	#$F,d0
 	moveq	#$5,d1
 	cmpi.w	#$3,(ram_FE44).w
@@ -34730,7 +34730,7 @@ sub_02B5C2:
 	move.b	#$39,d3
 	jsr	(sub_01A326).l
 	bne.b	loc_02B612
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.w	#$7,d0
 	cmpi.w	#$6,d0
 	blt.b	loc_02B5E4
@@ -34922,7 +34922,7 @@ sub_02B90C:
 	move.w	#$7240,(a2)+
 	move.w	#$81,(a2)+
 loc_02B95A:
-	btst.b	#$4,(ram_C61C).w
+	btst.b	#$4,(Flags_C61C).w
 	beq.w	loc_02BA60
 	move.w	#$46C,(a0)
 	move.w	#$1E0,$4(a0)
@@ -35119,7 +35119,7 @@ loc_02BDF8:
 	add.w	d1,d0
 	adda.w	d0,a3
 	jsr	(sub_01D368).l
-	move.b	(ram_C312).w,d0
+	move.b	(RNG_Seed).w,d0
 	andi.b	#$3,d0
 	addq.b	#$7,d0
 	move.b	d0,$51(a0)
