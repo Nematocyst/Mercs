@@ -26,6 +26,7 @@ from capstone import Cs, CS_ARCH_M68K, CS_MODE_M68K_000
 CC = 'hi ls cc cs ne eq vc vs pl mi ge lt gt le'.split()
 BRANCH = re.compile(r'^(bra|bsr|b(%s)|db(ra|t|f|%s))$' % ('|'.join(CC), '|'.join(CC)))
 HEXTOK = re.compile(r'(-?)\$([0-9a-f]+)(?:\.([wl]))?(\(pc)?')
+JUNK = {'chk', 'nbcd', 'movep', 'trapv', 'reset', 'illegal'}
 ENDS = {'rts', 'rte', 'rtr', 'illegal', 'bra', 'jmp'}
 AS = ['m68k-linux-gnu-as', '-m68000', '--register-prefix-optional']
 
@@ -61,6 +62,8 @@ class Rom:
             return None
         mnem, ops = i.mnemonic, i.op_str
         base = mnem.split('.')[0]
+        if base in ('dc', 'dc.w'):
+            return None
         w = struct.unpack('>H', self.d[a:a + 2])[0]
         if (w & 0xF1F0) in (0xC100, 0x8100):   # capstone garbles sbcd
             mn = 'abcd' if (w & 0xF000) == 0xC000 else 'sbcd'
@@ -105,11 +108,15 @@ class Rom:
             return True
         if a & 1 or a < 0x200 or a >= self.size:
             return False
-        zeros = 0
-        for _ in range(limit):
+        zeros = junk = 0
+        for k in range(limit):
             ins = self.decode(a)
             if ins is None:
                 return False
+            if self.is_junk(ins):
+                junk += 1
+                if junk >= 2 and k < 6:
+                    return False
             zeros = zeros + 1 if self.d[a:a + 2] == b'\0\0' else 0
             base = ins.mnem.split('.')[0]
             if zeros >= 2 or base == 'illegal':
@@ -122,6 +129,17 @@ class Rom:
                 return True
             a += ins.n
         return True     # long clean run with no terminator: still looks like code
+
+    @staticmethod
+    def is_junk(ins):
+        """Mnemonics that data tends to decode as, but real code rarely uses."""
+        base = ins.mnem.split('.')[0]
+        ops = ''.join(x for x in ins.parts if isinstance(x, str))
+        if base in JUNK:
+            return True
+        if base == 'ori':       # ori #imm,Dn / ori #0,<ea> are zero-padding noise
+            return bool(re.search(r',d[0-7]$', ops)) or ops.startswith('#$0,')
+        return ins.mnem == 'btst.l' and bool(re.match(r'd[0-7],d[0-7]$', ops))
 
     def long_table(self, a):
         n = 0
@@ -179,7 +197,8 @@ class Rom:
                         if not idx:
                             work.append(t)
                     if idx:
-                        self.idx_cands.add(t)
+                        if base in ('jsr', 'jmp'):      # only real jump tables, not data loads
+                            self.idx_cands.add(t)
                     elif base in ('lea', 'pea') or (base not in ('jsr', 'jmp', 'bsr')
                                                     and not BRANCH.match(base)):
                         self.data_cands.add(t)
@@ -241,6 +260,10 @@ class Rom:
                         self.add_table(t, 'l', n, work)
                         continue
                 n = self.ptr_table(t) if t in self.data_cands else 0
+                for j in range(n):      # pointers into decoded code are really numbers
+                    if struct.unpack('>I', self.d[t + 4 * j:t + 4 * j + 4])[0] in claimed:
+                        n = j
+                        break
                 if n >= 3:
                     self.add_table(t, 'p', n, work)
             if not work:
