@@ -7,7 +7,11 @@ Obj_Flags	equ	$02
 Obj_Flags2	equ	$03
 Obj_X	equ	$04
 Obj_Y	equ	$08
+Obj_VelX	equ	$0C
+Obj_VelY	equ	$10
 Obj_FramePtr	equ	$14
+Obj_TileAttr	equ	$22
+Obj_SpriteSize	equ	$24
 Obj_SortKey	equ	$26
 Obj_State	equ	$28
 Obj_Timer	equ	$2C
@@ -994,7 +998,7 @@ loc_0005DC:
 loc_0005E2:
 	move.w	#$E0,Obj_Y(a0)
 loc_0005E8:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_0005EE:
 	rts
 	dc.b	$00,$00,$00,$00,$00,$04,$00,$40,$00,$F0
@@ -5857,11 +5861,11 @@ loc_004A54:
 loc_004A5A:
 	move.w	#$87,Obj_Y(a0)
 loc_004A60:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_004A66:
-	move.l	#$FFFF8000,$C(a0)
+	move.l	#$FFFF8000,Obj_VelX(a0)
 loc_004A6E:
-	move.l	#$1800,$10(a0)
+	move.l	#$1800,Obj_VelY(a0)
 loc_004A76:
 	move.w	#$70,d0
 loc_004A7A:
@@ -5889,9 +5893,9 @@ loc_004AAA:
 loc_004AAC:
 	addq.w	#$4,Obj_State(a0)
 loc_004AB0:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_004AB4:
-	move.l	#$4000,$10(a0)
+	move.l	#$4000,Obj_VelY(a0)
 loc_004ABC:
 	rts
 loc_004ABE:
@@ -5901,7 +5905,7 @@ loc_004AC4:
 loc_004AC6:
 	addq.w	#$4,Obj_State(a0)
 loc_004ACA:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_004ACE:
 	move.w	#$200,Obj_Timer(a0)
 loc_004AD4:
@@ -5911,7 +5915,7 @@ loc_004AD6:
 loc_004ADA:
 	bpl.b	loc_004AE8
 	addq.w	#$4,Obj_State(a0)
-	move.l	#$FFFFC000,$10(a0)
+	move.l	#$FFFFC000,Obj_VelY(a0)
 loc_004AE8:
 	rts
 	dc.b	$0C,$68,$00,$A0,$00,$08
@@ -5926,7 +5930,7 @@ loc_004B12:
 loc_004B18:
 	move.w	#$98,Obj_Y(a0)
 loc_004B1E:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_004B24:
 	move.w	#$78,d0
 loc_004B28:
@@ -6316,7 +6320,7 @@ loc_00521C:
 loc_005222:
 	move.l	#$34722,Obj_FramePtr(a0)
 loc_00522A:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_005230:
 	clr.b	$3F(a0)
 loc_005234:
@@ -6350,7 +6354,7 @@ loc_005280:
 loc_005282:
 	addq.w	#$4,$38(a0)
 loc_005286:
-	move.l	#$FFFF8000,$10(a0)
+	move.l	#$FFFF8000,Obj_VelY(a0)
 loc_00528E:
 	move.b	#$18,$20(a0)
 loc_005294:
@@ -6388,7 +6392,7 @@ loc_0052D8:
 loc_0052DA:
 	addq.w	#$4,$38(a0)
 loc_0052DE:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0052E2:
 	move.l	#$E3BEE,Obj_FramePtr(a0)
 loc_0052EA:
@@ -6465,7 +6469,7 @@ loc_005408:
 loc_00540A:
 	move.l	#$34408,Obj_FramePtr(a0)
 loc_005412:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_005418:
 	tst.b	(ram_C604).w
 loc_00541C:
@@ -6541,7 +6545,7 @@ loc_0054CE:
 loc_0054D2:
 	move.l	#$34408,Obj_FramePtr(a0)
 loc_0054DA:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_0054E0:
 	rts
 loc_0054E2:
@@ -6915,7 +6919,7 @@ loc_0059E4:
 loc_0059EA:
 	move.l	#$E44C0,Obj_FramePtr(a0)
 loc_0059F2:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_0059F8:
 	move.w	#$2,Obj_Timer(a0)
 loc_0059FE:
@@ -6934,7 +6938,7 @@ loc_005A14:
 loc_005A1A:
 	beq.b	loc_005A36
 	addq.w	#$4,Obj_State(a0)
-	move.w	#$FFFF,$C(a0)
+	move.w	#$FFFF,Obj_VelX(a0)
 	movem.l	d0/a1,-(a7)
 	moveq	#-$39,d0
 	jsr	(sub_00A068).l
@@ -7439,7 +7443,7 @@ loc_0060B8:
 loc_0060BA:
 	ori.b	#$8,Obj_Flags(a0)
 loc_0060C0:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_0060C6:
 	move.w	#$B0,d0
 loc_0060CA:
@@ -7459,7 +7463,7 @@ loc_0060E8:
 	rts
 loc_0060F2:
 	addq.w	#$4,Obj_State(a0)
-	clr.b	$22(a0)
+	clr.b	Obj_TileAttr(a0)
 	move.w	#$A8,d0
 	jsr	(sub_00D96C).l
 	move.w	Obj_X(a0),d4
@@ -7474,7 +7478,7 @@ loc_00611C:
 loc_00611E:
 	ori.b	#$4,Obj_Flags(a0)
 loc_006124:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_00612A:
 	move.w	Obj_X(a0),Obj_AnimPtr(a0)
 loc_006130:
@@ -7503,7 +7507,7 @@ loc_00615C:
 	rts
 loc_006164:
 	andi.b	#$FB,Obj_Flags(a0)
-	move.w	#$FFFF,$10(a0)
+	move.w	#$FFFF,Obj_VelY(a0)
 	move.w	#$8000,$E(a0)
 loc_006176:
 	bchg.b	#$4,Obj_Flags(a0)
@@ -8503,7 +8507,7 @@ loc_006CBE:
 loc_006CC4:
 	move.w	#$88,Obj_Y(a0)
 loc_006CCA:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_006CD0:
 	move.w	#$78,d0
 loc_006CD4:
@@ -8658,7 +8662,7 @@ sub_006E0E:
 loc_006E14:
 	bne.b	loc_006E42
 loc_006E16:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_006E1C:
 	move.w	#$60,Obj_X(a0)
 loc_006E22:
@@ -8674,7 +8678,7 @@ loc_006E34:
 loc_006E38:
 	move.w	(a1)+,Obj_Y(a0)
 loc_006E3C:
-	move.w	#$4,$C(a0)
+	move.w	#$4,Obj_VelX(a0)
 loc_006E42:
 	move.w	Obj_X(a0),d0
 loc_006E46:
@@ -8682,7 +8686,7 @@ loc_006E46:
 loc_006E4A:
 	bcs.b	loc_006E50
 loc_006E4C:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_006E50:
 	rts
 dat_006E52:
@@ -8974,7 +8978,7 @@ sub_007218:
 sub_00722A:
 	move.w	Obj_X(a0),d0
 loc_00722E:
-	tst.w	$C(a0)
+	tst.w	Obj_VelX(a0)
 loc_007232:
 	bmi.b	loc_00723C
 loc_007234:
@@ -8986,7 +8990,7 @@ loc_00723C:
 	cmp.w	Obj_AnimPtr(a0),d0
 	bhi.b	loc_007246
 loc_007242:
-	clr.w	$C(a0)
+	clr.w	Obj_VelX(a0)
 loc_007246:
 	rts
 loc_007248:
@@ -9388,7 +9392,7 @@ loc_007E12:
 loc_007E1A:
 	ori.b	#$2,Obj_Flags(a0)
 loc_007E20:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_007E26:
 	move.w	#$184,Obj_X(a0)
 loc_007E2C:
@@ -9965,8 +9969,8 @@ dat_00842E:
 	dc.b	$00,$08
 	dc.b	$00,$04,$00,$0A,$00,$08,$00,$04
 sub_008438:
-	move.w	$C(a0),d0
-	move.w	$10(a0),d1
+	move.w	Obj_VelX(a0),d0
+	move.w	Obj_VelY(a0),d1
 	bra.w	loc_008454
 sub_008444:
 	move.w	(ram_E004).w,d0
@@ -14892,7 +14896,7 @@ sub_00AF30:
 	moveq	#$1,d1
 	rts
 sub_00AF50:
-	move.w	$24(a0),d2
+	move.w	Obj_SpriteSize(a0),d2
 sub_00AF54:
 	lea	(Objects_A).w,a1
 loc_00AF58:
@@ -16497,7 +16501,7 @@ loc_00BCDE:
 loc_00BCE2:
 	ori.b	#$2,Obj_Flags(a0)
 loc_00BCE8:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_00BCEE:
 	lea	(ram_C3B8).w,a1
 loc_00BCF2:
@@ -16508,7 +16512,7 @@ loc_00BCF8:
 	tst.b	(a1,d0.w)
 loc_00BCFC:
 	beq.b	loc_00BD04
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_00BD04:
 	rts
 sub_00BD06:
@@ -16520,7 +16524,7 @@ loc_00BD0E:
 loc_00BD14:
 	move.w	#$4B,$1E(a0)
 loc_00BD1A:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00BD20:
 	move.w	#$180,Obj_X(a0)
 loc_00BD26:
@@ -16580,7 +16584,7 @@ loc_00BD8E:
 loc_00BD94:
 	move.w	#$54,$1E(a0)
 loc_00BD9A:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_00BDA0:
 	move.w	#$1A0,Obj_X(a0)
 loc_00BDA6:
@@ -16618,7 +16622,7 @@ loc_00BDE6:
 loc_00BDEC:
 	ori.b	#$6,Obj_Flags(a0)
 loc_00BDF2:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_00BDF8:
 	tst.b	(ram_C6B5).w
 loc_00BDFC:
@@ -16812,7 +16816,7 @@ loc_00C162:
 loc_00C168:
 	move.l	#$E5DD2,Obj_FramePtr(a0)
 loc_00C170:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00C176:
 	move.b	#$10,$3E(a0)
 loc_00C17C:
@@ -17444,7 +17448,7 @@ loc_00C7DA:
 loc_00C7DE:
 	bsr.w	sub_00C836
 loc_00C7E2:
-	ori.b	#$80,$22(a0)
+	ori.b	#$80,Obj_TileAttr(a0)
 loc_00C7E8:
 	move.w	Obj_Timer(a0),d0
 loc_00C7EC:
@@ -17574,7 +17578,7 @@ loc_00C93E:
 loc_00C944:
 	move.w	#$4B,$1E(a0)
 loc_00C94A:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00C950:
 	move.l	#$3E5F8,Obj_FramePtr(a0)
 loc_00C958:
@@ -17616,7 +17620,7 @@ loc_00C9A0:
 loc_00C9A6:
 	move.w	#$54,$1E(a0)
 loc_00C9AC:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_00C9B2:
 	move.l	#$3E5D0,Obj_FramePtr(a0)
 loc_00C9BA:
@@ -17642,7 +17646,7 @@ loc_00C9E2:
 loc_00C9E4:
 	ori.b	#$2,Obj_Flags(a0)
 loc_00C9EA:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_00C9F0:
 	move.w	#$90,Obj_X(a0)
 loc_00C9F6:
@@ -17785,7 +17789,7 @@ loc_00CD80:
 loc_00CD86:
 	move.l	#$34722,Obj_FramePtr(a0)
 loc_00CD8E:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_00CD94:
 	move.w	(ram_C3B6).w,d0
 loc_00CD98:
@@ -17937,13 +17941,13 @@ loc_00CEC2:
 loc_00CEC6:
 	beq.b	loc_00CEDA
 loc_00CEC8:
-	move.b	#$E0,$22(a0)
+	move.b	#$E0,Obj_TileAttr(a0)
 loc_00CECE:
 	tst.b	$1C(a0)
 loc_00CED2:
 	beq.b	loc_00CEDA
 loc_00CED4:
-	move.b	#$A0,$22(a0)
+	move.b	#$A0,Obj_TileAttr(a0)
 loc_00CEDA:
 	bsr.w	sub_014248
 loc_00CEDE:
@@ -17989,9 +17993,9 @@ loc_00CF32:
 loc_00CF36:
 	bsr.w	sub_014248
 loc_00CF3A:
-	move.l	$C(a0),d2
+	move.l	Obj_VelX(a0),d2
 loc_00CF3E:
-	move.l	$10(a0),d3
+	move.l	Obj_VelY(a0),d3
 loc_00CF42:
 	move.l	d2,(ram_C60A).w
 loc_00CF46:
@@ -18051,9 +18055,9 @@ loc_00CFAC:
 loc_00CFB0:
 	bra.w	loc_00D0AA
 loc_00CFB4:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00CFB8:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00CFBC:
 	bsr.w	sub_00E2BA
 loc_00CFC0:
@@ -18077,7 +18081,7 @@ loc_00CFE0:
 loc_00CFE4:
 	move.w	#$4,Obj_Timer(a0)
 loc_00CFEA:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_00CFF0:
 	move.l	#$34468,$18(a0)
 loc_00CFF8:
@@ -18210,7 +18214,7 @@ loc_00D190:
 loc_00D194:
 	bne.b	loc_00D19A
 loc_00D196:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00D19A:
 	tst.b	(ram_C614).w
 loc_00D19E:
@@ -18763,9 +18767,9 @@ loc_00D824:
 loc_00D82A:
 	move.w	#$0,Obj_State(a0)
 loc_00D830:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00D834:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00D838:
 	bra.w	loc_00CE0E
 loc_00D83C:
@@ -18791,9 +18795,9 @@ loc_00D86A:
 loc_00D870:
 	move.b	#$18,$20(a0)
 loc_00D876:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00D87A:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00D87E:
 	bclr.b	#$0,$2A(a0)
 loc_00D884:
@@ -19237,13 +19241,13 @@ loc_00DB90:
 loc_00DB92:
 	bsr.b	sub_00DBA4
 loc_00DB94:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 loc_00DB98:
 	moveq	#$0,d4
 loc_00DB9A:
 	rts
 loc_00DB9C:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00DBA0:
 	moveq	#$1,d4
 loc_00DBA2:
@@ -19310,13 +19314,13 @@ loc_00DC2C:
 loc_00DC30:
 	bhi.b	loc_00DC3A
 loc_00DC32:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 loc_00DC36:
 	moveq	#$0,d4
 loc_00DC38:
 	rts
 loc_00DC3A:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00DC3E:
 	moveq	#$1,d4
 loc_00DC40:
@@ -19333,11 +19337,11 @@ loc_00DC54:
 	cmp.w	(ram_C62A).w,d0
 	bhi.b	loc_00DC62
 loc_00DC5A:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 	moveq	#$0,d4
 	rts
 loc_00DC62:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 	moveq	#$1,d4
 	rts
 sub_00DC6A:
@@ -19381,13 +19385,13 @@ loc_00DC9E:
 loc_00DCA0:
 	bsr.b	sub_00DCB2
 loc_00DCA2:
-	move.l	d3,$10(a0)
+	move.l	d3,Obj_VelY(a0)
 loc_00DCA6:
 	moveq	#$0,d4
 loc_00DCA8:
 	rts
 loc_00DCAA:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00DCAE:
 	moveq	#$1,d4
 loc_00DCB0:
@@ -19437,15 +19441,15 @@ loc_00DD50:
 	bhi.b	loc_00DD60
 loc_00DD56:
 	add.l	d4,d3
-	move.l	d3,$10(a0)
+	move.l	d3,Obj_VelY(a0)
 	moveq	#$0,d4
 	rts
 loc_00DD60:
-	move.l	d4,$10(a0)
+	move.l	d4,Obj_VelY(a0)
 	moveq	#$1,d4
 	rts
 loc_00DD68:
-	move.l	d3,$10(a0)
+	move.l	d3,Obj_VelY(a0)
 	move.l	d3,d4
 	bsr.w	sub_00DD74
 	rts
@@ -19934,7 +19938,7 @@ loc_00E1F4:
 	rts
 	dc.b	$08,$28,$00,$02,$00,$02,$66,$0A
 sub_00E1FE:
-	move.w	$24(a0),d0
+	move.w	Obj_SpriteSize(a0),d0
 sub_00E202:
 	cmpi.w	#$10,d0
 loc_00E206:
@@ -19972,7 +19976,7 @@ loc_00E230:
 loc_00E232:
 	rts
 sub_00E234:
-	move.w	$24(a0),d4
+	move.w	Obj_SpriteSize(a0),d4
 sub_00E238:
 	lea	(dat_02D000).l,a1
 loc_00E23E:
@@ -20133,7 +20137,7 @@ loc_00E346:
 loc_00E348:
 	lsl.l	#$8,d3
 loc_00E34A:
-	move.l	d3,$10(a0)
+	move.l	d3,Obj_VelY(a0)
 loc_00E34E:
 	moveq	#$0,d2
 loc_00E350:
@@ -20143,7 +20147,7 @@ loc_00E352:
 loc_00E354:
 	lsl.l	#$8,d2
 loc_00E356:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 loc_00E35A:
 	rts
 sub_00E35C:
@@ -20317,7 +20321,7 @@ loc_00E656:
 loc_00E65A:
 	move.l	$2(a2),Obj_FramePtr(a0)
 loc_00E660:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00E666:
 	move.l	#$40400,$1C(a0)
 loc_00E66E:
@@ -20519,16 +20523,16 @@ loc_00E878:
 loc_00E87A:
 	lea	(a1,d3.w),a1
 loc_00E87E:
-	move.l	(a1)+,$C(a0)
+	move.l	(a1)+,Obj_VelX(a0)
 loc_00E882:
-	move.l	(a1)+,$10(a0)
+	move.l	(a1)+,Obj_VelY(a0)
 loc_00E886:
 	rts
 sub_00E888:
 	move.w	$4(a1),d0
 sub_00E88C:
 	move.l	#$2000,d1
-	move.l	$C(a0),d2
+	move.l	Obj_VelX(a0),d2
 	cmp.w	Obj_X(a0),d0
 	bcc.b	loc_00E89E
 	neg.l	d1
@@ -20541,14 +20545,14 @@ loc_00E89E:
 	cmpi.l	#$FFFC0000,d2
 	bcs.b	loc_00E8B8
 loc_00E8B4:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 loc_00E8B8:
 	rts
 sub_00E8BA:
 	move.w	$8(a1),d0
 sub_00E8BE:
 	move.l	#$2000,d1
-	move.l	$10(a0),d2
+	move.l	Obj_VelY(a0),d2
 	cmp.w	Obj_Y(a0),d0
 	bcc.b	loc_00E8D0
 	neg.l	d1
@@ -20561,7 +20565,7 @@ loc_00E8D0:
 	cmpi.l	#$FFFC0000,d2
 	bcs.b	loc_00E8EA
 loc_00E8E6:
-	move.l	d2,$10(a0)
+	move.l	d2,Obj_VelY(a0)
 loc_00E8EA:
 	rts
 sub_00E8EC:
@@ -20575,7 +20579,7 @@ loc_00E8FA:
 loc_00E8FE:
 	jsr	(sub_00D96C).l
 loc_00E904:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00E90A:
 	move.w	Obj_Timer(a0),d0
 loc_00E90E:
@@ -20610,9 +20614,9 @@ loc_00E95E:
 loc_00E962:
 	jsr	(sub_00D96C).l
 loc_00E968:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00E96E:
-	move.w	#$FFFC,$10(a0)
+	move.w	#$FFFC,Obj_VelY(a0)
 loc_00E974:
 	subq.w	#$1,Obj_X(a0)
 loc_00E978:
@@ -20657,7 +20661,7 @@ loc_00E9D8:
 loc_00E9DE:
 	move.w	#$1,Obj_SortKey(a0)
 loc_00E9E4:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_00E9EA:
 	move.b	$2D(a0),$3F(a0)
 loc_00E9F0:
@@ -20704,7 +20708,7 @@ loc_00EA66:
 loc_00EA6C:
 	move.w	#$1,Obj_SortKey(a0)
 loc_00EA72:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_00EA78:
 	move.b	#$10,$3C(a0)
 loc_00EA7E:
@@ -20754,8 +20758,8 @@ loc_00EAEE:
 	move.b	$2E(a0),d0
 	lsl.w	#$2,d0
 	adda.w	d0,a1
-	move.l	(a1)+,$C(a0)
-	move.l	(a1)+,$10(a0)
+	move.l	(a1)+,Obj_VelX(a0)
+	move.l	(a1)+,Obj_VelY(a0)
 	rts
 loc_00EB0C:
 	bsr.w	sub_014248
@@ -20772,8 +20776,8 @@ loc_00EB2E:
 sub_00EB30:
 	moveq	#$0,d0
 	moveq	#$0,d1
-	add.l	$C(a0),d0
-	add.l	$10(a0),d1
+	add.l	Obj_VelX(a0),d0
+	add.l	Obj_VelY(a0),d1
 	bsr.w	sub_00B36C
 	cmpi.b	#$20,d0
 	rts
@@ -20818,7 +20822,7 @@ loc_00EBBE:
 loc_00EBC0:
 	move.b	#$2,$3E(a0)
 loc_00EBC6:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00EBCC:
 	move.b	#$2,$3C(a0)
 loc_00EBD2:
@@ -20883,7 +20887,7 @@ sub_00EC88:
 loc_00EC8E:
 	bne.b	loc_00ECCA
 loc_00EC90:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00EC96:
 	move.b	#$2,$3D(a0)
 loc_00EC9C:
@@ -20948,8 +20952,8 @@ loc_00ED2E:
 	move.l	#$3A56E,$18(a0)
 	moveq	#$4,d0
 	bsr.w	sub_00D95E
-	clr.l	$C(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelX(a0)
+	clr.l	Obj_VelY(a0)
 	move.b	#$4,$2F(a0)
 	rts
 loc_00ED58:
@@ -20975,7 +20979,7 @@ sub_00ED82:
 loc_00ED88:
 	bne.b	loc_00EDC8
 loc_00ED8A:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00ED90:
 	move.b	#$2,$3E(a0)
 loc_00ED96:
@@ -20987,7 +20991,7 @@ loc_00EDA2:
 loc_00EDA6:
 	movea.l	Obj_FramePtr(a0),a1
 loc_00EDAA:
-	move.w	$2(a1),$24(a0)
+	move.w	$2(a1),Obj_SpriteSize(a0)
 loc_00EDB0:
 	bsr.w	sub_00E1FE
 loc_00EDB4:
@@ -21075,9 +21079,9 @@ loc_00EE3E:
 loc_00EE42:
 	bsr.w	sub_00D95E
 loc_00EE46:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00EE4A:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00EE4E:
 	clr.w	Obj_AnimPtr(a0)
 loc_00EE52:
@@ -21093,7 +21097,7 @@ sub_00EE5E:
 loc_00EE64:
 	bne.b	loc_00EEA4
 loc_00EE66:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00EE6C:
 	bsr.w	sub_00F6D8
 loc_00EE70:
@@ -21105,7 +21109,7 @@ loc_00EE7E:
 loc_00EE82:
 	movea.l	Obj_FramePtr(a0),a1
 loc_00EE86:
-	move.w	$2(a1),$24(a0)
+	move.w	$2(a1),Obj_SpriteSize(a0)
 loc_00EE8C:
 	bsr.w	sub_00E1FE
 loc_00EE90:
@@ -21144,7 +21148,7 @@ sub_00EEE4:
 loc_00EEEA:
 	bne.b	loc_00EF28
 loc_00EEEC:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00EEF2:
 	move.b	#$2,$3D(a0)
 loc_00EEF8:
@@ -21156,7 +21160,7 @@ loc_00EF02:
 loc_00EF06:
 	movea.l	Obj_FramePtr(a0),a1
 loc_00EF0A:
-	move.w	$2(a1),$24(a0)
+	move.w	$2(a1),Obj_SpriteSize(a0)
 loc_00EF10:
 	bsr.w	sub_00E1FE
 loc_00EF14:
@@ -21219,8 +21223,8 @@ loc_00EF9C:
 loc_00EFBA:
 	moveq	#$6,d0
 	bsr.w	sub_00D95E
-	clr.l	$C(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelX(a0)
+	clr.l	Obj_VelY(a0)
 	rts
 loc_00EFCA:
 	cmpi.b	#$3,$1C(a0)
@@ -21262,7 +21266,7 @@ loc_00F01C:
 	move.w	#$8,Obj_State(a0)
 	bra.w	loc_00F0A6
 loc_00F02E:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00F034:
 	ori.b	#$48,Obj_Flags(a0)
 loc_00F03A:
@@ -21274,7 +21278,7 @@ loc_00F046:
 loc_00F04A:
 	movea.l	Obj_FramePtr(a0),a1
 loc_00F04E:
-	move.w	$2(a1),$24(a0)
+	move.w	$2(a1),Obj_SpriteSize(a0)
 loc_00F054:
 	bra.w	sub_00E1FE
 loc_00F058:
@@ -21311,9 +21315,9 @@ loc_00F0A6:
 	andi.w	#$1C,d2
 	lea	(dat_039096).l,a1
 	move.l	(a1,d2.w),d0
-	move.w	d0,$10(a0)
+	move.w	d0,Obj_VelY(a0)
 	swap	d0
-	move.w	d0,$C(a0)
+	move.w	d0,Obj_VelX(a0)
 	move.w	(ram_C346).w,d0
 	add.w	d0,d0
 	lea	(dat_03B5DE).l,a1
@@ -21334,7 +21338,7 @@ loc_00F108:
 loc_00F10A:
 	move.b	#$1,$3D(a0)
 loc_00F110:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00F116:
 	ori.b	#$24,Obj_Flags(a0)
 loc_00F11C:
@@ -21627,7 +21631,7 @@ loc_00F33E:
 loc_00F340:
 	move.l	#$3935C,Obj_FramePtr(a0)
 loc_00F348:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00F34E:
 	ori.b	#$26,Obj_Flags(a0)
 loc_00F354:
@@ -21694,7 +21698,7 @@ sub_00F3D8:
 loc_00F3DE:
 	bne.b	loc_00F402
 loc_00F3E0:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_00F3E6:
 	move.w	#$88,d0
 loc_00F3EA:
@@ -21720,7 +21724,7 @@ sub_00F40C:
 loc_00F412:
 	bne.b	loc_00F456
 loc_00F414:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00F41A:
 	ori.b	#$4,Obj_Flags(a0)
 loc_00F420:
@@ -21736,9 +21740,9 @@ loc_00F436:
 loc_00F43A:
 	clr.w	Obj_State(a0)
 loc_00F43E:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_00F442:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00F446:
 	bsr.b	sub_00F49E
 loc_00F448:
@@ -21989,8 +21993,8 @@ loc_00F62E:
 	andi.w	#$1F,d2
 	lsl.w	#$3,d2
 	lea	(a1,d2.w),a1
-	move.l	(a1)+,$C(a0)
-	move.l	(a1)+,$10(a0)
+	move.l	(a1)+,Obj_VelX(a0)
+	move.l	(a1)+,Obj_VelY(a0)
 	move.b	dat_00F61E(pc,d3.w),$2F(a0)
 	rts
 dat_00F660:
@@ -22016,9 +22020,9 @@ loc_00F69A:
 loc_00F69C:
 	lea	(a1,d2.w),a1
 loc_00F6A0:
-	move.l	(a1)+,$C(a0)
+	move.l	(a1)+,Obj_VelX(a0)
 loc_00F6A4:
-	move.l	(a1)+,$10(a0)
+	move.l	(a1)+,Obj_VelY(a0)
 loc_00F6A8:
 	rts
 sub_00F6AA:
@@ -22223,7 +22227,7 @@ loc_00F84A:
 loc_00F84C:
 	move.l	#$3E51C,Obj_FramePtr(a0)
 loc_00F854:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_00F85A:
 	ori.b	#$28,Obj_Flags(a0)
 loc_00F860:
@@ -22298,7 +22302,7 @@ loc_00F8FA:
 loc_00F900:
 	bsr.w	sub_00F912
 loc_00F904:
-	move.w	#$FFFE,$10(a0)
+	move.w	#$FFFE,Obj_VelY(a0)
 loc_00F90A:
 	move.w	Obj_Y(a0),Obj_SortKey(a0)
 loc_00F910:
@@ -22339,7 +22343,7 @@ loc_00F960:
 loc_00F964:
 	lsr.w	#$2,d0
 loc_00F966:
-	move.b	dat_00F96E(pc,d0.w),$22(a0)
+	move.b	dat_00F96E(pc,d0.w),Obj_TileAttr(a0)
 loc_00F96C:
 	rts
 dat_00F96E:
@@ -22391,15 +22395,15 @@ loc_00F9CA:
 loc_00F9CE:
 	bne.w	loc_00FA44
 loc_00F9D2:
-	tst.w	$10(a0)
+	tst.w	Obj_VelY(a0)
 loc_00F9D6:
 	bmi.b	loc_00F9E2
 loc_00F9D8:
-	cmpi.l	#$20000,$10(a0)
+	cmpi.l	#$20000,Obj_VelY(a0)
 loc_00F9E0:
 	bhi.b	loc_00F9EE
 loc_00F9E2:
-	addi.l	#$2000,$10(a0)
+	addi.l	#$2000,Obj_VelY(a0)
 loc_00F9EA:
 	bra.w	loc_00F90A
 loc_00F9EE:
@@ -22421,7 +22425,7 @@ loc_00FA24:
 	move.w	#$14,Obj_State(a0)
 	move.b	#$80,$2F(a0)
 loc_00FA32:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_00FA36:
 	move.w	#$20,Obj_Timer(a0)
 loc_00FA3C:
@@ -22507,9 +22511,9 @@ loc_00FADC:
 	beq.w	sub_014220
 	move.l	d0,Obj_FramePtr(a0)
 	andi.b	#$B7,Obj_Flags(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	move.w	#$10,Obj_State(a0)
-	move.w	#$FFFF,$10(a0)
+	move.w	#$FFFF,Obj_VelY(a0)
 	move.w	#$10,Obj_Timer(a0)
 	rts
 loc_00FB14:
@@ -22537,11 +22541,11 @@ loc_00FB32:
 	dc.b	$00,$30,$60,$00,$FD,$76
 loc_00FB96:
 	move.w	#$18,Obj_State(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 	move.w	#$C0,d0
 	jsr	(sub_00D96C).l
 	andi.b	#$BF,Obj_Flags(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	move.b	#$4,$3D(a0)
 	bra.w	loc_00F90A
 	dc.b	$11,$7C,$00,$58,$00,$19,$08,$68,$00,$00,$00,$2A,$67,$06,$11,$7C
@@ -22555,10 +22559,10 @@ loc_00FBEE:
 	andi.b	#$FB,Obj_Flags(a0)
 	andi.b	#$FE,Obj_Flags2(a0)
 	bsr.w	sub_00F912
-	move.w	#$FFFE,$10(a0)
+	move.w	#$FFFE,Obj_VelY(a0)
 	move.w	Obj_Y(a0),Obj_SortKey(a0)
 	move.w	#$4,Obj_State(a0)
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 	move.b	#$10,$3C(a0)
 	bra.w	sub_00E262
 dat_00FC28:
@@ -22611,7 +22615,7 @@ loc_00FE2A:
 loc_00FE2C:
 	ori.b	#$6,Obj_Flags(a0)
 loc_00FE32:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00FE38:
 	move.w	#$138,Obj_X(a0)
 loc_00FE3E:
@@ -22641,7 +22645,7 @@ loc_00FE90:
 loc_00FE92:
 	ori.b	#$6,Obj_Flags(a0)
 loc_00FE98:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_00FE9E:
 	move.l	#$581D0,Obj_FramePtr(a0)
 loc_00FEA6:
@@ -22802,7 +22806,7 @@ loc_00FFFE:
 loc_010000:
 	ori.b	#$6,Obj_Flags(a0)
 loc_010006:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_01000C:
 	move.w	Obj_Timer(a0),d0
 loc_010010:
@@ -22838,7 +22842,7 @@ loc_01007C:
 loc_01007E:
 	ori.b	#$6,Obj_Flags(a0)
 loc_010084:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_01008A:
 	move.w	Obj_Timer(a0),d0
 loc_01008E:
@@ -22956,13 +22960,13 @@ loc_010196:
 loc_01019C:
 	clr.b	(ram_C601).w
 loc_0101A0:
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 loc_0101A4:
 	neg.l	d0
 loc_0101A6:
 	move.l	d0,(ram_C54E).w
 loc_0101AA:
-	move.l	$10(a0),d0
+	move.l	Obj_VelY(a0),d0
 loc_0101AE:
 	neg.l	d0
 loc_0101B0:
@@ -22980,7 +22984,7 @@ loc_0101C4:
 loc_0101CA:
 	move.l	#$59D2A,Obj_FramePtr(a0)
 loc_0101D2:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_0101D8:
 	move.b	#$10,$2F(a0)
 loc_0101DE:
@@ -23010,7 +23014,7 @@ loc_01020E:
 loc_010210:
 	move.l	#$59D20,Obj_FramePtr(a0)
 loc_010218:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01021E:
 	move.b	#$10,$2F(a0)
 loc_010224:
@@ -23213,7 +23217,7 @@ loc_0104C6:
 loc_0104C8:
 	move.l	#$59CC2,Obj_FramePtr(a0)
 loc_0104D0:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_0104D6:
 	move.w	#$F8,Obj_X(a0)
 loc_0104DC:
@@ -23764,7 +23768,7 @@ loc_010F88:
 loc_010F8A:
 	move.l	#$5FF4A,Obj_FramePtr(a0)
 loc_010F92:
-	move.b	#$0,$22(a0)
+	move.b	#$0,Obj_TileAttr(a0)
 loc_010F98:
 	ori.b	#$8,Obj_Flags(a0)
 loc_010F9E:
@@ -23780,7 +23784,7 @@ loc_010FB0:
 loc_010FB4:
 	lea	(dat_011042).l,a1
 loc_010FBA:
-	move.w	(a1,d0.w),$24(a0)
+	move.w	(a1,d0.w),Obj_SpriteSize(a0)
 loc_010FC0:
 	bsr.w	sub_00AF50
 loc_010FC4:
@@ -23800,7 +23804,7 @@ loc_010FD6:
 loc_010FDA:
 	dbra	d7,loc_010FD2
 loc_010FDE:
-	move.b	#$0,$22(a0)
+	move.b	#$0,Obj_TileAttr(a0)
 loc_010FE4:
 	bsr.w	sub_00E234
 loc_010FE8:
@@ -23812,7 +23816,7 @@ loc_010FEE:
 loc_010FF4:
 	bne.w	sub_014220
 loc_010FF8:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_010FFE:
 	move.b	$18(a0),d0
 loc_011002:
@@ -23855,7 +23859,7 @@ loc_011052:
 loc_011054:
 	move.l	#$5FF40,Obj_FramePtr(a0)
 loc_01105C:
-	move.b	#$0,$22(a0)
+	move.b	#$0,Obj_TileAttr(a0)
 loc_011062:
 	ori.b	#$8,Obj_Flags(a0)
 loc_011068:
@@ -23958,9 +23962,9 @@ loc_011124:
 loc_01112A:
 	not.b	(ram_C5ED).w
 loc_01112E:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_011132:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_011136:
 	move.l	(ram_E704).w,Obj_X(a0)
 loc_01113C:
@@ -23994,15 +23998,15 @@ loc_01117A:
 loc_011180:
 	beq.b	loc_011190
 loc_011182:
-	clr.w	$10(a0)
+	clr.w	Obj_VelY(a0)
 loc_011186:
-	move.l	#$FFFEE000,$C(a0)
+	move.l	#$FFFEE000,Obj_VelX(a0)
 loc_01118E:
 	rts
 loc_011190:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_011194:
-	move.w	#$2,$10(a0)
+	move.w	#$2,Obj_VelY(a0)
 loc_01119A:
 	rts
 loc_01119C:
@@ -24126,7 +24130,7 @@ loc_011294:
 loc_011296:
 	bsr.w	sub_00D95E
 loc_01129A:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_0112A0:
 	ori.b	#$24,Obj_Flags(a0)
 loc_0112A6:
@@ -24408,7 +24412,7 @@ sub_01160A:
 loc_011610:
 	bne.b	loc_01164E
 loc_011612:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_011618:
 	ori.b	#$24,Obj_Flags(a0)
 loc_01161E:
@@ -24582,7 +24586,7 @@ loc_0118F4:
 	move.w	#$2B,$1E(a0)
 	move.b	#$2,$3F(a0)
 loc_011902:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_011908:
 	move.b	#$10,$20(a0)
 loc_01190E:
@@ -24619,7 +24623,7 @@ loc_011962:
 loc_011968:
 	ori.b	#$4,Obj_Flags2(a0)
 loc_01196E:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_011974:
 	clr.w	$1E(a0)
 loc_011978:
@@ -24995,7 +24999,7 @@ loc_011DA0:
 loc_011DA6:
 	move.l	#$38796,Obj_FramePtr(a0)
 loc_011DAE:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_011DB4:
 	clr.w	Obj_State(a0)
 loc_011DB8:
@@ -25078,7 +25082,7 @@ loc_011E8E:
 loc_011E94:
 	move.l	#$70A5C,Obj_FramePtr(a0)
 loc_011E9C:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_011EA2:
 	move.b	#$40,$2F(a0)
 loc_011EA8:
@@ -25238,9 +25242,9 @@ loc_0120BE:
 loc_0120C6:
 	move.l	#$FF010200,$1C(a0)
 loc_0120CE:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_0120D2:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0120D6:
 	rts
 	dc.b	$61,$00,$21,$6E,$66,$00,$21,$42
@@ -25327,7 +25331,7 @@ sub_0121EA:
 	clr.b	(ram_C625).w
 	bclr.b	#$2,(Flags_C5EB).w
 	move.l	d0,(ram_C634).w
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_012202:
 	rts
 loc_012204:
@@ -25395,7 +25399,7 @@ loc_0122C4:
 loc_0122C8:
 	move.l	(a1)+,Obj_FramePtr(a0)
 loc_0122CC:
-	move.w	(a1)+,$22(a0)
+	move.w	(a1)+,Obj_TileAttr(a0)
 loc_0122D0:
 	move.w	(a1)+,Obj_Timer(a0)
 loc_0122D4:
@@ -25549,7 +25553,7 @@ loc_0124B0:
 	bra.w	loc_0124B8
 	dc.b	$60,$00,$00,$64
 loc_0124B8:
-	clr.b	$22(a0)
+	clr.b	Obj_TileAttr(a0)
 loc_0124BC:
 	move.w	#$CC0,d2
 loc_0124C0:
@@ -25566,7 +25570,7 @@ loc_0124CC:
 	movem.l	(a7)+,d0/a1
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_0124EE
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_0124EC:
 	rts
 loc_0124EE:
@@ -25577,7 +25581,7 @@ loc_0124F8:
 loc_0124FC:
 	jsr	(sub_00D96C).l
 loc_012502:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_012508:
 	movem.l	d0/a1,-(a7)
 loc_01250C:
@@ -25603,7 +25607,7 @@ loc_01252C:
 loc_012532:
 	ori.b	#$4,Obj_Flags2(a0)
 loc_012538:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01253E:
 	bsr.w	sub_00E262
 loc_012542:
@@ -25820,7 +25824,7 @@ loc_012768:
 loc_01276A:
 	neg.l	d0
 loc_01276C:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_012770:
 	rts
 loc_012772:
@@ -26220,7 +26224,7 @@ loc_012B54:
 loc_012B5C:
 	move.w	#$1,Obj_SortKey(a0)
 loc_012B62:
-	move.w	#$4,$10(a0)
+	move.w	#$4,Obj_VelY(a0)
 loc_012B68:
 	move.w	#$20,$38(a0)
 loc_012B6E:
@@ -26278,7 +26282,7 @@ loc_012BE2:
 loc_012BE4:
 	addq.w	#$4,Obj_State(a0)
 loc_012BE8:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_012BEC:
 	addi.w	#$10,Obj_X(a0)
 loc_012BF2:
@@ -26408,7 +26412,7 @@ loc_012D64:
 loc_012D66:
 	ori.b	#$26,Obj_Flags(a0)
 loc_012D6C:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_012D72:
 	move.b	#$8,$3C(a0)
 loc_012D78:
@@ -26416,9 +26420,9 @@ loc_012D78:
 loc_012D7E:
 	bra.w	loc_012E84
 loc_012D82:
-	move.l	(ram_F2AC).w,$C(a0)
+	move.l	(ram_F2AC).w,Obj_VelX(a0)
 loc_012D88:
-	move.l	(ram_F2B0).w,$10(a0)
+	move.l	(ram_F2B0).w,Obj_VelY(a0)
 loc_012D8E:
 	move.w	Obj_State(a0),d0
 loc_012D92:
@@ -26488,9 +26492,9 @@ loc_012EBC:
 loc_012EC2:
 	move.l	#$10600,$1C(a0)
 loc_012ECA:
-	move.l	(ram_F2AC).w,$C(a0)
+	move.l	(ram_F2AC).w,Obj_VelX(a0)
 loc_012ED0:
-	move.l	(ram_F2B0).w,$10(a0)
+	move.l	(ram_F2B0).w,Obj_VelY(a0)
 loc_012ED6:
 	cmpi.w	#$40,Obj_Y(a0)
 loc_012EDC:
@@ -26532,7 +26536,7 @@ loc_012F36:
 loc_012F3A:
 	jsr	(sub_00D96C).l
 loc_012F40:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_012F46:
 	move.b	#$4,$3D(a0)
 loc_012F4C:
@@ -26590,7 +26594,7 @@ loc_012FCE:
 loc_012FD0:
 	add.w	d1,Obj_X(a0)
 loc_012FD4:
-	move.b	(a1)+,$22(a0)
+	move.b	(a1)+,Obj_TileAttr(a0)
 loc_012FD8:
 	moveq	#$0,d0
 loc_012FDA:
@@ -26617,7 +26621,7 @@ loc_013010:
 loc_013016:
 	ori.b	#$4,Obj_Flags2(a0)
 loc_01301C:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_013022:
 	moveq	#$0,d0
 loc_013024:
@@ -26709,7 +26713,7 @@ loc_01314E:
 loc_013150:
 	ori.b	#$4,Obj_Flags(a0)
 loc_013156:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01315C:
 	addi.w	#$78,Obj_Y(a0)
 loc_013162:
@@ -26829,7 +26833,7 @@ loc_0132AE:
 loc_0132B4:
 	move.w	#$2,Obj_SortKey(a0)
 loc_0132BA:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_0132C0:
 	move.w	#$28,d0
 loc_0132C4:
@@ -26871,7 +26875,7 @@ loc_013340:
 loc_013342:
 	ori.b	#$20,Obj_Flags(a0)
 loc_013348:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01334E:
 	move.l	#$3848C,Obj_FramePtr(a0)
 loc_013356:
@@ -26918,7 +26922,7 @@ loc_0133E0:
 loc_0133E2:
 	ori.b	#$20,Obj_Flags(a0)
 loc_0133E8:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_0133EE:
 	move.l	#$384CC,Obj_FramePtr(a0)
 loc_0133F6:
@@ -26946,7 +26950,7 @@ loc_013428:
 loc_01342A:
 	move.w	#$1E0,Obj_Timer(a0)
 loc_013430:
-	neg.l	$C(a0)
+	neg.l	Obj_VelX(a0)
 loc_013434:
 	rts
 sub_013436:
@@ -26968,7 +26972,7 @@ loc_013454:
 loc_01345C:
 	move.l	#$3855A,Obj_FramePtr(a0)
 loc_013464:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01346A:
 	move.w	#$A0,$38(a0)
 loc_013470:
@@ -27041,7 +27045,7 @@ loc_01351C:
 	move.w	#$8,Obj_State(a0)
 	move.w	#$0,d0
 	jsr	(sub_00D96C).l
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	moveq	#$0,d0
 	btst.b	#$4,Obj_Flags(a0)
 	beq.b	loc_01354E
@@ -27077,7 +27081,7 @@ sub_01359E:
 loc_0135A4:
 	bne.b	loc_0135D6
 loc_0135A6:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_0135AC:
 	ori.b	#$20,Obj_Flags(a0)
 loc_0135B2:
@@ -27182,9 +27186,9 @@ loc_01368A:
 loc_013690:
 	ori.b	#$20,Obj_Flags(a0)
 loc_013696:
-	move.w	#$2,$10(a0)
+	move.w	#$2,Obj_VelY(a0)
 loc_01369C:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_0136A2:
 	move.w	#$60,$38(a0)
 loc_0136A8:
@@ -27234,7 +27238,7 @@ loc_0136FC:
 	moveq	#$4,d7
 	move.l	#$11776,d4
 	bsr.w	sub_0113F4
-	clr.w	$10(a0)
+	clr.w	Obj_VelY(a0)
 	bset.b	#$2,Obj_Flags(a0)
 	bra.w	sub_014220
 loc_013732:
@@ -27371,7 +27375,7 @@ loc_0138B8:
 	beq.b	loc_0138C2
 	move.l	#$13A34,Obj_FramePtr(a0)
 loc_0138C2:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_0138C8:
 	moveq	#$0,d0
 loc_0138CA:
@@ -27531,7 +27535,7 @@ loc_013A70:
 loc_013A72:
 	ori.b	#$22,Obj_Flags(a0)
 loc_013A78:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_013A7E:
 	move.w	#$40,d0
 loc_013A82:
@@ -27573,7 +27577,7 @@ sub_013ACA:
 loc_013AD0:
 	bne.b	loc_013B30
 loc_013AD2:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_013AD8:
 	move.w	(ram_E008).w,Obj_AnimPtr(a0)
 loc_013ADE:
@@ -27607,9 +27611,9 @@ loc_013B12:
 loc_013B14:
 	adda.w	d0,a1
 loc_013B16:
-	move.l	(a1)+,$C(a0)
+	move.l	(a1)+,Obj_VelX(a0)
 loc_013B1A:
-	move.l	(a1)+,$10(a0)
+	move.l	(a1)+,Obj_VelY(a0)
 loc_013B1E:
 	move.w	#$1,$38(a0)
 loc_013B24:
@@ -27638,8 +27642,8 @@ loc_013B62:
 	addq.w	#$4,Obj_State(a0)
 	move.w	#$38,d0
 	jsr	(sub_00D96C).l
-	clr.l	$C(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelX(a0)
+	clr.l	Obj_VelY(a0)
 loc_013B78:
 	rts
 loc_013B7A:
@@ -27667,7 +27671,7 @@ loc_013BBE:
 loc_013BC4:
 	move.b	#$3,$3F(a0)
 loc_013BCA:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_013BD0:
 	rts
 loc_013BD2:
@@ -27752,7 +27756,7 @@ loc_013C7E:
 loc_013C84:
 	move.w	#$2,Obj_SortKey(a0)
 loc_013C8A:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_013C90:
 	move.w	#$10,Obj_AnimPtr(a0)
 loc_013C96:
@@ -27797,8 +27801,8 @@ dat_013CF2:
 	dc.b	$C6,$77,$C6,$78
 loc_013CF6:
 	addq.w	#$4,Obj_State(a0)
-	move.w	#$FFFC,$C(a0)
-	move.w	#$4,$10(a0)
+	move.w	#$FFFC,Obj_VelX(a0)
+	move.w	#$4,Obj_VelY(a0)
 	move.w	#$D8,d0
 	moveq	#$1,d4
 	moveq	#$1,d7
@@ -27958,7 +27962,7 @@ loc_013F4C:
 sub_013F82:
 	move.l	Obj_X(a0),d3
 loc_013F86:
-	add.l	$C(a0),d3
+	add.l	Obj_VelX(a0),d3
 loc_013F8A:
 	btst.b	#$1,Obj_Flags(a0)
 loc_013F90:
@@ -27980,7 +27984,7 @@ loc_013FAE:
 loc_013FB2:
 	move.l	Obj_Y(a0),d2
 loc_013FB6:
-	add.l	$10(a0),d2
+	add.l	Obj_VelY(a0),d2
 loc_013FBA:
 	btst.b	#$1,Obj_Flags(a0)
 loc_013FC0:
@@ -28008,7 +28012,7 @@ loc_013FEA:
 sub_013FEC:
 	move.l	Obj_X(a0),d3
 loc_013FF0:
-	add.l	$C(a0),d3
+	add.l	Obj_VelX(a0),d3
 loc_013FF4:
 	btst.b	#$1,Obj_Flags(a0)
 loc_013FFA:
@@ -28030,7 +28034,7 @@ loc_014018:
 loc_01401C:
 	move.l	Obj_Y(a0),d2
 loc_014020:
-	add.l	$10(a0),d2
+	add.l	Obj_VelY(a0),d2
 loc_014024:
 	btst.b	#$1,Obj_Flags(a0)
 loc_01402A:
@@ -28274,7 +28278,7 @@ loc_014186:
 loc_014188:
 	addq.w	#$8,d0
 loc_01418A:
-	move.w	d0,$24(a0)
+	move.w	d0,Obj_SpriteSize(a0)
 loc_01418E:
 	move.w	Obj_Y(a0),d2
 loc_014192:
@@ -28350,7 +28354,7 @@ loc_0141F2:
 loc_0141F8:
 	bne.b	loc_0141FE
 loc_0141FA:
-	or.w	$22(a0),d0
+	or.w	Obj_TileAttr(a0),d0
 loc_0141FE:
 	btst.b	#$6,Obj_Flags(a0)
 loc_014204:
@@ -29238,7 +29242,7 @@ loc_016260:
 sub_016262:
 	move.l	#$87028,Obj_FramePtr(a0)
 loc_01626A:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_016270:
 	bset.b	#$3,Obj_Flags(a0)
 loc_016276:
@@ -29465,7 +29469,7 @@ loc_016414:
 loc_016418:
 	jsr	Object_LoadTemplate(pc)
 loc_01641C:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_016422:
 	move.w	#$23C,(a0)
 loc_016426:
@@ -29681,7 +29685,7 @@ loc_0165AC:
 	adda.w	(a1,d0.w),a1
 	jmp	Object_RunAnimScript(pc)
 loc_0165DA:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	lea	ObjData_015F70(pc),a1
 	jmp	Object_RunAnimScript(pc)
 loc_0165E8:
@@ -29990,9 +29994,9 @@ loc_017096:
 loc_01709A:
 	beq.b	loc_0170A8
 loc_01709C:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_0170A0:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0170A4:
 	bra.w	loc_01712C
 loc_0170A8:
@@ -30006,15 +30010,15 @@ loc_0170B2:
 loc_0170B8:
 	beq.b	loc_0170BE
 loc_0170BA:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_0170BE:
 	btst.b	#$1,$56(a0)
 loc_0170C4:
 	beq.b	loc_0170D4
 loc_0170C6:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0170CA:
-	tst.l	$C(a0)
+	tst.l	Obj_VelX(a0)
 loc_0170CE:
 	bne.b	loc_0170D4
 loc_0170D0:
@@ -30096,7 +30100,7 @@ loc_01717A:
 loc_01717E:
 	bclr.b	#$6,Obj_Flags(a0)
 loc_017184:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01718A:
 	bra.b	loc_017160
 sub_01718C:
@@ -30152,11 +30156,11 @@ loc_0171D4:
 loc_0171DA:
 	bclr.b	#$7,$55(a0)
 loc_0171E0:
-	tst.l	$C(a0)
+	tst.l	Obj_VelX(a0)
 loc_0171E4:
 	bne.b	loc_017210
 loc_0171E6:
-	tst.l	$10(a0)
+	tst.l	Obj_VelY(a0)
 loc_0171EA:
 	bne.b	loc_017210
 loc_0171EC:
@@ -30973,7 +30977,7 @@ loc_0177AE:
 loc_0177B2:
 	jmp	Object_RunAnimScript(pc)
 loc_0177B6:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	movea.l	$38(a2),a1
 	btst.b	#$0,$55(a0)
 	beq.b	loc_0177D0
@@ -31150,7 +31154,7 @@ loc_017932:
 loc_017936:
 	clr.b	$57(a0)
 loc_01793A:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_017940:
 	bset.b	#$3,Obj_Flags(a0)
 loc_017946:
@@ -31370,7 +31374,7 @@ loc_017B02:
 loc_017B08:
 	move.w	$8(a1),Obj_Y(a0)
 loc_017B0E:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_017B14:
 	move.b	$35(a1),d0
 loc_017B18:
@@ -31388,7 +31392,7 @@ loc_017B2C:
 loc_017B32:
 	bset.b	#$3,Obj_Flags(a0)
 loc_017B38:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_017B3E:
 	move.l	#$14F6E,Obj_AnimPtr(a0)
 loc_017B46:
@@ -31748,7 +31752,7 @@ loc_01822C:
 loc_01822E:
 	add.l	d1,d0
 loc_018230:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_018234:
 	jmp	sub_01AF0E(pc)
 sub_018238:
@@ -31772,7 +31776,7 @@ loc_018258:
 loc_018260:
 	move.b	#$1,Obj_AnimTimer(a0)
 loc_018266:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01826C:
 	moveq	#-$4D,d0
 loc_01826E:
@@ -31848,7 +31852,7 @@ loc_018464:
 	moveq	#$0,d0
 	cmpi.b	#$1,$3E(a0)
 	bne.b	loc_01847A
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	bra.b	loc_018490
 loc_01847A:
 	addq.w	#$4,d0
@@ -31922,7 +31926,7 @@ loc_018568:
 loc_01856E:
 	move.b	#$10,$3B(a0)
 loc_018574:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_01857A:
 	move.w	#$FFE2,$2E(a0)
 loc_018580:
@@ -33072,7 +33076,7 @@ loc_01A4A2:
 loc_01A4A4:
 	jsr	(sub_00A068).l
 loc_01A4AA:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_01A4B0:
 	move.w	#$23C,(a0)
 loc_01A4B4:
@@ -33592,9 +33596,9 @@ loc_01ADD8:
 loc_01ADDC:
 	moveq	#$0,d7
 loc_01ADDE:
-	move.l	d7,$C(a0)
+	move.l	d7,Obj_VelX(a0)
 loc_01ADE2:
-	move.l	d7,$10(a0)
+	move.l	d7,Obj_VelY(a0)
 loc_01ADE6:
 	move.b	d7,$44(a0)
 loc_01ADEA:
@@ -33685,9 +33689,9 @@ loc_01AEAA:
 loc_01AEAC:
 	neg.l	d1
 loc_01AEAE:
-	move.l	d2,$C(a0)
+	move.l	d2,Obj_VelX(a0)
 loc_01AEB2:
-	move.l	d1,$10(a0)
+	move.l	d1,Obj_VelY(a0)
 loc_01AEB6:
 	rts
 dat_01AEB8:
@@ -33818,9 +33822,9 @@ loc_01AFB4:
 loc_01AFB6:
 	asl.l	#$8,d1
 loc_01AFB8:
-	movem.l	d1,$C(a0)
+	movem.l	d1,Obj_VelX(a0)
 loc_01AFBE:
-	movem.l	d0,$10(a0)
+	movem.l	d0,Obj_VelY(a0)
 loc_01AFC4:
 	move.l	a1,Obj_AnimPtr(a0)
 loc_01AFC8:
@@ -33920,7 +33924,7 @@ loc_01B064:
 loc_01B066:
 	move.l	Obj_Y(a0),d0
 loc_01B06A:
-	add.l	$10(a0),d0
+	add.l	Obj_VelY(a0),d0
 loc_01B06E:
 	move.l	(ram_C51A).w,d2
 loc_01B072:
@@ -33932,7 +33936,7 @@ loc_01B076:
 loc_01B07A:
 	move.l	Obj_X(a0),d1
 loc_01B07E:
-	add.l	$C(a0),d1
+	add.l	Obj_VelX(a0),d1
 loc_01B082:
 	move.l	(ram_C508).w,d2
 loc_01B086:
@@ -34235,9 +34239,9 @@ loc_01B282:
 loc_01B284:
 	move.l	d0,Obj_FramePtr(a0)
 loc_01B288:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01B28C:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_01B290:
 	move.b	$1A(a0),d0
 loc_01B294:
@@ -34320,9 +34324,9 @@ loc_01B346:
 loc_01B34C:
 	move.w	#$80,Obj_X(a0)
 loc_01B352:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01B356:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01B35A:
 	btst.b	#$4,(Flags_C61C).w
 loc_01B360:
@@ -35026,7 +35030,7 @@ loc_01BACE:
 loc_01BAD4:
 	move.w	d0,$18(a0)
 loc_01BAD8:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01BADE:
 	move.w	(ram_C328).w,d1
 loc_01BAE2:
@@ -35040,9 +35044,9 @@ loc_01BAEE:
 loc_01BAF2:
 	move.w	(a1,d1.w),$1E(a0)
 loc_01BAF8:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01BAFC:
-	move.w	#$1,$10(a0)
+	move.w	#$1,Obj_VelY(a0)
 loc_01BB02:
 	move.w	d0,$12(a0)
 loc_01BB06:
@@ -35211,11 +35215,11 @@ sub_01BC72:
 loc_01BC74:
 	move.w	d0,$18(a0)
 loc_01BC78:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_01BC7C:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01BC80:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_01BC86:
 	move.b	#$10,$35(a0)
 loc_01BC8C:
@@ -35270,11 +35274,11 @@ loc_01BD64:
 	beq.b	loc_01BD6A
 	bra.w	sub_01C222
 loc_01BD6A:
-	move.l	$10(a0),d0
+	move.l	Obj_VelY(a0),d0
 loc_01BD6E:
 	sub.l	d0,Obj_Y(a0)
 loc_01BD72:
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 loc_01BD76:
 	sub.l	d0,Obj_X(a0)
 loc_01BD7A:
@@ -35297,9 +35301,9 @@ loc_01BD9C:
 	move.w	#$288,(a0)
 	bra.b	loc_01BD7A
 sub_01BDB8:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01BDBC:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01BDC0:
 	jsr	sub_01B048(pc)
 loc_01BDC4:
@@ -35355,9 +35359,9 @@ loc_01BE26:
 	movea.l	a2,a0
 	jmp	sub_01B002(pc)
 sub_01BE3E:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01BE42:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01BE46:
 	jsr	sub_01B048(pc)
 loc_01BE4A:
@@ -35930,11 +35934,11 @@ loc_01C84E:
 loc_01C852:
 	move.w	d0,$1C(a0)
 loc_01C856:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01C85C:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01C860:
-	move.l	#$C000,$10(a0)
+	move.l	#$C000,Obj_VelY(a0)
 loc_01C868:
 	ori.b	#$28,Obj_Flags(a0)
 loc_01C86E:
@@ -35986,9 +35990,9 @@ loc_01C8FC:
 loc_01C902:
 	beq.w	loc_01C998
 loc_01C906:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01C90A:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01C90E:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01C914:
@@ -36093,11 +36097,11 @@ loc_01CA36:
 loc_01CA3A:
 	move.w	d0,$1C(a0)
 loc_01CA3E:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01CA44:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01CA48:
-	move.l	#$C000,$10(a0)
+	move.l	#$C000,Obj_VelY(a0)
 loc_01CA50:
 	ori.b	#$28,Obj_Flags(a0)
 loc_01CA56:
@@ -36151,9 +36155,9 @@ loc_01CACA:
 loc_01CAD0:
 	beq.w	loc_01CB58
 loc_01CAD4:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01CAD8:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01CADC:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01CAE2:
@@ -36425,11 +36429,11 @@ loc_01CE12:
 loc_01CE16:
 	move.w	d0,$1C(a0)
 loc_01CE1A:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01CE20:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01CE24:
-	move.l	#$C000,$10(a0)
+	move.l	#$C000,Obj_VelY(a0)
 loc_01CE2C:
 	ori.b	#$28,Obj_Flags(a0)
 loc_01CE32:
@@ -36483,9 +36487,9 @@ loc_01CEA6:
 loc_01CEAC:
 	beq.w	loc_01CF12
 loc_01CEB0:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01CEB4:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01CEB8:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01CEBE:
@@ -36727,7 +36731,7 @@ loc_01D3B4:
 loc_01D3B8:
 	move.b	#$1,$2E(a0)
 loc_01D3BE:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_01D3C4:
 	move.w	#$2B0,(a0)
 loc_01D3C8:
@@ -36751,7 +36755,7 @@ loc_01D3FC:
 loc_01D400:
 	ori.b	#$6A,Obj_Flags(a0)
 loc_01D406:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01D40C:
 	move.b	#$1,Obj_State(a0)
 loc_01D412:
@@ -36852,7 +36856,7 @@ loc_01D502:
 loc_01D506:
 	move.l	#$1E21A,Obj_AnimPtr(a0)
 loc_01D50E:
-	move.l	#$8000,$10(a0)
+	move.l	#$8000,Obj_VelY(a0)
 loc_01D516:
 	move.w	#$9370,d0
 loc_01D51A:
@@ -36922,9 +36926,9 @@ loc_01D5A6:
 loc_01D5AC:
 	move.l	#$1E240,Obj_AnimPtr(a0)
 loc_01D5B4:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01D5B8:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01D5BC:
 	cmpi.w	#$168,Obj_Y(a0)
 loc_01D5C2:
@@ -36933,11 +36937,11 @@ loc_01D5C2:
 loc_01D5C8:
 	jsr	sub_01B048(pc)
 loc_01D5CC:
-	move.l	$10(a0),d0
+	move.l	Obj_VelY(a0),d0
 loc_01D5D0:
 	sub.l	d0,Obj_Y(a0)
 loc_01D5D4:
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 loc_01D5D8:
 	sub.l	d0,Obj_X(a0)
 loc_01D5DC:
@@ -37008,7 +37012,7 @@ loc_01D680:
 loc_01D682:
 	move.w	#$4D8,d4
 loc_01D686:
-	move.w	d4,$24(a0)
+	move.w	d4,Obj_SpriteSize(a0)
 loc_01D68A:
 	jsr	(sub_00E238).l
 loc_01D690:
@@ -37056,9 +37060,9 @@ loc_01D706:
 loc_01D70A:
 	move.l	#$1E252,Obj_AnimPtr(a0)
 loc_01D712:
-	move.l	#$8000,$C(a0)
+	move.l	#$8000,Obj_VelX(a0)
 loc_01D71A:
-	move.l	#$8000,$10(a0)
+	move.l	#$8000,Obj_VelY(a0)
 loc_01D722:
 	move.w	#$9320,d0
 loc_01D726:
@@ -37116,9 +37120,9 @@ loc_01D796:
 sub_01D79A:
 	subi.w	#$60,Obj_X(a0)
 sub_01D7A0:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01D7A4:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01D7A8:
 	subi.w	#$20,Obj_Y(a0)
 loc_01D7AE:
@@ -37134,7 +37138,7 @@ loc_01D7C0:
 loc_01D7C4:
 	move.l	#$1E308,Obj_AnimPtr(a0)
 loc_01D7CC:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01D7D2:
 	ori.b	#$6A,Obj_Flags(a0)
 loc_01D7D8:
@@ -37288,9 +37292,9 @@ loc_01D946:
 loc_01D94A:
 	jmp	Object_RunAnimScript(pc)
 sub_01D94E:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_01D952:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_01D956:
 	subi.w	#$20,Obj_Y(a0)
 loc_01D95C:
@@ -37324,7 +37328,7 @@ loc_01D9A4:
 loc_01D9A8:
 	move.w	d1,$5A(a0)
 loc_01D9AC:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01D9B2:
 	ori.b	#$68,Obj_Flags(a0)
 loc_01D9B8:
@@ -37605,11 +37609,11 @@ loc_01DC8C:
 loc_01DC8E:
 	move.w	d0,$18(a0)
 loc_01DC92:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_01DC96:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_01DC9A:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_01DCA0:
 	move.w	d0,Obj_Flags(a0)
 loc_01DCA4:
@@ -38135,8 +38139,8 @@ loc_01E93A:
 	move.b	#$1A,$41(a0)
 	move.b	#$0,$42(a0)
 	move.b	#$0,$43(a0)
-	clr.l	$C(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelX(a0)
+	clr.l	Obj_VelY(a0)
 	lea	ObjData_01EFC0(pc),a1
 	jmp	(Object_RunAnimScript).l
 loc_01E97A:
@@ -38292,7 +38296,7 @@ loc_01EB72:
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$1F210,Obj_AnimPtr(a0)
 	move.w	#$23C,(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	bclr.b	#$7,Obj_Flags(a0)
 	moveq	#-$4D,d0
 	jsr	(sub_00A068).l
@@ -38498,7 +38502,7 @@ loc_01F31C:
 loc_01F320:
 	ori.b	#$28,Obj_Flags(a0)
 loc_01F326:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01F32C:
 	lea	ObjData_01F4DC(pc),a1
 loc_01F330:
@@ -38627,7 +38631,7 @@ loc_01F49E:
 	bclr.b	#$6,Obj_Flags(a0)
 	move.w	#$23C,(a0)
 	move.l	#$1F630,Obj_AnimPtr(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	moveq	#-$4C,d0
 	jsr	(sub_00A068).l
 	bra.b	loc_01F49A
@@ -38705,7 +38709,7 @@ loc_01F6AC:
 loc_01F6B2:
 	move.b	#$1,$58(a0)
 loc_01F6B8:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_01F6BE:
 	move.w	#$308,(a0)
 loc_01F6C2:
@@ -39210,7 +39214,7 @@ loc_02073C:
 loc_020740:
 	jsr	Object_LoadTemplate(pc)
 loc_020744:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_02074A:
 	clr.b	$49(a0)
 loc_02074E:
@@ -39218,7 +39222,7 @@ loc_02074E:
 loc_020754:
 	beq.b	loc_020760
 	addq.b	#$1,$49(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 loc_020760:
 	ori.b	#$28,Obj_Flags(a0)
 loc_020766:
@@ -39238,7 +39242,7 @@ loc_02077A:
 loc_02077C:
 	lea	ObjData_020EB0(pc),a1
 loc_020780:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_020786:
 	jsr	Object_LoadTemplate(pc)
 loc_02078A:
@@ -39254,7 +39258,7 @@ loc_02079C:
 loc_0207A0:
 	ori.b	#$68,Obj_Flags(a0)
 loc_0207A6:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_0207AC:
 	clr.b	$35(a0)
 loc_0207B0:
@@ -40310,9 +40314,9 @@ loc_021D8E:
 loc_021D90:
 	lsl.l	#$8,d1
 loc_021D92:
-	add.l	d0,$C(a0)
+	add.l	d0,Obj_VelX(a0)
 loc_021D96:
-	add.l	d1,$10(a0)
+	add.l	d1,Obj_VelY(a0)
 loc_021D9A:
 	jsr	(sub_00E234).l
 loc_021DA0:
@@ -40376,9 +40380,9 @@ loc_021E52:
 loc_021E54:
 	lsl.l	#$8,d1
 loc_021E56:
-	add.l	d0,$C(a0)
+	add.l	d0,Obj_VelX(a0)
 loc_021E5A:
-	add.l	d1,$10(a0)
+	add.l	d1,Obj_VelY(a0)
 loc_021E5E:
 	jsr	(sub_00E234).l
 loc_021E64:
@@ -40540,15 +40544,15 @@ loc_0220DA:
 loc_0220DE:
 	move.l	a2,Obj_FramePtr(a0)
 loc_0220E2:
-	move.b	#$C0,$22(a0)
+	move.b	#$C0,Obj_TileAttr(a0)
 loc_0220E8:
 	move.w	#$88,Obj_Y(a0)
 loc_0220EE:
 	move.w	#$128,Obj_X(a0)
 loc_0220F4:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_0220F8:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0220FC:
 	clr.w	$18(a0)
 loc_022100:
@@ -40635,8 +40639,8 @@ loc_02219C:
 loc_0221AA:
 	cmpi.w	#$C,d0
 	bcc.b	loc_0221BA
-	clr.l	$C(a0)
-	clr.l	$10(a0)
+	clr.l	Obj_VelX(a0)
+	clr.l	Obj_VelY(a0)
 	bra.b	loc_0221FA
 loc_0221BA:
 	move.w	$8(a1),-(a7)
@@ -40671,9 +40675,9 @@ loc_0221EE:
 loc_0221F0:
 	lsl.l	#$8,d1
 loc_0221F2:
-	move.l	d1,$C(a0)
+	move.l	d1,Obj_VelX(a0)
 loc_0221F6:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_0221FA:
 	move.b	#$88,$2D(a0)
 loc_022200:
@@ -40704,8 +40708,8 @@ loc_022220:
 	neg.l	d0
 	lsl.l	#$8,d0
 	lsl.l	#$8,d1
-	add.l	d0,$10(a0)
-	add.l	d1,$C(a0)
+	add.l	d0,Obj_VelY(a0)
+	add.l	d1,Obj_VelX(a0)
 loc_022252:
 	cmpi.b	#$14,$29(a0)
 	bcc.b	loc_02226A
@@ -40716,7 +40720,7 @@ loc_022252:
 loc_02226A:
 	move.w	#$80,d0
 loc_02226E:
-	tst.w	$C(a0)
+	tst.w	Obj_VelX(a0)
 loc_022272:
 	bmi.b	loc_022284
 loc_022274:
@@ -40733,11 +40737,11 @@ loc_022284:
 	bcs.b	loc_022296
 	move.w	d0,Obj_X(a0)
 loc_022292:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_022296:
 	move.w	#$80,d0
 loc_02229A:
-	tst.w	$10(a0)
+	tst.w	Obj_VelY(a0)
 loc_02229E:
 	bmi.b	loc_0222B0
 loc_0222A0:
@@ -40754,7 +40758,7 @@ loc_0222B0:
 	bcs.b	loc_0222C2
 	move.w	d0,Obj_Y(a0)
 loc_0222BE:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0222C2:
 	bsr.w	sub_0223AA
 loc_0222C6:
@@ -40924,7 +40928,7 @@ loc_022488:
 loc_02248C:
 	ori.b	#$22,Obj_Flags(a0)
 loc_022492:
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_022498:
 	movea.l	Obj_State(a0),a2
 loc_02249C:
@@ -41271,7 +41275,7 @@ loc_022E0C:
 	lea	ObjData_023B4E(pc),a1
 	jsr	(Object_LoadTemplate).l
 	move.b	#$10,$35(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.w	#$18,$54(a0)
 	ori.b	#$6A,Obj_Flags(a0)
 	move.w	d6,$1E(a0)
@@ -41280,7 +41284,7 @@ loc_022E0C:
 	lea	ObjData_023B7E(pc),a1
 	jsr	(Object_LoadTemplate).l
 	ori.b	#$6A,Obj_Flags(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.b	#$52,$36(a0)
 	move.w	#$3F,$54(a0)
 	move.w	#$65,$58(a0)
@@ -41290,7 +41294,7 @@ loc_022E0C:
 	lea	ObjData_023B8E(pc),a1
 	jsr	(Object_LoadTemplate).l
 	ori.b	#$6A,Obj_Flags(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.b	#$4C,$36(a0)
 	move.w	#$9,$54(a0)
 	move.w	#$65,$58(a0)
@@ -41311,7 +41315,7 @@ loc_022E0C:
 	lea	$60(a0),a0
 	lea	ObjData_023B9E(pc),a1
 	jsr	(Object_LoadTemplate).l
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.b	#$10,$35(a0)
 	ori.b	#$6A,Obj_Flags(a0)
 	move.w	#$6,$56(a0)
@@ -41359,7 +41363,7 @@ loc_022F1E:
 sub_02306A:
 	jsr	(sub_01AF0E).l
 loc_023070:
-	move.l	$10(a0),d0
+	move.l	Obj_VelY(a0),d0
 loc_023074:
 	add.l	d0,d0
 loc_023076:
@@ -41375,7 +41379,7 @@ loc_023084:
 loc_023088:
 	jsr	(sub_01B048).l
 loc_02308E:
-	tst.l	$10(a0)
+	tst.l	Obj_VelY(a0)
 loc_023092:
 	beq.b	loc_0230EC
 	tst.b	$5E(a0)
@@ -42398,27 +42402,27 @@ loc_024DFA:
 	lea	ObjData_025940(pc),a1
 	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	ori.b	#$2A,Obj_Flags(a0)
 	move.w	#$378,(a0)
 	lea	$60(a0),a0
 	lea	ObjData_025950(pc),a1
 	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	ori.b	#$2A,Obj_Flags(a0)
 	move.w	#$37C,(a0)
 	lea	$60(a0),a0
 	lea	ObjData_025960(pc),a1
 	jsr	(Object_LoadTemplate).l
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	ori.b	#$2A,Obj_Flags(a0)
 	move.w	#$384,(a0)
 	lea	$60(a0),a0
 	lea	ObjData_025970(pc),a1
 	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.b	#$3,$36(a0)
 	ori.b	#$2A,Obj_Flags(a0)
 	move.w	#$380,(a0)
@@ -42426,7 +42430,7 @@ loc_024DFA:
 	lea	ObjData_025970(pc),a1
 	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.b	#$4,$36(a0)
 	ori.b	#$2A,Obj_Flags(a0)
 	move.w	#$380,(a0)
@@ -43408,7 +43412,7 @@ loc_0260B4:
 	jsr	(Object_LoadTemplate).l
 	clr.l	$1C(a0)
 	ori.b	#$2A,Obj_Flags(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.w	#$1,$54(a0)
 	move.w	#$364,(a0)
 	lea	$60(a0),a0
@@ -43416,14 +43420,14 @@ loc_0260B4:
 	jsr	(Object_LoadTemplate).l
 	clr.l	$1C(a0)
 	ori.b	#$2A,Obj_Flags(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.w	#$1,$54(a0)
 	move.w	#$364,(a0)
 	lea	$60(a0),a0
 	lea	ObjData_02690A(pc),a1
 	jsr	(Object_LoadTemplate).l
 	ori.b	#$2A,Obj_Flags(a0)
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	move.w	#$3,$54(a0)
 	move.w	#$36C,(a0)
 	clr.l	$60(a0)
@@ -43487,7 +43491,7 @@ loc_0261C2:
 	lsl.w	#$2,d0
 	lea	dat_026364(pc),a1
 	movem.w	(a1,d0.w),d0-d1
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 	move.b	d1,$5C(a0)
 loc_0261EE:
 	subq.b	#$1,$5C(a0)
@@ -43536,7 +43540,7 @@ loc_02625C:
 	beq.b	loc_0262B8
 	cmpi.b	#$1,$2A(a0)
 	bne.b	loc_02628A
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 	beq.b	loc_0262B4
 	bpl.b	loc_026282
 	addi.l	#$4000,d0
@@ -43545,7 +43549,7 @@ loc_026282:
 	subi.l	#$4000,d0
 	bra.b	loc_0262B4
 loc_02628A:
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 	cmpi.b	#$2,$2A(a0)
 	bne.b	loc_0262A6
 	cmpi.l	#$FFFF0000,d0
@@ -43557,7 +43561,7 @@ loc_0262A6:
 	bge.b	loc_0262B4
 	addi.l	#$4000,d0
 loc_0262B4:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 loc_0262B8:
 	lea	ObjData_02683E(pc),a3
 loc_0262BC:
@@ -43955,7 +43959,7 @@ loc_026814:
 	movem.w	Obj_State(a0),d1
 	lsl.l	#$8,d1
 	add.l	d1,d0
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 	jmp	(sub_01AF0E).l
 loc_026828:
 	jmp	(sub_018238).l
@@ -44181,7 +44185,7 @@ loc_026EE0:
 loc_026EE6:
 	ori.b	#$2E,Obj_Flags(a0)
 loc_026EEC:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_026EF2:
 	clr.b	Obj_State(a0)
 loc_026EF6:
@@ -44197,7 +44201,7 @@ loc_026F08:
 loc_026F0E:
 	ori.b	#$2E,Obj_Flags(a0)
 loc_026F14:
-	move.b	#$80,$22(a0)
+	move.b	#$80,Obj_TileAttr(a0)
 loc_026F1A:
 	clr.b	Obj_State(a0)
 loc_026F1E:
@@ -44690,7 +44694,7 @@ loc_027480:
 loc_027486:
 	beq.b	loc_0274A2
 loc_027488:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$21BDA,Obj_AnimPtr(a0)
@@ -45093,7 +45097,7 @@ loc_02795A:
 	beq.w	loc_02799E
 loc_02795E:
 	move.b	#$20,$37(a0)
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$28070,Obj_AnimPtr(a0)
 	bclr.b	#$2,Obj_Flags(a0)
@@ -45712,7 +45716,7 @@ loc_028878:
 loc_02887C:
 	jsr	(Object_LoadTemplate).l
 loc_028882:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_028888:
 	move.w	#$404,(a0)
 loc_02888C:
@@ -45750,13 +45754,13 @@ loc_0288D0:
 loc_0288D6:
 	beq.b	loc_0288DC
 loc_0288D8:
-	clr.l	$C(a0)
+	clr.l	Obj_VelX(a0)
 loc_0288DC:
 	btst.b	#$1,$56(a0)
 loc_0288E2:
 	beq.b	loc_0288E8
 loc_0288E4:
-	clr.l	$10(a0)
+	clr.l	Obj_VelY(a0)
 loc_0288E8:
 	subq.b	#$1,$2B(a0)
 loc_0288EC:
@@ -45802,7 +45806,7 @@ loc_02893A:
 loc_02893E:
 	jmp	(Object_RunAnimScript).l
 loc_028944:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	lea	(ObjData_015EBA).l,a1
 	jmp	(Object_RunAnimScript).l
 loc_028956:
@@ -46041,7 +46045,7 @@ loc_028E6C:
 loc_028E72:
 	move.b	$1A(a0),$35(a0)
 loc_028E78:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_028E7E:
 	move.w	#$3FC,(a0)
 loc_028E82:
@@ -46136,7 +46140,7 @@ loc_028F3E:
 	moveq	#$0,d0
 	cmpi.b	#$1,$3E(a0)
 	bne.b	loc_028F54
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	bra.b	loc_028F60
 loc_028F54:
 	addq.w	#$4,d0
@@ -46190,7 +46194,7 @@ loc_029096:
 loc_02909C:
 	move.b	#$1,$2A(a0)
 loc_0290A2:
-	move.b	#$60,$22(a0)
+	move.b	#$60,Obj_TileAttr(a0)
 loc_0290A8:
 	move.w	(ram_C328).w,d1
 loc_0290AC:
@@ -46344,7 +46348,7 @@ loc_029344:
 loc_029348:
 	jsr	(Object_LoadTemplate).l
 loc_02934E:
-	move.b	#$0,$22(a0)
+	move.b	#$0,Obj_TileAttr(a0)
 loc_029354:
 	move.b	#$10,$35(a0)
 loc_02935A:
@@ -46940,7 +46944,7 @@ loc_029BD4:
 	lsl.w	#$2,d0
 	lea	dat_029CCE(pc),a1
 	movem.w	(a1,d0.w),d0-d1
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 	move.b	d1,$2D(a0)
 loc_029C08:
 	subq.b	#$1,$2D(a0)
@@ -46954,7 +46958,7 @@ loc_029C0C:
 	neg.w	d1
 loc_029C20:
 	move.b	d0,Obj_State(a0)
-	move.l	$C(a0),d0
+	move.l	Obj_VelX(a0),d0
 	cmpi.b	#$2,Obj_State(a0)
 	bne.b	loc_029C40
 	cmpi.l	#$FFFE0000,d0
@@ -46966,11 +46970,11 @@ loc_029C40:
 	bge.b	loc_029C4E
 	addi.l	#$1800,d0
 loc_029C4E:
-	move.l	d0,$C(a0)
+	move.l	d0,Obj_VelX(a0)
 	tst.l	d0
 	bne.b	loc_029C94
 	move.b	#$4,$37(a0)
-	move.l	$10(a0),$50(a0)
+	move.l	Obj_VelY(a0),$50(a0)
 	move.b	(RNG_Seed).w,d0
 	andi.w	#$3,d0
 	tst.b	d0
@@ -47436,10 +47440,10 @@ loc_02A776:
 	tst.b	$44(a0)
 	beq.b	loc_02A7A4
 	subq.b	#$1,$44(a0)
-	move.b	#$0,$22(a0)
+	move.b	#$0,Obj_TileAttr(a0)
 	eori.b	#$1,$58(a0)
 	beq.b	loc_02A7A4
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 	moveq	#-$44,d0
 	jsr	(sub_00A068).l
 loc_02A7A4:
@@ -47546,12 +47550,12 @@ loc_02A8FE:
 loc_02A904:
 	beq.w	loc_02A9CA
 loc_02A908:
-	clr.b	$22(a0)
+	clr.b	Obj_TileAttr(a0)
 loc_02A90C:
 	tst.b	$44(a1)
 loc_02A910:
 	beq.b	loc_02A918
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_02A918:
 	move.w	$4(a1),d0
 loc_02A91C:
@@ -47682,12 +47686,12 @@ loc_02AA02:
 loc_02AA08:
 	beq.w	loc_02AAD4
 loc_02AA0C:
-	clr.b	$22(a0)
+	clr.b	Obj_TileAttr(a0)
 loc_02AA10:
 	tst.b	$44(a1)
 loc_02AA14:
 	beq.b	loc_02AA1C
-	move.b	#$20,$22(a0)
+	move.b	#$20,Obj_TileAttr(a0)
 loc_02AA1C:
 	move.w	$4(a1),d0
 loc_02AA20:
@@ -48478,7 +48482,7 @@ loc_02BB2E:
 loc_02BB34:
 	lea	(ram_F2A0).w,a1
 loc_02BB38:
-	movem.l	$C(a0),d0-d1
+	movem.l	Obj_VelX(a0),d0-d1
 loc_02BB3E:
 	movem.l	d0-d1,$C(a1)
 loc_02BB44:
@@ -48539,7 +48543,7 @@ loc_02BD26:
 loc_02BD2C:
 	lea	(ram_F2A0).w,a1
 loc_02BD30:
-	movem.l	$C(a0),d0-d1
+	movem.l	Obj_VelX(a0),d0-d1
 loc_02BD36:
 	movem.l	d0-d1,$C(a1)
 loc_02BD3C:
@@ -48575,7 +48579,7 @@ loc_02BD8E:
 loc_02BD94:
 	lea	(ram_F2A0).w,a1
 loc_02BD98:
-	movem.l	$C(a0),d0-d1
+	movem.l	Obj_VelX(a0),d0-d1
 loc_02BD9E:
 	movem.l	d0-d1,$C(a1)
 loc_02BDA4:
@@ -48656,7 +48660,7 @@ loc_02BE38:
 loc_02BE3C:
 	movem.w	(a1,d0.w),d0-d1
 loc_02BE42:
-	move.l	d0,$10(a0)
+	move.l	d0,Obj_VelY(a0)
 loc_02BE46:
 	move.b	d1,$52(a0)
 loc_02BE4A:
@@ -49217,7 +49221,7 @@ loc_02C550:
 loc_02C554:
 	jmp	(sub_01AF0E).l
 loc_02C55A:
-	move.b	#$40,$22(a0)
+	move.b	#$40,Obj_TileAttr(a0)
 	move.w	#$23C,(a0)
 	lea	(ObjData_021BDA).l,a1
 	jmp	(Object_RunAnimScript).l

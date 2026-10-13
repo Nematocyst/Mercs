@@ -351,7 +351,11 @@
     "28": "Obj_State",
     "2C": "Obj_Timer",
     "30": "Obj_AnimPtr",
-    "34": "Obj_AnimTimer"
+    "34": "Obj_AnimTimer",
+    "0C": "Obj_VelX",
+    "10": "Obj_VelY",
+    "22": "Obj_TileAttr",
+    "24": "Obj_SpriteSize"
   },
   "object_routines": [
     "1ADB0",

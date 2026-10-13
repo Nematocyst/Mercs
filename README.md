@@ -103,9 +103,16 @@ instruction that loads `a0` with something else (15,410 instructions). Evidence 
 | `$03` b | `Obj_Flags2` | mostly `btst` |
 | `$04` l | `Obj_X` | 16.16 fixed point; RIGHT/LEFT move it, fraction at `+$06` |
 | `$08` l | `Obj_Y` | 16.16 fixed point; DOWN moves it, fraction at `+$0A` |
+| `$0C` l | `Obj_VelX` | 16.16; RIGHT sets `$00013333`, LEFT `$FFFECCCD`, cleared on release; `Obj_X` changes by it each frame |
+| `$10` l | `Obj_VelY` | same, DOWN sets `$00013333` |
 | `$14` l | `Obj_FramePtr` | `movea.l $14(a0),a1 ; move.w 2(a1),$24(a0)` |
+| `$22` b | `Obj_TileAttr` | only `$20/$40/$60/$C0`: the VDP tile-attribute bits for palette and priority; loaded from tables |
+| `$24` w | `Obj_SpriteSize` | `move.w 2(a1),$24(a0)` from the frame definition; runtime values `1..7` are the VDP sprite-size nibble |
 | `$26` w | `Obj_SortKey` | pushed with the object address into the sprite list |
 | `$28` w | `Obj_State` | per-object state set to constants and stepped |
 | `$2C` w | `Obj_Timer` | `subq.w #1,$2C(a0)` countdowns |
 | `$30` l | `Obj_AnimPtr` | set by `Object_LoadTemplate`, read by `Object_RunAnimScript` |
 | `$34` b | `Obj_AnimTimer` | set by the animation script |
+
+`tools/emu/field_profile.py` prints, per field, the immediates the code writes and how the field behaves
+across all active objects at runtime (distinct values, counts down/up by 1, stays put).
