@@ -173,3 +173,18 @@ and emits `dc.w` / `dc.l`:
 
 `tools/emu/boot_state.py` writes a scratch ROM (checksum fixed) that boots straight into any `Game_State`,
 which is how the screens of states that need long play to reach were captured.
+
+### Game state graph
+
+Edges are the immediates each handler writes to `Game_NextState` (gameplay, mode select and the hub
+decide dynamically, so they show no edges here):
+
+    04 SegaLogo -> 14 Title -> 18 Demo -> 04            14 Title -> 38 ModeSelect
+    10 RoundStart -> 0C Gameplay | 28 Intro (Arcade) | 34 MissionMap (Original)
+    48 OrigIntro -> 34 MissionMap -> 0C Gameplay
+    20 MissionComplete -> 24 NextMission -> 0C Gameplay
+    20 MissionComplete -> 2C Ending_A -> 30 Ending_B -> 3C HighScores -> 04
+    40 Ending2_A -> 44 Ending2_B -> 3C HighScores
+    4C GameOver -> 04          1C Options -> 38 ModeSelect
+
+The `Ending*` names are medium-low confidence: they rest on the graph, not on a verified screen.
