@@ -112,7 +112,8 @@
     "ObjType_9C/A0/A3/A6_EnemySoldier": "medium-low - Mission 3 types whose crops show a grey-uniformed rifle soldier",
     "ObjType_26/38_EnterDoor": "medium - Mission 5; crops show a green gate with an ENTER sign and a flash",
     "ObjType_98_BigTank": "medium-low - Mission 6, one spawn: a large grey tank with a gun crew (possibly a boss)",
-    "ObjType_A4/A5_EnemySoldier": "medium-low - grey-uniformed soldiers in Mission 5"
+    "ObjType_A4/A5_EnemySoldier": "medium-low - grey-uniformed soldiers in Mission 5",
+    "ObjType_5F_EnemyGrenadier": "medium - Original mode; 4 spawns, crop shows an orange-uniformed soldier with a raised dark grenade"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -225,5 +226,6 @@
   "013000": "ObjType_38_EnterDoor",
   "021986": "ObjType_98_BigTank",
   "01C844": "ObjType_A4_EnemySoldier",
-  "01C8DE": "ObjType_A5_EnemySoldier"
+  "01C8DE": "ObjType_A5_EnemySoldier",
+  "012476": "ObjType_5F_EnemyGrenadier"
 }

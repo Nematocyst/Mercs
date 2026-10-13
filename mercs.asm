@@ -25521,7 +25521,7 @@ loc_012458:
 	bra.w	loc_0124F8
 	dc.b	$61,$00,$1D,$E2,$67,$00,$01,$36,$31,$68,$00,$2C
 	dc.b	$00,$18,$60,$00,$D7,$7A
-ObjType_5F:
+ObjType_5F_EnemyGrenadier:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01247C:
 	bne.b	loc_012498
@@ -28585,7 +28585,7 @@ ObjectTypeTable:
 	dc.l	ObjType_50,ObjType_51,ObjType_52,ObjType_53
 	dc.l	ObjType_54,ObjType_55,ObjType_56,ObjType_57
 	dc.l	ObjType_58,ObjType_59,ObjType_5A,ObjType_5B
-	dc.l	ObjType_5C,ObjType_5D,ObjType_5E,ObjType_5F
+	dc.l	ObjType_5C,ObjType_5D,ObjType_5E,ObjType_5F_EnemyGrenadier
 	dc.l	ObjType_60,ObjType_61,ObjType_62,ObjType_63
 	dc.l	ObjType_64,ObjType_65,ObjType_66,ObjType_67
 	dc.l	ObjType_68,ObjType_69,ObjType_6A,ObjType_6B

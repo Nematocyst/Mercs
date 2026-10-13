@@ -1,8 +1,10 @@
 """Play Mission 1 and record every object type the game itself spawns, with a crop of the screen
 around it a few frames after it appears.
 
-    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames] [god]
+    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames] [god] [original]
 
+`original` chooses ORIGINAL MODE in the menu and keeps playing across missions (mission map, mission complete...) until
+the game returns to the logo or title; otherwise the run stops when the first mission ends.
 `god` keeps Player_Invuln_Timer ($C5C2) high every frame, so the player is never hit and whole missions can be played.
 
 Writes spawns.tsv (type, first frame, array, X, Y, count) and spawn_sheet_N.png contact sheets.
@@ -17,26 +19,40 @@ from PIL import Image, ImageDraw
 rom = sys.argv[1] if len(sys.argv) > 1 else 'mercs.bin'
 out = sys.argv[2] if len(sys.argv) > 2 else '.'
 frames = int(sys.argv[3]) if len(sys.argv) > 3 else 6000
-god = len(sys.argv) > 4 and sys.argv[4] == 'god'
+god = 'god' in sys.argv[4:]
+original = 'original' in sys.argv[4:]
 os.makedirs(out, exist_ok=True)
 g = harness.Game(rom)
+entered38 = None
 for f in range(9000):
     st = g.w(0xFFFE04)
     if st == 0x0C and g.frame > 0:
         break
+    if original and st == 0x38:
+        entered38 = f if entered38 is None else entered38
+        k = f - entered38
+        g.step(1, DOWN=(150 <= k < 154), START=(190 <= k < 196))     # cursor to ORIGINAL MODE, then Start
+        continue
     g.step(1, START=((f % 100) < 6 and st not in (0, 4, 8)))
 g.step(200)
 ARR = [('A', 0xE000, 0x40, 52), ('B', 0xED00, 0x60, 25), ('C', 0xF660, 0x40, 22)]
 prev = {}; first = {}; count = collections.Counter(); pending = []
-random.seed(5); pad = {}
+random.seed(5); pad = {}; had_play = False
 for fr in range(frames):
     if fr % 15 == 0:
         pad = {'UP': random.random() < 0.8, 'LEFT': random.random() < 0.3, 'RIGHT': random.random() < 0.3,
                'DOWN': random.random() < 0.1, 'B': random.random() < 0.7, 'C': random.random() < 0.4, 'A': random.random() < 0.2}
     if god:                                   # never hit: a nonzero Player_Invuln_Timer suppresses Collision_HitPlayer
         g.env._ram[0xC5C2 ^ 1] = 0x40; g.env._ram[0xC5C3 ^ 1] = 0
+    stt = g.w(0xFFFE04)
+    if original and stt != 0x0C:                  # between missions: tap Start on every screen
+        if stt in (0x04, 0x14) and had_play:
+            break
+        g.step(1, START=((fr % 90) < 6 and stt not in (0, 4, 8)))
+        continue
+    had_play = True
     g.step(1, **pad)
-    if g.w(0xFFFE04) != 0x0C:
+    if g.w(0xFFFE04) != 0x0C and not original:
         break
     for nm, base, stride, n in ARR:
         for i in range(n):

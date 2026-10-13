@@ -235,3 +235,11 @@ frames). Over Missions 1-7 the game spawns only **74 distinct object types** of 
 list has saturated. The other ~200 handlers are not created in Arcade play: probably children made inside
 handlers of those types, Original-mode content or unused. New names from this pass: `ObjType_26/38_EnterDoor`
 (building entrances with an ENTER sign, Mission 5), `ObjType_98_BigTank` (Mission 6), `ObjType_A4/A5_EnemySoldier`.
+
+### Original mode
+
+`watch_spawns.py ... god original` chooses ORIGINAL MODE in the menu and keeps playing across screens
+(`tools/emu/spawns_original_mission1.tsv`). Original Mission 1 spawns the same types as Arcade Mission 1 plus
+`5D` (an invisible trigger on the beach) and `5F` (`ObjType_5F_EnemyGrenadier`). The random autopilot then stayed on
+that one mission for 150,000 frames without finishing it, so later Original missions were not reached: that mode
+needs a smarter driver (its levels do not simply scroll upward).
