@@ -61,7 +61,10 @@
     "Camera_Y_Frac": "high - fractional half of the camera Y (the integer is Camera_Y at $C516)",
     "GameState_MissionMap": "high - state 34, the 'MISSION 1 / COAST' island map; only reached in Original mode",
     "stack": "$FFFDC0..$FFFDFF is the stack (top $FFFE00): the VBlank handler's movem.l pushes there. Not variables.",
-    "ram_C328 (unnamed)": "set to 7 when the Original-mode intro ends; 0 throughout Arcade; 1 at the start of state 10 and stepped by 7 there; compared with $16 in state 40; tested by object handlers. A selection index with several roles - not named yet."
+    "ram_C328 (unnamed)": "set to 7 when the Original-mode intro ends; 0 throughout Arcade; 1 at the start of state 10 and stepped by 7 there; compared with $16 in state 40; tested by object handlers. A selection index with several roles - not named yet.",
+    "GameState_RoundStart/MissionComplete/HighScores": "high - screenshots after booting straight into states 10, 20, 3C (tools/emu/boot_state.py)",
+    "GameState_GameOver": "medium - state 4C shows 'TRY' then the flow resets to the SEGA logo and title",
+    "states 24 2C 30 40 44": "not named: 24 runs into Mission 2 gameplay; 2C/30/40/44 show only flat colour or one sprite without their usual context (40 -> 44 happens by itself)"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -98,5 +101,9 @@
   "FFFFE008": "Player1_Y",
   "FFFFC51A": "Camera_VelY",
   "FFFFC514": "Camera_Y_Frac",
-  "005D48": "GameState_MissionMap"
+  "005D48": "GameState_MissionMap",
+  "000650": "GameState_RoundStart",
+  "002D80": "GameState_MissionComplete",
+  "00666A": "GameState_HighScores",
+  "006AAE": "GameState_GameOver"
 }

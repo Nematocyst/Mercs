@@ -840,11 +840,11 @@ loc_0003FC:
 loc_0003FE:
 	bra.b	MainLoop
 GameStateTable:
-	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,sub_000650
-	dc.l	GameState_Title,GameState_Demo,GameState_Options,sub_002D80
+	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,GameState_RoundStart
+	dc.l	GameState_Title,GameState_Demo,GameState_Options,GameState_MissionComplete
 	dc.l	sub_00440E,GameState_Intro,sub_0050FC,sub_00578C
-	dc.l	GameState_MissionMap,GameState_ModeSelect,sub_00666A,sub_006BD2
-	dc.l	sub_006FDE,GameState_OriginalIntro,sub_006AAE
+	dc.l	GameState_MissionMap,GameState_ModeSelect,GameState_HighScores,sub_006BD2
+	dc.l	sub_006FDE,GameState_OriginalIntro,GameState_GameOver
 dat_00044C:
 	dc.b	$00,$20,$00,$00
 	dc.b	$00,$10,$00,$00,$00,$05,$00,$00,$00,$04,$00,$00,$00,$03,$00,$00
@@ -1016,7 +1016,7 @@ dat_000610:
 	dc.b	$00,$FF,$FF,$FF,$00,$0F,$FF,$FF,$00,$00,$FF,$FF,$00,$00,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-sub_000650:
+GameState_RoundStart:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -4093,7 +4093,7 @@ loc_002D6C:
 	move.b	d0,(ram_FE5E).w
 	move.b	d1,(Joy1_Held).w
 	bra.w	loc_001A3E
-sub_002D80:
+GameState_MissionComplete:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -7903,7 +7903,7 @@ dat_00662A:
 	dc.b	'ARCADE   MODE',0
 	dc.b	'ORIGINAL MODE',0
 	dc.b	$4F,$50,$54,$49,$4F,$4E,$53,$00
-sub_00666A:
+GameState_HighScores:
 	move.w	#$2700,sr
 loc_00666E:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -8334,7 +8334,7 @@ dat_006A92:
 	dc.b	$A3,$18,$A4,$98,$A6,$18,$A7,$98,$A9,$18,$AA,$98,$AC,$18
 dat_006AA0:
 	dc.b	$A3,$08,$A4,$88,$A6,$08,$A7,$88,$A9,$08,$AA,$88,$AC,$08
-sub_006AAE:
+GameState_GameOver:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0

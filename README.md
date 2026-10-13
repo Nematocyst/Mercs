@@ -46,6 +46,11 @@ offers `Game(rom)` with `step(n, START=True, ...)`, `b/w/l(addr)` RAM reads and 
 | `28` | intro story text |
 | `0C` | gameplay (Mission 1) |
 | `18` | attract-mode demo |
+| `10` | round-start card ("ROUND 1") |
+| `20` | mission-complete bonus screen |
+| `3C` | high scores ("BEST FIGHTERS") |
+| `4C` | game over ("TRY"), then back to the SEGA logo (medium confidence) |
+| `1C`, `48`, `34` | options, Original-mode intro, mission map |
 
 ## PC trace (`tools/trace/`)
 
@@ -165,3 +170,6 @@ and emits `dc.w` / `dc.l`:
   top nibble 0), at least 8 distinct words and 60% with a blue/green part. `ColorList_` is the
   same pattern with 30-60%: interleaved (CRAM offset, colour) pairs. The code copies palettes into a RAM
   buffer and DMAs them, so they are not found by CRAM commands.
+
+`tools/emu/boot_state.py` writes a scratch ROM (checksum fixed) that boots straight into any `Game_State`,
+which is how the screens of states that need long play to reach were captured.
