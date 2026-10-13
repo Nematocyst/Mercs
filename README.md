@@ -240,16 +240,38 @@ handlers of those types, Original-mode content or unused. New names from this pa
 
 `watch_spawns.py ... god original` chooses ORIGINAL MODE in the menu and keeps playing across screens
 (`tools/emu/spawns_original_mission1.tsv`). Original Mission 1 spawns the same types as Arcade Mission 1 plus
-`5D` (an invisible trigger on the beach) and `5F` (`ObjType_5F_EnemyGrenadier`). The random autopilot then stayed on
-that one mission for 150,000 frames without finishing it, so later Original missions were not reached: that mode
-needs a smarter driver (its levels do not simply scroll upward).
+`5D` (an invisible trigger on the beach) and `5F` (`ObjType_5F_EnemyGrenadier`). Its levels do not simply scroll upward,
+so the random autopilot stalls; the `explore` driver below solves that.
 
-### Explorer driver result
+### Explorer driver (`watch_spawns.py ... god original explore`)
 
-`watch_spawns.py ... god original explore` gets past the point where the random walker stalls in Original Mission 1
-(camera Y `$03AF`) and reaches `$024F`, adding types `16`, `84`, `86` (two spawn offscreen above the view) and a soldier
-behind sandbags (`8A`). It then stays in the same 60 positions for 175,000 frames while the game keeps running: the
-level holds the camera until some condition is met (not just killing nearby soldiers - the score stays 650). A
-goal-aware driver (find what releases the scroll, e.g. by watching `Camera_VelY` writers with `mdtrace -watch`) is the
-next step. Crops are taken at an approximate position and can show a neighbouring object: names from them are
-medium confidence at best (`ObjType_8A` was misread once).
+Every 90 frames it probes nine directions from a saved state and keeps the one reaching the rarest position; it also
+holds fire (B) and pulses grenades (C, which break fences and are needed for the Mission 1 boss), and after about
+3,600 frames without upward progress runs `gap_sweep()`: run to the end of the wall, then walk back in short hops
+trying UP until a gap (fence / sandbag line) lets the camera advance. With that it finishes Original Mission 1
+(boss included), enters Mission 2, passes the tank fight and the first tent, and surveys 31 object types in Mission 1.
+Handy environment options: `LOAD_STATE` (start from a savestate), `SAVE_STATE` (write one at the end), `SNAP_EVERY=n`
+(screenshots) and `RAM_RANGE=from,to,step` (RAM dumps + screenshots for diffing around events).
+
+### Hidden round select (`tools/emu/round_select.py`)
+
+Setting `$FFFE58` non-zero before a new game starts makes state `$08` go to state `$10` (a "ROUND n" menu) instead of
+the mission (the original trick: hold Down+Left+A+B+C on pad 2 at the Sega logo; see TCRF "Mercs (Genesis)").
+LEFT/RIGHT change the round, START starts it. In Original mode round 1-7 are internal stages 7-13.
+`round_select.py rom.bin ROUND out.state` saves a savestate at the start of any round.
+
+### Original mode party and tents
+
+Original mode plays a party of five mercs in a fixed order (Rifle, Burner, Launcher, Laser, Homing); tents (blinking
+ENTER sign) shops hand out the next one. Findings: `Current_Merc` (`$C36E`, word = 2 x party slot) is written only by the
+party screen (`sub_00BC28`) and level start; `Party_Last_Offset` (`$C3C6`) = 2 x (party size - 1); `Merc_Flags`
+(`$C3B8`..) are *dead* flags per slot; `Merc_Medals` (`$C350`, BCD, copied into per-slot records at
+`$C370 + 14*slot`); weapon id `$C352` (= merc x 4) drives the fire jump table at `loc_00DEA2`. The party screen and
+shop panels are drawn from per-merc tables (`dat_00CA6E`, `CA2A`, `CCFA`, `CD0E`, `CD22`, `CD36`, `842E`,
+`ColorList_00BFB0`) and from a contiguous five-row script at `dat_00BE6C` (0x38 bytes per slot, name pointer at +4).
+
+### Randomized Mode (`tools/mod/`)
+
+A separate patch (the disassembly and ROM stay untouched) that shuffles the party order in Original mode each new game:
+random starting merc and random join order at the tents. See `tools/mod/README.md`; `tools/mod/check.py` is its
+regression check and `tools/mod/mercs_randomized.ips` the prebuilt patch.

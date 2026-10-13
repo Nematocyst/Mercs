@@ -23,11 +23,25 @@ is unchanged.
   lists the 21 hook sites (each asserts the original bytes, so it only applies to the right ROM).
 
 ## Testing
+`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied in Original mode, Arcade unaffected).
 `test_start.py` boots a ROM into Original Mission 1 and prints the shuffle (`DELAY=n` varies the menu dwell time);
 `tools/emu/watch_spawns.py` (`LOAD_STATE`, `RAM_RANGE`, `explore`) drives the game to the Mission 2 tent.
 
+## Behaviour notes
+* It is always on in Original mode; there is no separate menu entry. Arcade mode is untouched (`check.py` verifies this).
+* The shuffle happens once per new game; continues keep it. The randomness comes from how long you sit in the menus, so
+  an emulator that replays identical inputs will get the same order every time.
+
+## Verified (emulator)
+* Starting merc varies; weapon id, sprite colours and shop panels follow it.
+* Tents: Mission 2 end to end, and rounds 4 and 6 via the round select - join header, shop panel and carrier panels
+  follow the shuffle.
+* Death: the dead slot is greyed on the party screen with the right names, and the replacement gets the right weapon
+  id and colours.
+
 ## Known gaps
-* The "JOINED YOUR PARTY" message remap is untested in play (the line never showed up in my emulator runs).
-* Portrait palettes on the party screen follow the slot, not the merc, so a shuffled portrait can look slightly off.
-* Tents were exercised in Mission 2 (full), and via the hidden round select (`tools/emu/round_select.py`) in rounds 4 and 6: join header,
-  shop panel and carrier panels all followed the shuffle. Deaths were checked in round 6 (dead slot greyed on the party screen with the right names, and picking a replacement set the right weapon id and sprite colours). Reviving with the tent item, rounds 3/5/7 tents and the ending are untested.
+* The "X JOINED YOUR PARTY" line remap is untested in play (the line never appeared in any run, original ROM included).
+* Buying the tent's revive item works (medals are deducted), but the actual revive on the carrier's death was not
+  observed; the revive code is slot-based like the dead flags, so it should be fine.
+* Party-screen portrait palettes follow the slot, not the merc, so a shuffled portrait can look slightly off.
+* Rounds 3, 5 and 7 tents, and the ending, are untested. Not tried on real hardware.
