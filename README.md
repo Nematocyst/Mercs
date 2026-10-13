@@ -64,3 +64,11 @@ Build and run (Musashi is a separate checkout, not part of this repo):
 * An autopilot taps Start and mashes buttons; `-types N` snapshots gameplay and forces each of the
   292 object types onto a free slot for N frames. A run that jumps into data (odd PC, `$200`,
   zero word, `ori.b #imm,Dn`) is stopped and the instructions just before it are discarded.
+
+### Finding code the game does not reach
+
+`tools/candidates.py` lists plausible function starts (after an `rts`, >=12 clean instructions, no
+junk opcodes, >=2 hardware/RAM/branch refs) in space neither the disassembler nor the trace has
+touched. `mdtrace ROM 5000 out 1 -probe cands.txt` then calls each one from a gameplay snapshot
+with a return sentinel on the stack and reports `returned` / `running` / `derailed`; only those
+that do not derail go into `tools/hints.json` (`code`). The 35 found so far all ran cleanly.

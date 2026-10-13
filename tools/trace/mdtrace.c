@@ -32,7 +32,8 @@ static unsigned long frame_instr, total_instr;
 #define RING 32
 static uint8_t runcov[ROMSZ / 8];
 static uint8_t *curcov = cov;                      /* where the hook records: cov, or runcov in the type pass */
-static unsigned ring[RING]; static int ring_n, derail; static unsigned derail_pc;
+static unsigned ring[RING]; static int ring_n, derail, sentinel_hit; static unsigned derail_pc;
+#define SENTINEL 0x0FFFFEu
 
 static int bad_pc(unsigned pc) {
     if ((pc & 1) || pc >= ROMSZ || pc == 0x200) return 1;
@@ -50,6 +51,7 @@ void md_instr_hook(unsigned pc) {
     pc &= 0xFFFFFF;
     frame_instr++; total_instr++;
     if (derail) return;
+    if (pc == SENTINEL) { sentinel_hit = 1; m68k_end_timeslice(); return; }
     if (bad_pc(pc)) { derail = 1; derail_pc = pc; m68k_end_timeslice(); return; }
     if (!(curcov[pc >> 3] >> (pc & 7) & 1)) { curcov[pc >> 3] |= 1 << (pc & 7); ring[ring_n++ % RING] = pc; }
 }
@@ -150,11 +152,12 @@ int main(int argc, char **argv) {
     FILE *f = fopen(argv[1], "rb"); if (!f || fread(rom, 1, ROMSZ, f) != ROMSZ) { fprintf(stderr, "bad rom\n"); return 2; } fclose(f);
     long frames = atol(argv[2]); const char *pfx = argv[3];
     rng_state = argc > 4 ? (unsigned)atol(argv[4]) | 1 : 1;
-    int verbose = 0, type_frames = 0, type_max = 291;
+    int verbose = 0, type_frames = 0, type_max = 291; const char *probe_file = NULL;
     for (int i = 5; i < argc; i++) {
         if (!strcmp(argv[i], "-v")) verbose = 1;
         else if (!strcmp(argv[i], "-types") && i + 1 < argc) type_frames = atoi(argv[++i]);
         else if (!strcmp(argv[i], "-maxtype") && i + 1 < argc) type_max = atoi(argv[++i]);
+        else if (!strcmp(argv[i], "-probe") && i + 1 < argc) { probe_file = argv[++i]; type_frames = 1; }
     }
     m68k_init(); m68k_set_cpu_type(M68K_CPU_TYPE_68000); m68k_pulse_reset();
     unsigned last_state = 0xFFFF, entered = 0, mask = 0;
@@ -188,6 +191,25 @@ int main(int argc, char **argv) {
             printf("derailed at frame %ld (Game_State %02X) pc=%06X\n", fr, ramw(0xFE04), derail_pc);
             break;
         }
+    }
+    if (probe_file && have_snap) {
+        /* call each address as a subroutine with a return sentinel; report how it behaves */
+        FILE *pf = fopen(probe_file, "r"); unsigned addr;
+        while (pf && fscanf(pf, "%x", &addr) == 1) {
+            m68k_set_context(ctx0); memcpy(ram, ram0, sizeof ram); memcpy(zram, zram0, sizeof zram);
+            busreq = snap_busreq; vdp_reg1 = snap_reg1; derail = 0; sentinel_hit = 0; ring_n = 0;
+            memset(runcov, 0, sizeof runcov); curcov = runcov;
+            unsigned sp = m68k_get_reg(NULL, M68K_REG_SP) - 4;
+            m68k_set_reg(M68K_REG_SP, sp); m68k_write_memory_32(sp, SENTINEL);
+            m68k_set_reg(M68K_REG_PC, addr);
+            frame_instr = 0; unsigned long i0 = total_instr;
+            m68k_execute(200000);
+            long nd = 0; for (unsigned i = 0; i < sizeof runcov; i++) for (int b = 0; b < 8; b++) nd += (runcov[i] >> b) & 1;
+            printf("%06X %s instructions=%lu distinct=%ld\n", addr,
+                   sentinel_hit ? "returned" : derail ? "derailed" : "running", total_instr - i0, nd);
+            curcov = cov;
+        }
+        have_snap = 0;                       /* skip the type pass */
     }
     if (type_frames && have_snap) {
         /* force every object type onto a free slot of the first object array, run it, restore */
