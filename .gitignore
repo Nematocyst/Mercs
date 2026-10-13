@@ -9,3 +9,4 @@ build/
 *.o
 *.lst
 __pycache__/
+!README.md
