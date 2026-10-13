@@ -188,7 +188,7 @@ ram_C347	equ	$FFFFC347
 ram_C348	equ	$FFFFC348
 ram_C34A	equ	$FFFFC34A
 ram_C34C	equ	$FFFFC34C
-ram_C350	equ	$FFFFC350
+Merc_Medals	equ	$FFFFC350
 ram_C351	equ	$FFFFC351
 ram_C352	equ	$FFFFC352
 ram_C354	equ	$FFFFC354
@@ -2545,7 +2545,7 @@ loc_0016F8:
 sub_0016FA:
 	st.b	(ram_C354).w
 loc_0016FE:
-	move.w	#$3,(ram_C350).w
+	move.w	#$3,(Merc_Medals).w
 loc_001704:
 	move.w	#$20,(ram_C348).w
 loc_00170A:
@@ -2561,7 +2561,7 @@ loc_00171A:
 loc_00171E:
 	beq.b	loc_00173C
 loc_001720:
-	move.w	#$1,(ram_C350).w
+	move.w	#$1,(Merc_Medals).w
 loc_001726:
 	lea	(dat_001748).l,a1
 loc_00172C:
@@ -4260,7 +4260,7 @@ loc_002FBA:
 	bsr.w	sub_008A7C
 	clr.l	(ram_C67C).w
 	move.b	#$1,d1
-	move.w	(ram_C350).w,d0
+	move.w	(Merc_Medals).w,d0
 	beq.b	loc_003044
 	moveq	#$0,d6
 	addq.w	#$1,d6
@@ -4298,9 +4298,9 @@ loc_003064:
 loc_003084:
 	addq.w	#$4,(ram_C602).w
 	move.w	#$20,(Timer_C606).w
-	cmpi.w	#$3,(ram_C350).w
+	cmpi.w	#$3,(Merc_Medals).w
 	bcc.b	loc_0030B2
-	move.w	#$3,(ram_C350).w
+	move.w	#$3,(Merc_Medals).w
 	bset.b	#$3,(Flags_C5C0).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3E,d0
@@ -15813,7 +15813,7 @@ loc_00B714:
 loc_00B718:
 	move.w	(a2)+,(ram_C34A).w
 loc_00B71C:
-	move.w	(a2)+,(ram_C350).w
+	move.w	(a2)+,(Merc_Medals).w
 loc_00B720:
 	move.w	(a2)+,(ram_C3C2).w
 loc_00B724:
@@ -16129,7 +16129,7 @@ loc_00BA68:
 loc_00BA6C:
 	move.w	(ram_C34A).w,(a2)+
 loc_00BA70:
-	move.w	(ram_C350).w,(a2)+
+	move.w	(Merc_Medals).w,(a2)+
 loc_00BA74:
 	move.w	(ram_C3C2).w,(a2)+
 loc_00BA78:
@@ -18780,7 +18780,7 @@ sub_00D84E:
 loc_00D854:
 	beq.w	loc_00D0BA
 loc_00D858:
-	tst.w	(ram_C350).w
+	tst.w	(Merc_Medals).w
 loc_00D85C:
 	beq.w	loc_00D0BA
 loc_00D860:
@@ -22717,11 +22717,11 @@ loc_00FF36:
 loc_00FF3C:
 	move.w	(a1,d1.w),(ram_C5D2).w
 loc_00FF42:
-	cmpi.w	#$3,(ram_C350).w
+	cmpi.w	#$3,(Merc_Medals).w
 loc_00FF48:
 	bcc.b	loc_00FF50
 loc_00FF4A:
-	move.w	#$3,(ram_C350).w
+	move.w	#$3,(Merc_Medals).w
 loc_00FF50:
 	bsr.w	sub_00D914
 loc_00FF54:

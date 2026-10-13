@@ -116,7 +116,8 @@
   "ObjType_8A_EnemyTroop": "low - CORRECTED: Mission 5 crops showed a tank near the spawn, but in Original Mission 1 the same type shows an orange soldier behind sandbags; the crop is only a region around an approximate position, so the neighbour was misread. Treated as an enemy troop (counts: 36 in Mission 5).",
   "Current_Merc": "high - word = 2*merc slot (0 Rifle, 2 Burner), toggled in emulator by the Start party screen; written only by sub_00BC28 (party screen) and loc_00B5D4 (level start); 18 readers",
   "Party_Last_Offset": "medium - word = 2*(party size-1); rose 0->2 when Burner joined at the Mission 2 tent; used as the wrap limit in sub_00BC28",
-  "Merc_Flags": "low - 5 bytes tested by sub_00BC78 / loc_00B5C8 (party screen skips slots with nonzero?)"
+  "Merc_Flags": "low - 5 bytes tested by sub_00BC78 / loc_00B5C8 (party screen skips slots with nonzero?)",
+  "Merc_Medals": "high - BCD word shown as the medal count next to the merc name; copied into the per-slot record at $C370+14*slot+8 (sub_00BA52); poking it before entering a tent funds shop purchases (emulator test)"
  },
  "FFFFC516": "Camera_Y",
  "0035C2": "GameState_Transition",
@@ -233,5 +234,6 @@
  "01A41A": "ObjType_8A_EnemyTroop",
  "FFFFC36E": "Current_Merc",
  "FFFFC3C6": "Party_Last_Offset",
- "FFFFC3B8": "Merc_Flags"
+ "FFFFC3B8": "Merc_Flags",
+ "FFFFC350": "Merc_Medals"
 }
