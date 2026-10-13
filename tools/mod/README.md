@@ -30,4 +30,4 @@ is unchanged.
 * The "JOINED YOUR PARTY" message remap is untested in play (the line never showed up in my emulator runs).
 * Portrait palettes on the party screen follow the slot, not the merc, so a shuffled portrait can look slightly off.
 * Tents were exercised in Mission 2 (full), and via the hidden round select (`tools/emu/round_select.py`) in rounds 4 and 6: join header,
-  shop panel and carrier panels all followed the shuffle. Deaths/revives, rounds 3/5/7 tents and the ending are untested.
+  shop panel and carrier panels all followed the shuffle. Deaths were checked in round 6 (dead slot greyed on the party screen with the right names, and picking a replacement set the right weapon id and sprite colours). Reviving with the tent item, rounds 3/5/7 tents and the ending are untested.
