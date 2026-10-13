@@ -12,7 +12,7 @@
   "003398": "VInt_StateTable",
   "0003EE": "MainLoop",
   "000400": "GameStateTable",
-  "000468": "GameState_Title",
+  "000468": "GameState_SegaLogo",
   "01435A": "ObjectTypeTable",
   "0142AE": "ObjectUpdate",
   "FFFFC300": "Joy1_Held",
@@ -21,8 +21,7 @@
   "FFFFC303": "Joy2_Pressed",
   "FFFFC312": "RNG_Seed",
   "FFFFC318": "DMA_Trigger_Word",
-  "FFFFC5A2": "Game_SubState",
-  "FFFFC346": "Menu_Cursor",
+  "FFFFC5A2": "Game_NextState",
   "FFFFC5AF": "Flags_C5AF",
   "FFFFC61C": "Flags_C61C",
   "FFFFC5EB": "Flags_C5EB",
@@ -36,12 +35,20 @@
   "009DCC": "ReadJoypad_Port",
   "009E04": "InitVDP",
   "_notes": {
-    "Joy*": "high - sub_009DAC stores held then newly-pressed byte per port; Start = bit 7",
-    "RNG_Seed": "high - seeded with $2A6D365A when zero (standard LCG seed)",
+    "Joy*": "high - confirmed in emulator: held bits B=10 C=20 Right=08 Start=80; Pressed = newly set bits",
+    "RNG_Seed": "high - seeded with $2A6D365A when zero; confirmed changing every frame in gameplay",
     "DMA_Trigger_Word": "high - final VDP DMA command word is written from RAM (68k->VRAM DMA)",
-    "Game_SubState": "high - word index (x4) into the jump table at $35E4 (state 1 handler)",
-    "Menu_Cursor": "medium - clamped against a per-menu maximum at +6 of a descriptor",
     "Flags_*": "low - only known to be bit flags (bset/bclr/btst); meaning unknown",
-    "Timer_*": "medium - loaded with a constant then counted down with subq"
-  }
+    "Timer_*": "medium - loaded with a constant then counted down with subq",
+    "Game_NextState": "high - state 08 is a hub; $C5A2 holds the next Game_State (observed 14,38,28,0C,18,04)",
+    "Camera_Y": "medium - falls steadily while walking up in Mission 1 ($3A0->$302 in 150 frames)",
+    "GameState_*": "high for 04/08/0C/14/18/28/38 - verified by emulator screenshots; Game_State = 4*(table index+1)"
+  },
+  "FFFFC516": "Camera_Y",
+  "0035C2": "GameState_Transition",
+  "001394": "GameState_Gameplay",
+  "000E46": "GameState_Title",
+  "002C8C": "GameState_Demo",
+  "00494E": "GameState_Intro",
+  "006448": "GameState_ModeSelect"
 }

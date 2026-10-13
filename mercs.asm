@@ -119,7 +119,7 @@ ram_C336	equ	$FFFFC336
 VBlank_Counter	equ	$FFFFC33E
 ram_C342	equ	$FFFFC342
 ram_C344	equ	$FFFFC344
-Menu_Cursor	equ	$FFFFC346
+ram_C346	equ	$FFFFC346
 ram_C347	equ	$FFFFC347
 ram_C348	equ	$FFFFC348
 ram_C34A	equ	$FFFFC34A
@@ -164,7 +164,7 @@ ram_C50E	equ	$FFFFC50E
 ram_C510	equ	$FFFFC510
 ram_C512	equ	$FFFFC512
 ram_C514	equ	$FFFFC514
-ram_C516	equ	$FFFFC516
+Camera_Y	equ	$FFFFC516
 ram_C51A	equ	$FFFFC51A
 ram_C51E	equ	$FFFFC51E
 ram_C520	equ	$FFFFC520
@@ -207,7 +207,7 @@ ram_C598	equ	$FFFFC598
 ram_C59A	equ	$FFFFC59A
 ram_C59E	equ	$FFFFC59E
 ram_C5A0	equ	$FFFFC5A0
-Game_SubState	equ	$FFFFC5A2
+Game_NextState	equ	$FFFFC5A2
 Timer_C5A4	equ	$FFFFC5A4
 ram_C5A6	equ	$FFFFC5A6
 ram_C5A8	equ	$FFFFC5A8
@@ -694,16 +694,16 @@ loc_0003FC:
 	jsr	(a1)
 	bra.b	MainLoop
 GameStateTable:
-	dc.l	GameState_Title,sub_0035C2,sub_001394,sub_000650
-	dc.l	sub_000E46,sub_002C8C,sub_00085A,sub_002D80
-	dc.l	sub_00440E,sub_00494E,sub_0050FC,sub_00578C
-	dc.l	sub_005D48,sub_006448,sub_00666A,sub_006BD2
+	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,sub_000650
+	dc.l	GameState_Title,GameState_Demo,sub_00085A,sub_002D80
+	dc.l	sub_00440E,GameState_Intro,sub_0050FC,sub_00578C
+	dc.l	sub_005D48,GameState_ModeSelect,sub_00666A,sub_006BD2
 	dc.l	sub_006FDE,sub_00798C,sub_006AAE
 dat_00044C:
 	dc.b	$00,$20,$00,$00
 	dc.b	$00,$10,$00,$00,$00,$05,$00,$00,$00,$04,$00,$00,$00,$03,$00,$00
 	dc.b	$00,$02,$00,$00,$00,$01,$00,$00
-GameState_Title:
+GameState_SegaLogo:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -756,7 +756,7 @@ loc_00053C:
 	bne.b	loc_00054A
 	st.b	(ram_FE58).w
 loc_00054A:
-	move.w	#$14,(Game_SubState).w
+	move.w	#$14,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_000558:
@@ -847,15 +847,15 @@ loc_0006DE:
 	cmpi.w	#$E,(ram_C328).w
 	bhi.b	loc_000716
 loc_0006FC:
-	move.w	#$28,(Game_SubState).w
+	move.w	#$28,(Game_NextState).w
 	tst.b	(Flags_C356).w
 	beq.b	loc_00070E
-	move.w	#$34,(Game_SubState).w
+	move.w	#$34,(Game_NextState).w
 loc_00070E:
 	move.w	#$8,(Game_State).w
 	rts
 loc_000716:
-	move.w	#$C,(Game_SubState).w
+	move.w	#$C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_000724:
@@ -991,7 +991,7 @@ loc_0008F0:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$38,(Game_SubState).w
+	move.w	#$38,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00090E:
@@ -1212,7 +1212,7 @@ dat_000D74:
 	dc.b	$B7,$B8,$B9,$BA,$BB,$BC,$BD,$BE,$BF,$C0,$C1,$C2,$C3,$C4,$C5,$C6
 	dc.b	$C7,$C8,$C9,$CB,$CC,$CD,$CE,$CF,$D0,$D1,$D2,$D3,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$00,$F8
-sub_000E46:
+GameState_Title:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -1305,7 +1305,7 @@ loc_000F8C:
 	bne.b	loc_000FC2
 	bra.w	loc_000F8C
 loc_000FC2:
-	move.w	#$38,(Game_SubState).w
+	move.w	#$38,(Game_NextState).w
 loc_000FC8:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
@@ -1317,11 +1317,11 @@ loc_000FE0:
 	st.b	(ram_C344).w
 	st.b	(ram_C5CD).w
 	move.w	#$FFFF,(ram_C5C2).w
-	move.w	#$18,(Game_SubState).w
+	move.w	#$18,(Game_NextState).w
 	bra.b	loc_000FC8
 loc_000FF6:
 	st.b	(ram_FE80).w
-	move.w	#$14,(Game_SubState).w
+	move.w	#$14,(Game_NextState).w
 	bra.b	loc_000FC8
 sub_001002:
 	move.w	(ram_C602).w,d0
@@ -1570,7 +1570,7 @@ dat_001376:
 	dc.b	$52,$45,$50,$52,$4F,$47,$52,$41,$4D,$4D
 	dc.b	$45,$44,$20,$47,$41,$4D,$45,$20,$40,$53,$45,$47,$41,$20,$31,$39
 	dc.b	$39,$31,$00,$00
-sub_001394:
+GameState_Gameplay:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -1734,7 +1734,7 @@ loc_001682:
 loc_001684:
 	addq.w	#$1,(ram_C328).w
 loc_001688:
-	move.w	#$C,(Game_SubState).w
+	move.w	#$C,(Game_NextState).w
 loc_00168E:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
@@ -1749,13 +1749,13 @@ loc_0016A8:
 	bls.b	loc_0016B6
 	move.l	d0,(ram_FE50).w
 loc_0016B6:
-	move.w	#$3C,(Game_SubState).w
+	move.w	#$3C,(Game_NextState).w
 	bra.b	loc_00168E
 loc_0016BE:
-	move.w	#$20,(Game_SubState).w
+	move.w	#$20,(Game_NextState).w
 	tst.b	(Flags_C356).w
 	beq.b	loc_0016D4
-	move.w	#$34,(Game_SubState).w
+	move.w	#$34,(Game_NextState).w
 	addq.w	#$1,(ram_C328).w
 loc_0016D4:
 	move.l	#$69827,d0
@@ -1767,10 +1767,10 @@ loc_0016DA:
 	bne.b	loc_0016DA
 	bra.b	loc_00168E
 loc_0016E6:
-	move.w	#$2C,(Game_SubState).w
+	move.w	#$2C,(Game_NextState).w
 	tst.b	(Flags_C356).w
 	beq.b	loc_0016F8
-	move.w	#$40,(Game_SubState).w
+	move.w	#$40,(Game_NextState).w
 loc_0016F8:
 	bra.b	loc_00168E
 sub_0016FA:
@@ -1814,7 +1814,7 @@ sub_00178E:
 	move.w	(a6)+,(ram_C554).w
 	move.w	(a6)+,(ram_C566).w
 	move.w	(a6)+,(ram_C504).w
-	move.w	(a6)+,(ram_C516).w
+	move.w	(a6)+,(Camera_Y).w
 	move.w	(a6)+,(ram_C54A).w
 	move.w	(a6)+,(ram_C55C).w
 	move.l	(a6)+,(ram_C5B0).w
@@ -1872,7 +1872,7 @@ loc_00181C:
 	divu.w	#$140,d0
 	move.l	d0,(ram_C50C).w
 	moveq	#$0,d0
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	divu.w	#$E0,d0
 	move.l	d0,(ram_C51E).w
 	movea.l	(a6)+,a0
@@ -2768,7 +2768,7 @@ dat_002C40:
 	dc.b	$EF,$F4,$00,$0E,$EC,$1E,$00,$02,$00,$16,$02,$80,$13,$40,$01,$40
 	dc.b	$00,$E0,$00,$1E,$00,$14,$00,$F0,$00,$A0,$82,$01,$00,$0D,$60,$46
 	dc.b	$00,$0D,$76,$2A,$00,$0D,$7E,$FE,$00,$00,$00,$00
-sub_002C8C:
+GameState_Demo:
 	move.w	#$2700,sr
 	moveq	#$0,d0
 	move.w	#$100,(ram_FE5E).w
@@ -2778,7 +2778,7 @@ sub_002C8C:
 	clr.w	(ram_FE44).w
 	clr.w	(ram_FE42).w
 	move.w	#$2000,sr
-	bsr.w	sub_001394
+	bsr.w	GameState_Gameplay
 	st.b	(ram_C5C9).w
 loc_002CBE:
 	jsr	(sub_0084CA).l
@@ -2794,7 +2794,7 @@ loc_002CDE:
 	cmpi.w	#$4,(ram_FE64).w
 	beq.w	loc_002D22
 	st.b	(ram_FE80).w
-	move.w	#$14,(Game_SubState).w
+	move.w	#$14,(Game_NextState).w
 loc_002CF2:
 	clr.w	(ram_C344).w
 	clr.b	(ram_C5C9).w
@@ -2808,7 +2808,7 @@ loc_002CF2:
 	move.w	#$8,(Game_State).w
 	rts
 loc_002D22:
-	move.w	#$4,(Game_SubState).w
+	move.w	#$4,(Game_NextState).w
 	bra.b	loc_002CF2
 loc_002D2A:
 	jsr	(ReadJoypads).l
@@ -2903,10 +2903,10 @@ loc_002E86:
 	bne.b	loc_002EB6
 	bra.w	loc_002E86
 loc_002EB6:
-	move.w	#$24,(Game_SubState).w
+	move.w	#$24,(Game_NextState).w
 	cmpi.w	#$6,(ram_C328).w
 	bne.b	loc_002EDC
-	move.w	#$2C,(Game_SubState).w
+	move.w	#$2C,(Game_NextState).w
 	move.l	(ram_C332).w,d0
 	cmp.l	(ram_FE50).w,d0
 	bls.b	loc_002ED8
@@ -3342,14 +3342,14 @@ loc_003586:
 	dc.b	$70,$00,$72,$08,$10,$99,$4E,$71,$4E,$71,$14,$10,$C4,$19,$67,$02
 	dc.b	$80,$01,$E2,$09,$66,$EE,$14,$81,$4E,$75,$40,$0C,$40,$03,$00,$0C
 	dc.b	$00,$03
-sub_0035C2:
+GameState_Transition:
 	clr.w	(Flags_C61C).w
 	bset.b	#$0,(Flags_C61C).w
 	bsr.w	sub_0084CA
 	move.b	#$6,(Timer_C5A4).w
 	clr.w	(ram_C5A6).w
 	move.b	#$1,(ram_C59E).w
-	move.w	(Game_SubState).w,d0
+	move.w	(Game_NextState).w,d0
 loc_0035E4:
 	jmp	loc_0035E4(pc,d0.w)
 	dc.b	$60,$00,$00,$4A,$60,$00,$00,$46
@@ -3731,7 +3731,7 @@ loc_004496:
 	bra.w	loc_004496
 loc_0044C6:
 	addq.w	#$1,(ram_C328).w
-	move.w	#$C,(Game_SubState).w
+	move.w	#$C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_0044D8:
@@ -3903,7 +3903,7 @@ dat_0048FA:
 	dc.b	$11,$14,$55,$56,$1F,$29,$3B,$3A,$2E,$0A,$0E,$26,$FF,$0E,$22,$0F
 	dc.b	$13,$25,$2F,$3D,$29,$3C,$33,$3D,$36,$14,$57,$58,$1F,$FF,$59,$5A
 	dc.b	$0A,$25,$4C,$4D,$4E,$4F,$1F,$5B,$5C,$0C,$19,$26,$FE,$00
-sub_00494E:
+GameState_Intro:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -3958,7 +3958,7 @@ loc_004A28:
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$1,(ram_C3B6).w
-	move.w	#$C,(Game_SubState).w
+	move.w	#$C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_004A4C:
@@ -4326,7 +4326,7 @@ loc_0051F0:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$30,(Game_SubState).w
+	move.w	#$30,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00520E:
@@ -4751,7 +4751,7 @@ loc_00590E:
 	moveq	#-$20,d0
 	jsr	(sub_00A068).l
 	movem.l	(a7)+,d0/a1
-	move.w	#$3C,(Game_SubState).w
+	move.w	#$3C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_00592C:
@@ -5003,7 +5003,7 @@ loc_005DE0:
 	bne.b	loc_005E04
 	bra.w	loc_005DE0
 loc_005E04:
-	move.w	#$C,(Game_SubState).w
+	move.w	#$C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_005E12:
@@ -5381,7 +5381,7 @@ dat_0063FC:
 	dc.b	$00,$01,$01,$04,$00,$E4,$01,$04,$01,$04,$00,$00,$00,$DC,$01,$1C
 dat_006440:
 	dc.b	$00,$00,$01,$03,$04,$05,$06,$08
-sub_006448:
+GameState_ModeSelect:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -5414,10 +5414,10 @@ loc_0064C0:
 loc_0064CE:
 	bsr.w	sub_0064FC
 	move.w	(ram_E028).w,d0
-	move.w	dat_0064F0(pc,d0.w),(Game_SubState).w
+	move.w	dat_0064F0(pc,d0.w),(Game_NextState).w
 	tst.b	(ram_FE58).w
 	beq.b	loc_0064E8
-	move.w	dat_0064F6(pc,d0.w),(Game_SubState).w
+	move.w	dat_0064F6(pc,d0.w),(Game_NextState).w
 loc_0064E8:
 	move.w	#$8,(Game_State).w
 	rts
@@ -5619,7 +5619,7 @@ loc_006762:
 	beq.b	loc_0067A0
 	bra.w	loc_006762
 loc_0067A0:
-	move.w	#$4,(Game_SubState).w
+	move.w	#$4,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_0067AE:
@@ -5842,7 +5842,7 @@ loc_006B14:
 	beq.b	loc_006B3E
 	bra.w	loc_006B14
 loc_006B3E:
-	move.w	#$4,(Game_SubState).w
+	move.w	#$4,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_006B4C:
@@ -5929,7 +5929,7 @@ loc_006C7E:
 	bra.w	loc_006C7E
 loc_006CA2:
 	move.w	#$11,(ram_C328).w
-	move.w	#$44,(Game_SubState).w
+	move.w	#$44,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_006CB6:
@@ -6201,12 +6201,12 @@ loc_0070EE:
 	jsr	(sub_00A606).l
 	jsr	(sub_00A694).l
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	subi.w	#$A,d3
 	jsr	(sub_008EAC).l
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	subi.w	#$A,d3
 	jsr	(sub_009020).l
@@ -6216,10 +6216,10 @@ loc_0070EE:
 	bra.w	loc_0070EE
 loc_007156:
 	addq.w	#$1,(ram_C328).w
-	move.w	#$44,(Game_SubState).w
+	move.w	#$44,(Game_NextState).w
 	cmpi.w	#$19,(ram_C328).w
 	bls.b	loc_00716E
-	move.w	#$3C,(Game_SubState).w
+	move.w	#$3C,(Game_NextState).w
 loc_00716E:
 	move.w	#$8,(Game_State).w
 	rts
@@ -6465,7 +6465,7 @@ loc_007A24:
 	bra.w	loc_007A24
 loc_007A4E:
 	move.w	#$7,(ram_C328).w
-	move.w	#$34,(Game_SubState).w
+	move.w	#$34,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
 sub_007A62:
@@ -6783,14 +6783,14 @@ sub_00805E:
 	move.w	(ram_C5D6).w,d0
 	beq.b	loc_008092
 	clr.w	(ram_C5D6).w
-	add.w	(Menu_Cursor).w,d0
+	add.w	(ram_C346).w,d0
 	move.w	(ram_C36E).w,d1
 	add.w	d1,d1
 	lea	(dat_00CD0E).l,a1
 	movea.l	(a1,d1.w),a1
 	cmp.w	$6(a1),d0
 	bcc.b	loc_0080BA
-	move.w	d0,(Menu_Cursor).w
+	move.w	d0,(ram_C346).w
 	bra.w	loc_0080BA
 loc_008092:
 	moveq	#$0,d4
@@ -8048,7 +8048,7 @@ dat_008E98:
 	dc.b	$00,$00
 sub_008EA2:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 sub_008EAC:
 	lsl.w	#$2,d3
@@ -8133,7 +8133,7 @@ dat_009010:
 	dc.b	$00,$00,$00,$04,$00,$00
 sub_009016:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 sub_009020:
 	lsl.w	#$2,d3
@@ -8216,7 +8216,7 @@ dat_0091AA:
 	dc.b	$00,$00
 sub_0091AC:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	movea.l	dat_0091FC(pc,d3.w),a1
@@ -8302,7 +8302,7 @@ dat_009332:
 	dc.b	$00,$00
 sub_009334:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	movea.l	dat_009394(pc,d3.w),a1
@@ -8388,7 +8388,7 @@ dat_00947E:
 	dc.b	$00,$00
 sub_009480:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	movea.l	dat_0094B2(pc,d3.w),a1
@@ -8433,7 +8433,7 @@ dat_0094F6:
 	dc.b	$00,$00,$00,$00,$00,$00
 sub_0095F6:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	movea.l	dat_009628(pc,d3.w),a1
@@ -8477,7 +8477,7 @@ sub_009736:
 	btst.b	#$0,(ram_C5DC).w
 	bne.w	loc_0097B8
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	lea	(dat_0097F0).l,a1
@@ -8656,7 +8656,7 @@ dat_009B28:
 	dc.b	$00,$00
 sub_009B2A:
 	moveq	#$0,d1
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	move.w	(ram_C328).w,d3
 	lsl.w	#$2,d3
 	movea.l	dat_009B70(pc,d3.w),a1
@@ -9439,7 +9439,7 @@ loc_00A508:
 	andi.l	#$20,d2
 	beq.w	loc_00A834
 	move.w	(ram_C512).w,d6
-	move.w	(ram_C516).w,d7
+	move.w	(Camera_Y).w,d7
 	lea	(ram_FF0000).l,a2
 	lea	(ram_C800).w,a3
 	lea	(ram_C532).w,a1
@@ -9455,7 +9455,7 @@ sub_00A56E:
 	move.l	(ram_C51A).w,d0
 	beq.w	loc_00A834
 	move.l	(ram_C512).w,d1
-	move.l	(ram_C516).w,d3
+	move.l	(Camera_Y).w,d3
 	move.l	d1,d2
 	move.l	d3,d5
 	add.l	d0,d1
@@ -9472,7 +9472,7 @@ loc_00A596:
 	bcs.w	loc_00A834
 loc_00A5A2:
 	move.l	d1,(ram_C512).w
-	move.l	d3,(ram_C516).w
+	move.l	d3,(Camera_Y).w
 	bsr.w	sub_00A824
 	move.w	d4,(ram_C522).w
 	swap	d3
@@ -10146,14 +10146,14 @@ loc_00AC4E:
 	move.w	(a3),d0
 	move.w	$2(a3),d1
 	add.w	(ram_C504).w,d0
-	add.w	(ram_C516).w,d1
+	add.w	(Camera_Y).w,d1
 	bsr.w	sub_00B380
 	tst.w	d5
 	beq.b	loc_00AC86
 	move.w	(a5)+,d0
 	move.w	(a5),d1
 	add.w	(ram_C504).w,d0
-	add.w	(ram_C516).w,d1
+	add.w	(Camera_Y).w,d1
 	bsr.w	sub_00B380
 loc_00AC86:
 	tst.b	(ram_C68E).w
@@ -10190,15 +10190,15 @@ sub_00ACE4:
 	beq.b	loc_00AD0C
 	cmpi.w	#$A,(ram_C328).w
 	bne.b	loc_00AD50
-	cmpi.w	#$C60,(ram_C516).w
+	cmpi.w	#$C60,(Camera_Y).w
 	bcc.b	loc_00AD50
-	cmpi.w	#$980,(ram_C516).w
+	cmpi.w	#$980,(Camera_Y).w
 	bcs.b	loc_00AD50
 	bra.w	loc_00AD1C
 loc_00AD0C:
-	cmpi.w	#$470,(ram_C516).w
+	cmpi.w	#$470,(Camera_Y).w
 	bcc.b	loc_00AD50
-	cmpi.w	#$1E0,(ram_C516).w
+	cmpi.w	#$1E0,(Camera_Y).w
 	bcs.b	loc_00AD50
 loc_00AD1C:
 	lea	(ram_F060).w,a4
@@ -10247,7 +10247,7 @@ dat_00AD7C:
 	dc.b	$02,$02,$02,$04,$04,$04,$04,$04,$04,$04,$04,$04,$02,$00,$02,$02
 	dc.b	$02,$02,$02,$02,$02,$07,$07,$07,$06,$06,$07,$07,$07,$07,$02,$00
 sub_00ADE0:
-	move.w	(ram_C516).w,d0
+	move.w	(Camera_Y).w,d0
 	cmp.w	(ram_C622).w,d0
 	bne.b	loc_00ADFE
 	move.w	(ram_C620).w,d1
@@ -10636,7 +10636,7 @@ sub_00B36C:
 	add.l	$4(a0),d0
 	add.l	$8(a0),d1
 	add.l	(ram_C504).w,d0
-	add.l	(ram_C516).w,d1
+	add.l	(Camera_Y).w,d1
 	swap	d0
 	swap	d1
 sub_00B380:
@@ -10709,7 +10709,7 @@ sub_00B434:
 	subi.l	#$800000,d0
 	subi.l	#$800000,d1
 	add.l	(ram_C504).w,d0
-	add.l	(ram_C516).w,d1
+	add.l	(Camera_Y).w,d1
 	swap	d0
 	swap	d1
 	lsr.w	#$5,d0
@@ -10920,7 +10920,7 @@ sub_00B6EA:
 	lea	(dat_00BE62).l,a1
 	movea.w	(a1,d0.w),a2
 	move.w	a2,(ram_C3D0).w
-	move.w	(a2)+,(Menu_Cursor).w
+	move.w	(a2)+,(ram_C346).w
 	move.w	(a2)+,d1
 	move.w	d1,(ram_C3B6).w
 	lsl.w	#$2,d1
@@ -11167,7 +11167,7 @@ sub_00BA52:
 	move.w	(ram_C36E).w,d0
 	lea	(dat_00BE62).l,a1
 	movea.w	(a1,d0.w),a2
-	move.w	(Menu_Cursor).w,(a2)+
+	move.w	(ram_C346).w,(a2)+
 	move.w	(ram_C3B6).w,(a2)+
 	move.w	(ram_C348).w,(a2)+
 	move.w	(ram_C34A).w,(a2)+
@@ -13197,7 +13197,7 @@ sub_00D6FA:
 	bcc.b	loc_00D724
 	btst.b	#$2,(Flags_C5EB).w
 	bne.b	loc_00D724
-	move.w	(ram_C516).w,d1
+	move.w	(Camera_Y).w,d1
 	subq.w	#$2,d1
 	bmi.b	loc_00D724
 	cmp.w	(ram_C542).w,d1
@@ -13663,7 +13663,7 @@ sub_00DC6A:
 	tst.b	(ram_C626).w
 	bne.w	loc_00DD30
 	move.w	$8(a0),d0
-	move.l	(ram_C516).w,d1
+	move.l	(Camera_Y).w,d1
 	tst.l	d3
 	beq.b	loc_00DCA2
 	bpl.b	loc_00DC98
@@ -13795,7 +13795,7 @@ loc_00DDCC:
 	move.l	(ram_C634).w,d4
 	addi.l	#$FFFFFF00,d4
 	move.l	d4,(ram_C634).w
-	move.l	(ram_C516).w,d0
+	move.l	(Camera_Y).w,d0
 	add.l	d4,d0
 	bpl.b	loc_00DDC6
 	st.b	(ram_C66D).w
@@ -13912,7 +13912,7 @@ loc_00DF1C:
 	andi.b	#$1F,d2
 	lea	(dat_00DF4C).l,a1
 	bsr.w	sub_00E17A
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lea	(dat_00DF42).l,a2
 	move.b	(a2,d0.w),d4
 	move.w	#$C,d0
@@ -13954,7 +13954,7 @@ loc_00DFBC:
 	andi.b	#$1C,d2
 	lea	(dat_00DFF2).l,a1
 	bsr.w	sub_00E17A
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lea	(dat_00DFE8).l,a2
 	move.b	(a2,d0.w),d4
 	move.w	#$4C,d0
@@ -13972,7 +13972,7 @@ loc_00E006:
 	bne.b	loc_00E02C
 	moveq	#$1,d0
 	moveq	#$1,d7
-	cmpi.w	#$4,(Menu_Cursor).w
+	cmpi.w	#$4,(ram_C346).w
 	bcs.b	loc_00E01C
 	moveq	#$2,d7
 loc_00E01C:
@@ -13991,7 +13991,7 @@ loc_00E036:
 	andi.b	#$1C,d2
 	moveq	#$1,d4
 	moveq	#$1,d7
-	cmpi.w	#$4,(Menu_Cursor).w
+	cmpi.w	#$4,(ram_C346).w
 	bcs.b	loc_00E058
 	moveq	#$2,d7
 loc_00E058:
@@ -14035,7 +14035,7 @@ loc_00E09A:
 loc_00E0C0:
 	rts
 loc_00E0C2:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	moveq	#$0,d7
 	move.b	dat_00E0FA(pc,d0.w),d7
 	bsr.w	sub_00E0FE
@@ -14046,7 +14046,7 @@ loc_00E0C2:
 	move.b	$20(a0),d2
 	andi.b	#$1C,d2
 	move.w	(a7)+,d4
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	moveq	#$0,d7
 	move.b	dat_00E0FA(pc,d0.w),d7
 	move.w	#$148,d0
@@ -14115,7 +14115,7 @@ loc_00E16E:
 	moveq	#$1,d7
 	rts
 sub_00E17A:
-	move.w	(Menu_Cursor).w,d1
+	move.w	(ram_C346).w,d1
 	add.w	d1,d1
 	lea	(a1,d1.w),a1
 	moveq	#$0,d0
@@ -15076,7 +15076,7 @@ loc_00EF9A:
 loc_00EF9C:
 	move.w	#$8,$28(a0)
 	move.l	#$3A56E,$18(a0)
-	cmpi.w	#$4,(Menu_Cursor).w
+	cmpi.w	#$4,(ram_C346).w
 	bcc.b	loc_00EFBA
 	move.l	#$3A55C,$18(a0)
 loc_00EFBA:
@@ -15092,7 +15092,7 @@ loc_00EFCA:
 	bra.b	loc_00EFEC
 loc_00EFD8:
 	move.w	#$290,d0
-	cmpi.w	#$4,(Menu_Cursor).w
+	cmpi.w	#$4,(ram_C346).w
 	bcs.b	loc_00EFE8
 	move.w	#$298,d0
 loc_00EFE8:
@@ -15161,7 +15161,7 @@ loc_00F0A6:
 	move.w	d0,$10(a0)
 	swap	d0
 	move.w	d0,$C(a0)
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	add.w	d0,d0
 	lea	(dat_03B5DE).l,a1
 	move.b	$1(a1,d0.w),$3C(a0)
@@ -15283,7 +15283,7 @@ loc_00F226:
 	move.w	$2C(a0),d0
 	beq.b	loc_00F27E
 	lea	(dat_040712).l,a1
-	move.w	(Menu_Cursor).w,d1
+	move.w	(ram_C346).w,d1
 	lsl.w	#$2,d1
 	movea.l	(a1,d1.w),a1
 	movea.l	(a1,d0.w),a1
@@ -15548,7 +15548,7 @@ loc_00F554:
 	dc.b	$C5,$4E,$4E,$75
 sub_00F5A4:
 	lea	(dat_03F908).l,a1
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	movea.l	(a1,d0.w),a1
 	move.w	$2C(a0),d0
@@ -15564,11 +15564,11 @@ loc_00F5D0:
 	lea	(a1,d2.w),a1
 	bra.w	loc_00EC3A
 sub_00F5DC:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	movea.l	dat_00F5F6(pc,d0.w),a1
 	bsr.w	sub_00F690
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	move.b	dat_00F61E(pc,d0.w),$2F(a0)
 loc_00F5F4:
 	rts
@@ -15580,7 +15580,7 @@ dat_00F61E:
 	dc.b	$12,$14
 	dc.b	$16,$16,$18,$18,$1A,$1B,$1D,$24
 sub_00F628:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	move.w	d0,d3
 loc_00F62E:
 	moveq	#$0,d2
@@ -15602,7 +15602,7 @@ dat_00F660:
 sub_00F66A:
 	lea	(dat_040174).l,a1
 	bsr.w	sub_00F690
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	move.b	dat_00F680(pc,d0.w),$2F(a0)
 	rts
 dat_00F680:
@@ -15619,7 +15619,7 @@ sub_00F690:
 	move.l	(a1)+,$10(a0)
 	rts
 sub_00F6AA:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038B68).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15632,7 +15632,7 @@ sub_00F6AA:
 	move.l	(a1,d2.w),$14(a0)
 	rts
 sub_00F6D8:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038C4E).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15643,7 +15643,7 @@ sub_00F6D8:
 	move.b	d2,$3C(a0)
 	rts
 sub_00F6FE:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038DB6).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15654,7 +15654,7 @@ sub_00F6FE:
 	move.l	(a1,d2.w),$14(a0)
 	rts
 sub_00F724:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	add.w	d0,d0
 	lea	(dat_03B5DE).l,a1
 	moveq	#$0,d1
@@ -15674,7 +15674,7 @@ sub_00F724:
 	move.l	(a1),$14(a0)
 	rts
 sub_00F770:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038E66).l,a1
 	movea.l	(a1,d0.w),a1
@@ -15682,7 +15682,7 @@ sub_00F770:
 	move.l	(a1,d0.w),$18(a0)
 	rts
 sub_00F78C:
-	move.w	(Menu_Cursor).w,d0
+	move.w	(ram_C346).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_038F7E).l,a1
 	movea.l	(a1,d0.w),a1
@@ -16318,7 +16318,7 @@ loc_01027E:
 	move.w	(ram_C328).w,d0
 	lsl.w	#$3,d0
 	movem.w	(a1,d0.w),d0-d3
-	move.w	(ram_C516).w,d4
+	move.w	(Camera_Y).w,d4
 	move.w	(ram_C504).w,d5
 	cmp.w	d0,d4
 	bcs.b	loc_0102E2
@@ -16334,8 +16334,8 @@ loc_01027E:
 	st.b	(ram_C5AE).w
 	move.l	(ram_C504).w,(ram_C53E).w
 	move.l	(ram_C504).w,(ram_C536).w
-	move.l	(ram_C516).w,(ram_C542).w
-	move.l	(ram_C516).w,(ram_C53A).w
+	move.l	(Camera_Y).w,(ram_C542).w
+	move.l	(Camera_Y).w,(ram_C53A).w
 	bsr.w	sub_00D94C
 	move.w	(ram_C328).w,d0
 	lsl.w	#$2,d0
@@ -17598,11 +17598,11 @@ loc_011ACC:
 	beq.b	loc_011AF6
 	cmpi.w	#$B,(ram_C328).w
 	bne.b	loc_011AFE
-	cmpi.w	#$620,(ram_C516).w
+	cmpi.w	#$620,(Camera_Y).w
 	bcs.b	loc_011B2A
 	bra.w	loc_011AFE
 loc_011AF6:
-	cmpi.w	#$2C0,(ram_C516).w
+	cmpi.w	#$2C0,(Camera_Y).w
 	bcs.b	loc_011B2A
 loc_011AFE:
 	bclr.b	#$0,$3(a0)
@@ -17700,7 +17700,7 @@ loc_011C16:
 	move.b	#$20,$2E(a0)
 	bset.b	#$0,(Flags_C5EB).w
 loc_011C4E:
-	cmpi.w	#$40,(ram_C516).w
+	cmpi.w	#$40,(Camera_Y).w
 	bcc.b	loc_011C5A
 	st.b	$20(a0)
 loc_011C5A:
@@ -18865,12 +18865,12 @@ loc_012C80:
 loc_012C82:
 	move.l	#$FFFFC000,d0
 	move.l	(ram_C512).w,d1
-	move.l	(ram_C516).w,d3
+	move.l	(Camera_Y).w,d3
 	add.l	d0,d1
 	add.l	d0,d3
 	bmi.b	loc_012CCC
 	move.l	d1,(ram_C512).w
-	move.l	d3,(ram_C516).w
+	move.l	d3,(Camera_Y).w
 	jsr	(sub_00A824).l
 	move.w	d4,(ram_C522).w
 	tst.b	$20(a0)
@@ -19642,7 +19642,7 @@ loc_013782:
 	bra.w	loc_01380A
 	bra.w	loc_013820
 loc_013796:
-	cmpi.w	#$710,(ram_C516).w
+	cmpi.w	#$710,(Camera_Y).w
 	bhi.b	loc_0137AC
 	addq.w	#$4,$28(a0)
 	move.w	#$8,d0
@@ -19817,7 +19817,7 @@ loc_0139EA:
 	jsr	(sub_00AF0A).l
 	beq.b	loc_013A32
 	move.l	(ram_C504).w,(ram_C54A).w
-	move.l	(ram_C516).w,(ram_C55C).w
+	move.l	(Camera_Y).w,(ram_C55C).w
 	move.l	(ram_C500).w,(ram_C546).w
 	move.l	(ram_C512).w,(ram_C558).w
 	move.w	(ram_C510).w,(ram_C556).w

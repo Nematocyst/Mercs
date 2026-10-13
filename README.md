@@ -29,3 +29,20 @@ automatically; word-offset code tables are hint-only because they look like data
 
 Hardware registers (VDP, Z80, YM2612, I/O ports) are named by the tool. All names are emitted as
 `equ` lines at the top of `mercs.asm`, so a name can never change the assembled bytes.
+
+## Emulator tests
+
+`tools/emu/` drives the Genesis Plus GX libretro core headlessly (`pip install stable-retro`;
+`stable_retro_shim.py` loads the core through ctypes, so it works on any Python). `harness.py`
+offers `Game(rom)` with `step(n, START=True, ...)`, `b/w/l(addr)` RAM reads and `save_png()`.
+`walk_states.py` logs the `Game_State` flow and takes a screenshot of each state. Observed so far:
+
+| Game_State | Screen |
+|---|---|
+| `04` | SEGA logo |
+| `08` | transition hub (`Game_NextState` holds the destination) |
+| `14` | title (Mercs emblem) |
+| `38` | mode select (ARCADE / ORIGINAL / OPTIONS) |
+| `28` | intro story text |
+| `0C` | gameplay (Mission 1) |
+| `18` | attract-mode demo |
