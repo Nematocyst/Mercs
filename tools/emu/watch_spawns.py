@@ -126,6 +126,8 @@ for fr in range(frames):
             t = g.w(a) >> 2
             if t and prev.get(a) != t:
                 count[t] += 1
+                if os.environ.get('SAVE_ON_TYPE') and t == int(os.environ['SAVE_ON_TYPE'], 16) and not os.path.exists(os.environ['SAVE_STATE']):
+                    open(os.environ['SAVE_STATE'], 'wb').write(g.env.em.get_state())
                 if t not in first:
                     first[t] = (fr, nm, g.w(a + 4), g.w(a + 8)); pending.append((fr + 3, t, g.w(a + 4), g.w(a + 8)))
             prev[a] = t

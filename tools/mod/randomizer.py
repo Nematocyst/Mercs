@@ -39,7 +39,6 @@ SITES = [
     (0xB65A, '3038c36ee348', lambda s: jsr(s['Phys2_d0'])),                       # weapon id -> C352
     (0xB730, '3038c36ed040', lambda s: jsr(s['Phys2_d0'])),                       # sprite colours ColorList[merc]
     (0xB86E, '3038c36e43f90000ca6ed040', lambda s: jsr(s['Site6']) + NOP * 3),    # panel layout CA6E[merc]
-    (0xBCA2, '3238c36e43f8c700', lambda s: jsr(s['Site7']) + NOP),                # palette flash position
     (0xCA18, '60000006', lambda s: bytes.fromhex('d0406006')),                    # bra loc_00CA20 -> add.w d0,d0 ; bra.b +6
     (0xCA1C, '3038c36ed040', lambda s: jsr(s['Phys2_d0'])),                       # portrait frame CA2A[merc]
     (0xC4D6, '3228003034311000', lambda s: jsr(s['SiteT1']) + NOP),                # shop: stat cap word table
@@ -52,6 +51,15 @@ SITES = [
     (0xBCD6, '215900143159' + '0004', lambda s: jsr(s['SiteP']) + NOP),             # party screen portraits
     (0xBA1C, '4df90000be6c', lambda s: jsr(s['SiteW'])),                          # party screen rows start
     (0xBB56, '225e245e323cc517', lambda s: jmp(s['SiteV']) + NOP),               # party screen names
+    (0xB6EE, '43f90000be62', lambda s: jsr(s['SiteR'])),                          # stat records follow the merc (5 lookups)
+    (0xBA56, '43f90000be62', lambda s: jsr(s['SiteR'])),
+    (0xBD56, '43f90000be62', lambda s: jsr(s['SiteR'])),
+    (0xC662, '43f90000be62', lambda s: jsr(s['SiteR'])),
+    (0xC980, '43f90000be62', lambda s: jsr(s['SiteR'])),
+    (0xC3EC, '317b000c0032', lambda s: jsr(s['SiteS32'])),                        # shop: record of the carrier
+    (0xBB64, '225e345e301e', lambda s: jmp(s['SiteB64'])),                        # party screen bars: record + maximum
+    (0xBB4C, '325e245e4ef900008a3c', lambda s: jmp(s['SiteQ']) + NOP * 2),       # party screen life gauge
+    (0xBAB2, '325e3011325e3211225e381e', lambda s: jmp(s['SiteX']) + NOP * 3),    # party screen record pointers
     (0x6512, '31c0fe444e75', lambda s: jmp(s['SetMode'])),                        # mode chosen -> reshuffle
     (0x8954, '43f900042b5e', lambda s: jsr(s['MsgPtr'])),                         # "X JOINED YOUR PARTY" text
 ]
