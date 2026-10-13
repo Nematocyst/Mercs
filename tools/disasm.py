@@ -44,6 +44,7 @@ HW = {0xA00000: 'Z80_RAM', 0xA04000: 'YM2612_A0', 0xA04001: 'YM2612_D0',
       0xC00011: 'PSG_Port'}
 SYMS = {}       # full address -> name, filled in by main()
 OBJ_FIELDS = {}  # offset -> name for $NN(a0) inside object code (hints.json "object_fields")
+TYPED = {}       # data address -> (element size 'w'|'l', length in bytes or 0 = to the next boundary)
 OBJ_SCOPE = set()  # addresses of instructions in which a0 is the current object
 
 
@@ -485,6 +486,21 @@ def build_entries(rom, label, bad):
         k = bisect.bisect_right(table_addrs, a)
         if k < len(table_addrs):
             lim2 = min(lim2, table_addrs[k])
+        if a in TYPED and a % 2 == 0:               # typed words / longs
+            size, ln = TYPED[a]
+            step = 4 if size == 'l' else 2
+            span = (min(lim2, a + ln) if ln else lim2) - a
+            span -= span % step
+            if span >= step:
+                per = 16 // step
+                for k in range(0, span // step, per):
+                    m = min(per, span // step - k)
+                    seg = d[a + k * step:a + (k + m) * step]
+                    vals = struct.unpack('>%d%s' % (m, 'I' if step == 4 else 'H'), seg)
+                    ents.append(dict(addr=a + k * step, n=m * step, kind='d', comment='',
+                                     text='dc.%s\t%s' % (size, ','.join(('$%08X' if step == 4 else '$%04X') % v for v in vals))))
+                a += span
+                continue
         n = string_len(d, a, lim2)
         if n:                                  # a text string, with its NUL terminator if present
             n = min(n, 48)
@@ -678,6 +694,12 @@ def main():
             a = int(x, 16)
             if label.get(a, '').startswith('dat_'):
                 label[a] = '%s_%06X' % (prefix, a)
+    for pre, size, ax, ln in (json.load(open(args.hints)).get('data_typed', []) if os.path.exists(args.hints) else []):
+        a = int(ax, 16)
+        if a not in rom.code and a >= 0x200:
+            if label.get(a, 'dat_').startswith('dat_') or a not in label:
+                label[a] = '%s_%06X' % (pre, a)
+            TYPED[a] = (size, ln)
     for a, nm in rom_names.items():        # hand-chosen names win over generated ones
         if a >= 0x200:
             label[a] = nm

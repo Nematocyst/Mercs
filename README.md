@@ -149,3 +149,17 @@ segments the 68k uploads to the Z80 and checks that `pasmo` reassembles them byt
 * Hardware: `YM_A0/D0/A1/D1` `$4000-$4003`, `Bank_Reg` `$6000`, `PSG_Port` `$7F11`; driver
   variables are `var_XXXX` equates (`$1BF0..`).
 * YM2612 F-number tables (`val_0872`, `val_08FC`) are recognised as constants, not code pointers.
+
+### Typed data (tilemaps, tables, palettes)
+
+`tools/classify_data.py` also writes `data_typed` entries to `hints.json`; `tools/disasm.py` labels them
+and emits `dc.w` / `dc.l`:
+
+* `Map_XXXXXX` - blobs passed in `a1` to `sub_00A11A` / `sub_00A150`, the tilemap rectangle writer
+  ((d1+1) x (d2+1) tile words to the VRAM address in `d0`).
+* `Words_` / `Longs_` - tables read with `move.w` / `move.l table(pc,dN)`; the access size is the
+  element size (extent: up to the next label).
+* `Pal_` - runs of colour words found by scanning for the Genesis `0BGR` pattern (every nibble even,
+  top nibble 0), at least 8 distinct words and 60% with a blue/green part. `ColorList_` is the
+  same pattern with 30-60%: interleaved (CRAM offset, colour) pairs. The code copies palettes into a RAM
+  buffer and DMAs them, so they are not found by CRAM commands.

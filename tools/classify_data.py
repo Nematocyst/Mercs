@@ -6,6 +6,12 @@ Consumers and their meaning are listed in CONSUMERS (found by reading the routin
 
   Art      sub_00A218 / sub_00A22A   Huffman-style decompressor, to VDP / to a RAM buffer
   ObjData  sub_01ADB0 / 01ADF6 / 01AF0E / 01AF1A   object template and animation-script loaders
+  Map      sub_00A11A / 00A150   tilemap rectangle writer: a1 = (d1+1)*(d2+1) words
+  Words/Longs  tables read with move.w / move.l table(pc,dN)
+  Pal / ColorList   runs of Genesis colour words (0BGR, every nibble even), found by scanning;
+           ColorList = interleaved (CRAM offset, colour) pairs
+
+Typed entries are written to hints.json "data_typed": [prefix, size, addr, length].
 
     python3 tools/classify_data.py        (rewrites the data_prefix entry of hints.json)
 """
@@ -13,7 +19,7 @@ import collections, json, os, struct, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import disasm
 
-CONSUMERS = {'Art': (0xA218, 0xA22A), 'ObjData': (0x1ADB0, 0x1ADF6, 0x1AF0E, 0x1AF1A)}
+CONSUMERS = {'Art': (0xA218, 0xA22A), 'ObjData': (0x1ADB0, 0x1ADF6, 0x1AF0E, 0x1AF1A), 'Map': (0xA11A, 0xA150)}
 
 here = os.path.dirname(os.path.abspath(__file__))
 r = disasm.Rom(os.path.join(here, '..', 'mercs.bin'))
@@ -47,6 +53,44 @@ for a in order:
             ps = [p for p in pi.parts if isinstance(p, tuple)]
             if ps and ps[0][0] in ('abs', 'pc') and ps[0][1] < r.size and ps[0][1] not in r.code:
                 found[which[tg[0]]].add(ps[0][1])
+typed = []
+for prefix in ('Map',):
+    for a in sorted(found[prefix] - found['Art']):
+        typed.append([prefix, 'w', '%X' % a, 0])
+# tables read with an indexed pc-relative load: the access size is the element size
+tab = {}
+for a, ins in r.code.items():
+    base, _, sz = ins.mnem.partition('.')
+    if base in ('move', 'add', 'sub', 'cmp') and sz in ('w', 'l') and r.indexed_pc(ins):
+        for p_ in ins.parts:
+            if isinstance(p_, tuple) and p_[0] == 'pc' and p_[1] < r.size and p_[1] not in r.code:
+                tab.setdefault(p_[1], sz)
+for a, sz in sorted(tab.items()):
+    if a % 2 == 0 and not any(a == int(t[2], 16) for t in typed):
+        typed.append(['Words' if sz == 'w' else 'Longs', sz, '%X' % a, 0])
+# colour words: 0BGR with bits 15-12 and the low bit of every nibble clear
+code_bytes = bytearray(r.size)
+for a, i in r.code.items():
+    code_bytes[a:a + i.n] = b'\1' * i.n
+isc = lambda w: (w & 0xF111) == 0
+a = 0x200
+while a < r.size - 16:
+    run = 0
+    while a + 2 * run + 1 < r.size and not code_bytes[a + 2 * run] and isc(r.d[a + 2 * run] << 8 | r.d[a + 2 * run + 1]):
+        run += 1
+    ws = [r.d[a + 2 * k] << 8 | r.d[a + 2 * k + 1] for k in range(run)]
+    nz = [w for w in ws if w]
+    nib = {(w >> sh) & 15 for w in nz for sh in (0, 4, 8)} - {0}
+    if run >= 8 and len(set(nz)) >= 8 and len(nib) >= 4 and len(nz) >= run // 2:
+        frac = sum(1 for w in nz if w >= 0x100) / len(nz)      # real colours have a blue/green part
+        kind = 'Pal' if frac >= 0.6 else 'ColorList' if frac >= 0.3 else None   # lists of (CRAM offset, colour)
+        if kind:
+            typed.append([kind, 'w', '%X' % a, 2 * run])
+        a += 2 * run
+    else:
+        a += 2
+h['data_typed'] = typed
+print('typed:', {k: sum(1 for t in typed if t[0] == k) for k in ('Map', 'Words', 'Longs', 'Pal', 'ColorList')})
 out = {}
 for prefix in CONSUMERS:                                  # Art wins when a blob is used both ways
     out[prefix] = sorted('%X' % a for a in found[prefix] - (found['Art'] if prefix != 'Art' else set()))
