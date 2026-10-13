@@ -339,5 +339,27 @@
       "2CB96",
       "2CBC8"
     ]
-  }
+  },
+  "object_fields": {
+    "00": "Obj_Type",
+    "02": "Obj_Flags",
+    "03": "Obj_Flags2",
+    "04": "Obj_X",
+    "08": "Obj_Y",
+    "14": "Obj_FramePtr",
+    "26": "Obj_SortKey",
+    "28": "Obj_State",
+    "2C": "Obj_Timer",
+    "30": "Obj_AnimPtr",
+    "34": "Obj_AnimTimer"
+  },
+  "object_routines": [
+    "1ADB0",
+    "1ADF6",
+    "1AF0E",
+    "1AF1A",
+    "14160",
+    "13F82",
+    "13FEC"
+  ]
 }

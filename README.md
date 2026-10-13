@@ -86,3 +86,26 @@ that do not derail go into `tools/hints.json` (`code`). The 35 found so far all 
   string is also decoded back and compared. The game font is not ASCII: `<` is `.`, `:` is `'`,
   `[` is `!`.
 * The `$100..$1FF` header is emitted as typed fields.
+
+## Object fields
+
+Objects live in three arrays (`Objects_A` `$E000` 52 x `$40`, `Objects_B` `$ED00` 25 x `$60`,
+`Objects_C` `$F660` 22 x `$40`) and are run by `ObjectUpdate` through `ObjectTypeTable`.
+`hints.json` (`object_fields`) names the offsets; `tools/disasm.py` rewrites `$NN(a0)` only where
+`a0` is provably the object: the 292 handlers, `object_routines` and their callees, up to any
+instruction that loads `a0` with something else (15,410 instructions). Evidence (the player is
+`Objects_A[0]`, type `$04`; found by diffing the arrays after identical runs with and without input):
+
+| Offset | Name | Evidence |
+|---|---|---|
+| `$00` w | `Obj_Type` | index x4 into `ObjectTypeTable`, 0 = empty |
+| `$02` b | `Obj_Flags` | handlers start `bset.b #0,2(a0) ; bne` (first-run guard); bits 2/3 steer the sprite builder |
+| `$03` b | `Obj_Flags2` | mostly `btst` |
+| `$04` l | `Obj_X` | 16.16 fixed point; RIGHT/LEFT move it, fraction at `+$06` |
+| `$08` l | `Obj_Y` | 16.16 fixed point; DOWN moves it, fraction at `+$0A` |
+| `$14` l | `Obj_FramePtr` | `movea.l $14(a0),a1 ; move.w 2(a1),$24(a0)` |
+| `$26` w | `Obj_SortKey` | pushed with the object address into the sprite list |
+| `$28` w | `Obj_State` | per-object state set to constants and stepped |
+| `$2C` w | `Obj_Timer` | `subq.w #1,$2C(a0)` countdowns |
+| `$30` l | `Obj_AnimPtr` | set by `Object_LoadTemplate`, read by `Object_RunAnimScript` |
+| `$34` b | `Obj_AnimTimer` | set by the animation script |
