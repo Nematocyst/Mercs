@@ -239,6 +239,7 @@ int main(int argc, char **argv) {
     char name[512];
     snprintf(name, sizeof name, "%s.cov", pfx);   f = fopen(name, "wb"); fwrite(cov, 1, sizeof cov, f);     fclose(f);
     snprintf(name, sizeof name, "%s.dread", pfx); f = fopen(name, "wb"); fwrite(dread, 1, sizeof dread, f); fclose(f);
+    snprintf(name, sizeof name, "%s.zram", pfx);  f = fopen(name, "wb"); fwrite(zram, 1, sizeof zram, f);   fclose(f);
     snprintf(name, sizeof name, "%s.ram", pfx);   f = fopen(name, "wb"); fwrite(ram, 1, sizeof ram, f);     fclose(f);
     long n = 0; for (unsigned i = 0; i < sizeof cov; i++) for (int b = 0; b < 8; b++) n += (cov[i] >> b) & 1;
     if (type_frames) printf("types derailed: %d of %d\n", derailed_types, type_max);

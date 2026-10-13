@@ -301,6 +301,46 @@ def text_of(ins, label, final=True):
     return '%s\t%s' % (ins.mnem, ops) if ops.strip() else ins.mnem
 
 
+HEADER = [(16, 's', 'console'), (16, 's', 'copyright'), (48, 's', 'domestic name'),
+          (48, 's', 'overseas name'), (14, 's', 'serial number'), (2, 'w', 'checksum'),
+          (16, 's', 'I/O support'), (4, 'l', 'ROM start'), (4, 'l', 'ROM end'), (4, 'l', 'RAM start'),
+          (4, 'l', 'RAM end'), (12, 'b', 'SRAM info'), (12, 'b', 'modem'), (40, 's', 'notes'),
+          (16, 's', 'region')]
+assert sum(n for n, _, _ in HEADER) == 0x100
+
+# -- strings ------------------------------------------------------------------
+def string_len(d, a, limit):
+    """Length of a readable ASCII run at a, else 0. Real text needs variety and word structure:
+    tilemaps and graphics bytes such as 'ffffffff' or 'HIHIHIHI' are rejected."""
+    j = a
+    while j < limit and 0x20 <= d[j] < 0x7F:
+        j += 1
+    n = j - a
+    if n < 8:
+        return 0
+    t = bytes(d[a:j])
+    body = [c for c in t if c != 0x20]
+    if len(body) < 5 or sum(1 for c in t if chr(c).isalpha() or c == 0x20) < 0.8 * n:
+        return 0
+    if len(set(body)) < 5 or max(body.count(c) for c in set(body)) > 0.35 * len(body):
+        return 0
+    letters = [chr(c).lower() for c in t if chr(c).isalpha()]
+    if not letters or not 0.12 <= sum(c in 'aeiou' for c in letters) / len(letters) <= 0.6:
+        return 0
+    return n if (0x20 in t or (j < limit and d[j] == 0)) else 0
+
+
+def string_text(chunk):
+    body = bytes(chunk).replace(b"'", b"''").decode('ascii')
+    return "dc.b\t'%s'" % body
+
+
+def parse_string_text(text):
+    """Inverse of string_text, used to prove the emitted text encodes the ROM bytes."""
+    q = text.split("'", 1)[1].rsplit("'", 1)[0]
+    return q.replace("''", "'").encode('ascii')
+
+
 # -- layout -----------------------------------------------------------------
 def build_entries(rom, label, bad):
     ents = []  # dict(addr,n,kind,text,comment)
@@ -340,6 +380,22 @@ def build_entries(rom, label, bad):
                                  text='dc.%s\t%s' % ('l' if longs else 'w', ','.join(toks)), comment=''))
             a += cnt * step
             continue
+        if a == 0x100:                 # Mega Drive ROM header: typed fields
+            for n, kind, what in HEADER:
+                chunk = d[a:a + n]
+                if kind in 'sb' and all(0x20 <= c < 0x7F for c in chunk):
+                    txt = string_text(chunk)
+                    assert parse_string_text(txt) == bytes(chunk)
+                    ents.append(dict(addr=a, n=n, kind='s', text=txt, comment=what,
+                                     gas='dc.b\t' + ','.join('$%02X' % c for c in chunk)))
+                elif kind == 'l':
+                    ents.append(dict(addr=a, n=4, kind='d', text='dc.l\t$%08X' % struct.unpack('>I', chunk)[0], comment=what))
+                elif kind == 'w':
+                    ents.append(dict(addr=a, n=2, kind='d', text='dc.w\t$%04X' % struct.unpack('>H', chunk)[0], comment=what))
+                else:
+                    ents.append(dict(addr=a, n=n, kind='d', text='dc.b\t' + ','.join('$%02X' % c for c in chunk), comment=what))
+                a += n
+            continue
         if a < 0x100:
             n = 16
             vals = struct.unpack('>4I', d[a:a + 16])
@@ -361,10 +417,34 @@ def build_entries(rom, label, bad):
         k = bisect.bisect_right(labels_at, a)
         if k < len(labels_at):
             end = min(end, labels_at[k])
-        chunk = d[a:end]
+        limit = end
+        k = bisect.bisect_right(code_addrs, a)
+        lim2 = min([a + 0x10000] + ([code_addrs[k]] if k < len(code_addrs) else []))
+        k = bisect.bisect_right(labels_at, a)
+        if k < len(labels_at):
+            lim2 = min(lim2, labels_at[k])
+        k = bisect.bisect_right(table_addrs, a)
+        if k < len(table_addrs):
+            lim2 = min(lim2, table_addrs[k])
+        n = string_len(d, a, lim2)
+        if n:                                  # a text string, with its NUL terminator if present
+            n = min(n, 48)
+            tail = n < 48 and a + n < lim2 and d[a + n] == 0
+            chunk = d[a:a + n + tail]
+            txt = string_text(chunk[:n]) + (',0' if tail else '')
+            assert parse_string_text(txt) == bytes(chunk[:n])
+            ents.append(dict(addr=a, n=len(chunk), kind='s', text=txt, comment='',
+                             gas='dc.b\t' + ','.join('$%02X' % b for b in chunk)))
+            a += len(chunk)
+            continue
+        for j in range(a + 1, limit):           # a string may start inside this row: cut before it
+            if string_len(d, j, lim2):
+                limit = j
+                break
+        chunk = d[a:limit]
         ents.append(dict(addr=a, n=len(chunk), kind='d',
                          text='dc.b\t' + ','.join('$%02X' % b for b in chunk), comment=''))
-        a = end
+        a = limit
     return ents
 
 
@@ -406,7 +486,7 @@ def render_gas(ents, label, pinned):
             lines.append('%s:' % label[a])
         if pinned and e['kind'] == 'i':
             lines.append('I_%X:' % a)
-        lines.append('\t' + to_gas(e['text']))
+        lines.append('\t' + to_gas(e.get('gas', e['text'])))
         owner[len(lines)] = idx
         if pinned and e['kind'] == 'i':
             lines.append('E_%X:' % a)
@@ -514,8 +594,16 @@ def main():
             label[t] = ('sub_%06X' if (t in rom.calls or t in roots) else 'loc_%06X') % t
         else:
             label[t] = 'dat_%06X' % t
+    dp = {}                                # data typed by its consumer (tools/classify_data.py)
+    if os.path.exists(args.hints):
+        dp = json.load(open(args.hints)).get('data_prefix', {})
+    for prefix, addrs in dp.items():
+        for x in addrs:
+            a = int(x, 16)
+            if label.get(a, '').startswith('dat_'):
+                label[a] = '%s_%06X' % (prefix, a)
     for a, nm in rom_names.items():        # hand-chosen names win over generated ones
-        if a in label:
+        if a >= 0x200:
             label[a] = nm
     # a label that falls inside an instruction cannot be placed: drop it
     inside = set()

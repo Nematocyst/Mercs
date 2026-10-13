@@ -42,7 +42,12 @@
     "Timer_*": "medium - loaded with a constant then counted down with subq",
     "Game_NextState": "high - state 08 is a hub; $C5A2 holds the next Game_State (observed 14,38,28,0C,18,04)",
     "Camera_Y": "medium - falls steadily while walking up in Mission 1 ($3A0->$302 in 150 frames)",
-    "GameState_*": "high for 04/08/0C/14/18/28/38 - verified by emulator screenshots; Game_State = 4*(table index+1)"
+    "GameState_*": "high for 04/08/0C/14/18/28/38 - verified by emulator screenshots; Game_State = 4*(table index+1)",
+    "Decompress_To*": "high - one Huffman-style decompressor: A218 outputs to VDP_Data, A22A to the buffer in a4; table in ram_CE00",
+    "Object_LoadTemplate": "medium - copies a template record (a1) into object fields $34/$37/$3A/$30...",
+    "Object_RunAnimScript": "medium - interprets word commands at $30(a0), sets $34(a0)",
+    "Art_/ObjData_": "derived by tools/classify_data.py from the routine each blob is passed to",
+    "Z80_Driver*": "high - ROM $FB75A..$FC6AA is copied to Z80 RAM $0000 and $FC6AA..$FCFA0 to Z80 RAM $1000 (verified against a Z80 RAM dump)"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -50,5 +55,14 @@
   "000E46": "GameState_Title",
   "002C8C": "GameState_Demo",
   "00494E": "GameState_Intro",
-  "006448": "GameState_ModeSelect"
+  "006448": "GameState_ModeSelect",
+  "00A218": "Decompress_ToVDP",
+  "00A22A": "Decompress_ToRAM",
+  "01ADB0": "Object_LoadTemplate",
+  "01AF1A": "Object_RunAnimScript",
+  "FFFFCE00": "Huffman_Table",
+  "FFFFA000": "Decomp_Buffer",
+  "0FB75A": "Z80_Driver",
+  "0FC6AA": "Z80_Driver_Data",
+  "0FCFA0": "Z80_Driver_End"
 }

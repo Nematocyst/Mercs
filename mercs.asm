@@ -82,7 +82,7 @@ ram_880C	equ	$FFFF880C
 ram_8D20	equ	$FFFF8D20
 ram_9300	equ	$FFFF9300
 ram_9E00	equ	$FFFF9E00
-ram_A000	equ	$FFFFA000
+Decomp_Buffer	equ	$FFFFA000
 ram_A08C	equ	$FFFFA08C
 ram_A128	equ	$FFFFA128
 ram_A12E	equ	$FFFFA12E
@@ -391,7 +391,7 @@ ram_C800	equ	$FFFFC800
 ram_C900	equ	$FFFFC900
 ram_CB00	equ	$FFFFCB00
 ram_CC00	equ	$FFFFCC00
-ram_CE00	equ	$FFFFCE00
+Huffman_Table	equ	$FFFFCE00
 ram_D000	equ	$FFFFD000
 ram_D010	equ	$FFFFD010
 ram_D020	equ	$FFFFD020
@@ -570,22 +570,21 @@ ram_FEDD	equ	$FFFFFEDD
 	dc.l	ErrorTrap,ErrorTrap,ErrorTrap,ErrorTrap
 	dc.l	ErrorTrap,ErrorTrap,ErrorTrap,ErrorTrap
 	dc.l	ErrorTrap,ErrorTrap,ErrorTrap,ErrorTrap
-	dc.b	$53,$45,$47,$41,$20,$4D,$45,$47,$41,$20,$44,$52,$49,$56,$45,$20
-	dc.b	$28,$43,$29,$53,$45,$47,$41,$20,$31,$39,$39,$31,$2E,$41,$55,$47
-	dc.b	$90,$ED,$8F,$EA,$82,$CC,$98,$54,$87,$55,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$4D,$45,$52,$43,$53,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$6D,$6B,$20,$30,$30,$30,$30,$31,$31,$31,$39,$2D,$30,$30,$0F,$41
-	dc.b	$4A,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$00,$00,$00,$00,$00,$0F,$FF,$FF,$FF,$FF,$00,$00,$FF,$FF,$FF,$FF
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$4A,$55,$45,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
+	dc.b	'SEGA MEGA DRIVE '		; console
+	dc.b	'(C)SEGA 1991.AUG'		; copyright
+	dc.b	$90,$ED,$8F,$EA,$82,$CC,$98,$54,$87,$55,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20		; domestic name
+	dc.b	'MERCS                                           '		; overseas name
+	dc.b	'mk 00001119-00'		; serial number
+	dc.w	$0F41		; checksum
+	dc.b	'J               '		; I/O support
+	dc.l	$00000000		; ROM start
+	dc.l	$000FFFFF		; ROM end
+	dc.l	$FFFF0000		; RAM start
+	dc.l	$FFFFFFFF		; RAM end
+	dc.b	'            '		; SRAM info
+	dc.b	'            '		; modem
+	dc.b	'                                        '		; notes
+	dc.b	'JUE             '		; region
 ErrorTrap:
 	nop
 loc_000202:
@@ -848,9 +847,9 @@ loc_000480:
 loc_000484:
 	move.l	#$40200000,(VDP_Control).l
 loc_00048E:
-	lea	(dat_0DD000).l,a0
+	lea	(Art_0DD000).l,a0
 loc_000494:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_00049A:
 	lea	(dat_000610).l,a1
 loc_0004A0:
@@ -1011,8 +1010,8 @@ sub_000650:
 	jsr	(sub_008508).l
 	move.b	#$1,(ram_C5A0).w
 	move.l	#$68600002,(VDP_Control).l
-	lea	(dat_058554).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_058554).l,a0
+	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_0007C8
 	move.w	#$1,(ram_C328).w
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -1114,7 +1113,7 @@ loc_0007B0:
 loc_0007C6:
 	rts
 sub_0007C8:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$3FF,d6
 loc_0007D2:
@@ -1148,8 +1147,9 @@ loc_00083A:
 	dc.b	$00,$01
 dat_00083E:
 	dc.b	$00,$00
-	dc.b	$25,$43,$00,$00,$00,$00,$88,$02,$00,$00,$08,$4E,$A3,$10,$52,$4F
-	dc.b	$55,$4E,$44,$20,$20,$20,$20,$31,$00,$00
+	dc.b	$25,$43,$00,$00,$00,$00,$88,$02,$00,$00,$08,$4E,$A3,$10
+	dc.b	'ROUND    1',0
+	dc.b	$00
 sub_00085A:
 	move.w	#$2700,sr
 loc_00085E:
@@ -1169,9 +1169,9 @@ loc_00087C:
 loc_000882:
 	move.l	#$62E00002,(VDP_Control).l
 loc_00088C:
-	lea	(dat_0582AC).l,a0
+	lea	(Art_0582AC).l,a0
 loc_000892:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_000898:
 	move.w	#$20,d0
 loc_00089C:
@@ -1563,7 +1563,7 @@ dat_000B9A:
 	dc.b	$00,$00,$0C,$DE,$00,$00
 	dc.b	$0C,$F2
 sub_000BA2:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_000BA6:
 	moveq	#$0,d7
 loc_000BA8:
@@ -1637,16 +1637,19 @@ dat_000C38:
 	dc.b	$00,$00,$0C,$9A,$A8,$0A,$00,$00,$0C,$A6,$A9,$0E,$00,$00,$0C,$AA
 	dc.b	$A9,$8E,$00,$00,$0C,$B0,$AB,$0A,$4F,$50,$54,$49,$4F,$4E,$53,$00
 	dc.b	$4D,$4F,$44,$45,$00,$00,$4C,$45,$56,$45,$4C,$00,$43,$4F,$4E,$54
-	dc.b	$52,$4F,$4C,$00,$52,$41,$50,$49,$44,$00,$53,$4F,$55,$4E,$44,$20
-	dc.b	$54,$45,$53,$54,$00,$00,$42,$47,$4D,$00,$53,$2E,$45,$2E,$00,$00
+	dc.b	$52,$4F,$4C,$00,$52,$41,$50,$49,$44,$00
+	dc.b	'SOUND TEST',0
+	dc.b	$00,$42,$47,$4D,$00,$53,$2E,$45,$2E,$00,$00
 	dc.b	$45,$58,$49,$54,$00,$00
 dat_000CB6:
 	dc.b	$00,$01,$25,$17,$00,$00,$00,$00,$87,$E2
-	dc.b	$00,$00,$0C,$CC,$A3,$1C,$00,$00,$0D,$06,$A7,$1C,$41,$52,$43,$41
-	dc.b	$44,$45,$20,$20,$4F,$52,$49,$47,$49,$4E,$41,$4C,$00,$00,$45,$41
-	dc.b	$53,$59,$20,$20,$4E,$4F,$52,$4D,$41,$4C,$20,$20,$48,$41,$52,$44
-	dc.b	$00,$00,$4E,$4F,$52,$4D,$41,$4C,$20,$20,$48,$41,$52,$44,$20,$20
-	dc.b	$20,$20,$20,$20,$00,$00,$4F,$4E,$20,$20,$4F,$46,$46,$00,$30,$31
+	dc.b	$00,$00,$0C,$CC,$A3,$1C,$00,$00,$0D,$06,$A7,$1C
+	dc.b	'ARCADE  ORIGINAL',0
+	dc.b	$00
+	dc.b	'EASY  NORMAL  HARD',0
+	dc.b	$00
+	dc.b	'NORMAL  HARD      ',0
+	dc.b	$00,$4F,$4E,$20,$20,$4F,$46,$46,$00,$30,$31
 	dc.b	$00,$00
 dat_000D12:
 	dc.b	$00,$04,$05,$17,$00,$00,$00,$00,$87,$E2,$00,$00,$0D,$3A
@@ -1668,9 +1671,11 @@ dat_000D74:
 	dc.b	$00,$00,$00,$00,$87,$E2,$00,$00,$0D,$D4,$A5,$22,$00,$00,$0D,$D4
 	dc.b	$A5,$A2,$00,$00,$0D,$E6,$A6,$22,$00,$02,$05,$17,$00,$00,$00,$00
 	dc.b	$87,$E2,$00,$00,$0D,$E6,$A5,$22,$00,$00,$0D,$D4,$A5,$A2,$00,$00
-	dc.b	$0D,$D4,$A6,$22,$53,$48,$4F,$54,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$00,$00,$4D,$45,$47,$41,$20,$43,$52,$41,$53,$48
-	dc.b	$20,$20,$20,$20,$20,$20,$00,$00,$81,$82,$83,$84,$85,$86,$87,$88
+	dc.b	$0D,$D4,$A6
+	dc.b	'"SHOT            ',0
+	dc.b	$00
+	dc.b	'MEGA CRASH      ',0
+	dc.b	$00,$81,$82,$83,$84,$85,$86,$87,$88
 	dc.b	$89,$8A,$8B,$8C,$8D,$8E,$8F,$90,$91,$92,$93,$94,$95,$96,$97,$98
 	dc.b	$99,$9A,$9B,$9C,$9D,$9E,$9F,$A0,$A1,$A2
 dat_000E1A:
@@ -1777,7 +1782,7 @@ loc_000F36:
 loc_000F38:
 	dbra	d0,loc_000F36
 loc_000F3C:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_000F40:
 	moveq	#$0,d7
 loc_000F42:
@@ -2159,15 +2164,14 @@ loc_001318:
 loc_001352:
 	rts
 dat_001354:
-	dc.b	$50,$52,$45,$53,$53,$20,$53,$54,$41,$52,$54,$20
-	dc.b	$42,$55,$54,$54,$4F,$4E,$00,$00
+	dc.b	'PRESS START BUTTON',0
+	dc.b	$00
 dat_001368:
 	dc.b	$40,$43,$41,$50,$43,$4F,$4D,$20
 	dc.b	$31,$39,$39,$30,$00,$00
 dat_001376:
-	dc.b	$52,$45,$50,$52,$4F,$47,$52,$41,$4D,$4D
-	dc.b	$45,$44,$20,$47,$41,$4D,$45,$20,$40,$53,$45,$47,$41,$20,$31,$39
-	dc.b	$39,$31,$00,$00
+	dc.b	'REPROGRAMMED GAME @SEGA 1991',0
+	dc.b	$00
 GameState_Gameplay:
 	move.w	#$2700,sr
 loc_001398:
@@ -2241,15 +2245,15 @@ loc_001438:
 loc_001440:
 	move.l	#$72800003,(VDP_Control).l
 loc_00144A:
-	lea	(dat_0591E0).l,a0
+	lea	(Art_0591E0).l,a0
 loc_001450:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001456:
 	move.l	#$7B400003,(VDP_Control).l
 loc_001460:
-	lea	(dat_059D34).l,a0
+	lea	(Art_059D34).l,a0
 loc_001466:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_00146C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001474:
@@ -2285,51 +2289,51 @@ loc_0014B6:
 loc_0014BA:
 	bsr.w	sub_0023B0
 loc_0014BE:
-	lea	(dat_039136).l,a0
+	lea	(Art_039136).l,a0
 loc_0014C4:
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 loc_0014C8:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0014CE:
-	lea	(dat_03A692).l,a0
+	lea	(Art_03A692).l,a0
 loc_0014D4:
 	lea	(ram_A1C0).w,a4
 loc_0014D8:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0014DE:
-	lea	(dat_03AAAC).l,a0
+	lea	(Art_03AAAC).l,a0
 loc_0014E4:
 	lea	(ram_A280).w,a4
 loc_0014E8:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0014EE:
-	lea	(dat_03A710).l,a0
+	lea	(Art_03A710).l,a0
 loc_0014F4:
 	lea	(ram_AD20).w,a4
 loc_0014F8:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0014FE:
-	lea	(dat_0817A0).l,a0
+	lea	(Art_0817A0).l,a0
 loc_001504:
 	lea	(ram_B0C0).w,a4
 loc_001508:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00150E:
 	tst.b	(Flags_C356).w
 loc_001512:
 	beq.b	loc_00153C
 loc_001514:
-	lea	(dat_03B45A).l,a0
+	lea	(Art_03B45A).l,a0
 loc_00151A:
 	lea	(ram_BB00).w,a4
 loc_00151E:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_001524:
-	lea	(dat_03AF96).l,a0
+	lea	(Art_03AF96).l,a0
 loc_00152A:
 	lea	(ram_FF5A60).l,a4
 loc_001530:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_001536:
 	jsr	(sub_00B72A).l
 loc_00153C:
@@ -2703,13 +2707,13 @@ loc_00187A:
 loc_00187E:
 	movea.l	(a6)+,a0
 loc_001880:
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 loc_001884:
 	moveq	#$1,d0
 loc_001886:
 	jsr	(sub_00855A).l
 loc_00188C:
-	lea	(ram_A000).w,a0
+	lea	(Decomp_Buffer).w,a0
 loc_001890:
 	lea	(ram_8000).w,a4
 loc_001894:
@@ -2745,7 +2749,7 @@ loc_0018CA:
 loc_0018CC:
 	jmp	(sub_008524).l
 sub_0018D2:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_0018D6:
 	movea.l	(ram_C5B0).w,a2
 loc_0018DA:
@@ -2759,7 +2763,7 @@ loc_0018E2:
 loc_0018E6:
 	jsr	(sub_00A19C).l
 loc_0018EC:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_0018F0:
 	move.w	#$3FF,d0
 loc_0018F4:
@@ -2797,7 +2801,7 @@ sub_00193C:
 loc_001940:
 	bne.b	loc_0019AA
 loc_001942:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_001946:
 	movea.l	(ram_C5B4).w,a2
 loc_00194A:
@@ -2811,7 +2815,7 @@ loc_001952:
 loc_001956:
 	jsr	(sub_00A19C).l
 loc_00195C:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_001960:
 	move.w	#$3FF,d0
 loc_001964:
@@ -3383,9 +3387,9 @@ loc_001E70:
 loc_001E72:
 	move.l	#$75000002,(VDP_Control).l
 loc_001E7C:
-	lea	(dat_057D28).l,a0
+	lea	(Art_057D28).l,a0
 loc_001E82:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001E88:
 	rts
 sub_001E8A:
@@ -3403,21 +3407,21 @@ loc_001EA0:
 loc_001EB2:
 	move.l	#$4D400002,(VDP_Control).l
 loc_001EBC:
-	lea	(dat_0E4550).l,a0
+	lea	(Art_0E4550).l,a0
 loc_001EC2:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001EC8:
 	move.l	#$53400002,(VDP_Control).l
 loc_001ED2:
-	lea	(dat_0E4632).l,a0
+	lea	(Art_0E4632).l,a0
 loc_001ED8:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001EDE:
 	move.l	#$62E00002,(VDP_Control).l
 loc_001EE8:
-	lea	(dat_0582AC).l,a0
+	lea	(Art_0582AC).l,a0
 loc_001EEE:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001EF4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001EFC:
@@ -3447,9 +3451,9 @@ loc_001F2E:
 loc_001F36:
 	move.l	#$5CA00002,(VDP_Control).l
 loc_001F40:
-	lea	(dat_0E4538).l,a0
+	lea	(Art_0E4538).l,a0
 loc_001F46:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_001F4C:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_001F54:
@@ -3561,9 +3565,9 @@ loc_002050:
 loc_002054:
 	move.l	#$4D200002,(VDP_Control).l
 loc_00205E:
-	lea	(dat_03937A).l,a0
+	lea	(Art_03937A).l,a0
 loc_002064:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_00206A:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002072:
@@ -3599,20 +3603,20 @@ loc_0020B2:
 	cmpi.w	#$D,(ram_C328).w
 	bne.w	loc_002114
 	move.l	#$67A00001,(VDP_Control).l
-	lea	(dat_03AAAC).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_03AAAC).l,a0
+	jsr	(Decompress_ToVDP).l
 	bra.w	loc_002114
 loc_0020E4:
 	move.l	#$56200001,(VDP_Control).l
-	lea	(dat_03AAAC).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_03AAAC).l,a0
+	jsr	(Decompress_ToVDP).l
 	bra.w	loc_002114
 loc_0020FE:
 	move.l	#$6D200001,(VDP_Control).l
 loc_002108:
-	lea	(dat_03C4C0).l,a0
+	lea	(Art_03C4C0).l,a0
 loc_00210E:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_002114:
 	lea	(VDP_Control).l,a6
 loc_00211A:
@@ -3648,7 +3652,7 @@ loc_002142:
 	add.w	d0,d0
 	movea.l	dat_00217A(pc,d0.w),a0
 	move.l	#$40000000,(VDP_Control).l
-	jmp	(sub_00A218).l
+	jmp	(Decompress_ToVDP).l
 dat_00217A:
 	dc.b	$00,$0A,$DA,$06,$00,$0B
 	dc.b	$01,$E4,$00,$0B,$01,$E4,$00,$0B,$36,$78,$00,$0B,$63,$06,$00,$0B
@@ -3656,47 +3660,47 @@ dat_00217A:
 	dc.b	$DC,$48,$00,$0C,$0A,$80,$00,$0C,$0A,$80
 loc_0021AA:
 	move.l	#$40000000,(VDP_Control).l
-	lea	(dat_076EDA).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_076EDA).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$5B200000,(VDP_Control).l
-	lea	(dat_0782D2).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0782D2).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$71C00000,(VDP_Control).l
-	lea	(dat_0BA626).l,a0
-	jmp	(sub_00A218).l
+	lea	(Art_0BA626).l,a0
+	jmp	(Decompress_ToVDP).l
 loc_0021EC:
 	move.l	#$40000000,(VDP_Control).l
-	lea	(dat_0C0A80).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0C0A80).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$5E000000,(VDP_Control).l
-	lea	(dat_0C1A5E).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0C1A5E).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$6B800000,(VDP_Control).l
-	lea	(dat_08016E).l,a0
-	jmp	(sub_00A218).l
+	lea	(Art_08016E).l,a0
+	jmp	(Decompress_ToVDP).l
 loc_00222E:
 	move.l	#$40000000,(VDP_Control).l
-	lea	(dat_0C2486).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0C2486).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$56800000,(VDP_Control).l
-	lea	(dat_07E0F2).l,a0
-	jmp	(sub_00A218).l
+	lea	(Art_07E0F2).l,a0
+	jmp	(Decompress_ToVDP).l
 sub_00225A:
 	bclr.b	#$2,(ram_C5C8).w
 loc_002260:
 	beq.w	loc_00193A
 	move.l	#$40200000,(VDP_Control).l
-	lea	(dat_086C92).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_086C92).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$4C000000,(VDP_Control).l
-	lea	(dat_0E5022).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0E5022).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$51200002,(VDP_Control).l
-	lea	(dat_0E4EBE).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0E4EBE).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$5EA00002,(VDP_Control).l
-	lea	(dat_0E4EE8).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0E4EE8).l,a0
+	jsr	(Decompress_ToVDP).l
 	bra.w	loc_001E94
 sub_0022C0:
 	bclr.b	#$7,(ram_C5C8).w
@@ -4113,14 +4117,14 @@ loc_002DF2:
 	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$70C00002,(VDP_Control).l
-	lea	(dat_0589FA).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0589FA).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$68600002,(VDP_Control).l
-	lea	(dat_058554).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_058554).l,a0
+	jsr	(Decompress_ToVDP).l
 	move.l	#$62E00002,(VDP_Control).l
-	lea	(dat_0582AC).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0582AC).l,a0
+	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_00317A
 	move.w	#$20,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -4362,7 +4366,7 @@ sub_00317A:
 	move.w	(ram_C34A).w,d1
 	bsr.w	sub_008150
 	bsr.w	sub_0080A4
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$3FF,d6
 loc_0031B6:
@@ -4412,12 +4416,13 @@ loc_003252:
 	rts
 dat_003260:
 	dc.b	$00,$01,$05,$86,$00,$00,$00,$00,$88,$78,$00,$00,$32,$76,$A1,$0C
-	dc.b	$00,$00,$32,$7E,$A2,$8C,$4D,$49,$53,$53,$49,$4F,$4E,$00,$43,$4F
-	dc.b	$4D,$50,$4C,$45,$54,$45,$44,$00
+	dc.b	$00,$00,$32,$7E,$A2,$8C,$4D,$49,$53,$53,$49,$4F,$4E,$00
+	dc.b	'COMPLETED',0
 dat_003288:
 	dc.b	$00,$01,$05,$86,$00,$00,$00,$00
-	dc.b	$88,$78,$00,$00,$32,$9E,$A4,$08,$00,$00,$32,$AA,$A5,$A4,$42,$4F
-	dc.b	$4E,$55,$53,$20,$50,$4F,$49,$4E,$54,$00,$50,$54,$53,$00
+	dc.b	$88,$78,$00,$00,$32,$9E,$A4,$08,$00,$00,$32,$AA,$A5,$A4
+	dc.b	'BONUS POINT',0
+	dc.b	$50,$54,$53,$00
 dat_0032AE:
 	dc.b	$30,$00
 dat_0032B0:
@@ -4434,12 +4439,14 @@ dat_0032EA:
 	dc.b	$C7,$DD
 dat_0032F2:
 	dc.b	$00,$01,$05,$86,$00,$00,$00,$00,$88,$78,$00,$00,$33,$08
-	dc.b	$AA,$0E,$00,$00,$33,$12,$AB,$94,$56,$49,$54,$41,$4C,$49,$54,$59
-	dc.b	$00,$00,$42,$4F,$4E,$55,$53,$00
+	dc.b	$AA,$0E,$00,$00,$33,$12,$AB,$94
+	dc.b	'VITALITY',0
+	dc.b	$00,$42,$4F,$4E,$55,$53,$00
 dat_003318:
 	dc.b	$00,$01,$05,$86,$00,$00,$00,$00
-	dc.b	$88,$78,$00,$00,$32,$76,$A1,$10,$00,$00,$33,$2E,$A2,$86,$41,$43
-	dc.b	$43,$4F,$4D,$50,$4C,$49,$53,$48,$45,$44,$00,$00
+	dc.b	$88,$78,$00,$00,$32,$76,$A1,$10,$00,$00,$33,$2E,$A2,$86
+	dc.b	'ACCOMPLISHED',0
+	dc.b	$00
 dat_00333C:
 	dc.b	$00,$10,$00,$12
 	dc.b	$00,$14,$00,$16,$00,$18,$00,$1A,$00,$1C,$00,$10,$00,$12,$00,$14
@@ -4726,72 +4733,72 @@ loc_00364A:
 loc_00364C:
 	bra.b	loc_003634
 loc_00364E:
-	lea	(dat_0DD39C).l,a0
+	lea	(Art_0DD39C).l,a0
 loc_003654:
 	lea	(ram_FF0000).l,a4
 loc_00365A:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003660:
 	btst.b	#$7,(Hardware_Version).w
 loc_003666:
 	beq.b	loc_00367C
 loc_003668:
-	lea	(dat_058554).l,a0
+	lea	(Art_058554).l,a0
 loc_00366E:
 	lea	(ram_A860).w,a4
 loc_003672:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003678:
 	bra.w	loc_0036A0
 loc_00367C:
-	lea	(dat_08472A).l,a0
+	lea	(Art_08472A).l,a0
 	lea	(ram_FF3000).l,a4
-	jsr	(sub_00A22A).l
-	lea	(dat_0EAB2E).l,a0
+	jsr	(Decompress_ToRAM).l
+	lea	(Art_0EAB2E).l,a0
 	lea	(ram_FF32A0).l,a4
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036A0:
 	bra.b	loc_003634
 loc_0036A2:
-	lea	(dat_0E19A4).l,a0
+	lea	(Art_0E19A4).l,a0
 loc_0036A8:
 	lea	(ram_FF0000).l,a4
 loc_0036AE:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036B4:
-	lea	(dat_0E16EE).l,a0
+	lea	(Art_0E16EE).l,a0
 loc_0036BA:
 	lea	(ram_FF1B60).l,a4
 loc_0036C0:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036C6:
-	lea	(dat_0E81A8).l,a0
+	lea	(Art_0E81A8).l,a0
 loc_0036CC:
 	lea	(ram_FF2140).l,a4
 loc_0036D2:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036D8:
-	lea	(dat_0E811C).l,a0
+	lea	(Art_0E811C).l,a0
 loc_0036DE:
 	lea	(ram_FF63A0).l,a4
 loc_0036E4:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036EA:
-	lea	(dat_057D28).l,a0
+	lea	(Art_057D28).l,a0
 loc_0036F0:
 	lea	(ram_B500).w,a4
 loc_0036F4:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0036FA:
-	lea	(dat_0EABB2).l,a0
+	lea	(Art_0EABB2).l,a0
 loc_003700:
 	lea	(ram_B500).w,a4
 loc_003704:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00370A:
 	bra.w	loc_003634
 loc_00370E:
-	lea	(dat_057D08).l,a1
+	lea	(Art_057D08).l,a1
 loc_003714:
 	lea	(ram_FF0020).l,a2
 loc_00371A:
@@ -4803,29 +4810,29 @@ loc_003720:
 loc_003724:
 	bra.w	loc_003634
 loc_003728:
-	lea	(dat_0E683E).l,a0
+	lea	(Art_0E683E).l,a0
 loc_00372E:
 	lea	(ram_FF0000).l,a4
 loc_003734:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00373A:
-	lea	(dat_0E78E4).l,a0
+	lea	(Art_0E78E4).l,a0
 loc_003740:
 	lea	(ram_FF1D80).l,a4
 loc_003746:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00374C:
-	lea	(dat_0E7938).l,a0
+	lea	(Art_0E7938).l,a0
 loc_003752:
 	lea	(ram_FF1EA0).l,a4
 loc_003758:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00375E:
-	lea	(dat_03937A).l,a0
+	lea	(Art_03937A).l,a0
 loc_003764:
 	lea	(ram_8D20).w,a4
 loc_003768:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00376E:
 	bra.w	loc_003634
 	dc.b	$4D,$F9,$00,$FF,$00,$00,$7E,$00,$3C,$3C,$00,$07,$2C,$C7
@@ -4846,44 +4853,44 @@ loc_0037DE:
 loc_0037E0:
 	dbra	d6,loc_0037DE
 loc_0037E4:
-	lea	(dat_07F5B8).l,a0
+	lea	(Art_07F5B8).l,a0
 loc_0037EA:
 	lea	(ram_FF0020).l,a4
 loc_0037F0:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0037F6:
-	lea	(dat_082040).l,a0
+	lea	(Art_082040).l,a0
 loc_0037FC:
 	lea	(ram_FF04A0).l,a4
 loc_003802:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003808:
-	lea	(dat_0E2F84).l,a0
+	lea	(Art_0E2F84).l,a0
 loc_00380E:
 	lea	(ram_FF5280).l,a4
 loc_003814:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00381A:
-	lea	(dat_0E2C4A).l,a0
+	lea	(Art_0E2C4A).l,a0
 loc_003820:
 	lea	(ram_FF64C0).l,a4
 loc_003826:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00382C:
-	lea	(dat_058554).l,a0
+	lea	(Art_058554).l,a0
 loc_003832:
 	lea	(ram_A860).w,a4
 loc_003836:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00383C:
 	btst.b	#$7,(Hardware_Version).w
 loc_003842:
 	bne.b	loc_003856
-	lea	(dat_08472A).l,a0
+	lea	(Art_08472A).l,a0
 	lea	(ram_FF6AA0).l,a4
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003856:
-	lea	(dat_02E000).l,a1
+	lea	(Art_02E000).l,a1
 loc_00385C:
 	lea	(ram_FF0280).l,a2
 loc_003862:
@@ -4895,17 +4902,17 @@ loc_003868:
 loc_00386C:
 	bra.w	loc_003634
 loc_003870:
-	lea	(dat_0E19A4).l,a0
+	lea	(Art_0E19A4).l,a0
 loc_003876:
 	lea	(ram_FF0000).l,a4
 loc_00387C:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003882:
-	lea	(dat_0E16EE).l,a0
+	lea	(Art_0E16EE).l,a0
 loc_003888:
 	lea	(ram_FF1B60).l,a4
 loc_00388E:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003894:
 	lea	(ram_FF2140).l,a1
 loc_00389A:
@@ -4917,21 +4924,21 @@ loc_0038A2:
 loc_0038A4:
 	dbra	d0,loc_0038A2
 loc_0038A8:
-	lea	(dat_08472A).l,a0
+	lea	(Art_08472A).l,a0
 loc_0038AE:
 	lea	(ram_FF6AA0).l,a4
 loc_0038B4:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0038BA:
 	btst.b	#$7,(Hardware_Version).w
 loc_0038C0:
 	beq.b	loc_0038D2
 loc_0038C2:
-	lea	(dat_0582AC).l,a0
+	lea	(Art_0582AC).l,a0
 loc_0038C8:
 	lea	(ram_A2E0).w,a4
 loc_0038CC:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0038D2:
 	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$05,$91,$E0,$49,$F9,$00,$FF
@@ -4946,17 +4953,17 @@ loc_0038D2:
 	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$05,$89,$FA,$49,$F8,$B0,$C0
 	dc.b	$4E,$B9,$00,$00,$A2,$2A,$60,$00,$FC,$BC
 loc_00397A:
-	lea	(dat_0DD39C).l,a0
+	lea	(Art_0DD39C).l,a0
 loc_003980:
 	lea	(ram_FF0000).l,a4
 loc_003986:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00398C:
-	lea	(dat_0582AC).l,a0
+	lea	(Art_0582AC).l,a0
 loc_003992:
 	lea	(ram_A2E0).w,a4
 loc_003996:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00399C:
 	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$05,$85,$54,$49,$F8,$A8,$60,$4E,$B9,$00,$00,$A2,$2A
@@ -4964,31 +4971,31 @@ loc_00399C:
 	dc.b	$00,$06,$FE,$48,$67,$06,$43,$F9,$00,$00,$43,$FC,$43,$F1,$00,$00
 	dc.b	$21,$D9,$FE,$5A,$31,$D9,$C3,$28
 loc_0039D8:
-	lea	(dat_03C4C0).l,a0
+	lea	(Art_03C4C0).l,a0
 loc_0039DE:
 	lea	(ram_FF6D20).l,a4
 loc_0039E4:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0039EA:
-	lea	(dat_0599AA).l,a0
+	lea	(Art_0599AA).l,a0
 loc_0039F0:
 	lea	(ram_FF6060).l,a4
 loc_0039F6:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_0039FC:
-	lea	(dat_059BB8).l,a0
+	lea	(Art_059BB8).l,a0
 loc_003A02:
 	lea	(ram_FF89A0).l,a4
 loc_003A08:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003A0E:
-	lea	(dat_039208).l,a0
+	lea	(Art_039208).l,a0
 loc_003A14:
 	lea	(ram_FF8B00).l,a4
 loc_003A1A:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003A20:
-	lea	(dat_05994A).l,a1
+	lea	(Art_05994A).l,a1
 loc_003A26:
 	lea	(ram_FF8C40).l,a2
 loc_003A2C:
@@ -4998,13 +5005,13 @@ loc_003A30:
 loc_003A32:
 	dbra	d0,loc_003A30
 loc_003A36:
-	lea	(dat_059DBA).l,a0
+	lea	(Art_059DBA).l,a0
 loc_003A3C:
 	lea	(ram_FF8CA0).l,a4
 loc_003A42:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003A48:
-	lea	(dat_02E000).l,a1
+	lea	(Art_02E000).l,a1
 loc_003A4E:
 	lea	(ram_FF8CE0).l,a2
 loc_003A54:
@@ -5014,17 +5021,17 @@ loc_003A58:
 loc_003A5A:
 	dbra	d0,loc_003A58
 loc_003A5E:
-	lea	(dat_03937A).l,a0
+	lea	(Art_03937A).l,a0
 loc_003A64:
 	lea	(ram_FF8D20).l,a4
 loc_003A6A:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003A70:
-	lea	(dat_099AC0).l,a0
+	lea	(Art_099AC0).l,a0
 loc_003A76:
 	lea	(ram_FF81A0).l,a4
 loc_003A7C:
-	jsr	sub_00A22A(pc)
+	jsr	Decompress_ToRAM(pc)
 loc_003A80:
 	lea	(dat_05FF20).l,a1
 loc_003A86:
@@ -5057,67 +5064,67 @@ loc_003ABE:
 	dc.b	$04,$44,$60,$00,$04,$C2,$60,$00,$05,$8C,$60,$00,$06,$64,$60,$00
 	dc.b	$06,$BE,$60,$00,$06,$F4
 loc_003B06:
-	lea	(dat_059DCE).l,a0
+	lea	(Art_059DCE).l,a0
 loc_003B0C:
 	lea	(ram_FF0000).l,a4
 loc_003B12:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B18:
-	lea	(dat_05F978).l,a0
+	lea	(Art_05F978).l,a0
 loc_003B1E:
 	lea	(ram_FF4860).l,a4
 loc_003B24:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B2A:
-	lea	(dat_05FA2E).l,a0
+	lea	(Art_05FA2E).l,a0
 loc_003B30:
 	lea	(ram_FF4980).l,a4
 loc_003B36:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B3C:
-	lea	(dat_02E040).l,a0
+	lea	(Art_02E040).l,a0
 loc_003B42:
 	lea	(ram_FF5180).l,a4
 loc_003B48:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B4E:
-	lea	(dat_05FE2E).l,a0
+	lea	(Art_05FE2E).l,a0
 loc_003B54:
 	lea	(ram_BE00).w,a4
 loc_003B58:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B5E:
 	bra.w	loc_003634
 loc_003B62:
-	lea	(dat_076EDA).l,a0
+	lea	(Art_076EDA).l,a0
 loc_003B68:
 	lea	(ram_FF0000).l,a4
 loc_003B6E:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B74:
-	lea	(dat_05FFD2).l,a0
+	lea	(Art_05FFD2).l,a0
 loc_003B7A:
 	lea	(ram_FF1B20).l,a4
 loc_003B80:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B86:
-	lea	(dat_060DBA).l,a0
+	lea	(Art_060DBA).l,a0
 loc_003B8C:
 	lea	(ram_FF2D20).l,a4
 loc_003B92:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003B98:
-	lea	(dat_0624F8).l,a0
+	lea	(Art_0624F8).l,a0
 loc_003B9E:
 	lea	(ram_FF5F80).l,a4
 loc_003BA4:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003BAA:
-	lea	(dat_0A61DE).l,a0
+	lea	(Art_0A61DE).l,a0
 loc_003BB0:
 	lea	(ram_FF58C0).l,a4
 loc_003BB6:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003BBC:
 	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$06,$5A,$CC,$49,$F9,$00,$FF,$00,$00,$4E,$B9,$00,$00
@@ -5156,73 +5163,73 @@ loc_003BBC:
 	dc.b	$45,$F9,$00,$FF,$82,$40,$30,$3C,$00,$0F,$24,$D9,$51,$C8,$FF,$FC
 	dc.b	$60,$00,$F8,$52
 loc_003DE4:
-	lea	(dat_02E040).l,a0
+	lea	(Art_02E040).l,a0
 loc_003DEA:
 	lea	(ram_FF5180).l,a4
 loc_003DF0:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003DF6:
-	lea	(dat_0AD124).l,a0
+	lea	(Art_0AD124).l,a0
 loc_003DFC:
 	lea	(ram_FF0000).l,a4
 loc_003E02:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E08:
-	lea	(dat_059DCE).l,a0
+	lea	(Art_059DCE).l,a0
 loc_003E0E:
 	lea	(ram_FF0B80).l,a4
 loc_003E14:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E1A:
-	lea	(dat_0AD000).l,a0
+	lea	(Art_0AD000).l,a0
 loc_003E20:
 	lea	(ram_FF4DE0).l,a4
 loc_003E26:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E2C:
 	bra.w	loc_003634
 loc_003E30:
-	lea	(dat_0A1AFE).l,a0
+	lea	(Art_0A1AFE).l,a0
 loc_003E36:
 	lea	(ram_FF4E80).l,a4
 loc_003E3C:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E42:
-	lea	(dat_09A20C).l,a0
+	lea	(Art_09A20C).l,a0
 loc_003E48:
 	lea	(ram_FF5860).l,a4
 loc_003E4E:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E54:
-	lea	(dat_099E1E).l,a0
+	lea	(Art_099E1E).l,a0
 loc_003E5A:
 	lea	(ram_FF5D40).l,a4
 loc_003E60:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E66:
-	lea	(dat_09B7E4).l,a0
+	lea	(Art_09B7E4).l,a0
 loc_003E6C:
 	lea	(ram_FF3B00).l,a4
 loc_003E72:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E78:
-	lea	(dat_09BA88).l,a0
+	lea	(Art_09BA88).l,a0
 loc_003E7E:
 	lea	(ram_FF4180).l,a4
 loc_003E84:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E8A:
-	lea	(dat_0ADA06).l,a0
+	lea	(Art_0ADA06).l,a0
 loc_003E90:
 	lea	(ram_FF0000).l,a4
 loc_003E96:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003E9C:
-	lea	(dat_0AD950).l,a0
+	lea	(Art_0AD950).l,a0
 loc_003EA2:
 	lea	(ram_FF3700).l,a4
 loc_003EA8:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_003EAE:
 	bra.w	loc_003634
 	dc.b	$41,$F9,$00,$0A,$65,$E8,$49,$F9,$00,$FF,$57,$80,$4E,$B9
@@ -5591,7 +5598,7 @@ sub_004514:
 	move.w	a2,(ram_C36C).w
 	rts
 sub_004538:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$3FF,d6
 loc_004542:
@@ -5664,31 +5671,32 @@ dat_00462E:
 dat_004646:
 	dc.b	$00,$02,$05,$43,$00,$00,$00,$00,$88,$1A
 	dc.b	$00,$00,$46,$62,$A2,$98,$00,$00,$46,$72,$A4,$1E,$00,$00,$46,$7E
-	dc.b	$A5,$98,$4C,$41,$4E,$44,$49,$4E,$47,$20,$4D,$49,$53,$53,$49,$4F
-	dc.b	$4E,$00,$53,$55,$43,$43,$45,$53,$53,$46,$55,$4C,$5B,$00,$54,$49
-	dc.b	$4D,$45,$20,$54,$4F,$20,$4D,$4F,$56,$45,$20,$49,$4E,$5B,$00,$00
+	dc.b	$A5,$98
+	dc.b	'LANDING MISSION',0
+	dc.b	'SUCCESSFUL[',0
+	dc.b	'TIME TO MOVE IN[',0
+	dc.b	$00
 dat_004690:
 	dc.b	$00,$00,$05,$43,$00,$00,$00,$00,$88,$1A,$00,$00,$46,$A0,$A2,$92
-	dc.b	$45,$4E,$45,$4D,$59,$20,$54,$41,$4E,$4B,$20,$4C,$49,$4E,$45,$20
-	dc.b	$42,$52,$4F,$4B,$45,$4E,$5B,$00
+	dc.b	'ENEMY TANK LINE BROKEN[',0
 dat_0046B8:
 	dc.b	$00,$01,$05,$43,$00,$00,$00,$00
-	dc.b	$88,$1A,$00,$00,$46,$CE,$A2,$94,$00,$00,$46,$E2,$A4,$12,$53,$50
-	dc.b	$45,$43,$49,$41,$4C,$20,$41,$54,$54,$41,$43,$4B,$20,$55,$4E,$49
-	dc.b	$54,$00,$5F,$53,$43,$4F,$52,$50,$49,$4F,$4E,$5F,$20,$4E,$45,$55
-	dc.b	$54,$52,$41,$4C,$49,$5A,$45,$44,$5B,$00
+	dc.b	$88,$1A,$00,$00,$46,$CE,$A2,$94,$00,$00,$46,$E2,$A4,$12
+	dc.b	'SPECIAL ATTACK UNIT',0
+	dc.b	'_SCORPION_ NEUTRALIZED[',0
 dat_0046FA:
 	dc.b	$00,$01,$05,$43,$00,$00
 	dc.b	$00,$00,$88,$1A,$00,$00,$47,$10,$A2,$90,$00,$00,$47,$2A,$A4,$14
-	dc.b	$4D,$4F,$55,$4E,$54,$41,$49,$4E,$20,$50,$41,$53,$53,$20,$50,$45
-	dc.b	$4E,$45,$54,$52,$41,$54,$45,$44,$5B,$00,$4E,$45,$55,$54,$52,$41
-	dc.b	$4C,$49,$5A,$45,$20,$45,$4E,$45,$4D,$59,$20,$48,$51,$5B,$00,$00
+	dc.b	'MOUNTAIN PASS PENETRATED[',0
+	dc.b	'NEUTRALIZE ENEMY HQ[',0
+	dc.b	$00
 dat_004740:
 	dc.b	$00,$02,$05,$43,$00,$00,$00,$00,$88,$1A,$00,$00,$47,$5C,$A2,$96
-	dc.b	$00,$00,$47,$6E,$A4,$1E,$00,$00,$47,$7A,$A5,$94,$45,$4E,$45,$4D
-	dc.b	$59,$20,$53,$55,$50,$50,$4C,$59,$20,$4C,$49,$4E,$45,$00,$44,$45
-	dc.b	$53,$54,$52,$4F,$59,$45,$44,$5B,$00,$00,$4D,$49,$53,$53,$49,$4F
-	dc.b	$4E,$20,$41,$43,$43,$4F,$4D,$50,$4C,$49,$53,$48,$45,$44,$5B,$00
+	dc.b	$00,$00,$47,$6E,$A4,$1E,$00,$00,$47,$7A,$A5,$94
+	dc.b	'ENEMY SUPPLY LINE',0
+	dc.b	'DESTROYED[',0
+	dc.b	$00
+	dc.b	'MISSION ACCOMPLISHED[',0
 dat_004790:
 	dc.b	$00,$01,$C5,$86,$00,$00,$00,$00,$88,$78,$00,$00,$47,$DA,$A0,$9C
 	dc.b	$00,$00,$47,$E2,$A2,$0C
@@ -5697,29 +5705,26 @@ dat_0047A6:
 	dc.b	$00,$00,$47,$F2,$A3,$84,$00,$00,$48,$14,$A5,$04,$00,$00,$48,$34
 	dc.b	$A6,$84,$00,$00,$48,$58,$A8,$04,$00,$00,$48,$7A,$A9,$84,$00,$00
 	dc.b	$48,$94,$AB,$04,$00,$00,$48,$BA,$AC,$84,$4D,$45,$52,$43,$53,$5B
-	dc.b	$00,$00,$4D,$49,$53,$53,$49,$4F,$4E,$20,$55,$50,$44,$41,$54,$45
-	dc.b	$00,$00,$57,$45,$20,$48,$41,$56,$45,$20,$52,$45,$43,$45,$49,$56
-	dc.b	$45,$44,$20,$49,$4E,$46,$4F,$52,$4D,$41,$54,$49,$4F,$4E,$20,$54
-	dc.b	$48,$41,$54,$00,$54,$48,$45,$20,$4C,$45,$41,$44,$45,$52,$20,$4F
-	dc.b	$46,$20,$54,$48,$45,$20,$52,$45,$56,$4F,$4C,$55,$54,$49,$4F,$4E
-	dc.b	$41,$52,$59,$00,$43,$4F,$52,$50,$53,$20,$49,$53,$20,$55,$53,$49
-	dc.b	$4E,$47,$20,$54,$48,$45,$20,$46,$4F,$52,$4D,$45,$52,$20,$50,$52
-	dc.b	$45,$53,$49,$44,$45,$4E,$54,$00,$49,$4E,$20,$41,$4E,$20,$41,$54
-	dc.b	$54,$45,$4D,$50,$54,$20,$54,$4F,$20,$46,$4C,$45,$45,$20,$54,$48
-	dc.b	$45,$20,$43,$4F,$55,$4E,$54,$52,$59,$00,$49,$4E,$20,$41,$20,$48
-	dc.b	$45,$52,$43,$55,$4C,$45,$53,$20,$54,$52,$41,$4E,$53,$50,$4F,$52
-	dc.b	$54,$5B,$00,$00,$49,$4E,$54,$45,$52,$43,$45,$50,$54,$20,$54,$48
-	dc.b	$45,$20,$46,$4C,$49,$47,$48,$54,$20,$4F,$46,$20,$54,$48,$45,$20
-	dc.b	$48,$45,$52,$43,$55,$4C,$45,$53,$00,$00,$41,$4E,$44,$20,$52,$45
-	dc.b	$53,$43,$55,$45,$20,$54,$48,$45,$20,$46,$4F,$52,$4D,$45,$52,$20
-	dc.b	$50,$52,$45,$53,$49,$44,$45,$4E,$54,$5B,$00,$00
+	dc.b	$00,$00
+	dc.b	'MISSION UPDATE',0
+	dc.b	$00
+	dc.b	'WE HAVE RECEIVED INFORMATION THAT',0
+	dc.b	'THE LEADER OF THE REVOLUTIONARY',0
+	dc.b	'CORPS IS USING THE FORMER PRESIDENT',0
+	dc.b	'IN AN ATTEMPT TO FLEE THE COUNTRY',0
+	dc.b	'IN A HERCULES TRANSPORT[',0
+	dc.b	$00
+	dc.b	'INTERCEPT THE FLIGHT OF THE HERCULES',0
+	dc.b	$00
+	dc.b	'AND RESCUE THE FORMER PRESIDENT[',0
+	dc.b	$00
 dat_0048DC:
 	dc.b	$00,$00,$C5,$86
-	dc.b	$00,$00,$00,$00,$88,$78,$00,$00,$48,$EC,$A2,$0E,$46,$49,$4E,$41
-	dc.b	$4C,$20,$4D,$49,$53,$53,$49,$4F,$4E,$00
+	dc.b	$00,$00,$00,$00,$88,$78,$00,$00,$48,$EC,$A2,$0E
+	dc.b	'FINAL MISSION',0
 dat_0048FA:
-	dc.b	$46,$47,$48,$49,$4A,$4B
-	dc.b	$20,$4C,$4D,$4E,$4F,$1F,$0E,$10,$13,$25,$FF,$2F,$3D,$29,$3C,$33
+	dc.b	'FGHIJK LMNO'
+	dc.b	$1F,$0E,$10,$13,$25,$FF,$2F,$3D,$29,$3C,$33
 	dc.b	$3D,$36,$13,$19,$1C,$50,$51,$52,$53,$1F,$FF,$54,$10,$10,$02,$1C
 	dc.b	$11,$14,$55,$56,$1F,$29,$3B,$3A,$2E,$0A,$0E,$26,$FF,$0E,$22,$0F
 	dc.b	$13,$25,$2F,$3D,$29,$3C,$33,$3D,$36,$14,$57,$58,$1F,$FF,$59,$5A
@@ -6012,7 +6017,7 @@ loc_004C5E:
 loc_004C62:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_004C6A:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_004C6E:
 	moveq	#$0,d7
 loc_004C70:
@@ -6151,49 +6156,21 @@ loc_004D7C:
 	dc.b	$4E,$02,$00,$00,$4E,$72,$00,$00,$4E,$E2,$00,$00,$4F,$52,$00,$00
 	dc.b	$4F,$C2
 dat_004D92:
-	dc.b	$20,$41,$53,$20,$41,$20,$53,$4B,$49,$4C,$4C,$45,$44,$20
-	dc.b	$50,$52,$4F,$46,$45,$53,$53,$49,$4F,$4E,$41,$4C,$20,$20,$53,$4F
-	dc.b	$4C,$44,$49,$45,$52,$3B,$20,$54,$52,$41,$49,$4E,$45,$44,$20,$49
-	dc.b	$4E,$20,$41,$4E,$54,$49,$3E,$20,$20,$20,$54,$45,$52,$52,$4F,$52
-	dc.b	$49,$53,$54,$20,$54,$41,$43,$54,$49,$43,$53,$3B,$20,$59,$4F,$55
-	dc.b	$20,$48,$41,$56,$45,$20,$42,$45,$45,$4E,$20,$48,$49,$52,$45,$44
-	dc.b	$20,$42,$59,$20,$54,$48,$45,$20,$55,$3C,$20,$53,$3C,$20,$20,$20
-	dc.b	$20,$20,$47,$4F,$56,$45,$52,$4E,$4D,$45,$4E,$54,$20,$54,$4F,$20
-	dc.b	$41,$53,$53,$49,$53,$54,$20,$49,$4E,$20,$41,$20,$20,$20,$54,$4F
-	dc.b	$50,$20,$53,$45,$43,$52,$45,$54,$20,$4F,$50,$45,$52,$41,$54,$49
-	dc.b	$4F,$4E,$3C,$20,$20,$20,$20,$20,$20,$20,$57,$48,$49,$4C,$45,$20
-	dc.b	$54,$4F,$55,$52,$49,$4E,$47,$20,$43,$45,$4E,$54,$52,$41,$4C,$20
-	dc.b	$41,$46,$52,$49,$43,$41,$46,$4F,$52,$20,$57,$4F,$52,$4C,$44,$20
-	dc.b	$50,$45,$41,$43,$45,$3B,$20,$54,$48,$45,$20,$46,$4F,$52,$4D,$45
-	dc.b	$52,$20,$50,$52,$45,$53,$49,$44,$45,$4E,$54,$20,$4F,$46,$20,$54
-	dc.b	$48,$45,$20,$55,$4E,$49,$54,$45,$44,$20,$20,$20,$20,$20,$53,$54
-	dc.b	$41,$54,$45,$53,$20,$57,$41,$53,$20,$54,$41,$4B,$45,$4E,$20,$48
-	dc.b	$4F,$53,$54,$41,$47,$45,$20,$42,$59,$20,$41,$20,$47,$52,$4F,$55
-	dc.b	$50,$20,$4F,$46,$20,$52,$45,$56,$4F,$4C,$55,$54,$49,$4F,$4E,$41
-	dc.b	$52,$49,$45,$53,$3C,$20,$44,$55,$45,$20,$54,$4F,$20,$44,$49,$50
-	dc.b	$4C,$4F,$4D,$41,$54,$49,$43,$20,$52,$45,$41,$53,$4F,$4E,$53,$3B
-	dc.b	$20,$20,$54,$48,$45,$20,$55,$3C,$20,$53,$3C,$20,$47,$4F,$56,$45
-	dc.b	$52,$4E,$4D,$45,$4E,$54,$20,$43,$41,$4E,$4E,$4F,$54,$20,$53,$45
-	dc.b	$4E,$44,$20,$4D,$49,$4C,$49,$54,$41,$52,$59,$20,$49,$4E,$54,$45
-	dc.b	$52,$56,$45,$4E,$54,$49,$4F,$4E,$3C,$20,$49,$4E,$53,$54,$45,$41
-	dc.b	$44,$3B,$20,$41,$4E,$20,$45,$4C,$49,$54,$45,$20,$43,$4F,$52,$50
-	dc.b	$53,$20,$4F,$46,$20,$20,$4D,$45,$52,$43,$45,$4E,$41,$52,$49,$45
-	dc.b	$53,$20,$4B,$4E,$4F,$57,$4E,$20,$41,$53,$20,$54,$48,$45,$20,$20
-	dc.b	$20,$20,$3A,$4D,$45,$52,$43,$53,$3A,$20,$48,$41,$56,$45,$20,$42
-	dc.b	$45,$45,$4E,$20,$53,$45,$4C,$45,$43,$54,$45,$44,$20,$20,$54,$4F
-	dc.b	$20,$52,$45,$53,$43,$55,$45,$20,$54,$48,$45,$20,$50,$52,$45,$53
-	dc.b	$49,$44,$45,$4E,$54,$20,$41,$4E,$44,$20,$53,$54,$4F,$50,$20,$54
-	dc.b	$48,$45,$20,$52,$45,$42,$45,$4C,$53,$3A,$20,$41,$54,$54,$45,$4D
-	dc.b	$50,$54,$20,$54,$4F,$20,$54,$41,$4B,$45,$20,$43,$4F,$4E,$54,$52
-	dc.b	$4F,$4C,$20,$4F,$46,$20,$54,$48,$45,$20,$43,$4F,$55,$4E,$54,$52
-	dc.b	$59,$20,$5A,$55,$54,$55,$52,$41,$3C,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$41,$53
-	dc.b	$20,$41,$20,$4D,$45,$4D,$42,$45,$52,$20,$4F,$46,$20,$54,$48,$45
-	dc.b	$20,$4D,$45,$52,$43,$53,$3B,$20,$20,$20,$59,$4F,$55,$52,$20,$4D
-	dc.b	$49,$53,$53,$49,$4F,$4E,$20,$41,$57,$41,$49,$54,$53,$3D,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20
-	dc.b	$20,$20,$00,$00,$50,$72,$00,$00,$50,$9C,$00,$00,$50,$C2,$00,$00
+	dc.b	' AS A SKILLED PROFESSIONAL  SOLDIER; TRAINED IN '
+	dc.b	'ANTI>   TERRORIST TACTICS; YOU HAVE BEEN HIRED B'
+	dc.b	'Y THE U< S<     GOVERNMENT TO ASSIST IN A   TOP '
+	dc.b	'SECRET OPERATION<       WHILE TOURING CENTRAL AF'
+	dc.b	'RICAFOR WORLD PEACE; THE FORMER PRESIDENT OF THE'
+	dc.b	' UNITED     STATES WAS TAKEN HOSTAGE BY A GROUP '
+	dc.b	'OF REVOLUTIONARIES< DUE TO DIPLOMATIC REASONS;  '
+	dc.b	'THE U< S< GOVERNMENT CANNOT SEND MILITARY INTERV'
+	dc.b	'ENTION< INSTEAD; AN ELITE CORPS OF  MERCENARIES '
+	dc.b	'KNOWN AS THE    :MERCS: HAVE BEEN SELECTED  TO R'
+	dc.b	'ESCUE THE PRESIDENT AND STOP THE REBELS: ATTEMPT'
+	dc.b	' TO TAKE CONTROL OF THE COUNTRY ZUTURA<         '
+	dc.b	'            AS A MEMBER OF THE MERCS;   YOUR MIS'
+	dc.b	'SION AWAITS=                                    '
+	dc.b	$00,$00,$50,$72,$00,$00,$50,$9C,$00,$00,$50,$C2,$00,$00
 	dc.b	$50,$D8,$00,$00,$50,$FA
 dat_005046:
 	dc.b	$3E,$3F,$43,$43,$5D,$44,$5E,$25,$41,$50
@@ -6201,7 +6178,8 @@ dat_005046:
 	dc.b	$13,$19,$1C,$FF,$67,$6C,$2A,$3D,$37,$2D,$3D,$20,$57,$6D,$0A,$0E
 	dc.b	$26,$FE,$6E,$1F,$6F,$21,$06,$0A,$10,$25,$67,$70,$71,$72,$14,$73
 	dc.b	$FF,$41,$50,$1F,$74,$75,$76,$23,$01,$24,$0E,$77,$78,$50,$4C,$FF
-	dc.b	$4D,$4E,$4F,$20,$46,$47,$48,$79,$7A,$13,$FE,$00,$7B,$7C,$09,$1D
+	dc.b	'MNO FGHyz'
+	dc.b	$13,$FE,$00,$7B,$7C,$09,$1D
 	dc.b	$10,$0A,$18,$24,$0E,$26,$FF,$08,$1D,$13,$6A,$0A,$77,$78,$50,$7D
 	dc.b	$15,$46,$47,$48,$79,$FF,$7A,$17,$14,$7E,$7F,$1F,$80,$81,$0A,$25
 	dc.b	$FE,$00,$4C,$4D,$4E,$4F,$5B,$5C,$14,$73,$14,$82,$83,$91,$84,$7A
@@ -6567,13 +6545,13 @@ loc_0054F0:
 sub_0054F8:
 	lea	(dat_0576F2).l,a0
 loc_0054FE:
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 loc_005502:
 	moveq	#$1,d0
 loc_005504:
 	jsr	(sub_00855A).l
 loc_00550A:
-	lea	(ram_A000).w,a0
+	lea	(Decomp_Buffer).w,a0
 loc_00550E:
 	lea	(ram_8000).w,a4
 loc_005512:
@@ -6583,13 +6561,13 @@ loc_005514:
 loc_00551A:
 	lea	(dat_0E3C2C).l,a0
 loc_005520:
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 loc_005524:
 	moveq	#$1,d0
 loc_005526:
 	jsr	(sub_00855A).l
 loc_00552C:
-	lea	(ram_A000).w,a0
+	lea	(Decomp_Buffer).w,a0
 loc_005530:
 	lea	(ram_9300).w,a4
 loc_005534:
@@ -6613,7 +6591,7 @@ loc_00555C:
 loc_00555E:
 	jsr	(sub_008524).l
 loc_005564:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_005568:
 	lea	(ram_FF2A00).l,a2
 loc_00556E:
@@ -6627,7 +6605,7 @@ loc_005576:
 loc_00557A:
 	jsr	(sub_00A19C).l
 loc_005580:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_005584:
 	move.w	#$3FF,d0
 loc_005588:
@@ -6659,7 +6637,7 @@ loc_0055C2:
 loc_0055C6:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_0055CE:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_0055D2:
 	lea	(ram_FF0000).l,a2
 loc_0055D8:
@@ -6673,7 +6651,7 @@ loc_0055E0:
 loc_0055E4:
 	jsr	(sub_00A19C).l
 loc_0055EA:
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 loc_0055EE:
 	move.w	#$3FF,d0
 loc_0055F2:
@@ -6720,20 +6698,25 @@ loc_005650:
 	rts
 	dc.b	$00,$03,$E5,$43,$00,$00,$00,$00,$88,$02,$00,$00,$56,$74
 	dc.b	$A8,$14,$00,$00,$56,$8A,$A9,$94,$00,$00,$56,$A0,$AB,$14,$00,$00
-	dc.b	$56,$B6,$AC,$94,$20,$49,$4E,$20,$4D,$41,$52,$43,$48,$20,$4F,$46
-	dc.b	$20,$31,$39,$58,$58,$5C,$20,$20,$00,$00,$54,$48,$45,$20,$46,$4F
-	dc.b	$52,$4D,$45,$52,$20,$50,$52,$45,$53,$49,$44,$45,$4E,$54,$00,$00
-	dc.b	$57,$41,$53,$20,$52,$45,$53,$43,$55,$45,$44,$20,$42,$59,$20,$54
-	dc.b	$48,$45,$20,$20,$00,$00,$4D,$45,$52,$43,$53,$5B,$20,$20,$20,$20
-	dc.b	$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$00,$00,$00,$03,$E5,$43
+	dc.b	$56,$B6,$AC,$94
+	dc.b	' IN MARCH OF 19XX\  ',0
+	dc.b	$00
+	dc.b	'THE FORMER PRESIDENT',0
+	dc.b	$00
+	dc.b	'WAS RESCUED BY THE  ',0
+	dc.b	$00
+	dc.b	'MERCS[              ',0
+	dc.b	$00,$00,$03,$E5,$43
 	dc.b	$00,$00,$00,$00,$88,$02,$00,$00,$56,$EE,$A8,$14,$00,$00,$57,$04
-	dc.b	$A9,$94,$00,$00,$57,$1A,$AB,$14,$00,$00,$57,$30,$AC,$94,$20,$48
-	dc.b	$4F,$57,$45,$56,$45,$52,$5C,$4E,$4F,$20,$4F,$46,$46,$49,$43,$49
-	dc.b	$41,$4C,$00,$00,$52,$45,$43,$4F,$52,$44,$20,$41,$42,$4F,$55,$54
-	dc.b	$20,$41,$20,$4D,$45,$52,$43,$53,$00,$00,$4F,$50,$45,$52,$41,$54
-	dc.b	$49,$4F,$4E,$20,$57,$49,$4C,$4C,$20,$45,$56,$45,$52,$20,$00,$00
-	dc.b	$42,$45,$20,$52,$45,$47,$49,$53,$54,$45,$52,$45,$44,$5B,$20,$20
-	dc.b	$20,$20,$20,$20,$00,$00,$3E,$3F,$43,$43,$5D,$44,$5E,$25,$FF,$77
+	dc.b	$A9,$94,$00,$00,$57,$1A,$AB,$14,$00,$00,$57,$30,$AC,$94
+	dc.b	' HOWEVER\NO OFFICIAL',0
+	dc.b	$00
+	dc.b	'RECORD ABOUT A MERCS',0
+	dc.b	$00
+	dc.b	'OPERATION WILL EVER ',0
+	dc.b	$00
+	dc.b	'BE REGISTERED[      ',0
+	dc.b	$00,$3E,$3F,$43,$43,$5D,$44,$5E,$25,$FF,$77
 	dc.b	$78,$50,$4C,$4D,$4E,$4F,$5B,$5C,$09,$FF,$1D,$1C,$26,$FF,$0A,$05
 	dc.b	$0A,$25,$FE,$00,$28,$34,$30,$45,$30,$39,$3D,$2C,$13,$19,$FF,$1C
 	dc.b	$08,$14,$5F,$60,$15,$25,$61,$62,$63,$FF,$64,$13,$15,$65,$66,$AE
@@ -6987,10 +6970,10 @@ loc_005A90:
 	rts
 sub_005AA0:
 	lea	(dat_0E4464).l,a0
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 	moveq	#$1,d0
 	jsr	(sub_00855A).l
-	lea	(ram_A000).w,a0
+	lea	(Decomp_Buffer).w,a0
 	lea	(ram_8000).w,a4
 	moveq	#$2,d0
 	jsr	(sub_008524).l
@@ -6998,14 +6981,14 @@ sub_005AA0:
 	lea	(ram_FF2A00).l,a4
 	moveq	#$1,d0
 	jsr	(sub_008524).l
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 	lea	(ram_FF2A00).l,a2
 	lea	(ram_8000).w,a3
 	moveq	#$7,d0
 	moveq	#$7,d1
 	move.w	#$14,d3
 	jsr	(sub_00A1DA).l
-	lea	(ram_A000).w,a1
+	lea	(Decomp_Buffer).w,a1
 	move.w	#$3FF,d0
 	bsr.w	sub_0019C0
 	move.w	#$100,(Z80_Bus_Request).l
@@ -7022,7 +7005,7 @@ loc_005B06:
 	move.w	#$83,(DMA_Trigger_Word).w
 	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$7FF,d6
 loc_005B4A:
@@ -7066,18 +7049,25 @@ dat_005BBC:
 	dc.b	$00,$00,$5D,$22,$B6,$18,$00,$00,$5D,$28,$B6,$98,$00,$00,$5D,$2E
 	dc.b	$B7,$98,$00,$00,$5D,$34,$BB,$94,$00,$00,$5D,$3E,$BC,$62,$00,$00
 	dc.b	$5D,$42,$BD,$1E,$50,$4C,$41,$4E,$4E,$45,$52,$00,$4B,$59,$41,$4D
-	dc.b	$55,$52,$41,$00,$44,$45,$53,$49,$47,$4E,$45,$52,$53,$00,$4C,$20
+	dc.b	$55,$52,$41,$00
+	dc.b	'DESIGNERS',0
+	dc.b	$4C,$20
 	dc.b	$43,$00,$52,$45,$57,$00,$4D,$41,$4A,$49,$4B,$4B,$4F,$00,$4D,$41
-	dc.b	$4A,$49,$4D,$41,$4A,$49,$00,$00,$50,$52,$4F,$47,$52,$41,$4D,$4D
-	dc.b	$45,$52,$53,$00,$4D,$54,$20,$42,$4F,$4F,$4B,$00,$50,$52,$4F,$54
+	dc.b	$4A,$49,$4D,$41,$4A,$49,$00,$00
+	dc.b	'PROGRAMMERS',0
+	dc.b	$4D,$54,$20,$42,$4F,$4F,$4B,$00,$50,$52,$4F,$54
 	dc.b	$4F,$20,$32,$00,$4D,$41,$52,$4B,$55,$4E,$00,$00,$53,$4F,$55,$4E
 	dc.b	$44,$00,$41,$52,$52,$41,$4E,$47,$45,$52,$00,$00,$4D,$49,$4C,$50
-	dc.b	$4F,$00,$50,$52,$4F,$44,$55,$43,$45,$52,$00,$00,$4F,$53,$53,$49
+	dc.b	$4F,$00
+	dc.b	'PRODUCER',0
+	dc.b	$00,$4F,$53,$53,$49
 	dc.b	$45,$00,$53,$50,$45,$43,$49,$41,$4C,$00,$54,$48,$41,$4E,$4B,$53
 	dc.b	$00,$00,$4D,$41,$52,$55,$53,$41,$4E,$00,$4D,$55,$00,$00,$54,$41
 	dc.b	$4B,$41,$20,$4F,$48,$00,$41,$58,$00,$00,$53,$55,$4E,$53,$45,$54
 	dc.b	$00,$00,$4F,$54,$41,$4B,$55,$00,$54,$53,$55,$43,$48,$00,$54,$4F
-	dc.b	$4D,$4F,$00,$00,$50,$52,$45,$53,$45,$4E,$54,$45,$44,$00,$42,$59
+	dc.b	$4D,$4F,$00,$00
+	dc.b	'PRESENTED',0
+	dc.b	$42,$59
 	dc.b	$00,$00,$53,$45,$47,$41,$00,$00
 sub_005D48:
 	move.w	#$2700,sr
@@ -7114,15 +7104,15 @@ loc_005D92:
 loc_005D98:
 	move.l	#$70C00002,(VDP_Control).l
 loc_005DA2:
-	lea	(dat_0589FA).l,a0
+	lea	(Art_0589FA).l,a0
 loc_005DA8:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_005DAE:
 	move.l	#$6CC00001,(VDP_Control).l
 loc_005DB8:
-	lea	(dat_0817A0).l,a0
+	lea	(Art_0817A0).l,a0
 loc_005DBE:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_005DC4:
 	bsr.w	sub_005E12
 loc_005DC8:
@@ -7158,13 +7148,13 @@ loc_005E10:
 sub_005E12:
 	lea	(dat_0E7C4C).l,a0
 loc_005E18:
-	lea	(ram_A000).w,a4
+	lea	(Decomp_Buffer).w,a4
 loc_005E1C:
 	moveq	#$1,d0
 loc_005E1E:
 	jsr	(sub_00855A).l
 loc_005E24:
-	lea	(ram_A000).w,a0
+	lea	(Decomp_Buffer).w,a0
 loc_005E28:
 	lea	(ram_8000).w,a4
 loc_005E2C:
@@ -7194,7 +7184,7 @@ loc_005E5A:
 loc_005E5E:
 	jsr	(sub_00A19C).l
 loc_005E64:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_005E68:
 	moveq	#$0,d7
 loc_005E6A:
@@ -7301,7 +7291,7 @@ loc_005F78:
 	asr.l	#$5,d0
 	move.l	d0,$10(a0)
 	bset.b	#$1,(Flags_C5AF).w
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$1FF,d6
 loc_005FAE:
@@ -7629,8 +7619,9 @@ loc_0062BA:
 dat_0062BC:
 	dc.b	$00,$01,$25,$86
 	dc.b	$00,$00,$00,$00,$88,$78,$00,$00,$62,$D2,$A1,$12,$00,$00,$62,$DA
-	dc.b	$A2,$92,$4D,$49,$53,$53,$49,$4F,$4E,$00,$43,$4F,$4D,$50,$4C,$45
-	dc.b	$54,$45,$44,$00,$00,$00,$25,$86,$00,$00,$00,$00,$88,$78,$00,$00
+	dc.b	$A2,$92,$4D,$49,$53,$53,$49,$4F,$4E,$00
+	dc.b	'COMPLETED',0
+	dc.b	$00,$00,$25,$86,$00,$00,$00,$00,$88,$78,$00,$00
 	dc.b	$62,$D2,$A1,$16
 dat_0062F4:
 	dc.b	$00,$10,$00,$26,$00,$3C,$00,$52,$00,$68,$00,$7E
@@ -7646,10 +7637,11 @@ dat_0062F4:
 	dc.b	$88,$78,$00,$00,$62,$D2,$A1,$16,$00,$00,$63,$E8,$A2,$9E,$00,$01
 	dc.b	$25,$86,$00,$00,$00,$00,$88,$78,$00,$00,$62,$D2,$A1,$16,$00,$00
 	dc.b	$63,$EE,$A2,$8E,$43,$4F,$41,$53,$54,$00,$46,$4F,$52,$45,$53,$54
-	dc.b	$00,$00,$43,$4C,$49,$46,$46,$00,$4C,$41,$4B,$45,$53,$20,$41,$4E
-	dc.b	$44,$20,$42,$4F,$47,$53,$00,$00,$44,$45,$53,$45,$52,$54,$00,$00
-	dc.b	$53,$54,$52,$45,$45,$54,$53,$00,$50,$4F,$52,$54,$00,$00,$45,$4E
-	dc.b	$45,$4D,$59,$20,$48,$49,$44,$45,$4F,$55,$54,$00
+	dc.b	$00,$00,$43,$4C,$49,$46,$46,$00
+	dc.b	'LAKES AND BOGS',0
+	dc.b	$00,$44,$45,$53,$45,$52,$54,$00,$00
+	dc.b	$53,$54,$52,$45,$45,$54,$53,$00,$50,$4F,$52,$54,$00,$00
+	dc.b	'ENEMY HIDEOUT',0
 dat_0063FC:
 	dc.b	$00,$0E,$00,$18
 	dc.b	$00,$22,$00,$28,$00,$2E,$00,$34,$00,$3E,$00,$01,$01,$7C,$01,$34
@@ -7677,9 +7669,9 @@ loc_00646A:
 loc_006470:
 	move.l	#$62E00002,(VDP_Control).l
 loc_00647A:
-	lea	(dat_0582AC).l,a0
+	lea	(Art_0582AC).l,a0
 loc_006480:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_006486:
 	bsr.w	sub_0065B6
 loc_00648A:
@@ -7839,7 +7831,7 @@ dat_0065A8:
 	dc.b	$00,$02,$A4,$18,$00,$0C,$A5,$18
 	dc.b	$00,$0C,$A6,$18,$00,$06
 sub_0065B6:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_0065BA:
 	moveq	#$0,d7
 loc_0065BC:
@@ -7893,9 +7885,10 @@ loc_006628:
 dat_00662A:
 	dc.b	$00,$02,$25,$17,$00,$00
 	dc.b	$00,$00,$87,$E2,$00,$00,$66,$46,$A4,$18,$00,$00,$66,$54,$A5,$18
-	dc.b	$00,$00,$66,$62,$A6,$18,$41,$52,$43,$41,$44,$45,$20,$20,$20,$4D
-	dc.b	$4F,$44,$45,$00,$4F,$52,$49,$47,$49,$4E,$41,$4C,$20,$4D,$4F,$44
-	dc.b	$45,$00,$4F,$50,$54,$49,$4F,$4E,$53,$00
+	dc.b	$00,$00,$66,$62,$A6,$18
+	dc.b	'ARCADE   MODE',0
+	dc.b	'ORIGINAL MODE',0
+	dc.b	$4F,$50,$54,$49,$4F,$4E,$53,$00
 sub_00666A:
 	move.w	#$2700,sr
 loc_00666E:
@@ -7915,9 +7908,9 @@ loc_00668C:
 loc_006692:
 	move.l	#$70C00002,(VDP_Control).l
 loc_00669C:
-	lea	(dat_0589FA).l,a0
+	lea	(Art_0589FA).l,a0
 loc_0066A2:
-	jsr	(sub_00A218).l
+	jsr	(Decompress_ToVDP).l
 loc_0066A8:
 	moveq	#$0,d1
 loc_0066AA:
@@ -8045,7 +8038,7 @@ loc_0067A6:
 loc_0067AC:
 	rts
 sub_0067AE:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_0067B2:
 	moveq	#$0,d7
 loc_0067B4:
@@ -8292,8 +8285,9 @@ dat_0069BC:
 	dc.b	$00,$00,$00,$00,$88,$78,$00,$00,$69,$F6,$A1,$0E,$00,$00,$6A,$04
 	dc.b	$A3,$0C,$00,$00,$6A,$08,$A4,$8C,$00,$00,$6A,$0C,$A6,$0C,$00,$00
 	dc.b	$6A,$10,$A7,$8C,$00,$00,$6A,$10,$A9,$0C,$00,$00,$6A,$10,$AA,$8C
-	dc.b	$00,$00,$6A,$10,$AC,$0C,$42,$45,$53,$54,$20,$46,$49,$47,$48,$54
-	dc.b	$45,$52,$53,$00,$53,$54,$00,$00,$4E,$44,$00,$00,$52,$44,$00,$00
+	dc.b	$00,$00,$6A,$10,$AC,$0C
+	dc.b	'BEST FIGHTERS',0
+	dc.b	$53,$54,$00,$00,$4E,$44,$00,$00,$52,$44,$00,$00
 	dc.b	$54,$48,$00,$00
 dat_006A14:
 	dc.b	$00,$06,$25,$86,$00,$00,$00,$00,$88,$78,$00,$00
@@ -8336,8 +8330,8 @@ sub_006AAE:
 	jsr	(sub_008508).l
 	move.b	#$1,(ram_C5A0).w
 	move.l	#$70C00002,(VDP_Control).l
-	lea	(dat_0589FA).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0589FA).l,a0
+	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_006B4C
 	move.w	#$200,(Timer_C606).w
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -8362,7 +8356,7 @@ loc_006B3E:
 	move.w	#$8,(Game_State).w
 	rts
 sub_006B4C:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 	moveq	#$0,d7
 	move.w	#$3FF,d6
 loc_006B56:
@@ -8689,7 +8683,7 @@ dat_006E52:
 	dc.b	$01,$00,$00,$0E,$A2,$A6,$01,$80,$01,$00,$00,$05,$81,$D0,$01,$90
 	dc.b	$01,$00
 sub_006ED2:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_006ED6:
 	moveq	#$0,d7
 loc_006ED8:
@@ -8830,8 +8824,8 @@ loc_007004:
 	move.w	(DMA_Trigger_Word).w,(a6)
 	move.w	#$0,(Z80_Bus_Request).l
 	move.l	#$70C00002,(VDP_Control).l
-	lea	(dat_0589FA).l,a0
-	jsr	(sub_00A218).l
+	lea	(Art_0589FA).l,a0
+	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_00178E
 	cmpi.w	#$16,(ram_C328).w
 	bne.b	loc_00707C
@@ -9224,7 +9218,7 @@ loc_007AB0:
 loc_007AB2:
 	dbra	d6,loc_007AB0
 loc_007AB6:
-	lea	(ram_A000).w,a6
+	lea	(Decomp_Buffer).w,a6
 loc_007ABA:
 	moveq	#$0,d7
 loc_007ABC:
@@ -9338,29 +9332,29 @@ dat_007BB2:
 	dc.b	$00,$00,$7C,$96,$8E,$4C,$00,$00,$7C,$AE,$8F,$4C,$00,$00,$7C,$C4
 	dc.b	$90,$4C,$00,$00,$7C,$DC,$91,$4C,$00,$00,$7C,$F4,$92,$4C,$00,$00
 	dc.b	$7D,$0C,$93,$4C,$00,$00,$7D,$20,$94,$4C,$00,$00,$7D,$38,$95,$4C
-	dc.b	$00,$00,$7D,$4E,$96,$4C,$00,$00,$7D,$64,$97,$4C,$54,$48,$45,$20
-	dc.b	$57,$48,$49,$54,$45,$20,$48,$4F,$55,$53,$45,$20,$48,$41,$53,$00
-	dc.b	$52,$45,$43,$45,$49,$56,$45,$44,$20,$41,$20,$52,$45,$50,$4F,$52
-	dc.b	$54,$00,$54,$48,$41,$54,$20,$54,$48,$45,$20,$47,$4F,$56,$45,$52
-	dc.b	$4E,$4D,$45,$4E,$54,$00,$4F,$46,$20,$51,$55,$49,$52,$41,$20,$48
-	dc.b	$41,$53,$20,$53,$45,$43,$52,$45,$54,$4C,$59,$00,$44,$45,$56,$45
-	dc.b	$4C,$4F,$50,$45,$44,$20,$4C,$4F,$4E,$47,$20,$52,$41,$4E,$47,$45
-	dc.b	$00,$00,$42,$41,$4C,$4C,$49,$53,$54,$49,$43,$20,$4D,$49,$53,$53
-	dc.b	$49,$4C,$45,$53,$5B,$00,$46,$45,$41,$52,$49,$4E,$47,$20,$54,$48
-	dc.b	$41,$54,$20,$54,$48,$45,$20,$4E,$45,$57,$4C,$59,$00,$00,$44,$45
-	dc.b	$56,$45,$4C,$4F,$50,$45,$44,$20,$53,$54,$52,$45,$4E,$47,$54,$48
-	dc.b	$20,$4F,$46,$00,$51,$55,$49,$52,$41,$20,$43,$4F,$55,$4C,$44,$20
-	dc.b	$41,$46,$46,$45,$43,$54,$20,$54,$48,$45,$00,$00,$47,$4C,$4F,$42
-	dc.b	$41,$4C,$20,$42,$41,$4C,$41,$4E,$43,$45,$20,$4F,$46,$20,$50,$4F
-	dc.b	$57,$45,$52,$00,$41,$4E,$44,$20,$45,$56,$45,$4E,$54,$55,$41,$4C
-	dc.b	$4C,$59,$20,$4C,$45,$41,$44,$20,$54,$4F,$00,$00,$57,$41,$52,$5C
-	dc.b	$20,$54,$48,$45,$20,$50,$52,$45,$53,$49,$44,$45,$4E,$54,$00,$00
-	dc.b	$4F,$52,$44,$45,$52,$45,$44,$20,$54,$48,$45,$20,$5F,$4D,$45,$52
-	dc.b	$43,$53,$5C,$5F,$20,$41,$4E,$00,$45,$4C,$49,$54,$45,$20,$43,$4F
-	dc.b	$52,$50,$53,$20,$4F,$46,$20,$48,$49,$52,$45,$44,$00,$00,$53,$4F
-	dc.b	$4C,$44,$49,$45,$52,$53,$5C,$20,$54,$4F,$20,$54,$41,$4B,$45,$20
-	dc.b	$4F,$55,$54,$00,$54,$48,$45,$53,$45,$20,$4D,$49,$53,$53,$49,$4C
-	dc.b	$45,$53,$5B,$00
+	dc.b	$00,$00,$7D,$4E,$96,$4C,$00,$00,$7D,$64,$97
+	dc.b	'LTHE WHITE HOUSE HAS',0
+	dc.b	'RECEIVED A REPORT',0
+	dc.b	'THAT THE GOVERNMENT',0
+	dc.b	'OF QUIRA HAS SECRETLY',0
+	dc.b	'DEVELOPED LONG RANGE',0
+	dc.b	$00
+	dc.b	'BALLISTIC MISSILES[',0
+	dc.b	'FEARING THAT THE NEWLY',0
+	dc.b	$00
+	dc.b	'DEVELOPED STRENGTH OF',0
+	dc.b	'QUIRA COULD AFFECT THE',0
+	dc.b	$00
+	dc.b	'GLOBAL BALANCE OF POWER',0
+	dc.b	'AND EVENTUALLY LEAD TO',0
+	dc.b	$00
+	dc.b	'WAR\ THE PRESIDENT',0
+	dc.b	$00
+	dc.b	'ORDERED THE _MERCS\_ AN',0
+	dc.b	'ELITE CORPS OF HIRED',0
+	dc.b	$00
+	dc.b	'SOLDIERS\ TO TAKE OUT',0
+	dc.b	'THESE MISSILES[',0
 dat_007D74:
 	dc.b	$3E,$3F,$3F,$43,$5D,$43,$5E,$25,$FF,$40,$50,$1F
 	dc.b	$92,$93,$76,$14,$94,$95,$96,$FF,$5F,$8B,$8C,$05,$1A,$25,$40,$50
@@ -12619,7 +12613,7 @@ loc_00A00A:
 loc_00A00C:
 	lea	(Z80_RAM).l,a6
 loc_00A012:
-	lea	(dat_0FB75A).l,a5
+	lea	(Z80_Driver).l,a5
 loc_00A018:
 	move.w	#$F4F,d0
 loc_00A01C:
@@ -12629,7 +12623,7 @@ loc_00A01E:
 loc_00A022:
 	lea	($A01000).l,a6
 loc_00A028:
-	lea	(dat_0FC6AA).l,a5
+	lea	(Z80_Driver_Data).l,a5
 loc_00A02E:
 	move.w	#$8F5,d0
 loc_00A032:
@@ -12901,7 +12895,7 @@ loc_00A1DE:
 	adda.w	d3,a2
 	dbra	d1,sub_00A1DA
 	rts
-sub_00A218:
+Decompress_ToVDP:
 	movem.l	d0-d7/a0-a1/a3-a5,-(a7)
 loc_00A21C:
 	lea	(loc_00A2D6).l,a3
@@ -12909,12 +12903,12 @@ loc_00A222:
 	lea	(VDP_Data).l,a4
 loc_00A228:
 	bra.b	loc_00A232
-sub_00A22A:
+Decompress_ToRAM:
 	movem.l	d0-d7/a0-a1/a3-a5,-(a7)
 loc_00A22E:
 	lea	loc_00A2EC(pc),a3
 loc_00A232:
-	lea	(ram_CE00).w,a1
+	lea	(Huffman_Table).w,a1
 loc_00A236:
 	move.w	(a0)+,d2
 loc_00A238:
@@ -16060,11 +16054,11 @@ loc_00B9F8:
 loc_00B9FC:
 	rts
 sub_00B9FE:
-	lea	(dat_0E4B2E).l,a0
+	lea	(Art_0E4B2E).l,a0
 loc_00BA04:
 	lea	(ram_FF7000).l,a4
 loc_00BA0A:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_00BA10:
 	bsr.w	sub_00BA30
 loc_00BA14:
@@ -16670,7 +16664,9 @@ dat_00BE96:
 	dc.b	$00,$FF,$6B,$8C,$C3,$A8,$00,$03,$00,$FF,$6C,$8C,$C3,$AA,$00,$03
 	dc.b	$C3,$B1,$00,$FF,$6C,$36,$C3,$AC,$C3,$AE,$00,$FF,$6B,$A2,$C4,$E4
 	dc.b	$00,$FF,$5A,$20,$52,$49,$46,$4C,$45,$00,$42,$55,$52,$4E,$45,$52
-	dc.b	$00,$00,$4C,$41,$55,$4E,$43,$48,$45,$52,$00,$00,$4C,$41,$53,$45
+	dc.b	$00,$00
+	dc.b	'LAUNCHER',0
+	dc.b	$00,$4C,$41,$53,$45
 	dc.b	$52,$00,$48,$4F,$4D,$49,$4E,$47,$00,$00,$53,$50,$45,$45,$44,$00
 dat_00BFB0:
 	dc.b	$0E,$86,$08,$40,$00,$6E,$00,$06,$00,$8A,$00,$46,$06,$A4,$00,$40
@@ -24835,11 +24831,11 @@ loc_011C20:
 loc_011C26:
 	move.l	a0,-(a7)
 loc_011C28:
-	lea	(dat_0B0026).l,a0
+	lea	(Art_0B0026).l,a0
 loc_011C2E:
 	lea	(ram_FF5C00).l,a4
 loc_011C34:
-	jsr	(sub_00A22A).l
+	jsr	(Decompress_ToRAM).l
 loc_011C3A:
 	movea.l	(a7)+,a0
 loc_011C3C:
@@ -27940,8 +27936,11 @@ loc_013F4C:
 	rts
 	dc.b	$00,$01
 	dc.b	$C3,$9A,$00,$00,$00,$00,$88,$78,$00,$01,$3F,$64,$B2,$8A,$00,$01
-	dc.b	$3F,$70,$B4,$0A,$59,$4F,$55,$20,$46,$41,$49,$4C,$45,$44,$00,$00
-	dc.b	$54,$52,$59,$20,$41,$47,$41,$49,$4E,$00,$00,$B4,$00,$B4,$00,$B4
+	dc.b	$3F,$70,$B4,$0A
+	dc.b	'YOU FAILED',0
+	dc.b	$00
+	dc.b	'TRY AGAIN',0
+	dc.b	$00,$B4,$00,$B4,$00,$B4
 	dc.b	$00,$B4
 sub_013F82:
 	move.l	$4(a0),d3
@@ -28633,7 +28632,7 @@ dat_0147EA:
 	dc.l	$0001482E,dat_014CCE,dat_014F9E,dat_01513E
 	dc.l	dat_0152DE,dat_0152DE,dat_01542E,dat_01542E
 	dc.l	dat_0157CA,dat_0159B0,dat_0157EA,dat_0159D0
-	dc.l	dat_01580A,dat_0159F0,dat_015EBA,dat_015F70
+	dc.l	dat_01580A,dat_0159F0,ObjData_015EBA,ObjData_015F70
 	dc.l	dat_015AD2,$0001486E,dat_0148B4,dat_0148FA
 	dc.l	dat_014940,dat_014986,dat_0149CC,dat_014A12
 	dc.l	dat_014A58,dat_014A9E,dat_014AE4,dat_014B2A
@@ -28896,7 +28895,7 @@ dat_015594:
 dat_0155AA:
 	dc.b	$00,$02,$00,$08,$74,$9C
 	dc.b	$00,$60,$00,$04,$89,$90,$00,$00,$00,$00,$FF,$FF,$00,$01,$55,$AA
-dat_0155C0:
+ObjData_0155C0:
 	dc.b	$00,$02,$00,$08,$74,$A6,$00,$60,$00,$04,$89,$30,$00,$00,$00,$00
 	dc.b	$FF,$FF,$00,$01,$55,$C0
 dat_0155D6:
@@ -28951,7 +28950,7 @@ dat_01580A:
 	dc.b	$00,$C0,$00,$04,$76,$80,$FF,$00,$00,$00,$00,$09,$FF,$FF,$FF,$FF
 	dc.b	$00,$00,$01,$00,$00,$00,$00,$0C,$00,$08,$72,$B2,$00,$C0,$00,$04
 	dc.b	$77,$40,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
-dat_01585C:
+ObjData_01585C:
 	dc.b	$00,$02,$FF,$FF
 	dc.b	$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$50,$00,$09
 	dc.b	$00,$08,$73,$48,$00,$C0,$00,$04,$76,$80,$FF,$00,$00,$00,$FF,$FF
@@ -29059,10 +29058,10 @@ dat_015AD2:
 	dc.b	$00,$02,$00,$08,$72,$DA,$00,$00,$05,$00,$00,$5A,$00,$02,$00,$08
 	dc.b	$72,$DA,$00,$00,$06,$80,$00,$5A,$00,$02,$00,$08,$72,$DA,$00,$00
 	dc.b	$07,$00,$00,$5A,$00,$00,$00,$01,$7A,$8E
-dat_015EAA:
+ObjData_015EAA:
 	dc.b	$00,$01,$59,$68,$00,$01
 	dc.b	$58,$46,$00,$01,$58,$46,$00,$01,$59,$9A
-dat_015EBA:
+ObjData_015EBA:
 	dc.b	$00,$04,$00,$08,$73,$02
 	dc.b	$00,$C0,$00,$04,$7C,$70,$00,$00,$00,$00,$00,$04,$00,$08,$73,$0C
 	dc.b	$00,$C0,$00,$04,$7D,$30,$00,$00,$00,$00,$00,$04,$00,$08,$73,$02
@@ -29075,7 +29074,7 @@ dat_015EBA:
 	dc.b	$00,$C0,$00,$04,$7F,$70,$00,$00,$00,$00,$00,$06,$00,$08,$73,$34
 	dc.b	$00,$C0,$00,$04,$80,$30,$00,$00,$00,$00,$00,$04,$00,$08,$73,$3E
 	dc.b	$00,$C0,$00,$04,$80,$F0,$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A
-dat_015F70:
+ObjData_015F70:
 	dc.b	$00,$04,$00,$08,$7A,$66,$00,$90,$00,$04,$C2,$40,$00,$00,$00,$00
 	dc.b	$00,$04,$00,$08,$7A,$70,$00,$90,$00,$04,$C2,$D0,$00,$00,$00,$00
 	dc.b	$00,$04,$00,$08,$7A,$66,$00,$90,$00,$04,$C2,$40,$00,$00,$00,$00
@@ -29086,15 +29085,15 @@ dat_015F70:
 	dc.b	$00,$04,$00,$08,$7A,$84,$00,$90,$00,$04,$C3,$F0,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$7A,$7A,$00,$01,$00,$03,$44,$3A,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$01,$7A,$7A
-dat_016008:
+ObjData_016008:
 	dc.b	$00,$06,$00,$03,$44,$3A,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$44,$44,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$06,$00,$03,$44,$54,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$44,$5E,$00,$00,$00,$00,$00,$00,$00,$06,$00,$08,$70,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$44,$5E,$00,$00,$00,$00,$00,$00
-dat_016050:
+ObjData_016050:
 	dc.b	$00,$00,$00,$01,$7A,$20
-dat_016056:
+ObjData_016056:
 	dc.b	$00,$06,$00,$03,$44,$7E,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$06,$00,$03,$44,$92,$00,$00,$00,$00,$00,$00,$00,$06
 	dc.b	$00,$03,$44,$A2,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$44,$B2
@@ -29171,7 +29170,7 @@ loc_0161AA:
 	move.l	(ram_C14C).w,d2
 	move.l	(ram_C150).w,d5
 	move.l	(ram_C154).w,d6
-	lea	(ram_CE00).w,a1
+	lea	(Huffman_Table).w,a1
 	move.w	#$3,(ram_C15A).w
 loc_0161F2:
 	movea.w	#$8,a5
@@ -29399,9 +29398,9 @@ loc_0163AC:
 loc_0163AE:
 	ori.b	#$48,$2(a0)
 loc_0163B4:
-	lea	dat_0166C4(pc),a1
+	lea	ObjData_0166C4(pc),a1
 loc_0163B8:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_0163BC:
 	move.b	#$60,$22(a0)
 loc_0163C2:
@@ -29415,7 +29414,7 @@ loc_0163CE:
 loc_0163D2:
 	move.b	d0,$28(a0)
 loc_0163D6:
-	lea	dat_0166D4(pc),a1
+	lea	ObjData_0166D4(pc),a1
 loc_0163DA:
 	lsr.w	#$2,d0
 loc_0163DC:
@@ -29449,9 +29448,9 @@ loc_016408:
 loc_01640E:
 	bclr.b	#$2,$2(a0)
 loc_016414:
-	lea	dat_0166B4(pc),a1
+	lea	ObjData_0166B4(pc),a1
 loc_016418:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01641C:
 	move.b	#$60,$22(a0)
 loc_016422:
@@ -29517,7 +29516,7 @@ loc_016498:
 loc_01649A:
 	clr.b	$29(a0)
 loc_01649E:
-	lea	dat_0167B8(pc),a1
+	lea	ObjData_0167B8(pc),a1
 loc_0164A2:
 	move.b	$28(a0),d0
 loc_0164A6:
@@ -29527,7 +29526,7 @@ loc_0164AA:
 loc_0164AC:
 	adda.w	(a1,d0.w),a1
 loc_0164B0:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0164B4:
 	jmp	sub_01AF0E(pc)
 sub_0164B8:
@@ -29545,7 +29544,7 @@ loc_0164CA:
 loc_0164D0:
 	move.b	#$4,$37(a0)
 loc_0164D6:
-	lea	dat_0169F8(pc),a1
+	lea	ObjData_0169F8(pc),a1
 loc_0164DA:
 	move.b	$28(a0),d0
 loc_0164DE:
@@ -29555,7 +29554,7 @@ loc_0164E2:
 loc_0164E6:
 	move.l	(a7)+,d0
 loc_0164E8:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0164EC:
 	rts
 sub_0164EE:
@@ -29639,13 +29638,13 @@ loc_016584:
 loc_016586:
 	move.w	#$23C,(a0)
 loc_01658A:
-	lea	dat_016B48(pc),a1
+	lea	ObjData_016B48(pc),a1
 loc_01658E:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_016592:
 	move.w	#$25C,(a0)
 loc_016596:
-	lea	dat_0167B8(pc),a1
+	lea	ObjData_0167B8(pc),a1
 loc_01659A:
 	move.b	$28(a0),d0
 loc_01659E:
@@ -29655,7 +29654,7 @@ loc_0165A2:
 loc_0165A4:
 	adda.w	(a1,d0.w),a1
 loc_0165A8:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0165AC:
 	move.b	#$1,$34(a0)
 	move.w	#$23C,(a0)
@@ -29663,23 +29662,23 @@ loc_0165AC:
 	beq.b	loc_0165DA
 	cmpi.b	#$2,$3E(a0)
 	beq.b	loc_0165E8
-	lea	dat_016B84(pc),a1
+	lea	ObjData_016B84(pc),a1
 	move.b	$28(a0),d0
 	andi.w	#$1E,d0
 	adda.w	(a1,d0.w),a1
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0165DA:
 	move.b	#$40,$22(a0)
-	lea	dat_015F70(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_015F70(pc),a1
+	jmp	Object_RunAnimScript(pc)
 loc_0165E8:
 	bclr.b	#$3,$2(a0)
 	bsr.b	sub_016602
 	move.b	d0,$35(a0)
 	add.w	d0,d0
-	lea	dat_016C14(pc),a1
+	lea	ObjData_016C14(pc),a1
 	adda.w	(a1,d0.w),a1
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_016602:
 	moveq	#$0,d0
 loc_016604:
@@ -29754,10 +29753,10 @@ loc_016664:
 	move.b	#$20,$22(a0)
 	moveq	#-$40,d0
 	jsr	(sub_00A068).l
-	lea	dat_016056(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_016056(pc),a1
+	jmp	Object_RunAnimScript(pc)
 loc_016682:
-	lea	dat_016FFC(pc),a1
+	lea	ObjData_016FFC(pc),a1
 loc_016686:
 	move.b	$35(a0),d0
 loc_01668A:
@@ -29765,17 +29764,17 @@ loc_01668A:
 loc_01668C:
 	adda.w	(a1,d0.w),a1
 loc_016690:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$FF,$E0,$00,$00,$FF,$E8,$FF,$E8,$00,$00,$FF,$E0
 	dc.b	$00,$18,$FF,$E8,$00,$20,$00,$00,$00,$18,$00,$18,$00,$00,$00,$20
 	dc.b	$FF,$E8,$00,$18
-dat_0166B4:
+ObjData_0166B4:
 	dc.b	$80,$01,$0A,$00,$03,$04,$09,$00,$00,$01,$00,$00
 	dc.b	$00,$01,$66,$DC
-dat_0166C4:
+ObjData_0166C4:
 	dc.b	$80,$01,$0A,$00,$03,$04,$09,$00,$00,$01,$00,$00
 	dc.b	$00,$01,$66,$DC
-dat_0166D4:
+ObjData_0166D4:
 	dc.b	$00,$08,$00,$76,$00,$76,$00,$08,$00,$04,$00,$08
 	dc.b	$7B,$10,$00,$60,$00,$04,$C4,$80,$00,$00,$00,$00,$00,$04,$00,$08
 	dc.b	$7B,$1A,$00,$60,$00,$04,$C4,$E0,$00,$00,$00,$00,$00,$01,$00,$08
@@ -29791,7 +29790,7 @@ dat_0166D4:
 	dc.b	$C6,$00,$08,$00,$00,$00,$00,$05,$00,$08,$7B,$24,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$0C,$00,$08,$79,$94,$00,$90,$00,$04,$BB,$20,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$01,$65,$92
-dat_0167B8:
+ObjData_0167B8:
 	dc.b	$00,$10,$00,$56,$00,$9C,$00,$E2
 	dc.b	$01,$28,$01,$6E,$01,$B4,$01,$FA,$00,$08,$00,$08,$79,$1C,$00,$60
 	dc.b	$00,$04,$B4,$F0,$80,$00,$00,$FF,$00,$06,$00,$08,$79,$26,$00,$60
@@ -29829,7 +29828,7 @@ dat_0167B8:
 	dc.b	$00,$FF,$00,$08,$00,$08,$79,$4E,$00,$90,$00,$04,$B7,$30,$80,$00
 	dc.b	$00,$FF,$00,$06,$00,$08,$79,$44,$00,$90,$00,$04,$B6,$A0,$80,$00
 	dc.b	$00,$FF,$FF,$FF,$00,$01,$69,$B2
-dat_0169F8:
+ObjData_0169F8:
 	dc.b	$00,$20,$00,$20,$00,$46,$00,$46
 	dc.b	$00,$6C,$00,$6C,$00,$92,$00,$92,$00,$B8,$00,$B8,$00,$DE,$00,$DE
 	dc.b	$01,$04,$01,$04,$01,$2A,$01,$2A,$00,$09,$00,$08,$7B,$6C,$00,$80
@@ -29852,13 +29851,13 @@ dat_0169F8:
 	dc.b	$65,$86,$00,$09,$00,$08,$7B,$76,$00,$C0,$00,$04,$CA,$A0,$00,$00
 	dc.b	$00,$00,$00,$07,$00,$08,$79,$3A,$00,$90,$00,$04,$B6,$10,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$01,$65,$86
-dat_016B48:
+ObjData_016B48:
 	dc.b	$00,$08,$00,$08,$7B,$58,$00,$90
 	dc.b	$00,$04,$C9,$00,$00,$00,$00,$00,$00,$08,$00,$08,$7B,$62,$00,$90
 	dc.b	$00,$04,$C9,$90,$00,$00,$00,$00,$00,$08,$00,$08,$7A,$5C,$00,$60
 	dc.b	$00,$04,$C1,$E0,$00,$00,$00,$00,$00,$00,$00,$01,$7A,$68,$FF,$FF
 	dc.b	$00,$01,$60,$08
-dat_016B84:
+ObjData_016B84:
 	dc.b	$00,$20,$00,$20,$00,$20,$00,$20,$00,$3C,$00,$3C
 	dc.b	$00,$3C,$00,$3C,$00,$58,$00,$58,$00,$58,$00,$58,$00,$74,$00,$74
 	dc.b	$00,$74,$00,$74,$00,$08,$00,$08,$7A,$16,$00,$90,$00,$04,$BD,$60
@@ -29869,7 +29868,7 @@ dat_016B84:
 	dc.b	$7A,$68,$FF,$FF,$00,$01,$5F,$F6,$00,$08,$00,$08,$7A,$98,$00,$90
 	dc.b	$00,$04,$BD,$60,$00,$00,$00,$00,$00,$00,$00,$01,$7A,$68,$FF,$FF
 	dc.b	$00,$01,$5F,$F6
-dat_016C14:
+ObjData_016C14:
 	dc.b	$01,$F8,$01,$06,$00,$08,$00,$00,$00,$02,$00,$08
 	dc.b	$7A,$20,$00,$90,$00,$04,$BD,$F0,$F8,$00,$00,$5A,$00,$02,$00,$08
 	dc.b	$7A,$20,$00,$00,$F9,$80,$00,$5A,$00,$02,$00,$08,$7A,$20,$00,$00
@@ -29933,7 +29932,7 @@ dat_016C14:
 	dc.b	$00,$5A,$00,$02,$00,$08,$7A,$48,$00,$00,$05,$00,$00,$5A,$00,$02
 	dc.b	$00,$08,$7A,$48,$00,$00,$06,$80,$00,$5A,$00,$02,$00,$08,$7A,$48
 	dc.b	$00,$00,$07,$00,$00,$5A,$00,$00,$00,$01,$66,$4E
-dat_016FFC:
+ObjData_016FFC:
 	dc.b	$00,$34,$00,$4A
 	dc.b	$00,$08,$00,$1E,$00,$0C,$00,$08,$7A,$34,$00,$C0,$00,$04,$BF,$40
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$01,$AE,$4A,$00,$0C,$00,$08,$7A,$52
@@ -30398,9 +30397,9 @@ loc_017394:
 loc_017398:
 	movem.l	(a7)+,d0-d1
 loc_01739C:
-	lea	dat_016050(pc),a1
+	lea	ObjData_016050(pc),a1
 loc_0173A0:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_0173A4:
 	moveq	#$0,d0
 loc_0173A6:
@@ -30959,7 +30958,7 @@ loc_0177AC:
 loc_0177AE:
 	movea.l	(a2,d0.w),a1
 loc_0177B2:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0177B6:
 	move.b	#$40,$22(a0)
 	movea.l	$38(a2),a1
@@ -30968,7 +30967,7 @@ loc_0177B6:
 	movea.l	$3C(a2),a1
 	clr.l	$600(a0)
 loc_0177D0:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0177D4:
 	movea.l	$40(a2),a1
 loc_0177D8:
@@ -30990,7 +30989,7 @@ loc_0177F4:
 loc_0177FA:
 	movea.l	(a1,d0.w),a1
 loc_0177FE:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 dat_017802:
 	dc.b	$30,$28,$28,$20,$20,$28,$28,$30
 dat_01780A:
@@ -31007,7 +31006,7 @@ loc_01781A:
 loc_017820:
 	move.l	#$147EA,$58(a0)
 loc_017828:
-	lea	dat_017E86(pc),a1
+	lea	ObjData_017E86(pc),a1
 loc_01782C:
 	bra.b	loc_0178A0
 loc_01782E:
@@ -31024,7 +31023,7 @@ loc_01783A:
 loc_017840:
 	move.l	#$147EA,$58(a0)
 loc_017848:
-	lea	dat_017E96(pc),a1
+	lea	ObjData_017E96(pc),a1
 loc_01784C:
 	bra.b	loc_0178A0
 sub_01784E:
@@ -31052,7 +31051,7 @@ loc_017872:
 loc_017878:
 	move.l	#$147EA,$58(a0)
 loc_017880:
-	lea	dat_017E86(pc),a1
+	lea	ObjData_017E86(pc),a1
 loc_017884:
 	bra.b	loc_0178A0
 sub_017886:
@@ -31066,9 +31065,9 @@ loc_01788E:
 loc_017894:
 	move.l	#$147EA,$58(a0)
 loc_01789C:
-	lea	dat_017EB6(pc),a1
+	lea	ObjData_017EB6(pc),a1
 loc_0178A0:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_0178A4:
 	move.w	#$208,(a0)
 loc_0178A8:
@@ -31118,9 +31117,9 @@ loc_017902:
 loc_017908:
 	move.l	#$147EA,$58(a0)
 loc_017910:
-	lea	dat_017E96(pc),a1
+	lea	ObjData_017E96(pc),a1
 loc_017914:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_017918:
 	move.w	#$210,(a0)
 loc_01791C:
@@ -31160,9 +31159,9 @@ loc_017966:
 loc_01796C:
 	move.b	#$4,$52(a0)
 loc_017972:
-	lea	dat_0155C0(pc),a1
+	lea	ObjData_0155C0(pc),a1
 loc_017976:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_01797A:
 	subq.b	#$1,$2B(a0)
 loc_01797E:
@@ -31217,7 +31216,7 @@ loc_0179E0:
 loc_0179E2:
 	movea.l	(a1,d0.w),a1
 loc_0179E6:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0179EA:
 	clr.b	$28(a0)
 	clr.b	$35(a0)
@@ -31226,7 +31225,7 @@ loc_0179EA:
 	move.w	#$208,(a0)
 	jmp	sub_01AF0E(pc)
 dat_017A04:
-	dc.l	dat_01557E,dat_015594,dat_0155AA,dat_0155C0
+	dc.l	dat_01557E,dat_015594,dat_0155AA,ObjData_0155C0
 	dc.l	dat_0155D6,dat_0155EC,dat_015602
 sub_017A20:
 	lea	(ram_C0E0).w,a2
@@ -31282,15 +31281,15 @@ loc_017A6E:
 loc_017A74:
 	addq.w	#$6,a1
 loc_017A76:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_017A7A:
 	bclr.b	#$6,$2(a0)
 loc_017A80:
 	move.b	#$20,$22(a0)
 loc_017A86:
-	lea	dat_016008(pc),a1
+	lea	ObjData_016008(pc),a1
 loc_017A8A:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_017A8E:
 	moveq	#$0,d0
 loc_017A90:
@@ -31316,17 +31315,17 @@ loc_017AB6:
 loc_017AB8:
 	jsr	(sub_00A068).l
 loc_017ABE:
-	lea	dat_016056(pc),a1
+	lea	ObjData_016056(pc),a1
 loc_017AC2:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_017AC6:
-	lea	dat_015EAA(pc),a1
+	lea	ObjData_015EAA(pc),a1
 loc_017ACA:
 	move.b	$35(a0),d0
 loc_017ACE:
 	movea.l	(a1,d0.w),a1
 loc_017AD2:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_017AD6:
 	movea.l	a0,a1
 loc_017AD8:
@@ -31366,7 +31365,7 @@ loc_017B18:
 loc_017B1C:
 	movea.l	dat_017B86(pc,d0.w),a1
 loc_017B20:
-	jsr	sub_01AF1A(pc)
+	jsr	Object_RunAnimScript(pc)
 loc_017B24:
 	move.w	#$1,$26(a0)
 loc_017B2A:
@@ -31478,16 +31477,16 @@ dat_017E26:
 	dc.b	$03,$04,$04,$05,$05,$05,$04,$04,$04,$05,$05,$05,$05,$05,$05,$05
 	dc.b	$05,$05,$05,$05,$05,$FF,$05,$05,$05,$05,$05,$05,$FF,$FF,$05,$05
 	dc.b	$05,$05,$05,$FF,$FF,$FF
-dat_017E86:
+ObjData_017E86:
 	dc.b	$80,$01,$05,$00,$01,$04,$04,$00,$00,$01
 	dc.b	$00,$00,$00,$01,$48,$6E
-dat_017E96:
+ObjData_017E96:
 	dc.b	$80,$01,$05,$00,$02,$04,$04,$00,$00,$01
 	dc.b	$00,$00,$00,$01,$48,$6E
 dat_017EA6:
 	dc.b	$80,$01,$05,$00,$03,$04,$04,$00,$00,$01
 	dc.b	$00,$00,$00,$01,$48,$6E
-dat_017EB6:
+ObjData_017EB6:
 	dc.b	$80,$01,$05,$00,$03,$24,$0A,$00,$00,$01
 	dc.b	$00,$04,$00,$01,$48,$6E
 dat_017EC6:
@@ -31778,7 +31777,7 @@ loc_018288:
 loc_01828C:
 	addq.w	#$6,a1
 loc_01828E:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 dat_018292:
 	dc.b	$00,$09,$00,$06,$FF,$F0,$FF,$F4,$FF,$F0,$FF,$EF,$FF,$FC
 	dc.b	$FF,$F0,$FF,$F8,$FF,$F0,$00,$04,$FF,$F0,$00,$0A,$FF,$F6,$00,$0C
@@ -31812,7 +31811,7 @@ dat_018354:
 	dc.b	$7B,$F8,$00,$00,$80,$00,$00,$FF,$00,$04,$00,$08,$7C,$02,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$7C,$0C,$00,$00,$80,$00,$00,$FF
 	dc.b	$FF,$FF,$00,$01,$83,$D0
-dat_018406:
+ObjData_018406:
 	dc.b	$00,$06,$00,$03,$A5,$A8,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$06,$00,$03,$A5,$BE,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$82,$88,$00,$06,$00,$03,$A5,$D4,$00,$00,$00,$00,$00,$00
@@ -31898,9 +31897,9 @@ loc_01854C:
 loc_018552:
 	ori.b	#$68,$2(a0)
 loc_018558:
-	lea	dat_018946(pc),a1
+	lea	ObjData_018946(pc),a1
 loc_01855C:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_018560:
 	clr.b	$3E(a0)
 loc_018564:
@@ -31918,7 +31917,7 @@ loc_018580:
 loc_018584:
 	movea.l	a3,a1
 loc_018586:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_01858A:
 	lea	dat_01956E(pc),a3
 	bra.b	loc_0185A6
@@ -31942,8 +31941,8 @@ loc_0185A6:
 loc_0185B6:
 	bclr.b	#$2,$2(a0)
 	ori.b	#$48,$2(a0)
-	lea	dat_018946(pc),a1
-	jsr	sub_01ADB0(pc)
+	lea	ObjData_018946(pc),a1
+	jsr	Object_LoadTemplate(pc)
 	clr.b	$3E(a0)
 	move.b	#$FF,$55(a0)
 	move.b	#$60,$22(a0)
@@ -31951,7 +31950,7 @@ loc_0185B6:
 	move.b	#$10,$3B(a0)
 	move.w	#$250,(a0)
 	movea.l	a3,a1
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_0185F0:
 	lea	dat_019C92(pc),a3
 	bra.b	loc_018618
@@ -31986,9 +31985,9 @@ loc_018628:
 loc_01862E:
 	ori.b	#$48,$2(a0)
 loc_018634:
-	lea	dat_018946(pc),a1
+	lea	ObjData_018946(pc),a1
 loc_018638:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01863C:
 	clr.w	$2E(a0)
 loc_018640:
@@ -32006,7 +32005,7 @@ loc_01865A:
 loc_01865E:
 	movea.l	a3,a1
 loc_018660:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_018664:
 	lea	dat_019DF6(pc),a3
 loc_018668:
@@ -32033,9 +32032,9 @@ loc_01868A:
 loc_018690:
 	ori.b	#$48,$2(a0)
 loc_018696:
-	lea	dat_018946(pc),a1
+	lea	ObjData_018946(pc),a1
 loc_01869A:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01869E:
 	clr.b	$3E(a0)
 loc_0186A2:
@@ -32053,7 +32052,7 @@ loc_0186BE:
 loc_0186C2:
 	movea.l	a3,a1
 loc_0186C4:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_0186C8:
 	move.l	a1,$2A(a0)
 loc_0186CC:
@@ -32144,7 +32143,7 @@ loc_01876E:
 loc_018770:
 	lsl.w	#$2,d1
 loc_018772:
-	lea	dat_018E68(pc),a1
+	lea	ObjData_018E68(pc),a1
 loc_018776:
 	lea	-$38(a1,d1.w),a1
 loc_01877A:
@@ -32156,7 +32155,7 @@ loc_01877E:
 loc_018782:
 	movea.l	(a1),a1
 loc_018784:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 dat_018788:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$0E,$0E,$0E,$0F,$10,$11,$12,$12,$12,$00,$00,$00
@@ -32207,7 +32206,7 @@ loc_018846:
 loc_01884A:
 	addq.w	#$6,a1
 loc_01884C:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$4A,$A8,$00,$50,$66,$08,$43,$E9,$00,$16,$4E,$FA,$26,$BE,$5C,$49
 	dc.b	$4E,$FA,$26,$B8,$11,$7C,$00,$08,$00,$3B,$5C,$49,$4E,$FA,$26,$AC
 	dc.b	$11,$7C,$00,$0C,$00,$3B,$60,$F2,$48,$E7,$00,$C0,$43,$F8,$E0,$00
@@ -32224,7 +32223,7 @@ loc_01884C:
 	dc.b	$00,$08,$35,$42,$00,$08,$47,$FA,$17,$7C,$D6,$F3,$40,$00,$25,$4B
 	dc.b	$00,$30,$15,$7C,$00,$40,$00,$22,$34,$BC,$02,$3C,$70,$B2,$4E,$B9
 	dc.b	$00,$00,$A0,$68,$4E,$75
-dat_018946:
+ObjData_018946:
 	dc.b	$80,$01,$04,$00,$03,$0C,$00,$00,$00,$07
 	dc.b	$00,$00,$00,$01,$89,$56,$00,$06,$00,$08,$77,$BA,$00,$F0,$00,$04
 	dc.b	$9F,$90,$80,$00,$00,$08,$00,$06,$00,$08,$77,$CA,$00,$F0,$00,$04
@@ -32315,7 +32314,7 @@ dat_018D7C:
 	dc.b	$77,$DA,$00,$F0,$00,$04,$A1,$70,$80,$00,$00,$08,$00,$00,$00,$01
 	dc.b	$86,$C8,$00,$06,$00,$08,$78,$72,$00,$C0,$00,$04,$AC,$60,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$01,$89,$9C
-dat_018E68:
+ObjData_018E68:
 	dc.l	dat_018E90,dat_018EA6,dat_018EBC,dat_018ED2
 	dc.l	dat_018EE8
 	dc.b	$00,$01,$8E,$90
@@ -32667,7 +32666,7 @@ loc_01A180:
 loc_01A184:
 	bne.w	loc_01A1F6
 loc_01A188:
-	lea	dat_01A4BE(pc),a1
+	lea	ObjData_01A4BE(pc),a1
 loc_01A18C:
 	jsr	sub_01ADF6(pc)
 loc_01A190:
@@ -32726,7 +32725,7 @@ sub_01A1F8:
 loc_01A1FC:
 	bne.w	loc_01A266
 loc_01A200:
-	lea	dat_01A4BE(pc),a1
+	lea	ObjData_01A4BE(pc),a1
 loc_01A204:
 	jsr	sub_01ADF6(pc)
 loc_01A208:
@@ -32787,15 +32786,15 @@ loc_01A26E:
 loc_01A270:
 	addq.w	#$6,a1
 loc_01A272:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_01A276:
-	lea	dat_01A5AE(pc),a3
+	lea	ObjData_01A5AE(pc),a3
 sub_01A27A:
 	jsr	sub_01AD58(pc)
 loc_01A27E:
 	bne.w	loc_01A306
 loc_01A282:
-	lea	dat_01A4CE(pc),a1
+	lea	ObjData_01A4CE(pc),a1
 loc_01A286:
 	jsr	sub_01ADF6(pc)
 loc_01A28A:
@@ -32879,7 +32878,7 @@ loc_01A32A:
 loc_01A32E:
 	move.l	a1,-(a7)
 loc_01A330:
-	lea	dat_01A4DE(pc),a1
+	lea	ObjData_01A4DE(pc),a1
 loc_01A334:
 	jsr	sub_01ADF6(pc)
 loc_01A338:
@@ -32984,9 +32983,9 @@ loc_01A408:
 loc_01A40C:
 	move.w	#$23C,(a0)
 loc_01A410:
-	lea	dat_01A6A2(pc),a1
+	lea	ObjData_01A6A2(pc),a1
 loc_01A414:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 sub_01A41A:
 	subq.b	#$1,$3E(a0)
 loc_01A41E:
@@ -33064,16 +33063,16 @@ loc_01A4AA:
 loc_01A4B0:
 	move.w	#$23C,(a0)
 loc_01A4B4:
-	lea	dat_018406(pc),a1
+	lea	ObjData_018406(pc),a1
 loc_01A4B8:
-	jmp	(sub_01AF1A).l
-dat_01A4BE:
+	jmp	(Object_RunAnimScript).l
+ObjData_01A4BE:
 	dc.b	$80,$01
 	dc.b	$05,$00,$00,$24,$04,$00,$00,$00,$00,$00,$00,$01,$A6,$72
-dat_01A4CE:
+ObjData_01A4CE:
 	dc.b	$80,$01
 	dc.b	$0F,$00,$00,$20,$00,$00,$00,$00,$00,$04,$00,$01,$A7,$CE
-dat_01A4DE:
+ObjData_01A4DE:
 	dc.b	$80,$01
 	dc.b	$0F,$00,$00,$20,$00,$00,$00,$00,$00,$04,$00,$01,$AA,$3C
 dat_01A4EE:
@@ -33094,7 +33093,7 @@ dat_01A56E:
 	dc.b	$00,$00,$00,$0A,$FF,$FD,$00,$07,$00,$02,$00,$03,$00,$05,$00,$02
 	dc.b	$00,$05,$FF,$FD,$00,$05,$FF,$F9,$00,$02,$FF,$F5,$FF,$FD,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_01A5AE:
+ObjData_01A5AE:
 	dc.b	$00,$3C
 	dc.b	$00,$06,$00,$3C,$00,$06,$00,$3B,$00,$06,$00,$3B,$00,$0A,$00,$29
 	dc.b	$00,$29,$00,$2A,$00,$28,$00,$28,$00,$2A,$00,$06,$00,$30,$FF,$FF
@@ -33112,7 +33111,7 @@ dat_01A5AE:
 	dc.b	$00,$01,$A2,$68,$00,$02,$00,$08,$7B,$BC,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$02,$00,$08,$7B,$C6,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$01
 	dc.b	$A6,$84
-dat_01A6A2:
+ObjData_01A6A2:
 	dc.b	$00,$02,$00,$03,$93,$66,$00,$00,$00,$00,$00,$00,$00,$02
 	dc.b	$00,$03,$93,$70,$00,$00,$00,$00,$00,$00,$FF,$FE
 dat_01A6BC:
@@ -33553,7 +33552,7 @@ loc_01ADA8:
 	moveq	#-$1,d7
 loc_01ADAE:
 	rts
-sub_01ADB0:
+Object_LoadTemplate:
 	move.b	(a1)+,$37(a0)
 loc_01ADB4:
 	move.b	(a1)+,$34(a0)
@@ -33644,9 +33643,9 @@ loc_01AE54:
 loc_01AE56:
 	eori.b	#$4,$2(a0)
 loc_01AE5C:
-	lea	dat_01585C(pc),a1
+	lea	ObjData_01585C(pc),a1
 loc_01AE60:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_01AE64:
 	jmp	sub_017A20(pc)
 	dc.b	$11,$7C,$00,$09,$00,$3E,$60,$06
@@ -33691,7 +33690,7 @@ loc_01AF12:
 	bne.w	loc_01AFEA
 loc_01AF16:
 	movea.l	$30(a0),a1
-sub_01AF1A:
+Object_RunAnimScript:
 	move.w	(a1),d0
 loc_01AF1C:
 	beq.b	loc_01AF2A
@@ -35124,7 +35123,7 @@ loc_01BBC8:
 loc_01BBCC:
 	lsl.w	#$2,d0
 loc_01BBCE:
-	lea	dat_01BCD4(pc),a1
+	lea	ObjData_01BCD4(pc),a1
 loc_01BBD2:
 	movem.w	(a1,d0.w),d0-d1
 loc_01BBD8:
@@ -35138,9 +35137,9 @@ loc_01BBE6:
 loc_01BBE8:
 	lea	$60(a0),a0
 loc_01BBEC:
-	lea	dat_01C586(pc),a1
+	lea	ObjData_01C586(pc),a1
 loc_01BBF0:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01BBF4:
 	bsr.w	sub_01BC72
 loc_01BBF8:
@@ -35150,9 +35149,9 @@ loc_01BC00:
 loc_01BC06:
 	lea	$60(a0),a0
 loc_01BC0A:
-	lea	dat_01C596(pc),a1
+	lea	ObjData_01C596(pc),a1
 loc_01BC0E:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01BC12:
 	bsr.w	sub_01BC72
 loc_01BC16:
@@ -35230,7 +35229,7 @@ dat_01BCB6:
 	dc.b	$00,$00,$00,$00,$01,$7D,$00,$00,$01,$EF
 	dc.b	$01,$EF,$00,$00,$00,$00,$02,$C3,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$02,$AD
-dat_01BCD4:
+ObjData_01BCD4:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$49,$20,$00,$81
 	dc.b	$00,$00,$00,$00,$42,$C0,$00,$81,$42,$C0,$00,$81,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$44,$00,$00,$81,$00,$00,$00,$00,$00,$00,$00,$00
@@ -35428,7 +35427,7 @@ loc_01BEDA:
 loc_01BEDC:
 	move.b	#$39,d3
 loc_01BEE0:
-	lea	dat_01C414(pc),a1
+	lea	ObjData_01C414(pc),a1
 loc_01BEE4:
 	jsr	sub_01A326(pc)
 loc_01BEE8:
@@ -35487,9 +35486,9 @@ loc_01BF6C:
 loc_01BF70:
 	move.b	#$41,$54(a0)
 loc_01BF76:
-	lea	dat_017E96(pc),a1
+	lea	ObjData_017E96(pc),a1
 loc_01BF7A:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01BF7E:
 	ori.b	#$C,$48(a0)
 loc_01BF84:
@@ -35583,12 +35582,12 @@ loc_01C042:
 loc_01C046:
 	add.w	d0,d0
 loc_01C048:
-	lea	dat_01C62E(pc),a1
+	lea	ObjData_01C62E(pc),a1
 loc_01C04C:
 	cmpi.b	#$52,$28(a0)
 loc_01C052:
 	bne.b	loc_01C058
-	lea	dat_01C66E(pc),a1
+	lea	ObjData_01C66E(pc),a1
 loc_01C058:
 	move.w	(a1,d0.w),d1
 loc_01C05C:
@@ -35824,7 +35823,7 @@ dat_01C382:
 	dc.b	$00,$3C,$00,$2B,$00,$2C,$08,$2C,$00,$2D,$00,$3D,$00,$3E,$00,$2E
 	dc.b	$00,$2F,$08,$2F,$00,$30,$00,$3F,$00,$40,$00,$41,$00,$31,$00,$31
 	dc.b	$00,$42,$00,$43
-dat_01C414:
+ObjData_01C414:
 	dc.b	$00,$24,$00,$37,$00,$24,$00,$37,$00,$24,$00,$37
 	dc.b	$00,$24,$00,$37,$00,$24,$00,$37,$00,$24,$00,$37,$00,$24,$00,$37
 	dc.b	$00,$24,$00,$37,$00,$24,$00,$37,$00,$24,$00,$3C,$00,$24,$00,$40
@@ -35850,10 +35849,10 @@ dat_01C4A0:
 	dc.b	$C5,$50,$00,$04,$00,$08,$94,$F0,$00,$00,$80,$00,$00,$FF,$FF,$FF
 	dc.b	$00,$01,$C5,$62,$00,$04,$00,$08,$95,$00,$00,$00,$80,$00,$00,$FF
 	dc.b	$FF,$FF,$00,$01,$C5,$74
-dat_01C586:
+ObjData_01C586:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$1E,$00,$00,$01,$C6,$CE
-dat_01C596:
+ObjData_01C596:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$1E,$00,$00,$01,$C7,$90
 dat_01C5A6:
@@ -35868,13 +35867,13 @@ dat_01C5EE:
 	dc.b	$FF,$F8,$00,$12,$FF,$F8,$00,$0E,$00,$06,$00,$0E,$00,$06,$FF,$FE
 	dc.b	$00,$08,$FF,$F2,$00,$06,$FF,$F2,$00,$06,$FF,$EE,$FF,$F8,$FF,$EE
 	dc.b	$FF,$F8,$FF,$F4,$FF,$EE,$FF,$F4,$FF,$EE,$00,$04,$FF,$E8
-dat_01C62E:
+ObjData_01C62E:
 	dc.b	$00,$0C
 	dc.b	$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C
 	dc.b	$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0E
 	dc.b	$00,$24,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C
 	dc.b	$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22,$00,$0C,$00,$22
-dat_01C66E:
+ObjData_01C66E:
 	dc.b	$00,$1E
 	dc.b	$00,$22,$00,$1E,$00,$22,$00,$1E,$00,$22,$00,$1E,$00,$22,$00,$1E
 	dc.b	$00,$22,$00,$1E,$00,$22,$00,$1E,$00,$22,$00,$1E,$00,$22,$00,$20
@@ -35908,9 +35907,9 @@ dat_01C770:
 	dc.b	$C1,$1E,$00,$3C,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$C2,$54
 sub_01C844:
-	lea	dat_01CFF0(pc),a1
+	lea	ObjData_01CFF0(pc),a1
 loc_01C848:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01C84C:
 	moveq	#$0,d0
 loc_01C84E:
@@ -36071,9 +36070,9 @@ loc_01C9F0:
 loc_01CA2A:
 	rts
 sub_01CA2C:
-	lea	dat_01CFF0(pc),a1
+	lea	ObjData_01CFF0(pc),a1
 loc_01CA30:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01CA34:
 	moveq	#$0,d0
 loc_01CA36:
@@ -36226,7 +36225,7 @@ loc_01CBA8:
 	rts
 loc_01CBAA:
 	move.b	#$53,$36(a2)
-	lea	dat_01D000(pc),a1
+	lea	ObjData_01D000(pc),a1
 loc_01CBB4:
 	jsr	sub_01ADF6(pc)
 	move.w	#$418,(a2)
@@ -36287,7 +36286,7 @@ loc_01CC3C:
 loc_01CC40:
 	bne.b	loc_01CC84
 loc_01CC42:
-	lea	(dat_028434).l,a1
+	lea	(ObjData_028434).l,a1
 loc_01CC48:
 	jsr	sub_01ADF6(pc)
 loc_01CC4C:
@@ -36309,7 +36308,7 @@ loc_01CC74:
 loc_01CC76:
 	add.w	d0,d0
 loc_01CC78:
-	lea	dat_01CD00(pc),a1
+	lea	ObjData_01CD00(pc),a1
 loc_01CC7C:
 	move.w	(a1,d0.w),d0
 loc_01CC80:
@@ -36360,16 +36359,16 @@ loc_01CCDA:
 loc_01CCE0:
 	beq.b	loc_01CCEA
 loc_01CCE2:
-	lea	dat_01D0AC(pc),a1
+	lea	ObjData_01D0AC(pc),a1
 loc_01CCE6:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_01CCEA:
-	lea	dat_01D0BE(pc),a1
+	lea	ObjData_01D0BE(pc),a1
 	move.b	#$FF,$29(a0)
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 dat_01CCF8:
 	dc.b	$00,$00,$FF,$C0,$00,$40,$00,$00
-dat_01CD00:
+ObjData_01CD00:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$26,$00,$1A,$00,$00
 sub_01CD10:
 	cmpi.b	#$45,$36(a0)
@@ -36386,8 +36385,8 @@ loc_01CD22:
 	bclr.b	#$6,$2(a0)
 	moveq	#-$4D,d0
 	jsr	(sub_00A068).l
-	lea	dat_01D17A(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_01D17A(pc),a1
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$2F,$09,$49,$FA
 	dc.b	$03,$C2,$61,$2C,$66,$16,$49,$FA,$03,$D8,$61,$24,$66,$0E,$49,$FA
 	dc.b	$03,$EE,$61,$1C,$66,$06,$49,$FA,$04,$04,$61,$14,$22,$5F,$08,$A8
@@ -36403,9 +36402,9 @@ loc_01CD22:
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$02,$A8,$02,$A8,$00,$00
 sub_01CE08:
-	lea	dat_01CFF0(pc),a1
+	lea	ObjData_01CFF0(pc),a1
 loc_01CE0C:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01CE10:
 	moveq	#$0,d0
 loc_01CE12:
@@ -36538,7 +36537,7 @@ loc_01CF44:
 sub_01CF64:
 	jsr	sub_01AD58(pc)
 	bne.b	loc_01CFA2
-	lea	dat_01D020(pc),a1
+	lea	ObjData_01D020(pc),a1
 	jsr	sub_01ADF6(pc)
 	move.b	#$40,$22(a2)
 	bset.b	#$6,$2(a2)
@@ -36561,13 +36560,13 @@ dat_01CFB2:
 	dc.b	$00,$1C,$FF,$CA,$00,$23,$FF,$CA,$00,$0D,$FF,$D0,$00,$14,$FF,$D0
 	dc.b	$00,$1C,$FF,$D0,$00,$23,$FF,$D0,$2F,$09,$4E,$B9,$00,$00,$E2,$34
 	dc.b	$4E,$B9,$00,$00,$B0,$36,$22,$5F,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
-dat_01CFF0:
+ObjData_01CFF0:
 	dc.b	$80,$01,$05,$00,$08,$24,$10,$00,$00,$00,$00,$04,$00,$08,$70,$00
-dat_01D000:
+ObjData_01D000:
 	dc.b	$80,$01,$05,$00,$00,$34,$0F,$00,$00,$00,$00,$04,$00,$01,$D0,$9A
 dat_01D010:
 	dc.b	$80,$01,$05,$00,$00,$28,$0F,$00,$00,$00,$00,$04,$00,$01,$D0,$9A
-dat_01D020:
+ObjData_01D020:
 	dc.b	$80,$01,$05,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$D2,$CC
 dat_01D030:
 	dc.b	$00,$08,$00,$22,$0E,$EE,$00,$24,$00,$00,$00,$26,$0A,$C8,$00,$28
@@ -36578,10 +36577,10 @@ dat_01D030:
 	dc.b	$00,$FF,$FF,$FF,$00,$01,$D0,$76,$00,$64,$00,$08,$97,$F6,$00,$00
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$01,$D0,$88,$00,$64,$00,$08,$9A,$3A
 	dc.b	$00,$00,$80,$00,$00,$00,$FF,$FF,$00,$01,$D0,$9A
-dat_01D0AC:
+ObjData_01D0AC:
 	dc.b	$00,$64,$00,$08
 	dc.b	$9A,$2A,$00,$00,$80,$00,$00,$10,$FF,$FF,$00,$01,$D0,$9A
-dat_01D0BE:
+ObjData_01D0BE:
 	dc.b	$00,$14
 	dc.b	$00,$08,$9A,$2A,$00,$00,$80,$00,$00,$10,$00,$00,$00,$01,$CD,$3C
 	dc.b	$00,$06,$00,$03,$A5,$A8,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
@@ -36595,7 +36594,7 @@ dat_01D0BE:
 	dc.b	$00,$00,$80,$00,$00,$10,$00,$00,$00,$01,$CD,$A4,$00,$08,$00,$08
 	dc.b	$7D,$6A,$00,$00,$80,$00,$00,$0D,$00,$12,$00,$08,$7D,$6A,$00,$00
 	dc.b	$80,$00,$00,$10,$00,$00,$00,$01,$CD,$A4
-dat_01D17A:
+ObjData_01D17A:
 	dc.b	$00,$06,$00,$03,$A5,$A8
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A5,$BE,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$06,$00,$03,$A5,$D4,$00,$00,$00,$00,$00,$00,$00,$06
@@ -36691,19 +36690,19 @@ loc_01D384:
 loc_01D38A:
 	beq.b	loc_01D39C
 loc_01D38C:
-	lea	dat_01DEBE(pc),a3
+	lea	ObjData_01DEBE(pc),a3
 loc_01D390:
 	cmpi.w	#$4,(ram_C328).w
 loc_01D396:
 	beq.b	loc_01D39C
 loc_01D398:
-	lea	dat_01DE82(pc),a3
+	lea	ObjData_01DE82(pc),a3
 loc_01D39C:
 	bra.b	sub_01D368
 sub_01D39E:
-	lea	dat_01DE72(pc),a1
+	lea	ObjData_01DE72(pc),a1
 loc_01D3A2:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01D3A6:
 	clr.w	$18(a0)
 loc_01D3AA:
@@ -36721,19 +36720,19 @@ loc_01D3C4:
 loc_01D3C8:
 	move.w	a2,$28(a0)
 loc_01D3CC:
-	move.w	dat_01D3D6(pc,d1.w),d2
+	move.w	ObjData_01D3D6(pc,d1.w),d2
 loc_01D3D0:
 	move.w	d2,$1E(a0)
 loc_01D3D4:
 	rts
-dat_01D3D6:
+ObjData_01D3D6:
 	dc.b	$00,$00,$02,$D5,$00,$00,$00,$00,$01,$EF
 	dc.b	$01,$EF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$23,$00,$00
 	dc.b	$00,$00,$00,$00
 sub_01D3F4:
-	lea	dat_01DE62(pc),a1
+	lea	ObjData_01DE62(pc),a1
 loc_01D3F8:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01D3FC:
 	clr.w	$18(a0)
 loc_01D400:
@@ -36781,9 +36780,9 @@ loc_01D484:
 loc_01D48A:
 	ori.b	#$26,$2(a0)
 loc_01D490:
-	lea	dat_01DE52(pc),a1
+	lea	ObjData_01DE52(pc),a1
 loc_01D494:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01D498:
 	moveq	#$0,d1
 loc_01D49A:
@@ -36947,8 +36946,8 @@ loc_01D5E0:
 	beq.b	loc_01D61E
 	jmp	sub_01C222(pc)
 loc_01D61E:
-	lea	dat_01E32C(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_01E32C(pc),a1
+	jmp	Object_RunAnimScript(pc)
 loc_01D626:
 	jmp	sub_01AF0E(pc)
 sub_01D62A:
@@ -37114,11 +37113,11 @@ loc_01D7AE:
 loc_01D7B4:
 	move.w	#$278,(a0)
 loc_01D7B8:
-	lea	dat_01E554(pc),a3
+	lea	ObjData_01E554(pc),a3
 loc_01D7BC:
-	lea	dat_01DE52(pc),a1
+	lea	ObjData_01DE52(pc),a1
 loc_01D7C0:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01D7C4:
 	move.l	#$1E308,$30(a0)
 loc_01D7CC:
@@ -37248,12 +37247,12 @@ loc_01D8F0:
 	addq.w	#$1,$5A(a0)
 loc_01D90A:
 	move.l	d1,$C(a0)
-	lea	dat_01E278(pc),a1
+	lea	ObjData_01E278(pc),a1
 	cmpi.b	#$44,$36(a0)
 	beq.b	loc_01D91E
-	lea	dat_01E2A8(pc),a1
+	lea	ObjData_01E2A8(pc),a1
 loc_01D91E:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_01D922:
 	andi.w	#$FFFE,d0
 loc_01D926:
@@ -37265,16 +37264,16 @@ loc_01D92E:
 	subq.w	#$1,$5A(a0)
 	bra.b	loc_01D90A
 loc_01D936:
-	lea	dat_01E296(pc),a1
+	lea	ObjData_01E296(pc),a1
 loc_01D93A:
 	cmpi.b	#$44,$36(a0)
 loc_01D940:
 	beq.b	loc_01D946
-	lea	dat_01E2C6(pc),a1
+	lea	ObjData_01E2C6(pc),a1
 loc_01D946:
 	clr.l	$C(a0)
 loc_01D94A:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_01D94E:
 	clr.l	$10(a0)
 loc_01D952:
@@ -37284,9 +37283,9 @@ loc_01D956:
 loc_01D95C:
 	move.w	#$358,(a0)
 loc_01D960:
-	lea	dat_01DE52(pc),a1
+	lea	ObjData_01DE52(pc),a1
 loc_01D964:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01D968:
 	bclr.b	#$7,$1A(a0)
 loc_01D96E:
@@ -37326,7 +37325,7 @@ loc_01D9C2:
 loc_01D9C6:
 	move.w	d2,$38(a0)
 loc_01D9CA:
-	lea	dat_01E554(pc),a3
+	lea	ObjData_01E554(pc),a3
 loc_01D9CE:
 	movea.l	a0,a2
 loc_01D9D0:
@@ -37585,9 +37584,9 @@ loc_01DC7E:
 	bne.b	loc_01DC84
 	clr.b	(ram_C66F).w
 loc_01DC84:
-	lea	dat_01DE72(pc),a1
+	lea	ObjData_01DE72(pc),a1
 loc_01DC88:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01DC8C:
 	moveq	#$0,d0
 loc_01DC8E:
@@ -37683,8 +37682,8 @@ loc_01DD60:
 	move.w	d1,$1E(a0)
 	lsl.w	#$5,d1
 	move.w	d1,$1C(a0)
-	lea	dat_01EFE4(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_01EFE4(pc),a1
+	jmp	Object_RunAnimScript(pc)
 loc_01DD86:
 	moveq	#$0,d0
 	move.b	$1A(a0),d0
@@ -37762,22 +37761,22 @@ dat_01DE12:
 	dc.b	$00,$06,$00,$02,$00,$08,$FF,$F2,$00,$06,$FF,$F2,$00,$06,$FF,$EE
 	dc.b	$FF,$F8,$FF,$EE,$FF,$F8,$FF,$F4,$FF,$EE,$FF,$F4,$FF,$EE,$00,$04
 	dc.b	$FF,$E8
-dat_01DE52:
+ObjData_01DE52:
 	dc.b	$80,$01,$00,$00,$0C,$00,$10,$00,$03,$E8,$00,$04,$00,$01
 	dc.b	$E6,$24
-dat_01DE62:
+ObjData_01DE62:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$E3,$8A
-dat_01DE72:
+ObjData_01DE72:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$E6,$24
-dat_01DE82:
+ObjData_01DE82:
 	dc.b	$00,$06,$00,$22,$0E,$EE,$00,$24,$00,$00,$00,$32,$04,$AA
 	dc.b	$00,$34,$02,$66,$00,$36,$02,$44,$00,$38,$06,$8A,$00,$3A,$02,$46
 dat_01DEA0:
 	dc.b	$00,$06,$00,$22,$0E,$EE,$00,$24,$00,$00,$00,$32,$0A,$AA,$00,$34
 	dc.b	$06,$66,$00,$36,$04,$44,$00,$38,$06,$88,$00,$3A,$02,$44
-dat_01DEBE:
+ObjData_01DEBE:
 	dc.b	$00,$06
 	dc.b	$00,$22,$0E,$EE,$00,$24,$00,$00,$00,$32,$08,$A8,$00,$34,$04,$64
 	dc.b	$00,$36,$02,$42,$00,$38,$06,$8A,$00,$3A,$02,$46
@@ -37835,11 +37834,10 @@ dat_01E15A:
 	dc.b	$20,$80,$20,$85,$20,$8A,$20,$8E,$20,$91,$20,$94,$20,$98,$20,$9C
 	dc.b	$00,$00,$20,$04,$20,$79,$20,$7D,$20,$81,$20,$86,$20,$8B,$20,$8F
 	dc.b	$20,$92,$20,$95,$20,$99,$20,$9D,$00,$00,$20,$2F,$20,$30,$20,$31
-	dc.b	$20,$82,$20,$87,$20,$8C,$20,$43,$20,$45,$20,$47,$20,$49,$20,$4B
-	dc.b	$20,$4D,$20,$33,$20,$36,$20,$39,$20,$3C,$20,$40,$20,$42,$20,$44
-	dc.b	$20,$46,$20,$48,$20,$4A,$20,$4C,$20,$4E,$20,$34,$20,$37,$20,$3A
-	dc.b	$20,$3D,$20,$4F,$20,$51,$20,$53,$20,$55,$20,$57,$20,$59,$20,$5B
-	dc.b	$00,$00,$20,$35,$20,$38,$20,$3B,$20,$3E,$20,$50,$20,$52,$20,$54
+	dc.b	$20,$82,$20,$87,$20,$8C
+	dc.b	' C E G I K M 3 6 9 < @ B D F H J L N 4 7 : = O Q'
+	dc.b	' S U W Y [',0
+	dc.b	$00,$20,$35,$20,$38,$20,$3B,$20,$3E,$20,$50,$20,$52,$20,$54
 	dc.b	$20,$56,$20,$58,$20,$5A,$20,$5C,$00,$00,$00,$04,$00,$08,$70,$00
 	dc.b	$00,$B0,$00,$05,$17,$BF,$80,$00,$00,$FF,$00,$04,$00,$08,$70,$00
 	dc.b	$00,$B0,$00,$05,$18,$6F,$80,$00,$00,$FF,$FF,$FF,$00,$01,$E2,$1A
@@ -37847,18 +37845,18 @@ dat_01E15A:
 	dc.b	$E2,$40,$00,$04,$00,$08,$70,$00,$01,$C0,$00,$05,$27,$C8,$80,$00
 	dc.b	$00,$FF,$00,$04,$00,$08,$70,$00,$01,$C0,$00,$05,$29,$88,$80,$00
 	dc.b	$00,$FF,$FF,$FF,$00,$01,$E2,$52
-dat_01E278:
+ObjData_01E278:
 	dc.b	$00,$04,$00,$08,$96,$74,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$96,$B4,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$01,$D8,$E2
-dat_01E296:
+ObjData_01E296:
 	dc.b	$00,$08,$00,$08,$96,$74,$00,$00,$80,$00
 	dc.b	$00,$FF,$00,$00,$00,$01,$D8,$E2
-dat_01E2A8:
+ObjData_01E2A8:
 	dc.b	$00,$04,$00,$08,$96,$F4,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$97,$34,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$01,$D8,$E2
-dat_01E2C6:
+ObjData_01E2C6:
 	dc.b	$00,$08,$00,$08,$96,$F4,$00,$00,$80,$00
 	dc.b	$00,$FF,$00,$00,$00,$01,$D8,$E2,$00,$04,$00,$08,$96,$74,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$04,$00,$08,$96,$B4,$00,$00,$80,$00,$00,$FF
@@ -37866,7 +37864,7 @@ dat_01E2C6:
 	dc.b	$00,$FF,$FF,$FF,$00,$01,$E2,$F6,$00,$08,$00,$08,$70,$00,$00,$00
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$01,$E3,$08,$00,$04,$00,$08,$70,$00
 	dc.b	$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$01,$E3,$1A
-dat_01E32C:
+ObjData_01E32C:
 	dc.b	$00,$1E,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$D6,$BC,$00,$1E
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FE,$00,$32,$00,$08
@@ -37909,7 +37907,7 @@ dat_01E514:
 	dc.b	$00,$3B,$00,$29,$00,$3C,$00,$29,$00,$3B,$00,$26,$00,$3B,$00,$26
 	dc.b	$00,$3B,$00,$26,$00,$3B,$00,$26,$00,$3B,$00,$26,$00,$3B,$00,$26
 	dc.b	$00,$3B,$00,$26
-dat_01E554:
+ObjData_01E554:
 	dc.b	$00,$1B,$00,$0A,$00,$1B,$00,$0A,$00,$1B,$00,$0A
 	dc.b	$00,$1B,$00,$0A,$00,$1B,$00,$0A,$00,$1B,$00,$0C,$00,$1B,$00,$0C
 	dc.b	$00,$1B,$00,$0E,$00,$1B,$00,$0E,$00,$1B,$00,$0B,$00,$1B,$00,$0B
@@ -37987,7 +37985,7 @@ loc_01E75A:
 	dc.b	$60,$10,$43,$FA,$06,$20,$04,$68,$00,$40,$00,$08,$11,$7C,$00,$50
 	dc.b	$00,$36
 loc_01E7A2:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01E7A6:
 	moveq	#$0,d0
 loc_01E7A8:
@@ -38020,9 +38018,9 @@ loc_01E7E6:
 loc_01E7E8:
 	lea	$60(a0),a0
 loc_01E7EC:
-	lea	dat_01EDF4(pc),a1
+	lea	ObjData_01EDF4(pc),a1
 loc_01E7F0:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01E7F4:
 	cmpi.w	#$B,(ram_C328).w
 loc_01E7FA:
@@ -38050,9 +38048,9 @@ loc_01E832:
 loc_01E836:
 	bne.b	loc_01E862
 loc_01E838:
-	lea	dat_01EDE4(pc),a1
+	lea	ObjData_01EDE4(pc),a1
 loc_01E83C:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01E840:
 	ori.b	#$62,$2(a0)
 loc_01E846:
@@ -38126,8 +38124,8 @@ loc_01E93A:
 	move.b	#$0,$43(a0)
 	clr.l	$C(a0)
 	clr.l	$10(a0)
-	lea	dat_01EFC0(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_01EFC0(pc),a1
+	jmp	(Object_RunAnimScript).l
 loc_01E97A:
 	move.l	a0,-(a7)
 	lea	$60(a0),a0
@@ -38184,9 +38182,9 @@ loc_01EA12:
 loc_01EA16:
 	jmp	sub_01AF0E(pc)
 loc_01EA1A:
-	lea	dat_01EFE4(pc),a1
+	lea	ObjData_01EFE4(pc),a1
 loc_01EA1E:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$00,$08,$00,$00,$00,$08,$00,$00,$00,$08,$00,$00,$00,$08
 	dc.b	$00,$00,$FF,$FD,$00,$07,$FF,$FE,$00,$04,$FF,$FE,$00,$04,$FF,$FE
 	dc.b	$00,$04,$00,$00,$FF,$FA,$00,$03,$00,$05,$00,$08,$00,$00,$00,$03
@@ -38213,7 +38211,7 @@ loc_01EA7E:
 	dc.b	$02,$C2,$0C,$78,$00,$04,$C3,$28,$66,$04,$32,$3C,$02,$9B,$31,$41
 	dc.b	$00,$1E,$EB,$49,$31,$41,$00,$1C,$60,$DE
 sub_01EADA:
-	lea	dat_01EDD4(pc),a1
+	lea	ObjData_01EDD4(pc),a1
 loc_01EADE:
 	movea.l	a0,a2
 loc_01EAE0:
@@ -38344,13 +38342,13 @@ loc_01ECA4:
 loc_01ECAA:
 	subq.b	#$1,$29(a0)
 loc_01ECAE:
-	lea	dat_01F246(pc),a1
+	lea	ObjData_01F246(pc),a1
 loc_01ECB2:
 	cmpi.b	#$4A,$36(a0)
 loc_01ECB8:
 	beq.b	loc_01ECBE
 loc_01ECBA:
-	lea	dat_01F160(pc),a1
+	lea	ObjData_01F160(pc),a1
 loc_01ECBE:
 	moveq	#$1E,d0
 loc_01ECC0:
@@ -38360,7 +38358,7 @@ loc_01ECC4:
 loc_01ECC8:
 	move.l	a1,$30(a0)
 loc_01ECCC:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 dat_01ECD0:
 	dc.b	$00,$00,$FF,$D0,$00,$0C,$FF,$D8,$00,$0C,$FF,$D8,$00,$10,$FF,$EA
 	dc.b	$00,$10,$FF,$EA,$00,$0E,$FF,$F8,$00,$0E,$FF,$F8,$00,$0E,$FF,$F8
@@ -38382,13 +38380,13 @@ dat_01ED74:
 	dc.b	$00,$01,$EE,$82,$80,$01,$0A,$00,$08,$0C,$00,$00,$00,$28,$00,$04
 	dc.b	$00,$01,$EF,$36,$80,$01,$0A,$00,$08,$18,$00,$00,$00,$28,$00,$04
 	dc.b	$00,$01,$EF,$D2
-dat_01EDD4:
+ObjData_01EDD4:
 	dc.b	$80,$01,$04,$00,$07,$0C,$00,$00,$00,$19,$00,$00
 	dc.b	$00,$08,$83,$40
-dat_01EDE4:
+ObjData_01EDE4:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$F1,$A4
-dat_01EDF4:
+ObjData_01EDF4:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$F1,$1E,$00,$0A,$00,$03,$86,$86,$00,$00,$80,$00,$00,$08
 	dc.b	$00,$05,$00,$03,$86,$86,$00,$00,$80,$00,$00,$07,$00,$05,$00,$03
@@ -38418,11 +38416,11 @@ dat_01EDF4:
 	dc.b	$00,$00,$80,$00,$00,$18,$FF,$FF,$00,$01,$EF,$9C,$00,$FF,$00,$03
 	dc.b	$86,$D0,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$01,$EF,$9C,$00,$FF
 	dc.b	$00,$03,$86,$D0,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$01,$EF,$AE
-dat_01EFC0:
+ObjData_01EFC0:
 	dc.b	$00,$22,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$E9,$98,$00,$FF,$00,$03,$86,$D0,$00,$00,$80,$00,$00,$10,$FF,$FF
 	dc.b	$00,$01,$EF,$AE
-dat_01EFE4:
+ObjData_01EFE4:
 	dc.b	$00,$02,$00,$08,$72,$A8,$00,$C0,$00,$04,$76,$80
 	dc.b	$F8,$00,$00,$5A,$00,$02,$00,$08,$72,$A8,$00,$00,$F9,$80,$00,$5A
 	dc.b	$00,$02,$00,$08,$72,$A8,$00,$00,$FB,$00,$00,$5A,$00,$02,$00,$08
@@ -38449,7 +38447,7 @@ dat_01F0FE:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$FF,$00,$08,$97,$88,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$FF,$00,$08,$97,$7E,$00,$00,$00,$00,$00,$00,$00,$FF
 	dc.b	$00,$08,$97,$74,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$01,$F1,$1E
-dat_01F160:
+ObjData_01F160:
 	dc.b	$00,$20,$00,$32,$00,$32,$00,$44,$00,$44,$00,$56,$00,$56,$00,$56
 	dc.b	$00,$68,$00,$7A,$00,$7A,$00,$8C,$00,$8C,$00,$9E,$00,$9E,$00,$9E
 	dc.b	$00,$04,$00,$08,$82,$E8,$00,$00,$80,$00,$00,$FF,$00,$00,$00,$01
@@ -38465,7 +38463,7 @@ dat_01F160:
 	dc.b	$A6,$4A,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A6,$60,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$A6,$76,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$EC,$22
-dat_01F246:
+ObjData_01F246:
 	dc.b	$00,$20,$00,$36,$00,$36,$00,$4C,$00,$4C
 	dc.b	$00,$62,$00,$62,$00,$62,$00,$78,$00,$8E,$00,$8E,$00,$A4,$00,$A4
 	dc.b	$00,$BA,$00,$BA,$00,$BA,$00,$04,$00,$08,$83,$98,$00,$C0,$00,$04
@@ -38489,7 +38487,7 @@ loc_01F320:
 loc_01F326:
 	move.b	#$20,$22(a0)
 loc_01F32C:
-	lea	dat_01F4DC(pc),a1
+	lea	ObjData_01F4DC(pc),a1
 loc_01F330:
 	movea.l	a0,a2
 loc_01F332:
@@ -38501,7 +38499,7 @@ loc_01F33A:
 loc_01F33C:
 	bset.b	#$6,$2(a0)
 loc_01F342:
-	move.w	dat_01F370(pc,d0.w),$1E(a0)
+	move.w	ObjData_01F370(pc,d0.w),$1E(a0)
 loc_01F348:
 	move.w	dat_01F352(pc,d0.w),$38(a0)
 loc_01F34E:
@@ -38509,10 +38507,10 @@ loc_01F34E:
 dat_01F352:
 	dc.b	$00,$00,$00,$19,$00,$32,$00,$4B,$00,$64,$00,$7D,$00,$00
 	dc.b	$00,$00,$00,$32,$00,$00,$00,$00,$00,$00,$00,$00,$00,$7D,$00,$96
-dat_01F370:
+ObjData_01F370:
 	dc.b	$00,$00,$00,$00,$01,$E5,$00,$00,$00,$00,$02,$93,$00,$00,$00,$00
 	dc.b	$01,$D8,$00,$00,$00,$00,$00,$00,$00,$00,$02,$1E,$02,$9E
-dat_01F38E:
+ObjData_01F38E:
 	dc.b	$00,$00
 	dc.b	$00,$00,$02,$EF,$00,$00,$00,$00,$02,$EF,$00,$00,$00,$00,$02,$0C
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$02,$52,$02,$DA
@@ -38600,10 +38598,10 @@ loc_01F450:
 loc_01F478:
 	move.w	(ram_C328).w,d0
 	add.w	d0,d0
-	lea	dat_01F370(pc),a1
+	lea	ObjData_01F370(pc),a1
 	subq.b	#$1,$36(a0)
 	beq.b	loc_01F48E
-	lea	dat_01F38E(pc),a1
+	lea	ObjData_01F38E(pc),a1
 	bra.b	loc_01F494
 loc_01F48E:
 	move.l	$2A(a0),$14(a0)
@@ -38626,7 +38624,7 @@ loc_01F4CC:
 	rts
 	dc.b	$4A,$28
 	dc.b	$00,$1A,$67,$04,$52,$38,$C6,$40,$4E,$FA,$BB,$28
-dat_01F4DC:
+ObjData_01F4DC:
 	dc.b	$80,$01,$0A,$00
 	dc.b	$07,$00,$00,$00,$00,$96,$00,$00,$00,$01,$F5,$D6
 dat_01F4EC:
@@ -38658,9 +38656,9 @@ dat_01F56C:
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$A5,$F0,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$01,$F4,$CE
 sub_01F666:
-	lea	dat_01FB46(pc),a1
+	lea	ObjData_01FB46(pc),a1
 loc_01F66A:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01F66E:
 	move.b	#$0,$2E(a0)
 loc_01F674:
@@ -38668,9 +38666,9 @@ loc_01F674:
 loc_01F676:
 	adda.w	#$60,a0
 loc_01F67A:
-	lea	dat_01FB56(pc),a1
+	lea	ObjData_01FB56(pc),a1
 loc_01F67E:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01F682:
 	move.b	#$0,$2E(a0)
 loc_01F688:
@@ -38716,9 +38714,9 @@ loc_01F6E4:
 loc_01F6EA:
 	rts
 sub_01F6EC:
-	lea	dat_01FB46(pc),a1
+	lea	ObjData_01FB46(pc),a1
 loc_01F6F0:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01F6F4:
 	move.b	#$4,$2E(a0)
 loc_01F6FA:
@@ -38726,9 +38724,9 @@ loc_01F6FA:
 loc_01F6FC:
 	adda.w	#$60,a0
 loc_01F700:
-	lea	dat_01FB56(pc),a1
+	lea	ObjData_01FB56(pc),a1
 loc_01F704:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_01F708:
 	move.l	#$201BA,$50(a0)
 loc_01F710:
@@ -38821,7 +38819,7 @@ sub_01F7CE:
 loc_01F93C:
 	bsr.w	sub_01FA84
 loc_01F940:
-	lea	dat_01FB7E(pc),a1
+	lea	ObjData_01FB7E(pc),a1
 loc_01F944:
 	moveq	#$0,d0
 loc_01F946:
@@ -38829,7 +38827,7 @@ loc_01F946:
 loc_01F94A:
 	movea.l	(a1,d0.w),a1
 loc_01F94E:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$53,$28,$00,$29,$67,$12,$30,$28,$00,$08,$32,$00,$34,$38
 	dc.b	$E0,$08,$94,$41,$0C,$42,$00,$60,$6C,$D2,$43,$FA,$02,$1A,$70,$00
 	dc.b	$10,$28,$00,$2E,$22,$71,$00,$00,$11,$7C,$00,$08,$00,$3B,$4E,$FA
@@ -38881,12 +38879,12 @@ loc_01F9C6:
 loc_01F9C8:
 	movea.l	$50(a0),a1
 loc_01F9CC:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_01F9D0:
 	jmp	sub_01AF0E(pc)
 loc_01F9D4:
-	lea	dat_0206AE(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_0206AE(pc),a1
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$08,$A8,$00,$03
 	dc.b	$00,$02,$11,$7C,$00,$05,$00,$3E,$5C,$49,$4E,$FA,$B5,$2E
 dat_01F9EE:
@@ -38902,7 +38900,7 @@ loc_01FA3A:
 	beq.b	loc_01FA82
 	jsr	sub_01AD58(pc)
 	bne.b	loc_01FA82
-	lea	dat_01FB66(pc),a1
+	lea	ObjData_01FB66(pc),a1
 	jsr	sub_01ADF6(pc)
 	lea	dat_01FB06(pc),a3
 	moveq	#$0,d0
@@ -38982,16 +38980,16 @@ dat_01FB06:
 	dc.b	$FF,$F0,$FF,$F8,$00,$10,$FF,$E9,$00,$00,$FF,$E9,$00,$00,$FF,$E8
 	dc.b	$00,$05,$FF,$E8,$FF,$FB,$FF,$EC,$00,$05,$FF,$EC,$FF,$FB,$FF,$E0
 	dc.b	$00,$00,$FF,$E0,$00,$00
-dat_01FB46:
+ObjData_01FB46:
 	dc.b	$80,$01,$04,$00,$07,$20,$0A,$00,$00,$10
 	dc.b	$00,$00,$00,$01,$FB,$8E
-dat_01FB56:
+ObjData_01FB56:
 	dc.b	$80,$01,$04,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$01,$4E
-dat_01FB66:
+ObjData_01FB66:
 	dc.b	$80,$01,$04,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$06,$66,$00,$01,$FB,$8E,$00,$01,$FC,$60
-dat_01FB7E:
+ObjData_01FB7E:
 	dc.b	$00,$01
 	dc.b	$FB,$94,$00,$01,$FC,$84,$00,$01,$FB,$A6,$00,$01,$FC,$96,$00,$00
 	dc.b	$00,$01,$F9,$3C,$00,$28,$00,$08,$80,$E2,$00,$00,$00,$00,$00,$00
@@ -39180,7 +39178,7 @@ dat_02026E:
 	dc.b	$00,$08,$81,$DA,$00,$00,$00,$00,$00,$00,$00,$03,$00,$08,$81,$E4
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$03,$00,$08,$81,$EE,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$03,$00,$08,$81,$F8,$00,$00,$00,$00,$00,$00
-dat_0206AE:
+ObjData_0206AE:
 	dc.b	$FF,$FE
 	dc.b	$00,$08,$00,$62,$00,$26,$00,$44,$00,$01,$00,$02,$EF,$FE,$00,$00
 	dc.b	$80,$00,$00,$04,$00,$01,$00,$08,$70,$00,$00,$00,$80,$00,$00,$04
@@ -39195,9 +39193,9 @@ sub_020730:
 loc_020736:
 	move.b	#$10,$5E(a0)
 loc_02073C:
-	lea	dat_020EA0(pc),a1
+	lea	ObjData_020EA0(pc),a1
 loc_020740:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_020744:
 	move.b	#$20,$22(a0)
 loc_02074A:
@@ -39225,11 +39223,11 @@ loc_020776:
 loc_02077A:
 	bne.b	loc_0207BE
 loc_02077C:
-	lea	dat_020EB0(pc),a1
+	lea	ObjData_020EB0(pc),a1
 loc_020780:
 	move.b	#$60,$22(a0)
 loc_020786:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_02078A:
 	ori.b	#$6A,$2(a0)
 loc_020790:
@@ -39237,9 +39235,9 @@ loc_020790:
 loc_020794:
 	lea	$60(a0),a0
 loc_020798:
-	lea	dat_020EC0(pc),a1
+	lea	ObjData_020EC0(pc),a1
 loc_02079C:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_0207A0:
 	ori.b	#$68,$2(a0)
 loc_0207A6:
@@ -39309,12 +39307,12 @@ loc_02082C:
 	move.b	#$1A,$41(a0)
 	clr.w	$42(a0)
 	move.w	#$260,(a0)
-	lea	dat_020FBE(pc),a1
+	lea	ObjData_020FBE(pc),a1
 	tst.b	$49(a0)
 	bne.b	loc_020864
-	lea	dat_020FD0(pc),a1
+	lea	ObjData_020FD0(pc),a1
 loc_020864:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 sub_020868:
 	tst.b	$51(a0)
 loc_02086C:
@@ -39338,7 +39336,7 @@ loc_020876:
 loc_02089E:
 	add.b	d2,$5E(a0)
 	andi.b	#$1E,$5E(a0)
-	lea	dat_020F0E(pc),a1
+	lea	ObjData_020F0E(pc),a1
 	move.b	$5E(a0),d0
 	andi.w	#$1E,d0
 	adda.w	(a1,d0.w),a1
@@ -39553,7 +39551,7 @@ loc_020A56:
 loc_020A5C:
 	move.w	#$10,$38(a0)
 loc_020A62:
-	lea	dat_020F0E(pc),a1
+	lea	ObjData_020F0E(pc),a1
 loc_020A66:
 	move.b	$5E(a0),d0
 loc_020A6A:
@@ -39561,7 +39559,7 @@ loc_020A6A:
 loc_020A6E:
 	adda.w	(a1,d0.w),a1
 loc_020A72:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$2F,$09,$43,$F8,$E0,$00,$4E,$BA,$A1,$50
 	dc.b	$11,$40,$00,$35,$22,$5F,$5C,$49,$4E,$FA,$A4,$90,$42,$90,$30,$BC
 	dc.b	$00,$AC,$00,$28,$00,$28,$00,$02,$10,$28,$00,$35,$50,$00,$02,$40
@@ -39614,7 +39612,7 @@ loc_020BBE:
 loc_020BC2:
 	add.w	d0,d0
 loc_020BC4:
-	lea	dat_020E60(pc),a1
+	lea	ObjData_020E60(pc),a1
 loc_020BC8:
 	movem.w	(a1,d0.w),d0-d1
 loc_020BCE:
@@ -39628,14 +39626,14 @@ loc_020BDA:
 loc_020BE0:
 	rts
 loc_020BE2:
-	lea	dat_0212FE(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_0212FE(pc),a1
+	jmp	Object_RunAnimScript(pc)
 sub_020BEA:
 	jsr	(sub_01AD58).l
 loc_020BF0:
 	bne.b	loc_020C3E
 loc_020BF2:
-	lea	dat_020EE0(pc),a1
+	lea	ObjData_020EE0(pc),a1
 loc_020BF6:
 	jsr	sub_01ADF6(pc)
 loc_020BFA:
@@ -39649,7 +39647,7 @@ loc_020C0E:
 loc_020C14:
 	move.b	#$6,$2A(a2)
 loc_020C1A:
-	lea	dat_021300(pc),a1
+	lea	ObjData_021300(pc),a1
 loc_020C1E:
 	move.b	$35(a2),d0
 loc_020C22:
@@ -39707,11 +39705,11 @@ loc_020CB2:
 	add.b	d1,$35(a0)
 	andi.b	#$1E,$35(a0)
 loc_020CBC:
-	lea	dat_021300(pc),a1
+	lea	ObjData_021300(pc),a1
 	move.b	$35(a0),d0
 	andi.w	#$1E,d0
 	adda.w	(a1,d0.w),a1
-	jsr	sub_01AF1A(pc)
+	jsr	Object_RunAnimScript(pc)
 	move.w	#$1,$26(a0)
 	rts
 	dc.b	$14,$28,$00,$35,$48,$E7,$00,$C0
@@ -39719,9 +39717,9 @@ loc_020CBC:
 loc_020CEE:
 	move.w	#$23C,(a0)
 loc_020CF2:
-	lea	dat_0215C0(pc),a1
+	lea	ObjData_0215C0(pc),a1
 loc_020CF6:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 	dc.b	$4E,$B9,$00,$01,$AD,$58
 	dc.b	$66,$4A,$43,$FA,$01,$CC,$4E,$BA,$A0,$EE,$34,$BC,$02,$30,$35,$68
 	dc.b	$00,$04,$00,$04,$35,$68,$00,$08,$00,$08,$08,$EA,$00,$03,$00,$02
@@ -39748,23 +39746,23 @@ dat_020DA0:
 	dc.b	$FF,$FF,$00,$04,$FF,$FE,$00,$0B,$FF,$FE,$00,$0B,$FF,$FE,$00,$0B
 	dc.b	$00,$00,$00,$05,$00,$06,$00,$09,$00,$06,$00,$09,$00,$06,$00,$09
 	dc.b	$00,$02,$00,$03,$00,$03,$00,$0A,$00,$03,$00,$0A,$00,$03,$00,$0A
-dat_020E60:
+ObjData_020E60:
 	dc.b	$FF,$F4,$00,$06,$FF,$E5,$00,$00,$FF,$E5,$00,$00,$FF,$E5,$00,$00
 	dc.b	$FF,$E0,$FF,$F8,$FF,$E4,$FF,$EA,$FF,$E4,$FF,$EA,$FF,$E4,$FF,$EA
 	dc.b	$FF,$F4,$FF,$E8,$00,$04,$FF,$EA,$00,$04,$FF,$EA,$00,$04,$FF,$EA
 	dc.b	$00,$08,$FF,$F6,$00,$02,$FF,$FE,$00,$02,$FF,$FE,$00,$02,$FF,$FE
-dat_020EA0:
+ObjData_020EA0:
 	dc.b	$80,$01,$0F,$00,$07,$08,$10,$00,$27,$10,$00,$04,$00,$02,$0E,$F0
-dat_020EB0:
+ObjData_020EB0:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$10,$0A
-dat_020EC0:
+ObjData_020EC0:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$12,$E0
 	dc.b	$80,$01,$00,$00,$00,$18,$00,$00,$00,$00,$00,$00,$00,$02,$16,$16
-dat_020EE0:
+ObjData_020EE0:
 	dc.b	$80,$01,$14,$00,$01,$14,$0A,$00,$00,$01,$00,$04,$00,$02,$13,$20
 	dc.b	$00,$01,$00,$03,$88,$64,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02
 	dc.b	$0A,$4C,$00,$00,$00,$02,$0A,$76,$00,$00,$00,$02,$0A,$4C
-dat_020F0E:
+ObjData_020F0E:
 	dc.b	$00,$20
 	dc.b	$00,$32,$00,$32,$00,$32,$00,$44,$00,$56,$00,$56,$00,$56,$00,$68
 	dc.b	$00,$7A,$00,$7A,$00,$7A,$00,$8C,$00,$9E,$00,$9E,$00,$9E,$00,$FF
@@ -39777,10 +39775,10 @@ dat_020F0E:
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$02,$0F,$88,$00,$FF,$00,$03,$88,$64
 	dc.b	$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02,$0F,$9A,$00,$FF,$00,$03
 	dc.b	$88,$74,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02,$0F,$AC
-dat_020FBE:
+ObjData_020FBE:
 	dc.b	$00,$5A
 	dc.b	$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$0A,$8C
-dat_020FD0:
+ObjData_020FD0:
 	dc.b	$00,$1E,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$28,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FE,$00,$20,$00,$36,$00,$36
 	dc.b	$00,$36,$00,$4C,$00,$62,$00,$62,$00,$62,$00,$78,$00,$8E,$00,$8E
@@ -39833,9 +39831,9 @@ dat_020FD0:
 dat_0212E0:
 	dc.b	$00,$02,$00,$03,$88,$A4,$00,$00,$00,$00,$00,$00,$00,$02,$00,$03
 	dc.b	$88,$AE,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$12,$E0
-dat_0212FE:
+ObjData_0212FE:
 	dc.b	$FF,$FE
-dat_021300:
+ObjData_021300:
 	dc.b	$00,$20,$00,$4A,$00,$74,$00,$9E,$00,$C8,$00,$F2,$01,$1C,$01,$46
 	dc.b	$01,$70,$01,$9A,$01,$C4,$01,$EE,$02,$18,$02,$42,$02,$6C,$02,$96
 	dc.b	$00,$02,$00,$03,$8A,$48,$00,$00,$80,$00,$00,$00,$00,$00,$00,$02
@@ -39880,7 +39878,7 @@ dat_021300:
 	dc.b	$FF,$FF,$00,$02,$15,$6C,$00,$02,$00,$03,$8A,$34,$00,$00,$80,$00
 	dc.b	$00,$1E,$00,$00,$00,$02,$0C,$D8,$00,$02,$00,$03,$8A,$3E,$00,$00
 	dc.b	$80,$00,$00,$1E,$00,$00,$00,$02,$0C,$D8,$FF,$FF,$00,$02,$15,$96
-dat_0215C0:
+ObjData_0215C0:
 	dc.b	$00,$06,$00,$03,$8A,$CA,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$8A,$E0,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$44,$7E,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$03,$44,$88,$00,$00,$00,$00,$00,$00
@@ -39931,7 +39929,7 @@ loc_021670:
 	bne.b	loc_0216C2
 	movea.l	(ram_C100).w,a0
 	lea	(loc_00A2D6).l,a3
-	lea	(ram_CE00).w,a1
+	lea	(Huffman_Table).w,a1
 	move.w	(a0)+,d2
 	bpl.b	loc_02168E
 	adda.w	#$A,a3
@@ -40042,7 +40040,7 @@ sub_0219B8:
 loc_0219BE:
 	bne.w	loc_021A58
 loc_0219C2:
-	lea	dat_021A8A(pc),a1
+	lea	ObjData_021A8A(pc),a1
 loc_0219C6:
 	jsr	(sub_01ADF6).l
 loc_0219CC:
@@ -40157,8 +40155,8 @@ loc_021A7E:
 loc_021A84:
 	addq.w	#$6,a1
 loc_021A86:
-	jmp	sub_01AF1A(pc)
-dat_021A8A:
+	jmp	Object_RunAnimScript(pc)
+ObjData_021A8A:
 	dc.b	$80,$01,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$1A,$66
 	dc.b	$00,$06,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$06,$00,$00
@@ -40184,7 +40182,7 @@ dat_021BA8:
 	dc.b	$00,$00,$00,$00,$00,$07,$00,$03,$A6,$4A,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$07,$00,$03,$A6,$60,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$A6,$76,$00,$00,$00,$00,$00,$00,$FF,$FE
-dat_021BDA:
+ObjData_021BDA:
 	dc.b	$00,$00,$00,$02,$1A,$66
 	dc.b	$00,$06,$00,$03,$A5,$A8,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03
 	dc.b	$A5,$BE,$00,$00,$00,$00,$00,$00,$00,$06,$00,$03,$A5,$D4,$00,$00
@@ -40210,7 +40208,7 @@ loc_021C3A:
 	adda.w	(a1,d2.w),a1
 	move.l	a1,$28(a2)
 	move.l	#$3AEFA,$14(a2)
-	lea	dat_021E9E(pc),a1
+	lea	ObjData_021E9E(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$4,$36(a2)
 	move.w	(ram_C328).w,d0
@@ -40386,7 +40384,7 @@ dat_021E7E:
 dat_021E8E:
 	dc.b	$00,$02
 	dc.b	$1F,$44,$00,$02,$1F,$52,$00,$02,$1F,$60,$00,$02,$1F,$6E
-dat_021E9E:
+ObjData_021E9E:
 	dc.b	$80,$01
 	dc.b	$14,$00,$00,$18,$00,$00,$00,$00,$00,$04,$00,$02,$1E,$AE,$00,$01
 	dc.b	$00,$08,$8C,$34,$00,$00,$80,$00,$00,$FF,$00,$02,$00,$08,$8C,$3E
@@ -40440,15 +40438,15 @@ loc_021FC4:
 	move.w	#$230,(a0)
 	move.w	#$178,$8(a0)
 	move.w	#$110,$4(a0)
-	lea	dat_02258A(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02258A(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$140,$38(a0)
 	move.b	#$5,$2B(a0)
 	move.b	#$8,$2C(a0)
-	lea	dat_02272C(pc),a3
+	lea	ObjData_02272C(pc),a3
 	cmpi.w	#$0,(ram_C328).w
 	beq.b	loc_022022
-	lea	dat_02274A(pc),a3
+	lea	ObjData_02274A(pc),a3
 loc_022022:
 	jsr	sub_01D368(pc)
 	move.l	a0,$88(a0)
@@ -40677,9 +40675,9 @@ loc_02220C:
 loc_022212:
 	move.b	#$50,$29(a0)
 loc_022218:
-	lea	dat_0225C8(pc),a1
+	lea	ObjData_0225C8(pc),a1
 loc_02221C:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_022220:
 	subq.b	#$1,$29(a0)
 	cmpi.b	#$34,$29(a0)
@@ -40700,8 +40698,8 @@ loc_022252:
 	bcc.b	loc_02226A
 	bsr.w	sub_0223AA
 	bne.w	loc_0222CC
-	lea	dat_0225DA(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_0225DA(pc),a1
+	jmp	Object_RunAnimScript(pc)
 loc_02226A:
 	move.w	#$80,d0
 loc_02226E:
@@ -40774,14 +40772,14 @@ loc_0222CC:
 	move.l	d0,$C(a0)
 	move.w	#$100,$8(a0)
 	adda.w	#$60,a0
-	lea	dat_02272C(pc),a3
+	lea	ObjData_02272C(pc),a3
 	cmpi.w	#$0,(ram_C328).w
 	beq.b	loc_022350
-	lea	dat_02274A(pc),a3
+	lea	ObjData_02274A(pc),a3
 loc_022350:
 	bsr.b	sub_02235A
-	lea	dat_022610(pc),a1
-	jmp	sub_01AF1A(pc)
+	lea	ObjData_022610(pc),a1
+	jmp	Object_RunAnimScript(pc)
 sub_02235A:
 	move.b	#$1,(ram_C357).w
 	move.b	#$FF,(ram_C5C9).w
@@ -40809,13 +40807,13 @@ loc_0223A2:
 loc_0223A8:
 	rts
 sub_0223AA:
-	lea	dat_02272C(pc),a3
+	lea	ObjData_02272C(pc),a3
 loc_0223AE:
 	cmpi.w	#$0,(ram_C328).w
 loc_0223B4:
 	beq.b	loc_0223BA
 loc_0223B6:
-	lea	dat_02274A(pc),a3
+	lea	ObjData_02274A(pc),a3
 loc_0223BA:
 	tst.b	$44(a0)
 loc_0223BE:
@@ -40893,19 +40891,19 @@ loc_022462:
 loc_022466:
 	move.b	$2C(a0),d6
 loc_02246A:
-	lea	dat_02259A(pc),a1
+	lea	ObjData_02259A(pc),a1
 loc_02246E:
-	jsr	sub_01ADB0(pc)
+	jsr	Object_LoadTemplate(pc)
 loc_022472:
 	move.b	d6,$2C(a0)
 loc_022476:
-	lea	dat_022634(pc),a1
+	lea	ObjData_022634(pc),a1
 loc_02247A:
 	cmpi.b	#$52,d6
 loc_02247E:
 	beq.b	loc_022484
 loc_022480:
-	lea	dat_022670(pc),a1
+	lea	ObjData_022670(pc),a1
 loc_022484:
 	move.l	a1,$30(a0)
 loc_022488:
@@ -40965,15 +40963,15 @@ loc_0224F6:
 loc_0224FA:
 	move.b	#$1,$34(a0)
 loc_022500:
-	lea	dat_022634(pc),a1
+	lea	ObjData_022634(pc),a1
 loc_022504:
 	cmpi.b	#$52,$2C(a0)
 loc_02250A:
 	beq.b	loc_022510
 loc_02250C:
-	lea	dat_022670(pc),a1
+	lea	ObjData_022670(pc),a1
 loc_022510:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_022514:
 	tst.b	$2D(a2)
 	beq.b	loc_0224F6
@@ -40985,12 +40983,12 @@ loc_022514:
 	move.b	$2C(a2),$2F(a0)
 	move.b	#$88,$2D(a0)
 	move.b	#$1,$34(a0)
-	lea	dat_022646(pc),a1
+	lea	ObjData_022646(pc),a1
 	cmpi.b	#$52,$2C(a0)
 	beq.b	loc_022550
-	lea	dat_022682(pc),a1
+	lea	ObjData_022682(pc),a1
 loc_022550:
-	jmp	sub_01AF1A(pc)
+	jmp	Object_RunAnimScript(pc)
 loc_022554:
 	tst.b	$2F(a0)
 	beq.b	loc_022562
@@ -41008,37 +41006,37 @@ dat_02257A:
 	dc.b	$00,$40
 dat_022582:
 	dc.b	$00,$40,$00,$40,$00,$40,$00,$40
-dat_02258A:
+ObjData_02258A:
 	dc.b	$80,$01,$00,$00,$0F,$08
 	dc.b	$00,$00,$01,$90,$00,$00,$00,$02,$25,$AA
-dat_02259A:
+ObjData_02259A:
 	dc.b	$80,$01,$00,$00,$00,$08
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$26,$34,$00,$D5,$00,$08,$84,$24
 	dc.b	$00,$00,$FF,$40,$00,$00,$00,$14,$00,$08,$84,$24,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$02,$21,$3E
-dat_0225C8:
+ObjData_0225C8:
 	dc.b	$00,$C8,$00,$08,$84,$24,$00,$00
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$02,$25,$C8
-dat_0225DA:
+ObjData_0225DA:
 	dc.b	$00,$08,$00,$08,$84,$24
 	dc.b	$00,$00,$00,$40,$00,$00,$00,$08,$00,$08,$84,$24,$00,$00,$FF,$C0
 	dc.b	$00,$00,$00,$08,$00,$08,$84,$24,$00,$00,$FF,$C0,$00,$00,$00,$08
 	dc.b	$00,$08,$84,$24,$00,$00,$00,$40,$00,$00,$FF,$FF,$00,$02,$25,$DA
-dat_022610:
+ObjData_022610:
 	dc.b	$00,$C8,$00,$08,$84,$24,$00,$00,$00,$18,$00,$0C,$00,$96,$00,$08
 	dc.b	$84,$24,$00,$00,$00,$18,$00,$0C,$00,$00,$00,$02,$24,$4E,$FF,$FF
 	dc.b	$00,$02,$26,$10
-dat_022634:
+ObjData_022634:
 	dc.b	$00,$C8,$00,$08,$84,$7C,$00,$00,$80,$00,$00,$FF
 	dc.b	$FF,$FF,$00,$02,$26,$34
-dat_022646:
+ObjData_022646:
 	dc.b	$00,$02,$00,$08,$84,$7C,$00,$00,$80,$00
 	dc.b	$00,$FF,$00,$02,$00,$08,$84,$8C,$00,$00,$80,$00,$00,$FF,$00,$02
 	dc.b	$00,$08,$84,$9C,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02,$26,$46
-dat_022670:
+ObjData_022670:
 	dc.b	$00,$C8,$00,$08,$84,$EA,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02
 	dc.b	$26,$70
-dat_022682:
+ObjData_022682:
 	dc.b	$00,$02,$00,$08,$84,$EA,$00,$00,$80,$00,$00,$FF,$00,$02
 	dc.b	$00,$08,$84,$FA,$00,$00,$80,$00,$00,$FF,$00,$02,$00,$08,$85,$0A
 	dc.b	$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02,$26,$82
@@ -41054,11 +41052,11 @@ dat_0226EC:
 	dc.b	$FF,$64,$01,$7A,$FE,$DF,$01,$21,$FE,$86,$00,$9C,$FE,$67,$00,$00
 	dc.b	$FE,$86,$FF,$64,$FE,$DF,$FE,$DF,$FF,$64,$FE,$86,$00,$00,$FE,$67
 	dc.b	$00,$9C,$FE,$86,$01,$21,$FE,$DF,$01,$7A,$FF,$64
-dat_02272C:
+ObjData_02272C:
 	dc.b	$00,$06,$00,$22
 	dc.b	$0E,$CA,$00,$24,$0C,$A8,$00,$26,$0A,$86,$00,$28,$08,$64,$00,$2A
 	dc.b	$06,$42,$00,$2C,$04,$20,$00,$2E,$00,$00
-dat_02274A:
+ObjData_02274A:
 	dc.b	$00,$06,$00,$22,$0C,$EC
 	dc.b	$00,$24,$0A,$CA,$00,$26,$08,$A8,$00,$28,$06,$64,$00,$2A,$04,$42
 	dc.b	$00,$2C,$02,$20,$00,$2E,$00,$00
@@ -41070,7 +41068,7 @@ sub_022786:
 	movea.l	a2,a3
 	jsr	sub_01AD58(pc)
 	bne.w	loc_022800
-	lea	dat_0228B0(pc),a1
+	lea	ObjData_0228B0(pc),a1
 	jsr	sub_01ADF6(pc)
 	move.w	$4(a0),$4(a2)
 	move.w	$8(a0),$8(a2)
@@ -41116,7 +41114,7 @@ loc_022800:
 	dc.b	$45,$FA,$01,$4E,$60,$1C,$45,$FA,$03,$24,$60,$16,$45,$FA,$01,$78
 	dc.b	$60,$10,$45,$FA,$03,$4E,$60,$0A,$45,$FA,$01,$BA,$60,$04,$45,$FA
 	dc.b	$03,$90,$5C,$49,$53,$68,$00,$36,$67,$02,$22,$4A,$4E,$FA,$86,$6C
-dat_0228B0:
+ObjData_0228B0:
 	dc.b	$80,$01,$08,$00,$00,$00,$0A,$00,$00,$00,$00,$00,$00,$02,$28,$CE
 dat_0228C0:
 	dc.b	$01,$8E,$01,$40,$01,$0A,$00,$D4,$00,$9E,$00,$5C,$00,$0E,$00,$00
@@ -41248,8 +41246,8 @@ loc_022DEA:
 loc_022DEC:
 	jsr	sub_021668(pc)
 	beq.b	loc_022DEA
-	lea	dat_023B3E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B3E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	movea.l	a0,a2
 	moveq	#$0,d6
 	cmpi.w	#$9,(ram_C328).w
@@ -41257,8 +41255,8 @@ loc_022DEC:
 	move.w	#$98,d6
 loc_022E0C:
 	lea	$60(a0),a0
-	lea	dat_023B4E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B4E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.b	#$10,$35(a0)
 	move.b	#$20,$22(a0)
 	move.w	#$18,$54(a0)
@@ -41266,8 +41264,8 @@ loc_022E0C:
 	move.w	d6,$1E(a0)
 	move.w	#$2E0,(a0)
 	lea	$60(a0),a0
-	lea	dat_023B7E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B7E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$6A,$2(a0)
 	move.b	#$20,$22(a0)
 	move.b	#$52,$36(a0)
@@ -41276,8 +41274,8 @@ loc_022E0C:
 	move.w	d6,$1E(a0)
 	move.w	#$2EC,(a0)
 	lea	$60(a0),a0
-	lea	dat_023B8E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B8E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$6A,$2(a0)
 	move.b	#$20,$22(a0)
 	move.b	#$4C,$36(a0)
@@ -41286,20 +41284,20 @@ loc_022E0C:
 	move.w	d6,$1E(a0)
 	move.w	#$2EC,(a0)
 	lea	$60(a0),a0
-	lea	dat_023B5E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B5E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$2A,$2(a0)
 	move.b	#$52,$36(a0)
 	move.w	#$2F4,(a0)
 	lea	$60(a0),a0
-	lea	dat_023B5E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B5E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$2A,$2(a0)
 	move.b	#$4C,$36(a0)
 	move.w	#$2F4,(a0)
 	lea	$60(a0),a0
-	lea	dat_023B9E(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_023B9E(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.b	#$20,$22(a0)
 	move.b	#$10,$35(a0)
 	ori.b	#$6A,$2(a0)
@@ -41326,8 +41324,8 @@ loc_022F1E:
 	jsr	(sub_01B048).l
 	move.w	#$2FC,(a0)
 	move.b	#$1,$58(a0)
-	lea	dat_02413C(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_02413C(pc),a1
+	jmp	(Object_RunAnimScript).l
 	dc.b	$30,$3C
 	dc.b	$03,$20,$32,$3C,$01,$2C,$4A,$78,$FE,$48,$67,$08,$30,$3C,$02,$BC
 	dc.b	$32,$3C,$00,$FA,$31,$40,$00,$38,$31,$41,$02,$78,$45,$FA,$0D,$0A
@@ -41434,9 +41432,9 @@ loc_023168:
 	beq.b	loc_023176
 	jmp	(sub_01AF0E).l
 loc_023176:
-	lea	dat_024278(pc),a1
+	lea	ObjData_024278(pc),a1
 	bset.b	#$2,$2(a0)
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 	dc.b	$4A,$28,$00,$50,$66,$32,$0C,$28,$00,$28
 	dc.b	$00,$51,$64,$00,$00,$8E,$43,$F8,$E0,$00,$4E,$B9,$00,$01,$AB,$CE
 	dc.b	$0C,$00,$00,$0B,$6F,$76,$0C,$00,$00,$15,$6C,$70,$72,$01,$90,$28
@@ -41813,9 +41811,9 @@ loc_023830:
 loc_02383A:
 	move.b	$35(a0),d0
 	andi.w	#$1E,d0
-	lea	dat_024556(pc),a1
+	lea	ObjData_024556(pc),a1
 	adda.w	(a1,d0.w),a1
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 	dc.b	$4E,$B9,$00,$01,$AD,$58,$66,$00,$00,$6A,$43,$FA,$03,$72,$4E,$B9
 	dc.b	$00,$01,$AD,$F6,$15,$42,$00,$35,$15,$7C,$00,$40,$00,$22,$15,$7C
 	dc.b	$00,$FE,$00,$3E,$04,$42,$00,$0C,$D4,$42,$43,$FA,$00,$6C,$D2,$F1
@@ -41868,11 +41866,11 @@ loc_0239AA:
 	andi.w	#$1F,d0
 	move.b	d0,$35(a0)
 	add.w	d0,d0
-	lea	dat_0239C8(pc),a1
+	lea	ObjData_0239C8(pc),a1
 	adda.w	(a1,d0.w),a1
 	subq.b	#$1,$28(a0)
-	jmp	(sub_01AF1A).l
-dat_0239C8:
+	jmp	(Object_RunAnimScript).l
+ObjData_0239C8:
 	dc.b	$10,$F0,$11,$0E,$11,$2C,$11,$4A
 	dc.b	$11,$68,$11,$86,$11,$A4,$11,$C2,$11,$E0,$11,$FE,$12,$1C,$12,$3A
 	dc.b	$12,$58,$12,$76,$12,$94,$12,$B2,$12,$D0
@@ -41881,7 +41879,7 @@ sub_0239EA:
 loc_0239F0:
 	bne.b	loc_023A4A
 loc_0239F2:
-	lea	dat_023BAE(pc),a1
+	lea	ObjData_023BAE(pc),a1
 loc_0239F6:
 	jsr	(sub_01ADF6).l
 loc_0239FC:
@@ -41923,7 +41921,7 @@ sub_023A4C:
 	swap	d7
 	move.w	d7,$4(a2)
 	move.w	#$23C,(a2)
-	lea	dat_023BDE(pc),a1
+	lea	ObjData_023BDE(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$60,$22(a2)
 	cmpi.w	#$9,(ram_C328).w
@@ -41937,7 +41935,7 @@ loc_023A88:
 sub_023A8A:
 	jsr	(sub_01AD9A).l
 	bne.b	loc_023AFC
-	lea	dat_023BEE(pc),a1
+	lea	ObjData_023BEE(pc),a1
 	jsr	(sub_01ADF6).l
 	move.w	#$23C,(a2)
 	move.w	$4(a0),$4(a2)
@@ -41969,34 +41967,34 @@ loc_023AFC:
 	dc.b	$00,$02,$FF,$F6,$FF,$FF,$FF,$FA,$FF,$F8,$FF,$FF,$FF,$F0,$00,$00
 	dc.b	$FF,$EE,$00,$01,$FF,$F0,$00,$06,$FF,$F8,$00,$0A,$FF,$FF,$00,$0A
 	dc.b	$00,$02,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_023B3E:
+ObjData_023B3E:
 	dc.b	$80,$01
 	dc.b	$14,$00,$10,$00,$00,$00,$27,$10,$00,$04,$00,$02,$41,$3C
-dat_023B4E:
+ObjData_023B4E:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$42,$1E
-dat_023B5E:
+ObjData_023B5E:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$45,$2C,$80,$01
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$46,$96
-dat_023B7E:
+ObjData_023B7E:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$1E,$00,$00,$02,$44,$A8
-dat_023B8E:
+ObjData_023B8E:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$1E,$00,$00,$02,$44,$EA
-dat_023B9E:
+ObjData_023B9E:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$00,$08,$00,$4E,$20,$00,$04,$00,$02,$45,$44
-dat_023BAE:
+ObjData_023BAE:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$14,$08,$00,$00,$00,$00,$00,$00,$02,$4C,$B6,$80,$01
 	dc.b	$0A,$00,$01,$18,$0C,$00,$00,$01,$00,$04,$00,$02,$4A,$A6,$80,$01
 	dc.b	$0A,$00,$00,$10,$08,$00,$00,$00,$00,$00,$00,$02,$4A,$2E
-dat_023BDE:
+ObjData_023BDE:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$18,$00,$00,$00,$00,$00,$00,$00,$02,$4C,$EC
-dat_023BEE:
+ObjData_023BEE:
 	dc.b	$80,$01
 	dc.b	$00,$00,$00,$14,$00,$00,$00,$00,$00,$00,$00,$02,$4D,$66
 dat_023BFE:
@@ -42031,26 +42029,34 @@ dat_023CA8:
 	dc.b	$20,$2E,$20,$2F,$20,$30,$20,$31,$20,$32,$20,$33,$20,$89,$28,$89
 	dc.b	$20,$34,$20,$35,$20,$36,$20,$37,$20,$38,$20,$39,$20,$3A,$20,$89
 	dc.b	$28,$89,$20,$3B,$20,$3C,$20,$3D,$20,$3E,$20,$3F,$20,$40,$20,$3B
-	dc.b	$20,$89,$28,$8A,$20,$41,$20,$42,$20,$43,$20,$44,$20,$45,$20,$46
-	dc.b	$28,$41,$20,$8A,$20,$47,$20,$48,$20,$49,$20,$4A,$20,$4B,$20,$4C
-	dc.b	$20,$4D,$28,$48,$28,$47,$28,$8C,$28,$8B,$20,$4E,$20,$4F,$20,$50
+	dc.b	$20,$89,$28,$8A
+	dc.b	' A B C D E F(A '
+	dc.b	$8A,$20,$47
+	dc.b	' H I J K L M(H(G('
+	dc.b	$8C,$28,$8B,$20,$4E,$20,$4F,$20,$50
 	dc.b	$28,$4F,$28,$4E,$20,$8B,$20,$8C,$28,$8E,$28,$8D,$20,$51,$00,$00
 	dc.b	$00,$00,$00,$00,$28,$51,$20,$8D,$20,$8E
 dat_023DCA:
 	dc.b	$00,$48,$00,$62,$28,$88
 	dc.b	$20,$15,$20,$16,$20,$17,$20,$52,$28,$17,$28,$16,$28,$15,$20,$88
-	dc.b	$28,$89,$20,$19,$20,$53,$20,$54,$20,$55,$20,$56,$20,$57,$28,$19
+	dc.b	$28,$89,$20,$19
+	dc.b	' S T U V W('
+	dc.b	$19
 	dc.b	$20,$89,$28,$89,$20,$1D,$20,$58,$20,$59,$20,$5A,$20,$5B,$20,$5C
 	dc.b	$20,$21,$20,$89,$28,$89,$20,$22,$20,$5D,$20,$5E,$20,$5F,$20,$60
 	dc.b	$20,$61,$20,$25,$20,$89,$28,$89,$20,$26,$20,$27,$20,$62,$20,$29
 	dc.b	$20,$2A,$20,$2B,$20,$2C,$20,$89,$28,$89,$20,$2D,$20,$2E,$20,$63
 	dc.b	$20,$30,$20,$31,$20,$32,$20,$33,$20,$89,$28,$89,$20,$34,$20,$64
-	dc.b	$20,$65,$20,$66,$20,$38,$20,$39,$20,$3A,$20,$89,$28,$89,$20,$3B
-	dc.b	$20,$67,$20,$68,$20,$69,$20,$6A,$20,$40,$20,$3B,$20,$89,$28,$8A
-	dc.b	$20,$41,$20,$6B,$20,$6C,$20,$6D,$20,$6E,$20,$46,$28,$41,$20,$8A
-	dc.b	$20,$47,$20,$48,$20,$6F,$20,$70,$20,$71,$20,$72,$20,$4D,$28,$48
-	dc.b	$28,$47,$28,$8C,$28,$8B,$20,$4E,$20,$73,$20,$74,$20,$75,$28,$4E
-	dc.b	$20,$8B,$20,$8C
+	dc.b	$20,$65,$20,$66,$20,$38,$20,$39,$20,$3A,$20,$89,$28,$89
+	dc.b	' ; g h i j @ ; '
+	dc.b	$89,$28,$8A
+	dc.b	' A k l m n F(A '
+	dc.b	$8A
+	dc.b	$20,$47
+	dc.b	' H o p q r M(H(G('
+	dc.b	$8C,$28,$8B
+	dc.b	' N s t u(N '
+	dc.b	$8B,$20,$8C
 dat_023E94:
 	dc.b	$00,$A2,$00,$2C,$28,$89,$20,$2D,$20,$2E,$20,$76
 	dc.b	$20,$77,$20,$31,$20,$32,$20,$33,$20,$89,$28,$89,$20,$34,$20,$64
@@ -42101,7 +42107,7 @@ dat_0240DE:
 	dc.b	$21,$15,$21,$16,$20,$D3,$21,$21,$29,$22,$20,$D9,$21,$03,$21,$17
 	dc.b	$21,$18,$21,$19,$21,$1A,$28,$D9,$21,$22,$20,$DF,$20,$E0,$21,$07
 	dc.b	$21,$1B,$21,$1C,$21,$1D,$21,$1E,$28,$E0,$28,$DF
-dat_02413C:
+ObjData_02413C:
 	dc.b	$00,$3E,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$D2,$00,$08,$70,$00,$00,$00
 	dc.b	$00,$40,$00,$00,$00,$18,$00,$08,$70,$00,$00,$00,$00,$38,$00,$00
@@ -42123,7 +42129,7 @@ dat_02413C:
 	dc.b	$00,$02,$31,$86,$00,$06,$00,$08,$85,$8A,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$02,$31,$86,$00,$06,$00,$08,$85,$AC,$00,$00,$80,$00
 	dc.b	$00,$FF,$00,$00,$00,$02,$31,$86
-dat_024278:
+ObjData_024278:
 	dc.b	$00,$18,$00,$08,$70,$00,$00,$00
 	dc.b	$80,$00,$00,$FF,$00,$06,$00,$08,$70,$00,$00,$00,$80,$00,$00,$FF
 	dc.b	$00,$00,$00,$02,$32,$3C,$FF,$FF,$00,$02,$42,$84,$00,$06,$00,$08
@@ -42171,7 +42177,7 @@ dat_024278:
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$35,$36,$FF,$FF
 	dc.b	$00,$02,$45,$2C,$00,$06,$00,$08,$87,$FC,$00,$00,$80,$00,$00,$FF
 	dc.b	$FF,$FF,$00,$02,$46,$06
-dat_024556:
+ObjData_024556:
 	dc.b	$00,$20,$00,$32,$00,$44,$00,$56,$00,$68
 	dc.b	$00,$7A,$00,$8C,$00,$9E,$00,$B0,$00,$C2,$00,$D4,$00,$E6,$00,$F8
 	dc.b	$01,$0A,$01,$1C,$01,$2E,$00,$04,$00,$08,$88,$4C,$00,$00,$80,$00
@@ -42357,8 +42363,8 @@ loc_024DF8:
 loc_024DFA:
 	moveq	#-$76,d0
 	jsr	(sub_00A068).l
-	lea	dat_025930(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025930(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$1,$8(a0)
 	clr.w	$A(a0)
 	move.w	#$1E9,$4(a0)
@@ -42371,41 +42377,41 @@ loc_024DFA:
 	moveq	#$0,d0
 	move.b	(a3),d0
 	add.w	d0,d0
-	lea	dat_0259A0(pc),a3
+	lea	ObjData_0259A0(pc),a3
 	adda.w	(a3,d0.w),a3
 	move.l	a3,$30(a0)
 	movea.l	a0,a6
 	lea	$60(a0),a0
-	lea	dat_025940(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025940(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
 	move.b	#$20,$22(a0)
 	ori.b	#$2A,$2(a0)
 	move.w	#$378,(a0)
 	lea	$60(a0),a0
-	lea	dat_025950(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025950(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
 	move.b	#$20,$22(a0)
 	ori.b	#$2A,$2(a0)
 	move.w	#$37C,(a0)
 	lea	$60(a0),a0
-	lea	dat_025960(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025960(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.b	#$20,$22(a0)
 	ori.b	#$2A,$2(a0)
 	move.w	#$384,(a0)
 	lea	$60(a0),a0
-	lea	dat_025970(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025970(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
 	move.b	#$20,$22(a0)
 	move.b	#$3,$36(a0)
 	ori.b	#$2A,$2(a0)
 	move.w	#$380,(a0)
 	lea	$60(a0),a0
-	lea	dat_025970(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_025970(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.b	$50(a0)
 	move.b	#$20,$22(a0)
 	move.b	#$4,$36(a0)
@@ -42580,7 +42586,7 @@ sub_025156:
 	swap	d6
 	add.w	$4(a0),d6
 	move.w	d6,$4(a2)
-	lea	dat_025980(pc),a1
+	lea	ObjData_025980(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$60,$22(a2)
 	move.l	#$8940C,$14(a2)
@@ -42954,9 +42960,9 @@ loc_025504:
 loc_025508:
 	move.b	#$41,$54(a0)
 loc_02550E:
-	lea	(dat_017E96).l,a1
+	lea	(ObjData_017E96).l,a1
 loc_025514:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02551A:
 	clr.b	$55(a0)
 loc_02551E:
@@ -43018,7 +43024,7 @@ loc_02558E:
 sub_025594:
 	jsr	(sub_01AD58).l
 	bne.b	loc_02560C
-	lea	dat_025990(pc),a1
+	lea	ObjData_025990(pc),a1
 	jsr	(sub_01ADF6).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
@@ -43058,7 +43064,7 @@ dat_025632:
 sub_02563A:
 	jsr	(sub_01AD58).l
 	bne.b	loc_0256B2
-	lea	dat_025990(pc),a1
+	lea	ObjData_025990(pc),a1
 	jsr	(sub_01ADF6).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
@@ -43152,9 +43158,9 @@ loc_02579C:
 loc_02579E:
 	jsr	(sub_00A068).l
 loc_0257A4:
-	lea	dat_026072(pc),a1
+	lea	ObjData_026072(pc),a1
 loc_0257A8:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 sub_0257AE:
 	move.w	$8(a0),d0
 loc_0257B2:
@@ -43229,21 +43235,21 @@ dat_0258F2:
 	dc.b	$00,$28,$0E,$EE,$00,$2A,$0E,$EE,$00,$2C,$0E,$EE,$00,$2E,$0E,$EE
 	dc.b	$00,$30,$0E,$EE,$00,$32,$0E,$EE,$00,$34,$0E,$EE,$00,$36,$0E,$EE
 	dc.b	$00,$38,$0E,$EE,$00,$3A,$0E,$EE,$00,$3C,$0E,$EE,$00,$3E,$0E,$EE
-dat_025930:
+ObjData_025930:
 	dc.b	$80,$01,$14,$00,$11,$08,$1C,$00,$27,$0F,$00,$04,$00,$02,$59,$D0
-dat_025940:
+ObjData_025940:
 	dc.b	$80,$01,$14,$00,$00,$08,$00,$00,$00,$64,$00,$00,$00,$02,$5D,$36
-dat_025950:
+ObjData_025950:
 	dc.b	$80,$01,$14,$00,$00,$08,$00,$00,$00,$64,$00,$04,$00,$02,$5D,$9A
-dat_025960:
+ObjData_025960:
 	dc.b	$80,$01,$14,$00,$00,$08,$00,$00,$00,$64,$00,$04,$00,$02,$5E,$A8
-dat_025970:
+ObjData_025970:
 	dc.b	$80,$01,$14,$00,$00,$08,$00,$00,$00,$64,$00,$04,$00,$02,$5E,$4E
-dat_025980:
+ObjData_025980:
 	dc.b	$80,$01,$00,$00,$00,$10,$00,$00,$00,$00,$00,$00,$00,$02,$5F,$E0
-dat_025990:
+ObjData_025990:
 	dc.b	$80,$01,$0C,$00,$00,$20,$08,$00,$00,$0A,$00,$00,$00,$02,$5F,$86
-dat_0259A0:
+ObjData_0259A0:
 	dc.b	$00,$30,$00,$AE,$01,$7A,$01,$AA,$01,$AA,$01,$AA,$03,$12,$03,$12
 dat_0259B0:
 	dc.b	$00,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07
@@ -43362,7 +43368,7 @@ dat_025F2C:
 	dc.b	$94,$52,$00,$00,$80,$00,$00,$08,$00,$01,$00,$08,$70,$00,$00,$00
 	dc.b	$80,$00,$00,$08,$00,$02,$00,$08,$94,$52,$00,$00,$80,$00,$00,$08
 	dc.b	$FF,$FE
-dat_026072:
+ObjData_026072:
 	dc.b	$00,$02,$00,$08,$93,$F8,$00,$00,$00,$00,$00,$00,$00,$02
 	dc.b	$00,$08,$94,$02,$00,$00,$00,$00,$00,$00,$00,$01,$00,$08,$93,$F8
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FE
@@ -43385,24 +43391,24 @@ loc_0260B4:
 	jsr	sub_022106(pc)
 	movea.l	a0,a6
 	lea	$60(a0),a0
-	lea	dat_0268FA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_0268FA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	$1C(a0)
 	ori.b	#$2A,$2(a0)
 	move.b	#$20,$22(a0)
 	move.w	#$1,$54(a0)
 	move.w	#$364,(a0)
 	lea	$60(a0),a0
-	lea	dat_0268FA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_0268FA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	$1C(a0)
 	ori.b	#$2A,$2(a0)
 	move.b	#$20,$22(a0)
 	move.w	#$1,$54(a0)
 	move.w	#$364,(a0)
 	lea	$60(a0),a0
-	lea	dat_02690A(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02690A(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$2A,$2(a0)
 	move.b	#$20,$22(a0)
 	move.w	#$3,$54(a0)
@@ -43412,10 +43418,10 @@ loc_0260B4:
 	movea.l	a6,a0
 	moveq	#-$77,d0
 	jsr	(sub_00A068).l
-	lea	dat_02683E(pc),a3
+	lea	ObjData_02683E(pc),a3
 	jsr	(sub_01D368).l
-	lea	dat_0268DA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_0268DA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.b	#$1,$28(a0)
 	move.w	#$360,(a0)
 	clr.b	$53(a0)
@@ -43540,7 +43546,7 @@ loc_0262A6:
 loc_0262B4:
 	move.l	d0,$C(a0)
 loc_0262B8:
-	lea	dat_02683E(pc),a3
+	lea	ObjData_02683E(pc),a3
 loc_0262BC:
 	tst.b	$44(a0)
 loc_0262C0:
@@ -43578,7 +43584,7 @@ loc_026312:
 	bcc.b	loc_026374
 	jmp	(sub_01AF0E).l
 loc_02631A:
-	lea	dat_02683E(pc),a3
+	lea	ObjData_02683E(pc),a3
 	jsr	sub_02235A(pc)
 	move.l	#$2699C,$30(a0)
 	move.b	#$19,$40(a0)
@@ -43637,7 +43643,7 @@ loc_0263B2:
 loc_0263B8:
 	move.b	#$20,$F7(a0)
 loc_0263BE:
-	lea	dat_026B76(pc),a1
+	lea	ObjData_026B76(pc),a1
 loc_0263C2:
 	move.l	a1,$90(a0)
 loc_0263C6:
@@ -43942,7 +43948,7 @@ loc_026828:
 	jmp	(sub_018238).l
 	dc.b	$01,$04
 	dc.b	$00,$F0,$01,$04,$01,$04,$00,$DC,$00,$DC,$00,$DC,$00,$DC
-dat_02683E:
+ObjData_02683E:
 	dc.b	$00,$0C
 	dc.b	$00,$22,$08,$CE,$00,$24,$04,$8A,$00,$26,$02,$68,$00,$28,$00,$46
 	dc.b	$00,$2A,$00,$24,$00,$2C,$0E,$EE,$00,$2E,$0A,$AA,$00,$30,$06,$66
@@ -43958,14 +43964,14 @@ dat_026884:
 	dc.b	$0E,$EE,$00,$38,$0E,$EE,$00,$3A,$0E,$EE,$00,$09,$00,$06,$FF,$F0
 	dc.b	$FF,$F4,$FF,$F0,$FF,$EF,$FF,$FC,$FF,$F0,$FF,$F8,$FF,$F0,$00,$04
 	dc.b	$FF,$F0,$00,$0A,$FF,$F6,$00,$0C,$FF,$F8
-dat_0268DA:
+ObjData_0268DA:
 	dc.b	$80,$01,$14,$00,$12,$08
 	dc.b	$00,$00,$27,$0F,$00,$00,$00,$02,$6A,$20,$80,$01,$0F,$00,$00,$0C
 	dc.b	$10,$00,$00,$00,$00,$04,$00,$02,$6B,$E2
-dat_0268FA:
+ObjData_0268FA:
 	dc.b	$00,$01,$14,$00,$00,$08
 	dc.b	$00,$00,$27,$0F,$00,$00,$00,$02,$6B,$64
-dat_02690A:
+ObjData_02690A:
 	dc.b	$80,$01,$14,$00,$00,$08
 	dc.b	$00,$00,$27,$0F,$00,$00,$00,$02,$6B,$AC,$80,$01,$0F,$00,$00,$08
 	dc.b	$00,$00,$00,$00,$00,$04,$00,$02,$6B,$E2
@@ -44010,7 +44016,7 @@ dat_02693C:
 	dc.b	$92,$3A,$00,$00,$00,$00,$00,$00,$00,$04,$00,$08,$92,$4A,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$04,$00,$08,$92,$5A,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$FF,$00,$02,$6B,$64
-dat_026B76:
+ObjData_026B76:
 	dc.b	$00,$02,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$6B,$76,$00,$FF,$00,$08,$92,$6A,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$6B,$88,$00,$FF,$00,$08,$92,$8C
@@ -44047,8 +44053,8 @@ loc_026CE2:
 	btst.b	#$4,(Flags_C61C).w
 loc_026CE8:
 	beq.b	loc_026D1C
-	lea	dat_027AA6(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_027AA6(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$186,$2E(a0)
 	lea	dat_026DCA(pc),a1
 	move.b	(ram_C313).w,d0
@@ -44076,7 +44082,7 @@ loc_026D22:
 	move.l	a1,$50(a0)
 	jsr	(sub_01AD58).l
 	bne.b	loc_026D70
-	lea	dat_027AB6(pc),a1
+	lea	ObjData_027AB6(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$40,$22(a2)
 	bset.b	#$5,$2(a2)
@@ -44130,9 +44136,9 @@ dat_026DCA:
 sub_026E9A:
 	bset.b	#$2,$2(a0)
 loc_026EA0:
-	lea	dat_027A96(pc),a1
+	lea	ObjData_027A96(pc),a1
 loc_026EA4:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026EAA:
 	move.w	#$4E20,$38(a0)
 loc_026EB0:
@@ -44140,9 +44146,9 @@ loc_026EB0:
 loc_026EB2:
 	lea	$60(a0),a0
 loc_026EB6:
-	lea	dat_027AC6(pc),a1
+	lea	ObjData_027AC6(pc),a1
 loc_026EBA:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026EC0:
 	ori.b	#$2E,$2(a0)
 loc_026EC6:
@@ -44154,9 +44160,9 @@ loc_026ECE:
 loc_026ED2:
 	lea	$60(a0),a0
 loc_026ED6:
-	lea	dat_027B36(pc),a1
+	lea	ObjData_027B36(pc),a1
 loc_026EDA:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026EE0:
 	move.b	#$46,$36(a0)
 loc_026EE6:
@@ -44170,9 +44176,9 @@ loc_026EF6:
 loc_026EFA:
 	lea	$60(a0),a0
 loc_026EFE:
-	lea	dat_027B36(pc),a1
+	lea	ObjData_027B36(pc),a1
 loc_026F02:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026F08:
 	move.b	#$52,$36(a0)
 loc_026F0E:
@@ -44222,9 +44228,9 @@ loc_026F70:
 loc_026F76:
 	lea	$60(a0),a0
 loc_026F7A:
-	lea	dat_027B06(pc),a1
+	lea	ObjData_027B06(pc),a1
 loc_026F7E:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026F84:
 	clr.b	$36(a0)
 loc_026F88:
@@ -44236,9 +44242,9 @@ loc_026F92:
 loc_026F96:
 	lea	$60(a0),a0
 loc_026F9A:
-	lea	dat_027B06(pc),a1
+	lea	ObjData_027B06(pc),a1
 loc_026F9E:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026FA4:
 	move.b	#$1,$36(a0)
 loc_026FAA:
@@ -44250,9 +44256,9 @@ loc_026FB4:
 loc_026FB8:
 	lea	$60(a0),a0
 loc_026FBC:
-	lea	dat_027B06(pc),a1
+	lea	ObjData_027B06(pc),a1
 loc_026FC0:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026FC6:
 	move.b	#$2,$36(a0)
 loc_026FCC:
@@ -44264,9 +44270,9 @@ loc_026FD6:
 loc_026FDA:
 	lea	(ram_EEE0).w,a0
 loc_026FDE:
-	lea	dat_027B26(pc),a1
+	lea	ObjData_027B26(pc),a1
 loc_026FE2:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_026FE8:
 	clr.w	$2(a0)
 loc_026FEC:
@@ -44278,9 +44284,9 @@ loc_026FF8:
 loc_026FFC:
 	lea	$60(a0),a0
 loc_027000:
-	lea	dat_027B26(pc),a1
+	lea	ObjData_027B26(pc),a1
 loc_027004:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02700A:
 	clr.w	$2(a0)
 loc_02700E:
@@ -44292,9 +44298,9 @@ loc_02701A:
 loc_02701E:
 	lea	$60(a0),a0
 loc_027022:
-	lea	dat_027B26(pc),a1
+	lea	ObjData_027B26(pc),a1
 loc_027026:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02702C:
 	clr.w	$2(a0)
 loc_027030:
@@ -44310,9 +44316,9 @@ loc_027042:
 loc_027046:
 	jmp	(sub_01AF0E).l
 sub_02704C:
-	lea	dat_027AE6(pc),a1
+	lea	ObjData_027AE6(pc),a1
 loc_027050:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_027056:
 	move.b	#$18,$35(a0)
 loc_02705C:
@@ -44372,7 +44378,7 @@ loc_0270A8:
 	move.w	#$81,(a2)+
 	movea.l	(a7)+,a1
 	addq.w	#$6,a1
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 	dc.b	$2F,$09
 	dc.b	$70,$20,$4E,$B9,$00,$00,$8D,$E2,$43,$F8,$F4,$E0,$70,$00,$7E,$5F
 	dc.b	$22,$C0,$51,$CF,$FF,$FC,$43,$F8,$F4,$E0,$30,$3C,$01,$40,$72,$00
@@ -44387,7 +44393,7 @@ loc_027168:
 	bne.b	loc_0271B2
 	jsr	(sub_01AD9A).l
 	bne.b	loc_0271B6
-	lea	dat_027B66(pc),a1
+	lea	ObjData_027B66(pc),a1
 	jsr	(sub_01ADF6).l
 	move.l	#$8947A,$14(a2)
 	move.w	$4(a0),d0
@@ -44406,7 +44412,7 @@ loc_0271B6:
 loc_0271BC:
 	beq.b	loc_02721C
 loc_0271BE:
-	lea	dat_027A0A(pc),a3
+	lea	ObjData_027A0A(pc),a3
 loc_0271C2:
 	tst.b	$44(a0)
 loc_0271C6:
@@ -44450,7 +44456,7 @@ loc_02722E:
 	move.b	#$20,$37(a0)
 	clr.l	(ram_F000).w
 	clr.w	$38(a0)
-	lea	dat_027A0A(pc),a3
+	lea	ObjData_027A0A(pc),a3
 	jsr	sub_02235A(pc)
 	move.b	#$19,$A0(a0)
 	move.b	#$19,$A1(a0)
@@ -44529,7 +44535,7 @@ sub_0272FC:
 sub_027318:
 	jsr	(sub_01AD58).l
 	bne.b	loc_027382
-	lea	dat_027AD6(pc),a1
+	lea	ObjData_027AD6(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$40,$22(a2)
 	move.w	#$3B4,(a2)
@@ -44682,7 +44688,7 @@ sub_0274A8:
 loc_0274AE:
 	bne.b	loc_0274F6
 loc_0274B0:
-	lea	dat_027AF6(pc),a1
+	lea	ObjData_027AF6(pc),a1
 loc_0274B4:
 	jsr	(sub_01ADF6).l
 loc_0274BA:
@@ -44809,8 +44815,8 @@ loc_027602:
 	bge.b	loc_02761A
 	bsr.b	sub_027620
 	bne.b	loc_02761A
-	lea	dat_027E46(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_027E46(pc),a1
+	jmp	(Object_RunAnimScript).l
 loc_027616:
 	subq.b	#$1,$29(a0)
 loc_02761A:
@@ -44818,7 +44824,7 @@ loc_02761A:
 sub_027620:
 	jsr	(sub_01AD58).l
 	bne.b	loc_027698
-	lea	dat_027B16(pc),a1
+	lea	ObjData_027B16(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$40,$22(a2)
 	move.w	$4(a0),$4(a2)
@@ -44828,7 +44834,7 @@ sub_027620:
 	move.w	#$22C,(a2)
 	jsr	(sub_01AD58).l
 	bne.b	loc_027698
-	lea	dat_027B56(pc),a1
+	lea	ObjData_027B56(pc),a1
 	jsr	(sub_01ADF6).l
 	move.b	#$E0,$22(a2)
 	move.w	$4(a0),$4(a2)
@@ -44907,7 +44913,7 @@ loc_0277A4:
 loc_0277AA:
 	bne.b	loc_0277FE
 loc_0277AC:
-	lea	dat_028434(pc),a1
+	lea	ObjData_028434(pc),a1
 loc_0277B0:
 	jsr	(sub_01ADF6).l
 loc_0277B6:
@@ -44967,9 +44973,9 @@ loc_027828:
 loc_02782C:
 	move.w	#$3B8,(a0)
 loc_027830:
-	lea	dat_027EDC(pc),a1
+	lea	ObjData_027EDC(pc),a1
 loc_027834:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 dat_02783A:
 	dc.b	$00,$08,$00,$1C,$00,$30
 	dc.b	$00,$44,$00,$D0,$00,$88,$01,$48,$00,$A0,$01,$48,$00,$E0,$01,$30
@@ -45142,7 +45148,7 @@ loc_027A02:
 	clr.b	$2A(a0)
 loc_027A06:
 	bra.w	loc_027944
-dat_027A0A:
+ObjData_027A0A:
 	dc.b	$00,$0E,$00,$22,$00,$00
 	dc.b	$00,$24,$00,$20,$00,$26,$02,$42,$00,$28,$04,$64,$00,$2A,$06,$86
 	dc.b	$00,$2C,$08,$A8,$00,$2E,$0A,$CA,$00,$30,$0E,$EE,$00,$32,$00,$00
@@ -45155,44 +45161,44 @@ dat_027A48:
 	dc.b	$0E,$EE,$00,$36,$0E,$EE,$00,$38,$0E,$EE,$00,$3A,$0E,$EE,$00,$3C
 	dc.b	$0E,$EE,$00,$3E,$0E,$EE,$00,$C8,$00,$C8,$00,$C8,$00,$C8,$00,$64
 	dc.b	$00,$64,$00,$C8,$00,$C8
-dat_027A96:
+ObjData_027A96:
 	dc.b	$80,$01,$00,$00,$13,$04,$00,$00,$03,$E8
 	dc.b	$00,$00,$00,$02,$7B,$76
-dat_027AA6:
+ObjData_027AA6:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$7F,$06
-dat_027AB6:
+ObjData_027AB6:
 	dc.b	$80,$01,$0A,$00,$00,$00,$10,$00,$00,$00
 	dc.b	$00,$04,$00,$02,$7D,$44
-dat_027AC6:
+ObjData_027AC6:
 	dc.b	$00,$01,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$7D,$56
-dat_027AD6:
+ObjData_027AD6:
 	dc.b	$80,$01,$0C,$00,$01,$2C,$16,$00,$00,$01
 	dc.b	$00,$04,$00,$02,$7E,$B2
-dat_027AE6:
+ObjData_027AE6:
 	dc.b	$80,$01,$00,$00,$03,$00,$00,$00,$00,$64
 	dc.b	$00,$00,$00,$02,$7D,$DA
-dat_027AF6:
+ObjData_027AF6:
 	dc.b	$80,$01,$08,$00,$00,$18,$0A,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$7E,$94
-dat_027B06:
+ObjData_027B06:
 	dc.b	$80,$01,$64,$00,$08,$00,$78,$00,$01,$90
 	dc.b	$00,$04,$00,$02,$7E,$34
-dat_027B16:
+ObjData_027B16:
 	dc.b	$80,$01,$10,$00,$00,$00,$14,$00,$00,$00
 	dc.b	$00,$04,$00,$02,$7E,$82
-dat_027B26:
+ObjData_027B26:
 	dc.b	$80,$01,$00,$00,$08,$00,$00,$00,$00,$64
 	dc.b	$00,$00,$00,$02,$7F,$06
-dat_027B36:
+ObjData_027B36:
 	dc.b	$80,$01,$00,$00,$0C,$00,$00,$00,$00,$64
 	dc.b	$00,$00,$00,$02,$7F,$38,$80,$01,$0C,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$04,$00,$02,$7F,$26
-dat_027B56:
+ObjData_027B56:
 	dc.b	$80,$01,$0C,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$7F,$4A
-dat_027B66:
+ObjData_027B66:
 	dc.b	$80,$01,$0C,$00,$00,$20,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$7F,$F6,$00,$E0,$00,$08,$70,$00,$00,$00,$80,$00
 	dc.b	$00,$18,$00,$4A,$00,$08,$70,$00,$00,$00,$80,$00,$00,$18,$00,$5D
@@ -45241,7 +45247,7 @@ dat_027D80:
 	dc.b	$7E,$10,$00,$C8,$00,$08,$93,$2C,$00,$00,$00,$00,$00,$00,$FF,$FF
 	dc.b	$00,$02,$7E,$22,$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$FF,$00,$02,$7E,$34
-dat_027E46:
+ObjData_027E46:
 	dc.b	$00,$00,$00,$02,$76,$9A,$00,$1E,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$76,$C8,$00,$28
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$76,$DA
@@ -45252,7 +45258,7 @@ dat_027E46:
 	dc.b	$7E,$94,$00,$02,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$02
 	dc.b	$00,$08,$93,$7E,$00,$00,$80,$00,$00,$1F,$00,$02,$00,$08,$93,$8E
 	dc.b	$00,$00,$80,$00,$00,$1F,$FF,$FF,$00,$02,$7E,$BE
-dat_027EDC:
+ObjData_027EDC:
 	dc.b	$00,$1E,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$02,$00,$08,$93,$5E,$00,$00
 	dc.b	$08,$00,$00,$00,$00,$02,$00,$08,$93,$6E,$00,$00,$08,$00,$00,$00
@@ -45333,13 +45339,13 @@ loc_028118:
 loc_02811C:
 	move.w	a1,$2C(a0)
 loc_028120:
-	lea	dat_028574(pc),a3
+	lea	ObjData_028574(pc),a3
 loc_028124:
 	jsr	(sub_01D368).l
 loc_02812A:
-	lea	dat_028414(pc),a1
+	lea	ObjData_028414(pc),a1
 loc_02812E:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_028134:
 	jsr	sub_022106(pc)
 loc_028138:
@@ -45363,7 +45369,7 @@ loc_028166:
 	lea	dat_028564(pc),a2
 	tst.w	(Hardware_Version).w
 	beq.b	loc_028180
-	lea	dat_02856C(pc),a2
+	lea	ObjData_02856C(pc),a2
 loc_028180:
 	move.l	a2,$54(a1)
 	move.l	#$87000,$14(a1)
@@ -45393,7 +45399,7 @@ loc_0281C4:
 loc_0281CA:
 	jmp	(sub_01AF0E).l
 sub_0281D0:
-	lea	dat_028574(pc),a3
+	lea	ObjData_028574(pc),a3
 loc_0281D4:
 	tst.b	$44(a0)
 loc_0281D8:
@@ -45453,11 +45459,11 @@ loc_02825A:
 	jmp	(sub_01AF0E).l
 loc_028260:
 	move.b	#$41,$52(a0)
-	lea	dat_028750(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_028750(pc),a1
+	jmp	(Object_RunAnimScript).l
 loc_028270:
 	clr.l	(ram_F000).w
-	lea	dat_028574(pc),a3
+	lea	ObjData_028574(pc),a3
 	jsr	(sub_02235A).l
 	move.b	#$14,$40(a0)
 	move.b	#$14,$41(a0)
@@ -45471,7 +45477,7 @@ loc_0282A4:
 loc_0282A8:
 	addq.w	#$6,a1
 loc_0282AA:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 	dc.b	$47,$FA,$03,$A0,$4E,$FA,$47,$9E
 sub_0282B8:
 	addq.b	#$1,$2A(a0)
@@ -45490,7 +45496,7 @@ loc_0282D0:
 loc_0282D6:
 	bne.b	loc_02832A
 loc_0282D8:
-	lea	dat_028434(pc),a1
+	lea	ObjData_028434(pc),a1
 loc_0282DC:
 	jsr	(sub_01ADF6).l
 loc_0282E2:
@@ -45550,11 +45556,11 @@ loc_028362:
 loc_028366:
 	lsl.w	#$2,d0
 loc_028368:
-	lea	dat_0287B6(pc),a1
+	lea	ObjData_0287B6(pc),a1
 loc_02836C:
 	movea.l	(a1,d0.w),a1
 loc_028370:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 sub_028376:
 	subq.b	#$1,$29(a0)
 loc_02837A:
@@ -45581,13 +45587,13 @@ loc_02839E:
 	dc.b	$21,$42,$00,$10,$E4,$49,$10,$28,$00,$28,$02,$40,$00,$03,$D0,$41
 	dc.b	$43,$FA,$02,$78,$11,$71,$00,$00,$00,$29,$22,$5F,$5C,$49,$4E,$F9
 	dc.b	$00,$01,$AF,$1A
-dat_028414:
+ObjData_028414:
 	dc.b	$80,$01,$14,$00,$13,$00,$00,$00,$07,$D0,$00,$00
 	dc.b	$00,$02,$87,$1A
-dat_028424:
+ObjData_028424:
 	dc.b	$80,$01,$14,$00,$01,$28,$00,$00,$00,$0A,$00,$04
 	dc.b	$00,$02,$87,$98
-dat_028434:
+ObjData_028434:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$02,$88,$4A,$20,$D9,$20,$DA,$20,$DB,$20,$DC,$20,$DD,$20,$DE
 	dc.b	$28,$DE,$28,$DD,$28,$DC,$28,$DB,$28,$DA,$20,$D9,$20,$D9,$20,$DF
@@ -45610,10 +45616,10 @@ dat_028434:
 	dc.b	$21,$11,$21,$10
 dat_028564:
 	dc.b	$01,$90,$01,$2C,$01,$2C,$01,$90
-dat_02856C:
+ObjData_02856C:
 	dc.b	$00,$C8,$01,$2C
 	dc.b	$01,$2C,$01,$2C
-dat_028574:
+ObjData_028574:
 	dc.b	$00,$0E,$00,$22,$0E,$EE,$00,$24,$00,$00,$00,$26
 	dc.b	$02,$48,$00,$28,$04,$6C,$00,$2A,$08,$CC,$00,$2C,$06,$AA,$00,$2E
 	dc.b	$04,$88,$00,$30,$02,$66,$00,$32,$02,$44,$00,$34,$00,$22,$00,$36
@@ -45649,7 +45655,7 @@ dat_028672:
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$87,$1A,$00,$C8,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$00,$C8,$00,$08,$70,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$37,$5A,$FF,$FF,$00,$02,$87,$2C
-dat_028750:
+ObjData_028750:
 	dc.b	$00,$00,$00,$02,$82,$B0,$00,$08,$00,$08,$93,$C6,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$02,$82,$B0,$00,$08,$00,$08,$93,$C6,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$82,$B0,$00,$08,$00,$08,$93,$C6
@@ -45657,7 +45663,7 @@ dat_028750:
 	dc.b	$82,$A4,$FF,$FF,$00,$02,$87,$1A,$00,$02,$00,$08,$93,$C6,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$06,$00,$08,$93,$C6,$00,$00,$FA,$00,$00,$00
 	dc.b	$FF,$FF,$00,$02,$87,$A4
-dat_0287B6:
+ObjData_0287B6:
 	dc.l	dat_0287C6,dat_0287EA,dat_02880E,dat_028832
 dat_0287C6:
 	dc.b	$00,$18,$00,$08,$93,$DA,$00,$00,$00,$00
@@ -45689,9 +45695,9 @@ loc_02886C:
 loc_028872:
 	bclr.b	#$2,$2(a0)
 loc_028878:
-	lea	dat_028A8A(pc),a1
+	lea	ObjData_028A8A(pc),a1
 loc_02887C:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_028882:
 	move.b	#$60,$22(a0)
 loc_028888:
@@ -45753,7 +45759,7 @@ loc_0288FC:
 loc_0288FE:
 	clr.b	$29(a0)
 loc_028902:
-	lea	dat_028A9A(pc),a1
+	lea	ObjData_028A9A(pc),a1
 loc_028906:
 	move.b	$28(a0),d0
 loc_02890A:
@@ -45763,7 +45769,7 @@ loc_02890E:
 loc_028910:
 	adda.w	(a1,d0.w),a1
 loc_028914:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_02891A:
 	jmp	(sub_01AF0E).l
 loc_028920:
@@ -45779,13 +45785,13 @@ loc_028932:
 loc_028938:
 	beq.b	loc_028956
 loc_02893A:
-	lea	dat_028E1A(pc),a1
+	lea	ObjData_028E1A(pc),a1
 loc_02893E:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_028944:
 	move.b	#$40,$22(a0)
-	lea	(dat_015EBA).l,a1
-	jmp	(sub_01AF1A).l
+	lea	(ObjData_015EBA).l,a1
+	jmp	(Object_RunAnimScript).l
 loc_028956:
 	bclr.b	#$3,$2(a0)
 loc_02895C:
@@ -45795,11 +45801,11 @@ loc_028962:
 loc_028966:
 	add.w	d0,d0
 loc_028968:
-	lea	(dat_016C14).l,a1
+	lea	(ObjData_016C14).l,a1
 loc_02896E:
 	adda.w	(a1,d0.w),a1
 loc_028972:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 sub_028978:
 	lea	(Objects_A).w,a1
 loc_02897C:
@@ -45813,7 +45819,7 @@ loc_02898A:
 loc_02898C:
 	move.b	#$4,$37(a0)
 loc_028992:
-	lea	dat_028CDA(pc),a1
+	lea	ObjData_028CDA(pc),a1
 loc_028996:
 	move.b	$28(a0),d0
 loc_02899A:
@@ -45825,7 +45831,7 @@ loc_0289A0:
 loc_0289A4:
 	move.l	(a7)+,d0
 loc_0289A6:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_0289AC:
 	rts
 loc_0289AE:
@@ -45936,10 +45942,10 @@ loc_028A82:
 	move.b	#$2,$3E(a0)
 loc_028A88:
 	rts
-dat_028A8A:
+ObjData_028A8A:
 	dc.b	$80,$01,$0A,$00,$03,$0C
 	dc.b	$0C,$00,$00,$01,$00,$00,$00,$02,$8A,$AA
-dat_028A9A:
+ObjData_028A9A:
 	dc.b	$00,$10,$00,$56,$00,$9C
 	dc.b	$00,$E2,$01,$28,$01,$6E,$01,$B4,$01,$FA,$00,$06,$00,$08,$98,$1E
 	dc.b	$00,$80,$00,$05,$34,$41,$80,$00,$00,$FF,$00,$06,$00,$08,$98,$28
@@ -45977,7 +45983,7 @@ dat_028A9A:
 	dc.b	$80,$00,$00,$FF,$00,$06,$00,$08,$98,$50,$00,$C0,$00,$05,$37,$41
 	dc.b	$80,$00,$00,$FF,$00,$06,$00,$08,$98,$46,$00,$C0,$00,$05,$36,$81
 	dc.b	$80,$00,$00,$FF,$FF,$FF,$00,$02,$8C,$94
-dat_028CDA:
+ObjData_028CDA:
 	dc.b	$00,$10,$00,$36,$00,$5C
 	dc.b	$00,$82,$00,$A8,$00,$CE,$00,$F4,$01,$1A,$00,$09,$00,$08,$99,$0E
 	dc.b	$00,$90,$00,$05,$3E,$C1,$00,$00,$00,$00,$00,$07,$00,$08,$98,$1E
@@ -45999,7 +46005,7 @@ dat_028CDA:
 	dc.b	$00,$02,$89,$AE,$00,$09,$00,$08,$99,$1E,$00,$E0,$00,$05,$3F,$51
 	dc.b	$00,$00,$00,$00,$00,$07,$00,$08,$98,$3C,$00,$C0,$00,$05,$35,$C1
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$89,$AE
-dat_028E1A:
+ObjData_028E1A:
 	dc.b	$00,$08,$00,$08,$7A,$20
 	dc.b	$00,$90,$00,$04,$BD,$F0,$FF,$00,$00,$00,$FF,$FF,$00,$02,$8E,$30
 	dc.b	$00,$08,$FF,$FF,$FF,$FF,$00,$00,$01,$00,$00,$00,$00,$02,$00,$08
@@ -46016,9 +46022,9 @@ loc_028E60:
 loc_028E66:
 	bne.b	loc_028EA6
 loc_028E68:
-	lea	dat_028F98(pc),a1
+	lea	ObjData_028F98(pc),a1
 loc_028E6C:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_028E72:
 	move.b	$1A(a0),$35(a0)
 loc_028E78:
@@ -46036,7 +46042,7 @@ loc_028E8E:
 loc_028E92:
 	lsr.w	#$2,d0
 loc_028E94:
-	lea	dat_028FA8(pc),a1
+	lea	ObjData_028FA8(pc),a1
 loc_028E98:
 	adda.w	(a1,d0.w),a1
 loc_028E9C:
@@ -46106,7 +46112,7 @@ loc_028F18:
 	move.b	$35(a0),d0
 	andi.w	#$18,d0
 	lsr.w	#$2,d0
-	lea	dat_028FA8(pc),a1
+	lea	ObjData_028FA8(pc),a1
 	adda.w	(a1,d0.w),a1
 	move.l	a1,$30(a0)
 	move.b	#$1,$34(a0)
@@ -46137,10 +46143,10 @@ loc_028F72:
 dat_028F80:
 	dc.b	$00,$01,$5E,$BA,$00,$01,$94,$BA,$00,$01,$94,$BA,$00,$01,$5E,$BA
 	dc.b	$00,$01,$94,$EE,$00,$01,$94,$EE
-dat_028F98:
+ObjData_028F98:
 	dc.b	$80,$01,$0A,$00,$03,$0C,$04,$00
 	dc.b	$00,$01,$00,$00,$00,$02,$8F,$F6
-dat_028FA8:
+ObjData_028FA8:
 	dc.b	$00,$08,$00,$08,$00,$4E,$00,$94
 	dc.b	$00,$06,$00,$08,$9A,$4A,$00,$90,$00,$05,$44,$12,$80,$00,$00,$08
 	dc.b	$00,$06,$00,$08,$9A,$5A,$00,$90,$00,$05,$44,$A2,$80,$00,$00,$08
@@ -46159,7 +46165,7 @@ dat_028FA8:
 sub_029082:
 	movea.l	a0,a2
 loc_029084:
-	lea	dat_0291D8(pc),a1
+	lea	ObjData_0291D8(pc),a1
 loc_029088:
 	jsr	(sub_01ADF6).l
 loc_02908E:
@@ -46177,7 +46183,7 @@ loc_0290A8:
 loc_0290AC:
 	add.w	d1,d1
 loc_0290AE:
-	lea	(dat_01D3D6).l,a1
+	lea	(ObjData_01D3D6).l,a1
 loc_0290B4:
 	move.w	(a1,d1.w),d2
 loc_0290B8:
@@ -46187,7 +46193,7 @@ loc_0290BC:
 loc_0290C0:
 	lea	$40(a0),a2
 loc_0290C4:
-	lea	dat_0291C8(pc),a1
+	lea	ObjData_0291C8(pc),a1
 loc_0290C8:
 	jsr	(sub_01ADF6).l
 loc_0290CE:
@@ -46281,16 +46287,16 @@ loc_02918A:
 	bclr.b	#$6,$2(a0)
 	move.b	#$40,$22(a0)
 	move.w	#$23C,(a0)
-	lea	dat_021BDA(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_021BDA(pc),a1
+	jmp	(Object_RunAnimScript).l
 loc_0291BC:
 	jmp	(sub_01AF0E).l
 loc_0291C2:
 	jmp	(sub_01B002).l
-dat_0291C8:
+ObjData_0291C8:
 	dc.b	$80,$01,$00,$00,$00,$00,$0C,$00
 	dc.b	$00,$01,$00,$04,$00,$02,$92,$08
-dat_0291D8:
+ObjData_0291D8:
 	dc.b	$80,$01,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$00,$04,$00,$02,$92,$AA
 dat_0291E8:
@@ -46321,9 +46327,9 @@ sub_02933A:
 loc_029340:
 	bne.w	loc_029360
 loc_029344:
-	lea	dat_02986A(pc),a1
+	lea	ObjData_02986A(pc),a1
 loc_029348:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02934E:
 	move.b	#$0,$22(a0)
 loc_029354:
@@ -46343,11 +46349,11 @@ loc_029366:
 	lsl.w	#$3,d6
 	move.l	$4(a0),d4
 	move.l	$8(a0),d5
-	lea	dat_02949C(pc),a2
+	lea	ObjData_02949C(pc),a2
 	movea.l	a0,a3
 	lea	$60(a0),a0
-	lea	dat_02988A(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02988A(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.w	$2(a0)
 	ori.b	#$21,$2(a0)
 	move.w	(a2,d6.w),$38(a0)
@@ -46359,8 +46365,8 @@ loc_029366:
 	addi.l	#$FFF00000,$4(a0)
 	addi.l	#$200000,$8(a0)
 	lea	$60(a0),a0
-	lea	dat_02987A(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02987A(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.w	$2(a0)
 	ori.b	#$21,$2(a0)
 	move.w	(a2,d6.w),$38(a0)
@@ -46372,8 +46378,8 @@ loc_029366:
 	addi.l	#$400000,$4(a0)
 	addi.l	#$200000,$8(a0)
 	lea	$60(a0),a0
-	lea	dat_02987A(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02987A(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.w	$2(a0)
 	ori.b	#$21,$2(a0)
 	move.w	(a2,d6.w),$38(a0)
@@ -46385,8 +46391,8 @@ loc_029366:
 	addi.l	#$FFA00000,$4(a0)
 	addi.l	#$200000,$8(a0)
 	adda.w	#$60,a0
-	lea	(dat_01DE72).l,a1
-	jsr	(sub_01ADB0).l
+	lea	(ObjData_01DE72).l,a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$69,$2(a0)
 	lea	dat_0297FE(pc),a1
 	move.l	a1,$2A(a0)
@@ -46400,7 +46406,7 @@ loc_029366:
 	jsr	(sub_00A068).l
 loc_029496:
 	jmp	(sub_01AF0E).l
-dat_02949C:
+ObjData_02949C:
 	dc.b	$00,$96,$00,$96
 	dc.b	$00,$96,$00,$FA,$00,$C8,$00,$C8,$00,$C8,$01,$2C
 sub_0294AC:
@@ -46546,11 +46552,11 @@ loc_029600:
 loc_029604:
 	add.w	d0,d0
 loc_029606:
-	lea	dat_029670(pc),a1
+	lea	ObjData_029670(pc),a1
 loc_02960A:
 	adda.w	(a1,d0.w),a1
 loc_02960E:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_029614:
 	subq.b	#$1,$29(a0)
 loc_029618:
@@ -46562,7 +46568,7 @@ loc_02961E:
 	move.b	#$19,$40(a0)
 	move.b	#$19,$41(a0)
 	clr.w	$42(a0)
-	lea	dat_02A232(pc),a1
+	lea	ObjData_02A232(pc),a1
 	move.l	a1,$30(a0)
 	move.w	#$260,(a0)
 	jmp	(sub_01AF0E).l
@@ -46570,7 +46576,7 @@ dat_02964C:
 	dc.b	$00,$10,$00,$17
 	dc.b	$00,$10,$00,$16,$00,$07,$00,$18,$00,$08,$00,$18,$FF,$FF,$00,$1C
 	dc.b	$FF,$F8,$00,$18,$FF,$F9,$00,$18,$FF,$F6,$00,$16,$FF,$F0,$00,$18
-dat_029670:
+ObjData_029670:
 	dc.b	$02,$2A,$02,$2A,$02,$3C,$02,$3C,$02,$4E,$02,$60,$02,$60,$02,$72
 	dc.b	$02,$72
 dat_029682:
@@ -46635,8 +46641,8 @@ loc_02972C:
 	move.b	#$10,$41(a0)
 	move.b	#$14,$42(a0)
 	move.b	#$1E,$43(a0)
-	lea	dat_029906(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_029906(pc),a1
+	jmp	(Object_RunAnimScript).l
 sub_02975E:
 	lea	(ram_F060).w,a3
 loc_029762:
@@ -46704,13 +46710,13 @@ dat_02983E:
 dat_029854:
 	dc.b	$00,$04,$00,$10,$0E,$EE,$00,$12,$0E,$EE,$00,$14
 	dc.b	$0E,$EE,$00,$16,$0E,$EE,$00,$18,$0E,$EE
-dat_02986A:
+ObjData_02986A:
 	dc.b	$00,$01,$05,$00,$0E,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$98,$BE
-dat_02987A:
+ObjData_02987A:
 	dc.b	$00,$01,$05,$00,$0A,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$98,$F4
-dat_02988A:
+ObjData_02988A:
 	dc.b	$00,$01,$05,$00,$0C,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$98,$F4,$00,$64,$00,$08,$9A,$F0
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$98,$9A,$00,$64,$00,$08
@@ -46720,7 +46726,7 @@ dat_02988A:
 	dc.b	$98,$D0,$00,$64,$00,$08,$9A,$C8,$00,$00,$00,$00,$00,$00,$FF,$FF
 	dc.b	$00,$02,$98,$E2,$00,$FA,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$FF,$00,$02,$98,$F4
-dat_029906:
+ObjData_029906:
 	dc.b	$00,$50,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FE
 sub_029914:
@@ -46728,9 +46734,9 @@ sub_029914:
 loc_02991A:
 	bne.b	loc_029940
 loc_02991C:
-	lea	dat_029EA8(pc),a1
+	lea	ObjData_029EA8(pc),a1
 loc_029920:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_029926:
 	ori.b	#$2E,$2(a0)
 loc_02992C:
@@ -46755,27 +46761,27 @@ loc_029946:
 	clr.w	$A(a0)
 	movea.l	a0,a3
 	adda.w	#$60,a0
-	lea	dat_029EB8(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_029EB8(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$45C,(a0)
 	ori.b	#$26,$2(a0)
 	adda.w	#$60,a0
-	lea	dat_029EC8(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_029EC8(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$2E,$2(a0)
 	move.b	#$4C,$36(a0)
 	clr.b	$28(a0)
 	move.w	#$460,(a0)
 	adda.w	#$60,a0
-	lea	dat_029EC8(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_029EC8(pc),a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$2E,$2(a0)
 	move.b	#$52,$36(a0)
 	clr.b	$28(a0)
 	move.w	#$460,(a0)
 	adda.w	#$60,a0
-	lea	(dat_01DE72).l,a1
-	jsr	(sub_01ADB0).l
+	lea	(ObjData_01DE72).l,a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$69,$2(a0)
 	lea	dat_029DA2(pc),a1
 	move.l	a1,$2A(a0)
@@ -46786,8 +46792,8 @@ loc_029946:
 	move.b	#$1,$2E(a0)
 	move.b	#$48,$36(a0)
 	adda.w	#$60,a0
-	lea	(dat_01DE72).l,a1
-	jsr	(sub_01ADB0).l
+	lea	(ObjData_01DE72).l,a1
+	jsr	(Object_LoadTemplate).l
 	ori.b	#$69,$2(a0)
 	lea	dat_029DE2(pc),a1
 	move.l	a1,$2A(a0)
@@ -46798,7 +46804,7 @@ loc_029946:
 	move.b	#$1,$2E(a0)
 	move.b	#$48,$36(a0)
 	lea	(ram_E900).w,a2
-	lea	dat_029ED8(pc),a1
+	lea	ObjData_029ED8(pc),a1
 	jsr	(sub_01ADF6).l
 	ori.b	#$29,$2(a2)
 	move.b	#$20,$22(a2)
@@ -46807,7 +46813,7 @@ loc_029946:
 	move.w	#$2040,$1C(a2)
 	move.l	#$87000,$14(a2)
 	lea	(ram_E940).w,a2
-	lea	dat_029EE8(pc),a1
+	lea	ObjData_029EE8(pc),a1
 	jsr	(sub_01ADF6).l
 	ori.b	#$29,$2(a2)
 	move.b	#$20,$22(a2)
@@ -46957,14 +46963,14 @@ loc_029C4E:
 	tst.b	d0
 	beq.b	loc_029C7E
 	move.b	#$1,$34(a0)
-	lea	dat_02A154(pc),a1
+	lea	ObjData_02A154(pc),a1
 	st.b	$2A(a0)
 	bra.b	loc_029C90
 loc_029C7E:
 	move.b	#$1,$34(a0)
 	clr.b	$2A(a0)
 	st.b	$54(a0)
-	lea	dat_029F9E(pc),a1
+	lea	ObjData_029F9E(pc),a1
 loc_029C90:
 	move.l	a1,$30(a0)
 loc_029C94:
@@ -46977,7 +46983,7 @@ loc_029C9A:
 	move.b	#$19,$41(a0)
 	clr.b	$42(a0)
 	move.b	#$E0,$43(a0)
-	lea	dat_02A232(pc),a1
+	lea	ObjData_02A232(pc),a1
 	move.l	a1,$30(a0)
 	move.w	#$260,(a0)
 	jmp	(sub_01AF0E).l
@@ -47096,20 +47102,20 @@ loc_029E52:
 	beq.b	loc_029E72
 	bset.b	#$0,$28(a0)
 	bne.b	loc_029E8C
-	lea	dat_02A2A2(pc),a1
+	lea	ObjData_02A2A2(pc),a1
 	cmpi.b	#$52,$36(a0)
 	beq.b	loc_029E6C
-	lea	dat_02A348(pc),a1
+	lea	ObjData_02A348(pc),a1
 loc_029E6C:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_029E72:
 	bclr.b	#$0,$28(a0)
 loc_029E78:
 	beq.b	loc_029E8C
-	lea	dat_02A256(pc),a1
+	lea	ObjData_02A256(pc),a1
 	cmpi.b	#$52,$36(a0)
 	beq.b	loc_029E6C
-	lea	dat_02A27C(pc),a1
+	lea	ObjData_02A27C(pc),a1
 	bra.b	loc_029E6C
 loc_029E8C:
 	jmp	(sub_01AF0E).l
@@ -47117,19 +47123,19 @@ loc_029E92:
 	jmp	(sub_01B002).l
 	dc.b	$00,$64,$00,$64,$00,$64,$00,$64
 	dc.b	$00,$78,$00,$78,$00,$78,$00,$78
-dat_029EA8:
+ObjData_029EA8:
 	dc.b	$00,$01,$05,$00,$11,$10,$0F,$00
 	dc.b	$4E,$20,$00,$04,$00,$02,$9F,$5C
-dat_029EB8:
+ObjData_029EB8:
 	dc.b	$00,$01,$05,$00,$11,$00,$0F,$00
 	dc.b	$01,$90,$00,$00,$00,$02,$9F,$5C
-dat_029EC8:
+ObjData_029EC8:
 	dc.b	$00,$01,$05,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$02,$9F,$5C
-dat_029ED8:
+ObjData_029ED8:
 	dc.b	$00,$01,$05,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$02,$A2,$56
-dat_029EE8:
+ObjData_029EE8:
 	dc.b	$00,$01,$05,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$02,$A2,$7C
 dat_029EF8:
@@ -47151,7 +47157,7 @@ dat_029F6E:
 	dc.b	$00,$08,$70,$00,$00,$00,$80,$00,$00,$10,$00,$00,$00,$02,$9A,$BE
 	dc.b	$00,$04,$00,$08,$70,$00,$00,$00,$80,$00,$00,$FF,$00,$04,$00,$08
 	dc.b	$70,$00,$00,$00,$80,$00,$00,$FF,$FF,$FF,$00,$02,$9F,$80
-dat_029F9E:
+ObjData_029F9E:
 	dc.b	$00,$14
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$08,$00,$08,$70,$00
 	dc.b	$00,$00,$00,$60,$00,$00,$00,$08,$00,$08,$70,$00,$00,$00,$00,$A0
@@ -47181,7 +47187,7 @@ dat_029F9E:
 	dc.b	$00,$00,$FF,$60,$00,$00,$00,$04,$00,$08,$70,$00,$00,$00,$FF,$A0
 	dc.b	$00,$00,$00,$05,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$02,$9B,$02
-dat_02A154:
+ObjData_02A154:
 	dc.b	$00,$00,$00,$02,$58,$94,$00,$10,$00,$08,$70,$00
 	dc.b	$00,$00,$80,$00,$00,$09,$00,$08,$00,$08,$70,$00,$00,$00,$80,$00
 	dc.b	$00,$0B,$00,$04,$00,$08,$70,$00,$00,$00,$80,$00,$00,$0D,$00,$04
@@ -47197,20 +47203,20 @@ dat_02A154:
 	dc.b	$00,$08,$70,$00,$00,$00,$80,$00,$00,$07,$00,$02,$00,$08,$70,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$58,$9C,$00,$00,$00,$02
 	dc.b	$9B,$02
-dat_02A232:
+ObjData_02A232:
 	dc.b	$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$C8
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$37,$5A
 	dc.b	$FF,$FF,$00,$02,$A2,$32
-dat_02A256:
+ObjData_02A256:
 	dc.b	$00,$04,$00,$08,$70,$00,$00,$20,$00,$05
 	dc.b	$4F,$51,$00,$00,$00,$00,$00,$04,$00,$08,$70,$00,$00,$20,$00,$05
 	dc.b	$4F,$81,$00,$00,$00,$00,$FF,$FF,$00,$02,$A2,$56
-dat_02A27C:
+ObjData_02A27C:
 	dc.b	$00,$04,$00,$08
 	dc.b	$70,$00,$00,$10,$00,$05,$4F,$71,$00,$00,$00,$00,$00,$04,$00,$08
 	dc.b	$70,$00,$00,$10,$00,$05,$4F,$A1,$00,$00,$00,$00,$FF,$FF,$00,$02
 	dc.b	$A2,$7C
-dat_02A2A2:
+ObjData_02A2A2:
 	dc.b	$00,$02,$00,$08,$9A,$FA,$00,$20,$00,$05,$4F,$51,$00,$00
 	dc.b	$00,$00,$00,$02,$00,$08,$9B,$04,$00,$20,$00,$05,$4F,$81,$00,$00
 	dc.b	$00,$00,$00,$02,$00,$08,$9A,$FA,$00,$20,$00,$05,$4F,$51,$00,$00
@@ -47222,7 +47228,7 @@ dat_02A2A2:
 	dc.b	$00,$00,$00,$02,$00,$08,$9B,$0E,$00,$20,$00,$05,$4F,$51,$00,$00
 	dc.b	$00,$00,$00,$02,$00,$08,$9B,$1E,$00,$20,$00,$05,$4F,$81,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$A3,$22
-dat_02A348:
+ObjData_02A348:
 	dc.b	$00,$02,$00,$08,$9A,$FA,$00,$10
 	dc.b	$00,$05,$4F,$71,$00,$00,$00,$00,$00,$02,$00,$08,$9B,$04,$00,$10
 	dc.b	$00,$05,$4F,$A1,$00,$00,$00,$00,$00,$02,$00,$08,$9A,$FA,$00,$10
@@ -47239,9 +47245,9 @@ sub_02A3EE:
 loc_02A3F4:
 	bne.b	loc_02A420
 loc_02A3F6:
-	lea	dat_02AC7A(pc),a1
+	lea	ObjData_02AC7A(pc),a1
 loc_02A3FA:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02A400:
 	ori.b	#$2E,$2(a0)
 loc_02A406:
@@ -47258,14 +47264,14 @@ loc_02A420:
 	btst.b	#$4,(Flags_C61C).w
 loc_02A426:
 	beq.w	loc_02A44E
-	lea	dat_02ABDA(pc),a3
+	lea	ObjData_02ABDA(pc),a3
 	jsr	(sub_01D368).l
 	moveq	#-$62,d0
 	jsr	(sub_00A068).l
 	clr.b	$28(a0)
 	move.w	#$23C,(a0)
-	lea	dat_02AD28(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_02AD28(pc),a1
+	jmp	(Object_RunAnimScript).l
 loc_02A44E:
 	jmp	(sub_01AF0E).l
 	dc.b	$2F,$09,$4E,$B9,$00,$01,$AC,$A6,$4A,$07,$6B,$22
@@ -47290,8 +47296,8 @@ loc_02A44E:
 	dc.b	$00,$06,$31,$7C,$00,$40,$00,$08,$42,$68,$00,$0A,$43,$F9,$00,$01
 	dc.b	$E7,$26,$4E,$91,$20,$5F,$4E,$75
 sub_02A598:
-	lea	dat_02ACAA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACAA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$430,(a0)
 	ori.b	#$2B,$2(a0)
@@ -47304,16 +47310,16 @@ sub_02A598:
 loc_02A5CC:
 	movea.l	a0,a3
 	lea	$60(a0),a0
-	lea	dat_02ACCA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACCA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$438,(a0)
 	ori.b	#$2B,$2(a0)
 	clr.b	$22(a0)
 	move.w	a3,$28(a0)
 	lea	$60(a0),a0
-	lea	dat_02ACEA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACEA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$434,(a0)
 	ori.b	#$2F,$2(a0)
@@ -47335,7 +47341,7 @@ loc_02A618:
 	move.w	#$30,$8(a0)
 	bsr.b	sub_02A6A8
 	movea.l	(a7)+,a0
-	lea	dat_02AC18(pc),a3
+	lea	ObjData_02AC18(pc),a3
 	jsr	(sub_01D368).l
 	lea	(ram_F000).w,a1
 	move.l	#$2ACFA,$54(a1)
@@ -47354,8 +47360,8 @@ loc_02A682:
 	jsr	(sub_00A068).l
 	jmp	(sub_01AF0E).l
 sub_02A6A8:
-	lea	dat_02ACBA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACBA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$430,(a0)
 	move.l	#$89B2E,$14(a0)
@@ -47369,8 +47375,8 @@ sub_02A6A8:
 loc_02A6E6:
 	movea.l	a0,a3
 	lea	$60(a0),a0
-	lea	dat_02ACDA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACDA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$43C,(a0)
 	move.l	#$89BFE,$14(a0)
@@ -47379,8 +47385,8 @@ loc_02A6E6:
 	move.w	a3,$28(a0)
 	clr.b	$2C(a0)
 	lea	$60(a0),a0
-	lea	dat_02ACEA(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02ACEA(pc),a1
+	jsr	(Object_LoadTemplate).l
 	clr.l	(a0)
 	move.w	#$434,(a0)
 	move.l	#$87000,$14(a0)
@@ -47441,7 +47447,7 @@ loc_02A7AA:
 	cmpi.b	#$80,(ram_F1B7).w
 	beq.b	loc_02A808
 	clr.l	(ram_F000).w
-	lea	dat_02AC18(pc),a3
+	lea	ObjData_02AC18(pc),a3
 	jsr	(sub_02235A).l
 	move.l	#$2AFB8,$30(a0)
 loc_02A808:
@@ -47615,7 +47621,7 @@ loc_02A9A2:
 loc_02A9A4:
 	and.b	$35(a0),d0
 loc_02A9A8:
-	lea	dat_02AFDC(pc),a1
+	lea	ObjData_02AFDC(pc),a1
 loc_02A9AC:
 	adda.w	(a1,d0.w),a1
 loc_02A9B0:
@@ -47731,7 +47737,7 @@ loc_02AAA0:
 	moveq	#$1F,d0
 	and.b	$35(a0),d0
 	add.w	d0,d0
-	lea	dat_02B11C(pc),a1
+	lea	ObjData_02B11C(pc),a1
 	adda.w	(a1,d0.w),a1
 	move.l	a1,$30(a0)
 	move.b	#$1,$34(a0)
@@ -47763,13 +47769,13 @@ dat_02AB5A:
 	dc.b	$00,$07,$FF,$EF,$00,$03,$FF,$EF,$FF,$FC,$FF,$ED,$FF,$F9,$FF,$F6
 	dc.b	$FF,$E6,$FF,$F6,$FF,$E6,$FF,$FB,$FF,$E6,$FF,$F8,$FF,$E2,$FF,$F8
 	dc.b	$FF,$E2,$FF,$FE,$FF,$DE,$FF,$FE,$FF,$DE
-dat_02ABDA:
+ObjData_02ABDA:
 	dc.b	$00,$0E,$00,$22,$0E,$EE
 	dc.b	$00,$24,$00,$00,$00,$26,$04,$CA,$00,$28,$00,$86,$00,$2A,$00,$42
 	dc.b	$00,$2C,$06,$66,$00,$2E,$0A,$AA,$00,$30,$00,$0E,$00,$32,$0C,$A8
 	dc.b	$00,$34,$08,$64,$00,$36,$02,$44,$00,$38,$06,$8A,$00,$3A,$02,$46
 	dc.b	$00,$3C,$06,$88,$00,$36,$00,$0E
-dat_02AC18:
+ObjData_02AC18:
 	dc.b	$00,$17,$00,$0A,$08,$CE,$00,$0C
 	dc.b	$04,$8A,$00,$0E,$02,$68,$00,$10,$00,$46,$00,$12,$00,$24,$00,$14
 	dc.b	$0A,$AA,$00,$16,$06,$66,$00,$18,$02,$22,$00,$1A,$00,$00,$00,$22
@@ -47777,30 +47783,30 @@ dat_02AC18:
 	dc.b	$0E,$EE,$00,$2C,$0E,$EE,$00,$2E,$0E,$EE,$00,$30,$0E,$EE,$00,$32
 	dc.b	$0E,$EE,$00,$34,$0E,$EE,$00,$36,$0E,$EE,$00,$38,$0E,$EE,$00,$3A
 	dc.b	$0E,$EE,$00,$3C,$0E,$EE,$00,$3E,$0E,$EE
-dat_02AC7A:
+ObjData_02AC7A:
 	dc.b	$80,$01,$04,$00,$07,$20
 	dc.b	$10,$00,$00,$00,$00,$00,$00,$02,$AD,$0A,$80,$01,$04,$00,$07,$18
 	dc.b	$08,$00,$00,$10,$00,$04,$00,$01,$FC,$4E,$80,$01,$04,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$01,$A8
-dat_02ACAA:
+ObjData_02ACAA:
 	dc.b	$80,$01,$04,$00,$0E,$10
 	dc.b	$10,$00,$00,$00,$00,$04,$00,$02,$AD,$76
-dat_02ACBA:
+ObjData_02ACBA:
 	dc.b	$80,$01,$04,$00,$0F,$10
 	dc.b	$10,$00,$00,$00,$00,$04,$00,$02,$AD,$6A
-dat_02ACCA:
+ObjData_02ACCA:
 	dc.b	$80,$01,$04,$00,$00,$00
 	dc.b	$10,$00,$00,$00,$00,$00,$00,$02,$B0,$8C
-dat_02ACDA:
+ObjData_02ACDA:
 	dc.b	$80,$01,$04,$00,$00,$00
 	dc.b	$10,$00,$00,$00,$00,$00,$00,$02,$B1,$EC
-dat_02ACEA:
+ObjData_02ACEA:
 	dc.b	$80,$01,$04,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$02,$AD,$0A,$01,$0E,$01,$0E,$01,$0E
 	dc.b	$01,$0E,$01,$36,$01,$36,$01,$36,$01,$36,$00,$FA,$00,$08,$70,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$32,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$AD,$0A
-dat_02AD28:
+ObjData_02AD28:
 	dc.b	$00,$32,$00,$08,$70,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$1E,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$A4,$54,$00,$3C,$00,$08,$70,$00,$00,$00,$00,$00
@@ -47845,7 +47851,7 @@ dat_02AD28:
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FE,$00,$C8,$FF,$FF,$FF,$FF,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$C8,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$37,$5A,$FF,$FF,$00,$02,$AF,$AA
-dat_02AFDC:
+ObjData_02AFDC:
 	dc.b	$00,$20,$00,$32
 	dc.b	$00,$44,$00,$56,$00,$68,$00,$7A,$00,$8C,$00,$9E,$00,$B0,$00,$C2
 	dc.b	$00,$D4,$00,$E6,$00,$F8,$01,$0A,$01,$1C,$01,$2E,$00,$04,$00,$08
@@ -47867,7 +47873,7 @@ dat_02AFDC:
 	dc.b	$00,$00,$FF,$FF,$00,$02,$B0,$E6,$00,$04,$00,$08,$9C,$DA,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$B0,$F8,$00,$04,$00,$08,$9C,$E4
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$B1,$0A
-dat_02B11C:
+ObjData_02B11C:
 	dc.b	$00,$40,$00,$40
 	dc.b	$00,$52,$00,$52,$00,$64,$00,$64,$00,$76,$00,$76,$00,$88,$00,$88
 	dc.b	$00,$9A,$00,$9A,$00,$AC,$00,$AC,$00,$BE,$00,$BE,$00,$D0,$00,$E2
@@ -47896,9 +47902,9 @@ sub_02B27C:
 loc_02B282:
 	bne.w	loc_02B296
 loc_02B286:
-	lea	dat_02B7D4(pc),a1
+	lea	ObjData_02B7D4(pc),a1
 loc_02B28A:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02B290:
 	bset.b	#$5,$2(a0)
 loc_02B296:
@@ -47917,12 +47923,12 @@ loc_02B29C:
 	beq.b	loc_02B2CC
 	moveq	#$8,d6
 loc_02B2CC:
-	lea	dat_02B3D6(pc),a2
+	lea	ObjData_02B3D6(pc),a2
 	move.w	$4(a0),d4
 	move.w	$8(a0),d5
 	adda.w	#$60,a0
-	lea	dat_02B7E4(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02B7E4(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	d4,d0
 	move.w	d5,d1
 	subi.w	#$40,d0
@@ -47936,8 +47942,8 @@ loc_02B2CC:
 	move.w	(a2,d6.w),$38(a0)
 	addq.w	#$2,d6
 	adda.w	#$60,a0
-	lea	dat_02B7E4(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02B7E4(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	d4,d0
 	move.w	d5,d1
 	addi.w	#$70,d0
@@ -47951,8 +47957,8 @@ loc_02B2CC:
 	move.w	(a2,d6.w),$38(a0)
 	addq.w	#$2,d6
 	adda.w	#$60,a0
-	lea	dat_02B7F4(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02B7F4(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	d4,d0
 	move.w	d5,d1
 	addq.w	#$8,d0
@@ -47966,8 +47972,8 @@ loc_02B2CC:
 	move.w	(a2,d6.w),$38(a0)
 	addq.w	#$2,d6
 	adda.w	#$60,a0
-	lea	dat_02B7F4(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02B7F4(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	d4,d0
 	move.w	d5,d1
 	addi.w	#$40,d0
@@ -47985,7 +47991,7 @@ loc_02B2CC:
 	jsr	(sub_00A068).l
 loc_02B3D0:
 	jmp	(sub_01AF0E).l
-dat_02B3D6:
+ObjData_02B3D6:
 	dc.b	$00,$96,$00,$96,$00,$64,$00,$64,$00,$C8
 	dc.b	$00,$C8,$00,$96,$00,$96,$47,$F9,$00,$0D,$95,$64,$60,$5E,$47,$F9
 	dc.b	$00,$0D,$96,$A6,$60,$56,$47,$F9,$00,$0D,$97,$DE,$60,$4E,$47,$F9
@@ -48111,8 +48117,8 @@ loc_02B586:
 	addq.w	#$8,a3
 	movea.l	(a3),a3
 	jsr	(sub_008C10).l
-	lea	dat_02B8FE(pc),a1
-	jmp	(sub_01AF1A).l
+	lea	ObjData_02B8FE(pc),a1
+	jmp	(Object_RunAnimScript).l
 sub_02B5C2:
 	moveq	#$0,d0
 loc_02B5C4:
@@ -48297,13 +48303,13 @@ loc_02B7C8:
 	move.b	#$FF,$28(a0)
 loc_02B7CE:
 	jmp	(sub_01A448).l
-dat_02B7D4:
+ObjData_02B7D4:
 	dc.b	$00,$01,$05,$00,$0E,$00,$00,$00,$4E,$20,$00,$00
 	dc.b	$00,$02,$B8,$1A
-dat_02B7E4:
+ObjData_02B7E4:
 	dc.b	$00,$01,$05,$00,$0A,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$02,$B8,$EC
-dat_02B7F4:
+ObjData_02B7F4:
 	dc.b	$00,$01,$05,$00,$0C,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$02,$B8,$EC
 dat_02B804:
@@ -48325,7 +48331,7 @@ dat_02B82C:
 	dc.b	$00,$00,$00,$00,$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$02,$37,$5A,$FF,$FF,$00,$02,$B8,$C8,$00,$FA,$00,$08
 	dc.b	$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$B8,$EC
-dat_02B8FE:
+ObjData_02B8FE:
 	dc.b	$00,$64
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$FF,$FE
 sub_02B90C:
@@ -48333,9 +48339,9 @@ sub_02B90C:
 loc_02B912:
 	bne.b	loc_02B95A
 loc_02B914:
-	lea	dat_02C666(pc),a1
+	lea	ObjData_02C666(pc),a1
 loc_02B918:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02B91E:
 	ori.b	#$2E,$2(a0)
 loc_02B924:
@@ -48382,47 +48388,47 @@ loc_02B960:
 	move.w	#$70,$8(a0)
 	clr.w	$A(a0)
 	st.b	$54(a0)
-	lea	dat_02C742(pc),a1
+	lea	ObjData_02C742(pc),a1
 	move.l	a1,$30(a0)
 	move.b	#$1,$34(a0)
 	movea.l	a0,a3
 	adda.w	#$60,a0
-	lea	dat_029EB8(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_029EB8(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$478,(a0)
 	ori.b	#$26,$2(a0)
 	clr.b	$36(a0)
-	lea	dat_02C604(pc),a1
+	lea	ObjData_02C604(pc),a1
 	move.w	(a1),$50(a0)
 	move.l	a1,$2C(a0)
 	clr.b	$53(a0)
 	adda.w	#$60,a0
-	lea	dat_029EB8(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_029EB8(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$478,(a0)
 	ori.b	#$26,$2(a0)
 	move.b	#$1,$36(a0)
-	lea	dat_02C604(pc),a1
+	lea	ObjData_02C604(pc),a1
 	move.w	#$3C,$50(a0)
 	move.l	a1,$2C(a0)
 	clr.b	$53(a0)
 	adda.w	#$60,a0
-	lea	dat_02C686(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02C686(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$47C,(a0)
 	ori.b	#$2A,$2(a0)
 	clr.b	$36(a0)
 	move.b	#$20,$22(a0)
 	adda.w	#$60,a0
-	lea	dat_02C686(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02C686(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$47C,(a0)
 	ori.b	#$2A,$2(a0)
 	move.b	#$1,$36(a0)
 	move.b	#$20,$22(a0)
 	adda.w	#$60,a0
-	lea	dat_02C686(pc),a1
-	jsr	(sub_01ADB0).l
+	lea	ObjData_02C686(pc),a1
+	jsr	(Object_LoadTemplate).l
 	move.w	#$47C,(a0)
 	ori.b	#$2A,$2(a0)
 	move.b	#$2,$36(a0)
@@ -48790,13 +48796,13 @@ loc_02BFF6:
 	cmpi.b	#$10,d0
 	blt.b	loc_02C00E
 	beq.b	loc_02C014
-	lea	dat_02C808(pc),a1
+	lea	ObjData_02C808(pc),a1
 	bra.b	loc_02C018
 loc_02C00E:
-	lea	dat_02C7E4(pc),a1
+	lea	ObjData_02C7E4(pc),a1
 	bra.b	loc_02C018
 loc_02C014:
-	lea	dat_02C7F6(pc),a1
+	lea	ObjData_02C7F6(pc),a1
 loc_02C018:
 	move.l	a1,$30(a0)
 	move.b	#$1,$34(a0)
@@ -48922,7 +48928,7 @@ loc_02C188:
 loc_02C18C:
 	moveq	#$0,d0
 loc_02C18E:
-	lea	dat_02C2D0(pc),a1
+	lea	ObjData_02C2D0(pc),a1
 loc_02C192:
 	cmpi.b	#$10,$35(a0)
 loc_02C198:
@@ -48934,7 +48940,7 @@ loc_02C19E:
 loc_02C1A0:
 	adda.w	(a1,d0.w),a1
 loc_02C1A4:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_02C1AA:
 	move.b	#$14,$40(a0)
 	move.b	#$14,$41(a0)
@@ -48980,7 +48986,7 @@ dat_02C28C:
 	dc.b	$00,$1C,$00,$16,$00,$1B,$00,$18,$00,$1A,$00,$1A,$00,$07,$00,$20
 	dc.b	$FF,$F6,$00,$1F,$FF,$F4,$00,$1D,$FF,$F4,$00,$1D,$FF,$F1,$00,$1C
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_02C2D0:
+ObjData_02C2D0:
 	dc.b	$05,$4A,$05,$5C
 dat_02C2D4:
 	dc.b	$05,$6E,$00,$20,$FF,$F1,$00,$98,$FF,$F1,$02,$30
@@ -49200,8 +49206,8 @@ loc_02C554:
 loc_02C55A:
 	move.b	#$40,$22(a0)
 	move.w	#$23C,(a0)
-	lea	(dat_021BDA).l,a1
-	jmp	(sub_01AF1A).l
+	lea	(ObjData_021BDA).l,a1
+	jmp	(Object_RunAnimScript).l
 dat_02C570:
 	dc.b	$03,$54,$03,$72,$03,$90,$03,$AE,$03,$CC
 dat_02C57A:
@@ -49217,7 +49223,7 @@ dat_02C584:
 	dc.b	$00,$15,$00,$14,$00,$15,$00,$0C,$00,$1D,$00,$0C,$00,$15,$00,$14
 	dc.b	$00,$1D,$00,$14,$00,$15,$00,$0C,$00,$1D,$00,$0C,$00,$15,$00,$14
 	dc.b	$00,$1D,$00,$14
-dat_02C604:
+ObjData_02C604:
 	dc.b	$00,$78,$00,$04,$00,$B4,$00,$00,$00,$3C,$00,$04
 	dc.b	$00,$78,$00,$00,$00,$3C,$00,$04,$00,$78,$00,$00,$00,$3C,$00,$04
 	dc.b	$00,$3C,$00,$04,$00,$78,$00,$00,$00,$3C,$00,$04,$00,$3C,$00,$04
@@ -49225,11 +49231,11 @@ dat_02C604:
 	dc.b	$00,$3C,$00,$04,$00,$3C,$00,$04,$00,$3C,$00,$04,$01,$2C,$00,$00
 	dc.b	$00,$3C,$00,$04,$00,$78,$00,$00,$00,$1E,$00,$04,$00,$B4,$00,$00
 	dc.b	$FF,$FF,$00,$02,$C6,$04
-dat_02C666:
+ObjData_02C666:
 	dc.b	$00,$01,$05,$00,$13,$08,$00,$00,$01,$2C
 	dc.b	$00,$00,$00,$02,$B8,$1A,$00,$01,$05,$00,$13,$08,$00,$00,$4E,$20
 	dc.b	$00,$00,$00,$02,$C7,$F6
-dat_02C686:
+ObjData_02C686:
 	dc.b	$00,$01,$05,$00,$07,$08,$00,$00,$00,$32
 	dc.b	$00,$00,$00,$02,$C9,$00,$00,$01,$05,$00,$0E,$08,$00,$00,$01,$90
 	dc.b	$00,$00,$00,$02,$C8,$2C
@@ -49252,7 +49258,7 @@ dat_02C72E:
 	dc.b	$00,$01
 	dc.b	$00,$3A,$04,$44,$00,$3C,$02,$22,$00,$01,$00,$3A,$02,$22,$00,$3C
 	dc.b	$04,$44
-dat_02C742:
+ObjData_02C742:
 	dc.b	$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$4B
 	dc.b	$00,$08,$70,$00,$00,$00,$80,$00,$00,$10,$00,$C8,$00,$08,$70,$00
 	dc.b	$00,$00,$80,$00,$00,$18,$00,$96,$00,$08,$70,$00,$00,$00,$80,$00
@@ -49264,13 +49270,13 @@ dat_02C742:
 	dc.b	$00,$82,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$B4,$00,$08
 	dc.b	$70,$00,$00,$00,$80,$00,$00,$08,$00,$00,$00,$02,$BA,$AC,$FF,$FF
 	dc.b	$00,$02,$C7,$78
-dat_02C7E4:
+ObjData_02C7E4:
 	dc.b	$00,$C8,$00,$08,$9D,$62,$00,$00,$00,$00,$00,$00
 	dc.b	$FF,$FF,$00,$02,$C7,$E4
-dat_02C7F6:
+ObjData_02C7F6:
 	dc.b	$00,$C8,$00,$08,$9D,$42,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$C7,$F6
-dat_02C808:
+ObjData_02C808:
 	dc.b	$00,$C8,$00,$08,$9D,$4C,$00,$00
 	dc.b	$00,$00,$00,$00,$FF,$FF,$00,$02,$C8,$08,$00,$64,$00,$08,$9D,$26
 	dc.b	$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$02,$C8,$1A,$00,$64,$00,$08
@@ -49300,13 +49306,13 @@ dat_02C8AA:
 sub_02C972:
 	ori.b	#$26,$2(a0)
 loc_02C978:
-	lea	dat_02CB14(pc),a3
+	lea	ObjData_02CB14(pc),a3
 loc_02C97C:
 	jsr	(sub_01D368).l
 loc_02C982:
-	lea	dat_02CAF4(pc),a1
+	lea	ObjData_02CAF4(pc),a1
 loc_02C986:
-	jsr	(sub_01ADB0).l
+	jsr	(Object_LoadTemplate).l
 loc_02C98C:
 	jsr	(sub_022106).l
 loc_02C992:
@@ -49372,9 +49378,9 @@ loc_02CA0A:
 loc_02CA10:
 	move.b	#$41,$52(a0)
 loc_02CA16:
-	lea	dat_02CBC8(pc),a1
+	lea	ObjData_02CBC8(pc),a1
 loc_02CA1A:
-	jmp	(sub_01AF1A).l
+	jmp	(Object_RunAnimScript).l
 loc_02CA20:
 	clr.l	(ram_F000).w
 	jmp	(sub_01B002).l
@@ -49401,7 +49407,7 @@ loc_02CA4C:
 loc_02CA4E:
 	rts
 loc_02CA50:
-	lea	dat_02CB96(pc),a3
+	lea	ObjData_02CB96(pc),a3
 loc_02CA54:
 	move.l	a1,-(a7)
 loc_02CA56:
@@ -49409,7 +49415,7 @@ loc_02CA56:
 loc_02CA5C:
 	bne.w	loc_02CAE0
 loc_02CA60:
-	lea	dat_028424(pc),a1
+	lea	ObjData_028424(pc),a1
 loc_02CA64:
 	jsr	(sub_01ADF6).l
 loc_02CA6A:
@@ -49471,8 +49477,8 @@ loc_02CAE6:
 loc_02CAEC:
 	addq.w	#$6,a1
 loc_02CAEE:
-	jmp	(sub_01AF1A).l
-dat_02CAF4:
+	jmp	(Object_RunAnimScript).l
+ObjData_02CAF4:
 	dc.b	$80,$01,$14,$00,$13,$00,$00,$00,$4E,$20,$00,$00
 	dc.b	$00,$02,$CB,$B6
 dat_02CB04:
@@ -49480,7 +49486,7 @@ dat_02CB04:
 dat_02CB0C:
 	dc.b	$00,$C8,$00,$C8
 	dc.b	$00,$C8,$00,$C8
-dat_02CB14:
+ObjData_02CB14:
 	dc.b	$00,$00,$00,$20,$00,$00,$00,$00,$00,$20,$00,$00
 dat_02CB20:
 	dc.b	$00,$1E,$00,$04,$00,$64,$00,$00,$00,$1E,$00,$04,$00,$64,$00,$00
@@ -49491,12 +49497,12 @@ dat_02CB20:
 	dc.b	$00,$1E,$00,$04,$00,$64,$00,$00,$00,$1E,$00,$04,$00,$64,$00,$00
 	dc.b	$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$1E,$00,$04,$00,$64,$00,$00
 	dc.b	$FF,$FF,$00,$02,$CB,$20
-dat_02CB96:
+ObjData_02CB96:
 	dc.b	$FF,$CC,$FF,$E4,$FF,$D6,$FF,$E4,$00,$6C
 	dc.b	$FF,$E4,$00,$76,$FF,$E4,$FF,$CC,$FF,$EA,$FF,$D6,$FF,$EA,$00,$6C
 	dc.b	$FF,$EA,$00,$76,$FF,$EA,$00,$C8,$00,$08,$70,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$FF,$FF,$00,$02,$CB,$B6
-dat_02CBC8:
+ObjData_02CBC8:
 	dc.b	$00,$00,$00,$02,$CA,$50,$00,$08
 	dc.b	$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$CA,$50
 	dc.b	$00,$08,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$02
@@ -49822,12 +49828,12 @@ dat_02D000:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_02E000:
+Art_02E000:
 	dc.b	$00,$00,$00,$AA,$00,$0A,$AA,$AA,$0A,$AA,$AA,$AA,$AA,$AA,$AA,$AA
 	dc.b	$AA,$AA,$AA,$AA,$0A,$AA,$AA,$AA,$00,$0A,$AA,$AA,$00,$00,$00,$AA
 	dc.b	$AA,$00,$00,$00,$AA,$AA,$A0,$00,$AA,$AA,$AA,$A0,$AA,$AA,$AA,$AA
 	dc.b	$AA,$AA,$AA,$AA,$AA,$AA,$AA,$A0,$AA,$AA,$A0,$00,$AA,$00,$00,$00
-dat_02E040:
+Art_02E040:
 	dc.b	$00,$77,$80,$04,$07,$14,$08,$25,$16,$35,$1A,$45,$19,$56,$38,$67
 	dc.b	$76,$73,$02,$81,$03,$00,$14,$09,$26,$36,$37,$78,$47,$7A,$82,$03
 	dc.b	$01,$14,$0A,$26,$39,$37,$79,$83,$04,$06,$15,$17,$26,$37,$37,$77
@@ -51893,8 +51899,9 @@ dat_034D14:
 	dc.b	$56,$66,$66,$26,$66,$66,$66,$25,$66,$66,$66,$62,$66,$66,$66,$66
 	dc.b	$26,$66,$66,$66,$66,$66,$66,$66,$66,$66,$27,$27,$62,$72,$72,$72
 	dc.b	$27,$27,$27,$27,$72,$72,$72,$72,$27,$27,$27,$77,$72,$72,$72,$22
-	dc.b	$27,$27,$27,$77,$52,$72,$72,$72,$15,$27,$27,$27,$61,$55,$72,$72
-	dc.b	$46,$41,$57,$77,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	$27,$27,$27,$77,$52,$72,$72,$72,$15,$27
+	dc.b	'''''aUrrFAWw',0
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$06,$55,$60,$00,$65,$41,$56,$66,$54,$16,$15,$65,$56,$54,$61
 	dc.b	$55,$55,$65,$46,$55,$64,$56,$54,$56,$55,$45,$65,$25,$55,$54,$56
 	dc.b	$62,$25,$55,$65,$66,$62,$55,$64,$27,$66,$25,$65,$72,$72,$72,$65
@@ -51959,8 +51966,9 @@ dat_034D14:
 	dc.b	$64,$22,$66,$66,$64,$22,$66,$66,$64,$22,$22,$26,$64,$22,$56,$66
 	dc.b	$64,$22,$56,$66,$64,$22,$56,$66,$44,$22,$56,$66,$44,$22,$56,$66
 	dc.b	$44,$22,$56,$66,$66,$22,$56,$66,$55,$22,$56,$66,$55,$22,$62,$22
-	dc.b	$55,$55,$44,$14,$55,$55,$55,$55,$52,$42,$55,$55,$62,$52,$55,$55
-	dc.b	$26,$66,$66,$66,$00,$02,$22,$27,$00,$02,$22,$77,$00,$02,$22,$E7
+	dc.b	$55,$55,$44,$14,$55,$55,$55,$55
+	dc.b	'RBUUbRUU&fff',0
+	dc.b	$02,$22,$27,$00,$02,$22,$77,$00,$02,$22,$E7
 	dc.b	$00,$02,$22,$77,$00,$00,$22,$27,$00,$00,$22,$22,$00,$00,$02,$22
 	dc.b	$00,$00,$00,$02,$77,$77,$22,$22,$7E,$77,$72,$22,$77,$27,$E2,$22
 	dc.b	$72,$77,$72,$22,$7E,$77,$22,$22,$77,$72,$22,$22,$22,$22,$22,$22
@@ -52105,16 +52113,16 @@ dat_034D14:
 	dc.b	$27,$27,$27,$22,$72,$72,$72,$77,$27,$27,$27,$27,$22,$72,$72,$72
 	dc.b	$62,$77,$77,$27,$66,$22,$27,$77,$66,$66,$62,$22,$66,$66,$66,$66
 	dc.b	$66,$66,$66,$55,$66,$66,$62,$66,$66,$66,$62,$66,$44,$44,$44,$44
-	dc.b	$55,$55,$55,$66,$11,$44,$44,$44,$66,$66,$66,$61,$54,$65,$55,$61
-	dc.b	$54,$65,$55,$61,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	$55,$55,$55,$66,$11
+	dc.b	'DDDfffaTeUaTeUa',0
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$22,$22,$22,$22,$66,$66,$66,$66,$72,$76,$66,$66
 	dc.b	$27,$27,$27,$66,$72,$72,$72,$76,$27,$27,$27,$27,$72,$72,$72,$72
-	dc.b	$27,$27,$27,$27,$72,$72,$72,$72,$27,$27,$27,$27,$72,$72,$72,$72
-	dc.b	$27,$27,$77,$26,$77,$72,$22,$66,$22,$26,$66,$66,$66,$66,$66,$66
-	dc.b	$55,$66,$66,$66,$66,$26,$66,$66,$66,$26,$66,$66,$44,$44,$44,$44
-	dc.b	$66,$66,$66,$65,$44,$44,$44,$41,$46,$66,$66,$66,$42,$65,$54,$65
-	dc.b	$42,$65,$54,$65,$00,$00,$00,$00,$05,$55,$55,$00,$05,$51,$65,$00
+	dc.b	$27,$27,$27
+	dc.b	'''rrrr''''''''rrrr''''w&wr"f"&ffffffUffff&fff&ffDDDDfff'
+	dc.b	'eDDDAFfffBeTeBeTe',0
+	dc.b	$00,$00,$00,$05,$55,$55,$00,$05,$51,$65,$00
 	dc.b	$05,$51,$65,$00,$05,$51,$65,$00,$05,$51,$65,$00,$05,$51,$65,$00
 	dc.b	$05,$51,$65,$00,$25,$51,$65,$00,$25,$51,$65,$00,$25,$51,$65,$00
 	dc.b	$25,$51,$65,$20,$25,$51,$65,$72,$25,$66,$65,$27,$25,$44,$44,$E2
@@ -52891,7 +52899,7 @@ dat_0390B6:
 	dc.b	$FF,$DF,$00,$0A,$FF,$E6,$00,$0F,$FF,$F6,$00,$0C,$FF,$FF,$FF,$FD
 	dc.b	$00,$03,$FF,$F6,$FF,$FD,$FF,$F2,$FF,$F5,$FF,$F6,$FF,$ED,$00,$01
 	dc.b	$FF,$E7,$00,$0A,$FF,$EE
-dat_039136:
+Art_039136:
 	dc.b	$00,$0E,$80,$05,$1D,$14,$0C,$25,$1A,$35
 	dc.b	$1B,$46,$3C,$57,$7C,$73,$04,$81,$04,$0B,$84,$03,$03,$26,$3D,$85
 	dc.b	$02,$00,$14,$0A,$35,$1C,$8F,$03,$02,$17,$7D,$FF,$D1,$F0,$B3,$C1
@@ -52906,7 +52914,7 @@ dat_039136:
 	dc.b	$7E,$D3,$5F,$14,$92,$49,$24,$D2,$FF,$03,$5F,$14,$92,$49,$24,$92
 	dc.b	$49,$38,$84,$5F,$A9,$AE,$F1,$0B,$BC,$42,$2F,$D4,$D7,$78,$85,$DE
 	dc.b	$21,$17,$EA,$6B,$BC,$42,$92,$00
-dat_039208:
+Art_039208:
 	dc.b	$00,$09,$80,$03,$04,$35,$1B,$44
 	dc.b	$0B,$54,$0C,$65,$1E,$72,$00,$81,$04,$0E,$55,$1A,$89,$04,$0A,$8A
 	dc.b	$02,$01,$16,$3E,$FF,$FC,$87,$EE,$BF,$40,$FE,$C5,$8E,$BE,$D7,$DA
@@ -52931,7 +52939,7 @@ dat_039208:
 	dc.b	$F2,$FE,$02,$00,$00,$03,$93,$66,$00,$03,$93,$70,$00,$00,$00,$00
 	dc.b	$FC,$00,$04,$58,$FC,$FC,$00,$00,$00,$00,$F8,$05,$04,$59,$F8,$F8
 	dc.b	$00,$00,$00,$00,$F8,$05,$04,$5D,$F8,$F8
-dat_03937A:
+Art_03937A:
 	dc.b	$01,$3F,$80,$05,$12,$15
 	dc.b	$14,$25,$18,$35,$1A,$45,$16,$56,$37,$66,$3A,$74,$05,$81,$06,$33
 	dc.b	$17,$73,$27,$78,$58,$F6,$68,$F2,$76,$2F,$89,$04,$06,$15,$13,$26
@@ -53239,7 +53247,7 @@ dat_03937A:
 	dc.b	$F4,$07,$05,$86,$08,$E8,$00,$03,$00,$00,$F0,$07,$05,$8E,$E8,$08
 	dc.b	$E8,$09,$05,$96,$00,$E8,$F8,$05,$05,$9C,$08,$E8,$08,$0D,$05,$A0
 	dc.b	$F8,$E8
-dat_03A692:
+Art_03A692:
 	dc.b	$80,$06,$80,$03,$03,$14,$0A,$24,$0D,$34,$0B,$44,$09,$54
 	dc.b	$0E,$73,$02,$81,$03,$01,$14,$0C,$26,$3E,$82,$05,$1E,$83,$03,$00
 	dc.b	$14,$08,$FF,$5B,$F9,$29,$14,$37,$C4,$33,$EB,$13,$E3,$47,$DA,$28
@@ -53250,7 +53258,7 @@ dat_03A692:
 dat_03A6F2:
 	dc.b	$00,$00,$01,$70,$FC,$00,$05,$A8,$FC,$FC,$00,$00,$01,$78
 	dc.b	$FC,$00,$05,$A9,$FC,$FC,$00,$00,$01,$80,$F8,$05,$05,$AA,$F8,$F8
-dat_03A710:
+Art_03A710:
 	dc.b	$00,$1D,$80,$05,$15,$15,$16,$25,$14,$36,$38,$46,$3A,$57,$7B,$74
 	dc.b	$08,$81,$05,$1A,$16,$3B,$28,$FA,$86,$03,$03,$16,$3C,$28,$F8,$87
 	dc.b	$03,$01,$14,$09,$25,$18,$88,$03,$00,$15,$19,$27,$7A,$89,$06,$39
@@ -53311,7 +53319,7 @@ dat_03AA7A:
 	dc.b	$AA,$8E,$00,$03,$AA,$98,$00,$03,$AA,$A2,$00,$03,$AA,$A2,$00,$00
 	dc.b	$01,$D8,$F4,$05,$1B,$50,$F4,$FC,$00,$00,$01,$E0,$F2,$01,$13,$4E
 	dc.b	$FC,$FC,$00,$00,$01,$E8,$F4,$05,$13,$50,$FC,$F4
-dat_03AAAC:
+Art_03AAAC:
 	dc.b	$80,$55,$80,$04
 	dc.b	$08,$14,$09,$24,$0A,$34,$0C,$45,$1B,$55,$1D,$65,$1C,$73,$01,$81
 	dc.b	$03,$02,$17,$7A,$82,$07,$7B,$83,$03,$03,$18,$F8,$88,$04,$0B,$18
@@ -53392,7 +53400,7 @@ dat_03AAAC:
 	dc.b	$F4,$F4,$00,$00,$02,$C0,$EA,$0B,$05,$DE,$F4,$F4,$00,$01,$02,$C0
 	dc.b	$EA,$00,$05,$EA,$FC,$FC,$F2,$0A,$05,$EB,$F4,$F4,$00,$00,$00,$00
 	dc.b	$EA,$0A,$05,$F4,$F4,$F4
-dat_03AF96:
+Art_03AF96:
 	dc.b	$00,$2D,$80,$06,$34,$15,$1B,$25,$17,$34
 	dc.b	$08,$45,$14,$55,$18,$67,$7B,$73,$00,$81,$06,$35,$16,$3C,$37,$76
 	dc.b	$86,$05,$15,$18,$FA,$87,$04,$09,$17,$7A,$88,$03,$02,$15,$16,$89
@@ -53501,7 +53509,7 @@ dat_03B2B0:
 	dc.b	$00,$01,$0C,$70,$08,$09,$1D,$BC,$E8,$00,$00,$04,$1D,$C2,$F0,$00
 	dc.b	$00,$01,$0C,$70,$08,$08,$1D,$C4,$E8,$00,$00,$04,$1D,$C7,$F0,$00
 	dc.b	$00,$00,$0C,$70,$00,$09,$1D,$C9,$E8,$00
-dat_03B45A:
+Art_03B45A:
 	dc.b	$80,$20,$80,$02,$00,$15
 	dc.b	$1D,$25,$1A,$38,$F9,$46,$3C,$56,$3D,$73,$02,$81,$08,$FB,$82,$03
 	dc.b	$04,$18,$F8,$75,$1B,$83,$04,$0C,$88,$03,$05,$16,$39,$89,$08,$FA
@@ -53784,7 +53792,7 @@ dat_03C00E:
 	dc.b	$1F,$45,$68,$7D,$82,$35,$C2,$1E,$4F,$74,$18,$AF,$0F,$B1,$EB,$DD
 	dc.b	$FA,$3D,$1B,$8F,$0A,$AA,$AF,$A3,$E8,$AA,$FA,$08,$DF,$35,$D9,$07
 	dc.b	$9B,$BD,$DB,$0E,$DC,$1B,$78,$FB,$3C,$D7,$08,$90,$41,$8F,$41,$00
-dat_03C4C0:
+Art_03C4C0:
 	dc.b	$00,$30,$80,$06,$38,$17,$7A,$26,$3A,$37,$7B,$46,$3B,$55,$19,$66
 	dc.b	$37,$75,$18,$81,$04,$0A,$17,$79,$82,$03,$02,$14,$08,$25,$1A,$83
 	dc.b	$02,$00,$13,$03,$26,$39,$8A,$04,$09,$14,$0B,$26,$36,$57,$78,$78
@@ -55564,105 +55572,115 @@ dat_042B5E:
 	dc.b	$01,$A4,$01,$C4,$02,$02,$02,$34,$02,$6E,$02,$98,$02,$CA,$02,$F2
 	dc.b	$03,$22,$03,$60,$03,$8E,$03,$A6,$03,$D2,$04,$0E,$04,$38,$04,$62
 	dc.b	$04,$8C,$04,$B6,$04,$E0,$05,$10,$05,$38,$05,$66,$05,$7E,$05,$9E
-	dc.b	$05,$C0,$05,$E0,$05,$FC,$06,$1A,$06,$34,$06,$50,$06,$5C,$48,$4F
-	dc.b	$57,$20,$44,$49,$44,$20,$49,$54,$20,$47,$4F,$3F,$00,$26,$57,$48
-	dc.b	$4F,$3A,$53,$20,$47,$4F,$49,$4E,$47,$20,$54,$4F,$20,$43,$41,$52
-	dc.b	$52,$59,$00,$49,$54,$3F,$00,$26,$59,$4F,$55,$20,$44,$4F,$4E,$3A
-	dc.b	$54,$20,$48,$41,$56,$45,$20,$45,$4E,$4F,$55,$47,$48,$00,$4D,$45
-	dc.b	$44,$41,$4C,$53,$3C,$00,$26,$00,$48,$45,$20,$44,$4F,$45,$53,$4E
-	dc.b	$3A,$54,$20,$4E,$45,$45,$44,$20,$49,$54,$3C,$00,$26,$00,$54,$48
-	dc.b	$45,$20,$42,$4C,$55,$45,$20,$53,$51,$55,$41,$44,$20,$48,$41,$53
-	dc.b	$00,$42,$55,$4C,$4C,$45,$54,$3E,$50,$52,$4F,$4F,$46,$20,$56,$45
-	dc.b	$53,$54,$53,$3C,$00,$26,$42,$45,$57,$41,$52,$45,$3D,$00,$53,$4F
-	dc.b	$4D,$45,$20,$49,$54,$45,$4D,$20,$42,$4F,$58,$45,$53,$20,$48,$41
-	dc.b	$56,$45,$00,$42,$4F,$4D,$42,$53,$20,$49,$4E,$20,$54,$48,$45,$4D
-	dc.b	$3C,$00,$26,$00,$57,$49,$54,$48,$49,$4E,$20,$54,$48,$45,$20,$46
-	dc.b	$45,$4E,$43,$45,$53,$3B,$00,$59,$4F,$55,$3A,$4C,$4C,$20,$46,$49
-	dc.b	$4E,$44,$20,$54,$48,$49,$4E,$47,$53,$00,$59,$4F,$55,$20,$43,$41
-	dc.b	$4E,$20,$42,$52,$45,$41,$4B,$3C,$00,$26,$54,$48,$45,$20,$52,$45
-	dc.b	$44,$20,$53,$51,$55,$41,$44,$20,$48,$41,$53,$00,$48,$45,$41,$54
-	dc.b	$3E,$52,$45,$53,$49,$53,$54,$41,$4E,$54,$20,$53,$55,$49,$54,$53
-	dc.b	$3C,$00,$26,$00,$59,$4F,$55,$3A,$4C,$4C,$20,$53,$55,$53,$54,$41
-	dc.b	$49,$4E,$20,$4C,$45,$53,$53,$00,$44,$41,$4D,$41,$47,$45,$20,$49
-	dc.b	$46,$20,$59,$4F,$55,$20,$47,$52,$41,$42,$00,$54,$48,$45,$20,$53
-	dc.b	$50,$45,$43,$49,$41,$4C,$20,$55,$4E,$49,$46,$4F,$52,$4D,$3C,$00
-	dc.b	$26,$00,$53,$54,$41,$59,$20,$41,$57,$41,$59,$20,$46,$52,$4F,$4D
-	dc.b	$00,$50,$4F,$49,$53,$4F,$4E,$4F,$55,$53,$20,$47,$41,$53,$3C,$00
-	dc.b	$26,$00,$50,$49,$43,$4B,$20,$55,$50,$20,$54,$48,$45,$20,$47,$41
-	dc.b	$53,$20,$4D,$41,$53,$4B,$00,$54,$4F,$20,$50,$52,$4F,$54,$45,$43
-	dc.b	$54,$20,$59,$4F,$55,$52,$53,$45,$4C,$46,$00,$46,$52,$4F,$4D,$20
-	dc.b	$50,$4F,$49,$53,$4F,$4E,$4F,$55,$53,$20,$47,$41,$53,$3C,$00,$26
-	dc.b	$54,$48,$45,$20,$4D,$49,$53,$53,$49,$4C,$45,$20,$54,$52,$55,$43
-	dc.b	$4B,$53,$00,$43,$41,$52,$52,$59,$20,$50,$4F,$49,$53,$4F,$4E,$4F
-	dc.b	$55,$53,$20,$47,$41,$53,$3C,$00,$42,$45,$57,$41,$52,$45,$3D,$00
-	dc.b	$26,$00,$44,$4F,$20,$4E,$4F,$54,$20,$41,$49,$4D,$20,$41,$54,$20
-	dc.b	$54,$48,$45,$00,$47,$41,$53,$20,$54,$41,$4E,$4B,$20,$49,$4E,$20
-	dc.b	$54,$48,$45,$20,$52,$45,$41,$52,$00,$45,$4E,$44,$20,$4F,$46,$20
-	dc.b	$54,$48,$45,$20,$54,$41,$4E,$4B,$53,$3C,$00,$26,$42,$45,$20,$43
-	dc.b	$41,$52,$45,$46,$55,$4C,$20,$57,$48,$45,$4E,$00,$43,$52,$4F,$53
-	dc.b	$53,$49,$4E,$47,$20,$52,$41,$49,$4C,$57,$41,$59,$00,$54,$52,$41
-	dc.b	$43,$4B,$53,$3C,$00,$26,$59,$4F,$55,$3A,$4C,$4C,$20,$46,$49,$4E
-	dc.b	$44,$20,$41,$4C,$4C,$49,$45,$53,$00,$57,$49,$54,$48,$49,$4E,$20
-	dc.b	$54,$48,$45,$00,$45,$4E,$45,$4D,$49,$45,$53,$3A,$42,$55,$49,$4C
-	dc.b	$44,$49,$4E,$47,$53,$3C,$00,$26,$50,$41,$59,$20,$45,$58,$54,$52
-	dc.b	$41,$20,$41,$54,$54,$45,$4E,$54,$49,$4F,$4E,$00,$57,$48,$45,$4E
-	dc.b	$20,$49,$4E,$20,$54,$48,$45,$20,$44,$41,$52,$4B,$3C,$00,$26,$00
-	dc.b	$59,$4F,$55,$20,$4D,$41,$59,$20,$47,$45,$54,$20,$54,$4F,$20,$50
-	dc.b	$4C,$41,$43,$45,$53,$00,$54,$48,$41,$54,$20,$53,$45,$45,$4D,$00
-	dc.b	$49,$4E,$41,$43,$43,$45,$53,$53,$49,$42,$4C,$45,$3C,$00,$26,$00
-	dc.b	$53,$4F,$4D,$45,$20,$54,$48,$49,$4E,$47,$53,$20,$43,$41,$4E,$4E
-	dc.b	$4F,$54,$20,$42,$45,$00,$42,$52,$4F,$4B,$45,$4E,$20,$55,$4E,$4C
-	dc.b	$45,$53,$53,$20,$59,$4F,$55,$20,$55,$53,$45,$00,$43,$45,$52,$54
-	dc.b	$41,$49,$4E,$20,$57,$45,$41,$50,$4F,$4E,$53,$3C,$00,$26,$49,$3A
-	dc.b	$56,$45,$20,$48,$45,$41,$52,$44,$20,$41,$42,$4F,$55,$54,$20,$59
-	dc.b	$4F,$55,$3C,$00,$49,$3A,$4C,$4C,$20,$47,$49,$56,$45,$20,$59,$4F
-	dc.b	$55,$20,$41,$20,$48,$41,$4E,$44,$3C,$00,$26,$00,$4C,$45,$54,$3A
-	dc.b	$53,$20,$46,$49,$47,$48,$54,$20,$54,$4F,$47,$45,$54,$48,$45,$52
-	dc.b	$3D,$00,$26,$00,$49,$3A,$4D,$20,$54,$49,$52,$45,$44,$20,$4F,$46
-	dc.b	$20,$57,$41,$49,$54,$49,$4E,$47,$3C,$00,$49,$20,$42,$45,$54,$54
-	dc.b	$45,$52,$20,$47,$45,$54,$20,$47,$4F,$49,$4E,$47,$3C,$00,$26,$00
-	dc.b	$54,$48,$45,$20,$45,$4E,$45,$4D,$49,$45,$53,$3A,$20,$48,$49,$44
-	dc.b	$45,$4F,$55,$54,$00,$49,$53,$20,$55,$50,$20,$41,$48,$45,$41,$44
-	dc.b	$3C,$00,$49,$3A,$4C,$4C,$20,$4A,$4F,$49,$4E,$20,$59,$4F,$55,$00
-	dc.b	$46,$52,$4F,$4D,$20,$48,$45,$52,$45,$3C,$00,$26,$54,$48,$49,$53
-	dc.b	$20,$46,$49,$4C,$4C,$53,$20,$32,$20,$55,$4E,$49,$54,$53,$20,$00
-	dc.b	$4F,$46,$20,$59,$4F,$55,$52,$20,$4C,$49,$46,$45,$20,$47,$41,$55
-	dc.b	$47,$45,$3C,$00,$26,$00,$54,$48,$49,$53,$20,$46,$49,$4C,$4C,$53
-	dc.b	$20,$33,$20,$55,$4E,$49,$54,$53,$20,$00,$4F,$46,$20,$59,$4F,$55
-	dc.b	$52,$20,$4C,$49,$46,$45,$20,$47,$41,$55,$47,$45,$3C,$00,$26,$00
-	dc.b	$54,$48,$49,$53,$20,$46,$49,$4C,$4C,$53,$20,$34,$20,$55,$4E,$49
-	dc.b	$54,$53,$20,$00,$4F,$46,$20,$59,$4F,$55,$52,$20,$4C,$49,$46,$45
-	dc.b	$20,$47,$41,$55,$47,$45,$3C,$00,$26,$00,$54,$48,$49,$53,$20,$46
-	dc.b	$49,$4C,$4C,$53,$20,$36,$20,$55,$4E,$49,$54,$53,$20,$00,$4F,$46
-	dc.b	$20,$59,$4F,$55,$52,$20,$4C,$49,$46,$45,$20,$47,$41,$55,$47,$45
-	dc.b	$3C,$00,$26,$00,$54,$48,$49,$53,$20,$46,$49,$4C,$4C,$53,$20,$31
-	dc.b	$36,$20,$55,$4E,$49,$54,$53,$20,$00,$4F,$46,$20,$59,$4F,$55,$52
-	dc.b	$20,$4C,$49,$46,$45,$20,$47,$41,$55,$47,$45,$3C,$00,$26,$54,$48
-	dc.b	$49,$53,$20,$45,$4E,$41,$42,$4C,$45,$53,$20,$59,$4F,$55,$00,$54
-	dc.b	$4F,$20,$55,$53,$45,$20,$54,$48,$45,$00,$4D,$45,$47,$41,$20,$43
-	dc.b	$52,$41,$53,$48,$20,$41,$54,$54,$41,$43,$4B,$3C,$00,$26,$54,$48
-	dc.b	$49,$53,$20,$4D,$41,$4B,$45,$53,$20,$59,$4F,$55,$52,$00,$57,$45
-	dc.b	$41,$50,$4F,$4E,$53,$20,$4D,$4F,$52,$45,$20,$50,$4F,$57,$45,$52
-	dc.b	$46,$55,$4C,$3C,$00,$26,$54,$48,$49,$53,$20,$45,$58,$54,$45,$4E
-	dc.b	$44,$53,$20,$59,$4F,$55,$52,$20,$4C,$49,$46,$45,$00,$47,$41,$55
-	dc.b	$47,$45,$20,$54,$4F,$20,$54,$48,$45,$20,$4D,$41,$58,$49,$4D,$55
-	dc.b	$4D,$3C,$00,$26,$54,$48,$49,$53,$20,$47,$49,$56,$45,$53,$20,$59
-	dc.b	$4F,$55,$20,$53,$50,$45,$45,$44,$3C,$00,$26,$00,$54,$48,$49,$53
-	dc.b	$20,$42,$52,$49,$4E,$47,$53,$20,$59,$4F,$55,$00,$42,$41,$43,$4B
-	dc.b	$20,$54,$4F,$20,$4C,$49,$46,$45,$3C,$00,$26,$00,$54,$48,$49,$53
-	dc.b	$20,$49,$53,$20,$54,$4F,$50,$20,$53,$45,$43,$52,$45,$54,$00,$49
-	dc.b	$4E,$46,$4F,$52,$4D,$41,$54,$49,$4F,$4E,$3C,$00,$26,$00,$54,$48
-	dc.b	$49,$53,$20,$46,$49,$4C,$4C,$53,$20,$55,$50,$20,$59,$4F,$55,$52
-	dc.b	$00,$4C,$49,$46,$45,$20,$47,$41,$55,$47,$45,$3C,$00,$26,$42,$55
-	dc.b	$52,$4E,$45,$52,$20,$4A,$4F,$49,$4E,$45,$44,$20,$59,$4F,$55,$52
-	dc.b	$20,$50,$41,$52,$54,$59,$3C,$00,$26,$00,$4C,$41,$55,$4E,$43,$48
-	dc.b	$45,$52,$20,$4A,$4F,$49,$4E,$45,$44,$20,$59,$4F,$55,$52,$20,$50
-	dc.b	$41,$52,$54,$59,$3C,$00,$26,$00,$4C,$41,$53,$45,$52,$20,$4A,$4F
-	dc.b	$49,$4E,$45,$44,$20,$59,$4F,$55,$52,$20,$50,$41,$52,$54,$59,$3C
-	dc.b	$00,$26,$48,$4F,$4D,$49,$4E,$47,$20,$4A,$4F,$49,$4E,$45,$44,$20
-	dc.b	$59,$4F,$55,$52,$20,$50,$41,$52,$54,$59,$3C,$00,$26,$00,$53,$4F
-	dc.b	$4C,$44,$20,$4F,$55,$54,$3C,$00,$26,$00,$47,$4F,$4F,$44,$20,$4C
-	dc.b	$55,$43,$4B,$3C,$00,$26,$6E,$08,$0A,$00,$06,$08,$18,$00,$04,$08
+	dc.b	$05,$C0,$05,$E0,$05,$FC,$06,$1A,$06,$34,$06,$50,$06
+	dc.b	'\HOW DID IT GO?',0
+	dc.b	'&WHO:S GOING TO CARRY',0
+	dc.b	$49,$54,$3F,$00
+	dc.b	'&YOU DON:T HAVE ENOUGH',0
+	dc.b	$4D,$45
+	dc.b	$44,$41,$4C,$53,$3C,$00,$26,$00
+	dc.b	'HE DOESN:T NEED IT<',0
+	dc.b	$26,$00
+	dc.b	'THE BLUE SQUAD HAS',0
+	dc.b	'BULLET>PROOF VESTS<',0
+	dc.b	$26,$42,$45,$57,$41,$52,$45,$3D,$00
+	dc.b	'SOME ITEM BOXES HAVE',0
+	dc.b	'BOMBS IN THEM<',0
+	dc.b	$26,$00
+	dc.b	'WITHIN THE FENCES;',0
+	dc.b	'YOU:LL FIND THINGS',0
+	dc.b	'YOU CAN BREAK<',0
+	dc.b	'&THE RED SQUAD HAS',0
+	dc.b	'HEAT>RESISTANT SUITS<',0
+	dc.b	$26,$00
+	dc.b	'YOU:LL SUSTAIN LESS',0
+	dc.b	'DAMAGE IF YOU GRAB',0
+	dc.b	'THE SPECIAL UNIFORM<',0
+	dc.b	$26,$00
+	dc.b	'STAY AWAY FROM',0
+	dc.b	'POISONOUS GAS<',0
+	dc.b	$26,$00
+	dc.b	'PICK UP THE GAS MASK',0
+	dc.b	'TO PROTECT YOURSELF',0
+	dc.b	'FROM POISONOUS GAS<',0
+	dc.b	'&THE MISSILE TRUCKS',0
+	dc.b	'CARRY POISONOUS GAS<',0
+	dc.b	$42,$45,$57,$41,$52,$45,$3D,$00
+	dc.b	$26,$00
+	dc.b	'DO NOT AIM AT THE',0
+	dc.b	'GAS TANK IN THE REAR',0
+	dc.b	'END OF THE TANKS<',0
+	dc.b	'&BE CAREFUL WHEN',0
+	dc.b	'CROSSING RAILWAY',0
+	dc.b	$54,$52,$41
+	dc.b	$43,$4B,$53,$3C,$00
+	dc.b	'&YOU:LL FIND ALLIES',0
+	dc.b	'WITHIN THE',0
+	dc.b	'ENEMIES:BUILDINGS<',0
+	dc.b	'&PAY EXTRA ATTENTION',0
+	dc.b	'WHEN IN THE DARK<',0
+	dc.b	$26,$00
+	dc.b	'YOU MAY GET TO PLACES',0
+	dc.b	'THAT SEEM',0
+	dc.b	'INACCESSIBLE<',0
+	dc.b	$26,$00
+	dc.b	'SOME THINGS CANNOT BE',0
+	dc.b	'BROKEN UNLESS YOU USE',0
+	dc.b	'CERTAIN WEAPONS<',0
+	dc.b	'&I:VE HEARD ABOUT YOU<',0
+	dc.b	'I:LL GIVE YOU A HAND<',0
+	dc.b	$26,$00
+	dc.b	'LET:S FIGHT TOGETHER=',0
+	dc.b	$26,$00
+	dc.b	'I:M TIRED OF WAITING<',0
+	dc.b	'I BETTER GET GOING<',0
+	dc.b	$26,$00
+	dc.b	'THE ENEMIES: HIDEOUT',0
+	dc.b	'IS UP AHEAD<',0
+	dc.b	'I:LL JOIN YOU',0
+	dc.b	'FROM HERE<',0
+	dc.b	'&THIS FILLS 2 UNITS ',0
+	dc.b	'OF YOUR LIFE GAUGE<',0
+	dc.b	$26,$00
+	dc.b	'THIS FILLS 3 UNITS ',0
+	dc.b	'OF YOUR LIFE GAUGE<',0
+	dc.b	$26,$00
+	dc.b	'THIS FILLS 4 UNITS ',0
+	dc.b	'OF YOUR LIFE GAUGE<',0
+	dc.b	$26,$00
+	dc.b	'THIS FILLS 6 UNITS ',0
+	dc.b	'OF YOUR LIFE GAUGE<',0
+	dc.b	$26,$00
+	dc.b	'THIS FILLS 16 UNITS ',0
+	dc.b	'OF YOUR LIFE GAUGE<',0
+	dc.b	'&THIS ENABLES YOU',0
+	dc.b	'TO USE THE',0
+	dc.b	'MEGA CRASH ATTACK<',0
+	dc.b	'&THIS MAKES YOUR',0
+	dc.b	'WEAPONS MORE POWERFUL<',0
+	dc.b	'&THIS EXTENDS YOUR LIFE',0
+	dc.b	'GAUGE TO THE MAXIMUM<',0
+	dc.b	'&THIS GIVES YOU SPEED<',0
+	dc.b	$26,$00
+	dc.b	'THIS BRINGS YOU',0
+	dc.b	'BACK TO LIFE<',0
+	dc.b	$26,$00
+	dc.b	'THIS IS TOP SECRET',0
+	dc.b	'INFORMATION<',0
+	dc.b	$26,$00
+	dc.b	'THIS FILLS UP YOUR',0
+	dc.b	'LIFE GAUGE<',0
+	dc.b	'&BURNER JOINED YOUR PARTY<',0
+	dc.b	$26,$00
+	dc.b	'LAUNCHER JOINED YOUR PARTY<',0
+	dc.b	$26,$00
+	dc.b	'LASER JOINED YOUR PARTY<',0
+	dc.b	'&HOMING JOINED YOUR PARTY<',0
+	dc.b	$26,$00
+	dc.b	'SOLD OUT<',0
+	dc.b	$26,$00
+	dc.b	'GOOD LUCK<',0
+	dc.b	$26,$6E,$08,$0A,$00,$06,$08,$18,$00,$04,$08
 	dc.b	$1A,$00,$02,$08,$08,$00,$02,$08,$15,$00,$03,$04,$0E,$08,$0A,$00
 	dc.b	$82,$08,$00,$04,$04,$19,$08,$04,$04,$19,$08,$05,$04,$19,$08,$03
 	dc.b	$04,$03,$08,$02,$0C,$16,$08,$02,$04,$05,$08,$02,$0C,$1C,$08,$02
@@ -56710,10 +56728,12 @@ dat_045A1C:
 	dc.b	$A0,$7C,$A0,$7D,$A0,$7D,$A0,$7E,$A0,$7F,$A0,$80,$A0,$80,$A0,$80
 	dc.b	$20,$8A,$20,$8B,$20,$8B,$20,$8C,$20,$DE,$28,$DE,$28,$DD,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$A0,$53,$A0,$55,$A0,$56,$A0,$56,$A0,$57
-	dc.b	$A0,$5B,$A0,$5C,$A0,$5C,$A0,$5C,$20,$61,$20,$62,$20,$63,$20,$64
-	dc.b	$20,$C1,$28,$C1,$28,$C0,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$A0,$54
-	dc.b	$A0,$58,$A0,$59,$A0,$59,$A0,$5A,$A0,$5D,$A0,$5E,$A0,$5E,$A0,$5F
-	dc.b	$20,$65,$20,$66,$20,$67,$20,$68,$20,$C3,$28,$C3,$28,$C2,$20,$1B
+	dc.b	$A0,$5B,$A0,$5C,$A0,$5C,$A0
+	dc.b	'\ a b c d '
+	dc.b	$C1,$28,$C1,$28,$C0,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$A0,$54
+	dc.b	$A0,$58,$A0,$59,$A0,$59,$A0,$5A,$A0,$5D,$A0,$5E,$A0,$5E,$A0
+	dc.b	'_ e f g h '
+	dc.b	$C3,$28,$C3,$28,$C2,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$A0,$60,$21,$8F,$21,$90,$20,$6B,$21,$9C
 	dc.b	$20,$C1,$28,$C1,$28,$C0,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
@@ -56776,10 +56796,13 @@ dat_045A1C:
 	dc.b	$A0,$7E,$A0,$7F,$A0,$80,$A0,$80,$A0,$80,$21,$9A,$20,$8B,$20,$8B
 	dc.b	$20,$8C,$20,$C7,$28,$C7,$28,$C6,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$A0,$53,$A0,$55,$A0,$56,$A0,$56,$A0,$57,$A0,$5B,$A0,$5C,$A0,$5C
-	dc.b	$A0,$5C,$20,$61,$20,$62,$20,$63,$20,$64,$20,$B6,$28,$B6,$28,$B5
+	dc.b	$A0
+	dc.b	'\ a b c d '
+	dc.b	$B6,$28,$B6,$28,$B5
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$A0,$54,$A0,$58,$A0,$59,$A0,$59
-	dc.b	$A0,$5A,$A0,$5D,$A0,$5E,$A0,$5E,$A0,$5F,$20,$65,$20,$66,$20,$67
-	dc.b	$20,$68,$20,$B8,$28,$B8,$28,$B7,$20,$1B,$20,$1B,$20,$1B,$20,$1B
+	dc.b	$A0,$5A,$A0,$5D,$A0,$5E,$A0,$5E,$A0
+	dc.b	'_ e f g h '
+	dc.b	$B8,$28,$B8,$28,$B7,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$A0,$60,$21,$8F,$21,$90,$20,$6B,$21,$96,$20,$BA,$28,$BA,$28,$B9
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
@@ -56819,13 +56842,16 @@ dat_045A1C:
 	dc.b	$20,$1B,$A0,$7B,$A0,$7C,$A0,$7D,$A0,$7D,$A0,$7E,$A0,$7F,$A0,$80
 	dc.b	$A0,$80,$A0,$80,$A0,$8A,$20,$8B,$20,$8B,$20,$8C,$20,$93,$20,$94
 	dc.b	$28,$94,$28,$93,$20,$1B,$20,$1B,$20,$1B,$A0,$53,$A0,$55,$A0,$56
-	dc.b	$A0,$56,$A0,$57,$A0,$5B,$A0,$5C,$A0,$5C,$A0,$5C,$A0,$61,$20,$62
-	dc.b	$20,$63,$20,$64,$20,$70,$20,$71,$28,$71,$28,$70,$20,$1B,$20,$1B
+	dc.b	$A0,$56,$A0,$57,$A0,$5B,$A0,$5C,$A0,$5C,$A0,$5C,$A0
+	dc.b	'a b c d p q(q(p '
+	dc.b	$1B,$20,$1B
 	dc.b	$20,$1B,$A0,$54,$A0,$58,$A0,$59,$A0,$59,$A0,$5A,$A0,$5D,$A0,$5E
-	dc.b	$A0,$5E,$A0,$5F,$A0,$65,$20,$66,$20,$67,$20,$68,$20,$72,$20,$73
-	dc.b	$28,$73,$28,$72,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
-	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$60,$A0,$69,$20,$6A
-	dc.b	$20,$6B,$20,$6C,$20,$72,$20,$74,$28,$74,$28,$72,$20,$1B,$20,$1B
+	dc.b	$A0,$5E,$A0,$5F,$A0
+	dc.b	'e f g h r s(s(r '
+	dc.b	$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
+	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$60,$A0
+	dc.b	'i j k l r t(t(r '
+	dc.b	$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$A0,$1B,$20,$6D,$20,$6E,$20,$6F,$20,$72,$20,$3E
 	dc.b	$28,$3E,$28,$72,$10,$11,$12,$13,$14,$0A,$0B,$0C,$0D,$0E,$00,$40
@@ -56841,11 +56867,13 @@ dat_045A1C:
 	dc.b	$20,$1B,$A0,$7B,$A0,$7C,$A0,$7D,$A0,$7D,$A0,$7E,$A0,$7F,$A0,$80
 	dc.b	$A0,$80,$A0,$80,$21,$94,$20,$8B,$20,$8B,$20,$8C,$20,$94,$28,$94
 	dc.b	$28,$93,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$A0,$53,$A0,$55,$A0,$56
-	dc.b	$A0,$56,$A0,$57,$A0,$5B,$A0,$5C,$A0,$5C,$A0,$5C,$20,$61,$20,$62
-	dc.b	$20,$63,$20,$64,$20,$71,$28,$71,$28,$70,$20,$1B,$20,$1B,$20,$1B
+	dc.b	$A0,$56,$A0,$57,$A0,$5B,$A0,$5C,$A0,$5C,$A0
+	dc.b	'\ a b c d q(q(p '
+	dc.b	$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$A0,$54,$A0,$58,$A0,$59,$A0,$59,$A0,$5A,$A0,$5D,$A0,$5E
-	dc.b	$A0,$5E,$A0,$5F,$20,$65,$20,$66,$20,$67,$20,$68,$20,$73,$28,$73
-	dc.b	$28,$72,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
+	dc.b	$A0,$5E,$A0
+	dc.b	'_ e f g h s(s(r '
+	dc.b	$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$A0,$80,$21,$8F,$21,$90
 	dc.b	$20,$6B,$21,$91,$20,$74,$28,$74,$28,$72,$20,$1B,$20,$1B,$20,$1B
 	dc.b	$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B,$20,$1B
@@ -56863,8 +56891,9 @@ dat_045A1C:
 	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00
 	dc.b	$20,$84,$20,$85,$20,$72,$28,$96,$20,$8C,$20,$94,$28,$94,$28,$93
 	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00
-	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$1B,$28,$76,$28,$75,$28,$75
-	dc.b	$20,$64,$20,$71,$28,$71,$28,$70,$20,$00,$20,$00,$20,$00,$20,$00
+	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$1B,$28,$76,$28,$75,$28
+	dc.b	'u d q(q(p ',0
+	dc.b	$20,$00,$20,$00,$20,$00
 	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00
 	dc.b	$20,$1B,$28,$78,$28,$77,$28,$77,$20,$68,$20,$73,$28,$73,$28,$72
 	dc.b	$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00,$20,$00
@@ -58091,8 +58120,9 @@ dat_048B70:
 	dc.b	$52,$85,$5B,$93,$93,$60,$90,$03,$00,$81,$92,$07,$1A,$08,$00,$03
 	dc.b	$9B,$04,$52,$84,$5B,$5C,$5D,$5E,$03,$00,$81,$5F,$07,$55,$08,$00
 	dc.b	$02,$9B,$81,$4B,$04,$52,$8E,$58,$59,$5A,$61,$24,$00,$00,$56,$57
-	dc.b	$04,$03,$05,$9B,$9B,$09,$00,$03,$3F,$92,$4B,$52,$52,$58,$4D,$53
-	dc.b	$54,$4F,$24,$00,$00,$50,$04,$03,$05,$05,$9B,$9B,$09,$00,$04,$3F
+	dc.b	$04,$03,$05,$9B,$9B,$09,$00,$03,$3F,$92
+	dc.b	'KRRXMSTO$',0
+	dc.b	$00,$50,$04,$03,$05,$05,$9B,$9B,$09,$00,$04,$3F
 	dc.b	$91,$4B,$4C,$4D,$48,$4E,$4F,$4A,$1D,$00,$00,$51,$03,$05,$04,$03
 	dc.b	$9B,$9B,$09,$00,$05,$3F,$86,$47,$48,$44,$49,$4A,$1D,$03,$00,$87
 	dc.b	$50,$05,$04,$03,$05,$9B,$9B,$09,$00,$8A,$41,$42,$43,$3F,$3F,$3A
@@ -58272,8 +58302,9 @@ dat_048B70:
 	dc.b	$43,$44,$49,$03,$45,$99,$4D,$48,$49,$47,$51,$48,$4A,$4B,$54,$4C
 	dc.b	$03,$BD,$81,$45,$03,$BD,$81,$48,$03,$BD,$81,$48,$03,$BD,$FF,$09
 	dc.b	$4C,$A9,$1C,$55,$55,$19,$20,$55,$55,$1D,$42,$56,$56,$42,$57,$58
-	dc.b	$58,$57,$1C,$55,$55,$1C,$20,$55,$55,$20,$50,$4F,$4E,$4D,$54,$53
-	dc.b	$52,$51,$19,$55,$55,$1C,$1D,$55,$55,$20,$59,$0F,$12,$B0,$11,$55
+	dc.b	$58,$57,$1C,$55,$55,$1C
+	dc.b	' UU PONMTSRQ'
+	dc.b	$19,$55,$55,$1C,$1D,$55,$55,$20,$59,$0F,$12,$B0,$11,$55
 	dc.b	$55,$14,$5A,$5B,$5B,$88,$89,$5C,$5C,$32,$32,$5D,$5D,$34,$11,$55
 	dc.b	$55,$14,$88,$5E,$5E,$88,$32,$5C,$5C,$32,$32,$5D,$5D,$32,$11,$55
 	dc.b	$55,$14,$88,$5B,$5B,$5A,$32,$5C,$5C,$89,$34,$5D,$5D,$32,$04,$11
@@ -58332,10 +58363,9 @@ dat_048B70:
 	dc.b	$54,$55,$40,$56,$57,$58,$59,$03,$37,$8C,$5A,$4F,$59,$37,$51,$52
 	dc.b	$5B,$5C,$54,$55,$5D,$5E,$03,$37,$81,$38,$03,$37,$99,$38,$37,$37
 	dc.b	$39,$5F,$37,$37,$3A,$60,$37,$39,$3B,$3D,$37,$3A,$3C,$3E,$39,$3B
-	dc.b	$3D,$3F,$3A,$3C,$3E,$40,$06,$37,$AA,$61,$62,$37,$37,$63,$64,$37
-	dc.b	$37,$65,$66,$37,$61,$62,$67,$68,$69,$6A,$6B,$6C,$66,$66,$6D,$6E
-	dc.b	$6F,$70,$71,$72,$73,$73,$74,$75,$76,$76,$77,$78,$76,$76,$79,$7A
-	dc.b	$76,$76,$7B,$00,$32,$24,$02,$2C,$03,$24,$81,$2C,$03,$24,$81,$2C
+	dc.b	$3D,$3F,$3A,$3C,$3E,$40,$06,$37,$AA
+	dc.b	'ab77cd77ef7abghijklffmnopqrsstuvvwxvvyzvv{',0
+	dc.b	$32,$24,$02,$2C,$03,$24,$81,$2C,$03,$24,$81,$2C
 	dc.b	$03,$24,$03,$2C,$02,$24,$02,$2C,$02,$24,$02,$2C,$02,$24,$02,$2C
 	dc.b	$45,$24,$8B,$2C,$24,$24,$2C,$2C,$24,$24,$2C,$2C,$24,$24,$04,$2C
 	dc.b	$02,$24,$02,$2C,$02,$24,$02,$2C,$02,$24,$02,$2C,$0B,$24,$81,$2C
@@ -58438,8 +58468,8 @@ dat_048B70:
 	dc.b	$0A,$EF,$EF,$3F,$3F,$08,$EF,$8A,$40,$0A,$EF,$EF,$0A,$0A,$EF,$EF
 	dc.b	$3F,$3F,$04,$EF,$C0,$0A,$40,$42,$43,$0A,$0A,$44,$45,$3F,$3F,$46
 	dc.b	$43,$EF,$EF,$47,$48,$42,$43,$41,$D2,$44,$45,$41,$D5,$46,$43,$41
-	dc.b	$D8,$47,$48,$41,$DB,$42,$43,$42,$43,$44,$45,$44,$45,$46,$43,$46
-	dc.b	$43,$47,$48,$47,$48,$42,$43,$49,$49,$44,$45,$4A,$4B,$46,$43,$20
+	dc.b	$D8,$47,$48,$41,$DB
+	dc.b	'BCBCDEDEFCFCGHGHBCIIDEJKFC '
 	dc.b	$EF,$47,$48,$EF,$EF,$04,$49,$87,$4A,$4B,$4A,$4B,$20,$EF,$20,$05
 	dc.b	$EF,$02,$49,$9E,$42,$43,$4A,$4B,$44,$45,$20,$EF,$46,$43,$EF,$EF
 	dc.b	$47,$48,$49,$D0,$D1,$D2,$4A,$4C,$4D,$D5,$20,$EF,$4E,$D8,$EF,$EF
@@ -59993,8 +60023,9 @@ dat_048B70:
 	dc.b	$5A,$03,$D9,$86,$5B,$5C,$5D,$5E,$5D,$5F,$03,$D9,$81,$60,$03,$D9
 	dc.b	$81,$61,$03,$D9,$84,$5E,$5D,$5E,$5C,$03,$D9,$81,$5F,$03,$D9,$81
 	dc.b	$60,$03,$D9,$81,$61,$04,$3D,$04,$40,$08,$43,$04,$48,$04,$4B,$04
-	dc.b	$4E,$04,$4F,$90,$62,$63,$64,$65,$66,$67,$65,$68,$69,$6A,$6B,$6C
-	dc.b	$6D,$6E,$6F,$6C,$00,$00,$02,$44,$02,$4C,$02,$44,$02,$4C,$06,$44
+	dc.b	$4E,$04,$4F,$90
+	dc.b	'bcdefgehijklmnol',0
+	dc.b	$00,$02,$44,$02,$4C,$02,$44,$02,$4C,$06,$44
 	dc.b	$02,$54,$02,$24,$81,$44,$03,$24,$81,$44,$03,$24,$8C,$4C,$2C,$24
 	dc.b	$24,$54,$34,$2C,$2C,$24,$24,$2C,$2C,$04,$24,$02,$34,$02,$24,$02
 	dc.b	$34,$02,$24,$02,$2C,$0A,$24,$02,$34,$02,$00,$02,$08,$02,$10,$08
@@ -60060,8 +60091,9 @@ dat_048B70:
 	dc.b	$68,$82,$6D,$F0,$06,$0B,$03,$52,$85,$5B,$3C,$3C,$60,$67,$03,$68
 	dc.b	$83,$66,$25,$1A,$05,$0B,$05,$52,$84,$5B,$5C,$5D,$5E,$03,$64,$83
 	dc.b	$65,$16,$16,$04,$0B,$82,$3F,$4B,$04,$52,$8A,$58,$59,$5A,$61,$55
-	dc.b	$00,$00,$56,$57,$04,$04,$0B,$02,$3F,$8E,$4B,$52,$52,$58,$4D,$53
-	dc.b	$54,$4F,$55,$00,$00,$50,$04,$05,$04,$0B,$03,$3F,$8D,$4B,$4C,$4D
+	dc.b	$00,$00,$56,$57,$04,$04,$0B,$02,$3F,$8E
+	dc.b	'KRRXMSTOU',0
+	dc.b	$00,$50,$04,$05,$04,$0B,$03,$3F,$8D,$4B,$4C,$4D
 	dc.b	$48,$4E,$4F,$4A,$1D,$00,$00,$51,$02,$04,$04,$0B,$04,$3F,$86,$47
 	dc.b	$48,$44,$49,$4A,$1D,$03,$00,$83,$50,$04,$05,$04,$0B,$89,$42,$43
 	dc.b	$3F,$3F,$3A,$44,$40,$45,$1D,$04,$00,$84,$46,$1A,$46,$1A,$03,$0B
@@ -60362,8 +60394,9 @@ dat_048B70:
 	dc.b	$95,$7B,$7C,$96,$97,$7D,$7E,$7B,$7C,$7B,$7C,$7D,$7E,$7D,$7E,$7B
 	dc.b	$7C,$95,$92,$7D,$7E,$97,$96,$64,$65,$66,$67,$68,$69,$6A,$6B,$64
 	dc.b	$65,$6C,$6D,$68,$69,$6E,$6F,$70,$71,$70,$71,$72,$71,$72,$71,$70
-	dc.b	$71,$70,$71,$72,$71,$72,$11,$71,$90,$67,$66,$65,$64,$6B,$6A,$69
-	dc.b	$68,$6D,$6C,$65,$64,$6F,$6E,$69,$68,$00,$7F,$20,$81,$20,$13,$24
+	dc.b	$71,$70,$71,$72,$71,$72,$11,$71,$90
+	dc.b	'gfedkjihmledonih',0
+	dc.b	$7F,$20,$81,$20,$13,$24
 	dc.b	$81,$2C,$03,$24,$81,$2C,$03,$24,$81,$2C,$03,$24,$03,$2C,$02,$24
 	dc.b	$02,$2C,$02,$24,$02,$2C,$02,$24,$02,$2C,$02,$24,$10,$04,$11,$24
 	dc.b	$0F,$2C,$20,$04,$20,$24,$20,$2C,$10,$04,$20,$24,$20,$2C,$20,$24
@@ -60978,16 +61011,18 @@ dat_057C76:
 	dc.b	$83,$03,$00,$03,$0C,$00,$83,$03,$00,$03,$0B,$00,$14,$04,$46,$00
 	dc.b	$14,$04,$00,$00,$0A,$0C,$90,$0D,$0E,$0F,$10,$11,$12,$13,$14,$15
 	dc.b	$16,$40,$41,$42,$43,$44,$45,$0E,$0C,$91,$17,$18,$19,$1A,$1B,$1C
-	dc.b	$1D,$1E,$1F,$20,$46,$47,$48,$49,$4A,$4B,$4C,$0E,$0C,$90,$21,$22
+	dc.b	$1D,$1E,$1F
+	dc.b	' FGHIJKL'
+	dc.b	$0E,$0C,$90,$21,$22
 	dc.b	$23,$24,$25,$26,$27,$28,$29,$4D,$4E,$4F,$50,$51,$52,$53,$0D,$0C
 	dc.b	$91,$2A,$2B,$2C,$2D,$2E,$2F,$30,$31,$32,$33,$54,$55,$56,$57,$58
 	dc.b	$59,$5A,$10,$0C,$87,$34,$35,$36,$37,$38,$39,$3A,$18,$0C,$85,$3B
 	dc.b	$3C,$3D,$3E,$3F,$29,$0C,$00,$00
-dat_057D08:
+Art_057D08:
 	dc.b	$00,$10,$00,$00,$00,$11,$00,$00
 	dc.b	$00,$11,$10,$00,$00,$99,$99,$F0,$00,$99,$9F,$00,$00,$99,$F0,$00
 	dc.b	$00,$9F,$00,$00,$00,$F0,$00,$00
-dat_057D28:
+Art_057D28:
 	dc.b	$80,$58,$80,$04,$06,$14,$04,$24
 	dc.b	$07,$35,$15,$45,$14,$55,$16,$66,$32,$73,$01,$81,$05,$17,$17,$79
 	dc.b	$27,$78,$86,$08,$F8,$87,$05,$12,$16,$33,$26,$37,$88,$04,$08,$16
@@ -61095,7 +61130,7 @@ dat_05822A:
 	dc.b	$05,$EC,$00,$F0,$00,$00,$00,$00,$00,$05,$05,$F0,$00,$F0,$00,$00
 	dc.b	$00,$00,$00,$05,$05,$F4,$00,$F0,$00,$00,$00,$00,$00,$05,$05,$F8
 	dc.b	$00,$F0,$00,$00,$00,$00,$00,$05,$05,$FC,$00,$F0
-dat_0582AC:
+Art_0582AC:
 	dc.b	$00,$2C,$80,$03
 	dc.b	$02,$14,$09,$26,$36,$36,$38,$44,$0B,$76,$37,$81,$05,$19,$14,$08
 	dc.b	$27,$79,$36,$3B,$89,$05,$1A,$13,$03,$27,$7A,$36,$39,$47,$78,$57
@@ -61140,7 +61175,7 @@ dat_0582AC:
 	dc.b	$B4,$49,$A1,$56,$D4,$A0,$9C,$8A,$09,$C8,$88,$59,$A9,$1D,$70,$CB
 	dc.b	$65,$B2,$F1,$B7,$F4,$45,$F1,$07,$11,$5B,$3A,$D9,$D6,$CE,$B8,$F6
 	dc.b	$2F,$F7,$80,$00
-dat_058554:
+Art_058554:
 	dc.b	$00,$43,$80,$03,$03,$15,$17,$26,$38,$35,$16,$47
 	dc.b	$78,$74,$09,$81,$06,$3B,$16,$37,$38,$F7,$89,$05,$19,$14,$0A,$8A
 	dc.b	$05,$18,$14,$08,$37,$79,$8B,$06,$3A,$16,$36,$8F,$02,$00,$13,$02
@@ -61218,7 +61253,7 @@ dat_058956:
 	dc.b	$00,$32,$00,$31,$00,$33,$00,$34,$00,$35,$00,$36,$00,$37,$00,$38
 	dc.b	$00,$03,$00,$39,$00,$3A,$00,$3B,$00,$3C,$00,$3B,$00,$3D,$00,$3E
 	dc.b	$00,$3F,$00,$40,$00,$41,$00,$42,$00,$3B
-dat_0589FA:
+Art_0589FA:
 	dc.b	$00,$7A,$80,$05,$12,$13
 	dc.b	$02,$24,$07,$35,$13,$46,$36,$56,$3B,$68,$F8,$74,$06,$81,$05,$18
 	dc.b	$15,$17,$25,$16,$36,$38,$86,$04,$0A,$16,$32,$26,$33,$36,$37,$47
@@ -61348,7 +61383,7 @@ dat_059190:
 	dc.b	$C7,$C3,$C7,$C4,$C7,$C5,$C7,$C6,$C7,$C7,$C7,$C8,$C7,$C1,$C7,$C9
 	dc.b	$C7,$CA,$C7,$CB,$C7,$CC,$C7,$CD,$C7,$CE,$C7,$CF,$C7,$D0,$C7,$D1
 	dc.b	$C7,$D2,$C7,$D3,$C7,$D4,$C7,$D5,$C7,$D6,$C7,$D7,$C7,$D8,$C7,$D9
-dat_0591E0:
+Art_0591E0:
 	dc.b	$00,$46,$81,$05,$19,$14,$07,$25,$18,$35,$15,$58,$F8,$86,$05,$14
 	dc.b	$25,$1A,$35,$16,$57,$7A,$87,$05,$17,$27,$7B,$36,$39,$89,$06,$3A
 	dc.b	$14,$06,$37,$78,$8A,$06,$38,$16,$3B,$8B,$07,$79,$8F,$06,$36,$13
@@ -61472,7 +61507,7 @@ dat_05971A:
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
 	dc.b	$C4,$65,$C4,$65,$C4,$65,$C4,$65,$C4,$65
-dat_05994A:
+Art_05994A:
 	dc.b	$11,$11,$11,$11,$FF,$FF
 	dc.b	$FF,$FF,$33,$33,$33,$33,$23,$23,$23,$23,$32,$32,$32,$32,$22,$22
 	dc.b	$22,$22,$22,$22,$22,$22,$21,$21,$21,$21,$11,$11,$1F,$FF,$FF,$FF
@@ -61480,7 +61515,7 @@ dat_05994A:
 	dc.b	$1F,$FF,$FF,$FF,$1F,$FF,$FF,$FF,$1F,$FF,$11,$11,$11,$11,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-dat_0599AA:
+Art_0599AA:
 	dc.b	$80,$24,$80,$03,$01,$14
 	dc.b	$0A,$25,$19,$36,$34,$45,$17,$56,$39,$65,$18,$73,$00,$81,$04,$07
 	dc.b	$14,$09,$27,$6F,$83,$07,$7B,$28,$F4,$84,$04,$08,$16,$35,$37,$79
@@ -61515,7 +61550,7 @@ dat_0599AA:
 	dc.b	$2B,$D9,$FA,$CA,$00,$7F,$31,$1F,$5F,$E3,$96,$E1,$3F,$A4,$33,$9F
 	dc.b	$AA,$B7,$57,$46,$DA,$75,$55,$BE,$FD,$11,$B1,$B1,$ED,$5E,$62,$4C
 	dc.b	$C7,$18,$51,$C1,$7A,$22,$BD,$80
-dat_059BB8:
+Art_059BB8:
 	dc.b	$00,$0B,$80,$03,$04,$14,$0B,$25
 	dc.b	$1E,$74,$0C,$89,$05,$1D,$17,$7D,$8A,$04,$0A,$15,$1A,$27,$7C,$8B
 	dc.b	$03,$03,$15,$1B,$8F,$02,$00,$13,$02,$25,$1C,$FF,$CC,$CC,$CB,$53
@@ -61541,7 +61576,7 @@ dat_059BB8:
 	dc.b	$00,$01,$00,$00,$F0,$01,$03,$25,$F4,$04,$F0,$05,$03,$1D,$FC,$F4
 	dc.b	$00,$00,$00,$00,$F8,$0D,$04,$4D,$F0,$F0,$00,$00,$00,$00,$FC,$08
 	dc.b	$04,$55,$F4,$F4
-dat_059D34:
+Art_059D34:
 	dc.b	$00,$06,$81,$02,$01,$17,$7C,$86,$03,$04,$15,$1A
 	dc.b	$87,$06,$3C,$8B,$03,$05,$8C,$04,$0C,$45,$1C,$65,$1D,$8F,$02,$00
 	dc.b	$17,$7D,$26,$3D,$75,$1B,$FF,$DF,$EF,$FF,$63,$EB,$FD,$F4,$FD,$88
@@ -61551,10 +61586,10 @@ dat_059D34:
 	dc.b	$36,$F2,$5C,$84,$35,$72,$10,$D5,$C8,$43,$F6,$DE,$09,$3C,$9E,$13
 	dc.b	$FB,$F3,$D9,$E4,$77,$BF,$E7,$FF,$84,$78,$8F,$11,$E2,$3C,$47,$88
 	dc.b	$F3,$FE,$3F,$3A,$F5,$EB,$D7,$AF,$7F,$E2
-dat_059DBA:
+Art_059DBA:
 	dc.b	$80,$03,$80,$71,$00,$8E
 	dc.b	$02,$02,$FF,$FF,$F8,$08,$07,$F8,$2F,$D0,$40,$3F,$40,$00
-dat_059DCE:
+Art_059DCE:
 	dc.b	$82,$14
 	dc.b	$80,$03,$00,$14,$04,$25,$10,$35,$18,$46,$34,$56,$36,$67,$76,$76
 	dc.b	$2F,$81,$03,$01,$15,$15,$27,$74,$82,$05,$11,$17,$78,$83,$04,$05
@@ -63025,7 +63060,7 @@ dat_05A32C:
 	dc.b	$11,$11,$11,$31,$11,$11,$11,$11,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
-dat_05F978:
+Art_05F978:
 	dc.b	$00,$09,$80,$15,$1A,$55,$1D,$73
 	dc.b	$02,$82,$04,$09,$16,$3D,$37,$7D,$84,$17,$7C,$85,$03,$03,$86,$03
 	dc.b	$01,$15,$18,$25,$1C,$87,$04,$08,$14,$0B,$25,$19,$46,$3C,$88,$03
@@ -63038,7 +63073,7 @@ dat_05F978:
 	dc.b	$D7,$BF,$80,$9F,$D8,$71,$FE,$10,$17,$FB,$42,$3E,$3B,$C0,$FD,$BF
 	dc.b	$28,$C1,$C8,$FE,$14,$11,$F4,$60,$7E,$88,$62,$07,$A0,$D9,$12,$0D
 	dc.b	$98,$A3,$66,$28,$DE,$F5,$B4,$92,$49,$24,$97,$F0,$00,$00
-dat_05FA2E:
+Art_05FA2E:
 	dc.b	$00,$35
 	dc.b	$80,$05,$17,$15,$18,$25,$1C,$35,$13,$46,$3A,$57,$78,$75,$14,$82
 	dc.b	$03,$02,$15,$19,$28,$F8,$86,$07,$79,$87,$06,$36,$88,$05,$16,$17
@@ -63104,7 +63139,7 @@ dat_05FA2E:
 	dc.b	$CD,$BA,$B2,$B6,$36,$BD,$BE,$3F,$51,$E7,$6C,$ED,$65,$7E,$FE,$55
 	dc.b	$96,$3F,$51,$E7,$38,$5F,$97,$B6,$71,$65,$B5,$B3,$85,$DF,$6C,$E2
 	dc.b	$CB,$65,$65,$85,$B2,$B6,$71,$9B,$7C,$73,$F6,$54,$C0,$00
-dat_05FE2E:
+Art_05FE2E:
 	dc.b	$00,$0D
 	dc.b	$80,$03,$03,$14,$0D,$25,$19,$35,$1D,$48,$FA,$76,$3D,$85,$04,$0A
 	dc.b	$86,$03,$02,$14,$0B,$25,$1C,$87,$02,$00,$13,$04,$25,$18,$36,$3C
@@ -63134,7 +63169,7 @@ dat_05FF20:
 	dc.b	$06,$F0,$F4,$F4,$00,$00,$00,$00,$F8,$05,$06,$F9,$F8,$F8,$00,$00
 	dc.b	$00,$00,$F4,$0A,$0E,$F0,$F4,$F4,$00,$00,$00,$00,$F8,$05,$16,$F9
 	dc.b	$F8,$F8
-dat_05FFD2:
+Art_05FFD2:
 	dc.b	$00,$90,$81,$05,$11,$17,$69,$28,$DF,$38,$E2,$48,$F0,$58
 	dc.b	$F3,$68,$F5,$77,$6E,$82,$06,$2E,$18,$DE,$83,$07,$6D,$84,$03,$02
 	dc.b	$16,$30,$27,$6A,$37,$74,$48,$EF,$78,$F2,$85,$03,$01,$16,$31,$27
@@ -63360,7 +63395,7 @@ dat_060008:
 	dc.b	$27,$61,$DB,$12,$08,$23,$6C,$71,$04,$1D,$B1,$F1,$1B,$62,$76,$1D
 	dc.b	$B1,$39,$18,$C1,$FD,$DE,$1A,$60,$F0,$79,$C3,$7E,$1A,$1E,$1C,$50
 	dc.b	$78,$4F,$C3,$B7,$9C,$27,$EB,$0D,$C0,$00
-dat_060DBA:
+Art_060DBA:
 	dc.b	$00,$E8,$81,$07,$6E,$18
 	dc.b	$EB,$82,$05,$15,$18,$E9,$38,$F1,$78,$F4,$83,$05,$12,$17,$72,$84
 	dc.b	$08,$E6,$85,$04,$06,$15,$14,$27,$70,$86,$03,$00,$15,$16,$26,$34
@@ -63734,7 +63769,7 @@ dat_060DBA:
 	dc.b	$DB,$CB,$48,$A4,$B4,$8B,$C4,$DB,$53,$C5,$D3,$28,$BC,$5C,$1E,$E8
 	dc.b	$E8,$92,$DE,$60,$08,$43,$88,$21,$0C,$0F,$F3,$4A,$6B,$80,$98,$81
 	dc.b	$81,$09,$3C,$46,$21,$0A,$14,$20
-dat_0624F8:
+Art_0624F8:
 	dc.b	$00,$06,$86,$03,$04,$8D,$02,$01
 	dc.b	$13,$05,$24,$0D,$35,$1D,$45,$1E,$77,$7D,$8E,$02,$00,$14,$0C,$25
 	dc.b	$1C,$57,$7C,$FF,$3F,$DB,$1C,$62,$58,$8F,$C4,$85,$1C,$A5,$FC,$B1
@@ -67301,8 +67336,9 @@ dat_070002:
 	dc.b	$44,$44,$67,$87,$34,$44,$87,$77,$34,$44,$87,$77,$44,$44,$87,$76
 	dc.b	$34,$44,$87,$66,$44,$44,$86,$66,$34,$44,$66,$66,$34,$44,$66,$66
 	dc.b	$55,$55,$66,$87,$88,$88,$66,$77,$78,$77,$67,$77,$77,$76,$88,$88
-	dc.b	$88,$66,$88,$88,$88,$66,$88,$88,$86,$66,$56,$66,$66,$66,$55,$45
-	dc.b	$65,$65,$54,$54,$45,$55,$00,$66,$66,$66,$00,$66,$66,$64,$00,$45
+	dc.b	$88,$66,$88,$88,$88,$66,$88,$88,$86
+	dc.b	'fVfffUEeeTTEU',0
+	dc.b	$66,$66,$66,$00,$66,$66,$64,$00,$45
 	dc.b	$55,$55,$00,$04,$55,$33,$00,$91,$55,$33,$09,$19,$55,$33,$44,$44
 	dc.b	$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44
 	dc.b	$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44,$44
@@ -69016,7 +69052,7 @@ dat_070002:
 	dc.b	$83,$A3,$37,$67,$0A,$B7,$E6,$9A,$74,$C8,$4D,$DB,$A0,$4C,$FC,$4E
 	dc.b	$3B,$9B,$C3,$75,$D9,$95,$3A,$C2,$16,$7D,$7A,$C5,$D6,$0E,$04,$09
 	dc.b	$88,$39,$E5,$0D,$DE,$88,$ED,$6E,$27,$30
-dat_076EDA:
+Art_076EDA:
 	dc.b	$80,$D9,$80,$03,$00,$14
 	dc.b	$08,$25,$14,$35,$1A,$46,$37,$56,$38,$67,$75,$75,$18,$81,$03,$01
 	dc.b	$16,$36,$28,$EF,$82,$05,$13,$18,$F5,$83,$04,$06,$17,$74,$28,$F6
@@ -69338,7 +69374,7 @@ dat_076EDA:
 	dc.b	$D8,$5C,$FA,$29,$8B,$82,$49,$1E,$14,$EF,$72,$3F,$75,$B8,$5C,$12
 	dc.b	$41,$08,$5D,$5C,$F0,$9B,$DC,$2E,$84,$97,$64,$3C,$23,$F8,$ED,$44
 	dc.b	$90,$52
-dat_0782D2:
+Art_0782D2:
 	dc.b	$00,$B5,$81,$08,$E6,$82,$04,$04,$17,$66,$27,$70,$37,$68
 	dc.b	$58,$EB,$83,$06,$30,$38,$F0,$77,$6B,$84,$05,$11,$17,$6A,$27,$72
 	dc.b	$37,$6F,$48,$F2,$78,$E9,$85,$04,$03,$17,$67,$86,$03,$00,$15,$12
@@ -70846,7 +70882,7 @@ dat_0782D2:
 	dc.b	$27,$D7,$0E,$F9,$EF,$F1,$5A,$7D,$AF,$6B,$DA,$10,$84,$6C,$8F,$F4
 	dc.b	$B4,$66,$90,$F1,$DE,$7A,$7A,$FC,$5F,$F6,$11,$F8,$BE,$D0,$84,$23
 	dc.b	$C1,$6C
-dat_07E0F2:
+Art_07E0F2:
 	dc.b	$81,$47,$80,$03,$00,$15,$12,$25,$16,$36,$2E,$46,$2F,$56
 	dc.b	$35,$66,$32,$73,$02,$81,$03,$01,$16,$36,$28,$E9,$58,$EF,$82,$05
 	dc.b	$13,$17,$72,$83,$05,$14,$17,$6F,$28,$EB,$84,$06,$33,$85,$05,$18
@@ -71180,7 +71216,7 @@ dat_07E0F2:
 	dc.b	$B8,$47,$8E,$E9,$78,$EE,$05,$FB,$77,$10,$FD,$A1,$A5,$8E,$DB,$FB
 	dc.b	$6E,$3D,$B6,$23,$B6,$FA,$E2,$08,$37,$FE,$C6,$E2,$0D,$CD,$FD,$BA
 	dc.b	$E9,$15,$8A,$C7,$EA,$95,$C6,$C0
-dat_07F5B8:
+Art_07F5B8:
 	dc.b	$80,$24,$80,$03,$00,$13,$01,$25
 	dc.b	$15,$36,$32,$46,$3A,$55,$16,$67,$79,$75,$1A,$81,$07,$7A,$83,$05
 	dc.b	$12,$17,$77,$84,$05,$13,$85,$07,$7B,$86,$04,$04,$15,$17,$87,$04
@@ -71370,7 +71406,7 @@ dat_080000:
 	dc.b	$18,$35,$0C,$18,$30,$61,$89,$B0,$60,$C3,$FC,$72,$31,$FD,$30,$79
 	dc.b	$7F,$4D,$72,$3C,$8E,$5D,$F1,$FD,$39,$77,$AC,$77,$AA,$AF,$87,$87
 	dc.b	$82,$F8,$2A,$AF,$87,$87,$7C,$F5,$BA,$D9,$78,$2A,$A8,$00
-dat_08016E:
+Art_08016E:
 	dc.b	$01,$2F
 	dc.b	$80,$07,$6B,$17,$6C,$27,$6A,$36,$2F,$47,$6D,$57,$72,$67,$76,$75
 	dc.b	$14,$81,$04,$07,$16,$2D,$27,$70,$38,$F1,$82,$07,$6F,$83,$04,$05
@@ -71727,7 +71763,7 @@ dat_08016E:
 	dc.b	$56,$AF,$E7,$35,$7E,$4B,$F3,$9A,$67,$D9,$56,$7F,$CD,$EA,$C7,$A5
 	dc.b	$EB,$2C,$FB,$71,$52,$94,$A5,$2F,$96,$9A,$B4,$C5,$7E,$98,$A9,$A6
 	dc.b	$DD,$25,$B3,$4D,$7A,$62,$D7,$2D,$35,$E9,$8B,$5C,$B4,$DB,$A5,$E0
-dat_0817A0:
+Art_0817A0:
 	dc.b	$00,$34,$80,$04,$08,$14,$09,$24,$0B,$35,$19,$46,$39,$55,$1B,$66
 	dc.b	$38,$73,$02,$84,$04,$06,$15,$1A,$26,$3A,$37,$7A,$47,$7B,$56,$3C
 	dc.b	$78,$F9,$85,$02,$00,$14,$07,$24,$0A,$35,$18,$46,$3B,$58,$FA,$68
@@ -71866,7 +71902,7 @@ dat_0817A0:
 	dc.b	$AF,$1E,$AB,$D7,$7F,$CE,$7B,$F1,$E9,$1C,$1E,$DC,$DC,$EA,$6D,$F9
 	dc.b	$B5,$AB,$EA,$17,$E2,$A9,$97,$8F,$65,$91,$AF,$0B,$7A,$C5,$1F,$C5
 	dc.b	$57,$51,$95,$DD,$B8,$FD,$75,$F3,$6E,$80,$00,$00,$00,$02,$40,$00
-dat_082040:
+Art_082040:
 	dc.b	$82,$6F,$80,$03,$00,$15,$12,$25,$18,$36,$2E,$46,$2F,$55,$16,$67
 	dc.b	$6B,$74,$06,$81,$03,$01,$15,$15,$27,$6A,$37,$6F,$47,$70,$58,$EE
 	dc.b	$78,$EA,$82,$04,$07,$16,$33,$83,$03,$02,$16,$36,$27,$72,$38,$F2
@@ -72490,7 +72526,7 @@ dat_082040:
 	dc.b	$D2,$FF,$C5,$89,$DD,$A9,$A7,$77,$B3,$1B,$B5,$36,$57,$72,$D7,$4B
 	dc.b	$4F,$BA,$9C,$27,$D2,$D3,$E9,$DD,$2F,$FB,$33,$33,$3D,$3F,$6F,$C6
 	dc.b	$7D,$0D,$D1,$2F,$F0,$FF,$D9,$99,$98,$00
-dat_08472A:
+Art_08472A:
 	dc.b	$82,$9D,$80,$03,$01,$14
 	dc.b	$09,$24,$0A,$35,$16,$45,$17,$55,$1B,$66,$39,$74,$06,$81,$03,$02
 	dc.b	$14,$07,$25,$1A,$36,$38,$46,$3B,$58,$F8,$68,$F6,$8E,$04,$08,$15
@@ -73093,7 +73129,7 @@ dat_086702:
 	dc.b	$02,$94,$02,$95,$02,$96,$02,$97,$02,$98,$02,$99,$02,$9A,$02,$9B
 	dc.b	$02,$9C,$02,$9D,$02,$9E,$02,$9F,$02,$A0,$02,$A1,$02,$A2,$02,$A3
 	dc.b	$02,$A4
-dat_086C92:
+Art_086C92:
 	dc.b	$00,$5F,$81,$02,$00,$14,$0D,$25,$1E,$35,$1D,$48,$FA,$58
 	dc.b	$FB,$67,$7C,$8F,$04,$08,$13,$02,$23,$03,$34,$0A,$44,$0C,$55,$1C
 	dc.b	$64,$0B,$74,$09,$FF,$98,$FB,$B2,$CB,$2C,$5F,$73,$45,$95,$F2,$8C
@@ -76978,8 +77014,9 @@ dat_086C92:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$55,$00,$00,$00,$44,$50,$00,$00
-	dc.b	$44,$45,$00,$00,$44,$45,$32,$30,$47,$44,$53,$30,$57,$44,$51,$20
-	dc.b	$54,$55,$5A,$A2,$A5,$54,$45,$41,$5A,$44,$45,$22,$AA,$54,$44,$52
+	dc.b	$44,$45,$00,$00
+	dc.b	'DE20GDS0WDQ TUZ'
+	dc.b	$A2,$A5,$54,$45,$41,$5A,$44,$45,$22,$AA,$54,$44,$52
 	dc.b	$12,$A4,$44,$51,$11,$A5,$44,$45,$11,$3A,$44,$45,$21,$3A,$54,$45
 	dc.b	$22,$ED,$A4,$55,$11,$3E,$A5,$44,$12,$ED,$A5,$47,$12,$3E,$EA,$44
 	dc.b	$22,$22,$5A,$55,$22,$11,$45,$A5,$21,$12,$55,$A5,$33,$22,$AA,$AA
@@ -77929,7 +77966,7 @@ dat_086C92:
 	dc.b	$0F,$00,$F0,$F0,$F0,$FF,$0F,$0F,$0F,$00,$00,$00,$F0,$00,$F0,$00
 	dc.b	$F0,$00,$00,$00,$0F,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_099AC0:
+Art_099AC0:
 	dc.b	$80,$40,$80,$04,$05,$15,$16,$25,$18,$35,$17,$44,$09,$54,$06,$65
 	dc.b	$19,$73,$00,$81,$04,$04,$82,$07,$78,$83,$04,$08,$16,$3B,$86,$06
 	dc.b	$3A,$87,$06,$36,$88,$06,$37,$8A,$03,$01,$16,$39,$8B,$04,$07,$17
@@ -77984,7 +78021,7 @@ dat_099AC0:
 	dc.b	$03,$1F,$AB,$6F,$C8,$9C,$A6,$1D,$21,$5D,$92,$E9,$0A,$F3,$BC,$5D
 	dc.b	$D7,$74,$BA,$3F,$87,$BC,$6F,$25,$7C,$3D,$D2,$19,$CB,$80,$07,$A1
 	dc.b	$94,$C9,$97,$F1,$98,$64,$22,$5E,$19,$3F,$12,$25,$D2,$40
-dat_099E1E:
+Art_099E1E:
 	dc.b	$00,$16
 	dc.b	$80,$05,$1D,$16,$3C,$26,$3D,$35,$1B,$44,$08,$55,$18,$65,$1C,$73
 	dc.b	$02,$81,$05,$17,$86,$04,$07,$17,$7C,$87,$04,$06,$88,$04,$09,$89
@@ -78049,7 +78086,7 @@ dat_099E1E:
 	dc.b	$3C,$D9,$D8,$93,$6C,$8D,$4C,$56,$2B,$23,$5C,$B1,$27,$F9,$FB,$B7
 	dc.b	$F2,$06,$AB,$F6,$EA,$A3,$F9,$03,$5F,$CF,$DD,$89,$27,$E7,$F5,$3F
 	dc.b	$3B,$7F,$D8,$FE,$67,$F5,$5F,$A9,$F9,$27,$60,$00
-dat_09A20C:
+Art_09A20C:
 	dc.b	$00,$27,$80,$06
 	dc.b	$3B,$15,$17,$24,$07,$34,$08,$46,$36,$56,$37,$67,$7B,$73,$01,$82
 	dc.b	$05,$19,$83,$05,$18,$84,$04,$06,$18,$F8,$85,$04,$05,$16,$39,$87
@@ -78401,7 +78438,7 @@ dat_09A20C:
 	dc.b	$00,$00,$00,$00,$7A,$A3,$32,$00,$AA,$A3,$22,$00,$4A,$A3,$21,$00
 	dc.b	$7A,$A3,$23,$00,$AA,$A0,$32,$20,$A5,$A0,$03,$30,$45,$A0,$00,$00
 	dc.b	$00,$00,$00,$00
-dat_09B7E4:
+Art_09B7E4:
 	dc.b	$80,$34,$80,$04,$07,$14,$0A,$25,$1A,$35,$19,$45
 	dc.b	$18,$54,$09,$66,$38,$73,$00,$81,$03,$01,$16,$39,$82,$04,$06,$15
 	dc.b	$17,$27,$79,$83,$06,$37,$84,$07,$76,$18,$F7,$85,$04,$08,$16,$36
@@ -78445,7 +78482,7 @@ dat_09B7E4:
 	dc.b	$3B,$80,$00,$03,$8F,$EA,$57,$F5,$6B,$FA,$B5,$FD,$1A,$FE,$BD,$7F
 	dc.b	$48,$0F,$FA,$7F,$D7,$FE,$BF,$F1,$FF,$BF,$FC,$80,$FD,$A6,$7F,$6B
 	dc.b	$9F,$DA,$E7,$F6,$39,$FD,$BE,$40
-dat_09BA88:
+Art_09BA88:
 	dc.b	$80,$14,$80,$35,$1D,$45,$1C,$54
 	dc.b	$0C,$65,$1E,$71,$00,$81,$02,$02,$14,$0D,$36,$3E,$FF,$0F,$59,$32
 	dc.b	$64,$00,$65,$96,$59,$07,$BE,$49,$9B,$DD,$E5,$90,$00,$00,$00,$3F
@@ -79990,7 +80027,7 @@ dat_09BA88:
 	dc.b	$C6,$EC,$6E,$5E,$EF,$6A,$7F,$97,$D5,$68,$B1,$D5,$4C,$CC,$CE,$9F
 	dc.b	$4F,$7D,$CC,$BC,$BD,$DE,$5E,$5A,$9F,$E4,$D9,$E9,$8B,$F7,$41,$F5
 	dc.b	$5D,$97,$0F,$6F,$DD,$EB,$7D,$BE,$9F,$E3,$7D,$FE,$B2,$6E
-dat_0A1AFE:
+Art_0A1AFE:
 	dc.b	$80,$39
 	dc.b	$80,$03,$01,$15,$13,$24,$08,$35,$18,$45,$17,$55,$16,$66,$39,$73
 	dc.b	$00,$81,$04,$05,$15,$1A,$28,$F5,$82,$04,$04,$16,$3A,$28,$F2,$83
@@ -81126,7 +81163,7 @@ dat_0A1AFE:
 	dc.b	$42,$85,$78,$93,$66,$3C,$1F,$F4,$96,$3D,$CC,$B1,$60,$C8,$41,$8B
 	dc.b	$32,$8A,$1B,$17,$50,$C3,$2D,$05,$91,$1F,$DB,$23,$75,$BA,$DD,$EE
 	dc.b	$F7,$18,$84,$72,$44,$30,$C3,$96,$18,$61,$CB,$0C,$30,$00
-dat_0A61DE:
+Art_0A61DE:
 	dc.b	$00,$13
 	dc.b	$80,$04,$0A,$16,$36,$25,$1A,$36,$3B,$46,$33,$56,$39,$68,$F9,$75
 	dc.b	$16,$81,$04,$09,$16,$37,$82,$03,$02,$16,$3C,$83,$03,$03,$18,$FA
@@ -82890,7 +82927,7 @@ dat_0A61DE:
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-dat_0AD000:
+Art_0AD000:
 	dc.b	$00,$10,$80,$04,$08,$18,$FA,$27,$7A,$38,$F8,$43,$03,$58,$FB,$76
 	dc.b	$36,$82,$06,$37,$84,$07,$7B,$85,$06,$3C,$15,$1A,$86,$02,$00,$14
 	dc.b	$0B,$26,$38,$35,$1D,$87,$03,$02,$15,$18,$26,$39,$36,$32,$78,$F9
@@ -82910,7 +82947,7 @@ dat_0AD000:
 	dc.b	$7F,$97,$BF,$C7,$31,$FD,$64,$73,$D5,$7C,$88,$C0,$B3,$AD,$DA,$A6
 	dc.b	$A9,$8A,$58,$A6,$0F,$58,$92,$0F,$A1,$4C,$10,$42,$98,$20,$FA,$20
 	dc.b	$83,$6F,$40,$00
-dat_0AD124:
+Art_0AD124:
 	dc.b	$00,$5B,$80,$78,$F5,$82,$04,$06,$15,$18,$27,$70
 	dc.b	$85,$04,$07,$16,$32,$27,$75,$37,$74,$48,$F2,$78,$F3,$86,$03,$01
 	dc.b	$15,$17,$26,$36,$37,$71,$78,$F6,$87,$04,$0A,$16,$35,$27,$77,$88
@@ -83042,7 +83079,7 @@ dat_0AD124:
 	dc.b	$FD,$56,$FF,$35,$4F,$F5,$9A,$A5,$F6,$79,$33,$D0,$D4,$D4,$E4,$5E
 	dc.b	$B9,$B9,$73,$AE,$7C,$67,$84,$9C,$BC,$34,$DE,$8D,$1E,$77,$73,$AB
 	dc.b	$4B,$FF,$61,$CF,$EC,$B9,$BF,$87,$97,$32,$64,$CE,$DD,$2F,$90,$00
-dat_0AD950:
+Art_0AD950:
 	dc.b	$80,$0C,$80,$03,$02,$14,$0A,$24,$0C,$37,$7C,$45,$1B,$54,$09,$64
 	dc.b	$0B,$73,$00,$81,$05,$1A,$82,$04,$07,$83,$06,$3B,$84,$06,$3D,$85
 	dc.b	$04,$08,$86,$03,$01,$87,$06,$3A,$8A,$04,$06,$16,$3C,$8C,$07,$7D
@@ -83055,7 +83092,7 @@ dat_0AD950:
 	dc.b	$CF,$DE,$3E,$15,$E7,$1E,$8B,$8A,$62,$05,$1B,$29,$83,$7B,$BF,$39
 	dc.b	$6C,$00,$03,$0D,$95,$E4,$B2,$F7,$7D,$B7,$B9,$AA,$FC,$9F,$CE,$94
 	dc.b	$7C,$FD,$2A,$8F,$68,$00
-dat_0ADA06:
+Art_0ADA06:
 	dc.b	$81,$B6,$80,$03,$00,$14,$06,$25,$12,$36
 	dc.b	$32,$46,$37,$57,$74,$67,$75,$76,$2E,$81,$03,$01,$15,$15,$27,$73
 	dc.b	$38,$F5,$82,$05,$11,$17,$77,$83,$04,$07,$16,$38,$28,$F2,$84,$06
@@ -83667,7 +83704,7 @@ dat_0ADA06:
 	dc.b	$D7,$5D,$D7,$CF,$B7,$E9,$85,$B5,$78,$76,$B3,$6B,$24,$EC,$FE,$C3
 	dc.b	$C8,$63,$BA,$18,$EE,$84,$37,$41,$49,$FB,$D9,$75,$7D,$DF,$AB,$DC
 	dc.b	$FD,$5F,$77,$EA,$EC,$E0
-dat_0B0026:
+Art_0B0026:
 	dc.b	$00,$20,$80,$02,$00,$14,$0A,$25,$1C,$35
 	dc.b	$1D,$46,$3E,$55,$1E,$73,$04,$89,$04,$0C,$8A,$04,$0B,$8B,$04,$0D
 	dc.b	$8C,$03,$02,$8D,$04,$06,$8F,$04,$07,$FF,$AC,$10,$DD,$BE,$E8,$DC
@@ -86325,7 +86362,7 @@ dat_0B0026:
 	dc.b	$D7,$1D,$FF,$6B,$8E,$FF,$B5,$C7,$7F,$DA,$E3,$BF,$ED,$71,$DF,$F6
 	dc.b	$B8,$EF,$FB,$5C,$77,$EE,$F2,$F3,$E4,$9C,$97,$FC,$8B,$D6,$85,$7F
 	dc.b	$C8,$BC,$79,$F0,$A9,$E4
-dat_0BA626:
+Art_0BA626:
 	dc.b	$00,$13,$80,$76,$3A,$82,$04,$0C,$17,$7B
 	dc.b	$83,$07,$7A,$84,$03,$02,$14,$0A,$24,$09,$35,$1B,$45,$1A,$58,$FA
 	dc.b	$76,$3B,$85,$04,$08,$86,$05,$17,$87,$03,$03,$16,$39,$8A,$06,$38
@@ -87932,7 +87969,7 @@ dat_0BA626:
 	dc.b	$EE,$8D,$7E,$33,$F5,$DF,$87,$00,$05,$F1,$B7,$E2,$F7,$C6,$F2,$A5
 	dc.b	$4A,$95,$65,$FD,$16,$53,$AC,$68,$E9,$D6,$2E,$D3,$4F,$17,$F9,$CF
 	dc.b	$4A,$D9,$EA,$F6,$BB,$4E,$38,$BF,$EC,$BB,$FC,$F2,$67,$E6,$6E,$00
-dat_0C0A80:
+Art_0C0A80:
 	dc.b	$80,$D4,$80,$03,$00,$14,$06,$25,$12,$35,$14,$46,$32,$56,$34,$66
 	dc.b	$37,$74,$08,$81,$04,$07,$17,$73,$82,$07,$75,$83,$06,$33,$18,$F3
 	dc.b	$84,$07,$72,$85,$07,$74,$86,$03,$02,$15,$18,$28,$EE,$87,$03,$01
@@ -88187,7 +88224,7 @@ dat_0C0A80:
 	dc.b	$26,$42,$BD,$79,$2D,$F9,$0E,$79,$75,$E8,$56,$9D,$54,$44,$46,$FD
 	dc.b	$79,$75,$E9,$D7,$A7,$5E,$81,$02,$85,$B0,$CA,$C3,$F2,$84,$5A,$9D
 	dc.b	$3A,$F9,$53,$C6,$D9,$1D,$74,$31,$11,$10,$35,$88,$80,$00
-dat_0C1A5E:
+Art_0C1A5E:
 	dc.b	$00,$6C
 	dc.b	$81,$03,$02,$16,$32,$82,$07,$72,$17,$78,$83,$06,$33,$17,$7A,$84
 	dc.b	$06,$37,$17,$77,$87,$03,$03,$17,$76,$88,$03,$05,$15,$1A,$27,$79
@@ -88352,7 +88389,7 @@ dat_0C1A5E:
 	dc.b	$D1,$9F,$B9,$A3,$47,$1E,$C3,$19,$FA,$EE,$6C,$63,$3F,$73,$FB,$FB
 	dc.b	$B7,$1C,$D3,$BB,$70,$26,$AE,$DC,$21,$1E,$DC,$09,$AD,$B8,$10,$9F
 	dc.b	$E7,$84,$31,$31,$8C,$EC
-dat_0C2486:
+Art_0C2486:
 	dc.b	$80,$B4,$80,$03,$00,$15,$10,$25,$13,$36
 	dc.b	$2E,$45,$18,$56,$32,$66,$36,$73,$02,$81,$03,$01,$16,$37,$27,$73
 	dc.b	$38,$EF,$48,$EE,$68,$F0,$77,$74,$82,$05,$16,$18,$F4,$83,$05,$11
@@ -92297,8 +92334,9 @@ dat_0D1418:
 	dc.b	$50,$88,$4E,$4D,$4E,$4D,$5B,$5C,$5B,$5C,$04,$51,$84,$64,$62,$61
 	dc.b	$61,$04,$58,$04,$4B,$88,$72,$73,$74,$75,$76,$77,$78,$79,$04,$3D
 	dc.b	$04,$34,$04,$50,$8C,$4E,$4D,$4E,$4D,$5B,$5C,$5B,$5C,$69,$6A,$6B
-	dc.b	$6C,$04,$51,$8C,$64,$62,$61,$61,$7A,$7B,$7B,$7A,$4E,$4D,$4E,$4D
-	dc.b	$00,$00,$0C,$00,$89,$F0,$18,$18,$19,$22,$23,$24,$1A,$1B,$15,$00
+	dc.b	$6C,$04,$51,$8C
+	dc.b	'dbaaz{{zNMNM',0
+	dc.b	$00,$0C,$00,$89,$F0,$18,$18,$19,$22,$23,$24,$1A,$1B,$15,$00
 	dc.b	$89,$F0,$0D,$10,$12,$1F,$20,$21,$14,$16,$15,$00,$89,$F0,$0D,$0D
 	dc.b	$0E,$1C,$1D,$1E,$0F,$0D,$15,$00,$89,$F0,$05,$05,$06,$07,$09,$0A
 	dc.b	$0C,$05,$15,$00,$81,$F0,$03,$02,$85,$03,$02,$04,$02,$02,$15,$00
@@ -92517,8 +92555,9 @@ dat_0D1418:
 	dc.b	$74,$03,$00,$81,$75,$03,$6E,$84,$78,$77,$76,$70,$08,$00,$04,$6E
 	dc.b	$84,$73,$72,$73,$72,$08,$00,$04,$6E,$84,$73,$72,$70,$6B,$08,$00
 	dc.b	$02,$71,$02,$6E,$02,$6C,$82,$6B,$1B,$06,$00,$FF,$0A,$1C,$82,$00
-	dc.b	$00,$0F,$26,$10,$34,$97,$43,$44,$35,$8D,$8D,$3A,$39,$45,$45,$3E
-	dc.b	$3D,$46,$46,$42,$41,$47,$48,$00,$00,$49,$4A,$00,$00,$0A,$4B,$CE
+	dc.b	$00,$0F,$26,$10,$34,$97,$43,$44,$35,$8D,$8D,$3A,$39
+	dc.b	'EE>=FFBAGH',0
+	dc.b	$00,$49,$4A,$00,$00,$0A,$4B,$CE
 	dc.b	$54,$53,$55,$56,$56,$55,$57,$58,$58,$57,$59,$5A,$5A,$59,$C1,$C0
 	dc.b	$BF,$BE,$C5,$C4,$C3,$C2,$C9,$C8,$C7,$C6,$CD,$CC,$CB,$CA,$AA,$B2
 	dc.b	$B1,$B0,$B6,$B5,$B4,$B3,$BA,$B9,$B8,$B7,$AF,$BD,$BC,$BB,$AA,$A9
@@ -93118,7 +93157,9 @@ dat_0D1418:
 	dc.b	$3B,$34,$2A,$33,$3C,$35,$34,$38,$38,$37,$35,$03,$3A,$91,$39,$28
 	dc.b	$2D,$28,$28,$2B,$2E,$2C,$2B,$2F,$31,$30,$2F,$32,$33,$32,$32,$04
 	dc.b	$38,$0C,$3A,$10,$00,$8C,$08,$3D,$81,$00,$03,$45,$94,$03,$00,$8E
-	dc.b	$48,$40,$3F,$3E,$3D,$44,$43,$42,$41,$47,$46,$45,$00,$48,$03,$00
+	dc.b	$48,$40,$3F,$3E
+	dc.b	'=DCBAGFE',0
+	dc.b	$48,$03,$00
 	dc.b	$AE,$10,$49,$AF,$4C,$4B,$4A,$49,$50,$4F,$4E,$4D,$54,$53,$52,$51
 	dc.b	$58,$57,$56,$55,$59,$5A,$4C,$4C,$59,$5A,$4C,$4C,$59,$5A,$4C,$4C
 	dc.b	$59,$5A,$04,$4C,$FF,$5A,$59,$4C,$4C,$5A,$59,$4C,$4C,$5A,$59,$4C
@@ -95201,7 +95242,7 @@ dat_0DB534:
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-dat_0DD000:
+Art_0DD000:
 	dc.b	$80,$30,$80,$04,$05,$14,$07,$23,$01,$35,$11,$46,$2B,$57,$6B,$66
 	dc.b	$32,$74,$04,$81,$03,$00,$16,$34,$82,$06,$2E,$18,$F0,$38,$EE,$83
 	dc.b	$04,$06,$17,$75,$84,$06,$2A,$16,$37,$27,$70,$37,$72,$85,$06,$30
@@ -95262,7 +95303,7 @@ dat_0DD33C:
 	dc.b	$80,$1B,$80,$1C,$80,$1D,$80,$1E,$80,$1F,$80,$20,$80,$21,$80,$22
 	dc.b	$80,$23,$80,$24,$80,$25,$80,$26,$80,$27,$80,$28,$80,$29,$80,$2A
 	dc.b	$80,$2B,$80,$2C,$80,$2D,$80,$2E,$80,$2F,$80,$30
-dat_0DD39C:
+Art_0DD39C:
 	dc.b	$83,$2B,$80,$03
 	dc.b	$01,$14,$07,$25,$13,$35,$16,$46,$32,$55,$18,$66,$35,$75,$12,$81
 	dc.b	$03,$00,$15,$14,$26,$38,$38,$F1,$82,$04,$06,$17,$75,$83,$04,$04
@@ -96226,17 +96267,18 @@ dat_0E0EEA:
 	dc.b	$20,$1D,$20,$1E,$20,$1F,$20,$20,$20,$21,$20,$22,$20,$23,$20,$24
 	dc.b	$20,$25,$20,$26,$20,$27,$00,$00,$00,$00,$20,$28,$20,$29,$20,$2A
 	dc.b	$20,$2B,$20,$2C,$20,$2D,$20,$2E,$20,$2F,$20,$30,$20,$31,$20,$32
-	dc.b	$20,$33,$20,$34,$20,$35,$20,$36,$20,$37,$20,$38,$20,$39,$20,$3A
-	dc.b	$20,$3B,$20,$3C,$20,$3D,$20,$3E,$20,$3F,$20,$40,$20,$41,$20,$42
-	dc.b	$20,$43,$20,$44,$20,$45,$20,$46,$20,$47,$20,$48,$20,$49,$20,$4A
-	dc.b	$20,$4B,$20,$4C,$20,$4D,$20,$4E,$20,$4F,$00,$00,$00,$00,$00,$00
-	dc.b	$20,$50,$20,$51,$20,$52,$20,$53,$20,$54,$20,$55,$20,$56,$20,$57
-	dc.b	$20,$58,$20,$59,$20,$5A,$20,$5B,$20,$5C,$20,$5D,$00,$00,$00,$00
-	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$20,$5E,$20,$5F,$20,$60,$20,$61
-	dc.b	$20,$62,$20,$63,$20,$64,$20,$65,$20,$66,$20,$67,$20,$68,$20,$69
-	dc.b	$20,$6A,$20,$6B,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-	dc.b	$00,$00,$20,$6C,$20,$6D,$20,$6E,$20,$6F,$20,$70,$20,$71,$20,$72
-	dc.b	$20,$63,$20,$63,$20,$73,$20,$74,$20,$75,$00,$00,$00,$00,$00,$00
+	dc.b	$20,$33,$20,$34,$20,$35,$20,$36
+	dc.b	' 7 8 9 : ; < = > ? @ A B C D E F G H I J K L M N'
+	dc.b	$20,$4F,$00,$00,$00,$00,$00,$00
+	dc.b	$20,$50,$20,$51,$20,$52
+	dc.b	' S T U V W X Y Z [ \ ]',0
+	dc.b	$00,$00,$00
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	' ^ _ ` a b c d e f g h i j k',0
+	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+	dc.b	$00,$00
+	dc.b	' l m n o p q r c c s t u',0
+	dc.b	$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$20,$76,$20,$77,$20,$78,$20,$79
 	dc.b	$20,$7A,$20,$7B,$20,$7C,$20,$7D,$20,$7E,$20,$7F,$20,$63,$20,$80
 	dc.b	$20,$81,$20,$82,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
@@ -96347,7 +96389,7 @@ dat_0E14E6:
 	dc.b	$03,$14,$03,$15,$03,$16,$03,$17,$03,$18,$03,$19,$03,$1A,$03,$1B
 	dc.b	$03,$1C,$03,$1D,$03,$1E,$03,$1F,$03,$20,$03,$21,$03,$22,$03,$23
 	dc.b	$03,$24,$03,$25,$03,$26,$03,$27,$03,$28,$03,$29,$03,$2A
-dat_0E16EE:
+Art_0E16EE:
 	dc.b	$00,$2F
 	dc.b	$80,$05,$0B,$16,$2A,$25,$11,$35,$16,$45,$14,$55,$0F,$65,$12,$73
 	dc.b	$00,$81,$06,$2F,$16,$36,$27,$71,$82,$05,$10,$17,$7B,$83,$03,$01
@@ -96393,7 +96435,7 @@ dat_0E16EE:
 	dc.b	$E2,$AB,$57,$F2,$AB,$BF,$87,$18,$2A,$FE,$1F,$9A,$49,$8F,$EE,$BA
 	dc.b	$76,$99,$68,$00,$02,$E6,$50,$DC,$FA,$DE,$C9,$16,$3C,$89,$2A,$4A
 	dc.b	$00,$09,$00,$00
-dat_0E19A4:
+Art_0E19A4:
 	dc.b	$80,$DB,$80,$02,$00,$14,$07,$25,$14,$36,$2F,$47
 	dc.b	$6A,$57,$75,$68,$F2,$75,$15,$81,$03,$02,$14,$09,$26,$2E,$37,$78
 	dc.b	$82,$04,$06,$15,$16,$27,$76,$83,$04,$08,$16,$31,$28,$F6,$84,$06
@@ -96695,7 +96737,7 @@ dat_0E2B86:
 	dc.b	$00,$E3,$00,$E8,$00,$05,$00,$EC,$18,$D8,$00,$01,$00,$00,$00,$0A
 	dc.b	$00,$F0,$00,$E8,$00,$05,$00,$F9,$18,$D8,$00,$01,$00,$00,$00,$0A
 	dc.b	$00,$FD,$00,$E8,$00,$05,$01,$06,$18,$D8
-dat_0E2C4A:
+Art_0E2C4A:
 	dc.b	$80,$2F,$80,$03,$01,$14
 	dc.b	$08,$25,$14,$35,$1A,$45,$15,$55,$0F,$65,$12,$74,$04,$81,$04,$05
 	dc.b	$82,$06,$3B,$83,$05,$16,$84,$06,$36,$85,$05,$1C,$86,$06,$3A,$87
@@ -96749,7 +96791,7 @@ dat_0E2C4A:
 	dc.b	$5E,$B8,$8F,$9C,$AF,$C4,$44,$4B,$BB,$1F,$AC,$C3,$A1,$81,$F2,$4D
 	dc.b	$17,$3E,$50,$43,$66,$FD,$DF,$2C,$67,$B4,$6C,$67,$02,$36,$B5,$27
 	dc.b	$8B,$E2,$77,$00
-dat_0E2F84:
+Art_0E2F84:
 	dc.b	$00,$92,$80,$08,$F1,$78,$EC,$81,$07,$6C,$82,$06
 	dc.b	$31,$18,$E7,$83,$05,$12,$16,$34,$28,$EB,$84,$04,$06,$16,$30,$28
 	dc.b	$F3,$85,$04,$05,$16,$2F,$38,$F4,$86,$04,$04,$15,$13,$25,$16,$37
@@ -97106,10 +97148,10 @@ dat_0E4464:
 	dc.b	$08,$08,$00,$C6,$48,$A0,$10,$0D,$00,$C9,$40,$A0,$00,$03,$00,$00
 	dc.b	$00,$00,$00,$D1,$08,$F0,$08,$08,$00,$D2,$00,$E8,$00,$0D,$00,$D5
 	dc.b	$18,$C8,$00,$01,$00,$DD,$38,$C0
-dat_0E4538:
+Art_0E4538:
 	dc.b	$00,$10,$8F,$71,$00,$FF,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-dat_0E4550:
+Art_0E4550:
 	dc.b	$80,$1F,$80,$04,$09,$16,$37,$44,$08,$65,$16,$71,$00,$81,$05,$1A
 	dc.b	$82,$16,$36,$83,$05,$17,$16,$38,$25,$19,$74,$0A,$84,$06,$3A,$18
 	dc.b	$FB,$76,$3C,$85,$76,$3D,$86,$06,$3B,$77,$7C,$87,$05,$18,$78,$FA
@@ -97125,7 +97167,7 @@ dat_0E4550:
 	dc.b	$CA,$32,$8B,$BF,$61,$C0,$09,$D6,$DF,$91,$D8,$04,$EB,$6F,$C8,$ED
 	dc.b	$37,$5B,$21,$1F,$C1,$DB,$47,$FC,$5F,$F1,$2D,$A3,$FC,$29,$FF,$09
 	dc.b	$20,$00
-dat_0E4632:
+Art_0E4632:
 	dc.b	$80,$46,$80,$03,$00,$14,$07,$25,$17,$35,$19,$46,$36,$57
 	dc.b	$73,$66,$35,$74,$06,$81,$03,$01,$16,$34,$27,$7A,$82,$05,$18,$83
 	dc.b	$04,$08,$17,$77,$84,$04,$0A,$17,$79,$85,$07,$72,$86,$05,$16,$87
@@ -97206,7 +97248,7 @@ dat_0E4632:
 	dc.b	$CE,$5B,$7E,$AE,$9D,$5E,$7C,$3C,$87,$61,$EF,$D0,$4C,$69,$CB,$BF
 	dc.b	$9E,$3F,$3C,$CC,$75,$A4,$DC,$D6,$B4,$CC,$CC,$CC,$CC,$CC,$CC,$CC
 	dc.b	$DA,$FE,$BF,$60,$00,$00,$00,$00,$00,$0F,$04,$E5,$00,$E0
-dat_0E4B2E:
+Art_0E4B2E:
 	dc.b	$80,$46
 	dc.b	$80,$04,$0D,$13,$05,$34,$0C,$72,$00,$81,$03,$04,$82,$02,$01,$83
 	dc.b	$06,$3C,$84,$08,$F9,$85,$06,$3D,$88,$04,$0E,$8B,$08,$F8,$FF,$FC
@@ -97277,12 +97319,12 @@ dat_0E4E9E:
 dat_0E4EAE:
 	dc.b	$00,$01
 	dc.b	$00,$00,$00,$08,$04,$D1,$08,$E0,$08,$0E,$04,$D4,$00,$E0
-dat_0E4EBE:
+Art_0E4EBE:
 	dc.b	$80,$06
 	dc.b	$80,$14,$0A,$34,$0B,$65,$1E,$71,$00,$81,$03,$04,$14,$0C,$34,$0D
 	dc.b	$54,$0E,$FF,$AE,$5E,$85,$65,$C7,$A0,$1F,$80,$C0,$6A,$B8,$11,$E8
 	dc.b	$07,$F4,$23,$D1,$78,$2B,$57,$D4
-dat_0E4EE8:
+Art_0E4EE8:
 	dc.b	$00,$12,$81,$08,$F9,$14,$08,$36
 	dc.b	$3A,$89,$06,$3B,$13,$03,$36,$36,$8A,$08,$FA,$15,$19,$8B,$18,$F8
 	dc.b	$8E,$03,$02,$14,$09,$25,$18,$34,$0B,$46,$3D,$75,$1C,$8F,$02,$00
@@ -97304,7 +97346,7 @@ dat_0E4EE8:
 	dc.b	$BE,$F9,$24,$16,$33,$07,$D1,$92,$4F,$A3,$22,$3F,$16,$23,$E2,$BF
 	dc.b	$16,$23,$E3,$75,$BF,$24,$82,$C6,$59,$92,$CC,$96,$7C,$16,$7C,$17
 	dc.b	$BF,$24
-dat_0E5022:
+Art_0E5022:
 	dc.b	$80,$A1,$80,$03,$00,$14,$03,$24,$08,$35,$16,$46,$2E,$56
 	dc.b	$33,$66,$39,$75,$14,$81,$04,$04,$16,$37,$82,$04,$07,$17,$78,$83
 	dc.b	$04,$06,$16,$36,$28,$F6,$84,$06,$35,$18,$F7,$85,$06,$32,$86,$06
@@ -97699,7 +97741,7 @@ dat_0E5F7E:
 	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B
 	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B
 	dc.b	$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$F4,$6B,$FC,$6A,$C4,$6F
-dat_0E683E:
+Art_0E683E:
 	dc.b	$80,$EC
 	dc.b	$80,$03,$00,$14,$05,$25,$10,$35,$12,$45,$14,$55,$16,$66,$33,$74
 	dc.b	$06,$81,$06,$2F,$18,$F0,$82,$03,$01,$15,$13,$26,$38,$38,$EE,$48
@@ -97968,14 +98010,14 @@ dat_0E683E:
 	dc.b	$A9,$06,$06,$1C,$54,$DA,$A2,$E1,$5C,$96,$B1,$4C,$84,$6A,$BB,$7E
 	dc.b	$87,$F3,$11,$BF,$51,$BE,$ED,$F7,$25,$D1,$BB,$FE,$7F,$E3,$57,$0E
 	dc.b	$1D,$99,$99,$40
-dat_0E78E4:
+Art_0E78E4:
 	dc.b	$80,$09,$80,$04,$0C,$24,$0A,$35,$1A,$64,$0B,$71
 	dc.b	$00,$82,$03,$04,$46,$3E,$8C,$35,$1E,$8E,$04,$0E,$15,$1B,$FF,$00
 	dc.b	$FF,$64,$7E,$43,$F9,$DA,$F8,$6F,$FA,$1F,$AE,$F4,$7F,$3A,$BE,$0D
 	dc.b	$FF,$43,$F4,$45,$FE,$30,$57,$B5,$FB,$ED,$7E,$C8,$75,$C0,$41,$7D
 	dc.b	$FA,$C9,$5F,$BE,$FE,$07,$EC,$85,$42,$FF,$39,$02,$FB,$D1,$FE,$EC
 	dc.b	$FB,$61,$9F,$CC,$57,$FB,$B0,$00
-dat_0E7938:
+Art_0E7938:
 	dc.b	$00,$24,$80,$03,$00,$14,$0A,$25
 	dc.b	$19,$36,$38,$45,$1A,$57,$79,$66,$3A,$75,$1B,$82,$04,$09,$85,$03
 	dc.b	$03,$86,$03,$01,$15,$17,$27,$7B,$87,$03,$02,$15,$18,$28,$F8,$88
@@ -98107,7 +98149,7 @@ dat_0E7C4C:
 	dc.b	$00,$0E,$81,$12,$00,$00,$00,$00,$F8,$05,$03,$66,$F8,$F8,$00,$00
 	dc.b	$00,$00,$F0,$0F,$03,$6A,$F0,$F0,$00,$00,$00,$00,$F0,$0F,$03,$7A
 	dc.b	$F0,$F0,$00,$00,$00,$00,$F0,$0F,$03,$8A,$F0,$F0
-dat_0E811C:
+Art_0E811C:
 	dc.b	$00,$08,$80,$12
 	dc.b	$01,$24,$0A,$35,$17,$73,$04,$81,$06,$39,$15,$1D,$25,$16,$86,$05
 	dc.b	$19,$15,$1E,$26,$38,$87,$05,$18,$8F,$02,$00,$15,$1A,$27,$7C,$37
@@ -98118,7 +98160,7 @@ dat_0E811C:
 	dc.b	$80,$D2,$67,$05,$CF,$63,$49,$83,$F4,$EE,$E4,$9B,$7F,$8C,$3A,$E0
 	dc.b	$B9,$D3,$F8,$07,$23,$B7,$9C,$E0,$BF,$EC,$4A,$31,$9E,$95,$AF,$0F
 	dc.b	$CC,$E0,$7F,$6E,$57,$D9,$70,$00
-dat_0E81A8:
+Art_0E81A8:
 	dc.b	$82,$13,$80,$03,$00,$14,$05,$24
 	dc.b	$08,$35,$13,$45,$15,$55,$18,$66,$2F,$74,$02,$81,$04,$06,$16,$33
 	dc.b	$27,$76,$82,$05,$16,$18,$F1,$83,$04,$03,$16,$32,$27,$74,$38,$F2
@@ -98787,7 +98829,7 @@ dat_0EA544:
 	dc.b	$A2,$6C,$A3,$11,$A2,$CE,$A3,$12,$A3,$13,$A3,$14,$A3,$15,$A1,$82
 	dc.b	$A1,$82,$A1,$82,$BA,$4A,$A2,$7A,$A2,$7B,$A2,$7C,$A1,$82,$A3,$16
 	dc.b	$A2,$D3,$A3,$17,$A3,$18,$A3,$19,$A3,$1A,$A3,$1B,$A3,$1C
-dat_0EAB2E:
+Art_0EAB2E:
 	dc.b	$00,$08
 	dc.b	$80,$04,$0B,$14,$0C,$25,$1D,$35,$1C,$44,$09,$56,$3E,$74,$0D,$8E
 	dc.b	$03,$02,$14,$08,$25,$1E,$8F,$02,$00,$13,$03,$24,$0A,$FF,$E9,$07
@@ -98798,7 +98840,7 @@ dat_0EAB2E:
 	dc.b	$0E,$27,$26,$FF,$3F,$0F,$E7,$17,$EA,$C3,$D4,$84,$EC,$8B,$3A,$22
 	dc.b	$44,$48,$89,$23,$E7,$A9,$C9,$BB,$FE,$03,$FC,$0A,$B9,$FB,$E3,$BF
 	dc.b	$BF,$E0
-dat_0EABB2:
+Art_0EABB2:
 	dc.b	$80,$04,$80,$44,$0E,$53,$06,$62,$01,$73,$04,$89,$03,$05
 	dc.b	$8F,$02,$00,$FF,$92,$26,$2F,$15,$FC,$BF,$1F,$8E,$9F,$86,$98,$FC
 	dc.b	$42,$26,$2C,$C5,$49,$06,$8D,$3B,$F2,$EF,$E3,$8E,$FC,$34,$7F,$10
@@ -103084,7 +103126,7 @@ dat_0EFFF4:
 	dc.b	$90,$10,$09,$10,$1A,$09,$20,$00,$91,$00,$99,$11,$00,$90,$10,$90
 	dc.b	$02,$09,$90,$10,$0A,$11,$19,$90,$01,$09,$01,$01,$A0,$10,$1A,$00
 	dc.b	$00,$00,$10,$00,$99,$29,$10,$00,$00,$00
-dat_0FB75A:
+Z80_Driver:
 	dc.b	$F3,$F3,$18,$35,$00,$00
 	dc.b	$00,$00,$3A,$00,$40,$CB,$7F,$20,$F9,$C9,$DD,$CB,$01,$7E,$C0,$C3
 	dc.b	$38,$04,$C3,$46,$04,$00,$00,$00,$00,$00,$2A,$02,$1C,$06,$00,$C3
@@ -103331,7 +103373,7 @@ dat_0FB75A:
 	dc.b	$D6,$E1,$DD,$CB,$00,$E6,$C9,$DD,$34,$17,$C9,$DD,$CB,$00,$E6,$DD
 	dc.b	$CB,$00,$56,$C0,$3E,$1F,$DD,$86,$01,$B7,$F0,$32,$11,$7F,$DD,$CB
 	dc.b	$00,$46,$C8,$3E,$FF,$32,$11,$7F,$C9,$00
-dat_0FC6AA:
+Z80_Driver_Data:
 	dc.b	$4C,$10,$05,$11,$7B,$11
 	dc.b	$E0,$11,$4D,$12,$EC,$12,$1E,$13,$52,$13,$81,$13,$BD,$13,$E5,$13
 	dc.b	$0D,$14,$36,$14,$94,$14,$F7,$14,$4A,$15,$81,$15,$91,$15,$C7,$15
@@ -103476,6 +103518,7 @@ dat_0FC6AA:
 	dc.b	$30,$80,$30,$80,$DD,$18,$01,$01,$80,$05,$D4,$18,$00,$0C,$EF,$00
 	dc.b	$C6,$02,$C9,$CD,$D2,$0A,$F2,$3C,$0F,$01,$01,$01,$1F,$1F,$1F,$1F
 	dc.b	$10,$10,$00,$10,$10,$0A,$00,$0A,$35,$1A,$25,$1A,$1C,$80,$30,$80
+Z80_Driver_End:
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	dc.b	$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

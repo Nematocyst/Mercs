@@ -72,3 +72,17 @@ junk opcodes, >=2 hardware/RAM/branch refs) in space neither the disassembler no
 touched. `mdtrace ROM 5000 out 1 -probe cands.txt` then calls each one from a gameplay snapshot
 with a return sentinel on the stack and reports `returned` / `running` / `derailed`; only those
 that do not derail go into `tools/hints.json` (`code`). The 35 found so far all ran cleanly.
+
+## Data typing
+
+* **Art / ObjData labels** - `tools/classify_data.py` finds the blobs passed (`lea (X).l,An`) to a
+  routine just before it is called and records them in `hints.json` (`data_prefix`):
+  `Art_XXXXXX` goes to the Huffman-style decompressor `Decompress_ToVDP` / `Decompress_ToRAM`
+  (74 blobs), `ObjData_XXXXXX` to the object template / animation loaders (198 blobs).
+* **Z80 sound driver** - verified against a Z80 RAM dump: ROM `$FB75A..$FC6AA` goes to Z80 `$0000`,
+  `$FC6AA..$FCFA0` to Z80 `$1000` (labels `Z80_Driver`, `Z80_Driver_Data`, `Z80_Driver_End`).
+* **Strings** - emitted as `dc.b 'TEXT',0` when they have word structure (space or NUL, enough
+  distinct letters, plausible vowels). The assembler check assembles the equivalent bytes and each
+  string is also decoded back and compared. The game font is not ASCII: `<` is `.`, `:` is `'`,
+  `[` is `!`.
+* The `$100..$1FF` header is emitted as typed fields.
