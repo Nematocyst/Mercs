@@ -1,7 +1,9 @@
 """Play Mission 1 and record every object type the game itself spawns, with a crop of the screen
 around it a few frames after it appears.
 
-    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames]
+    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames] [god]
+
+`god` keeps Player_Invuln_Timer ($C5C2) high every frame, so the player is never hit and whole missions can be played.
 
 Writes spawns.tsv (type, first frame, array, X, Y, count) and spawn_sheet_N.png contact sheets.
 Objects live in VDP sprite coordinates, so the screen position is about (X-$80, Y-$80).
@@ -15,6 +17,7 @@ from PIL import Image, ImageDraw
 rom = sys.argv[1] if len(sys.argv) > 1 else 'mercs.bin'
 out = sys.argv[2] if len(sys.argv) > 2 else '.'
 frames = int(sys.argv[3]) if len(sys.argv) > 3 else 6000
+god = len(sys.argv) > 4 and sys.argv[4] == 'god'
 os.makedirs(out, exist_ok=True)
 g = harness.Game(rom)
 for f in range(9000):
@@ -30,6 +33,8 @@ for fr in range(frames):
     if fr % 15 == 0:
         pad = {'UP': random.random() < 0.8, 'LEFT': random.random() < 0.3, 'RIGHT': random.random() < 0.3,
                'DOWN': random.random() < 0.1, 'B': random.random() < 0.7, 'C': random.random() < 0.4, 'A': random.random() < 0.2}
+    if god:                                   # never hit: a nonzero Player_Invuln_Timer suppresses Collision_HitPlayer
+        g.env._ram[0xC5C2 ^ 1] = 0x40; g.env._ram[0xC5C3 ^ 1] = 0
     g.step(1, **pad)
     if g.w(0xFFFE04) != 0x0C:
         break
@@ -62,4 +67,4 @@ for s in range(0, len(cells), per):
     sheet = Image.new('RGB', (96 * 10, 96 * 6))
     for i, c in enumerate(cells[s:s + per]): sheet.paste(c, ((i % 10) * 96, (i // 10) * 96))
     sheet.save(os.path.join(out, 'spawn_sheet_%d.png' % (s // per)))
-print('frames played %d, types seen %d (%s)' % (fr, len(first), ' '.join('%02X' % t for t in sorted(first))))
+print('end state %02X, mission index %d, ' % (g.w(0xFFFE04), g.w(0xFFC328)) + 'frames played %d, types seen %d (%s)' % (fr, len(first), ' '.join('%02X' % t for t in sorted(first))))

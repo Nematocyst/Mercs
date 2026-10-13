@@ -22967,7 +22967,7 @@ loc_0101B0:
 	move.l	d0,(ram_C560).w
 loc_0101B4:
 	rts
-ObjType_26:
+ObjType_26_EnterDoor:
 	bset.b	#$0,Obj_Flags(a0)
 loc_0101BC:
 	bne.b	loc_0101DE
@@ -26602,7 +26602,7 @@ loc_012FEA:
 dat_012FEC:
 	dc.b	$00,$01,$2F,$F4
 	dc.b	$00,$01,$2F,$FA,$00,$00,$00,$10,$20,$60,$00,$00,$FF,$D8,$40,$68
-ObjType_38:
+ObjType_38_EnterDoor:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013006:
 	bne.b	loc_01302A
@@ -28571,12 +28571,12 @@ ObjectTypeTable:
 	dc.l	ObjType_18,ObjType_19,ObjType_1A,ObjType_1B
 	dc.l	ObjType_1C,ObjType_1D,ObjType_1E,ObjType_1F
 	dc.l	ObjType_20,ObjType_21,ObjType_22,ObjType_23
-	dc.l	ObjType_24,ObjType_25,ObjType_26,ObjType_27
+	dc.l	ObjType_24,ObjType_25,ObjType_26_EnterDoor,ObjType_27
 	dc.l	ObjType_28,ObjType_29,ObjType_2A,ObjType_2B
 	dc.l	ObjType_2C,ObjType_2D,ObjType_2E,ObjType_00
 	dc.l	ObjType_30,ObjType_31,ObjType_32_BossPlane,ObjType_33_BossPlane
 	dc.l	ObjType_34_BossPlane,ObjType_35_BossPlane,ObjType_36,ObjType_37
-	dc.l	ObjType_38,ObjType_39,ObjType_3A,ObjType_3B
+	dc.l	ObjType_38_EnterDoor,ObjType_39,ObjType_3A,ObjType_3B
 	dc.l	ObjType_3C,ObjType_3D,ObjType_3E,ObjType_3F
 	dc.l	ObjType_40,ObjType_41,ObjType_42,ObjType_43
 	dc.l	ObjType_44,ObjType_45,ObjType_46,ObjType_47
@@ -28600,10 +28600,10 @@ ObjectTypeTable:
 	dc.l	ObjType_8C,ObjType_8D,ObjType_8E_EnemySoldier,ObjType_8F_Shadow
 	dc.l	ObjType_90,ObjType_91,ObjType_92,ObjType_93
 	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97_Explosion
-	dc.l	ObjType_98,ObjType_99,ObjType_9A,ObjType_9B
+	dc.l	ObjType_98_BigTank,ObjType_99,ObjType_9A,ObjType_9B
 	dc.l	ObjType_9C_EnemySoldier,ObjType_9D,ObjType_9E,ObjType_9F
 	dc.l	ObjType_A0_EnemySoldier,ObjType_A1,ObjType_A2,ObjType_A3_EnemySoldier
-	dc.l	ObjType_A4,ObjType_A5,ObjType_A6_EnemySoldier,ObjType_A7
+	dc.l	ObjType_A4_EnemySoldier,ObjType_A5_EnemySoldier,ObjType_A6_EnemySoldier,ObjType_A7
 	dc.l	ObjType_A8,ObjType_A9,ObjType_AA,ObjType_AB
 	dc.l	ObjType_AC,ObjType_AD,ObjType_AE,ObjType_AF
 	dc.l	ObjType_B0,ObjType_B1,ObjType_B2,ObjType_B3
@@ -35916,7 +35916,7 @@ dat_01C770:
 	dc.b	$00,$04,$00,$08,$7E,$BE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$C1,$1E,$00,$3C,$00,$08,$70,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$01,$C2,$54
-ObjType_A4:
+ObjType_A4_EnemySoldier:
 	lea	ObjData_01CFF0(pc),a1
 loc_01C848:
 	jsr	Object_LoadTemplate(pc)
@@ -35964,7 +35964,7 @@ Words_01C8A2:
 Words_01C8C0:
 	dc.w	$0032,$004B,$0064,$007D,$0096,$00C8,$0000,$0000
 	dc.w	$0000,$0096,$0000,$0000,$0000,$0000,$0000
-ObjType_A5:
+ObjType_A5_EnemySoldier:
 	addq.w	#$1,$58(a0)
 loc_01C8E2:
 	cmpi.w	#$50,$58(a0)
@@ -40006,7 +40006,7 @@ dat_0218FA:
 	dc.b	$C1,$88,$55,$00,$00,$00,$00,$09,$A2,$0C,$55,$A0,$00,$03,$00,$0A
 	dc.b	$1A,$FE,$4B,$40,$00,$09,$9E,$1E,$37,$C0,$00,$09,$A2,$0C,$3D,$E0
 	dc.b	$00,$0A,$28,$FE,$52,$C0
-ObjType_98:
+ObjType_98_BigTank:
 	move.b	Obj_AnimTimer(a0),d0
 loc_02198A:
 	andi.b	#$3,d0

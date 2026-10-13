@@ -109,7 +109,10 @@
     "ObjType_32..35,B4_BossPlane": "medium - only Mission 7 spawns them; crops show one giant golden aircraft with propellers and turrets (tools/emu/watch_spawns.py on a stage-6 boot)",
     "ObjType_8A_Tank": "medium - Mission 5, 36 spawns, crop shows a green tank",
     "ObjType_97_Explosion": "medium - Mission 4, crop shows an orange fireball like type 80",
-    "ObjType_9C/A0/A3/A6_EnemySoldier": "medium-low - Mission 3 types whose crops show a grey-uniformed rifle soldier"
+    "ObjType_9C/A0/A3/A6_EnemySoldier": "medium-low - Mission 3 types whose crops show a grey-uniformed rifle soldier",
+    "ObjType_26/38_EnterDoor": "medium - Mission 5; crops show a green gate with an ENTER sign and a flash",
+    "ObjType_98_BigTank": "medium-low - Mission 6, one spawn: a large grey tank with a gun crew (possibly a boss)",
+    "ObjType_A4/A5_EnemySoldier": "medium-low - grey-uniformed soldiers in Mission 5"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -217,5 +220,10 @@
   "01BACC": "ObjType_A0_EnemySoldier",
   "01BE3E": "ObjType_A3_EnemySoldier",
   "01C016": "ObjType_A6_EnemySoldier",
-  "FFFFC328": "Stage_Index"
+  "FFFFC328": "Stage_Index",
+  "0101B6": "ObjType_26_EnterDoor",
+  "013000": "ObjType_38_EnterDoor",
+  "021986": "ObjType_98_BigTank",
+  "01C844": "ObjType_A4_EnemySoldier",
+  "01C8DE": "ObjType_A5_EnemySoldier"
 }

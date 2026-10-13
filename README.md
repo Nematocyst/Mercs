@@ -226,3 +226,12 @@ index preset (`Stage_Index` = `ram_C328` = mission number minus 1 in Arcade; sta
 starts Mission N). The trampoline lives in unused ROM padding at `$FFF00`. Running `watch_spawns.py` on missions
 2-7 (`tools/emu/spawns_missions2_7.tsv`; Mission 8 does not exist) added: `ObjType_32/33/34/35/B4_BossPlane`
 (Mission 7 only, one giant aircraft), `ObjType_8A_Tank`, `ObjType_97_Explosion` and `ObjType_9C/A0/A3/A6_EnemySoldier`.
+
+### Full Arcade playthrough of the object spawns
+
+`watch_spawns.py ... god` holds `Player_Invuln_Timer` high, so each mission plays to its end (about 13,000-19,000
+frames). Over Missions 1-7 the game spawns only **74 distinct object types** of the 274 handlers
+(`tools/emu/spawns_arcade_all.tsv`, with missions and counts); a second full pass found just 9 new ones, so the
+list has saturated. The other ~200 handlers are not created in Arcade play: probably children made inside
+handlers of those types, Original-mode content or unused. New names from this pass: `ObjType_26/38_EnterDoor`
+(building entrances with an ENTER sign, Mission 5), `ObjType_98_BigTank` (Mission 6), `ObjType_A4/A5_EnemySoldier`.
