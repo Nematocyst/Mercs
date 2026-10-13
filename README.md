@@ -225,7 +225,7 @@ group that appears together) were seen but not named.
 index preset (`Stage_Index` = `ram_C328` = mission number minus 1 in Arcade; state `$24` adds 1, so `K = N-2`
 starts Mission N). The trampoline lives in unused ROM padding at `$FFF00`. Running `watch_spawns.py` on missions
 2-7 (`tools/emu/spawns_missions2_7.tsv`; Mission 8 does not exist) added: `ObjType_32/33/34/35/B4_BossPlane`
-(Mission 7 only, one giant aircraft), `ObjType_8A_Tank`, `ObjType_97_Explosion` and `ObjType_9C/A0/A3/A6_EnemySoldier`.
+(Mission 7 only, one giant aircraft), `ObjType_8A_EnemyTroop` (originally read as a tank; corrected, see names.json), `ObjType_97_Explosion` and `ObjType_9C/A0/A3/A6_EnemySoldier`.
 
 ### Full Arcade playthrough of the object spawns
 
@@ -243,3 +243,13 @@ handlers of those types, Original-mode content or unused. New names from this pa
 `5D` (an invisible trigger on the beach) and `5F` (`ObjType_5F_EnemyGrenadier`). The random autopilot then stayed on
 that one mission for 150,000 frames without finishing it, so later Original missions were not reached: that mode
 needs a smarter driver (its levels do not simply scroll upward).
+
+### Explorer driver result
+
+`watch_spawns.py ... god original explore` gets past the point where the random walker stalls in Original Mission 1
+(camera Y `$03AF`) and reaches `$024F`, adding types `16`, `84`, `86` (two spawn offscreen above the view) and a soldier
+behind sandbags (`8A`). It then stays in the same 60 positions for 175,000 frames while the game keeps running: the
+level holds the camera until some condition is met (not just killing nearby soldiers - the score stays 650). A
+goal-aware driver (find what releases the scroll, e.g. by watching `Camera_VelY` writers with `mdtrace -watch`) is the
+next step. Crops are taken at an approximate position and can show a neighbouring object: names from them are
+medium confidence at best (`ObjType_8A` was misread once).

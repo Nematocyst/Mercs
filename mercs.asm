@@ -28596,7 +28596,7 @@ ObjectTypeTable:
 	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
 	dc.l	ObjType_80_Explosion,ObjType_82_EnemySoldier,ObjType_82_EnemySoldier,ObjType_83_EnemySoldier
 	dc.l	ObjType_84,ObjType_85,ObjType_86,ObjType_87
-	dc.l	ObjType_88,ObjType_89,ObjType_8A_Tank,ObjType_8B
+	dc.l	ObjType_88,ObjType_89,ObjType_8A_EnemyTroop,ObjType_8B
 	dc.l	ObjType_8C,ObjType_8D,ObjType_8E_EnemySoldier,ObjType_8F_Shadow
 	dc.l	ObjType_90,ObjType_91,ObjType_92,ObjType_93
 	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97_Explosion
@@ -32997,7 +32997,7 @@ loc_01A410:
 	lea	ObjData_01A6A2(pc),a1
 loc_01A414:
 	jmp	(Object_RunAnimScript).l
-ObjType_8A_Tank:
+ObjType_8A_EnemyTroop:
 	subq.b	#$1,$3E(a0)
 loc_01A41E:
 	beq.b	loc_01A40C

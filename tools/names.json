@@ -107,13 +107,13 @@
     "ObjType_82/83/8E_EnemySoldier": "medium - green infantry in the crops; 22, 14 and 29 spawns in arrays B/C",
     "Stage_Index": "high for Arcade - HUD MISSION n shows when it is n-1 (verified: boot with stage 3 -> state 24 adds 1 -> MISSION 5, C328=4); Original mode sets 7 on its mission map",
     "ObjType_32..35,B4_BossPlane": "medium - only Mission 7 spawns them; crops show one giant golden aircraft with propellers and turrets (tools/emu/watch_spawns.py on a stage-6 boot)",
-    "ObjType_8A_Tank": "medium - Mission 5, 36 spawns, crop shows a green tank",
     "ObjType_97_Explosion": "medium - Mission 4, crop shows an orange fireball like type 80",
     "ObjType_9C/A0/A3/A6_EnemySoldier": "medium-low - Mission 3 types whose crops show a grey-uniformed rifle soldier",
     "ObjType_26/38_EnterDoor": "medium - Mission 5; crops show a green gate with an ENTER sign and a flash",
     "ObjType_98_BigTank": "medium-low - Mission 6, one spawn: a large grey tank with a gun crew (possibly a boss)",
     "ObjType_A4/A5_EnemySoldier": "medium-low - grey-uniformed soldiers in Mission 5",
-    "ObjType_5F_EnemyGrenadier": "medium - Original mode; 4 spawns, crop shows an orange-uniformed soldier with a raised dark grenade"
+    "ObjType_5F_EnemyGrenadier": "medium - Original mode; 4 spawns, crop shows an orange-uniformed soldier with a raised dark grenade",
+    "ObjType_8A_EnemyTroop": "low - CORRECTED: Mission 5 crops showed a tank near the spawn, but in Original Mission 1 the same type shows an orange soldier behind sandbags; the crop is only a region around an approximate position, so the neighbour was misread. Treated as an enemy troop (counts: 36 in Mission 5)."
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -215,7 +215,6 @@
   "013BA2": "ObjType_34_BossPlane",
   "013ACA": "ObjType_35_BossPlane",
   "022092": "ObjType_B4_BossPlane",
-  "01A41A": "ObjType_8A_Tank",
   "01642C": "ObjType_97_Explosion",
   "01A448": "ObjType_9C_EnemySoldier",
   "01BACC": "ObjType_A0_EnemySoldier",
@@ -227,5 +226,6 @@
   "021986": "ObjType_98_BigTank",
   "01C844": "ObjType_A4_EnemySoldier",
   "01C8DE": "ObjType_A5_EnemySoldier",
-  "012476": "ObjType_5F_EnemyGrenadier"
+  "012476": "ObjType_5F_EnemyGrenadier",
+  "01A41A": "ObjType_8A_EnemyTroop"
 }
