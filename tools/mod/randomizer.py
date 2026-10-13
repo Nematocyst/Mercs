@@ -5,12 +5,12 @@
 
 In Original mode (Game_Mode == 3) the party order is shuffled each new game: you start as a random one of
 Rifle/Burner/Launcher/Laser/Homing and the tents hand out the rest in a random order.  Arcade mode is untouched.
-The new code lives in the unused ROM padding at $FFD40 (stubs.s); the game is hooked at the sites below.
+The new code lives in the unused ROM padding at $FCFA0 (stubs.s); the game is hooked at the sites below.
 """
 import os, struct, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CODE_ADDR = 0xFFD40
+CODE_ADDR = 0xFCFA0          # 4192 bytes of $FF padding after the Z80 driver (never read: dataread.map)
 AS = 'm68k-linux-gnu-as'; LD = 'm68k-linux-gnu-ld'; NM = 'm68k-linux-gnu-nm'; OC = 'm68k-linux-gnu-objcopy'
 
 
@@ -42,6 +42,16 @@ SITES = [
     (0xBCA2, '3238c36e43f8c700', lambda s: jsr(s['Site7']) + NOP),                # palette flash position
     (0xCA18, '60000006', lambda s: bytes.fromhex('d0406006')),                    # bra loc_00CA20 -> add.w d0,d0 ; bra.b +6
     (0xCA1C, '3038c36ed040', lambda s: jsr(s['Phys2_d0'])),                       # portrait frame CA2A[merc]
+    (0xC4D6, '3228003034311000', lambda s: jsr(s['SiteT1']) + NOP),                # shop: stat cap word table
+    (0xC544, '30280030d040', lambda s: jsr(s['SiteT2'])),                         # shop: CD0E
+    (0xC578, '30280030d040', lambda s: jsr(s['SiteT2'])),                         # shop: CD22
+    (0xC5A4, '30280030d040', lambda s: jsr(s['SiteT2'])),                         # shop: CD36
+    (0xC658, '3401d24121f11000e014', lambda s: jsr(s['SiteT5']) + NOP),           # carrier panel portrait + layout
+    (0xB93A, '2c7100006000013e', lambda s: jmp(s['SiteU1']) + NOP),                # join dialogue: header panel
+    (0xCA22, '217100000014', lambda s: jmp(s['SiteU2'])),                         # join dialogue: portrait
+    (0xBCD6, '215900143159' + '0004', lambda s: jsr(s['SiteP']) + NOP),             # party screen portraits
+    (0xBA1C, '4df90000be6c', lambda s: jsr(s['SiteW'])),                          # party screen rows start
+    (0xBB56, '225e245e323cc517', lambda s: jmp(s['SiteV']) + NOP),               # party screen names
     (0x6512, '31c0fe444e75', lambda s: jmp(s['SetMode'])),                        # mode chosen -> reshuffle
     (0x8954, '43f900042b5e', lambda s: jsr(s['MsgPtr'])),                         # "X JOINED YOUR PARTY" text
 ]
@@ -50,6 +60,7 @@ SITES = [
 def build(rom):
     code, syms = assemble()
     d = bytearray(rom)
+    assert len(code) <= 4192, 'code does not fit the padding'
     assert len(set(d[CODE_ADDR:CODE_ADDR + len(code)])) == 1 and d[CODE_ADDR] == 0xFF, 'ROM padding at $%X is not free' % CODE_ADDR
     d[CODE_ADDR:CODE_ADDR + len(code)] = code
     hunks = [(CODE_ADDR, code)]
