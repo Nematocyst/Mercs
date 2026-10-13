@@ -1,0 +1,11 @@
+# ROMs are commercial binaries; keep them out of the repo
+*.bin
+*.md
+*.gen
+*.smd
+*.rom
+# build output
+build/
+*.o
+*.lst
+__pycache__/
