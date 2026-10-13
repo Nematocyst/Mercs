@@ -266,9 +266,9 @@ ram_C57E	equ	$FFFFC57E
 ram_C58E	equ	$FFFFC58E
 ram_C590	equ	$FFFFC590
 ram_C598	equ	$FFFFC598
-ram_C59A	equ	$FFFFC59A
+Palette_Dirty	equ	$FFFFC59A
 ram_C59E	equ	$FFFFC59E
-ram_C5A0	equ	$FFFFC5A0
+Fade_Active	equ	$FFFFC5A0
 Game_NextState	equ	$FFFFC5A2
 Timer_C5A4	equ	$FFFFC5A4
 ram_C5A6	equ	$FFFFC5A6
@@ -284,7 +284,7 @@ ram_C5BE	equ	$FFFFC5BE
 ram_C5BF	equ	$FFFFC5BF
 Flags_C5C0	equ	$FFFFC5C0
 ram_C5C1	equ	$FFFFC5C1
-ram_C5C2	equ	$FFFFC5C2
+Player_Invuln_Timer	equ	$FFFFC5C2
 ram_C5C8	equ	$FFFFC5C8
 ram_C5C9	equ	$FFFFC5C9
 ram_C5CA	equ	$FFFFC5CA
@@ -395,14 +395,14 @@ ram_C6BE	equ	$FFFFC6BE
 ram_C6C2	equ	$FFFFC6C2
 ram_C6C8	equ	$FFFFC6C8
 ram_C6C9	equ	$FFFFC6C9
-ram_C700	equ	$FFFFC700
+Palette_Buffer	equ	$FFFFC700
 ram_C704	equ	$FFFFC704
 ram_C716	equ	$FFFFC716
 ram_C718	equ	$FFFFC718
 ram_C71A	equ	$FFFFC71A
 ram_C73E	equ	$FFFFC73E
 ram_C740	equ	$FFFFC740
-ram_C780	equ	$FFFFC780
+Palette_Target	equ	$FFFFC780
 ram_C7F0	equ	$FFFFC7F0
 ram_C800	equ	$FFFFC800
 ram_C900	equ	$FFFFC900
@@ -894,13 +894,13 @@ loc_0004D0:
 loc_0004D2:
 	moveq	#$3,d2
 loc_0004D4:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_0004DA:
 	moveq	#$0,d0
 loc_0004DC:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_0004E2:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_0004E8:
 	move.w	#$28,(ram_C30E).w
 loc_0004EE:
@@ -917,13 +917,13 @@ loc_000506:
 loc_00050A:
 	move.w	d0,(VDP_Control).l
 loc_000510:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_000516:
 	jsr	(ObjectUpdate).l
 loc_00051C:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_000522:
-	bsr.w	sub_00426C
+	bsr.w	PaletteFade_Step
 loc_000526:
 	jsr	(sub_000558).l
 loc_00052C:
@@ -978,7 +978,7 @@ loc_000582:
 loc_000584:
 	move.w	(a0)+,(a1)+
 loc_000586:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_00058C:
 	rts
 Pal_00058E:
@@ -1008,7 +1008,7 @@ loc_0005FE:
 loc_000602:
 	subq.w	#$1,(ram_C304).w
 loc_000606:
-	jsr	(sub_003522).l
+	jsr	(Frame_Update).l
 loc_00060C:
 	bra.w	loc_0033E8
 dat_000610:
@@ -1023,8 +1023,8 @@ GameState_RoundStart:
 	move.w	d0,(VDP_Control).l
 	jsr	(sub_009EE0).l
 	moveq	#$0,d0
-	jsr	(sub_008508).l
-	move.b	#$1,(ram_C5A0).w
+	jsr	(LoadPalette).l
+	move.b	#$1,(Fade_Active).w
 	move.l	#$68600002,(VDP_Control).l
 	lea	(Art_058554).l,a0
 	jsr	(Decompress_ToVDP).l
@@ -1034,11 +1034,11 @@ GameState_RoundStart:
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
 loc_0006A4:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 	jsr	(sub_00075C).l
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_0006CE
 	bra.w	loc_0006A4
@@ -1141,7 +1141,7 @@ loc_0007D2:
 loc_0007EA:
 	rts
 loc_0007EC:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_00083A
 	move.w	#$100,(Z80_Bus_Request).l
@@ -1175,13 +1175,13 @@ loc_000862:
 loc_000866:
 	move.w	d0,(VDP_Control).l
 loc_00086C:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_000872:
 	move.w	#$178,d0
 loc_000876:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00087C:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_000882:
 	move.l	#$62E00002,(VDP_Control).l
 loc_00088C:
@@ -1207,13 +1207,13 @@ loc_0008BA:
 loc_0008BE:
 	move.w	d0,(VDP_Control).l
 loc_0008C4:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_0008CA:
 	jsr	(ObjectUpdate).l
 loc_0008D0:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_0008D6:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_0008DC:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_0008E2:
@@ -1229,7 +1229,7 @@ loc_0008F0:
 loc_0008F4:
 	moveq	#-$20,d0
 loc_0008F6:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0008FC:
 	movem.l	(a7)+,d0/a1
 loc_000900:
@@ -1481,10 +1481,10 @@ loc_000AF6:
 loc_000AF8:
 	move.b	(a2,d0.w),d0
 loc_000AFC:
-	jmp	(sub_00A068).l
+	jmp	(PlaySound).l
 loc_000B02:
 	moveq	#-$1F,d0
-	jmp	(sub_00A068).l
+	jmp	(PlaySound).l
 loc_000B0A:
 	moveq	#$2,d0
 	move.w	#$518,d3
@@ -1612,7 +1612,7 @@ loc_000BE0:
 loc_000BE6:
 	rts
 loc_000BE8:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_000BEC:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_000BF2:
@@ -1711,7 +1711,7 @@ loc_000E58:
 loc_000E5E:
 	moveq	#$18,d0
 loc_000E60:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_000E66:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_000E6E:
@@ -1772,7 +1772,7 @@ loc_000EF0:
 	move.l	#$420E0003,d0
 	moveq	#$19,d1
 	moveq	#$A,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 	bra.w	loc_000F22
 loc_000F0C:
 	lea	(Map_0E14E6).l,a1
@@ -1783,9 +1783,9 @@ loc_000F18:
 loc_000F1A:
 	moveq	#$9,d2
 loc_000F1C:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_000F22:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_000F28:
 	lea	(dat_0FE45A).l,a1
 loc_000F2E:
@@ -1817,7 +1817,7 @@ loc_000F58:
 loc_000F5E:
 	move.w	#$168,d0
 loc_000F62:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_000F68:
 	lea	(Map_0E0EEA).l,a1
 loc_000F6E:
@@ -1827,7 +1827,7 @@ loc_000F74:
 loc_000F76:
 	moveq	#$17,d2
 loc_000F78:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_000F7E:
 	move.w	(VDP_Reg1_Shadow).w,d0
 loc_000F82:
@@ -1835,11 +1835,11 @@ loc_000F82:
 loc_000F86:
 	move.w	d0,(VDP_Control).l
 loc_000F8C:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_000F92:
 	jsr	(ObjectUpdate).l
 loc_000F98:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_000F9E:
 	bsr.b	sub_001002
 loc_000FA0:
@@ -1851,7 +1851,7 @@ loc_000FA8:
 loc_000FAE:
 	bne.b	loc_000FE0
 loc_000FB0:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_000FB6:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_000FBC:
@@ -1865,7 +1865,7 @@ loc_000FC8:
 loc_000FCC:
 	moveq	#-$20,d0
 loc_000FCE:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_000FD4:
 	movem.l	(a7)+,d0/a1
 loc_000FD8:
@@ -1875,7 +1875,7 @@ loc_000FDE:
 loc_000FE0:
 	st.b	(ram_C344).w
 	st.b	(ram_C5CD).w
-	move.w	#$FFFF,(ram_C5C2).w
+	move.w	#$FFFF,(Player_Invuln_Timer).w
 	move.w	#$18,(Game_NextState).w
 	bra.b	loc_000FC8
 loc_000FF6:
@@ -1933,7 +1933,7 @@ loc_001098:
 	tst.w	d7
 	beq.b	loc_001088
 	lea	(dat_0FF71C).l,a1
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 	move.w	#$7,d0
 loc_0010B2:
 	move.l	(a1)+,(a2)+
@@ -2016,7 +2016,7 @@ loc_001168:
 loc_00117C:
 	rts
 loc_00117E:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_001182:
 	bsr.w	sub_001198
 loc_001186:
@@ -2056,7 +2056,7 @@ loc_0011DA:
 	move.l	#$61140003,d0
 	moveq	#$13,d1
 	moveq	#$17,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_00120A:
 	rts
 sub_00120C:
@@ -2069,14 +2069,14 @@ loc_001212:
 	move.l	#$420E0003,d0
 	moveq	#$19,d1
 	moveq	#$A,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 	rts
 loc_001234:
 	lea	(Map_0E14E6).l,a1
 	move.l	#$420E0003,d0
 	moveq	#$19,d1
 	moveq	#$9,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_00124A:
 	rts
 sub_00124C:
@@ -2204,7 +2204,7 @@ loc_0013B0:
 loc_0013B2:
 	bsr.w	sub_0016FA
 loc_0013B6:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_0013BC:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0013C4:
@@ -2382,13 +2382,13 @@ loc_00157E:
 loc_001582:
 	move.b	(a1,d1.w),d0
 loc_001586:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00158C:
 	cmpi.w	#$18,(Game_State).w
 loc_001592:
 	beq.w	loc_00193A
 loc_001596:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 sub_00159C:
 	move.w	#$2700,sr
 loc_0015A0:
@@ -2402,7 +2402,7 @@ loc_0015B2:
 loc_0015B8:
 	jsr	(sub_00A0C6).l
 loc_0015BE:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_0015C4:
 	bsr.w	sub_001648
 loc_0015C8:
@@ -2442,7 +2442,7 @@ loc_001624:
 loc_00162A:
 	jsr	(sub_0084E2).l
 loc_001630:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_001636:
 	move.w	#$2000,sr
 loc_00163A:
@@ -2494,7 +2494,7 @@ loc_00168E:
 loc_001692:
 	moveq	#-$20,d0
 loc_001694:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00169A:
 	movem.l	(a7)+,d0/a1
 loc_00169E:
@@ -2593,7 +2593,7 @@ loc_00179A:
 loc_00179E:
 	move.w	(a6)+,d0
 loc_0017A0:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_0017A6:
 	move.w	(a6)+,(ram_C50E).w
 loc_0017AA:
@@ -2733,7 +2733,7 @@ loc_001890:
 loc_001894:
 	moveq	#$2,d0
 loc_001896:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_00189C:
 	movea.l	(a6)+,a0
 loc_00189E:
@@ -2741,7 +2741,7 @@ loc_00189E:
 loc_0018A4:
 	moveq	#$1,d0
 loc_0018A6:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_0018AC:
 	movea.l	(a6)+,a0
 loc_0018AE:
@@ -2749,7 +2749,7 @@ loc_0018AE:
 loc_0018B4:
 	moveq	#$1,d0
 loc_0018B6:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_0018BC:
 	move.l	(a6)+,d0
 loc_0018BE:
@@ -2761,7 +2761,7 @@ loc_0018C4:
 loc_0018CA:
 	moveq	#$1,d0
 loc_0018CC:
-	jmp	(sub_008524).l
+	jmp	(Decompress_RLE).l
 sub_0018D2:
 	lea	(Decomp_Buffer).w,a1
 loc_0018D6:
@@ -2901,7 +2901,7 @@ loc_0019E8:
 loc_0019EA:
 	moveq	#$1B,d2
 loc_0019EC:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_0019F2:
 	bsr.w	sub_001A02
 loc_0019F6:
@@ -2930,7 +2930,7 @@ loc_001A1A:
 loc_001A3E:
 	bsr.w	Update_Scroll
 loc_001A42:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_001A46:
 	bsr.w	sub_001AB8
 loc_001A4A:
@@ -3086,7 +3086,7 @@ loc_001B72:
 loc_001B74:
 	moveq	#$1,d2
 loc_001B76:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_001B7C:
 	rts
 sub_001B7E:
@@ -3106,7 +3106,7 @@ loc_001B96:
 loc_001B98:
 	moveq	#$1,d2
 loc_001B9A:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_001BA0:
 	rts
 loc_001BA2:
@@ -3118,7 +3118,7 @@ loc_001BAC:
 loc_001BAE:
 	moveq	#$0,d2
 loc_001BB0:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_001BB6:
 	rts
 sub_001BB8:
@@ -3571,7 +3571,7 @@ loc_002042:
 loc_002044:
 	moveq	#$1B,d2
 loc_002046:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_00204C:
 	bsr.w	Update_Scroll
 loc_002050:
@@ -4034,7 +4034,7 @@ GameState_Demo:
 	bsr.w	GameState_Gameplay
 	st.b	(ram_C5C9).w
 loc_002CBE:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	bsr.w	sub_00159C
 	cmpi.w	#$FFFF,(ram_FE64).w
 	beq.b	loc_002CBE
@@ -4056,7 +4056,7 @@ loc_002CF2:
 	move.w	(ram_FE62).w,(Control_Config).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$8,(Game_State).w
 	rts
@@ -4098,10 +4098,10 @@ GameState_MissionComplete:
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_Control).l
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 	move.w	#$D8,d0
-	jsr	(sub_008508).l
-	move.b	#$1,(ram_C5A0).w
+	jsr	(LoadPalette).l
+	move.b	#$1,(Fade_Active).w
 	move.w	#$100,(Z80_Bus_Request).l
 loc_002DB0:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -4145,10 +4145,10 @@ loc_002DF2:
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
 loc_002E86:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
-	jsr	(sub_00426C).l
+	jsr	(BuildSpriteList).l
+	jsr	(PaletteFade_Step).l
 	bsr.w	sub_002EE4
 	bsr.w	sub_0080BC
 	bsr.w	sub_00805E
@@ -4302,7 +4302,7 @@ loc_003084:
 	bset.b	#$3,(Flags_C5C0).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_0030B2:
 	rts
@@ -4324,7 +4324,7 @@ loc_0030B4:
 	move.w	d1,(ram_C5D2).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3A,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	bset.b	#$4,(Flags_C5C0).w
 loc_003106:
@@ -4357,7 +4357,7 @@ loc_003138:
 loc_003150:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3B,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	lea	(dat_040484).l,a1
 	lea	(ram_C336).w,a2
@@ -4374,7 +4374,7 @@ sub_00317A:
 	move.l	#$503C0003,d0
 	moveq	#$9,d1
 	moveq	#$1B,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 	bsr.w	sub_007F26
 	move.w	(ram_C348).w,d0
 	move.w	(ram_C34A).w,d1
@@ -4406,7 +4406,7 @@ loc_0031FC:
 	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_003204:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_003252
 	move.w	#$100,(Z80_Bus_Request).l
@@ -4528,7 +4528,7 @@ loc_0033E0:
 	bra.w	loc_007B1A
 	bra.w	loc_006B6E
 loc_0033E8:
-	bclr.b	#$0,(ram_C59A).w
+	bclr.b	#$0,(Palette_Dirty).w
 loc_0033EE:
 	beq.w	loc_003440
 loc_0033F2:
@@ -4620,7 +4620,7 @@ loc_00350A:
 	addq.w	#$2,a0
 	bsr.w	sub_00358C
 	move.b	d0,(ram_C326).w
-sub_003522:
+Frame_Update:
 	cmpi.w	#$18,(Game_State).w
 loc_003528:
 	beq.b	loc_003530
@@ -4658,7 +4658,7 @@ HInt:
 	movem.l	d0-d7/a0-a6,-(a7)
 	tst.b	(ram_C59E).w
 	beq.b	loc_003586
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_003586:
 	movem.l	(a7)+,d0-d7/a0-a6
 	rte
@@ -4692,7 +4692,7 @@ GameState_Transition:
 loc_0035C6:
 	bset.b	#$0,(Flags_C61C).w
 loc_0035CC:
-	bsr.w	sub_0084CA
+	bsr.w	WaitVBlank
 loc_0035D0:
 	move.b	#$6,(Timer_C5A4).w
 loc_0035D6:
@@ -4735,7 +4735,7 @@ loc_00362C:
 loc_003634:
 	bset.b	#$1,(Flags_C61C).w
 loc_00363A:
-	bsr.w	sub_0084CA
+	bsr.w	WaitVBlank
 loc_00363E:
 	tst.b	(ram_C59E).w
 loc_003642:
@@ -5306,24 +5306,24 @@ loc_003EAE:
 	dc.b	$00,$00,$A2,$2A,$41,$F9,$00,$0A,$16,$80,$49,$F9,$00,$FF,$44,$00
 	dc.b	$4E,$B9,$00,$00,$A2,$2A,$41,$F9,$00,$0A,$17,$7E,$49,$F9,$00,$FF
 	dc.b	$4B,$60,$4E,$B9,$00,$00,$A2,$2A,$60,$00,$F3,$CA
-sub_00426C:
-	tst.b	(ram_C5A0).w
+PaletteFade_Step:
+	tst.b	(Fade_Active).w
 loc_004270:
 	beq.b	loc_0042A0
 loc_004272:
 	moveq	#$6,d0
 loc_004274:
-	lea	(ram_C780).w,a1
+	lea	(Palette_Target).w,a1
 loc_004278:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_00427C:
 	moveq	#$3F,d1
 loc_00427E:
 	bsr.b	sub_0042A2
 loc_004280:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_004286:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_00428C:
 	move.w	#$8000,d3
 loc_004290:
@@ -5331,7 +5331,7 @@ loc_004290:
 loc_004294:
 	dbra	d0,loc_004274
 loc_004298:
-	clr.b	(ram_C5A0).w
+	clr.b	(Fade_Active).w
 loc_00429C:
 	clr.b	(ram_C6B4).w
 loc_0042A0:
@@ -5405,7 +5405,7 @@ loc_0042F8:
 loc_0042FC:
 	bsr.b	sub_0042A2
 loc_0042FE:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_004304:
 	subq.b	#$1,(Timer_C5A4).w
 loc_004308:
@@ -5417,7 +5417,7 @@ loc_00430E:
 loc_004312:
 	move.w	#$2,(ram_C5A6).w
 loc_004318:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_00431C:
 	moveq	#$3F,d1
 loc_00431E:
@@ -5507,7 +5507,7 @@ loc_0043B0:
 loc_0043B4:
 	bsr.b	sub_004372
 loc_0043B6:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_0043BC:
 	subq.b	#$1,(Timer_C5A4).w
 loc_0043C0:
@@ -5536,10 +5536,10 @@ GameState_NextMission:
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_Control).l
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 	move.w	#$E0,d0
-	jsr	(sub_008508).l
-	move.b	#$1,(ram_C5A0).w
+	jsr	(LoadPalette).l
+	move.b	#$1,(Fade_Active).w
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00443E:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -5561,10 +5561,10 @@ loc_00443E:
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
 loc_004496:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
-	jsr	(sub_00426C).l
+	jsr	(BuildSpriteList).l
+	jsr	(PaletteFade_Step).l
 	bsr.w	sub_0044D8
 	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_0044C6
@@ -5590,7 +5590,7 @@ loc_0044EC:
 	bsr.w	sub_004514
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	bset.b	#$0,(Flags_C5AF).w
 loc_004512:
@@ -5622,7 +5622,7 @@ loc_004542:
 	move.l	#$61140003,d0
 	moveq	#$13,d1
 	moveq	#$17,d2
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 	cmpi.w	#$5,(ram_C328).w
 	beq.b	loc_004590
 	move.w	(ram_C328).w,d0
@@ -5660,7 +5660,7 @@ loc_0045D6:
 	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_0045DE:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_00462C
 	move.w	#$100,(Z80_Bus_Request).l
@@ -5756,9 +5756,9 @@ loc_004960:
 loc_004966:
 	move.w	#$E8,d0
 loc_00496A:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_004970:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_004976:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00497E:
@@ -5814,19 +5814,19 @@ loc_0049F0:
 loc_0049F4:
 	moveq	#-$7F,d0
 loc_0049F6:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0049FC:
 	movem.l	(a7)+,d0/a1
 loc_004A00:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_004A06:
 	jsr	(ObjectUpdate).l
 loc_004A0C:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_004A12:
 	bsr.w	sub_004B36
 loc_004A16:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_004A1C:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_004A22:
@@ -5838,7 +5838,7 @@ loc_004A28:
 loc_004A2C:
 	moveq	#-$20,d0
 loc_004A2E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_004A34:
 	movem.l	(a7)+,d0/a1
 loc_004A38:
@@ -5866,11 +5866,11 @@ loc_004A6E:
 loc_004A76:
 	move.w	#$70,d0
 loc_004A7A:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_004A80:
 	rts
 loc_004A82:
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 loc_004A88:
 	move.w	Obj_State(a0),d0
 loc_004A8C:
@@ -5931,11 +5931,11 @@ loc_004B1E:
 loc_004B24:
 	move.w	#$78,d0
 loc_004B28:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_004B2E:
 	rts
 loc_004B30:
-	jmp	(sub_014248).l
+	jmp	(Anim_Step).l
 sub_004B36:
 	lea	(ram_D000).w,a1
 loc_004B3A:
@@ -6133,7 +6133,7 @@ loc_004D16:
 	moveq	#$0,d6
 	jmp	(sub_0089A6).l
 loc_004D2E:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_004D32:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_004D38:
@@ -6209,13 +6209,13 @@ loc_005104:
 loc_005108:
 	move.w	d0,(VDP_Control).l
 loc_00510E:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_005114:
 	move.w	#$F0,d0
 loc_005118:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00511E:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_005124:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00512C:
@@ -6281,17 +6281,17 @@ loc_0051BC:
 loc_0051C0:
 	moveq	#-$74,d0
 loc_0051C2:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0051C8:
 	movem.l	(a7)+,d0/a1
 loc_0051CC:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_0051D2:
 	jsr	(ObjectUpdate).l
 loc_0051D8:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_0051DE:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_0051E4:
 	btst.b	#$1,(Flags_C61C).w
 loc_0051EA:
@@ -6301,7 +6301,7 @@ loc_0051EC:
 loc_0051F0:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$30,(Game_NextState).w
 	move.w	#$8,(Game_State).w
@@ -6361,7 +6361,7 @@ loc_00529A:
 loc_0052A0:
 	rts
 loc_0052A2:
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 loc_0052A8:
 	cmpi.w	#$E0,Obj_Y(a0)
 loc_0052AE:
@@ -6381,7 +6381,7 @@ loc_0052C6:
 loc_0052CC:
 	rts
 loc_0052CE:
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 loc_0052D4:
 	bsr.w	sub_0043A0
 loc_0052D8:
@@ -6571,7 +6571,7 @@ loc_00550E:
 loc_005512:
 	moveq	#$2,d0
 loc_005514:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_00551A:
 	lea	(dat_0E3C2C).l,a0
 loc_005520:
@@ -6587,7 +6587,7 @@ loc_005530:
 loc_005534:
 	moveq	#$2,d0
 loc_005536:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_00553C:
 	lea	(dat_0E3BF8).l,a0
 loc_005542:
@@ -6595,7 +6595,7 @@ loc_005542:
 loc_005548:
 	moveq	#$1,d0
 loc_00554A:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_005550:
 	lea	(dat_057C76).l,a0
 loc_005556:
@@ -6603,7 +6603,7 @@ loc_005556:
 loc_00555C:
 	moveq	#$1,d0
 loc_00555E:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_005564:
 	lea	(Decomp_Buffer).w,a1
 loc_005568:
@@ -6675,7 +6675,7 @@ loc_0055F6:
 loc_0055FC:
 	rts
 loc_0055FE:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_005602:
 	bsr.w	sub_001B2C
 loc_005606:
@@ -6740,7 +6740,7 @@ GameState_Ending_B:
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_Control).l
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 	move.w	#$9030,(VDP_Control).l
 	move.w	#$8B02,(VDP_Control).l
 	move.w	#$8D3D,(VDP_Control).l
@@ -6770,8 +6770,8 @@ loc_005818:
 	move.l	d7,(a6)+
 	dbra	d6,loc_005818
 	move.w	#$F8,d0
-	jsr	(sub_008508).l
-	move.b	#$1,(ram_C5A0).w
+	jsr	(LoadPalette).l
+	move.b	#$1,(Fade_Active).w
 	move.w	#$100,(Z80_Bus_Request).l
 loc_005836:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -6808,22 +6808,22 @@ loc_005878:
 	move.w	d0,(VDP_Control).l
 	movem.l	d0/a1,-(a7)
 	moveq	#-$73,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_0058E0:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 	bsr.w	sub_005A6E
 	jsr	(sub_0084E2).l
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 	btst.b	#$1,(Flags_C61C).w
 	bne.b	loc_00590E
 	bra.w	loc_0058E0
 loc_00590E:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$20,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$3C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
@@ -6938,7 +6938,7 @@ loc_005A1A:
 	move.w	#$FFFF,Obj_VelX(a0)
 	movem.l	d0/a1,-(a7)
 	moveq	#-$39,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_005A36:
 	rts
@@ -6990,11 +6990,11 @@ sub_005AA0:
 	lea	(Decomp_Buffer).w,a0
 	lea	(ram_8000).w,a4
 	moveq	#$2,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 	lea	(dat_0E43FA).l,a0
 	lea	(ram_FF2A00).l,a4
 	moveq	#$1,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 	lea	(Decomp_Buffer).w,a1
 	lea	(ram_FF2A00).l,a2
 	lea	(ram_8000).w,a3
@@ -7043,7 +7043,7 @@ loc_005B62:
 	move.w	#$0,(Z80_Bus_Request).l
 	rts
 loc_005B9E:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bsr.w	sub_0034B4
 	rts
 dat_005BA8:
@@ -7092,13 +7092,13 @@ loc_005D50:
 loc_005D54:
 	move.w	d0,(VDP_Control).l
 loc_005D5A:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_005D60:
 	move.w	#$170,d0
 loc_005D64:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_005D6A:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_005D70:
 	move.w	#$0,d0
 loc_005D74:
@@ -7140,13 +7140,13 @@ loc_005DD6:
 loc_005DDA:
 	move.w	d0,(VDP_Control).l
 loc_005DE0:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_005DE6:
 	jsr	(ObjectUpdate).l
 loc_005DEC:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_005DF2:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_005DF8:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_005DFE:
@@ -7174,7 +7174,7 @@ loc_005E28:
 loc_005E2C:
 	moveq	#$2,d0
 loc_005E2E:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_005E34:
 	lea	(dat_0E7C04).l,a0
 loc_005E3A:
@@ -7182,7 +7182,7 @@ loc_005E3A:
 loc_005E40:
 	moveq	#$1,d0
 loc_005E42:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_005E48:
 	lea	(ram_B000).w,a1
 loc_005E4C:
@@ -7258,7 +7258,7 @@ loc_005EDC:
 	move.b	#$10,$2F(a0)
 	movem.l	d0/a1,-(a7)
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.w	(ram_C328).w,d0
 	subq.w	#$8,d0
@@ -7395,7 +7395,7 @@ loc_006040:
 loc_006044:
 	move.w	Words_006052(pc,d0.w),(ram_C718).w
 loc_00604A:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_006050:
 	rts
 Words_006052:
@@ -7444,7 +7444,7 @@ loc_0060C0:
 loc_0060C6:
 	move.w	#$B0,d0
 loc_0060CA:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_0060D0:
 	rts
 loc_0060D2:
@@ -7455,19 +7455,19 @@ loc_0060E0:
 	bra.w	loc_0060E8
 	bra.w	loc_006110
 loc_0060E8:
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 	bne.b	loc_0060F2
 	rts
 loc_0060F2:
 	addq.w	#$4,Obj_State(a0)
 	clr.b	Obj_TileAttr(a0)
 	move.w	#$A8,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	move.w	Obj_X(a0),d4
 	move.w	Obj_Y(a0),d5
 	bra.w	sub_006192
 loc_006110:
-	jmp	(sub_014248).l
+	jmp	(Anim_Step).l
 sub_006116:
 	bset.b	#$0,Obj_Flags(a0)
 loc_00611C:
@@ -7483,7 +7483,7 @@ loc_006130:
 loc_006136:
 	move.w	#$B8,d0
 loc_00613A:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_006140:
 	move.w	Obj_Timer(a0),d0
 loc_006144:
@@ -7508,7 +7508,7 @@ loc_006164:
 	move.w	#$8000,$E(a0)
 loc_006176:
 	bchg.b	#$4,Obj_Flags(a0)
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 	beq.b	loc_006190
 	move.w	Obj_AnimPtr(a0),Obj_X(a0)
 	move.w	Obj_AnimTimer(a0),Obj_Y(a0)
@@ -7567,7 +7567,7 @@ dat_0061FA:
 	dc.b	$01,$1C,$01,$2C,$00,$EC,$01,$04,$00,$E4,$01,$04,$01,$04,$00,$DC
 	dc.b	$01,$1C
 loc_006222:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_006226:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_00622C:
@@ -7673,13 +7673,13 @@ loc_006450:
 loc_006454:
 	move.w	d0,(VDP_Control).l
 loc_00645A:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_006460:
 	move.w	#$178,d0
 loc_006464:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00646A:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_006470:
 	move.l	#$62E00002,(VDP_Control).l
 loc_00647A:
@@ -7697,13 +7697,13 @@ loc_006494:
 loc_006498:
 	move.w	d0,(VDP_Control).l
 loc_00649E:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_0064A4:
 	jsr	(ObjectUpdate).l
 loc_0064AA:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_0064B0:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_0064B6:
 	tst.b	(ram_C604).w
 loc_0064BA:
@@ -7863,7 +7863,7 @@ loc_0065D2:
 loc_0065D8:
 	rts
 loc_0065DA:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_0065DE:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_0065E4:
@@ -7912,13 +7912,13 @@ loc_006672:
 loc_006676:
 	move.w	d0,(VDP_Control).l
 loc_00667C:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_006682:
 	move.w	#$D8,d0
 loc_006686:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00668C:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_006692:
 	move.l	#$70C00002,(VDP_Control).l
 loc_00669C:
@@ -8016,17 +8016,17 @@ loc_006752:
 loc_006756:
 	moveq	#-$6F,d0
 loc_006758:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00675E:
 	movem.l	(a7)+,d0/a1
 loc_006762:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_006768:
 	jsr	(ObjectUpdate).l
 loc_00676E:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_006774:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_00677A:
 	lea	(ram_D000).w,a1
 loc_00677E:
@@ -8261,7 +8261,7 @@ dat_00692C:
 	dc.b	$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00
 	dc.b	$60,$00,$60,$00,$60,$00,$60,$00,$60,$00,$60,$00
 loc_00696C:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_006970:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_006976:
@@ -8339,10 +8339,10 @@ GameState_GameOver:
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_Control).l
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 	move.w	#$D8,d0
-	jsr	(sub_008508).l
-	move.b	#$1,(ram_C5A0).w
+	jsr	(LoadPalette).l
+	move.b	#$1,(Fade_Active).w
 	move.l	#$70C00002,(VDP_Control).l
 	lea	(Art_0589FA).l,a0
 	jsr	(Decompress_ToVDP).l
@@ -8353,13 +8353,13 @@ GameState_GameOver:
 	move.w	d0,(VDP_Control).l
 	movem.l	d0/a1,-(a7)
 	moveq	#-$7F,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_006B14:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
-	jsr	(sub_00426C).l
+	jsr	(BuildSpriteList).l
+	jsr	(PaletteFade_Step).l
 	btst.b	#$7,(Joy1_Pressed).w
 	bne.b	loc_006B3E
 	subq.w	#$1,(Timer_C606).w
@@ -8381,7 +8381,7 @@ loc_006B56:
 	bset.b	#$0,(Flags_C5AF).w
 	rts
 loc_006B6E:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bclr.b	#$0,(Flags_C5AF).w
 	beq.b	loc_006BBC
 	move.w	#$100,(Z80_Bus_Request).l
@@ -8413,13 +8413,13 @@ loc_006BDA:
 loc_006BDE:
 	move.w	d0,(VDP_Control).l
 loc_006BE4:
-	jsr	(sub_009EF0).l
+	jsr	(Clear_GameVars).l
 loc_006BEA:
 	move.w	#$1E0,d0
 loc_006BEE:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_006BF4:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_006BFA:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_006C02:
@@ -8473,17 +8473,17 @@ loc_006C6E:
 loc_006C72:
 	moveq	#-$64,d0
 loc_006C74:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_006C7A:
 	movem.l	(a7)+,d0/a1
 loc_006C7E:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_006C84:
 	jsr	(ObjectUpdate).l
 loc_006C8A:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_006C90:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_006C96:
 	btst.b	#$0,(Flags_C61C).w
 loc_006C9C:
@@ -8508,7 +8508,7 @@ loc_006CCA:
 loc_006CD0:
 	move.w	#$78,d0
 loc_006CD4:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_006CDA:
 	move.b	#$40,$3E(a0)
 loc_006CE0:
@@ -8530,7 +8530,7 @@ loc_006CFA:
 loc_006CFE:
 	bsr.w	sub_0086E2
 loc_006D02:
-	jsr	(sub_014248).l
+	jsr	(Anim_Step).l
 loc_006D08:
 	subq.b	#$1,$3E(a0)
 loc_006D0C:
@@ -8585,7 +8585,7 @@ loc_006D62:
 loc_006D66:
 	move.w	loc_006D7C(pc,d0.w),d0
 loc_006D6A:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_006D70:
 	rts
 loc_006D72:
@@ -8757,7 +8757,7 @@ loc_006F42:
 loc_006F48:
 	rts
 loc_006F4A:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_006F4E:
 	bclr.b	#$0,(Flags_C5AF).w
 loc_006F54:
@@ -8822,7 +8822,7 @@ GameState_Ending2_B:
 	andi.b	#$BF,d0
 	move.w	d0,(VDP_Control).l
 	jsr	(sub_009EE0).l
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 	move.w	#$100,(Z80_Bus_Request).l
 loc_007004:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -8844,17 +8844,17 @@ loc_007004:
 	cmpi.w	#$16,(ram_C328).w
 	bne.b	loc_00707C
 	move.w	#$190,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	lea	(dat_0D1418).l,a0
 	lea	(ram_9E00).w,a4
 	moveq	#$2,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_00707C:
 	bsr.w	sub_0018D2
 	bsr.w	sub_00193C
 	move.w	#$210,d0
-	jsr	(sub_008508).l
-	clr.w	(ram_C780).w
+	jsr	(LoadPalette).l
+	clr.w	(Palette_Target).w
 	move.w	(ram_C328).w,d0
 	subi.w	#$11,d0
 	add.w	d0,d0
@@ -8876,12 +8876,12 @@ loc_0070C4:
 	bne.b	loc_0070EE
 	movem.l	d0/a1,-(a7)
 	moveq	#-$5F,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_0070EE:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 	jsr	(ObjectUpdate).l
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 	bsr.w	sub_007176
 	jsr	(sub_00A4D4).l
 	jsr	(sub_00A56E).l
@@ -8897,7 +8897,7 @@ loc_0070EE:
 	move.w	(ram_C328).w,d3
 	subi.w	#$A,d3
 	jsr	(sub_009020).l
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 	btst.b	#$3,(Flags_C61C).w
 	bne.b	loc_007156
 	bra.w	loc_0070EE
@@ -8992,7 +8992,7 @@ loc_007246:
 	rts
 loc_007248:
 	bsr.w	Update_Scroll
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 	bsr.w	sub_001AB8
 	bsr.w	sub_002350
 	rts
@@ -9130,9 +9130,9 @@ loc_0079AC:
 loc_0079B4:
 	move.w	#$218,d0
 loc_0079B8:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_0079BE:
-	move.b	#$1,(ram_C5A0).w
+	move.b	#$1,(Fade_Active).w
 loc_0079C4:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_0079CC:
@@ -9172,13 +9172,13 @@ loc_007A1A:
 loc_007A1E:
 	move.w	d0,(VDP_Control).l
 loc_007A24:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_007A2A:
 	addi.l	#$4000,(VScroll_A).w
 loc_007A32:
 	bsr.w	sub_007A62
 loc_007A36:
-	jsr	(sub_00426C).l
+	jsr	(PaletteFade_Step).l
 loc_007A3C:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_007A42:
@@ -9215,8 +9215,8 @@ loc_007A78:
 	beq.b	loc_007A92
 	move.w	#$220,d0
 loc_007A92:
-	jsr	(sub_008508).l
-	bset.b	#$0,(ram_C59A).w
+	jsr	(LoadPalette).l
+	bset.b	#$0,(Palette_Dirty).w
 loc_007A9E:
 	rts
 dat_007AA0:
@@ -9278,7 +9278,7 @@ loc_007B12:
 loc_007B18:
 	rts
 loc_007B1A:
-	bsr.w	sub_003522
+	bsr.w	Frame_Update
 loc_007B1E:
 	bsr.w	Update_Scroll
 loc_007B22:
@@ -9637,7 +9637,7 @@ loc_008036:
 loc_008038:
 	moveq	#$0,d2
 loc_00803A:
-	jsr	(sub_00A11A).l
+	jsr	(Write_TileMap).l
 loc_008040:
 	move.l	#$55BE0003,(VDP_Control).l
 loc_00804A:
@@ -9750,7 +9750,7 @@ loc_008126:
 	bne.b	sub_008138
 	movem.l	d0/a1,-(a7)
 	moveq	#-$38,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 sub_008138:
 	move.w	(ram_C34A).w,d1
@@ -10060,10 +10060,10 @@ loc_0084C4:
 	andi.w	#$1F,d3
 loc_0084C8:
 	rts
-sub_0084CA:
+WaitVBlank:
 	btst.b	#$3,($C00005).l
 loc_0084D2:
-	bne.b	sub_0084CA
+	bne.b	WaitVBlank
 loc_0084D4:
 	btst.b	#$3,($C00005).l
 loc_0084DC:
@@ -10100,7 +10100,7 @@ loc_008502:
 	move.l	d1,(RNG_Seed).w
 loc_008506:
 	rts
-sub_008508:
+LoadPalette:
 	lea	(dat_0FE7A8).l,a1
 loc_00850E:
 	adda.w	d0,a1
@@ -10115,10 +10115,10 @@ loc_008516:
 loc_008518:
 	dbra	d7,loc_008516
 loc_00851C:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_008522:
 	rts
-sub_008524:
+Decompress_RLE:
 	movea.l	a4,a1
 loc_008526:
 	clr.w	d1
@@ -10441,7 +10441,7 @@ loc_008738:
 loc_00873A:
 	bne.b	loc_008736
 loc_00873C:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_008742:
 	rts
 sub_008744:
@@ -11447,7 +11447,7 @@ loc_008DF8:
 loc_008DFA:
 	beq.b	loc_008E00
 loc_008DFC:
-	bsr.w	sub_008508
+	bsr.w	LoadPalette
 loc_008E00:
 	bset.b	#$1,(ram_C5DC).w
 loc_008E06:
@@ -11624,7 +11624,7 @@ loc_009046:
 loc_00904A:
 	beq.b	loc_009050
 loc_00904C:
-	bsr.w	sub_008508
+	bsr.w	LoadPalette
 loc_009050:
 	rts
 dat_009052:
@@ -12254,7 +12254,7 @@ loc_009B64:
 loc_009B66:
 	moveq	#$2,d0
 loc_009B68:
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 loc_009B6E:
 	rts
 dat_009B70:
@@ -12487,7 +12487,7 @@ loc_009EEA:
 	move.l	d7,(a6)+
 loc_009EEC:
 	dbra	d6,loc_009EEA
-sub_009EF0:
+Clear_GameVars:
 	lea	(ram_C500).w,a6
 loc_009EF4:
 	moveq	#$0,d7
@@ -12664,7 +12664,7 @@ loc_00A05C:
 dat_00A05E:
 	dc.b	$0F,$00
 	dc.b	$00,$80,$B4,$00,$B0,$80,$00,$00
-sub_00A068:
+PlaySound:
 	lea	($A01C0A).l,a1
 loc_00A06E:
 	move.w	#$100,(Z80_Bus_Request).l
@@ -12737,9 +12737,9 @@ loc_00A0E4:
 loc_00A0EA:
 	st.b	(ram_C6C9).w
 loc_00A0EE:
-	jsr	(sub_0084CA).l
+	jsr	(WaitVBlank).l
 loc_00A0F4:
-	jsr	(sub_014056).l
+	jsr	(BuildSpriteList).l
 loc_00A0FA:
 	tst.b	(ram_C3D6).w
 loc_00A0FE:
@@ -12762,7 +12762,7 @@ loc_00A116:
 	rts
 sub_00A118:
 	bsr.b	sub_00A13E
-sub_00A11A:
+Write_TileMap:
 	move.l	#$800000,d7
 loc_00A120:
 	lea	(VDP_Control).l,a2
@@ -14851,7 +14851,7 @@ dat_00AE8A:
 	dc.b	$01,$70,$01,$10,$01,$80,$01,$10,$01,$70,$01,$30,$01,$80,$01,$30
 	dc.b	$01,$70,$01,$50,$01,$88,$01,$50,$01,$70,$01,$80,$01,$88,$01,$70
 	dc.b	$01,$88,$01,$80,$01,$50,$01,$70,$01,$50
-sub_00AF0A:
+Collision_BoxTest:
 	tst.w	$30(a1)
 loc_00AF0E:
 	beq.b	loc_00AF2E
@@ -14880,7 +14880,7 @@ loc_00AF2C:
 loc_00AF2E:
 	rts
 sub_00AF30:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 	cmp.w	(Player1_X).w,d4
 	bhi.b	loc_00AF2C
 	cmp.w	(Player1_X).w,d5
@@ -14971,18 +14971,18 @@ loc_00B02E:
 	tst.b	(ram_C642).w
 loc_00B032:
 	bra.w	loc_00AF28
-sub_00B036:
+Collision_HitPlayer:
 	tst.b	(ram_C5C9).w
 loc_00B03A:
 	bne.w	loc_00AF2C
 loc_00B03E:
-	tst.w	(ram_C5C2).w
+	tst.w	(Player_Invuln_Timer).w
 loc_00B042:
 	bne.w	loc_00AF2C
 loc_00B046:
 	lea	(Objects_A).w,a1
 loc_00B04A:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_00B04E:
 	beq.w	loc_00AF2A
 loc_00B052:
@@ -15032,7 +15032,7 @@ loc_00B0A2:
 loc_00B0A6:
 	moveq	#-$3F,d0
 loc_00B0A8:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00B0AE:
 	movem.l	(a7)+,d0/a1
 loc_00B0B2:
@@ -15068,7 +15068,7 @@ sub_00B0EE:
 loc_00B0F2:
 	moveq	#-$34,d0
 loc_00B0F4:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00B0FA:
 	movem.l	(a7)+,d0/a1
 loc_00B0FE:
@@ -15096,7 +15096,7 @@ loc_00B130:
 loc_00B132:
 	bsr.w	sub_008138
 loc_00B136:
-	move.w	#$2328,(ram_C5C2).w
+	move.w	#$2328,(Player_Invuln_Timer).w
 loc_00B13C:
 	bset.b	#$0,(ram_E003).w
 loc_00B142:
@@ -15118,7 +15118,7 @@ sub_00B160:
 loc_00B164:
 	moveq	#-$32,d0
 loc_00B166:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00B16C:
 	movem.l	(a7)+,d0/a1
 loc_00B170:
@@ -15142,7 +15142,7 @@ dat_00B194:
 sub_00B1A0:
 	move.w	#$C,(ram_E028).w
 sub_00B1A6:
-	move.w	#$5A,(ram_C5C2).w
+	move.w	#$5A,(Player_Invuln_Timer).w
 loc_00B1AC:
 	bset.b	#$5,(ram_E02A).w
 loc_00B1B2:
@@ -15179,10 +15179,10 @@ sub_00B1F2:
 	rts
 loc_00B1F4:
 	bset.b	#$6,(Flags_C5C0).w
-	move.w	#$16,(ram_C5C2).w
+	move.w	#$16,(Player_Invuln_Timer).w
 	cmpi.b	#$4,(ram_C642).w
 	beq.b	loc_00B20E
-	move.w	#$5A,(ram_C5C2).w
+	move.w	#$5A,(Player_Invuln_Timer).w
 loc_00B20E:
 	move.b	$3C(a0),d1
 	ext.w	d1
@@ -15200,7 +15200,7 @@ sub_00B22A:
 sub_00B232:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$23,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.b	#$4,(ram_C61A).w
 	cmpi.b	#$10,(ram_C642).w
@@ -15221,7 +15221,7 @@ loc_00B256:
 	bset.b	#$7,(Flags_C5C0).w
 	bclr.b	#$1,(ram_E02A).w
 	rts
-sub_00B298:
+Collision_FindHit_E1C0:
 	tst.b	(ram_C601).w
 loc_00B29C:
 	bne.w	loc_00B316
@@ -15234,7 +15234,7 @@ loc_00B2A6:
 loc_00B2A8:
 	beq.b	loc_00B2B0
 loc_00B2AA:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_00B2AE:
 	bne.b	loc_00B2BC
 loc_00B2B0:
@@ -15334,7 +15334,7 @@ loc_00B362:
 loc_00B364:
 	rts
 	dc.b	$D0,$68,$00,$10,$26,$40
-sub_00B36C:
+Object_ToScreen:
 	add.l	Obj_X(a0),d0
 loc_00B370:
 	add.l	Obj_Y(a0),d1
@@ -15550,7 +15550,7 @@ loc_00B4E2:
 loc_00B4E8:
 	bne.w	loc_00BC26
 loc_00B4EC:
-	lea	(ram_C700).w,a1
+	lea	(Palette_Buffer).w,a1
 loc_00B4F0:
 	lea	(ram_DB00).w,a2
 loc_00B4F4:
@@ -15568,7 +15568,7 @@ loc_00B508:
 loc_00B50C:
 	bmi.b	loc_00B520
 loc_00B50E:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_00B512:
 	moveq	#$3F,d1
 loc_00B514:
@@ -15592,9 +15592,9 @@ loc_00B538:
 loc_00B53C:
 	bmi.b	loc_00B554
 loc_00B53E:
-	lea	(ram_C780).w,a1
+	lea	(Palette_Target).w,a1
 loc_00B542:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_00B546:
 	moveq	#$3F,d1
 loc_00B548:
@@ -15632,7 +15632,7 @@ loc_00B58A:
 loc_00B590:
 	move.w	#$120,d0
 loc_00B594:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00B59A:
 	lea	(ram_FF6000).l,a6
 loc_00B5A0:
@@ -15667,7 +15667,7 @@ loc_00B5D4:
 loc_00B5D8:
 	move.b	#$4,(Timer_C605).w
 loc_00B5DE:
-	jsr	(sub_00D94C).l
+	jsr	(Camera_Reset).l
 loc_00B5E4:
 	bset.b	#$0,(ram_C5C8).w
 loc_00B5EA:
@@ -15736,7 +15736,7 @@ loc_00B67A:
 loc_00B67E:
 	lea	(ram_DB00).w,a1
 loc_00B682:
-	lea	(ram_C780).w,a2
+	lea	(Palette_Target).w,a2
 loc_00B686:
 	move.w	#$1F,d0
 loc_00B68A:
@@ -15748,7 +15748,7 @@ loc_00B690:
 loc_00B696:
 	bne.b	loc_00B6A2
 	move.w	#$190,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_00B6A2:
 	bsr.w	sub_00B72A
 loc_00B6A6:
@@ -15834,14 +15834,14 @@ sub_00B73E:
 	lea	(dat_00239E).l,a1
 	move.w	(ram_C328).w,d1
 	move.b	(a1,d1.w),d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	bra.w	loc_00B616
 sub_00B75E:
 	addq.w	#$4,(ram_C6B6).w
 	move.b	#$7,(Timer_C5A4).w
 	movem.l	d0/a1,-(a7)
 	moveq	#-$65,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.b	#$7,(ram_C618).w
 	cmpi.w	#$C,(ram_C328).w
@@ -15874,11 +15874,11 @@ sub_00B7CE:
 	lea	(ram_FF6000).l,a0
 	lea	(ram_8000).w,a4
 	moveq	#$2,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 	lea	(dat_0D1418).l,a0
 	lea	(ram_9E00).w,a4
 	moveq	#$2,d0
-	jmp	(sub_008524).l
+	jmp	(Decompress_RLE).l
 sub_00B812:
 	lea	(ram_C5B0).w,a1
 loc_00B816:
@@ -15898,7 +15898,7 @@ loc_00B82E:
 loc_00B832:
 	clr.w	(VScroll_B).w
 loc_00B836:
-	jmp	(sub_00D94C).l
+	jmp	(Camera_Reset).l
 sub_00B83C:
 	btst.b	#$7,(ram_C6B9).w
 	bne.w	loc_00B8DC
@@ -16329,7 +16329,7 @@ sub_00BB9A:
 	clr.w	(ram_C6B6).w
 	clr.b	(ram_C6B5).w
 	clr.b	(ram_C6B4).w
-	move.w	#$5A,(ram_C5C2).w
+	move.w	#$5A,(Player_Invuln_Timer).w
 sub_00BBAC:
 	clr.w	(ram_C602).w
 loc_00BBB0:
@@ -16467,13 +16467,13 @@ loc_00BC9E:
 loc_00BCA2:
 	move.w	(ram_C36E).w,d1
 loc_00BCA6:
-	lea	(ram_C700).w,a1
+	lea	(Palette_Buffer).w,a1
 loc_00BCAA:
 	lea	(dat_00BE4E).l,a2
 loc_00BCB0:
 	move.w	(a2,d0.w),$16(a1,d1.w)
 loc_00BCB6:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_00BCBC:
 	rts
 sub_00BCBE:
@@ -16704,7 +16704,7 @@ loc_00BFDE:
 	bra.w	loc_00B508
 	bra.w	loc_00B538
 loc_00C006:
-	lea	(ram_C700).w,a1
+	lea	(Palette_Buffer).w,a1
 	lea	(ram_DB00).w,a2
 	move.w	#$1F,d0
 loc_00C012:
@@ -16738,12 +16738,12 @@ loc_00C05E:
 	beq.b	loc_00C084
 	movem.l	d0/a1,-(a7)
 	moveq	#-$65,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_00C084:
 	bsr.w	sub_00B812
 	move.w	#$180,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	bsr.w	sub_00B83C
 	bsr.w	sub_00B9C4
 	bra.w	sub_00B942
@@ -16868,7 +16868,7 @@ loc_00C1DC:
 loc_00C1E0:
 	moveq	#-$2E,d0
 loc_00C1E2:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00C1E8:
 	movem.l	(a7)+,d0/a1
 loc_00C1EC:
@@ -16894,7 +16894,7 @@ loc_00C20E:
 loc_00C212:
 	moveq	#-$2E,d0
 loc_00C214:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00C21A:
 	movem.l	(a7)+,d0/a1
 loc_00C21E:
@@ -16930,7 +16930,7 @@ loc_00C252:
 loc_00C270:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$2D,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	moveq	#$4C,d0
 	bsr.w	sub_0088B8
@@ -17005,7 +17005,7 @@ loc_00C37A:
 loc_00C37E:
 	moveq	#-$2F,d0
 loc_00C380:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00C386:
 	movem.l	(a7)+,d0/a1
 loc_00C38A:
@@ -17113,7 +17113,7 @@ loc_00C4B8:
 	bcc.b	loc_00C512
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3A,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	rts
 loc_00C4CC:
@@ -17125,7 +17125,7 @@ loc_00C4CC:
 	bls.w	loc_00C512
 	movem.l	d0/a1,-(a7)
 	moveq	#-$3E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	addq.w	#$2,$6(a6)
 	add.w	d1,d1
@@ -17550,11 +17550,11 @@ loc_00C900:
 loc_00C904:
 	move.w	#$C80,d4
 loc_00C908:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_00C90C:
 	lea	(Objects_A).w,a1
 loc_00C910:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_00C914:
 	beq.w	loc_00CA28
 	st.b	(ram_C6B5).w
@@ -17810,7 +17810,7 @@ loc_00CDC2:
 loc_00CDC6:
 	bsr.w	sub_008744
 loc_00CDCA:
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 loc_00CDCE:
 	bsr.w	sub_00E1FE
 loc_00CDD2:
@@ -17884,7 +17884,7 @@ loc_00CE5C:
 loc_00CE60:
 	bsr.w	sub_00D9F2
 loc_00CE64:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00CE68:
 	bra.w	loc_00D0AA
 loc_00CE6C:
@@ -17896,7 +17896,7 @@ loc_00CE74:
 loc_00CE76:
 	bsr.w	sub_00DC6A
 loc_00CE7A:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00CE7E:
 	beq.w	loc_00D0AA
 loc_00CE82:
@@ -17944,7 +17944,7 @@ loc_00CED2:
 loc_00CED4:
 	move.b	#$A0,Obj_TileAttr(a0)
 loc_00CEDA:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00CEDE:
 	beq.w	loc_00D0AA
 loc_00CEE2:
@@ -17986,7 +17986,7 @@ loc_00CF2E:
 loc_00CF32:
 	bsr.w	sub_00DAFA
 loc_00CF36:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00CF3A:
 	move.l	Obj_VelX(a0),d2
 loc_00CF3E:
@@ -18070,7 +18070,7 @@ loc_00CFD4:
 loc_00CFD8:
 	moveq	#-$40,d0
 loc_00CFDA:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00CFE0:
 	movem.l	(a7)+,d0/a1
 loc_00CFE4:
@@ -18082,11 +18082,11 @@ loc_00CFF0:
 loc_00CFF8:
 	moveq	#$6,d0
 loc_00CFFA:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_00CFFE:
 	bra.w	loc_00D0AA
 loc_00D002:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00D006:
 	beq.w	loc_00D0AA
 loc_00D00A:
@@ -18129,7 +18129,7 @@ loc_00D0CC:
 loc_00D0D2:
 	moveq	#$4,d0
 loc_00D0D4:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_00D0D8:
 	move.w	#$10,Obj_SortKey(a0)
 loc_00D0DE:
@@ -18181,7 +18181,7 @@ loc_00D152:
 loc_00D156:
 	move.l	#$34430,$18(a0)
 loc_00D15E:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00D162:
 	bra.w	loc_00D204
 loc_00D166:
@@ -18239,7 +18239,7 @@ loc_00D216:
 loc_00D218:
 	rts
 sub_00D21A:
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 loc_00D21E:
 	lea	(ram_E1C0).w,a6
 loc_00D222:
@@ -18354,7 +18354,7 @@ loc_00D2F2:
 	beq.b	loc_00D32A
 	movem.l	d0/a1,-(a7)
 	moveq	#-$21,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	lea	(dat_03F5E8).l,a1
 	move.b	$20(a0),d0
@@ -18367,7 +18367,7 @@ loc_00D2F2:
 loc_00D32A:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$23,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	rts
 	dc.b	$10,$28,$00,$20
@@ -18432,7 +18432,7 @@ loc_00D3FE:
 loc_00D498:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.l	a5,d2
 	move.l	a6,d3
@@ -18466,7 +18466,7 @@ loc_00D4DE:
 loc_00D4E4:
 	move.w	#$4,$28(a0)
 	bsr.w	sub_00D9EA
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	subq.w	#$8,a4
 	move.l	(a4)+,d0
 	move.l	(a4)+,d1
@@ -18495,7 +18495,7 @@ loc_00D518:
 	beq.b	loc_00D556
 	movem.l	d0/a1,-(a7)
 	moveq	#-$21,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_00D556:
 	lea	(dat_03F11C).l,a1
@@ -18537,7 +18537,7 @@ loc_00D594:
 	bne.b	loc_00D5FC
 	movem.l	d0/a1,-(a7)
 	moveq	#-$23,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.b	(ram_C627).w,d6
 	andi.b	#$F0,d6
@@ -18806,7 +18806,7 @@ loc_00D892:
 loc_00D898:
 	bclr.b	#$2,Obj_Flags(a0)
 loc_00D89E:
-	move.w	#$80,(ram_C5C2).w
+	move.w	#$80,(Player_Invuln_Timer).w
 loc_00D8A4:
 	bsr.w	sub_00D914
 loc_00D8A8:
@@ -18856,7 +18856,7 @@ loc_00D8F0:
 loc_00D8F8:
 	moveq	#$A,d0
 loc_00D8FA:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_00D8FE:
 	addq.w	#$4,a7
 loc_00D900:
@@ -18864,7 +18864,7 @@ loc_00D900:
 loc_00D904:
 	moveq	#-$4B,d0
 loc_00D906:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00D90C:
 	movem.l	(a7)+,d0/a1
 loc_00D910:
@@ -18903,7 +18903,7 @@ loc_00D946:
 	move.b	d2,$21(a0)
 loc_00D94A:
 	rts
-sub_00D94C:
+Camera_Reset:
 	clr.l	(ram_C508).w
 loc_00D950:
 	clr.l	(Camera_VelY).w
@@ -18913,13 +18913,13 @@ loc_00D958:
 	clr.l	(ram_C560).w
 loc_00D95C:
 	rts
-sub_00D95E:
+Anim_Restart:
 	move.b	d0,$1E(a0)
 loc_00D962:
 	move.w	#$FF01,$1C(a0)
 loc_00D968:
-	bra.w	sub_014248
-sub_00D96C:
+	bra.w	Anim_Step
+Anim_Set:
 	lea	(dat_00E526).l,a1
 loc_00D972:
 	lea	(a1,d0.w),a1
@@ -18928,7 +18928,7 @@ loc_00D976:
 loc_00D97A:
 	move.l	(a1),$1C(a0)
 loc_00D97E:
-	bra.w	sub_014248
+	bra.w	Anim_Step
 sub_00D982:
 	movea.l	$18(a0),a1
 loc_00D986:
@@ -19515,7 +19515,7 @@ loc_00DE14:
 loc_00DE16:
 	moveq	#$0,d1
 loc_00DE18:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00DE1C:
 	beq.b	loc_00DE34
 loc_00DE1E:
@@ -19543,7 +19543,7 @@ loc_00DE38:
 loc_00DE3A:
 	move.l	d7,d1
 loc_00DE3C:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00DE40:
 	beq.b	loc_00DE58
 loc_00DE42:
@@ -19970,9 +19970,9 @@ loc_00E230:
 	move.w	d0,(a2)+
 loc_00E232:
 	rts
-sub_00E234:
+Object_GetHitbox_FromSize:
 	move.w	Obj_SpriteSize(a0),d4
-sub_00E238:
+Object_GetHitbox:
 	lea	(dat_02D000).l,a1
 loc_00E23E:
 	cmpi.w	#$10,d4
@@ -20019,11 +20019,11 @@ loc_00E272:
 loc_00E276:
 	rts
 sub_00E278:
-	tst.w	(ram_C5C2).w
+	tst.w	(Player_Invuln_Timer).w
 loc_00E27C:
 	beq.b	loc_00E2B8
 loc_00E27E:
-	subq.w	#$1,(ram_C5C2).w
+	subq.w	#$1,(Player_Invuln_Timer).w
 loc_00E282:
 	beq.b	loc_00E2A4
 loc_00E284:
@@ -20035,7 +20035,7 @@ loc_00E28C:
 loc_00E292:
 	bne.b	loc_00E2B8
 loc_00E294:
-	cmpi.w	#$46,(ram_C5C2).w
+	cmpi.w	#$46,(Player_Invuln_Timer).w
 loc_00E29A:
 	bne.b	loc_00E2B2
 loc_00E29C:
@@ -20057,7 +20057,7 @@ sub_00E2BA:
 loc_00E2BC:
 	moveq	#$0,d1
 loc_00E2BE:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00E2C2:
 	beq.b	loc_00E33C
 loc_00E2C4:
@@ -20079,7 +20079,7 @@ loc_00E2DE:
 loc_00E2E0:
 	move.l	#$FFF80000,d1
 loc_00E2E6:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00E2EA:
 	bne.b	loc_00E2F4
 	subq.w	#$8,Obj_Y(a0)
@@ -20089,7 +20089,7 @@ loc_00E2F4:
 loc_00E2FA:
 	moveq	#$0,d1
 loc_00E2FC:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00E300:
 	bne.b	loc_00E30A
 	addq.w	#$8,Obj_X(a0)
@@ -20099,7 +20099,7 @@ loc_00E30A:
 loc_00E30C:
 	move.l	#$80000,d1
 loc_00E312:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00E316:
 	bne.b	loc_00E320
 loc_00E318:
@@ -20111,7 +20111,7 @@ loc_00E320:
 loc_00E326:
 	moveq	#$0,d1
 loc_00E328:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00E32C:
 	bne.b	loc_00E332
 	subq.w	#$8,Obj_X(a0)
@@ -20146,7 +20146,7 @@ loc_00E356:
 loc_00E35A:
 	rts
 sub_00E35C:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_00E360:
 	lea	(ram_E1C0).w,a1
 loc_00E364:
@@ -20293,7 +20293,7 @@ loc_00E628:
 loc_00E62C:
 	moveq	#-$48,d0
 loc_00E62E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00E634:
 	movem.l	(a7)+,d0/a1
 loc_00E638:
@@ -20347,7 +20347,7 @@ loc_00E6B2:
 loc_00E6B6:
 	bsr.w	sub_00E1FE
 loc_00E6BA:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00E6BE:
 	subq.b	#$1,$2F(a0)
 loc_00E6C2:
@@ -20465,7 +20465,7 @@ loc_00E77C:
 	lea	(dat_03B1DA).l,a1
 	move.l	(a1,d3.w),$18(a0)
 	move.b	#$1,$1D(a0)
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bra.w	sub_00E1FE
 	dc.b	$0C,$68,$02,$00
 	dc.b	$00,$04,$62,$00,$00,$14,$0C,$68,$02,$00,$00,$08,$62,$00,$00,$0A
@@ -20498,7 +20498,7 @@ loc_00E808:
 	lea	(dat_03B1DA).l,a1
 	move.l	(a1,d3.w),$18(a0)
 	move.b	#$1,$1D(a0)
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bra.w	sub_00E1FE
 Longs_00E848:
 	dc.l	$02000100,$02000200,$01000200,$00000200
@@ -20570,7 +20570,7 @@ loc_00E8F4:
 loc_00E8FA:
 	move.w	#$58,d0
 loc_00E8FE:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_00E904:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_00E90A:
@@ -20590,7 +20590,7 @@ loc_00E91E:
 	move.b	#$8,$3C(a0)
 	move.w	#$160,d0
 	bsr.w	sub_00E202
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.w	sub_014220
 	rts
 Longs_00E93C:
@@ -20605,7 +20605,7 @@ loc_00E958:
 loc_00E95E:
 	move.w	#$50,d0
 loc_00E962:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_00E968:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_00E96E:
@@ -20623,7 +20623,7 @@ loc_00E986:
 	bne.b	loc_00E9AC
 	moveq	#$0,d0
 	moveq	#$0,d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	beq.b	loc_00E9A4
 	cmpi.b	#$4,d0
 	beq.b	loc_00E9AC
@@ -20631,7 +20631,7 @@ loc_00E986:
 	beq.b	loc_00E9AC
 loc_00E9A4:
 	bsr.w	sub_00E1FE
-	bra.w	sub_014248
+	bra.w	Anim_Step
 loc_00E9AC:
 	lea	(ram_E240).w,a6
 	moveq	#$0,d7
@@ -20755,7 +20755,7 @@ loc_00EAEE:
 	move.l	(a1)+,Obj_VelY(a0)
 	rts
 loc_00EB0C:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_00EB22
 	bsr.w	sub_00E1FE
@@ -20771,7 +20771,7 @@ sub_00EB30:
 	moveq	#$0,d1
 	add.l	Obj_VelX(a0),d0
 	add.l	Obj_VelY(a0),d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	cmpi.b	#$20,d0
 	rts
 sub_00EB46:
@@ -20789,7 +20789,7 @@ loc_00EB56:
 loc_00EB5A:
 	moveq	#$4,d0
 loc_00EB5C:
-	bra.w	sub_00D95E
+	bra.w	Anim_Restart
 sub_00EB60:
 	lea	(dat_00EB78).l,a1
 loc_00EB66:
@@ -20829,7 +20829,7 @@ loc_00EBE6:
 loc_00EBEA:
 	moveq	#-$4A,d0
 loc_00EBEC:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00EBF2:
 	movem.l	(a7)+,d0/a1
 loc_00EBF6:
@@ -20902,7 +20902,7 @@ loc_00ECB8:
 loc_00ECBC:
 	moveq	#-$48,d0
 loc_00ECBE:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00ECC4:
 	movem.l	(a7)+,d0/a1
 loc_00ECC8:
@@ -20926,7 +20926,7 @@ loc_00ECFA:
 	bne.w	loc_00ED2E
 	moveq	#$0,d0
 	moveq	#$0,d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	beq.b	loc_00ED1A
 	cmpi.b	#$4,d0
 	beq.b	loc_00ED2E
@@ -20944,7 +20944,7 @@ loc_00ED2E:
 	move.w	#$160,Obj_SortKey(a0)
 	move.l	#$3A56E,$18(a0)
 	moveq	#$4,d0
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 	clr.l	Obj_VelX(a0)
 	clr.l	Obj_VelY(a0)
 	move.b	#$4,$2F(a0)
@@ -20952,7 +20952,7 @@ loc_00ED2E:
 loc_00ED58:
 	move.w	#$298,d0
 	bsr.w	sub_00E202
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.w	sub_014220
 	rts
 sub_00ED6A:
@@ -20992,7 +20992,7 @@ loc_00EDB4:
 loc_00EDB8:
 	moveq	#-$4A,d0
 loc_00EDBA:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00EDC0:
 	movem.l	(a7)+,d0/a1
 loc_00EDC4:
@@ -21012,7 +21012,7 @@ loc_00EDDC:
 loc_00EDDE:
 	moveq	#$0,d1
 loc_00EDE0:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00EDE4:
 	beq.b	loc_00EDF2
 loc_00EDE6:
@@ -21042,7 +21042,7 @@ loc_00EE10:
 loc_00EE12:
 	moveq	#$0,d1
 loc_00EE14:
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 loc_00EE18:
 	beq.b	loc_00EE26
 loc_00EE1A:
@@ -21070,7 +21070,7 @@ loc_00EE3C:
 loc_00EE3E:
 	move.b	$3E(a0),d0
 loc_00EE42:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_00EE46:
 	clr.l	Obj_VelX(a0)
 loc_00EE4A:
@@ -21080,7 +21080,7 @@ loc_00EE4E:
 loc_00EE52:
 	rts
 loc_00EE54:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00EE58:
 	bne.w	sub_014220
 loc_00EE5C:
@@ -21110,7 +21110,7 @@ loc_00EE90:
 loc_00EE94:
 	moveq	#-$49,d0
 loc_00EE96:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00EE9C:
 	movem.l	(a7)+,d0/a1
 loc_00EEA0:
@@ -21125,7 +21125,7 @@ loc_00EEAC:
 loc_00EEB8:
 	moveq	#$0,d0
 	moveq	#$0,d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	beq.b	loc_00EED2
 	cmpi.b	#$4,d0
 	beq.w	loc_00EE36
@@ -21161,7 +21161,7 @@ loc_00EF14:
 loc_00EF18:
 	moveq	#-$48,d0
 loc_00EF1A:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00EF20:
 	movem.l	(a7)+,d0/a1
 loc_00EF24:
@@ -21177,7 +21177,7 @@ loc_00EF36:
 loc_00EF42:
 	moveq	#$0,d0
 	moveq	#$0,d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	beq.b	loc_00EF58
 	cmpi.b	#$4,d0
 	beq.b	loc_00EF9C
@@ -21193,7 +21193,7 @@ loc_00EF68:
 	bne.w	loc_00EF9C
 	moveq	#$0,d0
 	moveq	#$0,d1
-	bsr.w	sub_00B36C
+	bsr.w	Object_ToScreen
 	beq.b	loc_00EF88
 	cmpi.b	#$4,d0
 	beq.b	loc_00EF9C
@@ -21215,7 +21215,7 @@ loc_00EF9C:
 	move.l	#$3A55C,$18(a0)
 loc_00EFBA:
 	moveq	#$6,d0
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 	clr.l	Obj_VelX(a0)
 	clr.l	Obj_VelY(a0)
 	rts
@@ -21232,7 +21232,7 @@ loc_00EFD8:
 loc_00EFE8:
 	bsr.w	sub_00E202
 loc_00EFEC:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.w	sub_014220
 	bra.b	loc_00EF9A
 sub_00EFF6:
@@ -21244,7 +21244,7 @@ loc_00EFFE:
 loc_00F002:
 	moveq	#-$31,d0
 loc_00F004:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00F00A:
 	movem.l	(a7)+,d0/a1
 loc_00F00E:
@@ -21348,13 +21348,13 @@ loc_00F132:
 loc_00F136:
 	moveq	#$4,d0
 loc_00F138:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_00F13C:
 	movem.l	d0/a1,-(a7)
 loc_00F140:
 	moveq	#-$47,d0
 loc_00F142:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00F148:
 	movem.l	(a7)+,d0/a1
 loc_00F14C:
@@ -21436,7 +21436,7 @@ loc_00F1E2:
 loc_00F1E8:
 	bsr.w	sub_00E1FE
 loc_00F1EC:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00F1F0:
 	tst.w	Obj_Timer(a0)
 loc_00F1F4:
@@ -21694,19 +21694,19 @@ loc_00F3E0:
 loc_00F3E6:
 	move.w	#$88,d0
 loc_00F3EA:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_00F3F0:
 	movem.l	d0/a1,-(a7)
 loc_00F3F4:
 	moveq	#-$4C,d0
 loc_00F3F6:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00F3FC:
 	movem.l	(a7)+,d0/a1
 loc_00F400:
 	rts
 loc_00F402:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00F406:
 	bne.w	sub_014220
 loc_00F40A:
@@ -21742,7 +21742,7 @@ loc_00F448:
 loc_00F450:
 	moveq	#$6,d0
 loc_00F452:
-	bra.w	sub_00D95E
+	bra.w	Anim_Restart
 loc_00F456:
 	bclr.b	#$0,Obj_Flags2(a0)
 loc_00F45C:
@@ -21770,7 +21770,7 @@ loc_00F486:
 loc_00F488:
 	bsr.w	sub_00E1FE
 loc_00F48C:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_00F490:
 	beq.b	loc_00F49C
 loc_00F492:
@@ -22249,9 +22249,9 @@ loc_00F8A0:
 loc_00F8A4:
 	bsr.w	sub_00AF50
 loc_00F8A8:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_00F8AC:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_00F8B0:
 	beq.w	loc_00F90A
 loc_00F8B4:
@@ -22379,11 +22379,11 @@ loc_00F9BC:
 loc_00F9C0:
 	rts
 loc_00F9C2:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_00F9C6:
 	lea	(Objects_A).w,a1
 loc_00F9CA:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_00F9CE:
 	bne.w	loc_00FA44
 loc_00F9D2:
@@ -22441,7 +22441,7 @@ loc_00FA62:
 loc_00FA66:
 	moveq	#-$3E,d0
 loc_00FA68:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_00FA6E:
 	movem.l	(a7)+,d0/a1
 loc_00FA72:
@@ -22515,11 +22515,11 @@ loc_00FB14:
 	bne.b	loc_00FAC4
 	bra.w	sub_014220
 loc_00FB22:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_00FB26:
 	lea	(Objects_A).w,a1
 loc_00FB2A:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_00FB2E:
 	bne.w	loc_00FA44
 loc_00FB32:
@@ -22535,7 +22535,7 @@ loc_00FB96:
 	move.w	#$18,Obj_State(a0)
 	clr.l	Obj_VelY(a0)
 	move.w	#$C0,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	andi.b	#$BF,Obj_Flags(a0)
 	move.b	#$40,Obj_TileAttr(a0)
 	move.b	#$4,$3D(a0)
@@ -22659,7 +22659,7 @@ loc_00FECC:
 loc_00FECE:
 	andi.b	#$FB,Obj_Flags(a0)
 loc_00FED4:
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 loc_00FED8:
 	btst.b	#$7,(Joy1_Pressed).w
 loc_00FEDE:
@@ -22737,7 +22737,7 @@ loc_00FF70:
 loc_00FF76:
 	move.l	(ram_C69C).w,(ram_E080).w
 loc_00FF7C:
-	move.w	#$5A,(ram_C5C2).w
+	move.w	#$5A,(Player_Invuln_Timer).w
 loc_00FF82:
 	bclr.b	#$4,(ram_E02A).w
 loc_00FF88:
@@ -22854,7 +22854,7 @@ loc_0100A4:
 loc_0100A8:
 	moveq	#-$60,d0
 loc_0100AA:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0100B0:
 	movem.l	(a7)+,d0/a1
 loc_0100B4:
@@ -22866,7 +22866,7 @@ loc_0100BE:
 loc_0100C2:
 	moveq	#-$71,d0
 loc_0100C4:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0100CA:
 	movem.l	(a7)+,d0/a1
 loc_0100CE:
@@ -22878,7 +22878,7 @@ loc_0100D8:
 loc_0100DA:
 	andi.b	#$FB,Obj_Flags(a0)
 loc_0100E0:
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 loc_0100E4:
 	move.w	Obj_State(a0),d0
 loc_0100E8:
@@ -23072,7 +23072,7 @@ loc_01029E:
 	move.l	(ram_C504).w,(ram_C536).w
 	move.l	(Camera_Y).w,(ram_C542).w
 	move.l	(Camera_Y).w,(ram_C53A).w
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 	move.w	(ram_C328).w,d0
 	lsl.w	#$2,d0
 	movea.l	dat_0102E4(pc,d0.w),a1
@@ -23158,7 +23158,7 @@ loc_0103FE:
 	clr.l	$10(a1)
 	ori.b	#$26,$2(a1)
 	move.w	(a6)+,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	move.w	(a6)+,(ram_C54A).w
 	move.w	(a6)+,(ram_C55C).w
 	move.l	(a6)+,(ram_C5B4).w
@@ -23176,11 +23176,11 @@ loc_0103FE:
 	lea	(ram_FF5400).l,a0
 	movea.w	(a6)+,a4
 	moveq	#$2,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 	movea.l	(a6)+,a0
 	lea	(ram_FF2A00).l,a4
 	moveq	#$1,d0
-	jsr	(sub_008524).l
+	jsr	(Decompress_RLE).l
 	lea	(ram_FF5400).l,a1
 	movea.l	(ram_C5B4).w,a2
 	lea	(ram_8000).w,a3
@@ -23392,9 +23392,9 @@ loc_0107F0:
 loc_0107F4:
 	move.w	$20(a0),d4
 loc_0107F8:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0107FC:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_010800:
 	beq.w	loc_010A74
 loc_010804:
@@ -23402,7 +23402,7 @@ loc_010804:
 loc_010808:
 	moveq	#-$44,d0
 loc_01080A:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_010810:
 	movem.l	(a7)+,d0/a1
 loc_010814:
@@ -23522,9 +23522,9 @@ loc_0109C4:
 loc_0109C6:
 	move.w	$20(a0),d4
 loc_0109CA:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0109CE:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_0109D2:
 	beq.w	loc_010A74
 loc_0109D6:
@@ -23532,7 +23532,7 @@ loc_0109D6:
 loc_0109DA:
 	moveq	#-$44,d0
 loc_0109DC:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0109E2:
 	movem.l	(a7)+,d0/a1
 loc_0109E6:
@@ -23798,9 +23798,9 @@ loc_010FDA:
 loc_010FDE:
 	move.b	#$0,Obj_TileAttr(a0)
 loc_010FE4:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_010FE8:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_010FEC:
 	beq.b	loc_010FFE
 loc_010FEE:
@@ -23926,7 +23926,7 @@ loc_0110EA:
 loc_0110EE:
 	moveq	#-$42,d0
 loc_0110F0:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0110F6:
 	movem.l	(a7)+,d0/a1
 loc_0110FA:
@@ -24120,7 +24120,7 @@ loc_01128C:
 loc_011294:
 	moveq	#$4,d0
 loc_011296:
-	bsr.w	sub_00D95E
+	bsr.w	Anim_Restart
 loc_01129A:
 	move.b	#$80,Obj_TileAttr(a0)
 loc_0112A0:
@@ -24148,7 +24148,7 @@ loc_0112CA:
 loc_0112D0:
 	rts
 loc_0112D2:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_0112D6:
 	beq.b	loc_011318
 loc_0112D8:
@@ -24217,8 +24217,8 @@ loc_01134E:
 	bne.w	loc_0116F4
 	bsr.w	sub_0114F6
 	move.w	(a6)+,d4
-	bsr.w	sub_00E238
-	bsr.w	sub_00B298
+	bsr.w	Object_GetHitbox
+	bsr.w	Collision_FindHit_E1C0
 	beq.w	loc_011384
 	btst.b	#$0,Obj_Flags2(a0)
 	beq.b	loc_01139E
@@ -24226,8 +24226,8 @@ loc_01134E:
 	bra.b	loc_01139E
 loc_011384:
 	move.w	(a6)+,d4
-	bsr.w	sub_00E238
-	bsr.w	sub_00B298
+	bsr.w	Object_GetHitbox
+	bsr.w	Collision_FindHit_E1C0
 	beq.w	loc_0116F4
 	btst.b	#$0,Obj_Flags2(a0)
 	beq.b	loc_01139E
@@ -24428,7 +24428,7 @@ loc_011640:
 loc_011648:
 	moveq	#$6,d0
 loc_01164A:
-	bra.w	sub_00D95E
+	bra.w	Anim_Restart
 loc_01164E:
 	move.w	Obj_State(a0),d0
 loc_011652:
@@ -24454,13 +24454,13 @@ loc_011676:
 loc_01167A:
 	moveq	#-$4C,d0
 loc_01167C:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_011682:
 	movem.l	(a7)+,d0/a1
 loc_011686:
 	rts
 loc_011688:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_01168C:
 	beq.b	loc_0116CE
 loc_01168E:
@@ -24488,7 +24488,7 @@ loc_0116BE:
 loc_0116C2:
 	moveq	#-$4C,d0
 loc_0116C4:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0116CA:
 	movem.l	(a7)+,d0/a1
 loc_0116CE:
@@ -24652,11 +24652,11 @@ loc_0119BE:
 	bra.w	loc_0119CA
 	dc.b	$60,$00,$00,$E0,$60,$00,$01,$04
 loc_0119CA:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_0119CE:
 	lea	(Objects_A).w,a1
 loc_0119D2:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_0119D6:
 	beq.w	loc_0119EE
 	addq.w	#$4,Obj_State(a0)
@@ -24802,9 +24802,9 @@ loc_011BCA:
 loc_011BCE:
 	bsr.w	sub_00AF54
 loc_011BD2:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_011BD6:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_011BDA:
 	beq.b	loc_011BEC
 	cmpi.b	#$FF,$18(a0)
@@ -25009,9 +25009,9 @@ loc_011DC8:
 	bra.w	loc_011E50
 loc_011DD4:
 	move.w	#$328,d4
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 	lea	(Objects_A).w,a1
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 	beq.b	loc_011E08
 	addq.w	#$4,Obj_State(a0)
 	move.w	#$3C,Obj_Timer(a0)
@@ -25042,10 +25042,10 @@ loc_011E32:
 	bclr.b	#$7,Obj_Flags(a0)
 	subi.w	#$20,Obj_Y(a0)
 	move.w	#$0,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	rts
 loc_011E50:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.w	sub_014220
 	rts
 sub_011E5A:
@@ -25092,22 +25092,22 @@ loc_011EBA:
 	bclr.b	#$5,$2A(a0)
 	beq.b	loc_011EFC
 	moveq	#$38,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	lea	(dat_045A1C).l,a3
 	move.l	#$FFE80000,d0
 	move.l	#$FFFC0000,d1
 	jmp	(sub_008C10).l
 	dc.b	$60,$40
 loc_011EFC:
-	bsr.w	sub_00E234
-	bsr.w	sub_00B298
+	bsr.w	Object_GetHitbox_FromSize
+	bsr.w	Collision_FindHit_E1C0
 	beq.b	loc_011F3C
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.w	loc_011F74
 	bset.b	#$5,$2A(a0)
 	bset.b	#$3,$2A(a0)
 	moveq	#$40,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	lea	(dat_0459CE).l,a3
 	move.l	#$FFE80000,d0
 	move.l	#$FFFC0000,d1
@@ -25148,7 +25148,7 @@ loc_011FA6:
 	subq.b	#$1,$2F(a0)
 	bne.w	loc_012264
 	moveq	#$38,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	move.b	#$40,$2F(a0)
 	move.w	#$4,Obj_State(a0)
 	move.b	#$6,$3B(a0)
@@ -25209,9 +25209,9 @@ loc_012088:
 loc_01208C:
 	rts
 sub_01208E:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_012092:
-	bsr.w	sub_00B036
+	bsr.w	Collision_HitPlayer
 loc_012096:
 	move.w	Obj_State(a0),d0
 loc_01209A:
@@ -25220,7 +25220,7 @@ loc_01209E:
 	bra.w	loc_0120A6
 	dc.b	$60,$00,$00,$34
 loc_0120A6:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_0120AA:
 	subq.w	#$1,$2E(a0)
 loc_0120AE:
@@ -25306,13 +25306,13 @@ loc_012184:
 	bsr.w	sub_00D69C
 	move.l	(ram_C504).w,(ram_C53E).w
 	move.l	(ram_C504).w,(ram_C536).w
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 	bsr.w	sub_0121EA
 	bra.w	sub_010360
 loc_0121CC:
 	move.w	#$18,Obj_State(a0)
 	move.w	#$C8,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	bra.w	loc_0121E4
 loc_0121E0:
 	addq.w	#$4,Obj_State(a0)
@@ -25327,7 +25327,7 @@ sub_0121EA:
 loc_012202:
 	rts
 loc_012204:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	move.l	#$FFFF8000,d0
 	move.l	d0,(ram_C634).w
 	move.l	d0,$10(a0)
@@ -25336,7 +25336,7 @@ loc_012204:
 	clr.l	$10(a0)
 	clr.l	(ram_C634).w
 loc_012226:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 	lea	(ram_C628).w,a1
 	move.w	d4,(a1)+
 	move.w	d5,(a1)+
@@ -25433,11 +25433,11 @@ loc_012374:
 loc_012378:
 	move.w	Obj_AnimPtr(a0),d4
 loc_01237C:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_012380:
 	lea	(Objects_A).w,a1
 loc_012384:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_012388:
 	beq.w	loc_012264
 	move.w	Obj_State(a0),d0
@@ -25498,14 +25498,14 @@ loc_012424:
 loc_012428:
 	bsr.w	sub_00AF54
 loc_01242C:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_012430:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_012434:
 	beq.b	loc_012456
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	cmpi.b	#$FF,$1A(a0)
 	beq.b	loc_012456
@@ -25551,14 +25551,14 @@ loc_0124BC:
 loc_0124C0:
 	bsr.w	sub_00AF54
 loc_0124C4:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_0124C8:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_0124CC:
 	beq.b	loc_0124EC
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_0124EE
@@ -25571,7 +25571,7 @@ loc_0124EE:
 loc_0124F8:
 	move.w	#$58,d0
 loc_0124FC:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_012502:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_012508:
@@ -25579,13 +25579,13 @@ loc_012508:
 loc_01250C:
 	moveq	#-$4C,d0
 loc_01250E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_012514:
 	movem.l	(a7)+,d0/a1
 loc_012518:
 	rts
 loc_01251A:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_01251E:
 	bne.w	sub_014220
 loc_012522:
@@ -25624,11 +25624,11 @@ loc_01256C:
 loc_012572:
 	bcc.w	loc_01262E
 loc_012576:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_01257A:
 	lea	(Objects_A).w,a1
 loc_01257E:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_012582:
 	beq.w	loc_0125A0
 	addq.w	#$4,Obj_State(a0)
@@ -25718,11 +25718,11 @@ loc_012674:
 loc_01267A:
 	move.w	#$CE8,d4
 loc_01267E:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_012682:
 	lea	(Objects_A).w,a1
 loc_012686:
-	bsr.w	sub_00AF0A
+	bsr.w	Collision_BoxTest
 loc_01268A:
 	beq.w	loc_0125A0
 	st.b	(ram_C5CD).w
@@ -25759,14 +25759,14 @@ loc_0126E0:
 loc_0126E2:
 	move.w	#$D08,d4
 loc_0126E6:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0126EA:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_0126EE:
 	beq.b	loc_01271C
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	btst.b	#$0,Obj_Flags2(a0)
 	beq.b	loc_01270E
@@ -25775,7 +25775,7 @@ loc_01270E:
 	bset.b	#$5,$2A(a0)
 	moveq	#$20,d0
 loc_012716:
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 loc_01271C:
 	move.w	Obj_State(a0),d0
 loc_012720:
@@ -25822,9 +25822,9 @@ loc_012770:
 loc_012772:
 	addq.w	#$4,Obj_State(a0)
 loc_012776:
-	lea	(ram_C700).w,a1
+	lea	(Palette_Buffer).w,a1
 loc_01277A:
-	lea	(ram_C780).w,a2
+	lea	(Palette_Target).w,a2
 loc_01277E:
 	move.w	#$1F,d0
 loc_012782:
@@ -25858,7 +25858,7 @@ loc_0127BA:
 loc_0127C0:
 	beq.b	loc_0127DC
 loc_0127C2:
-	lea	(ram_C700).w,a1
+	lea	(Palette_Buffer).w,a1
 loc_0127C6:
 	move.w	#$EEE,d1
 loc_0127CA:
@@ -25868,13 +25868,13 @@ loc_0127CE:
 loc_0127D0:
 	dbra	d0,loc_0127CE
 loc_0127D4:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_0127DA:
 	rts
 loc_0127DC:
-	lea	(ram_C780).w,a1
+	lea	(Palette_Target).w,a1
 loc_0127E0:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_0127E4:
 	move.w	#$1F,d0
 loc_0127E8:
@@ -25902,9 +25902,9 @@ loc_012810:
 loc_012814:
 	bmi.b	loc_012828
 loc_012816:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_01281C:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_012820:
 	moveq	#$3F,d1
 loc_012822:
@@ -25928,11 +25928,11 @@ loc_01284A:
 loc_01284E:
 	bmi.w	sub_014220
 loc_012852:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_012858:
-	lea	(ram_C780).w,a1
+	lea	(Palette_Target).w,a1
 loc_01285C:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_012860:
 	moveq	#$3F,d1
 loc_012862:
@@ -25979,7 +25979,7 @@ loc_01294A:
 loc_01294E:
 	bset.b	#$0,Obj_Flags2(a0)
 loc_012954:
-	bsr.w	sub_00D94C
+	bsr.w	Camera_Reset
 loc_012958:
 	lea	(ram_E1C0).w,a6
 loc_01295C:
@@ -26242,7 +26242,7 @@ loc_012B96:
 loc_012B9C:
 	move.l	#$380000,d1
 loc_012BA2:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_012BA8:
 	beq.b	loc_012BBC
 loc_012BAA:
@@ -26256,16 +26256,16 @@ loc_012BB4:
 	cmpi.b	#$40,d0
 	beq.b	loc_012BE4
 loc_012BBC:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_012BC0:
-	bsr.w	sub_00B036
+	bsr.w	Collision_HitPlayer
 loc_012BC4:
-	bsr.w	sub_00B298
+	bsr.w	Collision_FindHit_E1C0
 loc_012BC8:
 	beq.b	loc_012BE2
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_012BE4
@@ -26298,7 +26298,7 @@ loc_012C16:
 	andi.b	#$4,d0
 	move.l	Longs_012C3A(pc,d0.w),d1
 	move.l	d1,(ram_C71A).w
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_012C32:
 	move.w	Obj_State(a0),d0
 loc_012C36:
@@ -26440,7 +26440,7 @@ loc_012DC4:
 	addq.w	#$4,Obj_State(a0)
 	andi.b	#$FB,Obj_Flags(a0)
 	move.w	#$90,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_012DDA:
 	rts
 	dc.b	$61,$00,$B4,$56
@@ -26524,7 +26524,7 @@ loc_012F30:
 loc_012F36:
 	move.w	#$80,d0
 loc_012F3A:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_012F40:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_012F46:
@@ -26545,14 +26545,14 @@ loc_012F64:
 loc_012F6A:
 	bcc.w	sub_014220
 loc_012F6E:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_012F72:
 	jsr	(sub_00AF50).l
 loc_012F78:
 	beq.w	loc_01308E
 	tst.b	(ram_C642).w
 	bne.b	loc_012F88
-	tst.w	(ram_C5C2).w
+	tst.w	(Player_Invuln_Timer).w
 	bne.b	loc_012F96
 loc_012F88:
 	bclr.b	#$3,(ram_E02A).w
@@ -26563,7 +26563,7 @@ loc_012F96:
 	addq.w	#$8,Obj_X(a0)
 	addq.w	#$8,Obj_Y(a0)
 	move.w	#$88,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	rts
 	dc.b	$61,$00
 	dc.b	$12,$98,$66,$00,$12,$6C,$4E,$75
@@ -26590,9 +26590,9 @@ loc_012FD8:
 loc_012FDA:
 	move.b	(a1)+,d0
 loc_012FDC:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_012FE2:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_012FE6:
 	bne.w	sub_014220
 loc_012FEA:
@@ -26627,9 +26627,9 @@ loc_013038:
 	bra.w	loc_011AA4
 	bra.w	loc_01306C
 loc_013044:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 	lea	(Objects_A).w,a1
-	jsr	(sub_00AF0A).l
+	jsr	(Collision_BoxTest).l
 	beq.w	loc_01306A
 	addq.w	#$4,Obj_State(a0)
 	lea	(dat_011A94).l,a3
@@ -26670,11 +26670,11 @@ loc_0130B6:
 loc_0130C2:
 	move.w	#$388,d4
 loc_0130C6:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0130CA:
 	lea	(Objects_A).w,a1
 loc_0130CE:
-	jsr	(sub_00AF0A).l
+	jsr	(Collision_BoxTest).l
 loc_0130D4:
 	beq.b	loc_013104
 	addq.w	#$4,Obj_State(a0)
@@ -26687,7 +26687,7 @@ loc_0130EE:
 	dbra	d0,loc_0130EE
 	movem.l	d0/a1,-(a7)
 	moveq	#-$22,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 loc_013104:
 	rts
@@ -26777,14 +26777,14 @@ loc_013222:
 loc_01322C:
 	rts
 loc_01322E:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_013232:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_013238:
 	beq.b	loc_01322C
 	movem.l	d0/a1,-(a7)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.l	#$3865A,Obj_FramePtr(a0)
 	bset.b	#$5,$2A(a0)
@@ -26827,7 +26827,7 @@ loc_0132BA:
 loc_0132C0:
 	move.w	#$28,d0
 loc_0132C4:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_0132CA:
 	rts
 loc_0132CC:
@@ -26888,15 +26888,15 @@ loc_013382:
 	cmpi.w	#$160,Obj_Y(a0)
 loc_013388:
 	bcc.w	sub_014220
-	bsr.w	sub_00E234
-	jsr	(sub_00B036).l
+	bsr.w	Object_GetHitbox_FromSize
+	jsr	(Collision_HitPlayer).l
 	bclr.b	#$5,$2A(a0)
 	bne.w	loc_013A32
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 	beq.w	loc_013A32
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	bset.b	#$5,$2A(a0)
 	btst.b	#$0,Obj_Flags2(a0)
@@ -27012,14 +27012,14 @@ loc_0134E2:
 	beq.b	loc_0134E8
 	move.w	#$B50,d4
 loc_0134E8:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0134EC:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0134F2:
 	beq.b	loc_01351A
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	bset.b	#$5,$2A(a0)
 	btst.b	#$0,Obj_Flags2(a0)
@@ -27030,11 +27030,11 @@ loc_01351A:
 loc_01351C:
 	movem.l	d0/a1,-(a7)
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.w	#$8,Obj_State(a0)
 	move.w	#$0,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	move.b	#$40,Obj_TileAttr(a0)
 	moveq	#$0,d0
 	btst.b	#$4,Obj_Flags(a0)
@@ -27083,7 +27083,7 @@ loc_0135BE:
 loc_0135C4:
 	move.w	#$18,d0
 loc_0135C8:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_0135CE:
 	move.b	#$8,$3A(a0)
 loc_0135D4:
@@ -27107,9 +27107,9 @@ loc_0135F2:
 loc_0135F8:
 	bne.w	sub_014220
 loc_0135FC:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_013600:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_013606:
 	move.w	Obj_State(a0),d0
 loc_01360A:
@@ -27121,7 +27121,7 @@ loc_013612:
 loc_013616:
 	bra.w	loc_013652
 loc_01361A:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_01361E:
 	beq.b	loc_013634
 loc_013620:
@@ -27131,13 +27131,13 @@ loc_013624:
 loc_01362A:
 	move.w	#$20,d0
 loc_01362E:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_013634:
 	rts
 loc_013636:
 	subq.b	#$1,$2F(a0)
 loc_01363A:
-	bne.w	sub_014248
+	bne.w	Anim_Step
 loc_01363E:
 	addq.w	#$4,Obj_State(a0)
 loc_013642:
@@ -27203,15 +27203,15 @@ loc_0136D0:
 loc_0136D4:
 	bra.w	loc_0136D8
 loc_0136D8:
-	bsr.w	sub_00E234
+	bsr.w	Object_GetHitbox_FromSize
 loc_0136DC:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_0136E2:
 	bclr.b	#$5,$2A(a0)
 loc_0136E8:
 	bne.b	loc_013732
 loc_0136EA:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0136F0:
 	bset.b	#$5,$2A(a0)
 loc_0136F6:
@@ -27220,7 +27220,7 @@ loc_0136FC:
 	beq.b	loc_013732
 	movem.l	d0/a1,-(a7)
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	addq.w	#$4,Obj_State(a0)
 	move.b	#$40,$2F(a0)
@@ -27267,11 +27267,11 @@ loc_013796:
 	bhi.b	loc_0137AC
 	addq.w	#$4,Obj_State(a0)
 	move.w	#$8,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_0137AC:
 	rts
 loc_0137AE:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.b	loc_0137C4
 	tst.b	d1
 	beq.b	loc_0137C2
@@ -27305,11 +27305,11 @@ loc_01380A:
 	bne.b	loc_01381E
 	addq.w	#$4,Obj_State(a0)
 	move.w	#$10,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_01381E:
 	rts
 loc_013820:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 	bne.b	loc_013836
 	tst.b	d1
 	beq.b	loc_013834
@@ -27411,14 +27411,14 @@ sub_01391E:
 loc_013924:
 	bne.w	loc_013A32
 loc_013928:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_01392C:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_013932:
 	beq.w	loc_013A32
 	movem.l	d0/a1,-(a7)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	addq.w	#$4,a7
 	bset.b	#$5,$2A(a0)
@@ -27477,11 +27477,11 @@ loc_0139E4:
 loc_0139EA:
 	move.w	#$388,d4
 loc_0139EE:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_0139F2:
 	lea	(Objects_A).w,a1
 loc_0139F6:
-	jsr	(sub_00AF0A).l
+	jsr	(Collision_BoxTest).l
 loc_0139FC:
 	beq.b	loc_013A32
 	move.l	(ram_C504).w,(ram_C54A).w
@@ -27527,7 +27527,7 @@ loc_013A78:
 loc_013A7E:
 	move.w	#$40,d0
 loc_013A82:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_013A88:
 	addq.w	#$8,Obj_X(a0)
 loc_013A8C:
@@ -27545,7 +27545,7 @@ loc_013AA2:
 loc_013AA6:
 	bra.w	loc_013AC2
 loc_013AAA:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_013AAE:
 	beq.b	loc_013ABE
 loc_013AB0:
@@ -27553,11 +27553,11 @@ loc_013AB0:
 loc_013AB4:
 	move.w	#$48,d0
 loc_013AB8:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_013ABE:
 	bra.w	loc_013F44
 loc_013AC2:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_013AC6:
 	bra.w	loc_013F44
 sub_013ACA:
@@ -27617,8 +27617,8 @@ loc_013B38:
 	bra.w	loc_013B40
 	bra.w	loc_013B7A
 loc_013B40:
-	bsr.w	sub_00E234
-	jsr	(sub_00B036).l
+	bsr.w	Object_GetHitbox_FromSize
+	jsr	(Collision_HitPlayer).l
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_013B62
 	tst.b	(ram_C678).w
@@ -27629,15 +27629,15 @@ loc_013B40:
 loc_013B62:
 	addq.w	#$4,Obj_State(a0)
 	move.w	#$38,d0
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 	clr.l	Obj_VelX(a0)
 	clr.l	Obj_VelY(a0)
 loc_013B78:
 	rts
 loc_013B7A:
-	bsr.w	sub_00E234
-	jsr	(sub_00B036).l
-	bsr.w	sub_014248
+	bsr.w	Object_GetHitbox_FromSize
+	jsr	(Collision_HitPlayer).l
+	bsr.w	Anim_Step
 	bne.w	sub_014220
 	rts
 dat_013B8E:
@@ -27738,7 +27738,7 @@ loc_013C6E:
 loc_013C74:
 	move.w	#$30,d0
 loc_013C78:
-	jsr	(sub_00D96C).l
+	jsr	(Anim_Set).l
 loc_013C7E:
 	ori.b	#$2A,Obj_Flags(a0)
 loc_013C84:
@@ -27782,7 +27782,7 @@ loc_013CE6:
 loc_013CE8:
 	bne.b	loc_013CF6
 loc_013CEA:
-	bsr.w	sub_014248
+	bsr.w	Anim_Step
 loc_013CEE:
 	bra.w	loc_013F44
 dat_013CF2:
@@ -27871,14 +27871,14 @@ loc_013E6A:
 loc_013E6E:
 	move.w	$20(a0),d4
 loc_013E72:
-	bsr.w	sub_00E238
+	bsr.w	Object_GetHitbox
 loc_013E76:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_013E7C:
 	beq.w	loc_013F4C
 	bset.b	#$5,$2A(a0)
 	moveq	#$20,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	move.w	#$466,(ram_C73E).w
 	cmpi.w	#$240,$38(a0)
 	bge.w	loc_013F4C
@@ -27912,7 +27912,7 @@ loc_013EDC:
 	jsr	(sub_008B8C).l
 loc_013F0C:
 	move.w	#$100,d0
-	jsr	(sub_008508).l
+	jsr	(LoadPalette).l
 	move.w	#$466,(ram_C73E).w
 loc_013F1C:
 	rts
@@ -28047,7 +28047,7 @@ loc_014050:
 	move.l	d3,Obj_X(a0)
 loc_014054:
 	rts
-sub_014056:
+BuildSpriteList:
 	lea	(ram_D100).w,a2
 loc_01405A:
 	lea	(ram_D400).w,a6
@@ -28397,7 +28397,7 @@ loc_014242:
 	dbra	d7,loc_014240
 loc_014246:
 	rts
-sub_014248:
+Anim_Step:
 	movea.l	$18(a0),a1
 loc_01424C:
 	moveq	#$0,d0
@@ -28595,7 +28595,7 @@ ObjectTypeTable:
 	dc.l	sub_016262,sub_01705C,sub_01705C,sub_017768
 	dc.l	sub_01797A,sub_0181AA,sub_0178F8,sub_017146
 	dc.l	sub_018238,sub_01A478,sub_01A41A,sub_01AFF2
-	dc.l	sub_022392,sub_017AD6,sub_01A3E4,sub_01AF0E
+	dc.l	sub_022392,sub_017AD6,sub_01A3E4,Object_AnimTick
 	dc.l	sub_01B42C,sub_01B496,sub_01B542,sub_01B5F6
 	dc.l	sub_01843E,sub_0163FA,sub_0162FC,sub_01642C
 	dc.l	sub_021986,sub_01E9BE,sub_01E6B4,sub_01E8EE
@@ -29236,7 +29236,7 @@ loc_016270:
 loc_016276:
 	lea	(Objects_A).w,a1
 loc_01627A:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_016280:
 	move.b	(RNG_Seed).w,d0
 loc_016284:
@@ -29315,7 +29315,7 @@ loc_016314:
 loc_016318:
 	move.b	#$15,Obj_State(a0)
 loc_01631E:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_016322:
 	move.w	(RNG_Seed).w,d0
 loc_016326:
@@ -29333,7 +29333,7 @@ loc_016334:
 loc_016338:
 	ble.w	loc_0163F4
 loc_01633C:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_016340:
 	move.w	(RNG_Seed).w,d2
 loc_016344:
@@ -29351,7 +29351,7 @@ loc_016352:
 loc_016356:
 	ble.w	loc_0163F4
 loc_01635A:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_01635E:
 	move.w	(RNG_Seed).w,d1
 loc_016362:
@@ -29389,7 +29389,7 @@ loc_016396:
 loc_016398:
 	moveq	#$0,d1
 loc_01639A:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_0163A0:
 	cmpi.b	#$20,d0
 loc_0163A4:
@@ -29397,7 +29397,7 @@ loc_0163A4:
 loc_0163A6:
 	moveq	#$3,d0
 loc_0163A8:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_0163AC:
 	bne.b	loc_0163F0
 loc_0163AE:
@@ -29411,7 +29411,7 @@ loc_0163BC:
 loc_0163C2:
 	lea	(Objects_A).w,a1
 loc_0163C6:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_0163CA:
 	andi.w	#$1E,d0
 loc_0163CE:
@@ -29431,7 +29431,7 @@ loc_0163E4:
 loc_0163E8:
 	move.w	#$23C,(a0)
 loc_0163EC:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_0163F0:
 	movea.l	a6,a0
 loc_0163F2:
@@ -29445,7 +29445,7 @@ sub_0163FA:
 loc_016400:
 	moveq	#$3,d0
 loc_016402:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_016406:
 	bne.b	loc_01642A
 loc_016408:
@@ -29461,15 +29461,15 @@ loc_01641C:
 loc_016422:
 	move.w	#$23C,(a0)
 loc_016426:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01642A:
 	rts
 sub_01642C:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_016432:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_016438:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01643E:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_016444:
@@ -29493,7 +29493,7 @@ loc_016462:
 loc_016464:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_016468:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_01646E:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_016472:
@@ -29507,7 +29507,7 @@ loc_01647C:
 loc_01647E:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_016482:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_016488:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_01648C:
@@ -29533,7 +29533,7 @@ loc_0164AC:
 loc_0164B0:
 	jmp	Object_RunAnimScript(pc)
 loc_0164B4:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_0164B8:
 	lea	(Objects_A).w,a1
 loc_0164BC:
@@ -29575,7 +29575,7 @@ loc_0164FA:
 loc_016500:
 	lea	(Objects_A).w,a1
 loc_016504:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_016508:
 	andi.b	#$1F,d0
 loc_01650C:
@@ -29611,7 +29611,7 @@ loc_016540:
 loc_016546:
 	lea	(Objects_A).w,a1
 loc_01654A:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01654E:
 	andi.b	#$1E,d0
 loc_016552:
@@ -29747,7 +29747,7 @@ loc_016650:
 loc_016652:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_016656:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_01665C:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_016660:
@@ -29757,7 +29757,7 @@ loc_016664:
 	bclr.b	#$6,$2(a0)
 	move.b	#$20,$22(a0)
 	moveq	#-$40,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	lea	ObjData_016056(pc),a1
 	jmp	Object_RunAnimScript(pc)
 loc_016682:
@@ -29948,7 +29948,7 @@ ObjData_016FFC:
 sub_01705C:
 	lea	(Objects_A).w,a1
 loc_017060:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_017064:
 	move.w	d0,d5
 loc_017066:
@@ -30062,19 +30062,19 @@ loc_01713C:
 loc_017142:
 	bsr.w	sub_017720
 sub_017146:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01714C:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_017152:
 	bne.b	loc_017164
 loc_017154:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01715A:
 	beq.b	loc_017160
 loc_01715C:
 	move.w	#$20C,(a0)
 loc_017160:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_017164:
 	cmpi.b	#$45,$54(a0)
 loc_01716A:
@@ -30232,7 +30232,7 @@ loc_017280:
 loc_017282:
 	lea	dat_018016(pc),a2
 loc_017286:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_01728A:
 	move.b	(RNG_Seed).w,d1
 loc_01728E:
@@ -30342,7 +30342,7 @@ loc_01732E:
 loc_017330:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_017334:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_01733A:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_01733E:
@@ -30521,7 +30521,7 @@ loc_017446:
 loc_017448:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_01744C:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_017452:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_017456:
@@ -30581,7 +30581,7 @@ loc_0174B4:
 loc_0174B6:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_0174BA:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_0174C0:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_0174C4:
@@ -31003,7 +31003,7 @@ dat_01780A:
 sub_017812:
 	moveq	#$2,d0
 loc_017814:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_017818:
 	bne.b	loc_01782E
 loc_01781A:
@@ -31020,7 +31020,7 @@ loc_01782E:
 sub_017832:
 	moveq	#$2,d0
 loc_017834:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_017838:
 	bne.b	loc_01782E
 loc_01783A:
@@ -31034,7 +31034,7 @@ loc_01784C:
 sub_01784E:
 	moveq	#$2,d0
 loc_017850:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_017854:
 	bne.b	loc_01782E
 loc_017856:
@@ -31048,7 +31048,7 @@ loc_017868:
 sub_01786A:
 	moveq	#$2,d0
 loc_01786C:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_017870:
 	bne.b	loc_01782E
 loc_017872:
@@ -31062,7 +31062,7 @@ loc_017884:
 sub_017886:
 	moveq	#$2,d0
 loc_017888:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_01788C:
 	bne.b	loc_01782E
 loc_01788E:
@@ -31100,7 +31100,7 @@ loc_0178D6:
 loc_0178DA:
 	andi.b	#$1,$55(a0)
 loc_0178E0:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_0178E4:
 	andi.b	#$1E,d0
 loc_0178E8:
@@ -31114,7 +31114,7 @@ loc_0178F4:
 sub_0178F8:
 	moveq	#$2,d0
 loc_0178FA:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_0178FE:
 	bne.w	loc_01782E
 loc_017902:
@@ -31152,7 +31152,7 @@ loc_01794C:
 loc_017952:
 	lea	(Objects_A).w,a1
 loc_017956:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01795A:
 	andi.b	#$1E,d0
 loc_01795E:
@@ -31170,14 +31170,14 @@ loc_017976:
 sub_01797A:
 	subq.b	#$1,$2B(a0)
 loc_01797E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_017984:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01798A:
 	beq.b	loc_01799A
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.w	#$20C,(a0)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01799A:
 	lea	(Objects_A).w,a1
 loc_01799E:
@@ -31189,7 +31189,7 @@ loc_0179A6:
 loc_0179AA:
 	ble.b	loc_0179EA
 loc_0179AC:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_0179B0:
 	andi.b	#$1E,d0
 loc_0179B4:
@@ -31228,7 +31228,7 @@ loc_0179EA:
 	bset.b	#$4,$55(a0)
 	bsr.w	sub_017720
 	move.w	#$208,(a0)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 dat_017A04:
 	dc.l	dat_01557E,dat_015594,dat_0155AA,ObjData_0155C0
 	dc.l	dat_0155D6,dat_0155EC,dat_015602
@@ -31302,7 +31302,7 @@ loc_017A90:
 loc_017A92:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_017A96:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_017A9C:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_017AA0:
@@ -31318,7 +31318,7 @@ loc_017AB0:
 loc_017AB6:
 	moveq	#-$40,d0
 loc_017AB8:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_017ABE:
 	lea	ObjData_016056(pc),a1
 loc_017AC2:
@@ -31390,13 +31390,13 @@ loc_017B4C:
 loc_017B52:
 	addi.w	#$A,Obj_Y(a0)
 loc_017B58:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_017B5C:
 	cmpi.b	#$1,Obj_State(a0)
 loc_017B62:
 	beq.b	loc_017B70
 loc_017B64:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_017B68:
 	move.w	#$1,Obj_SortKey(a0)
 loc_017B6E:
@@ -31408,7 +31408,7 @@ loc_017B76:
 loc_017B7C:
 	addi.w	#$A,Obj_Y(a0)
 loc_017B82:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 dat_017B86:
 	dc.b	$00,$01,$60,$B0,$00,$01,$60,$CE,$00,$01
 	dc.b	$60,$EC,$00,$01,$61,$0A
@@ -31747,7 +31747,7 @@ loc_01822E:
 loc_018230:
 	move.l	d0,Obj_VelY(a0)
 loc_018234:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_018238:
 	bset.b	#$0,Obj_Flags(a0)
 loc_01823E:
@@ -31773,15 +31773,15 @@ loc_018266:
 loc_01826C:
 	moveq	#-$4D,d0
 loc_01826E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_018274:
 	move.w	#$6F8,d4
 loc_018278:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_01827E:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_018284:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_018288:
 	move.w	#$23C,(a0)
 loc_01828C:
@@ -31827,11 +31827,11 @@ ObjData_018406:
 	dc.b	$00,$01,$82,$88,$00,$06,$00,$03,$A5,$D4,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$06,$00,$03,$A5,$F0,$00,$00,$00,$00,$00,$00,$FF,$FE
 sub_01843E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_018444:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01844A:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_018450:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_018456:
@@ -31839,7 +31839,7 @@ loc_018456:
 	move.b	#$1,Obj_AnimTimer(a0)
 	bra.b	loc_018464
 loc_018460:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_018464:
 	move.w	#$23C,(a0)
 	moveq	#$0,d0
@@ -31865,7 +31865,7 @@ loc_018490:
 loc_0184A2:
 	movea.l	dat_0184AE(pc,d0.w),a1
 	move.l	a1,Obj_AnimPtr(a0)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 dat_0184AE:
 	dc.b	$00,$01
 	dc.b	$5E,$BA,$00,$01,$93,$C6,$00,$01,$92,$D2,$00,$01,$94,$BA,$00,$01
@@ -31897,7 +31897,7 @@ loc_01853A:
 loc_01853C:
 	moveq	#$3,d0
 loc_01853E:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_018542:
 	beq.b	loc_01854C
 	bset.b	#$2,Obj_Flags(a0)
@@ -31944,7 +31944,7 @@ sub_0185A2:
 	lea	dat_019826(pc),a3
 loc_0185A6:
 	moveq	#$3,d0
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 	beq.b	loc_0185B6
 	bset.b	#$2,$2(a0)
 	rts
@@ -31985,7 +31985,7 @@ sub_018614:
 loc_018618:
 	moveq	#$3,d0
 loc_01861A:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_01861E:
 	beq.b	loc_018628
 	bset.b	#$2,$2(a0)
@@ -32032,7 +32032,7 @@ sub_018676:
 loc_01867A:
 	moveq	#$3,d0
 loc_01867C:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_018680:
 	beq.b	loc_01868A
 	bset.b	#$2,$2(a0)
@@ -32078,7 +32078,7 @@ loc_0186DE:
 loc_0186E2:
 	bra.b	loc_0186F8
 loc_0186E4:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 	move.b	(RNG_Seed).w,d0
 	andi.w	#$7,d0
 	move.b	dat_018720(pc,d0.w),d0
@@ -32086,7 +32086,7 @@ loc_0186E4:
 loc_0186F8:
 	lea	(Objects_A).w,a1
 loc_0186FC:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_018700:
 	move.b	(RNG_Seed).w,d0
 loc_018704:
@@ -32135,7 +32135,7 @@ loc_018752:
 sub_018754:
 	nop
 loc_018756:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01875A:
 	andi.w	#$1F,d0
 loc_01875E:
@@ -32672,13 +32672,13 @@ dat_019EF8:
 	dc.b	$00,$08,$7C,$D4,$00,$00,$00,$00,$00,$00,$FF,$FE,$FF,$F8,$FF,$E8
 	dc.b	$FF,$F8,$FF,$E0,$FF,$FE,$FF,$E0,$00,$06,$FF,$E0,$00,$08,$FF,$E0
 loc_01A180:
-	jsr	sub_01AD5E(pc)
+	jsr	Object_AllocC(pc)
 loc_01A184:
 	bne.w	loc_01A1F6
 loc_01A188:
 	lea	ObjData_01A4BE(pc),a1
 loc_01A18C:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01A190:
 	move.b	d2,$35(a2)
 loc_01A194:
@@ -32731,13 +32731,13 @@ loc_01A1F2:
 loc_01A1F6:
 	rts
 sub_01A1F8:
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 loc_01A1FC:
 	bne.w	loc_01A266
 loc_01A200:
 	lea	ObjData_01A4BE(pc),a1
 loc_01A204:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01A208:
 	move.b	d2,$35(a2)
 loc_01A20C:
@@ -32800,13 +32800,13 @@ loc_01A272:
 sub_01A276:
 	lea	ObjData_01A5AE(pc),a3
 sub_01A27A:
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 loc_01A27E:
 	bne.w	loc_01A306
 loc_01A282:
 	lea	ObjData_01A4CE(pc),a1
 loc_01A286:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01A28A:
 	bset.b	#$6,$2(a2)
 loc_01A290:
@@ -32882,7 +32882,7 @@ dat_01A31C:
 	dc.b	$00,$00,$01,$F2
 	dc.b	$00,$00,$02,$59,$00,$00
 sub_01A326:
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 loc_01A32A:
 	bne.w	loc_01A3B4
 loc_01A32E:
@@ -32890,7 +32890,7 @@ loc_01A32E:
 loc_01A330:
 	lea	ObjData_01A4DE(pc),a1
 loc_01A334:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01A338:
 	bset.b	#$6,$2(a2)
 loc_01A33E:
@@ -32956,7 +32956,7 @@ loc_01A3A4:
 loc_01A3AA:
 	moveq	#-$4E,d0
 loc_01A3AC:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01A3B2:
 	moveq	#$0,d0
 loc_01A3B4:
@@ -32976,19 +32976,19 @@ loc_01A3EA:
 loc_01A3EC:
 	moveq	#$0,d1
 loc_01A3EE:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_01A3F4:
 	cmpi.b	#$4,d0
 loc_01A3F8:
 	beq.b	loc_01A40C
 loc_01A3FA:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01A400:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01A406:
 	bne.b	loc_01A40C
 loc_01A408:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01A40C:
 	move.w	#$23C,(a0)
 loc_01A410:
@@ -33000,23 +33000,23 @@ sub_01A41A:
 loc_01A41E:
 	beq.b	loc_01A40C
 loc_01A420:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01A426:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01A42C:
 	bne.b	loc_01A40C
 loc_01A42E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01A432:
 	subq.b	#$1,$3E(a0)
 loc_01A436:
 	beq.b	loc_01A498
 loc_01A438:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01A43E:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01A444:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01A448:
 	subq.b	#$1,$3E(a0)
 loc_01A44C:
@@ -33026,39 +33026,39 @@ loc_01A44E:
 loc_01A450:
 	moveq	#$0,d1
 loc_01A452:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_01A458:
 	cmpi.b	#$4,d0
 loc_01A45C:
 	beq.b	loc_01A498
 loc_01A45E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01A464:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01A46A:
 	bne.b	loc_01A498
 loc_01A46C:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01A472:
 	bne.b	loc_01A498
 loc_01A474:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01A478:
 	subq.b	#$1,$3E(a0)
 loc_01A47C:
 	beq.b	loc_01A498
 loc_01A47E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01A484:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01A48A:
 	bne.b	loc_01A498
 loc_01A48C:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01A492:
 	bne.b	loc_01A498
 loc_01A494:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01A498:
 	bclr.b	#$6,Obj_Flags(a0)
 loc_01A49E:
@@ -33066,7 +33066,7 @@ loc_01A49E:
 loc_01A4A2:
 	moveq	#-$4C,d0
 loc_01A4A4:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01A4AA:
 	move.b	#$40,Obj_TileAttr(a0)
 loc_01A4B0:
@@ -33205,7 +33205,7 @@ dat_01A8DC:
 	dc.b	$00,$1D,$FF,$FF,$00,$01,$AB,$26,$00,$04,$00,$08,$7D,$B0,$00,$00
 	dc.b	$80,$00,$00,$1E,$FF,$FF,$00,$01,$AB,$38,$00,$04,$00,$08,$7D,$B0
 	dc.b	$00,$00,$80,$00,$00,$1F,$FF,$FF,$00,$01,$AB,$4A
-sub_01AB5C:
+Alloc_C0E0Slot:
 	lea	(ram_C0E0).w,a2
 loc_01AB60:
 	moveq	#$0,d1
@@ -33258,7 +33258,7 @@ loc_01ABA2:
 	moveq	#$0,d7
 loc_01ABA4:
 	rts
-sub_01ABA6:
+Random_Update:
 	move.l	d7,-(a7)
 loc_01ABA8:
 	move.w	(RNG_Seed).w,d7
@@ -33276,7 +33276,7 @@ loc_01ABBC:
 	rts
 	dc.b	$43,$F8
 	dc.b	$E0,$00,$4A,$29,$00,$37,$67,$04,$43,$F8,$EE,$40,$4E,$75
-sub_01ABCE:
+Object_DirectionTo:
 	move.w	$4(a1),d0
 loc_01ABD2:
 	move.w	$8(a1),d1
@@ -33503,11 +33503,11 @@ loc_01AD4C:
 dat_01AD4E:
 	dc.b	$02,$01
 	dc.b	$04,$03,$07,$04,$04,$03,$07,$04
-sub_01AD58:
+Object_AllocC_18:
 	move.w	#$11,d0
 loc_01AD5C:
 	bra.b	loc_01AD6C
-sub_01AD5E:
+Object_AllocC:
 	move.w	(Game_Mode).w,d1
 loc_01AD62:
 	add.w	d1,d1
@@ -33533,7 +33533,7 @@ loc_01AD80:
 	moveq	#$0,d0
 loc_01AD82:
 	rts
-sub_01AD84:
+Object_AllocC_Last4:
 	moveq	#$3,d7
 loc_01AD86:
 	lea	(ram_FAE0).w,a2
@@ -33546,7 +33546,7 @@ loc_01AD8C:
 	moveq	#-$1,d7
 loc_01AD98:
 	rts
-sub_01AD9A:
+Object_AllocA_Last15:
 	moveq	#$E,d7
 loc_01AD9C:
 	lea	(ram_E6C0).w,a2
@@ -33599,7 +33599,7 @@ loc_01ADEE:
 	move.b	#$88,$4B(a0)
 loc_01ADF4:
 	rts
-sub_01ADF6:
+Object_LoadTemplateA2:
 	move.b	(a1)+,$37(a2)
 loc_01ADFA:
 	move.b	(a1)+,$34(a2)
@@ -33638,11 +33638,11 @@ loc_01AE30:
 loc_01AE32:
 	movea.l	a0,a2
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01AE4A:
 	move.w	#$11,$44(a0)
 loc_01AE50:
@@ -33693,7 +33693,7 @@ dat_01AEB8:
 	dc.b	$00,$08,$BE,$00,$00,$08,$BD,$80,$00,$08,$B8,$00,$00,$08,$BE,$80
 	dc.b	$00,$08,$BF,$00,$00,$08,$BF,$80,$4A,$28,$00,$44,$67,$04,$53,$28
 	dc.b	$00,$44,$4A,$28,$00,$44,$67,$04,$53,$28,$00,$44,$4E,$75
-sub_01AF0E:
+Object_AnimTick:
 	subq.b	#$1,Obj_AnimTimer(a0)
 loc_01AF12:
 	bne.w	loc_01AFEA
@@ -33712,7 +33712,7 @@ loc_01AF22:
 loc_01AF24:
 	bne.b	loc_01AF38
 loc_01AF26:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01AF2A:
 	movea.l	$2(a1),a2
 loc_01AF2E:
@@ -33844,12 +33844,12 @@ loc_01AFEA:
 loc_01AFF0:
 	rts
 sub_01AFF2:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01AFF8:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01AFFE:
-	bra.w	sub_01AF0E
-sub_01B002:
+	bra.w	Object_AnimTick
+Object_Free:
 	movea.l	a0,a1
 loc_01B004:
 	moveq	#$17,d7
@@ -34506,7 +34506,7 @@ loc_01B512:
 loc_01B522:
 	lea	$60(a2),a2
 	dbra	d7,loc_01B512
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 dat_01B52E:
 	dc.l	sub_018664,sub_01866A,sub_018670,sub_018676
 	dc.b	$00,$00
@@ -34546,7 +34546,7 @@ loc_01B580:
 loc_01B588:
 	move.l	#$87000,$14(a2)
 loc_01B590:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_01B594:
 	move.w	(RNG_Seed).w,d0
 loc_01B598:
@@ -34558,7 +34558,7 @@ loc_01B5A0:
 loc_01B5A4:
 	addi.w	#$30,$4(a2)
 loc_01B5AA:
-	jsr	sub_01ABA6(pc)
+	jsr	Random_Update(pc)
 loc_01B5AE:
 	move.b	(RNG_Seed).w,d0
 loc_01B5B2:
@@ -34895,14 +34895,14 @@ loc_01B8D6:
 	tst.b	$44(a0)
 	bne.b	loc_01B908
 	move.w	#$930,d4
-	jsr	(sub_00E238).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox).l
+	jsr	(Collision_FindHit_E1C0).l
 	beq.b	loc_01B920
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.w	loc_01B984
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01B908:
 	moveq	#$70,d0
 	subq.b	#$1,$44(a0)
@@ -34945,7 +34945,7 @@ loc_01B962:
 loc_01B97A:
 	subq.b	#$1,$3F(a0)
 loc_01B97E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_01B984:
 	lea	(ram_EE20).w,a2
 	moveq	#$4,d7
@@ -34966,7 +34966,7 @@ loc_01B99A:
 	swap	d1
 	swap	d2
 	jsr	(sub_01063C).l
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 dat_01B9CA:
 	dc.l	sub_0185F0,sub_0185F6,sub_0185FC
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$06
@@ -35005,7 +35005,7 @@ loc_01BA96:
 loc_01BA98:
 	dbra	d7,loc_01BA92
 loc_01BA9C:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 dat_01BAA0:
 	dc.b	$00,$00,$00,$00,$22,$49,$00,$00,$22,$16,$22,$16,$00,$00,$00,$00
 	dc.b	$22,$20,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$21,$D1
@@ -35192,16 +35192,16 @@ loc_01BC50:
 loc_01BC54:
 	bne.b	loc_01BC6E
 loc_01BC56:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01BC5A:
 	movea.l	a0,a2
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
 loc_01BC6E:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 sub_01BC72:
 	moveq	#$0,d0
 loc_01BC74:
@@ -35273,7 +35273,7 @@ loc_01BD72:
 loc_01BD76:
 	sub.l	d0,Obj_X(a0)
 loc_01BD7A:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01BD7E:
 	move.b	#$1,Obj_AnimTimer(a0)
 loc_01BD84:
@@ -35331,24 +35331,24 @@ loc_01BE02:
 	beq.b	loc_01BE08
 	bra.w	sub_01C222
 loc_01BE08:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01BE0C:
 	jsr	sub_0219B8(pc)
 	move.b	Obj_AnimTimer(a0),d0
 	andi.w	#$3,d0
 	bne.b	loc_01BE22
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01BE22:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01BE26:
 	movea.l	a0,a2
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 sub_01BE3E:
 	clr.l	Obj_VelY(a0)
 loc_01BE42:
@@ -35386,7 +35386,7 @@ loc_01BE82:
 loc_01BE88:
 	lea	(Objects_A).w,a1
 loc_01BE8C:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01BE90:
 	andi.w	#$1F,d0
 loc_01BE94:
@@ -35443,7 +35443,7 @@ loc_01BEE8:
 loc_01BEEA:
 	moveq	#-$4E,d0
 loc_01BEEC:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01BEF2:
 	move.b	#$51,$5A(a0)
 loc_01BEF8:
@@ -35451,7 +35451,7 @@ loc_01BEF8:
 loc_01BEFC:
 	subq.b	#$1,$5E(a0)
 loc_01BF00:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01BF04:
 	jsr	sub_01AC8A(pc)
 	tst.w	d7
@@ -35488,7 +35488,7 @@ loc_01BF64:
 loc_01BF66:
 	moveq	#$2,d0
 loc_01BF68:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_01BF6C:
 	bne.w	loc_01BFFE
 loc_01BF70:
@@ -35570,7 +35570,7 @@ loc_01C01C:
 loc_01C01E:
 	cmpi.b	#$20,$37(a2)
 loc_01C024:
-	beq.w	sub_01B002
+	beq.w	Object_Free
 loc_01C028:
 	moveq	#-$1,d0
 loc_01C02A:
@@ -35605,7 +35605,7 @@ loc_01C060:
 loc_01C064:
 	add.w	d1,Obj_Y(a0)
 loc_01C068:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 	dc.b	$70,$FF,$30,$28
 	dc.b	$00,$2C,$24,$40,$0C,$2A,$00,$20,$00,$37,$67,$00,$00,$84,$4A,$28
 	dc.b	$00,$29,$67,$04,$53,$28,$00,$29,$43,$F8,$E0,$00,$4E,$BA,$EB,$40
@@ -35637,7 +35637,7 @@ loc_01C136:
 loc_01C13A:
 	lea	(Objects_A).w,a1
 loc_01C13E:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01C142:
 	tst.b	d0
 loc_01C144:
@@ -35725,20 +35725,20 @@ loc_01C1DA:
 loc_01C1DE:
 	bne.w	loc_01C20E
 loc_01C1E2:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01C1E8:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01C1EE:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01C1F4:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01C1FA:
 	beq.b	loc_01C21A
 	tst.b	$44(a0)
 	bne.b	loc_01C20E
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01C20E:
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_01C21E
@@ -35758,7 +35758,7 @@ sub_01C222:
 	move.b	#$14,$42(a0)
 	move.b	#$1E,$43(a0)
 	move.l	#$1C832,Obj_AnimPtr(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_01C254:
 	moveq	#$0,d0
 	move.b	$49(a0),d0
@@ -35799,11 +35799,11 @@ loc_01C2A4:
 	jsr	(sub_01B048).l
 	movea.l	a0,a2
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 	dc.b	$00,$06,$00,$08,$94,$A2,$01,$20,$00,$05,$12,$2F,$80,$00,$00,$FF
 	dc.b	$00,$06,$00,$08,$94,$A2,$01,$20,$00,$05,$13,$4F,$80,$00,$00,$FF
 	dc.b	$FF,$FF,$00,$01,$C2,$D0,$00,$06,$00,$08,$94,$C0,$01,$20,$00,$05
@@ -35939,7 +35939,7 @@ loc_01C876:
 loc_01C87A:
 	lea	ColorList_01D030(pc),a3
 loc_01C87E:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 loc_01C882:
 	move.w	(ram_C328).w,d0
 loc_01C886:
@@ -35955,7 +35955,7 @@ loc_01C894:
 loc_01C898:
 	bset.b	#$6,Obj_Flags(a0)
 loc_01C89E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01C8A2:
 	dc.w	$0000,$0000,$0000,$0000,$0296,$0000,$0000,$0000
 	dc.w	$0000,$02E0,$0000,$0000,$0000,$0000,$0000
@@ -35975,7 +35975,7 @@ loc_01C8EE:
 loc_01C8F2:
 	jsr	(sub_00AF50).l
 loc_01C8F8:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01C8FC:
 	cmpi.b	#$20,$37(a0)
 loc_01C902:
@@ -35988,7 +35988,7 @@ loc_01C90E:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01C914:
 	ble.b	loc_01C91A
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01C91A:
 	cmpi.b	#$A,$5B(a0)
 loc_01C920:
@@ -36033,7 +36033,7 @@ loc_01C952:
 loc_01C98E:
 	jsr	(sub_00AF50).l
 loc_01C994:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01C998:
 	bset.b	#$3,Obj_Flags(a0)
 	jsr	(sub_0219B8).l
@@ -36041,9 +36041,9 @@ loc_01C998:
 	andi.w	#$3,d0
 	bne.b	loc_01C9B6
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01C9B6:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 	move.w	#$1,Obj_SortKey(a0)
 	rts
 sub_01C9C2:
@@ -36051,18 +36051,18 @@ sub_01C9C2:
 loc_01C9C6:
 	bne.w	loc_01C9F0
 loc_01C9CA:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01C9D0:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01C9D6:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01C9DC:
 	beq.b	loc_01CA2A
 	tst.b	$44(a0)
 	bne.b	loc_01C9F0
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01C9F0:
 	subq.b	#$1,$44(a0)
 	btst.b	#$0,Obj_Flags2(a0)
@@ -36102,7 +36102,7 @@ loc_01CA5E:
 loc_01CA62:
 	lea	ColorList_01D030(pc),a3
 loc_01CA66:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 loc_01CA6A:
 	move.w	(ram_C328).w,d0
 loc_01CA6E:
@@ -36120,7 +36120,7 @@ loc_01CA7E:
 loc_01CA82:
 	bset.b	#$6,Obj_Flags(a0)
 loc_01CA88:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01CA8C:
 	dc.w	$0000,$0000,$0000,$0000,$0000,$0218,$01FA,$0000
 Words_01CA9C:
@@ -36138,7 +36138,7 @@ loc_01CABC:
 loc_01CAC0:
 	jsr	(sub_00AF50).l
 loc_01CAC6:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01CACA:
 	cmpi.b	#$20,$37(a0)
 loc_01CAD0:
@@ -36151,7 +36151,7 @@ loc_01CADC:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01CAE2:
 	ble.b	loc_01CAE8
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01CAE8:
 	tst.b	$5A(a0)
 loc_01CAEC:
@@ -36198,7 +36198,7 @@ loc_01CB4C:
 loc_01CB4E:
 	jsr	(sub_00AF50).l
 loc_01CB54:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01CB58:
 	bset.b	#$3,Obj_Flags(a0)
 	jsr	(sub_0219B8).l
@@ -36206,15 +36206,15 @@ loc_01CB58:
 	andi.w	#$3,d0
 	bne.b	loc_01CB76
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01CB76:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 	dc.b	$00,$00,$00,$00,$00,$0F
 	dc.b	$FF,$B0,$00,$21,$FF,$B0
 sub_01CB86:
 	bsr.b	sub_01CBFC
 	bne.b	loc_01CB9C
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01CB9C
 	move.b	#$45,$36(a2)
 	lea	dat_01D010(pc),a1
@@ -36225,7 +36225,7 @@ sub_01CB9E:
 	bsr.b	sub_01CBFC
 loc_01CBA0:
 	bne.b	loc_01CBA8
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	beq.b	loc_01CBAA
 loc_01CBA8:
 	rts
@@ -36233,7 +36233,7 @@ loc_01CBAA:
 	move.b	#$53,$36(a2)
 	lea	ObjData_01D000(pc),a1
 loc_01CBB4:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 	move.w	#$418,(a2)
 	ori.b	#$61,$2(a2)
 	move.b	#$40,$22(a2)
@@ -36245,7 +36245,7 @@ loc_01CBB4:
 	move.w	Words_01CBEC(pc,d0.w),d0
 	move.w	d0,$1E(a2)
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 	rts
 Words_01CBEC:
@@ -36287,13 +36287,13 @@ loc_01CC34:
 loc_01CC3A:
 	bgt.b	loc_01CC84
 loc_01CC3C:
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 loc_01CC40:
 	bne.b	loc_01CC84
 loc_01CC42:
 	lea	(ObjData_028434).l,a1
 loc_01CC48:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01CC4C:
 	move.w	Obj_X(a0),$4(a2)
 loc_01CC52:
@@ -36324,7 +36324,7 @@ loc_01CC88:
 	cmpi.w	#$48,Obj_Y(a0)
 loc_01CC8E:
 	bcs.b	loc_01CC96
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_01CC96:
 	move.w	#$41C,(a0)
 loc_01CC9A:
@@ -36340,7 +36340,7 @@ loc_01CCAC:
 loc_01CCB2:
 	beq.b	loc_01CCD0
 loc_01CCB4:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_01CCBA:
 	move.b	(RNG_Seed).w,d1
 loc_01CCBE:
@@ -36384,12 +36384,12 @@ loc_01CD18:
 loc_01CD1C:
 	beq.b	loc_01CD22
 loc_01CD1E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01CD22:
 	move.w	#$22C,(a0)
 	bclr.b	#$6,Obj_Flags(a0)
 	moveq	#-$4D,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	lea	ObjData_01D17A(pc),a1
 	jmp	Object_RunAnimScript(pc)
 	dc.b	$2F,$09,$49,$FA
@@ -36431,7 +36431,7 @@ loc_01CE3A:
 loc_01CE3E:
 	lea	ColorList_01D030(pc),a3
 loc_01CE42:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 loc_01CE46:
 	move.w	(ram_C328).w,d0
 loc_01CE4A:
@@ -36449,7 +36449,7 @@ loc_01CE5A:
 loc_01CE5E:
 	bset.b	#$6,Obj_Flags(a0)
 loc_01CE64:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01CE68:
 	dc.w	$0000,$0000,$02BC,$0000,$0000,$01F4,$01D6,$0000
 Words_01CE78:
@@ -36467,7 +36467,7 @@ loc_01CE98:
 loc_01CE9C:
 	jsr	(sub_00AF50).l
 loc_01CEA2:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01CEA6:
 	cmpi.b	#$20,$37(a0)
 loc_01CEAC:
@@ -36480,7 +36480,7 @@ loc_01CEB8:
 	cmpi.w	#$1D0,Obj_Y(a0)
 loc_01CEBE:
 	ble.b	loc_01CEC4
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01CEC4:
 	bsr.w	sub_01CBFC
 loc_01CEC8:
@@ -36508,7 +36508,7 @@ loc_01CF06:
 loc_01CF08:
 	jsr	(sub_00AF50).l
 loc_01CF0E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01CF12:
 	bset.b	#$3,Obj_Flags(a0)
 	jsr	(sub_0219B8).l
@@ -36516,9 +36516,9 @@ loc_01CF12:
 	andi.w	#$3,d0
 	bne.b	loc_01CF30
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01CF30:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01CF34:
 	moveq	#$0,d1
 	moveq	#$10,d2
@@ -36538,10 +36538,10 @@ loc_01CF44:
 	move.w	d1,$8(a2)
 	movea.l	a2,a3
 sub_01CF64:
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01CFA2
 	lea	ObjData_01D020(pc),a1
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 	move.b	#$40,$22(a2)
 	bset.b	#$6,$2(a2)
 	move.w	$4(a3),$4(a2)
@@ -36662,7 +36662,7 @@ loc_01D328:
 loc_01D32A:
 	dbra	d7,loc_01D322
 loc_01D32E:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 dat_01D332:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$22,$40,$00,$00
 dat_01D33E:
@@ -36672,8 +36672,8 @@ dat_01D34A:
 	dc.b	$00,$00,$20,$00,$00,$00
 	dc.b	$00,$00,$22,$40,$22,$40,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$22,$94,$00,$00,$00,$00,$00,$00
-sub_01D368:
-	lea	(ram_C700).w,a2
+LoadColorList:
+	lea	(Palette_Buffer).w,a2
 loc_01D36C:
 	move.w	(a3)+,d7
 loc_01D36E:
@@ -36683,7 +36683,7 @@ loc_01D370:
 loc_01D374:
 	dbra	d7,loc_01D36E
 loc_01D378:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_01D37E:
 	rts
 sub_01D380:
@@ -36701,7 +36701,7 @@ loc_01D396:
 loc_01D398:
 	lea	ObjData_01DE82(pc),a3
 loc_01D39C:
-	bra.b	sub_01D368
+	bra.b	LoadColorList
 sub_01D39E:
 	lea	ObjData_01DE72(pc),a1
 loc_01D3A2:
@@ -36893,11 +36893,11 @@ loc_01D588:
 loc_01D58C:
 	bne.b	loc_01D596
 loc_01D58E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01D592:
 	jmp	loc_01AE32(pc)
 loc_01D596:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 sub_01D59A:
 	addq.w	#$1,$58(a0)
 loc_01D59E:
@@ -36933,9 +36933,9 @@ loc_01D5E0:
 	beq.b	loc_01D626
 	movea.l	a0,a6
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a6,a0
 	move.b	#$C,$40(a0)
 	move.b	#$10,$41(a0)
@@ -36949,7 +36949,7 @@ loc_01D61E:
 	lea	ObjData_01E32C(pc),a1
 	jmp	Object_RunAnimScript(pc)
 loc_01D626:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01D62A:
 	jsr	(sub_00AF50).l
 loc_01D630:
@@ -36985,11 +36985,11 @@ loc_01D668:
 loc_01D66C:
 	bra.b	loc_01D686
 loc_01D66E:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_01D674:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01D67A:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01D680:
 	bne.b	loc_01D69E
 loc_01D682:
@@ -36997,17 +36997,17 @@ loc_01D682:
 loc_01D686:
 	move.w	d4,Obj_SpriteSize(a0)
 loc_01D68A:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_01D690:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01D696:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01D69C:
 	beq.b	loc_01D6B4
 loc_01D69E:
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01D6AA:
 	subq.b	#$1,$44(a0)
 	andi.b	#$1,$44(a0)
@@ -37095,11 +37095,11 @@ loc_01D788:
 loc_01D78C:
 	bne.b	loc_01D796
 loc_01D78E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01D792:
 	jmp	loc_01AE32(pc)
 loc_01D796:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 sub_01D79A:
 	subi.w	#$60,Obj_X(a0)
 sub_01D7A0:
@@ -37167,7 +37167,7 @@ loc_01D824:
 loc_01D828:
 	jsr	sub_01B048(pc)
 loc_01D82C:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 	dc.b	$4E,$FA,$D7,$D0
 sub_01D834:
 	cmpi.b	#$20,$37(a0)
@@ -37186,7 +37186,7 @@ loc_01D84C:
 loc_01D850:
 	bne.b	loc_01D86A
 loc_01D852:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01D856:
 	clr.l	(a0)
 	cmpi.b	#$20,$37(a0)
@@ -37228,7 +37228,7 @@ loc_01D8C8:
 loc_01D8D6:
 	jsr	sub_01B048(pc)
 	bne.w	loc_01D856
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01D8E2:
 	move.l	#$4000,d1
 loc_01D8E8:
@@ -37362,7 +37362,7 @@ loc_01DA0C:
 loc_01DA10:
 	bsr.w	sub_01D380
 loc_01DA14:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01DA18:
 	dc.w	$0000,$009F,$0000,$0000,$0216,$028C,$0000,$0000
 	dc.w	$0000,$0000,$0000,$0188,$0000,$0000,$0000
@@ -37386,16 +37386,16 @@ loc_01DAA0:
 loc_01DAA4:
 	bne.b	loc_01DAC6
 loc_01DAA6:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01DAAC:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01DAB2:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01DAB8:
 	beq.b	loc_01DAD0
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01DAC6:
 	subq.b	#$1,$44(a0)
 	andi.b	#$1,$44(a0)
@@ -37404,7 +37404,7 @@ loc_01DAD0:
 loc_01DAD6:
 	bne.b	loc_01DAE4
 loc_01DAD8:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_01DADC:
 	move.w	#$1,Obj_SortKey(a0)
 loc_01DAE2:
@@ -37425,9 +37425,9 @@ loc_01DAE4:
 	move.l	#$1E35A,Obj_AnimPtr(a0)
 	movea.l	a0,a2
 	lea	$60(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01DB42:
 	jmp	loc_01AE32(pc)
 	dc.b	$43,$FA,$07,$90,$21,$7C,$FF,$FF,$C0,$00
@@ -37480,7 +37480,7 @@ loc_01DBD0:
 loc_01DBD4:
 	bmi.b	loc_01DC42
 loc_01DBD6:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01DBDA:
 	cmpi.b	#$8,d0
 loc_01DBDE:
@@ -37526,7 +37526,7 @@ loc_01DC14:
 loc_01DC16:
 	moveq	#-$4F,d0
 loc_01DC18:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01DC1E:
 	move.b	#$14,$29(a0)
 loc_01DC24:
@@ -37546,7 +37546,7 @@ loc_01DC38:
 loc_01DC3E:
 	subq.b	#$1,$2A(a0)
 loc_01DC42:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_01DC46:
 	move.w	#$2,Obj_SortKey(a0)
 loc_01DC4C:
@@ -37617,7 +37617,7 @@ loc_01DCCC:
 loc_01DCD2:
 	move.w	#$2B0,(a0)
 loc_01DCD6:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01DCDA:
 	dc.w	$0000,$02D5,$0000,$0000,$0000,$0000,$0000,$0000
 	dc.w	$0000,$0000,$0000,$0000,$0000,$0000,$02AD
@@ -37656,7 +37656,7 @@ loc_01DD32:
 loc_01DD36:
 	add.w	d1,Obj_Y(a0)
 loc_01DD3A:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_01DD3E:
 	move.w	#$3,Obj_SortKey(a0)
 loc_01DD44:
@@ -37669,7 +37669,7 @@ loc_01DD46:
 	bclr.b	#$7,$1A(a0)
 	beq.b	loc_01DD60
 loc_01DD5C:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_01DD60:
 	move.w	#$23C,(a0)
 	bset.b	#$6,Obj_Flags(a0)
@@ -37700,7 +37700,7 @@ loc_01DDA4:
 loc_01DDA6:
 	cmpi.b	#$20,$37(a2)
 loc_01DDAC:
-	beq.w	sub_01B002
+	beq.w	Object_Free
 loc_01DDB0:
 	tst.b	$2F(a0)
 loc_01DDB4:
@@ -37710,7 +37710,7 @@ loc_01DDB6:
 loc_01DDBA:
 	lea	(Objects_A).w,a1
 loc_01DDBE:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01DDC2:
 	move.b	d0,d2
 loc_01DDC4:
@@ -38040,7 +38040,7 @@ loc_01E82C:
 loc_01E830:
 	moveq	#$3,d0
 loc_01E832:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_01E836:
 	bne.b	loc_01E862
 loc_01E838:
@@ -38068,9 +38068,9 @@ loc_01E86A:
 loc_01E86C:
 	moveq	#-$21,d0
 loc_01E86E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01E874:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 	dc.b	$4E,$BA,$C5,$36,$70,$00,$11,$40
 	dc.b	$00,$35,$11,$40,$00,$95,$11,$40,$00,$F5,$11,$7C,$00,$20,$00,$22
 	dc.b	$31,$48,$00,$8A,$31,$48,$00,$EA,$30,$BC,$02,$6C,$00,$28,$00,$28
@@ -38086,18 +38086,18 @@ loc_01E8F4:
 loc_01E8F8:
 	bne.w	loc_01E922
 loc_01E8FC:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01E902:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01E908:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01E90E:
 	beq.b	loc_01E92E
 	tst.b	$44(a0)
 	bne.b	loc_01E922
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01E922:
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_01E93A
@@ -38107,10 +38107,10 @@ loc_01E92E:
 loc_01E934:
 	bgt.b	loc_01E97A
 loc_01E936:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01E93A:
 	moveq	#-$23,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	clr.b	$3E(a0)
 	move.b	#$20,$37(a0)
 	move.w	#$260,(a0)
@@ -38125,11 +38125,11 @@ loc_01E93A:
 loc_01E97A:
 	move.l	a0,-(a7)
 	lea	$60(a0),a0
-	jsr	(sub_01B002).l
+	jsr	(Object_Free).l
 	lea	$60(a0),a0
 	jsr	(sub_017A20).l
 	movea.l	(a7)+,a0
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 	dc.b	$0C,$28,$00,$50,$00,$36,$67,$04
 	dc.b	$4E,$FA,$C6,$60,$42,$90,$31,$7C,$00,$84,$00,$00,$10,$28,$00,$35
 	dc.b	$51,$40,$02,$40,$00,$1F,$11,$40,$00,$20,$60,$00,$02,$78
@@ -38176,7 +38176,7 @@ loc_01EA0E:
 loc_01EA12:
 	add.w	d2,Obj_Y(a0)
 loc_01EA16:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01EA1A:
 	lea	ObjData_01EFE4(pc),a1
 loc_01EA1E:
@@ -38200,7 +38200,7 @@ loc_01EA7E:
 	move.w	#$23C,(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$1EFE4,Obj_AnimPtr(a0)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 	dc.b	$32,$3C
 	dc.b	$02,$B6,$0C,$78,$00,$04,$C3,$28,$66,$04,$32,$3C,$02,$8F,$31,$41
 	dc.b	$00,$1E,$EB,$49,$31,$41,$00,$1C,$5C,$49,$4E,$FA,$C4,$5E,$32,$3C
@@ -38211,7 +38211,7 @@ sub_01EADA:
 loc_01EADE:
 	movea.l	a0,a2
 loc_01EAE0:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01EAE4:
 	move.l	#$1F1C8,Obj_AnimPtr(a0)
 loc_01EAEC:
@@ -38223,7 +38223,7 @@ loc_01EAF6:
 loc_01EAFC:
 	ori.b	#$A8,Obj_Flags(a0)
 loc_01EB02:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01EB06:
 	moveq	#-$1,d0
 loc_01EB08:
@@ -38265,9 +38265,9 @@ loc_01EB58:
 loc_01EB5E:
 	bgt.b	loc_01EB9E
 loc_01EB60:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01EB66:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01EB6C:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_01EB72:
@@ -38278,11 +38278,11 @@ loc_01EB72:
 	move.b	#$40,Obj_TileAttr(a0)
 	bclr.b	#$7,Obj_Flags(a0)
 	moveq	#-$4D,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01EB9A:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01EB9E:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$F9
 	dc.b	$FF,$F3,$FF,$F9,$FF,$F3,$FF,$F9,$FF,$F3,$FF,$F4,$FF,$F7,$FF,$F4
@@ -38306,7 +38306,7 @@ sub_01EC34:
 loc_01EC54:
 	lea	(Objects_A).w,a1
 loc_01EC58:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01EC5C:
 	move.b	d0,$35(a0)
 loc_01EC60:
@@ -38328,7 +38328,7 @@ loc_01EC6C:
 loc_01EC86:
 	jsr	sub_01A1F8(pc)
 	moveq	#-$45,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	#$2,$29(a0)
 	subq.b	#$1,$28(a0)
 	bne.b	loc_01ECAA
@@ -38487,7 +38487,7 @@ loc_01F32C:
 loc_01F330:
 	movea.l	a0,a2
 loc_01F332:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_01F336:
 	move.w	(ram_C328).w,d0
 loc_01F33A:
@@ -38499,7 +38499,7 @@ loc_01F342:
 loc_01F348:
 	move.w	Words_01F352(pc,d0.w),$38(a0)
 loc_01F34E:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 Words_01F352:
 	dc.w	$0000,$0019,$0032,$004B,$0064,$007D,$0000,$0000
 	dc.w	$0032,$0000,$0000,$0000,$0000,$007D,$0096
@@ -38517,7 +38517,7 @@ loc_01F3B0:
 loc_01F3B4:
 	cmpi.w	#$180,Obj_Y(a0)
 loc_01F3BA:
-	bgt.w	sub_01B002
+	bgt.w	Object_Free
 loc_01F3BE:
 	tst.b	$29(a0)
 loc_01F3C2:
@@ -38525,7 +38525,7 @@ loc_01F3C2:
 loc_01F3C4:
 	lea	(Objects_A).w,a1
 loc_01F3C8:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01F3CC:
 	move.b	d0,$35(a0)
 loc_01F3D0:
@@ -38572,19 +38572,19 @@ loc_01F41E:
 	jsr	sub_01A326(pc)
 	bne.b	loc_01F43A
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_01F43A:
 	move.b	#$60,Obj_State(a0)
 loc_01F440:
 	subq.b	#$1,Obj_State(a0)
 loc_01F444:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01F44A:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01F450:
 	beq.b	loc_01F49A
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	addq.b	#$2,$36(a0)
 	addq.b	#$1,Obj_AnimTimer(a0)
 	btst.b	#$0,Obj_Flags2(a0)
@@ -38604,7 +38604,7 @@ loc_01F48E:
 loc_01F494:
 	move.w	(a1,d0.w),$1E(a0)
 loc_01F49A:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01F49E:
 	move.b	#$1,Obj_AnimTimer(a0)
 	bclr.b	#$6,Obj_Flags(a0)
@@ -38612,7 +38612,7 @@ loc_01F49E:
 	move.l	#$1F630,Obj_AnimPtr(a0)
 	move.b	#$40,Obj_TileAttr(a0)
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	bra.b	loc_01F49A
 sub_01F4C6:
 	move.b	#$20,$37(a0)
@@ -38674,7 +38674,7 @@ loc_01F690:
 loc_01F692:
 	suba.w	#$60,a0
 loc_01F696:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01F69A:
 	clr.b	$2B(a0)
 loc_01F69E:
@@ -38732,15 +38732,15 @@ loc_01F716:
 loc_01F718:
 	suba.w	#$60,a0
 loc_01F71C:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01F720:
 	move.b	#$0,$B8(a0)
 loc_01F726:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_01F72C:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_01F732:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_01F738:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_01F73E:
@@ -38748,10 +38748,10 @@ loc_01F73E:
 loc_01F740:
 	bsr.w	sub_01FA36
 loc_01F744:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01F748:
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	bclr.b	#$3,Obj_Flags(a0)
 	bclr.b	#$1,$62(a0)
 	bset.b	#$5,Obj_Flags(a0)
@@ -38761,26 +38761,26 @@ loc_01F748:
 	move.w	#$23C,$60(a0)
 	move.l	#$1FD5C,Obj_AnimPtr(a0)
 	lea	(Objects_A).w,a1
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 	andi.w	#$18,d0
 	lsr.w	#$2,d0
 	lea	dat_02026E(pc),a1
 	adda.w	(a1,d0.w),a1
 	move.l	a1,$90(a0)
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01F744
 	move.l	#$1FE58,$30(a2)
 	bsr.b	sub_01F7CE
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01F7CA
 	move.l	#$1FF42,$30(a2)
 	bsr.b	sub_01F7CE
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01F7CA
 	move.l	#$2002C,$30(a2)
 	bsr.b	sub_01F7CE
 loc_01F7CA:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 sub_01F7CE:
 	move.l	Obj_Y(a0),$8(a2)
 	move.l	Obj_X(a0),$4(a2)
@@ -38877,7 +38877,7 @@ loc_01F9C8:
 loc_01F9CC:
 	jmp	Object_RunAnimScript(pc)
 loc_01F9D0:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_01F9D4:
 	lea	ObjData_0206AE(pc),a1
 	jmp	Object_RunAnimScript(pc)
@@ -38894,10 +38894,10 @@ sub_01FA36:
 	tst.b	$2B(a0)
 loc_01FA3A:
 	beq.b	loc_01FA82
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.b	loc_01FA82
 	lea	ObjData_01FB66(pc),a1
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 	lea	dat_01FB06(pc),a3
 	moveq	#$0,d0
 	move.b	$2A(a0),d0
@@ -38918,7 +38918,7 @@ loc_01FA82:
 sub_01FA84:
 	lea	(Objects_A).w,a1
 loc_01FA88:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_01FA8C:
 	andi.b	#$1E,d0
 loc_01FA90:
@@ -39215,7 +39215,7 @@ loc_020770:
 loc_020774:
 	moveq	#$2,d0
 loc_020776:
-	jsr	sub_01AB5C(pc)
+	jsr	Alloc_C0E0Slot(pc)
 loc_02077A:
 	bne.b	loc_0207BE
 loc_02077C:
@@ -39247,25 +39247,25 @@ loc_0207B4:
 loc_0207B6:
 	move.w	#$23C,(a0)
 loc_0207BA:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_0207BE:
 	tst.b	$49(a5)
 	beq.b	loc_0207C8
 	clr.b	(ram_C68C).w
 loc_0207C8:
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a5,a0
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 sub_0207D2:
 	cmpi.w	#$170,Obj_Y(a0)
 loc_0207D8:
 	bgt.b	loc_020808
 loc_0207DA:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_0207E0:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_0207E6:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0207EC:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_0207F2:
@@ -39279,25 +39279,25 @@ loc_0207FC:
 loc_020800:
 	bsr.w	sub_020906
 loc_020804:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_020808:
 	move.l	a0,-(a7)
 	adda.w	#$60,a0
 	jsr	(sub_017A20).l
 	adda.w	#$60,a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	(a7)+,a0
 	tst.b	$49(a0)
 	beq.b	loc_020828
 	clr.b	(ram_C68C).w
 loc_020828:
-	jmp	sub_01B002(pc)
+	jmp	Object_Free(pc)
 loc_02082C:
 	move.b	#$20,$37(a0)
 	clr.b	$3E(a0)
 	movea.l	a0,a2
 	lea	$C0(a0),a0
-	jsr	sub_01B002(pc)
+	jsr	Object_Free(pc)
 	movea.l	a2,a0
 	move.b	#$1A,$40(a0)
 	move.b	#$1A,$41(a0)
@@ -39320,7 +39320,7 @@ loc_020872:
 loc_020876:
 	move.b	#$10,$51(a0)
 	lea	(Objects_A).w,a1
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 	andi.b	#$1E,d0
 	moveq	#$2,d2
 	sub.b	$5E(a0),d0
@@ -39353,7 +39353,7 @@ loc_0208D0:
 loc_0208D6:
 	lea	(Objects_A).w,a1
 loc_0208DA:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_0208DE:
 	andi.b	#$1F,d0
 loc_0208E2:
@@ -39497,7 +39497,7 @@ loc_0209DA:
 loc_0209DC:
 	swap	d1
 loc_0209DE:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_0209E4:
 	cmpi.b	#$20,d0
 loc_0209E8:
@@ -39506,7 +39506,7 @@ loc_0209E8:
 	movem.w	(a2,d7.w),d0-d1
 	swap	d0
 	swap	d1
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 	cmpi.b	#$20,d0
 	bne.b	loc_020A0C
 	jsr	(sub_00AF50).l
@@ -39616,7 +39616,7 @@ loc_020BCE:
 loc_020BD2:
 	add.w	d1,Obj_Y(a0)
 loc_020BD6:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_020BDA:
 	move.w	#$1,Obj_SortKey(a0)
 loc_020BE0:
@@ -39625,13 +39625,13 @@ loc_020BE2:
 	lea	ObjData_0212FE(pc),a1
 	jmp	Object_RunAnimScript(pc)
 sub_020BEA:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 loc_020BF0:
 	bne.b	loc_020C3E
 loc_020BF2:
 	lea	ObjData_020EE0(pc),a1
 loc_020BF6:
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 loc_020BFA:
 	move.w	(ram_FFC206).l,$4(a2)
 loc_020C02:
@@ -39665,22 +39665,22 @@ sub_020C40:
 loc_020C42:
 	moveq	#$0,d1
 loc_020C44:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_020C4A:
 	cmpi.b	#$20,d0
 loc_020C4E:
 	bne.w	loc_020CEE
-	jsr	(sub_00E234).l
-	jsr	(sub_00B036).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_HitPlayer).l
 	bne.w	loc_020CEE
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_020CEE
 	tst.b	$29(a0)
 	beq.b	loc_020C86
 	subq.b	#$1,$29(a0)
 loc_020C7A:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 	move.w	#$1,Obj_SortKey(a0)
 	rts
 loc_020C86:
@@ -39689,7 +39689,7 @@ loc_020C86:
 	subq.b	#$1,$2A(a0)
 	move.b	#$A,$29(a0)
 	lea	(Objects_A).w,a1
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 	sub.b	$35(a0),d0
 	andi.w	#$1E,d0
 	beq.b	loc_020CBC
@@ -40015,9 +40015,9 @@ loc_021990:
 loc_021992:
 	moveq	#-$4C,d0
 loc_021994:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02199A:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_02199E:
 	cmpi.w	#$0,(ram_C328).w
 loc_0219A4:
@@ -40032,15 +40032,15 @@ loc_0219B0:
 loc_0219B6:
 	rts
 sub_0219B8:
-	jsr	(sub_01AD84).l
+	jsr	(Object_AllocC_Last4).l
 loc_0219BE:
 	bne.w	loc_021A58
 loc_0219C2:
 	lea	ObjData_021A8A(pc),a1
 loc_0219C6:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0219CC:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_0219D2:
 	move.b	(RNG_Seed).w,d0
 loc_0219D6:
@@ -40098,7 +40098,7 @@ loc_021A18:
 loc_021A1A:
 	move.w	d0,$8(a2)
 loc_021A1E:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_021A24:
 	move.b	(ram_C313).w,d0
 loc_021A28:
@@ -40143,7 +40143,7 @@ loc_021A72:
 loc_021A74:
 	move.l	a1,-(a7)
 loc_021A76:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_021A7C:
 	movea.l	(a7)+,a1
 loc_021A7E:
@@ -40187,7 +40187,7 @@ ObjData_021BDA:
 sub_021C12:
 	jsr	(a1)
 	beq.b	loc_021C20
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.w	loc_021CDE
 loc_021C20:
 	lea	dat_021CF0(pc),a1
@@ -40205,7 +40205,7 @@ loc_021C3A:
 	move.l	a1,$28(a2)
 	move.l	#$3AEFA,$14(a2)
 	lea	ObjData_021E9E(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$4,$36(a2)
 	move.w	(ram_C328).w,d0
 	move.b	dat_021CE0(pc,d0.w),d0
@@ -40297,15 +40297,15 @@ loc_021D92:
 loc_021D96:
 	add.l	d1,Obj_VelY(a0)
 loc_021D9A:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_021DA0:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_021DA6:
 	subq.b	#$1,$36(a0)
 loc_021DAA:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_021DB0:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 dat_021DB6:
 	dc.b	$28,$34,$38,$3C
 dat_021DBA:
@@ -40363,15 +40363,15 @@ loc_021E56:
 loc_021E5A:
 	add.l	d1,Obj_VelY(a0)
 loc_021E5E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_021E64:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_021E6A:
 	subq.b	#$1,$36(a0)
 loc_021E6E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_021E74:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 dat_021E7A:
 	dc.b	$28,$34,$38,$3C
 dat_021E7E:
@@ -40417,7 +40417,7 @@ loc_021F9C:
 	beq.b	loc_021FB2
 	moveq	#-$63,d0
 loc_021FB2:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	bsr.w	sub_022106
 	moveq	#$0,d0
 	jmp	loc_021636(pc)
@@ -40444,7 +40444,7 @@ loc_021FC4:
 	beq.b	loc_022022
 	lea	ObjData_02274A(pc),a3
 loc_022022:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 	move.l	a0,$88(a0)
 	move.w	#$2C8,$60(a0)
 	move.b	#$52,$8C(a0)
@@ -40634,7 +40634,7 @@ loc_0221C8:
 loc_0221CC:
 	move.w	d0,$8(a1)
 loc_0221D0:
-	jsr	sub_01ABCE(pc)
+	jsr	Object_DirectionTo(pc)
 loc_0221D4:
 	move.w	(a7)+,$8(a1)
 loc_0221D8:
@@ -40743,7 +40743,7 @@ loc_0222C2:
 loc_0222C6:
 	bne.b	loc_0222CC
 loc_0222C8:
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_0222CC:
 	clr.b	$2D(a0)
 	move.b	#$20,$37(a0)
@@ -40786,18 +40786,18 @@ sub_02235A:
 	blt.b	loc_02237C
 	moveq	#-$61,d0
 loc_02237C:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
-	jmp	sub_01D368(pc)
+	jmp	LoadColorList(pc)
 sub_022392:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_022396:
 	move.w	#$1,Obj_SortKey(a0)
 loc_02239C:
 	rts
 sub_02239E:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_0223A2:
 	move.w	#$2,Obj_SortKey(a0)
 loc_0223A8:
@@ -40817,33 +40817,33 @@ loc_0223BE:
 loc_0223C2:
 	move.w	#$620,d4
 loc_0223C6:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0223CC:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0223D2:
 	bne.b	loc_022412
 loc_0223D4:
 	move.w	#$628,d4
 loc_0223D8:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0223DE:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0223E4:
 	bne.b	loc_022412
 loc_0223E6:
 	move.w	#$630,d4
 loc_0223EA:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0223F0:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0223F6:
 	bne.b	loc_022412
 loc_0223F8:
 	move.w	#$638,d4
 loc_0223FC:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_022402:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_022408:
 	bne.b	loc_022412
 loc_02240A:
@@ -40865,15 +40865,15 @@ loc_022416:
 	beq.b	loc_022436
 	movea.l	a4,a3
 loc_022436:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_022442:
 	moveq	#$0,d0
 loc_022444:
 	rts
 loc_022446:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 	moveq	#-$1,d0
 	rts
 	dc.b	$08,$F8
@@ -40927,7 +40927,7 @@ loc_0224B8:
 loc_0224BA:
 	add.w	d0,Obj_X(a0)
 loc_0224BE:
-	jsr	sub_01AF0E(pc)
+	jsr	Object_AnimTick(pc)
 loc_0224C2:
 	move.w	#$1,Obj_SortKey(a0)
 loc_0224C8:
@@ -40974,7 +40974,7 @@ loc_022514:
 	tst.b	$2D(a0)
 	bne.b	loc_022554
 	moveq	#-$41,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	$2B(a2),$2E(a0)
 	move.b	$2C(a2),$2F(a0)
 	move.b	#$88,$2D(a0)
@@ -40989,14 +40989,14 @@ loc_022554:
 	tst.b	$2F(a0)
 	beq.b	loc_022562
 	subq.b	#$1,$2F(a0)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 loc_022562:
 	tst.b	$2E(a0)
 	beq.b	loc_022500
 	move.b	$2C(a2),$2F(a0)
 	subq.b	#$1,$2E(a0)
 	jsr	sub_022786(pc)
-	jmp	sub_01AF0E(pc)
+	jmp	Object_AnimTick(pc)
 dat_02257A:
 	dc.b	$00,$40,$00,$40,$00,$40
 	dc.b	$00,$40
@@ -41061,10 +41061,10 @@ dat_022768:
 	dc.b	$0E,$EE,$00,$2E,$0E,$EE
 sub_022786:
 	movea.l	a2,a3
-	jsr	sub_01AD58(pc)
+	jsr	Object_AllocC_18(pc)
 	bne.w	loc_022800
 	lea	ObjData_0228B0(pc),a1
-	jsr	sub_01ADF6(pc)
+	jsr	Object_LoadTemplateA2(pc)
 	move.w	Obj_X(a0),$4(a2)
 	move.w	Obj_Y(a0),$8(a2)
 	move.b	#$40,$22(a2)
@@ -41229,7 +41229,7 @@ loc_022DC2:
 	beq.b	loc_022DD4
 	moveq	#-$63,d0
 loc_022DD4:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$2,d0
 	cmpi.w	#$9,(ram_C328).w
 	bne.b	loc_022DE6
@@ -41305,7 +41305,7 @@ loc_022E0C:
 	beq.b	loc_022F1E
 	lea	dat_023C3C(pc),a3
 loc_022F1E:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 	clr.l	$50(a0)
 	clr.w	$18(a0)
 	move.b	#$20,$22(a0)
@@ -41339,7 +41339,7 @@ loc_022F1E:
 	dc.b	$03,$01,$03,$03,$01,$01,$03,$01,$03,$01,$05,$05,$05,$05,$05,$05
 	dc.b	$05,$05,$05,$05,$05,$05,$05,$05,$05,$05
 sub_02306A:
-	jsr	(sub_01AF0E).l
+	jsr	(Object_AnimTick).l
 loc_023070:
 	move.l	Obj_VelY(a0),d0
 loc_023074:
@@ -41418,14 +41418,14 @@ loc_02313E:
 	beq.b	loc_023144
 	subq.b	#$1,$51(a0)
 loc_023144:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$45,$F8,$F0,$60,$31,$6A
 	dc.b	$00,$04,$00,$04,$31,$6A,$00,$08,$00,$08,$30,$28,$00,$54,$D1,$68
 	dc.b	$00,$04,$4E,$F9,$00,$01,$AF,$0E
 loc_023168:
 	bset.b	#$0,Obj_Flags(a0)
 	beq.b	loc_023176
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_023176:
 	lea	ObjData_024278(pc),a1
 	bset.b	#$2,Obj_Flags(a0)
@@ -41486,7 +41486,7 @@ loc_0232E2:
 	move.b	d0,$54(a0)
 	move.b	#$1,$52(a0)
 	moveq	#-$47,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02330E:
 	subq.b	#$1,$54(a0)
 	cmpi.b	#$1,$53(a0)
@@ -41510,7 +41510,7 @@ loc_023330:
 loc_02334A:
 	lea	(ram_F060).w,a2
 	movem.l	$C(a2),d4-d5
-	lea	(sub_01AD9A).l,a1
+	lea	(Object_AllocA_Last15).l,a1
 	jsr	sub_021C12(pc)
 	bra.b	loc_023368
 dat_023360:
@@ -41518,7 +41518,7 @@ dat_023360:
 loc_023364:
 	subq.b	#$1,$50(a0)
 loc_023368:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02336E:
 	move.b	#$40,$50(a0)
 	clr.b	$51(a0)
@@ -41556,7 +41556,7 @@ loc_023486:
 loc_02348A:
 	move.l	d2,Obj_Y(a0)
 loc_02348E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$45,$F8,$F0,$60,$5C,$49,$08,$2A,$00,$00,$00,$5A
 	dc.b	$67,$10,$43,$FA,$10,$1C,$0C,$28,$00,$52,$00,$36,$67,$04,$43,$FA
 	dc.b	$10,$52,$4E,$F9,$00,$01,$AF,$1A,$70,$00,$10,$28,$00,$50,$52,$28
@@ -41586,7 +41586,7 @@ loc_023528:
 loc_02352C:
 	move.w	d1,Obj_Y(a0)
 loc_023530:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$45,$F8,$F0,$60,$4A,$2A,$00,$59,$67,$24
 	dc.b	$0C,$28,$00,$52,$00,$36,$67,$04,$42,$2A,$00,$59,$48,$E7,$00,$E0
 	dc.b	$61,$00,$00,$1A,$4C,$DF,$07,$00,$48,$E7,$00,$E0,$61,$00,$03,$9C
@@ -41626,11 +41626,11 @@ loc_0235CA:
 loc_0235CE:
 	bne.w	loc_0235F4
 loc_0235D2:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_0235D8:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_0235DE:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0235E4:
 	beq.b	loc_023626
 	addq.b	#$2,$44(a0)
@@ -41651,15 +41651,15 @@ loc_02360E:
 	beq.b	loc_02361A
 	exg	a3,a4
 loc_02361A:
-	jsr	sub_01D368(pc)
+	jsr	LoadColorList(pc)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_023626:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_02362C:
 	bne.b	loc_023634
 loc_02362E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_023634:
 	lea	(ram_F060).w,a2
 	bclr.b	#$0,Obj_Flags2(a0)
@@ -41706,7 +41706,7 @@ loc_0236C2:
 	move.w	d0,(a1)+
 	dbra	d7,loc_0236B8
 	addq.b	#$1,(ram_C232).w
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0236D2:
 	bset.b	#$1,$5A(a2)
 	bne.b	loc_023700
@@ -41739,7 +41739,7 @@ loc_023712:
 	move.b	#$20,$41(a2)
 	move.b	#$1E,$42(a2)
 	move.b	#$1E,$43(a2)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$08,$F8,$00,$02,$C6,$1C
 	dc.b	$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_023768:
@@ -41760,7 +41760,7 @@ loc_023798:
 	cmpi.b	#$20,$37(a2)
 	beq.w	loc_02383A
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	cmp.b	$51(a0),d0
 	beq.b	loc_0237E2
 	moveq	#-$1,d1
@@ -41779,7 +41779,7 @@ loc_0237E2:
 	bne.w	loc_02383A
 	tst.b	$50(a0)
 	bne.b	loc_023806
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 	move.b	(RNG_Seed).w,d0
 	andi.b	#$7,d0
 	bne.b	loc_02383A
@@ -41834,7 +41834,7 @@ loc_02394E:
 	bne.b	loc_023996
 	move.b	#$2,$28(a0)
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	sub.b	$35(a0),d0
 	andi.w	#$1F,d0
 	beq.b	loc_023996
@@ -41869,13 +41869,13 @@ ObjData_0239C8:
 	dc.b	$11,$68,$11,$86,$11,$A4,$11,$C2,$11,$E0,$11,$FE,$12,$1C,$12,$3A
 	dc.b	$12,$58,$12,$76,$12,$94,$12,$B2,$12,$D0
 sub_0239EA:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 loc_0239F0:
 	bne.b	loc_023A4A
 loc_0239F2:
 	lea	ObjData_023BAE(pc),a1
 loc_0239F6:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0239FC:
 	move.b	d2,$35(a2)
 loc_023A00:
@@ -41909,14 +41909,14 @@ loc_023A48:
 loc_023A4A:
 	rts
 sub_023A4C:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_023A88
 	move.w	d7,$8(a2)
 	swap	d7
 	move.w	d7,$4(a2)
 	move.w	#$23C,(a2)
 	lea	ObjData_023BDE(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$60,$22(a2)
 	cmpi.w	#$9,(ram_C328).w
 	bne.b	loc_023A86
@@ -41927,10 +41927,10 @@ loc_023A86:
 loc_023A88:
 	rts
 sub_023A8A:
-	jsr	(sub_01AD9A).l
+	jsr	(Object_AllocA_Last15).l
 	bne.b	loc_023AFC
 	lea	ObjData_023BEE(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.w	#$23C,(a2)
 	move.w	$4(a0),$4(a2)
 	move.w	$8(a0),$8(a2)
@@ -42360,7 +42360,7 @@ loc_024DF8:
 	rts
 loc_024DFA:
 	moveq	#-$76,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	lea	ObjData_025930(pc),a1
 	jsr	(Object_LoadTemplate).l
 	move.w	#$1,Obj_Y(a0)
@@ -42465,9 +42465,9 @@ loc_024FA2:
 	andi.w	#$3,d0
 	bne.b	loc_024FBC
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_024FBC:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_024FC2:
 	lea	dat_0258B4(pc),a3
 loc_024FC6:
@@ -42477,21 +42477,21 @@ loc_024FCA:
 loc_024FCE:
 	move.w	#$888,d4
 loc_024FD2:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_024FD8:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_024FDE:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_024FE4:
 	bne.b	loc_024FFE
 loc_024FE6:
 	move.w	#$890,d4
 loc_024FEA:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_024FF0:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_024FF6:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_024FFC:
 	beq.b	loc_025032
 loc_024FFE:
@@ -42507,9 +42507,9 @@ loc_025002:
 	beq.b	loc_025024
 	movea.l	a4,a3
 loc_025024:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_025032:
 	move.w	$2E(a0),d0
 loc_025036:
@@ -42519,7 +42519,7 @@ loc_02503A:
 loc_02503E:
 	bcc.b	loc_025052
 loc_025040:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 Words_025046:
 	dc.w	$02BC,$0190,$0000,$0230,$0140,$0000
 loc_025052:
@@ -42564,7 +42564,7 @@ loc_02507E:
 	clr.l	(ram_FB20).w
 	clr.l	(ram_FB60).w
 	move.l	#$25CB8,Obj_AnimPtr(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$70,$00,$10,$28
 	dc.b	$00,$2D,$52,$00,$0C,$00,$00,$20,$66,$04,$30,$3C,$00,$10,$11,$40
 	dc.b	$00,$2D,$45,$FA,$08,$CC,$10,$32,$00,$00,$D0,$40,$43,$FA,$08,$B2
@@ -42576,7 +42576,7 @@ loc_02507E:
 	dc.b	$33,$7C,$00,$16,$00,$1E,$08,$E9,$00,$06,$00,$02,$22,$5F,$5C,$49
 	dc.b	$4E,$F9,$00,$01,$AF,$1A
 sub_025156:
-	jsr	(sub_01AD9A).l
+	jsr	(Object_AllocA_Last15).l
 	bne.b	loc_02518C
 	add.w	Obj_Y(a0),d6
 	move.w	d6,$8(a2)
@@ -42584,7 +42584,7 @@ sub_025156:
 	add.w	Obj_X(a0),d6
 	move.w	d6,$4(a2)
 	lea	ObjData_025980(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$60,$22(a2)
 	move.l	#$8940C,$14(a2)
 	move.w	#$23C,(a2)
@@ -42619,7 +42619,7 @@ loc_0251C8:
 loc_0251CE:
 	bsr.b	sub_025232
 loc_0251D0:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0251D6:
 	tst.b	$29(a0)
 	beq.b	loc_0251E4
@@ -42661,7 +42661,7 @@ loc_025238:
 loc_02523E:
 	lea	(Objects_A).w,a1
 loc_025242:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_025248:
 	andi.w	#$1F,d0
 loc_02524C:
@@ -42720,7 +42720,7 @@ loc_0252AE:
 loc_0252B4:
 	bsr.b	sub_025318
 loc_0252B6:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0252BC:
 	tst.b	$29(a0)
 	beq.b	loc_0252CA
@@ -42762,7 +42762,7 @@ loc_02531E:
 loc_025324:
 	lea	(Objects_A).w,a1
 loc_025328:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_02532E:
 	andi.w	#$1F,d0
 loc_025332:
@@ -42824,7 +42824,7 @@ loc_0253A0:
 loc_0253A2:
 	bsr.b	sub_025406
 loc_0253A4:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0253AA:
 	tst.b	$29(a0)
 	beq.b	loc_0253B8
@@ -42866,7 +42866,7 @@ loc_02540C:
 loc_025412:
 	lea	(Objects_A).w,a1
 loc_025416:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_02541C:
 	andi.w	#$1F,d0
 loc_025420:
@@ -42929,13 +42929,13 @@ loc_025478:
 loc_02549E:
 	subq.b	#$1,$29(a0)
 loc_0254A2:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0254A8:
 	move.b	#$3C,$29(a0)
 loc_0254AE:
 	clr.b	Obj_State(a0)
 loc_0254B2:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$45,$F8,$F1,$80,$52,$2A,$00,$50
 	dc.b	$15,$7C,$00,$01,$00,$34,$25,$7C,$00,$02,$5E,$BA,$00,$30,$5C,$49
 	dc.b	$4E,$F9,$00,$01,$AF,$1A,$45,$F8,$F1,$80,$42,$2A,$00,$50,$15,$7C
@@ -42951,7 +42951,7 @@ loc_0254FA:
 loc_0254FC:
 	moveq	#$2,d0
 loc_0254FE:
-	jsr	(sub_01AB5C).l
+	jsr	(Alloc_C0E0Slot).l
 loc_025504:
 	bne.w	loc_02558E
 loc_025508:
@@ -43019,10 +43019,10 @@ loc_02558E:
 	moveq	#-$1,d0
 	rts
 sub_025594:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_02560C
 	lea	ObjData_025990(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
 	move.b	$35(a0),d0
@@ -43048,7 +43048,7 @@ sub_025594:
 	jsr	(sub_01AE8E).l
 	exg	a0,a2
 	moveq	#-$41,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 loc_02560C:
 	rts
@@ -43059,10 +43059,10 @@ loc_02560C:
 dat_025632:
 	dc.b	$00,$08,$10,$18,$20,$28,$30,$38
 sub_02563A:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_0256B2
 	lea	ObjData_025990(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.w	#$3C4,(a2)
 	move.b	$2B(a0),$36(a2)
 	move.b	$35(a0),d0
@@ -43088,7 +43088,7 @@ sub_02563A:
 	jsr	(sub_01AE8E).l
 	exg	a0,a2
 	moveq	#-$41,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 loc_0256B2:
 	rts
@@ -43123,7 +43123,7 @@ sub_0256D8:
 	move.w	d0,$2E(a2)
 	move.w	#$3C8,(a2)
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 loc_02574A:
 	rts
@@ -43137,9 +43137,9 @@ loc_025768:
 	cmp.w	$2E(a0),d0
 loc_02576C:
 	bge.b	loc_025780
-	jsr	(sub_00E234).l
-	jsr	(sub_00B036).l
-	jmp	(sub_01AF0E).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_HitPlayer).l
+	jmp	(Object_AnimTick).l
 loc_025780:
 	bclr.b	#$0,Obj_Flags(a0)
 loc_025786:
@@ -43153,7 +43153,7 @@ loc_025798:
 loc_02579C:
 	moveq	#-$35,d0
 loc_02579E:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0257A4:
 	lea	ObjData_026072(pc),a1
 loc_0257A8:
@@ -43164,12 +43164,12 @@ loc_0257B2:
 	cmp.w	$2E(a0),d0
 loc_0257B6:
 	bge.b	loc_0257D4
-	jsr	(sub_00E234).l
-	jsr	(sub_00B036).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_HitPlayer).l
 	bne.b	loc_0257D4
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_0257E8
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0257D4:
 	andi.b	#$BE,Obj_Flags(a0)
 loc_0257DA:
@@ -43195,7 +43195,7 @@ loc_025802:
 loc_025806:
 	move.w	d0,Obj_X(a0)
 loc_02580A:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_025810:
 	lea	(ram_F060).w,a1
 loc_025814:
@@ -43211,7 +43211,7 @@ loc_025824:
 loc_025828:
 	move.w	d0,Obj_X(a0)
 loc_02582C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$11,$FC,$00,$01,$F1,$10,$60,$42,$42,$38,$F1,$10,$60,$3C
 	dc.b	$11,$FC,$00,$01,$F1,$70,$60,$34,$42,$38,$F1,$70,$60,$2E,$11,$FC
 	dc.b	$00,$01,$F2,$30,$60,$26,$42,$38,$F2,$30,$11,$FC,$00,$1E,$F2,$09
@@ -43415,16 +43415,16 @@ loc_0260B4:
 	clr.l	$C0(a0)
 	movea.l	a6,a0
 	moveq	#-$77,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	lea	ObjData_02683E(pc),a3
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	lea	ObjData_0268DA(pc),a1
 	jsr	(Object_LoadTemplate).l
 	move.b	#$1,$28(a0)
 	move.w	#$360,(a0)
 	clr.b	$53(a0)
 	clr.b	$52(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_026184:
 	rts
 sub_026186:
@@ -43444,7 +43444,7 @@ loc_026198:
 loc_02619C:
 	adda.w	d0,a1
 loc_02619E:
-	lea	(ram_C700).w,a2
+	lea	(Palette_Buffer).w,a2
 loc_0261A2:
 	move.w	(a1)+,d0
 loc_0261A4:
@@ -43454,7 +43454,7 @@ loc_0261A8:
 loc_0261AA:
 	move.w	(a1)+,(a2,d0.w)
 loc_0261AE:
-	bset.b	#$0,(ram_C59A).w
+	bset.b	#$0,(Palette_Dirty).w
 loc_0261B4:
 	move.b	#$9,$5A(a0)
 loc_0261BA:
@@ -43552,9 +43552,9 @@ loc_0262C0:
 loc_0262C2:
 	move.w	#$850,d4
 loc_0262C6:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0262CC:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0262D2:
 	beq.b	loc_026306
 	addq.b	#$2,$44(a0)
@@ -43569,9 +43569,9 @@ loc_0262D8:
 	beq.b	loc_0262F8
 	movea.l	a4,a3
 loc_0262F8:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_026306:
 	move.w	$56(a0),d0
 loc_02630A:
@@ -43580,7 +43580,7 @@ loc_02630E:
 	cmp.w	$38(a0),d0
 loc_026312:
 	bcc.b	loc_026374
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02631A:
 	lea	ObjData_02683E(pc),a3
 	jsr	sub_02235A(pc)
@@ -43593,7 +43593,7 @@ loc_02631A:
 	clr.l	(ram_F2B0).w
 	clr.l	(ram_F2AC).w
 	clr.l	(ram_F000).w
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 Words_026358:
 	dc.w	$02BC,$01F4,$0000,$0190,$00C8,$0000
 dat_026364:
@@ -43652,7 +43652,7 @@ loc_0263CE:
 loc_0263D2:
 	move.b	#$20,$53(a0)
 loc_0263D8:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0263DE:
 	moveq	#$C,d0
 	moveq	#$20,d1
@@ -43662,7 +43662,7 @@ loc_0263DE:
 	jsr	(sub_01063C).l
 	addq.b	#$1,$58(a0)
 	clr.b	$59(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$11,$7C,$00,$00
 	dc.b	$00,$2A,$5C,$49,$4E,$F9,$00,$01,$AF,$1A,$11,$7C,$00,$01,$00,$2A
 	dc.b	$60,$F0,$11,$7C,$00,$02,$00,$2A,$60,$E8,$11,$7C,$00,$03,$00,$2A
@@ -43717,7 +43717,7 @@ loc_026522:
 	bne.b	loc_02656C
 	move.b	#$C,$50(a0)
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	move.b	d0,$35(a0)
 	bsr.w	sub_0266C2
 	bne.b	loc_02656C
@@ -43731,7 +43731,7 @@ loc_02655A:
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$26B4C,Obj_AnimPtr(a0)
 loc_02656C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_026572:
 	tst.b	Obj_State(a0)
 	bne.b	loc_0265A2
@@ -43746,7 +43746,7 @@ loc_026572:
 	move.b	#$8,Obj_State(a0)
 loc_0265A2:
 	subq.b	#$1,Obj_State(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_0265AC:
 	lea	(ram_F060).w,a1
 loc_0265B0:
@@ -43778,7 +43778,7 @@ loc_0265E6:
 	tst.b	$52(a0)
 	bne.b	loc_02662E
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	cmpi.b	#$E,d0
 	bge.b	loc_026600
 	moveq	#$E,d0
@@ -43804,9 +43804,9 @@ loc_02662E:
 	subq.b	#$1,$53(a0)
 	bne.b	loc_02664C
 	moveq	#-$47,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02664C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 dat_026652:
 	dc.b	$05,$36,$05,$48,$05,$5A,$05,$6C,$05,$7E
 loc_02665C:
@@ -43821,7 +43821,7 @@ loc_02665C:
 	lsl.w	#$2,d3
 	move.l	Longs_0266AE(pc,d3.w),d3
 	moveq	#$9,d2
-	lea	(sub_01AD9A).l,a1
+	lea	(Object_AllocA_Last15).l,a1
 	lea	(ram_F060).w,a2
 	movem.l	$C(a2),d4-d5
 	jsr	sub_021C12(pc)
@@ -43838,7 +43838,7 @@ Longs_0266AE:
 	dc.l	$001C0012,$0020000D,$00200000,$0020FFF3
 	dc.l	$001CFFEE
 sub_0266C2:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.w	loc_02678C
 	lea	(Objects_A).w,a1
 	movea.l	a2,a5
@@ -43939,7 +43939,7 @@ loc_026814:
 	lsl.l	#$8,d1
 	add.l	d1,d0
 	move.l	d0,Obj_VelY(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_026828:
 	jmp	(sub_018238).l
 	dc.b	$01,$04
@@ -44062,7 +44062,7 @@ loc_026CE8:
 	move.l	a1,$50(a0)
 	move.w	#$394,(a0)
 	moveq	#-$75,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_026D1C:
 	rts
 sub_026D1E:
@@ -44078,10 +44078,10 @@ loc_026D22:
 	move.w	(a1)+,d6
 	move.w	(a1)+,$2E(a0)
 	move.l	a1,$50(a0)
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_026D70
 	lea	ObjData_027AB6(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$40,$22(a2)
 	bset.b	#$5,$2(a2)
 	move.w	d6,$4(a2)
@@ -44092,7 +44092,7 @@ loc_026D22:
 loc_026D70:
 	rts
 loc_026D72:
-	jsr	(sub_01B002).l
+	jsr	(Object_Free).l
 	move.w	#$188,Obj_X(a0)
 	move.w	#$FD70,Obj_Y(a0)
 	move.w	#$39C,(a0)
@@ -44101,15 +44101,15 @@ loc_026D72:
 	bclr.b	#$2,Obj_Flags(a0)
 	rts
 sub_026D9E:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_026DA4:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_026DAA:
 	tst.b	Obj_Timer(a0)
 loc_026DAE:
 	beq.b	loc_026DBA
 	subq.b	#$1,Obj_Timer(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_026DBA:
 	bclr.b	#$0,Obj_Flags(a0)
 loc_026DC0:
@@ -44312,7 +44312,7 @@ loc_027040:
 loc_027042:
 	move.w	#$3A0,(a0)
 loc_027046:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_02704C:
 	lea	ObjData_027AE6(pc),a1
 loc_027050:
@@ -44389,10 +44389,10 @@ loc_027168:
 	bne.b	loc_0271B6
 	tst.b	Obj_Timer(a0)
 	bne.b	loc_0271B2
-	jsr	(sub_01AD9A).l
+	jsr	(Object_AllocA_Last15).l
 	bne.b	loc_0271B6
 	lea	ObjData_027B66(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.l	#$8947A,$14(a2)
 	move.w	Obj_X(a0),d0
 	move.w	Obj_Y(a0),d1
@@ -44418,9 +44418,9 @@ loc_0271C6:
 loc_0271CA:
 	move.w	#$880,d4
 loc_0271CE:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0271D4:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0271DA:
 	beq.b	loc_02720E
 	addq.b	#$2,$44(a0)
@@ -44435,9 +44435,9 @@ loc_0271E0:
 	beq.b	loc_027200
 	movea.l	a4,a3
 loc_027200:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02720E:
 	move.w	$2A(a0),d0
 loc_027212:
@@ -44447,7 +44447,7 @@ loc_027216:
 loc_02721A:
 	bcc.b	loc_02726A
 loc_02721C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 Words_027222:
 	dc.w	$02BC,$0190,$0000,$0226,$012C,$0000
 loc_02722E:
@@ -44461,7 +44461,7 @@ loc_02722E:
 	move.b	#$20,$A2(a0)
 	move.b	#$10,$A3(a0)
 	move.l	#$27D20,Obj_AnimPtr(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02726A:
 	addq.w	#$2,$2A(a0)
 loc_02726E:
@@ -44477,7 +44477,7 @@ loc_027276:
 	swap	d2
 	jsr	(sub_01063C).l
 loc_027288:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_02728E:
 	lea	(ram_F060).w,a1
 loc_027292:
@@ -44513,14 +44513,14 @@ loc_0272C8:
 loc_0272D8:
 	subq.b	#$1,$2A(a0)
 loc_0272DC:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0272E2:
 	jsr	(sub_0219B8).l
 	move.b	Obj_AnimTimer(a0),d0
 	andi.w	#$3,d0
 	bne.b	loc_0272DC
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	bra.b	loc_0272DC
 sub_0272FC:
 	move.b	#$4,$37(a0)
@@ -44531,10 +44531,10 @@ sub_0272FC:
 	move.b	d0,$2C(a0)
 	rts
 sub_027318:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_027382
 	lea	ObjData_027AD6(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$40,$22(a2)
 	move.w	#$3B4,(a2)
 	moveq	#$0,d0
@@ -44556,7 +44556,7 @@ sub_027318:
 	move.b	d0,Obj_Timer(a0)
 loc_027378:
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 loc_027382:
 	rts
@@ -44602,7 +44602,7 @@ loc_0273EE:
 loc_0273F0:
 	lea	(Objects_A).w,a1
 loc_0273F4:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_0273FA:
 	cmpi.b	#$14,d0
 loc_0273FE:
@@ -44647,7 +44647,7 @@ loc_027442:
 loc_027448:
 	bge.b	loc_027460
 loc_02744A:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_027450:
 	move.b	(RNG_Seed).w,d0
 loc_027454:
@@ -44663,13 +44663,13 @@ loc_027460:
 loc_027466:
 	subq.b	#$1,$29(a0)
 loc_02746A:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_027470:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_027476:
 	beq.b	loc_027480
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_027480:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_027486:
@@ -44680,15 +44680,15 @@ loc_027488:
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.l	#$21BDA,Obj_AnimPtr(a0)
 loc_0274A2:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_0274A8:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 loc_0274AE:
 	bne.b	loc_0274F6
 loc_0274B0:
 	lea	ObjData_027AF6(pc),a1
 loc_0274B4:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0274BA:
 	move.b	#$40,$22(a2)
 loc_0274C0:
@@ -44757,15 +44757,15 @@ loc_027560:
 	bne.b	loc_027566
 	move.w	#$878,d4
 loc_027566:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_02756C:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_027572:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_027578:
 	beq.b	loc_027582
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_027582:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_027588:
@@ -44783,9 +44783,9 @@ loc_0275B6:
 	andi.w	#$3,d0
 	bne.b	loc_0275CE
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0275CE:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0275D4:
 	tst.b	Obj_State(a0)
 loc_0275D8:
@@ -44818,22 +44818,22 @@ loc_027602:
 loc_027616:
 	subq.b	#$1,$29(a0)
 loc_02761A:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_027620:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_027698
 	lea	ObjData_027B16(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$40,$22(a2)
 	move.w	Obj_X(a0),$4(a2)
 	move.w	Obj_Y(a0),$8(a2)
 	subi.w	#$68,$4(a2)
 	addi.w	#$C,$8(a2)
 	move.w	#$22C,(a2)
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 	bne.b	loc_027698
 	lea	ObjData_027B56(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	move.b	#$E0,$22(a2)
 	move.w	Obj_X(a0),$4(a2)
 	move.w	Obj_Y(a0),$8(a2)
@@ -44841,7 +44841,7 @@ sub_027620:
 	addi.w	#$20,$4(a2)
 	move.w	#$23C,(a2)
 	moveq	#-$4F,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	#$88,Obj_State(a0)
 	moveq	#$0,d0
 loc_027698:
@@ -44875,9 +44875,9 @@ loc_02772E:
 loc_027732:
 	move.w	#$8A8,d4
 loc_027736:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_02773C:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_027742:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_027748:
@@ -44895,7 +44895,7 @@ loc_027748:
 	move.l	#$27F18,Obj_AnimPtr(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 loc_027784:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$00,$40,$01,$E0,$00,$1C
 	dc.b	$02,$34,$00,$1C,$02,$B4
 sub_027796:
@@ -44907,13 +44907,13 @@ loc_02779C:
 loc_0277A2:
 	beq.b	loc_0277F6
 loc_0277A4:
-	jsr	(sub_01AD9A).l
+	jsr	(Object_AllocA_Last15).l
 loc_0277AA:
 	bne.b	loc_0277FE
 loc_0277AC:
 	lea	ObjData_028434(pc),a1
 loc_0277B0:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0277B6:
 	move.l	#$27F70,$30(a2)
 loc_0277BE:
@@ -44945,7 +44945,7 @@ loc_0277F6:
 loc_0277FC:
 	ble.b	loc_027804
 loc_0277FE:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_027804:
 	moveq	#$0,d0
 loc_027806:
@@ -44988,11 +44988,11 @@ loc_027896:
 	cmp.w	Obj_Timer(a0),d0
 loc_02789A:
 	bge.b	loc_0278B6
-	jsr	(sub_00E234).l
-	jsr	(sub_00B036).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_HitPlayer).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_0278C6
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0278B6:
 	move.w	#$220,(a0)
 loc_0278BA:
@@ -45069,9 +45069,9 @@ loc_027940:
 loc_027944:
 	move.w	#$860,d4
 loc_027948:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_02794E:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_027954:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_02795A:
@@ -45095,7 +45095,7 @@ loc_027992:
 	swap	d2
 	jsr	(sub_01063C).l
 loc_02799E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0279A4:
 	tst.b	$29(a0)
 loc_0279A8:
@@ -45135,7 +45135,7 @@ loc_0279E6:
 loc_0279EC:
 	moveq	#-$4E,d0
 loc_0279EE:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_0279F4:
 	subq.b	#$1,$29(a0)
 loc_0279F8:
@@ -45341,7 +45341,7 @@ loc_02811C:
 loc_028120:
 	lea	ObjData_028574(pc),a3
 loc_028124:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 loc_02812A:
 	lea	ObjData_028414(pc),a1
 loc_02812E:
@@ -45357,7 +45357,7 @@ loc_02813E:
 	move.l	a1,Obj_Timer(a0)
 	clr.b	$53(a0)
 	moveq	#-$75,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.w	#$7D0,d0
 	tst.w	(Hardware_Version).w
 	beq.b	loc_028166
@@ -45377,7 +45377,7 @@ loc_028180:
 	move.w	#$2D0,(a1)
 	move.b	#$1,Obj_AnimTimer(a0)
 	move.w	#$344,(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0281A4:
 	move.l	(ram_C508).w,d0
 loc_0281A8:
@@ -45397,7 +45397,7 @@ loc_0281C0:
 loc_0281C4:
 	jsr	(sub_01B048).l
 loc_0281CA:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_0281D0:
 	lea	ObjData_028574(pc),a3
 loc_0281D4:
@@ -45407,9 +45407,9 @@ loc_0281D8:
 loc_0281DC:
 	move.w	#$800,d4
 loc_0281E0:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_0281E6:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0281EC:
 	bne.b	loc_0281F6
 loc_0281EE:
@@ -45431,9 +45431,9 @@ loc_0281FA:
 	beq.b	loc_02821A
 	movea.l	a4,a3
 loc_02821A:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_028228:
 	tst.b	$52(a0)
 loc_02822C:
@@ -45456,7 +45456,7 @@ loc_02824C:
 	tst.w	d7
 	bne.b	loc_028260
 loc_02825A:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028260:
 	move.b	#$41,$52(a0)
 	lea	ObjData_028750(pc),a1
@@ -45492,13 +45492,13 @@ loc_0282C8:
 loc_0282CE:
 	beq.b	loc_02832E
 loc_0282D0:
-	jsr	(sub_01AD9A).l
+	jsr	(Object_AllocA_Last15).l
 loc_0282D6:
 	bne.b	loc_02832A
 loc_0282D8:
 	lea	ObjData_028434(pc),a1
 loc_0282DC:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0282E2:
 	move.w	Obj_X(a0),$4(a2)
 loc_0282E8:
@@ -45530,7 +45530,7 @@ loc_02832E:
 loc_028334:
 	bcs.b	loc_02833C
 loc_028336:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02833C:
 	move.w	#$34C,(a0)
 loc_028340:
@@ -45566,7 +45566,7 @@ sub_028376:
 loc_02837A:
 	beq.b	loc_028382
 loc_02837C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028382:
 	cmpi.w	#$10,(ram_C328).w
 	bne.b	loc_02839E
@@ -45574,7 +45574,7 @@ loc_028382:
 	andi.w	#$3,d0
 	cmpi.w	#$2,d0
 	beq.b	loc_02839E
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 loc_02839E:
 	move.w	#$220,(a0)
 	bclr.b	#$0,Obj_Flags(a0)
@@ -45688,7 +45688,7 @@ sub_02885C:
 loc_028862:
 	moveq	#$3,d0
 loc_028864:
-	jsr	(sub_01AB5C).l
+	jsr	(Alloc_C0E0Slot).l
 loc_02886A:
 	bne.b	loc_028892
 loc_02886C:
@@ -45704,15 +45704,15 @@ loc_028882:
 loc_028888:
 	move.w	#$404,(a0)
 loc_02888C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028892:
 	rts
 sub_028894:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_02889A:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_0288A0:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_0288A6:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_0288AC:
@@ -45724,7 +45724,7 @@ loc_0288B2:
 loc_0288B8:
 	bne.b	loc_0288C0
 loc_0288BA:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0288C0:
 	tst.b	$2B(a0)
 loc_0288C4:
@@ -45772,7 +45772,7 @@ loc_028910:
 loc_028914:
 	jmp	(Object_RunAnimScript).l
 loc_02891A:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028920:
 	move.b	#$1,Obj_AnimTimer(a0)
 loc_028926:
@@ -45846,7 +45846,7 @@ loc_0289BE:
 sub_0289C2:
 	lea	(Objects_A).w,a1
 loc_0289C6:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_0289CC:
 	cmpi.b	#$40,$37(a0)
 loc_0289D2:
@@ -45912,7 +45912,7 @@ loc_028A3E:
 loc_028A40:
 	movem.l	d2-d5/a0-a3,-(a7)
 loc_028A44:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_028A4A:
 	movem.l	(a7)+,d2-d5/a0-a3
 loc_028A4E:
@@ -46019,7 +46019,7 @@ loc_028E54:
 loc_028E5A:
 	move.b	#$49,$36(a0)
 loc_028E60:
-	jsr	(sub_01AB5C).l
+	jsr	(Alloc_C0E0Slot).l
 loc_028E66:
 	bne.b	loc_028EA6
 loc_028E68:
@@ -46049,7 +46049,7 @@ loc_028E98:
 loc_028E9C:
 	move.l	a1,Obj_AnimPtr(a0)
 loc_028EA0:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028EA6:
 	clr.l	(a0)
 	rts
@@ -46068,7 +46068,7 @@ loc_028EBC:
 loc_028EBE:
 	swap	d1
 loc_028EC0:
-	jsr	(sub_00B36C).l
+	jsr	(Object_ToScreen).l
 loc_028EC6:
 	cmpi.b	#$24,d0
 loc_028ECA:
@@ -46098,13 +46098,13 @@ loc_028EEC:
 	dc.b	$00,$00
 	dc.b	$00,$00,$00,$08,$00,$01,$00,$00,$00,$03,$FF,$F8,$00,$01
 loc_028EFE:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_028F04:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_028F0A:
 	bne.b	loc_028F3E
 loc_028F0C:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_028F12:
 	bclr.b	#$1,Obj_State(a0)
 loc_028F18:
@@ -46118,7 +46118,7 @@ loc_028F18:
 	move.l	a1,Obj_AnimPtr(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 loc_028F38:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_028F3E:
 	move.w	#$23C,(a0)
 	moveq	#$0,d0
@@ -46140,7 +46140,7 @@ loc_028F60:
 loc_028F72:
 	movea.l	dat_028F80(pc,d0.w),a1
 	move.l	a1,Obj_AnimPtr(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 dat_028F80:
 	dc.b	$00,$01,$5E,$BA,$00,$01,$94,$BA,$00,$01,$94,$BA,$00,$01,$5E,$BA
 	dc.b	$00,$01,$94,$EE,$00,$01,$94,$EE
@@ -46168,7 +46168,7 @@ sub_029082:
 loc_029084:
 	lea	ObjData_0291D8(pc),a1
 loc_029088:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_02908E:
 	clr.w	$18(a0)
 loc_029092:
@@ -46196,7 +46196,7 @@ loc_0290C0:
 loc_0290C4:
 	lea	ObjData_0291C8(pc),a1
 loc_0290C8:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_0290CE:
 	clr.w	$18(a2)
 loc_0290D2:
@@ -46212,7 +46212,7 @@ loc_0290E8:
 loc_0290EE:
 	move.w	#$23C,(a2)
 loc_0290F2:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_0290F8:
 	cmpi.w	#$170,Obj_Y(a0)
 loc_0290FE:
@@ -46224,7 +46224,7 @@ loc_029106:
 loc_029108:
 	lea	(Objects_A).w,a1
 loc_02910C:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_029112:
 	move.b	d0,$35(a0)
 loc_029116:
@@ -46270,11 +46270,11 @@ loc_02916A:
 loc_02916E:
 	move.w	#$BB8,d4
 loc_029172:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_029178:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_02917E:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_029184:
 	btst.b	#$0,Obj_Flags2(a0)
 loc_02918A:
@@ -46291,9 +46291,9 @@ loc_02918A:
 	lea	ObjData_021BDA(pc),a1
 	jmp	(Object_RunAnimScript).l
 loc_0291BC:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_0291C2:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 ObjData_0291C8:
 	dc.b	$80,$01,$00,$00,$00,$00,$0C,$00
 	dc.b	$00,$01,$00,$04,$00,$02,$92,$08
@@ -46404,9 +46404,9 @@ loc_029366:
 	move.b	#$1,$2E(a0)
 	movea.l	a3,a0
 	moveq	#-$63,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_029496:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 ObjData_02949C:
 	dc.b	$00,$96,$00,$96
 	dc.b	$00,$96,$00,$FA,$00,$C8,$00,$C8,$00,$C8,$01,$2C
@@ -46453,8 +46453,8 @@ loc_029522:
 	tst.b	$44(a0)
 	bne.w	loc_029544
 	move.w	#$928,d4
-	jsr	(sub_00E238).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox).l
+	jsr	(Collision_FindHit_E1C0).l
 	beq.b	loc_02956E
 	addq.b	#$2,$44(a0)
 loc_029544:
@@ -46466,9 +46466,9 @@ loc_029544:
 	beq.b	loc_029560
 	movea.l	a4,a3
 loc_029560:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02956E:
 	tst.b	Obj_State(a0)
 loc_029572:
@@ -46520,7 +46520,7 @@ loc_0295C2:
 loc_0295C8:
 	lea	(Objects_A).w,a1
 loc_0295CC:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_0295D2:
 	sub.b	$35(a0),d0
 loc_0295D6:
@@ -46561,7 +46561,7 @@ loc_02960E:
 loc_029614:
 	subq.b	#$1,$29(a0)
 loc_029618:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02961E:
 	lea	dat_02983E(pc),a3
 	jsr	sub_02235A(pc)
@@ -46572,7 +46572,7 @@ loc_02961E:
 	lea	ObjData_02A232(pc),a1
 	move.l	a1,Obj_AnimPtr(a0)
 	move.w	#$260,(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 dat_02964C:
 	dc.b	$00,$10,$00,$17
 	dc.b	$00,$10,$00,$16,$00,$07,$00,$18,$00,$08,$00,$18,$FF,$FF,$00,$1C
@@ -46633,7 +46633,7 @@ loc_02971E:
 loc_029720:
 	jsr	(sub_01B42C).l
 loc_029726:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02972C:
 	move.w	#$260,(a0)
 	move.w	#$105,(ram_F08A).w
@@ -46659,14 +46659,14 @@ loc_029776:
 loc_02977A:
 	move.w	#$930,d4
 loc_02977E:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_029784:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_02978A:
 	beq.b	loc_0297C4
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_029798:
 	lea	dat_0297D6(pc),a3
 	cmpi.b	#$41,$36(a0)
@@ -46806,7 +46806,7 @@ loc_029946:
 	move.b	#$48,$36(a0)
 	lea	(ram_E900).w,a2
 	lea	ObjData_029ED8(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	ori.b	#$29,$2(a2)
 	move.b	#$20,$22(a2)
 	move.b	#$52,$36(a2)
@@ -46815,7 +46815,7 @@ loc_029946:
 	move.l	#$87000,$14(a2)
 	lea	(ram_E940).w,a2
 	lea	ObjData_029EE8(pc),a1
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 	ori.b	#$29,$2(a2)
 	move.b	#$20,$22(a2)
 	move.b	#$4C,$36(a2)
@@ -46824,9 +46824,9 @@ loc_029946:
 	move.l	#$87000,$14(a2)
 	movea.l	a3,a0
 	moveq	#-$63,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_029AB8:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$43,$F8
 	dc.b	$F0,$00,$23,$7C,$00,$02,$9E,$98,$00,$54,$31,$7C,$01,$F4,$00,$38
 	dc.b	$0C,$38,$00,$03,$FE,$44,$67,$0E,$23,$7C,$00,$02,$9E,$A0,$00,$54
@@ -46843,21 +46843,21 @@ loc_029B24:
 loc_029B28:
 	move.w	#$958,d4
 loc_029B2C:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_029B32:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_029B38:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_029B3E:
 	bne.b	loc_029B60
 loc_029B40:
 	move.w	#$950,d4
 loc_029B44:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_029B4A:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_029B50:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_029B56:
 	bne.b	loc_029B60
 loc_029B58:
@@ -46879,9 +46879,9 @@ loc_029B64:
 	beq.b	loc_029B86
 	movea.l	a4,a3
 loc_029B86:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_029B94:
 	tst.b	$2B(a0)
 loc_029B98:
@@ -46896,7 +46896,7 @@ loc_029BA8:
 	bne.b	loc_029BAE
 	lea	dat_029F56(pc),a3
 loc_029BAE:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 loc_029BB4:
 	moveq	#$7,d0
 loc_029BB6:
@@ -46975,7 +46975,7 @@ loc_029C7E:
 loc_029C90:
 	move.l	a1,Obj_AnimPtr(a0)
 loc_029C94:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_029C9A:
 	lea	ColorList_029EF8(pc),a3
 	jsr	sub_02235A(pc)
@@ -46987,7 +46987,7 @@ loc_029C9A:
 	lea	ObjData_02A232(pc),a1
 	move.l	a1,Obj_AnimPtr(a0)
 	move.w	#$260,(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 dat_029CCE:
 	dc.b	$00,$00
 	dc.b	$00,$01,$28,$00,$00,$31,$00,$00,$00,$01,$D8,$00,$00,$31,$45,$F8
@@ -47034,7 +47034,7 @@ loc_029D3C:
 loc_029D40:
 	bne.b	loc_029D48
 loc_029D42:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_029D48:
 	tst.b	Obj_State(a0)
 	bne.b	loc_029D9C
@@ -47045,7 +47045,7 @@ loc_029D48:
 	jsr	(sub_01A326).l
 	bne.b	loc_029D96
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.w	Obj_X(a0),d0
 	move.w	Obj_Y(a0),d1
 	move.w	d0,$4(a2)
@@ -47119,9 +47119,9 @@ loc_029E78:
 	lea	ObjData_02A27C(pc),a1
 	bra.b	loc_029E6C
 loc_029E8C:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_029E92:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 	dc.b	$00,$64,$00,$64,$00,$64,$00,$64
 	dc.b	$00,$78,$00,$78,$00,$78,$00,$78
 ObjData_029EA8:
@@ -47268,15 +47268,15 @@ loc_02A420:
 loc_02A426:
 	beq.w	loc_02A44E
 	lea	ObjData_02ABDA(pc),a3
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$62,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	clr.b	Obj_State(a0)
 	move.w	#$23C,(a0)
 	lea	ObjData_02AD28(pc),a1
 	jmp	(Object_RunAnimScript).l
 loc_02A44E:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$2F,$09,$4E,$B9,$00,$01,$AC,$A6,$4A,$07,$6B,$22
 	dc.b	$61,$2E,$22,$5F,$52,$28,$00,$28,$0C,$28,$00,$0F,$00,$28,$6E,$06
 	dc.b	$43,$FA,$08,$C2,$60,$06,$5C,$49,$42,$28,$00,$28,$4E,$F9,$00,$01
@@ -47345,7 +47345,7 @@ loc_02A618:
 	bsr.b	sub_02A6A8
 	movea.l	(a7)+,a0
 	lea	ObjData_02AC18(pc),a3
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	lea	(ram_F000).w,a1
 	move.l	#$2ACFA,$54(a1)
 	move.w	#$4B0,$38(a1)
@@ -47360,8 +47360,8 @@ loc_02A682:
 	clr.w	$2(a1)
 	move.w	#$2D0,(a1)
 	moveq	#-$63,d0
-	jsr	(sub_00A068).l
-	jmp	(sub_01AF0E).l
+	jsr	(PlaySound).l
+	jmp	(Object_AnimTick).l
 sub_02A6A8:
 	lea	ObjData_02ACBA(pc),a1
 	jsr	(Object_LoadTemplate).l
@@ -47404,11 +47404,11 @@ loc_02A74A:
 loc_02A74E:
 	bne.w	loc_02A776
 loc_02A752:
-	jsr	(sub_00E234).l
+	jsr	(Object_GetHitbox_FromSize).l
 loc_02A758:
-	jsr	(sub_00B036).l
+	jsr	(Collision_HitPlayer).l
 loc_02A75E:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_02A764:
 	bne.b	loc_02A76E
 loc_02A766:
@@ -47431,9 +47431,9 @@ loc_02A776:
 	beq.b	loc_02A7A4
 	move.b	#$20,Obj_TileAttr(a0)
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02A7A4:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02A7AA:
 	move.l	#$2AFAA,Obj_AnimPtr(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
@@ -47454,7 +47454,7 @@ loc_02A7AA:
 	jsr	(sub_02235A).l
 	move.l	#$2AFB8,Obj_AnimPtr(a0)
 loc_02A808:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_02A80E:
 	cmpi.b	#$53,$36(a0)
 loc_02A814:
@@ -47510,9 +47510,9 @@ loc_02A8C6:
 loc_02A8CA:
 	move.w	d1,Obj_Y(a0)
 loc_02A8CE:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02A8D4:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 sub_02A8DA:
 	move.b	$35(a0),d2
 loc_02A8DE:
@@ -47599,7 +47599,7 @@ loc_02A974:
 loc_02A976:
 	lea	(Objects_A).w,a1
 loc_02A97A:
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 loc_02A980:
 	andi.w	#$1F,d0
 loc_02A984:
@@ -47636,9 +47636,9 @@ loc_02A9BA:
 loc_02A9C0:
 	subq.b	#$1,$2B(a0)
 loc_02A9C4:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02A9CA:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 sub_02A9D0:
 	move.b	$35(a0),d2
 loc_02A9D4:
@@ -47658,7 +47658,7 @@ loc_02A9EE:
 loc_02A9F0:
 	moveq	#-$4E,d0
 loc_02A9F2:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02A9F8:
 	rts
 sub_02A9FA:
@@ -47725,7 +47725,7 @@ loc_02AA76:
 	tst.b	$2B(a0)
 	bne.b	loc_02AACA
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	andi.w	#$1F,d0
 	moveq	#$1,d1
 	sub.b	$35(a0),d0
@@ -47749,9 +47749,9 @@ loc_02AAC4:
 loc_02AACA:
 	subq.b	#$1,$2B(a0)
 loc_02AACE:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02AAD4:
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 dat_02AADA:
 	dc.b	$FF,$FA,$FF,$E0,$FF,$FA
 	dc.b	$FF,$E0,$00,$02,$FF,$DD,$00,$06,$FF,$E0,$00,$0A,$FF,$E0,$00,$0A
@@ -47993,9 +47993,9 @@ loc_02B2CC:
 	addq.w	#$2,d6
 	movea.l	a3,a0
 	moveq	#-$63,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02B3D0:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 ObjData_02B3D6:
 	dc.b	$00,$96,$00,$96,$00,$64,$00,$64,$00,$C8
 	dc.b	$00,$C8,$00,$96,$00,$96,$47,$F9,$00,$0D,$95,$64,$60,$5E,$47,$F9
@@ -48035,13 +48035,13 @@ loc_02B492:
 	add.w	Obj_Y(a0),d1
 	move.w	d1,$8(a2)
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02B4CA:
 	move.b	#$51,$29(a0)
 loc_02B4D0:
 	subq.b	#$1,$29(a0)
 loc_02B4D4:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02B4DA:
 	clr.l	(ram_F000).w
 	lea	dat_02B804(pc),a3
@@ -48079,7 +48079,7 @@ loc_02B540:
 loc_02B544:
 	bne.b	loc_02B56C
 loc_02B546:
-	jsr	(sub_01ABA6).l
+	jsr	(Random_Update).l
 loc_02B54C:
 	move.b	(RNG_Seed).w,d0
 loc_02B550:
@@ -48103,7 +48103,7 @@ loc_02B566:
 loc_02B56C:
 	subq.b	#$1,$29(a0)
 loc_02B570:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02B576:
 	lea	dat_02B740(pc),a3
 loc_02B57A:
@@ -48112,7 +48112,7 @@ loc_02B57A:
 	adda.w	#$14,a3
 loc_02B586:
 	moveq	#-$4C,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	#$17,$40(a0)
 	move.b	#$17,$41(a0)
 	move.b	#$20,$42(a0)
@@ -48176,16 +48176,16 @@ sub_02B620:
 loc_02B624:
 	bne.w	loc_02B648
 loc_02B628:
-	jsr	(sub_00E238).l
+	jsr	(Object_GetHitbox).l
 loc_02B62E:
-	jsr	(sub_00B298).l
+	jsr	(Collision_FindHit_E1C0).l
 loc_02B634:
 	beq.b	loc_02B666
 	tst.b	$44(a0)
 	bne.b	loc_02B648
 	addq.b	#$2,$44(a0)
 	moveq	#-$43,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02B648:
 	movem.l	(a4)+,d0-d1
 	btst.b	#$0,Obj_Flags2(a0)
@@ -48241,7 +48241,7 @@ loc_02B6AC:
 loc_02B6B2:
 	beq.b	loc_02B6C2
 loc_02B6B4:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02B6BA:
 	lea	dat_02B768(pc),a3
 	bra.w	loc_02B57A
@@ -48256,7 +48256,7 @@ loc_02B6C2:
 	jsr	(sub_01A326).l
 	bne.b	loc_02B71E
 	moveq	#-$4E,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	moveq	#$0,d0
 	addq.b	#$1,$2A(a0)
 	cmpi.b	#$3,$2A(a0)
@@ -48296,7 +48296,7 @@ loc_02B794:
 	subq.b	#$1,$29(a0)
 	beq.b	loc_02B7C8
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	andi.w	#$1F,d0
 	add.w	d0,d0
 	lea	(dat_01A8DC).l,a1
@@ -48440,9 +48440,9 @@ loc_02B960:
 	move.b	#$20,$22(a0)
 	movea.l	a3,a0
 	moveq	#-$63,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02BA60:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$11,$7C,$00,$80,$00,$37,$11,$7C,$00,$80
 	dc.b	$01,$57,$11,$7C,$00,$80,$01,$B7,$11,$7C,$00,$80,$02,$17,$5C,$49
 	dc.b	$42,$28,$00,$54,$42,$A8,$00,$0C,$4E,$F9,$00,$01,$AF,$1A,$11,$7C
@@ -48466,7 +48466,7 @@ loc_02BB28:
 loc_02BB2C:
 	beq.b	loc_02BB46
 loc_02BB2E:
-	jsr	(sub_01AF0E).l
+	jsr	(Object_AnimTick).l
 loc_02BB34:
 	lea	(ram_F2A0).w,a1
 loc_02BB38:
@@ -48527,7 +48527,7 @@ loc_02BD20:
 loc_02BD24:
 	bne.b	loc_02BD3E
 loc_02BD26:
-	jsr	(sub_01AF0E).l
+	jsr	(Object_AnimTick).l
 loc_02BD2C:
 	lea	(ram_F2A0).w,a1
 loc_02BD30:
@@ -48563,7 +48563,7 @@ loc_02BD88:
 loc_02BD8C:
 	bne.b	loc_02BDA6
 loc_02BD8E:
-	jsr	(sub_01AF0E).l
+	jsr	(Object_AnimTick).l
 loc_02BD94:
 	lea	(ram_F2A0).w,a1
 loc_02BD98:
@@ -48614,7 +48614,7 @@ loc_02BDFE:
 loc_02BE00:
 	adda.w	d0,a3
 loc_02BE02:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 loc_02BE08:
 	move.b	(RNG_Seed).w,d0
 loc_02BE0C:
@@ -48680,8 +48680,8 @@ loc_02BE84:
 loc_02BE8A:
 	bne.b	loc_02BEBE
 	move.w	#$A20,d4
-	jsr	(sub_00E238).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_02BEA4
 	move.w	#$88,d0
 	bra.b	loc_02BEA8
@@ -48696,7 +48696,7 @@ loc_02BEA8:
 	btst.b	#$0,Obj_Flags2(a0)
 	bne.b	loc_02BEC4
 loc_02BEBE:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02BEC4:
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
@@ -48726,11 +48726,11 @@ loc_02BF10:
 	add.w	d1,d0
 	add.w	d1,d0
 	adda.w	d0,a3
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	move.b	#$5,$29(a0)
 loc_02BF2A:
 	subq.b	#$1,$29(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 	dc.b	$50,$F8,$C3,$D4,$5C,$49,$4E,$F9,$00,$01,$AF,$1A
 sub_02BF40:
 	lea	(ram_F060).w,a3
@@ -48753,8 +48753,8 @@ loc_02BF60:
 	lea	dat_02C6A6(pc),a3
 	tst.b	$44(a0)
 	bne.w	loc_02BF8A
-	jsr	(sub_00E234).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_02BF86
 	tst.b	$44(a0)
 	bne.b	loc_02BF8A
@@ -48772,9 +48772,9 @@ loc_02BF8A:
 	beq.b	loc_02BFAC
 	movea.l	a4,a3
 loc_02BFAC:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 	moveq	#-$44,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02BFBA:
 	tst.b	$29(a0)
 	beq.w	loc_02C04A
@@ -48782,12 +48782,12 @@ loc_02BFBA:
 	subq.b	#$1,$29(a0)
 	bne.b	loc_02BFD6
 	moveq	#-$47,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02BFD6:
 	tst.b	Obj_State(a0)
 	bne.b	loc_02C022
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	cmpi.b	#$C,d0
 	bge.b	loc_02BFEE
 	moveq	#$C,d0
@@ -48814,7 +48814,7 @@ loc_02C018:
 loc_02C022:
 	subq.b	#$1,Obj_State(a0)
 loc_02C026:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02C02C:
 	clr.b	$37(a0)
 	st.b	(ram_F088).w
@@ -48835,7 +48835,7 @@ loc_02C04A:
 	lsl.w	#$2,d3
 	move.l	Longs_02C09E(pc,d3.w),d3
 	moveq	#$9,d2
-	lea	(sub_01AD9A).l,a1
+	lea	(Object_AllocA_Last15).l,a1
 	lea	(ram_F060).w,a2
 	movem.l	$C(a2),d4-d5
 	jsr	(sub_021C12).l
@@ -48889,7 +48889,7 @@ loc_02C0F4:
 	tst.b	Obj_State(a0)
 	bne.b	loc_02C136
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	cmpi.b	#$C,d0
 	bge.b	loc_02C124
 	moveq	#$C,d0
@@ -48904,8 +48904,8 @@ loc_02C136:
 	subq.b	#$1,Obj_State(a0)
 	tst.b	$44(a0)
 	bne.w	loc_02C15C
-	jsr	(sub_00E234).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_02C158
 	tst.b	$44(a0)
 	bne.b	loc_02C15C
@@ -48925,7 +48925,7 @@ loc_02C16E:
 	bsr.b	sub_02C1E0
 	bsr.b	sub_02C1E6
 	moveq	#-$4F,d0
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 	move.b	#$C1,$29(a0)
 loc_02C188:
 	subq.b	#$1,$29(a0)
@@ -48953,7 +48953,7 @@ loc_02C1AA:
 	move.w	#$260,(a0)
 	move.l	#$2C8AA,Obj_AnimPtr(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_02C1DA:
 	lea	dat_02C204(pc),a3
 	bra.b	loc_02C1EA
@@ -49028,8 +49028,8 @@ loc_02C312:
 	tst.b	$44(a0)
 	bne.w	loc_02C33C
 	move.w	#$9F0,d4
-	jsr	(sub_00E238).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox).l
+	jsr	(Collision_FindHit_E1C0).l
 	bne.b	loc_02C338
 	tst.b	$44(a0)
 	bne.b	loc_02C33C
@@ -49077,7 +49077,7 @@ loc_02C382:
 	jsr	sub_02CA2A(pc)
 	bne.b	loc_02C408
 loc_02C3A0:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02C3A6:
 	move.b	#$14,$40(a0)
 	move.b	#$14,$41(a0)
@@ -49152,8 +49152,8 @@ loc_02C480:
 	bne.w	loc_02C554
 	tst.b	$2B(a0)
 	bne.b	loc_02C4B0
-	jsr	(sub_00E234).l
-	jsr	(sub_00B298).l
+	jsr	(Object_GetHitbox_FromSize).l
+	jsr	(Collision_FindHit_E1C0).l
 	beq.b	loc_02C4B0
 	addq.b	#$2,$2B(a0)
 loc_02C4B0:
@@ -49166,7 +49166,7 @@ loc_02C4C4:
 	tst.b	Obj_State(a0)
 	bne.b	loc_02C514
 	lea	(Objects_A).w,a1
-	jsr	(sub_01ABCE).l
+	jsr	(Object_DirectionTo).l
 	cmpi.b	#$C,d0
 	bge.b	loc_02C4DC
 	moveq	#$C,d0
@@ -49206,7 +49206,7 @@ loc_02C514:
 loc_02C550:
 	subq.b	#$1,$29(a0)
 loc_02C554:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02C55A:
 	move.b	#$40,Obj_TileAttr(a0)
 	move.w	#$23C,(a0)
@@ -49312,7 +49312,7 @@ sub_02C972:
 loc_02C978:
 	lea	ObjData_02CB14(pc),a3
 loc_02C97C:
-	jsr	(sub_01D368).l
+	jsr	(LoadColorList).l
 loc_02C982:
 	lea	ObjData_02CAF4(pc),a1
 loc_02C986:
@@ -49358,7 +49358,7 @@ loc_02C9DE:
 loc_02C9E4:
 	move.w	#$3BC,(a0)
 loc_02C9E8:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 sub_02C9EE:
 	lea	(ram_E6C0).w,a3
 loc_02C9F2:
@@ -49378,7 +49378,7 @@ loc_02CA06:
 loc_02CA08:
 	bne.b	loc_02CA10
 loc_02CA0A:
-	jmp	(sub_01AF0E).l
+	jmp	(Object_AnimTick).l
 loc_02CA10:
 	move.b	#$41,$52(a0)
 loc_02CA16:
@@ -49387,7 +49387,7 @@ loc_02CA1A:
 	jmp	(Object_RunAnimScript).l
 loc_02CA20:
 	clr.l	(ram_F000).w
-	jmp	(sub_01B002).l
+	jmp	(Object_Free).l
 sub_02CA2A:
 	movea.l	Obj_Timer(a0),a1
 loc_02CA2E:
@@ -49415,13 +49415,13 @@ loc_02CA50:
 loc_02CA54:
 	move.l	a1,-(a7)
 loc_02CA56:
-	jsr	(sub_01AD58).l
+	jsr	(Object_AllocC_18).l
 loc_02CA5C:
 	bne.w	loc_02CAE0
 loc_02CA60:
 	lea	ObjData_028424(pc),a1
 loc_02CA64:
-	jsr	(sub_01ADF6).l
+	jsr	(Object_LoadTemplateA2).l
 loc_02CA6A:
 	move.b	#$40,$22(a2)
 loc_02CA70:
@@ -49471,7 +49471,7 @@ loc_02CACC:
 loc_02CAD8:
 	moveq	#-$4E,d0
 loc_02CADA:
-	jsr	(sub_00A068).l
+	jsr	(PlaySound).l
 loc_02CAE0:
 	movea.l	(a7)+,a1
 loc_02CAE2:

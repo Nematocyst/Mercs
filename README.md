@@ -188,3 +188,13 @@ decide dynamically, so they show no edges here):
     4C GameOver -> 04          1C Options -> 38 ModeSelect
 
 The `Ending*` names are medium-low confidence: they rest on the graph, not on a verified screen.
+
+## Main routines (named from behaviour; confidence per name in `tools/names.json`)
+
+| Area | Routines |
+|---|---|
+| Sound | `PlaySound` (queues d0 in the Z80 mailbox at `$1C0A`, 148 calls) |
+| Video | `WaitVBlank`, `Update_Scroll`, `Write_TileMap`, `LoadPalette`, `LoadColorList`, `PaletteFade_Step`, `Decompress_ToVDP/ToRAM` (Huffman), `Decompress_RLE`, `BuildSpriteList`, `Frame_Update` |
+| Objects | `ObjectUpdate`, `Object_AllocC*/AllocA*`, `Object_Free`, `Object_LoadTemplate/A2`, `Object_RunAnimScript`, `Object_AnimTick`, `Anim_Set/Step/Restart`, `Object_ToScreen`, `Object_DirectionTo` |
+| Collision | `Object_GetHitbox*`, `Collision_BoxTest`, `Collision_FindHit_E1C0`, `Collision_HitPlayer` |
+| Misc | `Random_Update`, `ReadJoypads`, `InitVDP`, `InitIOPorts`, `Camera_Reset`, `Clear_GameVars` |

@@ -366,13 +366,22 @@
     "24": "Obj_SpriteSize"
   },
   "object_routines": [
+    "13F82",
+    "13FEC",
+    "14160",
+    "14248",
+    "1ABCE",
     "1ADB0",
     "1ADF6",
     "1AF0E",
     "1AF1A",
-    "14160",
-    "13F82",
-    "13FEC"
+    "1B002",
+    "AF50",
+    "B36C",
+    "D96C",
+    "E1FE",
+    "E234",
+    "E238"
   ],
   "data_typed": [
     [
