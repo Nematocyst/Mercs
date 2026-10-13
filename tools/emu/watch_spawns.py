@@ -68,8 +68,32 @@ def choose():
         if score > best_score: best, best_score = d, score
     g.env.em.set_state(S0)
     return best
+def gap_sweep():
+    """Stuck against a wall: run to its left end, then walk right in short hops, trying UP after each hop (and a
+    mirrored sweep), keeping the first hop where Y or the camera advances (a gap in a fence / sandbag line)."""
+    for first, second in (('LEFT', 'RIGHT'), ('RIGHT', 'LEFT')):
+        for _ in range(300):
+            poke_god(); g.step(1, B=True, **{first: True})
+        for _ in range(40):
+            S0 = g.env.em.get_state(); y0 = (g.w(0xFFC516), g.w(0xFFE008))
+            for _ in range(25):
+                poke_god(); g.step(1, B=True, UP=True)
+            if (g.w(0xFFC516), g.w(0xFFE008)) < y0:
+                for _ in range(60):
+                    poke_god(); g.step(1, B=True, UP=True)
+                return True
+            g.env.em.set_state(S0)
+            for _ in range(10):
+                poke_god(); g.step(1, B=True, **{second: True})
+    return False
+
+
+best_cam = 0xFFFF; best_at = 0
 for fr in range(frames):
     if explore and fr % 90 == 0 and g.w(0xFFFE04) == 0x0C:
+        if g.w(0xFFC516) < best_cam: best_cam, best_at = g.w(0xFFC516), fr
+        elif fr - best_at > 3600:                 # no upward progress for 40 decisions
+            gap_sweep(); best_at = fr
         visited[pos_cell()] += 1
         pad = {k: True for k in choose()}; pad['B'] = True
     elif explore:
@@ -109,6 +133,7 @@ for fr in range(frames):
         first[t] = first[t] + (cell,)
         cell.save(os.path.join(out, 'crop_%02X.png' % t))
 g.save_png(os.path.join(out, 'final.png'))
+if os.environ.get('SAVE_STATE'): open(os.environ['SAVE_STATE'], 'wb').write(g.env.em.get_state())
 if explore:
     print('explorer: %d distinct positions, final camera Y=%04X HScroll=%04X, player (%04X,%04X)' % (
         len(visited), g.w(0xFFC516), g.w(0xFFC510), g.w(0xFFE004), g.w(0xFFE008)))
