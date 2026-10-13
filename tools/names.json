@@ -1,0 +1,18 @@
+{
+  "_comment": "Hex address -> symbol. Hardware names are built in; add RAM names here.",
+  "FFFFFE04": "Game_State",
+  "FFFFFE06": "VDP_Reg1_Shadow",
+  "FFFFFE08": "VDP_Status_Copy",
+  "FFFFFE48": "Hardware_Version",
+  "FFFFC33E": "VBlank_Counter",
+  "FFFFE000": "Objects_A",
+  "FFFFED00": "Objects_B",
+  "FFFFF660": "Objects_C",
+  "003362": "VInt_Handler",
+  "003398": "VInt_StateTable",
+  "0003EE": "MainLoop",
+  "000400": "GameStateTable",
+  "000468": "GameState_Title",
+  "01435A": "ObjectTypeTable",
+  "0142AE": "ObjectUpdate"
+}

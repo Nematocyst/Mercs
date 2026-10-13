@@ -17,3 +17,15 @@ emitted as `dc.w` with the original text in a comment. Extra code entry points a
 `ptr_tables` (pointers to data); each table entry is `["addr", count]`. Code-pointer tables
 right after a `bra`/`rts` and ascending data-pointer tables referenced by `lea` are found
 automatically; word-offset code tables are hint-only because they look like data tables.
+
+## Names
+
+`tools/names.json` maps hex addresses to symbols (keys starting with `_` are ignored):
+
+* addresses inside the ROM rename the generated label (`loc_`/`sub_`/`dat_`) at that address;
+* RAM addresses (`FFxxxx` or `FFFFxxxx`, both forms are the same cell) name a variable. The
+  short-absolute form (`(Game_State).w`) uses the name as is, the long form (`.l`) gets an `_L`
+  suffix because the encoding differs. Unnamed RAM operands become `ram_XXXX` / `ram_XXXXXX`.
+
+Hardware registers (VDP, Z80, YM2612, I/O ports) are named by the tool. All names are emitted as
+`equ` lines at the top of `mercs.asm`, so a name can never change the assembled bytes.
