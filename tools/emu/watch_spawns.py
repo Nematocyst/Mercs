@@ -1,10 +1,12 @@
 """Play Mission 1 and record every object type the game itself spawns, with a crop of the screen
 around it a few frames after it appears.
 
-    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames] [god] [original]
+    python3 tools/emu/watch_spawns.py [mercs.bin] [out_dir] [frames] [god] [original] [explore]
 
 `original` chooses ORIGINAL MODE in the menu and keeps playing across missions (mission map, mission complete...) until
 the game returns to the logo or title; otherwise the run stops when the first mission ends.
+`explore` replaces the random pad with a driver that, every 90 frames, tries nine directions from a saved state and
+chooses the one reaching the least-visited camera position (for levels that are not a plain upward scroll).
 `god` keeps Player_Invuln_Timer ($C5C2) high every frame, so the player is never hit and whole missions can be played.
 
 Writes spawns.tsv (type, first frame, array, X, Y, count) and spawn_sheet_N.png contact sheets.
@@ -21,6 +23,7 @@ out = sys.argv[2] if len(sys.argv) > 2 else '.'
 frames = int(sys.argv[3]) if len(sys.argv) > 3 else 6000
 god = 'god' in sys.argv[4:]
 original = 'original' in sys.argv[4:]
+explore = 'explore' in sys.argv[4:]
 os.makedirs(out, exist_ok=True)
 g = harness.Game(rom)
 entered38 = None
@@ -38,8 +41,40 @@ g.step(200)
 ARR = [('A', 0xE000, 0x40, 52), ('B', 0xED00, 0x60, 25), ('C', 0xF660, 0x40, 22)]
 prev = {}; first = {}; count = collections.Counter(); pending = []
 random.seed(5); pad = {}; had_play = False
+visited = collections.Counter()
+DIRS = [(), ('UP',), ('DOWN',), ('LEFT',), ('RIGHT',), ('UP', 'LEFT'), ('UP', 'RIGHT'), ('DOWN', 'LEFT'), ('DOWN', 'RIGHT')]
+
+
+def poke_god():
+    g.env._ram[0xC5C2 ^ 1] = 0x40; g.env._ram[0xC5C3 ^ 1] = 0
+
+
+def pos_cell():
+    sg = lambda v: v - 0x10000 if v >= 0x8000 else v
+    return ((g.w(0xFFC516) >> 5), (sg(g.w(0xFFC510)) >> 5), (g.w(0xFFE004) >> 6), (g.w(0xFFE008) >> 6))
+
+
+def choose():
+    """Probe each direction for 40 frames from the current state and keep the one reaching the rarest position."""
+    S0 = g.env.em.get_state(); best, best_score = None, -1e9
+    for d in DIRS:
+        g.env.em.set_state(S0)
+        c0 = pos_cell(); p0 = (g.w(0xFFE004), g.w(0xFFE008), g.w(0xFFC516))
+        for _ in range(40):
+            poke_god(); g.step(1, B=True, **{k: True for k in d})
+        c1 = pos_cell(); p1 = (g.w(0xFFE004), g.w(0xFFE008), g.w(0xFFC516))
+        moved = abs(p1[0] - p0[0]) + abs(p1[1] - p0[1]) + 2 * abs(p1[2] - p0[2])
+        score = -3.0 * visited[c1] + moved / 20.0 + random.random() * 0.5
+        if score > best_score: best, best_score = d, score
+    g.env.em.set_state(S0)
+    return best
 for fr in range(frames):
-    if fr % 15 == 0:
+    if explore and fr % 90 == 0 and g.w(0xFFFE04) == 0x0C:
+        visited[pos_cell()] += 1
+        pad = {k: True for k in choose()}; pad['B'] = True
+    elif explore:
+        pass
+    elif fr % 15 == 0:
         pad = {'UP': random.random() < 0.8, 'LEFT': random.random() < 0.3, 'RIGHT': random.random() < 0.3,
                'DOWN': random.random() < 0.1, 'B': random.random() < 0.7, 'C': random.random() < 0.4, 'A': random.random() < 0.2}
     if god:                                   # never hit: a nonzero Player_Invuln_Timer suppresses Collision_HitPlayer
@@ -73,6 +108,10 @@ for fr in range(frames):
         d = ImageDraw.Draw(cell); d.rectangle((0, 0, 40, 10), fill=(0, 0, 0)); d.text((2, 0), '%02X' % t, fill=(255, 255, 0))
         first[t] = first[t] + (cell,)
         cell.save(os.path.join(out, 'crop_%02X.png' % t))
+g.save_png(os.path.join(out, 'final.png'))
+if explore:
+    print('explorer: %d distinct positions, final camera Y=%04X HScroll=%04X, player (%04X,%04X)' % (
+        len(visited), g.w(0xFFC516), g.w(0xFFC510), g.w(0xFFE004), g.w(0xFFE008)))
 with open(os.path.join(out, 'spawns.tsv'), 'w') as f:
     f.write('type\tfirst_frame\tarray\tX\tY\tspawned\n')
     for t, v in sorted(first.items()):
