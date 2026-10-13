@@ -11,5 +11,9 @@ The ROM itself is not included (see `.gitignore`).
 
 `tools/disasm.py` is a recursive-descent disassembler. Every instruction is assembled
 on its own with GNU as and compared against the ROM; anything that does not round-trip is
-emitted as `dc.w` with the original text in a comment. Extra code entry points and pointer
-tables can be given in `tools/hints.json` (`{"code": ["1234"], "long_tables": [["400", 19]]}`).
+emitted as `dc.w` with the original text in a comment. Extra code entry points and tables can be given in
+`tools/hints.json`: `code` (entry addresses), `long_tables` (code pointers), `word_tables`
+(code offsets from the table base, as used by `lea tbl(pc,d1.w),a1 / jmp (a1)`) and
+`ptr_tables` (pointers to data); each table entry is `["addr", count]`. Code-pointer tables
+right after a `bra`/`rts` and ascending data-pointer tables referenced by `lea` are found
+automatically; word-offset code tables are hint-only because they look like data tables.

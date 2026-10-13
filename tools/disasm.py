@@ -61,8 +61,17 @@ class Rom:
             return None
         mnem, ops = i.mnemonic, i.op_str
         base = mnem.split('.')[0]
-        if base in ('lea', 'pea'):
+        w = struct.unpack('>H', self.d[a:a + 2])[0]
+        if (w & 0xF1F0) in (0xC100, 0x8100):   # capstone garbles sbcd
+            mn = 'abcd' if (w & 0xF000) == 0xC000 else 'sbcd'
+            rx, ry = (w >> 9) & 7, w & 7
+            o = '-(a%d),-(a%d)' % (ry, rx) if w & 8 else 'd%d,d%d' % (ry, rx)
+            return Insn(a, 2, mn, [o])
+        if base in ('lea', 'pea', 'exg', 'abcd'):
             mnem = base
+        if base == 'moveq':                 # signed immediate, as assemblers expect
+            v = int(ops.split(',')[0].lstrip('#$'), 16)
+            ops = '#%s,%s' % (('-$%X' % (256 - v)) if v >= 0x80 else '$%X' % v, ops.split(',', 1)[1].strip())
         isbr = bool(BRANCH.match(base))
         parts, pos = [], 0
         for m in HEXTOK.finditer(ops):
@@ -123,6 +132,16 @@ class Rom:
             n += 1
         return n
 
+    def ptr_table(self, a):
+        """Ascending run of ROM pointers (a table of data blobs)."""
+        n, last = 0, 0
+        while a + 4 * n + 4 <= self.size and n < 512:
+            v = struct.unpack('>I', self.d[a + 4 * n:a + 4 * n + 4])[0]
+            if v & 1 or not 0x200 <= v < self.size or v <= last:
+                break
+            last, n = v, n + 1
+        return n
+
     def word_table(self, base):
         n, minoff = 0, None
         while n < 256 and (minoff is None or 2 * n < minoff):
@@ -171,20 +190,24 @@ class Rom:
                 a += ins.n
 
     def add_table(self, a, kind, n, work, base=None):
+        """kind: 'l' code pointers, 'w' code offsets, 'p' data pointers."""
         self.tables[a] = (kind, n, base)
         self.refs.add(a)
         for k in range(n):
-            if kind == 'l':
+            if kind in ('l', 'p'):
                 t = struct.unpack('>I', self.d[a + 4 * k:a + 4 * k + 4])[0]
             else:
                 t = a + struct.unpack('>h', self.d[a + 2 * k:a + 2 * k + 2])[0]
-            self.calls.add(t)
-            work.append(t)
+            if kind == 'p':
+                self.refs.add(t)
+            else:
+                self.calls.add(t)
+                work.append(t)
 
-    def discover(self, roots, hint_code, hint_ltables=()):
+    def discover(self, roots, hint_code, hint_tables=()):
         work = list(roots) + list(hint_code)
-        for a, n in hint_ltables:
-            self.add_table(a, 'l', n, work)
+        for a, kind, n in hint_tables:
+            self.add_table(a, kind, n, work, base=a)
         tried = set()
         while True:
             self.flow(work)
@@ -208,16 +231,18 @@ class Rom:
                         work.extend(self.targets(e))
                         a += e.n
                     continue
-                n = self.word_table(t)
-                if n >= 2:
-                    self.add_table(t, 'w', n, work, base=t)
             for t in sorted((self.data_cands | self.end_cands) - tried):
                 tried.add(t)
                 if t in claimed or t in self.tables or t & 1 or t >= self.size:
                     continue
-                n = self.long_table(t)
-                if n >= (3 if t in self.end_cands and t not in self.data_cands else 2):
-                    self.add_table(t, 'l', n, work)
+                if t in self.end_cands:                 # table right after a bra/rts
+                    n = self.long_table(t)
+                    if n >= 3:
+                        self.add_table(t, 'l', n, work)
+                        continue
+                n = self.ptr_table(t) if t in self.data_cands else 0
+                if n >= 3:
+                    self.add_table(t, 'p', n, work)
             if not work:
                 break
 
@@ -261,19 +286,20 @@ def build_entries(rom, label, bad):
             continue
         if a in rom.tables:
             kind, cnt, base = rom.tables[a]
-            step = 4 if kind == 'l' else 2
-            for k in range(0, cnt, 4 if kind == 'l' else 8):
-                m = min(4 if kind == 'l' else 8, cnt - k)
+            longs = kind in ('l', 'p')
+            step = 4 if longs else 2
+            for k in range(0, cnt, 4 if longs else 8):
+                m = min(4 if longs else 8, cnt - k)
                 toks = []
                 for j in range(k, k + m):
-                    if kind == 'l':
+                    if longs:
                         v = struct.unpack('>I', d[a + 4 * j:a + 4 * j + 4])[0]
                         toks.append(label.get(v, '$%08X' % v))
                     else:
                         v = a + struct.unpack('>h', d[a + 2 * j:a + 2 * j + 2])[0]
                         toks.append('%s-%s' % (label.get(v, '$%X' % v), label[a]))
                 ents.append(dict(addr=a + k * step, n=m * step, kind='t',
-                                 text='dc.%s\t%s' % (kind, ','.join(toks)), comment=''))
+                                 text='dc.%s\t%s' % ('l' if longs else 'w', ','.join(toks)), comment=''))
             a += cnt * step
             continue
         if a < 0x100:
@@ -377,12 +403,13 @@ def main():
     d = rom.d
     vec = struct.unpack('>64I', d[:256])
     roots = {v for v in vec[1:] if 0x200 <= v < rom.size}
-    hint_code, hint_lt = [], []
+    hint_code, hint_tb = [], []
     if os.path.exists(args.hints):
         h = json.load(open(args.hints))
         hint_code = [int(x, 16) for x in h.get('code', [])]
-        hint_lt = [(int(a, 16), n) for a, n in h.get('long_tables', [])]
-    rom.discover(roots, hint_code, hint_lt)
+        for key, kind in (('long_tables', 'l'), ('word_tables', 'w'), ('ptr_tables', 'p')):
+            hint_tb += [(int(a, 16), kind, n) for a, n in h.get(key, [])]
+    rom.discover(roots, hint_code, hint_tb)
 
     # labels
     label = {}
