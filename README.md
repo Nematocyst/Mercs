@@ -218,3 +218,11 @@ identifies types far better than spawning them by hand. Named from it: `ObjType_
 above the player), `ObjType_80_Explosion`, `ObjType_8F_Shadow`, `ObjType_82/83/8E_EnemySoldier`, plus
 `ObjType_01_Player` and `ObjType_05_Crate`. Types `85`/`F5` (a rifleman pair), `08`, `12` and `4B..4E` (a scenery
 group that appears together) were seen but not named.
+
+### Starting any mission (`boot_state.py`)
+
+`python3 tools/emu/boot_state.py mercs.bin out.bin 24 K` boots into the next-mission state with the stage
+index preset (`Stage_Index` = `ram_C328` = mission number minus 1 in Arcade; state `$24` adds 1, so `K = N-2`
+starts Mission N). The trampoline lives in unused ROM padding at `$FFF00`. Running `watch_spawns.py` on missions
+2-7 (`tools/emu/spawns_missions2_7.tsv`; Mission 8 does not exist) added: `ObjType_32/33/34/35/B4_BossPlane`
+(Mission 7 only, one giant aircraft), `ObjType_8A_Tank`, `ObjType_97_Explosion` and `ObjType_9C/A0/A3/A6_EnemySoldier`.

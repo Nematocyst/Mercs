@@ -104,7 +104,12 @@
     "ObjType_03_PlayerShot": "high - spawned 261 times at X=$C0,Y=$109, just above the player ($130), crop shows blue bullets (tools/emu/watch_spawns.py)",
     "ObjType_80_Explosion": "medium-high - 19 spawns in array B; crop shows a large orange explosion",
     "ObjType_8F_Shadow": "medium-high - 47 spawns in array B beside the soldiers; crop shows a black oval under a figure",
-    "ObjType_82/83/8E_EnemySoldier": "medium - green infantry in the crops; 22, 14 and 29 spawns in arrays B/C"
+    "ObjType_82/83/8E_EnemySoldier": "medium - green infantry in the crops; 22, 14 and 29 spawns in arrays B/C",
+    "Stage_Index": "high for Arcade - HUD MISSION n shows when it is n-1 (verified: boot with stage 3 -> state 24 adds 1 -> MISSION 5, C328=4); Original mode sets 7 on its mission map",
+    "ObjType_32..35,B4_BossPlane": "medium - only Mission 7 spawns them; crops show one giant golden aircraft with propellers and turrets (tools/emu/watch_spawns.py on a stage-6 boot)",
+    "ObjType_8A_Tank": "medium - Mission 5, 36 spawns, crop shows a green tank",
+    "ObjType_97_Explosion": "medium - Mission 4, crop shows an orange fireball like type 80",
+    "ObjType_9C/A0/A3/A6_EnemySoldier": "medium-low - Mission 3 types whose crops show a grey-uniformed rifle soldier"
   },
   "FFFFC516": "Camera_Y",
   "0035C2": "GameState_Transition",
@@ -200,5 +205,17 @@
   "016262": "ObjType_80_Explosion",
   "01705C": "ObjType_82_EnemySoldier",
   "017768": "ObjType_83_EnemySoldier",
-  "01A3E4": "ObjType_8E_EnemySoldier"
+  "01A3E4": "ObjType_8E_EnemySoldier",
+  "013D2C": "ObjType_32_BossPlane",
+  "013C66": "ObjType_33_BossPlane",
+  "013BA2": "ObjType_34_BossPlane",
+  "013ACA": "ObjType_35_BossPlane",
+  "022092": "ObjType_B4_BossPlane",
+  "01A41A": "ObjType_8A_Tank",
+  "01642C": "ObjType_97_Explosion",
+  "01A448": "ObjType_9C_EnemySoldier",
+  "01BACC": "ObjType_A0_EnemySoldier",
+  "01BE3E": "ObjType_A3_EnemySoldier",
+  "01C016": "ObjType_A6_EnemySoldier",
+  "FFFFC328": "Stage_Index"
 }

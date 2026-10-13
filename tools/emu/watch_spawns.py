@@ -51,6 +51,7 @@ for fr in range(frames):
         cell = img.crop((box[0], box[1], box[0] + 96, box[1] + 96))
         d = ImageDraw.Draw(cell); d.rectangle((0, 0, 40, 10), fill=(0, 0, 0)); d.text((2, 0), '%02X' % t, fill=(255, 255, 0))
         first[t] = first[t] + (cell,)
+        cell.save(os.path.join(out, 'crop_%02X.png' % t))
 with open(os.path.join(out, 'spawns.tsv'), 'w') as f:
     f.write('type\tfirst_frame\tarray\tX\tY\tspawned\n')
     for t, v in sorted(first.items()):

@@ -175,7 +175,7 @@ ram_C313	equ	$FFFFC313
 DMA_Trigger_Word	equ	$FFFFC318
 ram_C324	equ	$FFFFC324
 ram_C326	equ	$FFFFC326
-ram_C328	equ	$FFFFC328
+Stage_Index	equ	$FFFFC328
 ram_C329	equ	$FFFFC329
 ram_C32A	equ	$FFFFC32A
 ram_C332	equ	$FFFFC332
@@ -1031,7 +1031,7 @@ GameState_RoundStart:
 	lea	(Art_058554).l,a0
 	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_0007C8
-	move.w	#$1,(ram_C328).w
+	move.w	#$1,(Stage_Index).w
 	move.w	(VDP_Reg1_Shadow).w,d0
 	ori.b	#$40,d0
 	move.w	d0,(VDP_Control).l
@@ -1050,13 +1050,13 @@ loc_0006CE:
 	st.b	(ram_C355).w
 	st.b	(ram_FE59).w
 loc_0006DE:
-	lea	(ram_C328).w,a1
+	lea	(Stage_Index).w,a1
 	bsr.w	sub_000724
-	subq.w	#$1,(ram_C328).w
+	subq.w	#$1,(Stage_Index).w
 	tst.b	(Mode_Flags).w
 	beq.b	loc_0006FC
-	addq.w	#$7,(ram_C328).w
-	cmpi.w	#$E,(ram_C328).w
+	addq.w	#$7,(Stage_Index).w
+	cmpi.w	#$E,(Stage_Index).w
 	bhi.b	loc_000716
 loc_0006FC:
 	move.w	#$28,(Game_NextState).w
@@ -2362,7 +2362,7 @@ loc_001546:
 loc_00154C:
 	move.w	#$10,(ram_E0C0).w
 loc_001552:
-	cmpi.w	#$5,(ram_C328).w
+	cmpi.w	#$5,(Stage_Index).w
 loc_001558:
 	bhi.b	loc_001560
 loc_00155A:
@@ -2380,7 +2380,7 @@ loc_001572:
 loc_001578:
 	lea	(dat_00239E).l,a1
 loc_00157E:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_001582:
 	move.b	(a1,d1.w),d0
 loc_001586:
@@ -2488,7 +2488,7 @@ loc_00167E:
 loc_001682:
 	rts
 loc_001684:
-	addq.w	#$1,(ram_C328).w
+	addq.w	#$1,(Stage_Index).w
 loc_001688:
 	move.w	#$C,(Game_NextState).w
 loc_00168E:
@@ -2522,7 +2522,7 @@ loc_0016BE:
 	tst.b	(Mode_Flags).w
 	beq.b	loc_0016D4
 	move.w	#$34,(Game_NextState).w
-	addq.w	#$1,(ram_C328).w
+	addq.w	#$1,(Stage_Index).w
 loc_0016D4:
 	move.l	#$69827,d0
 loc_0016DA:
@@ -2585,7 +2585,7 @@ dat_001748:
 	dc.b	$00,$00,$00,$00,$00,$00,$00,$24,$00,$02,$00,$01,$00,$00,$00,$00
 	dc.b	$00,$00,$00,$00,$00,$20,$00,$00,$00,$02,$00,$00,$00,$00
 sub_00178E:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_001792:
 	lsl.w	#$2,d0
 loc_001794:
@@ -3614,9 +3614,9 @@ loc_0020AC:
 	btst.b	#$4,(Flags_C61C).w
 loc_0020B2:
 	beq.w	loc_0020FE
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	beq.w	loc_0020E4
-	cmpi.w	#$D,(ram_C328).w
+	cmpi.w	#$D,(Stage_Index).w
 	bne.w	loc_002114
 	move.l	#$67A00001,(VDP_Control).l
 	lea	(Art_03AAAC).l,a0
@@ -3816,7 +3816,7 @@ sub_0023B0:
 loc_0023B4:
 	beq.w	loc_00193A
 loc_0023B8:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_0023BC:
 	subq.w	#$7,d0
 loc_0023BE:
@@ -4159,7 +4159,7 @@ loc_002E86:
 	bra.w	loc_002E86
 loc_002EB6:
 	move.w	#$24,(Game_NextState).w
-	cmpi.w	#$6,(ram_C328).w
+	cmpi.w	#$6,(Stage_Index).w
 	bne.b	loc_002EDC
 	move.w	#$2C,(Game_NextState).w
 	move.l	(ram_C332).w,d0
@@ -4199,7 +4199,7 @@ loc_002F1C:
 	lea	(dat_0032AE).l,a1
 	lea	(ram_A59C).w,a2
 	bsr.w	sub_008878
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	add.w	d0,d0
 	lea	(dat_0032B0).l,a1
 	move.w	(a1,d0.w),d0
@@ -4314,7 +4314,7 @@ loc_0030B4:
 	addq.w	#$4,(ram_C602).w
 	lea	(dat_0032F2).l,a6
 	bsr.w	sub_0087C6
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	add.w	d0,d0
 	lea	(dat_00333C).l,a1
 	move.w	(a1,d0.w),d1
@@ -4388,7 +4388,7 @@ sub_00317A:
 loc_0031B6:
 	move.l	d7,(a6)+
 	dbra	d6,loc_0031B6
-	cmpi.w	#$6,(ram_C328).w
+	cmpi.w	#$6,(Stage_Index).w
 	bne.b	loc_0031D2
 	lea	(dat_003318).l,a6
 	bsr.w	sub_0087C6
@@ -4399,7 +4399,7 @@ loc_0031D2:
 	moveq	#$2,d0
 	move.l	#$25862586,d3
 	moveq	#$0,d6
-	move.w	(ram_C328).w,(ram_C618).w
+	move.w	(Stage_Index).w,(ram_C618).w
 	addq.w	#$1,(ram_C618).w
 	lea	(ram_C619).w,a1
 	lea	(ram_A128).w,a2
@@ -5059,7 +5059,7 @@ loc_003A8E:
 loc_003A90:
 	dbra	d0,loc_003A8E
 loc_003A94:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_003A98:
 	lsl.w	#$2,d0
 loc_003A9A:
@@ -5574,7 +5574,7 @@ loc_004496:
 	bne.b	loc_0044C6
 	bra.w	loc_004496
 loc_0044C6:
-	addq.w	#$1,(ram_C328).w
+	addq.w	#$1,(Stage_Index).w
 	move.w	#$C,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
@@ -5625,9 +5625,9 @@ loc_004542:
 	moveq	#$13,d1
 	moveq	#$17,d2
 	jsr	(Write_TileMap).l
-	cmpi.w	#$5,(ram_C328).w
+	cmpi.w	#$5,(Stage_Index).w
 	beq.b	loc_004590
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	lsl.w	#$2,d0
 	lea	(dat_00462E).l,a1
 	movea.l	(a1,d0.w),a2
@@ -7228,7 +7228,7 @@ loc_005E98:
 loc_005E9E:
 	bsr.w	sub_00605E
 loc_005EA2:
-	cmpi.w	#$7,(ram_C328).w
+	cmpi.w	#$7,(Stage_Index).w
 loc_005EA8:
 	bne.b	loc_005EB0
 loc_005EAA:
@@ -7262,7 +7262,7 @@ loc_005EDC:
 	moveq	#-$4C,d0
 	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	subq.w	#$8,d0
 	add.w	d0,d0
 	lea	(dat_0063FC).l,a1
@@ -7288,7 +7288,7 @@ loc_005F36:
 	moveq	#$2,d0
 	move.l	#$25862586,d3
 	moveq	#$0,d6
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 	subq.w	#$7,d1
 	move.w	d1,(ram_C618).w
 	lea	(ram_C619).w,a1
@@ -7333,7 +7333,7 @@ loc_005FD2:
 loc_005FD6:
 	lea	(dat_0062F4).l,a1
 loc_005FDC:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_005FE0:
 	add.w	d0,d0
 loc_005FE2:
@@ -7349,7 +7349,7 @@ loc_005FF0:
 loc_005FF6:
 	moveq	#$0,d6
 loc_005FF8:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_005FFC:
 	subq.w	#$6,d1
 loc_005FFE:
@@ -7403,7 +7403,7 @@ loc_006050:
 Words_006052:
 	dc.w	$0000,$0842,$0842,$040E,$040E,$040E
 sub_00605E:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_006062:
 	cmpi.w	#$7,d0
 loc_006066:
@@ -7547,7 +7547,7 @@ loc_0061BC:
 sub_0061D4:
 	lea	(dat_006440).l,a1
 loc_0061DA:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_0061DE:
 	moveq	#$0,d3
 loc_0061E0:
@@ -8493,7 +8493,7 @@ loc_006C9C:
 loc_006C9E:
 	bra.w	loc_006C7E
 loc_006CA2:
-	move.w	#$11,(ram_C328).w
+	move.w	#$11,(Stage_Index).w
 	move.w	#$44,(Game_NextState).w
 	move.w	#$8,(Game_State).w
 	rts
@@ -8843,7 +8843,7 @@ loc_007004:
 	lea	(Art_0589FA).l,a0
 	jsr	(Decompress_ToVDP).l
 	bsr.w	sub_00178E
-	cmpi.w	#$16,(ram_C328).w
+	cmpi.w	#$16,(Stage_Index).w
 	bne.b	loc_00707C
 	move.w	#$190,d0
 	jsr	(LoadPalette).l
@@ -8857,7 +8857,7 @@ loc_00707C:
 	move.w	#$210,d0
 	jsr	(LoadPalette).l
 	clr.w	(Palette_Target).w
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	subi.w	#$11,d0
 	add.w	d0,d0
 	move.w	d0,(ram_C618).w
@@ -8866,7 +8866,7 @@ loc_00707C:
 	lea	(a1,d0.w),a1
 	move.l	a1,(ram_C65E).w
 	bsr.w	sub_00719C
-	cmpi.w	#$13,(ram_C328).w
+	cmpi.w	#$13,(Stage_Index).w
 	bne.b	loc_0070C4
 	move.w	#$178,(Objects_A).w
 loc_0070C4:
@@ -8891,12 +8891,12 @@ loc_0070EE:
 	jsr	(sub_00A694).l
 	moveq	#$0,d1
 	move.w	(Camera_Y).w,d0
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 	subi.w	#$A,d3
 	jsr	(sub_008EAC).l
 	moveq	#$0,d1
 	move.w	(Camera_Y).w,d0
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 	subi.w	#$A,d3
 	jsr	(sub_009020).l
 	jsr	(PaletteFade_Step).l
@@ -8904,9 +8904,9 @@ loc_0070EE:
 	bne.b	loc_007156
 	bra.w	loc_0070EE
 loc_007156:
-	addq.w	#$1,(ram_C328).w
+	addq.w	#$1,(Stage_Index).w
 	move.w	#$44,(Game_NextState).w
-	cmpi.w	#$19,(ram_C328).w
+	cmpi.w	#$19,(Stage_Index).w
 	bls.b	loc_00716E
 	move.w	#$3C,(Game_NextState).w
 loc_00716E:
@@ -9192,7 +9192,7 @@ loc_007A48:
 loc_007A4A:
 	bra.w	loc_007A24
 loc_007A4E:
-	move.w	#$7,(ram_C328).w
+	move.w	#$7,(Stage_Index).w
 loc_007A54:
 	move.w	#$34,(Game_NextState).w
 loc_007A5A:
@@ -9482,7 +9482,7 @@ loc_007EDC:
 sub_007EDE:
 	moveq	#$2,d0
 loc_007EE0:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_007EE4:
 	moveq	#$0,d2
 loc_007EE6:
@@ -9529,7 +9529,7 @@ sub_007F3C:
 loc_007F40:
 	bne.w	loc_007FDC
 loc_007F44:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_007F48:
 	add.w	d0,d0
 loc_007F4A:
@@ -11491,7 +11491,7 @@ sub_008EA2:
 loc_008EA4:
 	move.w	(Camera_Y).w,d0
 loc_008EA8:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 sub_008EAC:
 	lsl.w	#$2,d3
 loc_008EAE:
@@ -11594,7 +11594,7 @@ sub_009016:
 loc_009018:
 	move.w	(Camera_Y).w,d0
 loc_00901C:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 sub_009020:
 	lsl.w	#$2,d3
 loc_009022:
@@ -11692,7 +11692,7 @@ sub_0091AC:
 loc_0091AE:
 	move.w	(Camera_Y).w,d0
 loc_0091B2:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_0091B6:
 	lsl.w	#$2,d3
 loc_0091B8:
@@ -11786,7 +11786,7 @@ sub_009334:
 loc_009336:
 	move.w	(Camera_Y).w,d0
 loc_00933A:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_00933E:
 	lsl.w	#$2,d3
 loc_009340:
@@ -11891,7 +11891,7 @@ sub_009480:
 loc_009482:
 	move.w	(Camera_Y).w,d0
 loc_009486:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_00948A:
 	lsl.w	#$2,d3
 loc_00948C:
@@ -11949,7 +11949,7 @@ sub_0095F6:
 loc_0095F8:
 	move.w	(Camera_Y).w,d0
 loc_0095FC:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_009600:
 	lsl.w	#$2,d3
 loc_009602:
@@ -12003,7 +12003,7 @@ loc_009740:
 loc_009742:
 	move.w	(Camera_Y).w,d0
 loc_009746:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_00974A:
 	lsl.w	#$2,d3
 loc_00974C:
@@ -12216,7 +12216,7 @@ sub_009B2A:
 loc_009B2C:
 	move.w	(Camera_Y).w,d0
 loc_009B30:
-	move.w	(ram_C328).w,d3
+	move.w	(Stage_Index).w,d3
 loc_009B34:
 	lsl.w	#$2,d3
 loc_009B36:
@@ -14731,11 +14731,11 @@ loc_00ACC6:
 sub_00ACE4:
 	clr.b	(ram_C68E).w
 loc_00ACE8:
-	cmpi.w	#$3,(ram_C328).w
+	cmpi.w	#$3,(Stage_Index).w
 loc_00ACEE:
 	beq.b	loc_00AD0C
 loc_00ACF0:
-	cmpi.w	#$A,(ram_C328).w
+	cmpi.w	#$A,(Stage_Index).w
 loc_00ACF6:
 	bne.b	loc_00AD50
 	cmpi.w	#$C60,(Camera_Y).w
@@ -14780,7 +14780,7 @@ loc_00AD5A:
 loc_00AD5E:
 	lea	Words_00AD7C(pc,d1.w),a1
 loc_00AD62:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_00AD66:
 	moveq	#$0,d7
 loc_00AD68:
@@ -15711,14 +15711,14 @@ loc_00B630:
 	tst.b	(ram_C6B5).w
 loc_00B634:
 	beq.b	loc_00B65A
-	cmpi.w	#$F,(ram_C328).w
+	cmpi.w	#$F,(Stage_Index).w
 	bne.b	loc_00B646
 	addq.w	#$4,(Player1_Y).w
 	bra.w	loc_00B64C
 loc_00B646:
 	move.w	#$140,(Player1_Y).w
 loc_00B64C:
-	cmpi.w	#$C,(ram_C328).w
+	cmpi.w	#$C,(Stage_Index).w
 	bne.b	loc_00B65A
 	move.w	#$F8,(Player1_X).w
 loc_00B65A:
@@ -15746,7 +15746,7 @@ loc_00B68A:
 loc_00B68C:
 	dbra	d0,loc_00B68A
 loc_00B690:
-	cmpi.w	#$C,(ram_C328).w
+	cmpi.w	#$C,(Stage_Index).w
 loc_00B696:
 	bne.b	loc_00B6A2
 	move.w	#$190,d0
@@ -15834,7 +15834,7 @@ sub_00B73E:
 	addq.w	#$4,(ram_C6B6).w
 	st.b	(ram_C6BB).w
 	lea	(dat_00239E).l,a1
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 	move.b	(a1,d1.w),d0
 	jsr	(PlaySound).l
 	bra.w	loc_00B616
@@ -15846,14 +15846,14 @@ sub_00B75E:
 	jsr	(PlaySound).l
 	movem.l	(a7)+,d0/a1
 	move.b	#$7,(ram_C618).w
-	cmpi.w	#$C,(ram_C328).w
+	cmpi.w	#$C,(Stage_Index).w
 	bne.b	loc_00B78A
 	bsr.w	sub_00B7CE
 loc_00B78A:
-	cmpi.w	#$F,(ram_C328).w
+	cmpi.w	#$F,(Stage_Index).w
 	beq.b	loc_00B7AA
 	move.l	#$FFF00000,(Camera_VelY).w
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	beq.b	loc_00B7AA
 	move.l	#$FFF00000,(ram_C560).w
 loc_00B7AA:
@@ -18700,7 +18700,7 @@ loc_00D744:
 sub_00D746:
 	moveq	#$2,d2
 loc_00D748:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_00D74C:
 	lsl.w	#$2,d0
 loc_00D74E:
@@ -18723,7 +18723,7 @@ loc_00D79E:
 	dc.b	$95,$78,$C5,$1A,$30,$02,$08,$38,$00,$01,$C5,$EB,$66,$02,$E2,$40
 	dc.b	$91,$78,$C5,$60,$4E,$75
 sub_00D7B6:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	lsl.w	#$2,d0
 	jmp	loc_00D7C0(pc,d0.w)
 loc_00D7C0:
@@ -19254,7 +19254,7 @@ sub_00DBA4:
 loc_00DBAA:
 	bne.b	loc_00DB9A
 loc_00DBAC:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_00DBB0:
 	lsl.w	#$2,d0
 loc_00DBB2:
@@ -19394,7 +19394,7 @@ loc_00DCAE:
 loc_00DCB0:
 	rts
 sub_00DCB2:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_00DCB6:
 	lsl.w	#$2,d0
 loc_00DCB8:
@@ -19451,7 +19451,7 @@ loc_00DD68:
 	bsr.w	sub_00DD74
 	rts
 sub_00DD74:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	lsl.w	#$2,d0
 	jmp	loc_00DD7E(pc,d0.w)
 loc_00DD7E:
@@ -23045,7 +23045,7 @@ loc_010278:
 loc_01027E:
 	lea	(dat_0105B4).l,a1
 loc_010284:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_010288:
 	lsl.w	#$3,d0
 loc_01028A:
@@ -23075,7 +23075,7 @@ loc_01029E:
 	move.l	(Camera_Y).w,(ram_C542).w
 	move.l	(Camera_Y).w,(ram_C53A).w
 	bsr.w	Camera_Reset
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	lsl.w	#$2,d0
 	movea.l	dat_0102E4(pc,d0.w),a1
 	jmp	(a1)
@@ -24623,7 +24623,7 @@ loc_011974:
 loc_011978:
 	move.b	#$1,$3F(a0)
 loc_01197E:
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 loc_011984:
 	bne.b	loc_011992
 	move.w	#$69,$1E(a0)
@@ -25669,7 +25669,7 @@ loc_0125EA:
 	bclr.b	#$1,$2(a0)
 	clr.w	$30(a0)
 	lea	(ram_E900).w,a1
-	cmpi.w	#$3,(ram_C328).w
+	cmpi.w	#$3,(Stage_Index).w
 	beq.b	loc_01260A
 	lea	(ram_E140).w,a1
 loc_01260A:
@@ -26972,7 +26972,7 @@ loc_013470:
 loc_013476:
 	rts
 loc_013478:
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 loc_01347E:
 	beq.b	loc_01348A
 loc_013480:
@@ -27091,7 +27091,7 @@ loc_0135CE:
 loc_0135D4:
 	rts
 loc_0135D6:
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 loc_0135DC:
 	beq.b	loc_0135E8
 loc_0135DE:
@@ -27429,7 +27429,7 @@ loc_013932:
 	lea	(dat_048B70).l,a3
 	moveq	#$0,d0
 	moveq	#$0,d1
-	cmpi.w	#$E,(ram_C328).w
+	cmpi.w	#$E,(Stage_Index).w
 	bne.b	loc_013984
 	lea	(dat_0DB114).l,a3
 	tst.b	$18(a0)
@@ -27562,7 +27562,7 @@ loc_013AC2:
 	bsr.w	Anim_Step
 loc_013AC6:
 	bra.w	loc_013F44
-ObjType_35:
+ObjType_35_BossPlane:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013AD0:
 	bne.b	loc_013B30
@@ -27646,7 +27646,7 @@ dat_013B8E:
 	dc.b	$00,$19
 	dc.b	$00,$19,$00,$15,$00,$1D,$00,$04,$00,$22,$FF,$F4,$00,$1C,$FF,$EF
 	dc.b	$00,$19
-ObjType_34:
+ObjType_34_BossPlane:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013BA8:
 	bne.b	loc_013BD2
@@ -27731,7 +27731,7 @@ loc_013C5E:
 	move.l	(a1,d3.w),Obj_FramePtr(a0)
 loc_013C64:
 	rts
-ObjType_33:
+ObjType_33_BossPlane:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013C6C:
 	bne.b	loc_013CA4
@@ -27800,7 +27800,7 @@ loc_013CF6:
 	bra.w	sub_00E1AE
 	dc.b	$4A,$38,$C6,$78,$66,$00,$05,$2C,$61,$00
 	dc.b	$A5,$14,$4E,$B9,$00,$00,$B0,$36,$60,$00,$05,$1E
-ObjType_32:
+ObjType_32_BossPlane:
 	bset.b	#$0,Obj_Flags(a0)
 loc_013D32:
 	bne.b	loc_013D82
@@ -28574,8 +28574,8 @@ ObjectTypeTable:
 	dc.l	ObjType_24,ObjType_25,ObjType_26,ObjType_27
 	dc.l	ObjType_28,ObjType_29,ObjType_2A,ObjType_2B
 	dc.l	ObjType_2C,ObjType_2D,ObjType_2E,ObjType_00
-	dc.l	ObjType_30,ObjType_31,ObjType_32,ObjType_33
-	dc.l	ObjType_34,ObjType_35,ObjType_36,ObjType_37
+	dc.l	ObjType_30,ObjType_31,ObjType_32_BossPlane,ObjType_33_BossPlane
+	dc.l	ObjType_34_BossPlane,ObjType_35_BossPlane,ObjType_36,ObjType_37
 	dc.l	ObjType_38,ObjType_39,ObjType_3A,ObjType_3B
 	dc.l	ObjType_3C,ObjType_3D,ObjType_3E,ObjType_3F
 	dc.l	ObjType_40,ObjType_41,ObjType_42,ObjType_43
@@ -28596,18 +28596,18 @@ ObjectTypeTable:
 	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
 	dc.l	ObjType_80_Explosion,ObjType_82_EnemySoldier,ObjType_82_EnemySoldier,ObjType_83_EnemySoldier
 	dc.l	ObjType_84,ObjType_85,ObjType_86,ObjType_87
-	dc.l	ObjType_88,ObjType_89,ObjType_8A,ObjType_8B
+	dc.l	ObjType_88,ObjType_89,ObjType_8A_Tank,ObjType_8B
 	dc.l	ObjType_8C,ObjType_8D,ObjType_8E_EnemySoldier,ObjType_8F_Shadow
 	dc.l	ObjType_90,ObjType_91,ObjType_92,ObjType_93
-	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97
+	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97_Explosion
 	dc.l	ObjType_98,ObjType_99,ObjType_9A,ObjType_9B
-	dc.l	ObjType_9C,ObjType_9D,ObjType_9E,ObjType_9F
-	dc.l	ObjType_A0,ObjType_A1,ObjType_A2,ObjType_A3
-	dc.l	ObjType_A4,ObjType_A5,ObjType_A6,ObjType_A7
+	dc.l	ObjType_9C_EnemySoldier,ObjType_9D,ObjType_9E,ObjType_9F
+	dc.l	ObjType_A0_EnemySoldier,ObjType_A1,ObjType_A2,ObjType_A3_EnemySoldier
+	dc.l	ObjType_A4,ObjType_A5,ObjType_A6_EnemySoldier,ObjType_A7
 	dc.l	ObjType_A8,ObjType_A9,ObjType_AA,ObjType_AB
 	dc.l	ObjType_AC,ObjType_AD,ObjType_AE,ObjType_AF
 	dc.l	ObjType_B0,ObjType_B1,ObjType_B2,ObjType_B3
-	dc.l	ObjType_B4,ObjType_B5,ObjType_B6,ObjType_B7
+	dc.l	ObjType_B4_BossPlane,ObjType_B5,ObjType_B6,ObjType_B7
 	dc.l	ObjType_B8,ObjType_B9,ObjType_BA,ObjType_BB
 	dc.l	ObjType_BC,ObjType_BD,ObjType_BE,ObjType_BF
 	dc.l	ObjType_C0,ObjType_C1,ObjType_C2,ObjType_C3
@@ -29466,7 +29466,7 @@ loc_016426:
 	jmp	ObjType_8F_Shadow(pc)
 loc_01642A:
 	rts
-ObjType_97:
+ObjType_97_Explosion:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_016432:
 	jsr	(Collision_HitPlayer).l
@@ -32856,7 +32856,7 @@ loc_01A2DC:
 loc_01A2E0:
 	clr.w	$1C(a2)
 loc_01A2E4:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01A2E8:
 	add.w	d0,d0
 loc_01A2EA:
@@ -32930,7 +32930,7 @@ loc_01A372:
 loc_01A376:
 	move.w	d0,$1C(a2)
 loc_01A37A:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01A37E:
 	move.b	dat_01A3B6(pc,d0.w),$3C(a2)
 loc_01A384:
@@ -32997,7 +32997,7 @@ loc_01A410:
 	lea	ObjData_01A6A2(pc),a1
 loc_01A414:
 	jmp	(Object_RunAnimScript).l
-ObjType_8A:
+ObjType_8A_Tank:
 	subq.b	#$1,$3E(a0)
 loc_01A41E:
 	beq.b	loc_01A40C
@@ -33019,7 +33019,7 @@ loc_01A43E:
 	jsr	(Collision_HitPlayer).l
 loc_01A444:
 	jmp	ObjType_8F_Shadow(pc)
-ObjType_9C:
+ObjType_9C_EnemySoldier:
 	subq.b	#$1,$3E(a0)
 loc_01A44C:
 	beq.b	loc_01A498
@@ -34247,7 +34247,7 @@ loc_01B298:
 loc_01B2A0:
 	rts
 sub_01B2A2:
-	move.w	(ram_C328).w,d2
+	move.w	(Stage_Index).w,d2
 loc_01B2A6:
 	add.w	d2,d2
 loc_01B2A8:
@@ -34326,7 +34326,7 @@ loc_01B35A:
 loc_01B360:
 	bne.w	loc_01B400
 loc_01B364:
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 loc_01B36A:
 	bne.b	loc_01B376
 	cmpi.w	#$8,(ram_E028).w
@@ -34411,7 +34411,7 @@ loc_01B430:
 loc_01B432:
 	jsr	sub_01BF5A(pc)
 loc_01B436:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01B43A:
 	lsl.w	#$2,d0
 loc_01B43C:
@@ -34985,7 +34985,7 @@ dat_01B9CA:
 ObjType_CB:
 	moveq	#$0,d0
 loc_01BA78:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01BA7C:
 	add.w	d0,d0
 loc_01BA7E:
@@ -35014,10 +35014,10 @@ dat_01BAA0:
 ObjType_F7:
 	subi.w	#$48,Obj_X(a0)
 loc_01BAC4:
-	bra.b	ObjType_A0
+	bra.b	ObjType_A0_EnemySoldier
 ObjType_F8:
 	addi.w	#$48,Obj_X(a0)
-ObjType_A0:
+ObjType_A0_EnemySoldier:
 	moveq	#$0,d0
 loc_01BACE:
 	move.b	$19(a0),$49(a0)
@@ -35026,7 +35026,7 @@ loc_01BAD4:
 loc_01BAD8:
 	move.b	#$20,Obj_TileAttr(a0)
 loc_01BADE:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_01BAE2:
 	add.w	d1,d1
 loc_01BAE4:
@@ -35084,7 +35084,7 @@ loc_01BB68:
 loc_01BB7A:
 	move.w	#$284,(a0)
 loc_01BB7E:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01BB82:
 	add.w	d0,d0
 loc_01BB84:
@@ -35130,7 +35130,7 @@ loc_01BBC0:
 loc_01BBC4:
 	adda.w	#$A,a2
 loc_01BBC8:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01BBCC:
 	lsl.w	#$2,d0
 loc_01BBCE:
@@ -35227,7 +35227,7 @@ loc_01BC9C:
 loc_01BCA2:
 	move.w	#$298,(a0)
 loc_01BCA6:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01BCAA:
 	add.w	d0,d0
 loc_01BCAC:
@@ -35351,7 +35351,7 @@ loc_01BE26:
 	jsr	Object_Free(pc)
 	movea.l	a2,a0
 	jmp	Object_Free(pc)
-ObjType_A3:
+ObjType_A3_EnemySoldier:
 	clr.l	Obj_VelY(a0)
 loc_01BE42:
 	clr.l	Obj_VelX(a0)
@@ -35563,7 +35563,7 @@ loc_01BFFE:
 	rts
 	dc.b	$30,$BC,$02,$08,$11,$7C,$00,$04,$00,$3B,$43,$FA
 	dc.b	$8A,$8E,$4E,$FA,$EF,$06
-ObjType_A6:
+ObjType_A6_EnemySoldier:
 	moveq	#-$1,d0
 loc_01C018:
 	move.w	Obj_Timer(a0),d0
@@ -35943,7 +35943,7 @@ loc_01C87A:
 loc_01C87E:
 	jsr	LoadColorList(pc)
 loc_01C882:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01C886:
 	add.w	d0,d0
 loc_01C888:
@@ -36106,7 +36106,7 @@ loc_01CA62:
 loc_01CA66:
 	jsr	LoadColorList(pc)
 loc_01CA6A:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01CA6E:
 	subq.w	#$7,d0
 loc_01CA70:
@@ -36241,7 +36241,7 @@ loc_01CBB4:
 	move.b	#$40,$22(a2)
 	clr.b	$2A(a2)
 	clr.b	$2B(a2)
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	subq.w	#$7,d0
 	add.w	d0,d0
 	move.w	Words_01CBEC(pc,d0.w),d0
@@ -36309,7 +36309,7 @@ loc_01CC64:
 loc_01CC6A:
 	bset.b	#$6,$2(a2)
 loc_01CC70:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01CC74:
 	subq.w	#$7,d0
 loc_01CC76:
@@ -36435,7 +36435,7 @@ loc_01CE3E:
 loc_01CE42:
 	jsr	LoadColorList(pc)
 loc_01CE46:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01CE4A:
 	subq.w	#$7,d0
 loc_01CE4C:
@@ -36550,7 +36550,7 @@ sub_01CF64:
 	move.w	$8(a3),$8(a2)
 	subq.w	#$4,$8(a2)
 	move.w	#$23C,(a2)
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	subq.w	#$7,d0
 	add.w	d0,d0
 	move.w	Words_01CFA4(pc,d0.w),d0
@@ -36644,7 +36644,7 @@ loc_01D30A:
 loc_01D30E:
 	moveq	#$0,d0
 loc_01D310:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01D314:
 	add.w	d0,d0
 loc_01D316:
@@ -36691,13 +36691,13 @@ loc_01D37E:
 sub_01D380:
 	lea	dat_01DEA0(pc),a3
 loc_01D384:
-	cmpi.w	#$5,(ram_C328).w
+	cmpi.w	#$5,(Stage_Index).w
 loc_01D38A:
 	beq.b	loc_01D39C
 loc_01D38C:
 	lea	ObjData_01DEBE(pc),a3
 loc_01D390:
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 loc_01D396:
 	beq.b	loc_01D39C
 loc_01D398:
@@ -36788,7 +36788,7 @@ loc_01D494:
 loc_01D498:
 	moveq	#$0,d1
 loc_01D49A:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_01D49E:
 	add.w	d1,d1
 loc_01D4A0:
@@ -37129,7 +37129,7 @@ loc_01D7D2:
 loc_01D7D8:
 	moveq	#$0,d1
 loc_01D7DA:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_01D7DE:
 	add.w	d1,d1
 loc_01D7E0:
@@ -37317,7 +37317,7 @@ loc_01D9AC:
 loc_01D9B2:
 	ori.b	#$68,Obj_Flags(a0)
 loc_01D9B8:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_01D9BC:
 	add.w	d1,d1
 loc_01D9BE:
@@ -37578,7 +37578,7 @@ ObjType_AC:
 loc_01DC74:
 	bne.w	loc_01DCF8
 loc_01DC78:
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 loc_01DC7E:
 	bne.b	loc_01DC84
 	clr.b	(ram_C66F).w
@@ -37601,7 +37601,7 @@ loc_01DCA0:
 loc_01DCA4:
 	ori.b	#$69,Obj_Flags(a0)
 loc_01DCAA:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01DCAE:
 	add.w	d0,d0
 loc_01DCB0:
@@ -37664,7 +37664,7 @@ loc_01DD3E:
 loc_01DD44:
 	rts
 loc_01DD46:
-	cmpi.w	#$E,(ram_C328).w
+	cmpi.w	#$E,(Stage_Index).w
 	beq.b	loc_01DD86
 	tst.b	(ram_C66F).w
 	beq.b	loc_01DD3A
@@ -37940,9 +37940,9 @@ loc_01E6C0:
 loc_01E6C6:
 	beq.b	loc_01E70C
 	ori.b	#$40,Obj_Flags(a0)
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 	beq.b	loc_01E6F0
-	cmpi.w	#$B,(ram_C328).w
+	cmpi.w	#$B,(Stage_Index).w
 	beq.b	loc_01E702
 	move.w	#$69,$1E(a0)
 	move.b	#$3,$3F(a0)
@@ -38020,13 +38020,13 @@ loc_01E7EC:
 loc_01E7F0:
 	jsr	Object_LoadTemplate(pc)
 loc_01E7F4:
-	cmpi.w	#$B,(ram_C328).w
+	cmpi.w	#$B,(Stage_Index).w
 loc_01E7FA:
 	bne.b	loc_01E808
 	bset.b	#$6,$2(a0)
 	move.w	#$FFB8,$1E(a0)
 loc_01E808:
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 loc_01E80E:
 	bne.b	loc_01E81C
 	bset.b	#$6,$2(a0)
@@ -38064,7 +38064,7 @@ loc_01E85E:
 loc_01E862:
 	movea.l	a3,a0
 loc_01E864:
-	cmpi.w	#$B,(ram_C328).w
+	cmpi.w	#$B,(Stage_Index).w
 loc_01E86A:
 	beq.b	loc_01E874
 loc_01E86C:
@@ -38192,7 +38192,7 @@ loc_01EA62:
 	bset.b	#$6,Obj_Flags(a0)
 	bclr.b	#$1,Obj_Flags(a0)
 	move.w	#$2AA,d1
-	cmpi.w	#$4,(ram_C328).w
+	cmpi.w	#$4,(Stage_Index).w
 	bne.b	loc_01EA7E
 	move.w	#$283,d1
 loc_01EA7E:
@@ -38491,7 +38491,7 @@ loc_01F330:
 loc_01F332:
 	jsr	Object_LoadTemplateA2(pc)
 loc_01F336:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 loc_01F33A:
 	add.w	d0,d0
 loc_01F33C:
@@ -38594,7 +38594,7 @@ loc_01F450:
 	move.l	Obj_FramePtr(a0),$2A(a0)
 	move.l	#$882D8,Obj_FramePtr(a0)
 loc_01F478:
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	add.w	d0,d0
 	lea	ObjData_01F370(pc),a1
 	subq.b	#$1,$36(a0)
@@ -40021,11 +40021,11 @@ loc_021994:
 loc_02199A:
 	jsr	ObjType_8F_Shadow(pc)
 loc_02199E:
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 loc_0219A4:
 	beq.b	loc_0219B0
 loc_0219A6:
-	cmpi.w	#$7,(ram_C328).w
+	cmpi.w	#$7,(Stage_Index).w
 loc_0219AC:
 	beq.b	loc_0219B0
 	rts
@@ -40118,11 +40118,11 @@ loc_021A3A:
 loc_021A3E:
 	move.b	#$40,$22(a2)
 loc_021A44:
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 loc_021A4A:
 	beq.b	loc_021A5A
 loc_021A4C:
-	cmpi.w	#$7,(ram_C328).w
+	cmpi.w	#$7,(Stage_Index).w
 loc_021A52:
 	beq.b	loc_021A5A
 	move.w	#$23C,(a2)
@@ -40209,7 +40209,7 @@ loc_021C3A:
 	lea	ObjData_021E9E(pc),a1
 	jsr	(Object_LoadTemplateA2).l
 	move.b	#$4,$36(a2)
-	move.w	(ram_C328).w,d0
+	move.w	(Stage_Index).w,d0
 	move.b	dat_021CE0(pc,d0.w),d0
 	move.b	d0,$3C(a2)
 	move.b	#$40,$22(a2)
@@ -40234,9 +40234,9 @@ loc_021C3A:
 	bge.b	loc_021CB8
 	move.w	#$3E4,(a2)
 loc_021CB8:
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	beq.b	loc_021CD0
-	cmpi.w	#$D,(ram_C328).w
+	cmpi.w	#$D,(Stage_Index).w
 	bne.b	loc_021CDC
 	move.w	#$124,$1E(a2)
 	bra.b	loc_021CD6
@@ -40415,7 +40415,7 @@ loc_021F9C:
 	bset.b	#$0,Obj_State(a0)
 	bne.b	loc_021FC4
 	moveq	#-$78,d0
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 	beq.b	loc_021FB2
 	moveq	#-$63,d0
 loc_021FB2:
@@ -40442,7 +40442,7 @@ loc_021FC4:
 	move.b	#$5,$2B(a0)
 	move.b	#$8,$2C(a0)
 	lea	ObjData_02272C(pc),a3
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 	beq.b	loc_022022
 	lea	ObjData_02274A(pc),a3
 loc_022022:
@@ -40472,7 +40472,7 @@ loc_022022:
 loc_02208A:
 	move.l	a1,$54(a0)
 	clr.b	$28(a0)
-ObjType_B4:
+ObjType_B4_BossPlane:
 	tst.b	Obj_State(a0)
 loc_022096:
 	bne.b	loc_0220A8
@@ -40771,7 +40771,7 @@ loc_0222CC:
 	move.w	#$100,$8(a0)
 	adda.w	#$60,a0
 	lea	ObjData_02272C(pc),a3
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 	beq.b	loc_022350
 	lea	ObjData_02274A(pc),a3
 loc_022350:
@@ -40784,7 +40784,7 @@ sub_02235A:
 	bset.b	#$5,(Flags_C61C).w
 	st.b	(ram_C6B4).w
 	moveq	#-$72,d0
-	cmpi.w	#$7,(ram_C328).w
+	cmpi.w	#$7,(Stage_Index).w
 	blt.b	loc_02237C
 	moveq	#-$61,d0
 loc_02237C:
@@ -40807,7 +40807,7 @@ loc_0223A8:
 sub_0223AA:
 	lea	ObjData_02272C(pc),a3
 loc_0223AE:
-	cmpi.w	#$0,(ram_C328).w
+	cmpi.w	#$0,(Stage_Index).w
 loc_0223B4:
 	beq.b	loc_0223BA
 loc_0223B6:
@@ -41218,7 +41218,7 @@ loc_022D7E:
 	jsr	sub_022106(pc)
 	lea	(ram_FFB800).l,a1
 	lea	dat_023CA8(pc),a2
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_022DC0
 	lea	dat_023EF2(pc),a2
 loc_022DC0:
@@ -41227,13 +41227,13 @@ loc_022DC2:
 	move.w	(a2)+,(a1)+
 	dbra	d7,loc_022DC2
 	moveq	#-$77,d0
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 	beq.b	loc_022DD4
 	moveq	#-$63,d0
 loc_022DD4:
 	jsr	(PlaySound).l
 	moveq	#$2,d0
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_022DE6
 	moveq	#$24,d0
 loc_022DE6:
@@ -41247,7 +41247,7 @@ loc_022DEC:
 	jsr	(Object_LoadTemplate).l
 	movea.l	a0,a2
 	moveq	#$0,d6
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_022E0C
 	move.w	#$98,d6
 loc_022E0C:
@@ -41303,7 +41303,7 @@ loc_022E0C:
 	move.w	#$2DC,(a0)
 	movea.l	a2,a0
 	lea	ColorList_023BFE(pc),a3
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 	beq.b	loc_022F1E
 	lea	dat_023C3C(pc),a3
 loc_022F1E:
@@ -41375,7 +41375,7 @@ loc_023092:
 	move.w	#$9370,d0
 	move.w	#$9400,d1
 	lea	dat_0230EE(pc),a1
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_0230C4
 	adda.w	#$14,a1
 loc_0230C4:
@@ -41644,7 +41644,7 @@ loc_0235F4:
 	beq.b	loc_023626
 	subq.b	#$1,$44(a0)
 	lea	ColorList_023BFE(pc),a4
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 	beq.b	loc_02360E
 	lea	dat_023C3C(pc),a4
 loc_02360E:
@@ -41674,7 +41674,7 @@ loc_023634:
 loc_023656:
 	move.w	d1,$38(a0)
 	moveq	#$0,d6
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_023668
 	move.w	#$98,d6
 loc_023668:
@@ -41687,7 +41687,7 @@ loc_023668:
 	move.b	#$4C,$36(a1)
 	bsr.w	sub_023768
 	lea	dat_023DCA(pc),a3
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_0236A4
 	lea	dat_024014(pc),a3
 loc_0236A4:
@@ -41717,14 +41717,14 @@ loc_0236D2:
 	move.w	#$C8,d1
 	move.w	d1,$38(a0)
 	lea	dat_023E94(pc),a3
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_0236A4
 	lea	dat_0240DE(pc),a3
 	bra.b	loc_0236A4
 loc_023700:
 	move.l	a2,-(a7)
 	lea	ColorList_023BFE(pc),a3
-	cmpi.w	#$1,(ram_C328).w
+	cmpi.w	#$1,(Stage_Index).w
 	beq.b	loc_023712
 	lea	dat_023C3C(pc),a3
 loc_023712:
@@ -41901,7 +41901,7 @@ loc_023A2A:
 loc_023A30:
 	move.w	#$274,(a2)
 loc_023A34:
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 loc_023A3A:
 	bne.b	loc_023A48
 	bset.b	#$6,$2(a2)
@@ -41920,7 +41920,7 @@ sub_023A4C:
 	lea	ObjData_023BDE(pc),a1
 	jsr	(Object_LoadTemplateA2).l
 	move.b	#$60,$22(a2)
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_023A86
 	bset.b	#$6,$2(a2)
 	move.w	#$98,$1E(a2)
@@ -41950,7 +41950,7 @@ sub_023A8A:
 	exg	a0,a2
 	jsr	(Object_SetVelocityFromDir).l
 	exg	a0,a2
-	cmpi.w	#$9,(ram_C328).w
+	cmpi.w	#$9,(Stage_Index).w
 	bne.b	loc_023AFA
 	bset.b	#$6,$2(a2)
 	move.w	#$98,$1E(a2)
@@ -45512,11 +45512,11 @@ loc_0282F2:
 loc_0282FA:
 	move.b	#$60,$22(a2)
 loc_028300:
-	cmpi.w	#$10,(ram_C328).w
+	cmpi.w	#$10,(Stage_Index).w
 loc_028306:
 	beq.b	loc_02831E
 loc_028308:
-	cmpi.w	#$D,(ram_C328).w
+	cmpi.w	#$D,(Stage_Index).w
 loc_02830E:
 	bne.b	loc_02832A
 	bset.b	#$6,$2(a2)
@@ -45570,7 +45570,7 @@ loc_02837A:
 loc_02837C:
 	jmp	(ObjType_8F_Shadow).l
 loc_028382:
-	cmpi.w	#$10,(ram_C328).w
+	cmpi.w	#$10,(Stage_Index).w
 	bne.b	loc_02839E
 	move.b	Obj_State(a0),d0
 	andi.w	#$3,d0
@@ -46182,7 +46182,7 @@ loc_02909C:
 loc_0290A2:
 	move.b	#$60,Obj_TileAttr(a0)
 loc_0290A8:
-	move.w	(ram_C328).w,d1
+	move.w	(Stage_Index).w,d1
 loc_0290AC:
 	add.w	d1,d1
 loc_0290AE:
@@ -48309,7 +48309,7 @@ loc_02B794:
 loc_02B7C8:
 	move.b	#$FF,Obj_State(a0)
 loc_02B7CE:
-	jmp	(ObjType_9C).l
+	jmp	(ObjType_9C_EnemySoldier).l
 ObjData_02B7D4:
 	dc.b	$00,$01,$05,$00,$0E,$00,$00,$00,$4E,$20,$00,$00
 	dc.b	$00,$02,$B8,$1A
@@ -49457,11 +49457,11 @@ loc_02CAA4:
 loc_02CAA8:
 	bset.b	#$5,$2(a2)
 loc_02CAAE:
-	cmpi.w	#$10,(ram_C328).w
+	cmpi.w	#$10,(Stage_Index).w
 loc_02CAB4:
 	beq.b	loc_02CACC
 loc_02CAB6:
-	cmpi.w	#$D,(ram_C328).w
+	cmpi.w	#$D,(Stage_Index).w
 loc_02CABC:
 	bne.b	loc_02CAD8
 	bset.b	#$6,$2(a2)
