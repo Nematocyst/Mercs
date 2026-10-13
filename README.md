@@ -135,3 +135,17 @@ Verified in the emulator or by decoding VDP commands (see `_notes` in `tools/nam
 | `Player1_X/Y` `$E004/$E008` | `Objects_A[0]` follows pad 1 |
 
 `tools/emu/ram_profile.py` ranks unnamed variables and shows how each one behaves while the game runs.
+
+## Z80 sound driver (`z80/driver.asm`)
+
+`python3 tools/z80/disasm.py` (needs `pip install z80dis`, `apt install pasmo`) disassembles the two
+segments the 68k uploads to the Z80 and checks that `pasmo` reassembles them byte-identical:
+
+* `$0000..$0F4F` is code (1,709 instructions, about 3.4 KB): reset at `$00`, interrupt `ret` at `$38`,
+  main loop at `$39`, `rst $08` waits for the YM2612, `rst $28/$30` index and load a word table.
+  The command interpreter subtracts `$E0` and jumps through `CoordFlag_Table` (41 handlers): the
+  usual "coordination flag" scheme of Sega sound drivers.
+* `$1000..$18F5` is music data: a 35-entry pointer table to the sequences.
+* Hardware: `YM_A0/D0/A1/D1` `$4000-$4003`, `Bank_Reg` `$6000`, `PSG_Port` `$7F11`; driver
+  variables are `var_XXXX` equates (`$1BF0..`).
+* YM2612 F-number tables (`val_0872`, `val_08FC`) are recognised as constants, not code pointers.
