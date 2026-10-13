@@ -50,6 +50,38 @@ is unchanged.
 * Wrong stat caps (upgrade slots) for joined mercs: stat records and the party-screen bar scripts are now per merc (above).
 
 ## Known gaps
+* Parked, not reproduced: a playtest report that the Mission 1 Harrier never attacks if the player hides in a corner while
+  it appears (started as Homing). A/B in the emulator (state saved when `ObjType_B4` spawns; idle / corner / corner+fire,
+  original ROM vs patched ROM with a forced Homing start) showed the Harrier moving and firing normally in every case,
+  and its AI (`ObjType_B1`/`B3`) reads no merc or weapon variable. Open questions if it comes back: does it happen on
+  the unpatched ROM, which corner, and does the player retreat before or after the boss sprite starts appearing.
+* The "X JOINED YOUR PARTY" line is remapped too (Rifle has no stock line, so one is added).
+* New code (~1.2 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
+  lists the 29 hook sites (each asserts the original bytes, so it only applies to the right ROM).
+
+## Testing
+`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied in Original mode, Arcade unaffected).
+`test_start.py` boots a ROM into Original Mission 1 and prints the shuffle (`DELAY=n` varies the menu dwell time);
+`tools/emu/watch_spawns.py` (`LOAD_STATE`, `RAM_RANGE`, `explore`) drives the game to the Mission 2 tent.
+
+## Behaviour notes
+* It is always on in Original mode; there is no separate menu entry. Arcade mode is untouched (`check.py` verifies this).
+* The shuffle happens once per new game; continues keep it. The randomness comes from how long you sit in the menus, so
+  an emulator that replays identical inputs will get the same order every time.
+
+## Verified (emulator)
+* Starting merc varies; weapon id, sprite colours and shop panels follow it.
+* Tents: Mission 2 end to end, and rounds 4 and 6 via the round select - join header, shop panel and carrier panels
+  follow the shuffle.
+* Death: the dead slot is greyed on the party screen with the right names, and the replacement gets the right weapon
+  id and colours.
+
+## Fixed after first playtest
+* Party-screen cursor stuck on the bottom rows: the highlight frame is a palette entry per party *slot*; an earlier hook
+  moved it to the merc's original row. Removed.
+* Wrong stat caps (upgrade slots) for joined mercs: stat records and the party-screen bar scripts are now per merc (above).
+
+## Known gaps
 * Reported: the Mission 1 Harrier sometimes never attacks if the player hides in a corner while it appears (started as
   Homing). Not reproduced: its AI (`ObjType_B1`/`B3`) reads no merc or weapon variable and attacks normally in emulator
   runs with Homing, so it may be vanilla behaviour; needs an A/B on the unpatched ROM.
