@@ -60,6 +60,13 @@ SITES = [
     (0xBB64, '225e345e301e', lambda s: jmp(s['SiteB64'])),                        # party screen bars: record + maximum
     (0xBB4C, '325e245e4ef900008a3c', lambda s: jmp(s['SiteQ']) + NOP * 2),       # party screen life gauge
     (0xBAB2, '325e3011325e3211225e381e', lambda s: jmp(s['SiteX']) + NOP * 3),    # party screen record pointers
+    (0x6536, '10 38 c3 01 67 54'.replace(' ', ''), lambda s: jmp(s['NewStart'])),     # menu START handling (Randomized entry)
+    (0x657A, '0004', lambda s: bytes.fromhex('0006')),                            # cursor wrap: last state 4 -> 6
+    (0x6584, '0006', lambda s: bytes.fromhex('0008')),                            # cursor wrap: states < 8
+    (0x659E, '43f9000065a8', lambda s: bytes.fromhex('43f9') + struct.pack('>I', s['MenuHilite'])),   # highlight table
+    (0x65C6, '4df90000662a', lambda s: bytes.fromhex('4df9') + struct.pack('>I', s['MenuScript'])),   # menu text script
+    (0x64D6, '31fb0018c5a2', lambda s: jsr(s['SiteN1'])),                         # next state per menu line
+    (0x64E2, '31fb0012c5a2', lambda s: jsr(s['SiteN2'])),
     (0x6512, '31c0fe444e75', lambda s: jmp(s['SetMode'])),                        # mode chosen -> reshuffle
     (0x8954, '43f900042b5e', lambda s: jsr(s['MsgPtr'])),                         # "X JOINED YOUR PARTY" text
 ]

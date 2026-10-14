@@ -272,6 +272,6 @@ shop panels are drawn from per-merc tables (`dat_00CA6E`, `CA2A`, `CCFA`, `CD0E`
 
 ### Randomized Mode (`tools/mod/`)
 
-A separate patch (the disassembly and ROM stay untouched) that shuffles the party order in Original mode each new game:
-random starting merc and random join order at the tents. See `tools/mod/README.md`; `tools/mod/check.py` is its
+A separate patch (the disassembly and ROM stay untouched) that adds a menu line, ORIGINAL RANDOMIZED MERCS, which plays
+Original mode with the party order shuffled each new game: random starting merc and random join order at the tents. See `tools/mod/README.md`; `tools/mod/check.py` is its
 regression check and `tools/mod/mercs_randomized.ips` the prebuilt patch.

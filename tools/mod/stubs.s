@@ -6,13 +6,16 @@
 	.equ CUR,   0xFFFFC36E
 	.equ PLO,   0xFFFFC3C6
 	.equ GMODE, 0xFFFFFE44
+	.equ RMODE, 0xFFFFC3E8            | word: nonzero = "Original mode, randomized mercs" was chosen in the menu
+	.equ MODEFLAGS, 0xFFFFC356
+	.equ JOY1P, 0xFFFFC301
 	.equ PARTYROW, 0xFFFFC3E6
 	.equ PERMREC,  0xFFFFC3F0            | 5 words: stat record address of the merc in each slot
 	.equ RNG,   0xFFFFC312
 	.equ RANDOM_UPDATE, 0x1ABA6
 
 	.text
-	.globl	SiteP, SiteV, SiteW, SiteU1, SiteU2, SiteT1, SiteT2, SiteT5, Phys2_d0, Phys2_d1, Site3, Site6, SetMode, SiteR, SiteS32, SiteB64, SiteQ, SiteX, MsgPtr
+	.globl	NewStart, SiteN1, SiteN2, MenuScript, MenuHilite, SiteP, SiteV, SiteW, SiteU1, SiteU2, SiteT1, SiteT2, SiteT5, Phys2_d0, Phys2_d1, Site3, Site6, SetMode, SiteR, SiteS32, SiteB64, SiteQ, SiteX, MsgPtr
 
 | ---- make sure PERM holds a shuffle (Fisher-Yates with the game's RNG); preserves all registers
 EnsurePerm:
@@ -67,8 +70,8 @@ EnsurePerm:
 | ---- Map_dN : dN.w = slot*2  ->  dN.w = merc*2   (identity outside Original mode)
 	.macro	MAP r
 Map_\r:
-	cmpi.w	#3,(GMODE).w
-	bne	9f
+	tst.w	(RMODE).w
+	beq	9f
 	bsr	EnsurePerm
 	move.l	%a0,-(%sp)
 	lea	(PERM).w,%a0
@@ -135,8 +138,8 @@ SiteT5:
 | Remap: d1 = pointer taken from such a table, a2 = base of the matching 5-entry merc table -> d1 = that merc's
 | entry for whoever really occupies the slot.  Entry 0 (Rifle) is the default "no joiner" panel: use the merc under control.
 Remap:
-	cmpi.w	#3,(GMODE).w
-	bne	9f
+	tst.w	(RMODE).w
+	beq	9f
 	bsr	EnsurePerm
 	movem.l	%d0/%d2/%a0,-(%sp)
 	movea.l	%a2,%a0
@@ -182,8 +185,8 @@ SiteU2:
 
 | RemapStrict: like Remap but entry 0 is a real merc, not a default (used where entry k is party slot k)
 RemapStrict:
-	cmpi.w	#3,(GMODE).w
-	bne	9f
+	tst.w	(RMODE).w
+	beq	9f
 	bsr	EnsurePerm
 	movem.l	%d0/%d2/%a0,-(%sp)
 	movea.l	%a2,%a0
@@ -224,8 +227,8 @@ SiteV:
 	move.w	#0xC517,%d1
 	tst.b	(PARTYROW).w
 	beq	9f
-	cmpi.w	#3,(GMODE).w
-	bne	9f
+	tst.w	(RMODE).w
+	beq	9f
 	bsr	EnsurePerm
 	movem.l	%d0/%d2/%a0,-(%sp)
 	move.l	%a6,%d0
@@ -251,8 +254,8 @@ NameTab:
 
 | ---- per-merc stat records ($C370 + 14*merc): PERMREC[slot] replaces the ROM table dat_00BE62 (slot -> record)
 SiteR:                                   | replaces "lea (dat_00BE62).l,a1"
-	cmpi.w	#3,(GMODE).w
-	bne	1f
+	tst.w	(RMODE).w
+	beq	1f
 	bsr	EnsurePerm
 	lea	(PERMREC).w,%a1
 	rts
@@ -292,8 +295,8 @@ RecDelta:                                | d0 = row -> d0.w = 14*(PERM[row]-row)
 SiteB64:
 	tst.b	(PARTYROW).w
 	beq	5f
-	cmpi.w	#3,(GMODE).w
-	bne	5f
+	tst.w	(RMODE).w
+	beq	5f
 	bsr	EnsurePerm
 	movem.l	%d1-%d2/%a0,-(%sp)
 	bsr	RowInfo
@@ -323,8 +326,8 @@ SiteB64:
 SiteQ:
 	tst.b	(PARTYROW).w
 	beq	5f
-	cmpi.w	#3,(GMODE).w
-	bne	5f
+	tst.w	(RMODE).w
+	beq	5f
 	bsr	EnsurePerm
 	movem.l	%d0-%d1/%a0,-(%sp)
 	bsr	RowInfo
@@ -345,8 +348,8 @@ SiteQ:
 SiteX:
 	tst.b	(PARTYROW).w
 	beq	5f
-	cmpi.w	#3,(GMODE).w
-	bne	5f
+	tst.w	(RMODE).w
+	beq	5f
 	bsr	EnsurePerm
 	movem.l	%d2-%d3/%a0,-(%sp)
 	bsr	RowInfo
@@ -375,6 +378,67 @@ SiteX:
 	move.w	(%a6)+,%d4
 	jmp	(0xBABE).l
 
+| ---- mode menu: a fourth line "ORIGINAL RANDOMIZED MERCS" (cursor states 0,2,4,6 = Arcade, Original, Randomized, Options)
+MenuScript:                              | text script for sub_0087C6: count-1, tile base (twice), 0, routine, then (text ptr, dest) pairs
+	.word	3,0x2517,0
+	.long	0x87E2
+	.long	0x6646
+	.word	0xA418
+	.long	0x6654
+	.word	0xA518
+	.long	MenuText
+	.word	0xA618
+	.long	0x6662
+	.word	0xA718
+MenuHilite:                              | for sub_000B54: count-1, then (dest, length-1) per line
+	.word	3
+	.word	0xA418,12,0xA518,12,0xA618,24,0xA718,6
+MenuText:
+	.ascii	"ORIGINAL RANDOMIZED MERCS"
+	.byte	0
+	.align	2
+| replaces sub_006536 (menu START handling); entered with jmp from a bsr, so rts returns to the caller
+NewStart:
+	move.b	(JOY1P).w,%d0
+	beq	1f
+	andi.b	#0x80,%d0
+	beq	9f
+	st.b	(0xFFFFC604).w
+	move.w	0x28(%a0),%d0            | cursor state
+	clr.w	(RMODE).w
+	tst.w	%d0
+	bne	2f
+	bclr	#2,(MODEFLAGS).w         | Arcade
+	rts
+2:	cmpi.w	#2,%d0
+	bne	3f
+	bset	#2,(MODEFLAGS).w         | Original
+	rts
+3:	cmpi.w	#4,%d0
+	bne	9f
+	bset	#2,(MODEFLAGS).w         | Original, randomized mercs
+	move.w	#1,(RMODE).w
+9:	rts
+1:	addq.l	#4,%sp                   | no button: skip the cursor movement too (as the original does)
+	rts
+| next game state for the chosen line (replaces the pc-relative word tables Words_0064F0 / Words_0064F6)
+SiteN1:
+	move.l	%a1,-(%sp)
+	lea	NextTab(%pc),%a1
+	move.w	(%a1,%d0.w),(0xFFFFC5A2).w
+	movea.l	(%sp)+,%a1
+	rts
+SiteN2:                                  | round-select variant
+	move.l	%a1,-(%sp)
+	lea	NextTab2(%pc),%a1
+	move.w	(%a1,%d0.w),(0xFFFFC5A2).w
+	movea.l	(%sp)+,%a1
+	rts
+NextTab:
+	.word	0x28,0x48,0x48,0x1C
+NextTab2:
+	.word	0x10,0x10,0x10,0x1C
+
 | replaces the tail of the game-mode setter: move.w d0,(GMODE).w ; rts   (entered with jmp)
 SetMode:
 	move.w	%d0,(GMODE).w
@@ -383,8 +447,8 @@ SetMode:
 
 | replaces "lea (dat_042B5E).l,a1" in the message printer (d0 = 2*message index); d1 is free here
 MsgPtr:
-	cmpi.w	#3,(GMODE).w
-	bne	8f
+	tst.w	(RMODE).w
+	beq	8f
 	cmpi.w	#0x44,%d0
 	blo	8f
 	cmpi.w	#0x4A,%d0

@@ -7,10 +7,10 @@ A separate patch - the disassembly and the original ROM are untouched.
 `mercs_randomized.ips` is the same patch prebuilt (apply to the 1 MB Mercs ROM with any IPS tool; it also fixes the header checksum).
 
 ## What it does
-In **Original mode** (`Game_Mode == 3`) the five mercs are shuffled each new game (Fisher-Yates over the game's RNG, seeded
+The mode menu gets a fourth line, **ORIGINAL RANDOMIZED MERCS** (Arcade / Original / Original randomized mercs / Options).
+Plain Original mode and Arcade mode are untouched. Choosing the new line plays Original mode and the five mercs are shuffled each new game (Fisher-Yates over the game's RNG, seeded
 from the menu dwell time `VBlank_Counter` and the VDP HV counter). You start as `PERM[0]` and every tent that used to
-hand out the next fixed merc (Burner, Launcher, Laser, Homing) hands out the next one in the shuffled order. Arcade mode
-is unchanged.
+hand out the next fixed merc (Burner, Launcher, Laser, Homing) hands out the next one in the shuffled order.
 
 ## How
 * `PERM` (5 bytes at `$FFC3E0`) maps party slot -> merc (0 Rifle, 1 Burner, 2 Launcher, 3 Laser, 4 Homing); `$FFC3E5`
@@ -24,16 +24,19 @@ is unchanged.
   row scripts (`dat_00BE6C`) hard-code each slot's original merc's bar maxima and record pointers, so three hooks
   (`SiteB64`, `SiteQ`, `SiteX`) shift them to the merc standing in that slot.
 * The "X JOINED YOUR PARTY" line is remapped too (Rifle has no stock line, so one is added).
-* New code (~1.2 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
-  lists the 29 hook sites (each asserts the original bytes, so it only applies to the right ROM).
+* New code (~1.4 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
+  lists the 36 hook sites (each asserts the original bytes, so it only applies to the right ROM).
 
 ## Testing
-`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied in Original mode, Arcade unaffected).
+`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied on the new menu line, plain Original and Arcade unaffected).
 `test_start.py` boots a ROM into Original Mission 1 and prints the shuffle (`DELAY=n` varies the menu dwell time);
 `tools/emu/watch_spawns.py` (`LOAD_STATE`, `RAM_RANGE`, `explore`) drives the game to the Mission 2 tent.
 
 ## Behaviour notes
-* It is always on in Original mode; there is no separate menu entry. Arcade mode is untouched (`check.py` verifies this).
+* The shuffle is gated by `RMODE` (word at `$FFC3E8`), set only when the new menu line is chosen with START and cleared when
+  Arcade or Original is chosen, so the other two lines behave exactly as in the original game (`check.py` verifies all three).
+  The menu changes: a new text script and highlight table (`MenuScript`/`MenuHilite`), cursor wrap limits, START handling
+  (`NewStart` replaces `sub_006536`) and the next-state tables (`SiteN1/N2`).
 * The shuffle happens once per new game; continues keep it. The randomness comes from how long you sit in the menus, so
   an emulator that replays identical inputs will get the same order every time.
 
@@ -56,16 +59,19 @@ is unchanged.
   and its AI (`ObjType_B1`/`B3`) reads no merc or weapon variable. Open questions if it comes back: does it happen on
   the unpatched ROM, which corner, and does the player retreat before or after the boss sprite starts appearing.
 * The "X JOINED YOUR PARTY" line is remapped too (Rifle has no stock line, so one is added).
-* New code (~1.2 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
-  lists the 29 hook sites (each asserts the original bytes, so it only applies to the right ROM).
+* New code (~1.4 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
+  lists the 36 hook sites (each asserts the original bytes, so it only applies to the right ROM).
 
 ## Testing
-`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied in Original mode, Arcade unaffected).
+`check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied on the new menu line, plain Original and Arcade unaffected).
 `test_start.py` boots a ROM into Original Mission 1 and prints the shuffle (`DELAY=n` varies the menu dwell time);
 `tools/emu/watch_spawns.py` (`LOAD_STATE`, `RAM_RANGE`, `explore`) drives the game to the Mission 2 tent.
 
 ## Behaviour notes
-* It is always on in Original mode; there is no separate menu entry. Arcade mode is untouched (`check.py` verifies this).
+* The shuffle is gated by `RMODE` (word at `$FFC3E8`), set only when the new menu line is chosen with START and cleared when
+  Arcade or Original is chosen, so the other two lines behave exactly as in the original game (`check.py` verifies all three).
+  The menu changes: a new text script and highlight table (`MenuScript`/`MenuHilite`), cursor wrap limits, START handling
+  (`NewStart` replaces `sub_006536`) and the next-state tables (`SiteN1/N2`).
 * The shuffle happens once per new game; continues keep it. The randomness comes from how long you sit in the menus, so
   an emulator that replays identical inputs will get the same order every time.
 
