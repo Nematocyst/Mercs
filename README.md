@@ -303,3 +303,14 @@ Harrier's movement/attack AI), `ObjType_B2_HarrierPodMount`, `ObjType_B3_Harrier
 `ObjType_B4_BossHealthBar` (renamed from `BossPlane`: it draws the five boxes from the boss HP), `ObjType_11_ScrollTrigger`,
 `ObjType_8C/F5_Decoration`, `ObjType_FE_GrenadeThrow` and `ObjType_FF_EnemyGrenade`. Confidence per name is in
 `tools/names.json`.
+
+### Remaining untyped data
+
+About 340 KB of the ROM is still emitted as raw `dc.b` blocks under `dat_` labels (the rest is code, typed art/maps/object data,
+palettes and text). The largest: `$EFFF4` (57 KB, `$FF`-filled records), `$D1418` (40 KB), `$48B70` (37 KB, frame lists with
+long pointers), `$70002` (28 KB), `$5A32C` (22 KB, high entropy: probably compressed), `$34D14` (14 KB), `$45A1C` (12 KB,
+frame table), `$CF50E` (8 KB), `$DB534` (7 KB, pointer list). Their structure needs a reader per format. A scanner for
+unreferenced runs of long pointers was tried and dropped: it matched word-pair data such as `08FFD8` and would have
+produced misleading `dc.l` lists. Tables confirmed by hand while building the mod are typed instead: the merc portrait,
+panel, bar and tent-step tables (`Merc_*`, `TentStep_*`), `Merc_RecordAddrs`, `Words_MercMaxLife` and
+`Words_MessageOffsets`.

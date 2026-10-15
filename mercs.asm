@@ -9435,7 +9435,7 @@ loc_007E78:
 	beq.b	loc_007EA8
 	move.w	(ram_C3B6).w,d1
 	addq.w	#$1,d1
-	lea	(dat_00CD36).l,a1
+	lea	(Merc_SpeedBarLists).l,a1
 	move.w	(Current_Merc).w,d0
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a1
@@ -9666,7 +9666,7 @@ loc_00806A:
 	add.w	(ram_C346).w,d0
 	move.w	(Current_Merc).w,d1
 	add.w	d1,d1
-	lea	(dat_00CD0E).l,a1
+	lea	(Merc_PowerBarLists).l,a1
 	movea.l	(a1,d1.w),a1
 	cmp.w	$6(a1),d0
 	bcc.b	loc_0080BA
@@ -9714,7 +9714,7 @@ loc_0080CA:
 	bra.w	loc_0080EC
 loc_0080DE:
 	move.w	(Current_Merc).w,d2
-	lea	(dat_00842E).l,a1
+	lea	(Words_MercMaxLife).l,a1
 	move.w	(a1,d2.w),d2
 loc_0080EC:
 	cmp.w	d2,d1
@@ -9963,9 +9963,8 @@ dat_00833C:
 	dc.b	$32,$FF,$22,$22,$22,$FF,$22,$22,$22,$FF,$21,$21,$21,$FF,$11,$11
 	dc.b	$11,$11,$FF,$FF,$FF,$FF,$33,$33,$33,$3F,$23,$23,$23,$2F,$32,$32
 	dc.b	$32,$3F,$22,$22,$22,$2F,$22,$22,$22,$2F,$21,$21,$21,$2F
-dat_00842E:
-	dc.b	$00,$08
-	dc.b	$00,$04,$00,$0A,$00,$08,$00,$04
+Words_MercMaxLife:
+	dc.w	$0008,$0004,$000A,$0008,$0004
 sub_008438:
 	move.w	Obj_VelX(a0),d0
 	move.w	Obj_VelY(a0),d1
@@ -10719,7 +10718,7 @@ loc_008950:
 loc_008952:
 	rts
 loc_008954:
-	lea	(dat_042B5E).l,a1
+	lea	(Words_MessageOffsets).l,a1
 loc_00895A:
 	move.w	(a1,d0.w),d1
 loc_00895E:
@@ -15791,7 +15790,7 @@ loc_00B6E4:
 sub_00B6EA:
 	move.w	(Current_Merc).w,d0
 loc_00B6EE:
-	lea	(dat_00BE62).l,a1
+	lea	(Merc_RecordAddrs).l,a1
 loc_00B6F4:
 	movea.w	(a1,d0.w),a2
 loc_00B6F8:
@@ -15916,7 +15915,7 @@ loc_00B85A:
 	bsr.w	sub_00BA36
 	bsr.w	sub_00BA52
 	move.w	(Current_Merc).w,d0
-	lea	(dat_00CA6E).l,a1
+	lea	(Merc_PanelLayouts).l,a1
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a6
 	bsr.w	sub_00BA7E
@@ -15974,7 +15973,7 @@ loc_00B924:
 	dbra	d7,loc_00B924
 	move.w	(ram_C6B8).w,d0
 	andi.b	#$7F,d0
-	lea	(dat_00CA82).l,a1
+	lea	(TentStep_PanelLayouts).l,a1
 	add.w	d0,d0
 	movea.l	(a1,d0.w),a6
 	bra.w	sub_00BA7E
@@ -16081,7 +16080,7 @@ loc_00BA14:
 loc_00BA18:
 	move.w	(Party_Last_Offset).w,d0
 loc_00BA1C:
-	lea	(dat_00BE6C).l,a6
+	lea	(PartyScreen_RowScripts).l,a6
 loc_00BA22:
 	move.w	d0,-(a7)
 loc_00BA24:
@@ -16117,7 +16116,7 @@ loc_00BA50:
 sub_00BA52:
 	move.w	(Current_Merc).w,d0
 loc_00BA56:
-	lea	(dat_00BE62).l,a1
+	lea	(Merc_RecordAddrs).l,a1
 loc_00BA5C:
 	movea.w	(a1,d0.w),a2
 loc_00BA60:
@@ -16550,7 +16549,7 @@ sub_00BD50:
 loc_00BD54:
 	lsr.w	#$1,d0
 loc_00BD56:
-	lea	(dat_00BE62).l,a1
+	lea	(Merc_RecordAddrs).l,a1
 loc_00BD5C:
 	movea.w	(a1,d0.w),a1
 loc_00BD60:
@@ -16651,9 +16650,9 @@ dat_00BE4E:
 	dc.b	$06,$44
 	dc.b	$08,$66,$0A,$88,$0C,$AA,$0E,$CC,$0E,$EE,$0E,$CC,$0C,$AA,$0A,$88
 	dc.b	$08,$66
-dat_00BE62:
-	dc.b	$C3,$70,$C3,$7E,$C3,$8C,$C3,$9A,$C3,$A8
-dat_00BE6C:
+Merc_RecordAddrs:
+	dc.w	$C370,$C37E,$C38C,$C39A,$C3A8
+PartyScreen_RowScripts:
 	dc.b	$00,$FF,$61,$04
 	dc.b	$00,$00,$BF,$84,$00,$FF,$61,$0C,$00,$00,$BF,$AA,$00,$FF,$62,$0C
 dat_00BE80:
@@ -17120,7 +17119,7 @@ loc_00C4B8:
 	rts
 loc_00C4CC:
 	movea.w	$32(a0),a6
-	lea	(dat_00842E).l,a1
+	lea	(Words_MercMaxLife).l,a1
 	move.w	Obj_AnimPtr(a0),d1
 	move.w	(a1,d1.w),d2
 	cmp.w	$6(a6),d2
@@ -17131,7 +17130,7 @@ loc_00C4CC:
 	movem.l	(a7)+,d0/a1
 	addq.w	#$2,$6(a6)
 	add.w	d1,d1
-	lea	(dat_00CCFA).l,a1
+	lea	(Merc_LifeGaugeLists).l,a1
 	movea.l	(a1,d1.w),a6
 	bsr.w	sub_00BAB2
 	move.w	#$4,(ram_C5D2).w
@@ -17159,7 +17158,7 @@ loc_00C53C:
 	addq.w	#$1,d1
 	move.w	Obj_AnimPtr(a0),d0
 	add.w	d0,d0
-	lea	(dat_00CD0E).l,a6
+	lea	(Merc_PowerBarLists).l,a6
 	movea.l	(a6,d0.w),a6
 	cmp.w	$6(a6),d1
 	bcc.w	loc_00C512
@@ -17175,7 +17174,7 @@ loc_00C566:
 	move.b	d0,$9(a1)
 	move.w	Obj_AnimPtr(a0),d0
 	add.w	d0,d0
-	lea	(dat_00CD22).l,a6
+	lea	(Merc_LifeBarLists).l,a6
 	movea.l	(a6,d0.w),a6
 	bsr.w	sub_00BB42
 	bra.w	loc_00C270
@@ -17188,7 +17187,7 @@ loc_00C59A:
 	addq.w	#$1,d1
 	move.w	Obj_AnimPtr(a0),d0
 	add.w	d0,d0
-	lea	(dat_00CD36).l,a6
+	lea	(Merc_SpeedBarLists).l,a6
 	movea.l	(a6,d0.w),a6
 	cmp.w	$6(a6),d1
 	bcc.w	loc_00C512
@@ -17252,7 +17251,7 @@ loc_00C64C:
 loc_00C64E:
 	move.w	d1,Obj_AnimPtr(a0)
 sub_00C652:
-	lea	(dat_00CA2A).l,a1
+	lea	(Merc_PortraitFrames).l,a1
 loc_00C658:
 	move.w	d1,d2
 loc_00C65A:
@@ -17260,7 +17259,7 @@ loc_00C65A:
 loc_00C65C:
 	move.l	(a1,d1.w),(ram_E014).w
 loc_00C662:
-	lea	(dat_00BE62).l,a1
+	lea	(Merc_RecordAddrs).l,a1
 loc_00C668:
 	movea.w	(a1,d2.w),a2
 loc_00C66C:
@@ -17280,7 +17279,7 @@ loc_00C688:
 loc_00C68A:
 	ori.b	#$4,(ram_E302).w
 loc_00C690:
-	lea	(dat_00CA6E).l,a1
+	lea	(Merc_PanelLayouts).l,a1
 loc_00C696:
 	movea.l	(a1,d1.w),a6
 loc_00C69A:
@@ -17597,7 +17596,7 @@ loc_00C97A:
 sub_00C97C:
 	move.w	(Current_Merc).w,d0
 loc_00C980:
-	lea	(dat_00BE62).l,a1
+	lea	(Merc_RecordAddrs).l,a1
 loc_00C986:
 	movea.w	(a1,d0.w),a1
 loc_00C98A:
@@ -17649,12 +17648,12 @@ loc_00C9F0:
 loc_00C9F6:
 	move.w	#$90,Obj_Y(a0)
 loc_00C9FC:
-	lea	(dat_00CA2A).l,a1
+	lea	(Merc_PortraitFrames).l,a1
 loc_00CA02:
 	btst.b	#$7,(ram_C6B9).w
 loc_00CA08:
 	beq.b	loc_00CA1C
-	lea	(dat_00CA3E).l,a1
+	lea	(TentStep_PortraitFrames).l,a1
 	move.w	(ram_C6B8).w,d0
 	andi.b	#$7F,d0
 	bra.w	loc_00CA20
@@ -17666,22 +17665,20 @@ loc_00CA22:
 	move.l	(a1,d0.w),Obj_FramePtr(a0)
 loc_00CA28:
 	rts
-dat_00CA2A:
+Merc_PortraitFrames:
 	dc.l	dat_0E4E68,dat_0E4E78,dat_0E4E8E,dat_0E4E9E
 	dc.l	dat_0E4EAE
-dat_00CA3E:
-	dc.b	$00,$0E
-	dc.b	$4E,$78,$00,$0E,$4E,$8E,$00,$0E,$4E,$68,$00,$0E,$4E,$9E,$00,$0E
-	dc.b	$4E,$68,$00,$0E,$4E,$68,$00,$0E,$4E,$68,$00,$0E,$4E,$68,$00,$0E
-	dc.b	$4E,$68,$00,$0E,$4E,$68,$00,$0E,$4E,$AE,$00,$0E,$4E,$68
-dat_00CA6E:
-	dc.l	dat_00BE6C,dat_00CAB2,dat_00CAEA,dat_00CB22
+TentStep_PortraitFrames:
+	dc.l	dat_0E4E78,dat_0E4E8E,dat_0E4E68,dat_0E4E9E
+	dc.l	dat_0E4E68,dat_0E4E68,dat_0E4E68,dat_0E4E68
+	dc.l	dat_0E4E68,dat_0E4E68,dat_0E4EAE,dat_0E4E68
+Merc_PanelLayouts:
+	dc.l	PartyScreen_RowScripts,dat_00CAB2,dat_00CAEA,dat_00CB22
 	dc.l	dat_00CB5A
-dat_00CA82:
-	dc.b	$00,$00,$CA,$B2,$00,$00,$CA,$EA,$00,$00,$BE,$6C,$00,$00
-	dc.b	$CB,$22,$00,$00,$BE,$6C,$00,$00,$BE,$6C,$00,$00,$BE,$6C,$00,$00
-	dc.b	$BE,$6C,$00,$00,$BE,$6C,$00,$00,$CB,$5A,$00,$00,$CB,$5A,$00,$00
-	dc.b	$CB,$5A
+TentStep_PanelLayouts:
+	dc.l	dat_00CAB2,dat_00CAEA,PartyScreen_RowScripts,dat_00CB22
+	dc.l	PartyScreen_RowScripts,PartyScreen_RowScripts,PartyScreen_RowScripts,PartyScreen_RowScripts
+	dc.l	PartyScreen_RowScripts,dat_00CB5A,dat_00CB5A,dat_00CB5A
 dat_00CAB2:
 	dc.b	$00,$FF,$61,$04,$00,$00,$BF,$8A,$00,$FF,$61,$0C,$00,$00
 	dc.b	$BF,$AA,$00,$FF,$62,$0C
@@ -17760,16 +17757,16 @@ dat_00CB92:
 	dc.b	$14,$42,$0C,$50,$16,$3E,$10,$50,$16,$3E,$1C,$54,$03,$40,$04,$28
 	dc.b	$01,$34,$08,$40,$01,$42,$18,$38,$01,$36,$0C,$2C,$01,$38,$10,$24
 	dc.b	$01,$3A,$14,$50,$01,$3E,$1C,$54,$01,$40
-dat_00CCFA:
+Merc_LifeGaugeLists:
 	dc.l	dat_00BE96,dat_00CADC,dat_00CB14,dat_00CB4C
 	dc.l	dat_00CB84
-dat_00CD0E:
+Merc_PowerBarLists:
 	dc.l	dat_00BE80,dat_00CAC6,dat_00CAFE,dat_00CB36
 	dc.l	dat_00CB6E
-dat_00CD22:
+Merc_LifeBarLists:
 	dc.l	dat_00BE90,dat_00CAD6,dat_00CB0E,dat_00CB46
 	dc.l	dat_00CB7E
-dat_00CD36:
+Merc_SpeedBarLists:
 	dc.l	dat_00BE88,dat_00CACE,dat_00CB06,dat_00CB3E
 	dc.l	dat_00CB76
 dat_00CD4A:
@@ -55574,14 +55571,13 @@ Pal_0427D4:
 	dc.b	$B0,$B6,$DE,$C5,$B6,$CF,$C6,$C5,$AF,$C0,$00,$26,$A2,$B0,$F1,$F9
 	dc.b	$E5,$DE,$B6,$DE,$C5,$B6,$CF,$C6,$C5,$AF,$C0,$00,$26,$00,$B3,$D8
 	dc.b	$B7,$DA,$C3,$DE,$BD,$00,$26,$00,$20,$20,$20,$00,$26,$00
-dat_042B5E:
-	dc.b	$00,$50
-	dc.b	$00,$60,$00,$7A,$00,$9A,$00,$B0,$00,$D8,$01,$06,$01,$3C,$01,$66
-	dc.b	$01,$A4,$01,$C4,$02,$02,$02,$34,$02,$6E,$02,$98,$02,$CA,$02,$F2
-	dc.b	$03,$22,$03,$60,$03,$8E,$03,$A6,$03,$D2,$04,$0E,$04,$38,$04,$62
-	dc.b	$04,$8C,$04,$B6,$04,$E0,$05,$10,$05,$38,$05,$66,$05,$7E,$05,$9E
-	dc.b	$05,$C0,$05,$E0,$05,$FC,$06,$1A,$06,$34,$06,$50,$06
-	dc.b	'\HOW DID IT GO?',0
+Words_MessageOffsets:
+	dc.w	$0050,$0060,$007A,$009A,$00B0,$00D8,$0106,$013C
+	dc.w	$0166,$01A4,$01C4,$0202,$0234,$026E,$0298,$02CA
+	dc.w	$02F2,$0322,$0360,$038E,$03A6,$03D2,$040E,$0438
+	dc.w	$0462,$048C,$04B6,$04E0,$0510,$0538,$0566,$057E
+	dc.w	$059E,$05C0,$05E0,$05FC,$061A,$0634,$0650,$065C
+	dc.b	'HOW DID IT GO?',0
 	dc.b	'&WHO:S GOING TO CARRY',0
 	dc.b	$49,$54,$3F,$00
 	dc.b	'&YOU DON:T HAVE ENOUGH',0
