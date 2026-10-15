@@ -11,25 +11,25 @@ var_1BFC	equ	$1BFC
 var_1BFE	equ	$1BFE
 var_1C00	equ	$1C00
 var_1C01	equ	$1C01
-var_1C02	equ	$1C02
+Priority_Table_Ptr	equ	$1C02
 var_1C04	equ	$1C04
 var_1C06	equ	$1C06
 var_1C07	equ	$1C07
-var_1C09	equ	$1C09
-var_1C0A	equ	$1C0A
-var_1C0B	equ	$1C0B
-var_1C0C	equ	$1C0C
+Cmd_Current	equ	$1C09
+Cmd_Queue0	equ	$1C0A
+Cmd_Queue1	equ	$1C0B
+Cmd_Queue2	equ	$1C0C
 var_1C0D	equ	$1C0D
 var_1C0E	equ	$1C0E
 var_1C0F	equ	$1C0F
-var_1C10	equ	$1C10
+Cmd_StopAll	equ	$1C10
 var_1C11	equ	$1C11
 var_1C12	equ	$1C12
 var_1C13	equ	$1C13
 var_1C14	equ	$1C14
 var_1C15	equ	$1C15
 var_1C16	equ	$1C16
-var_1C18	equ	$1C18
+Cmd_Priority	equ	$1C18
 var_1C19	equ	$1C19
 var_1C32	equ	$1C32
 var_1C33	equ	$1C33
@@ -69,7 +69,7 @@ sub_0018:
 	jp sub_0446
 	defb	$00,$00,$00,$00,$00
 sub_0020:
-	ld hl,(var_1C02)
+	ld hl,(Priority_Table_Ptr)
 sub_0023:
 	ld b,0
 	jp loc_0412
@@ -98,17 +98,17 @@ Main:
 	call sub_00D6
 loc_0048:
 	di
-	call sub_0825
-	ld a,(var_1C10)
+	call Queue_Scan
+	ld a,(Cmd_StopAll)
 	or a
 	jr z,loc_0064
 	ld a,$80
-	ld (var_1C09),a
+	ld (Cmd_Current),a
 	xor a
-	ld (var_1C0A),a
-	ld (var_1C0B),a
-	ld (var_1C0C),a
-	ld (var_1C18),a
+	ld (Cmd_Queue0),a
+	ld (Cmd_Queue1),a
+	ld (Cmd_Queue2),a
+	ld (Cmd_Priority),a
 loc_0064:
 	ld a,(var_1BF1)
 	or a
@@ -141,7 +141,7 @@ loc_0080:
 	ld (hl),a
 	ld (hl),a
 	ld (hl),a
-	call sub_0825
+	call Queue_Scan
 	ld a,(YM_A0)
 	and 3
 	jr z,loc_0048
@@ -151,7 +151,7 @@ loc_0080:
 	ld hl,loc_00AD
 	push hl
 	call sub_06C1
-	call sub_04A4
+	call Cmd_Dispatch
 	jp loc_010B
 loc_00AD:
 	ld a,(YM_A0)
@@ -193,7 +193,7 @@ sub_00E8:
 	call sub_06C1
 	call sub_080C
 	call sub_073D
-	call sub_04A4
+	call Cmd_Dispatch
 	xor a
 	ld (var_1C19),a
 	ld ix,$1C40
@@ -726,24 +726,24 @@ sub_049E:
 	inc hl
 	rst $10
 	ret
-sub_04A4:
-	ld a,(var_1C09)
-sub_04A7:
+Cmd_Dispatch:
+	ld a,(Cmd_Current)
+Cmd_DispatchA:
 	bit 7,a
 	jp z,sub_0789
 	cp $B1
-	jp c,loc_04F4
+	jp c,Cmd_Music_81
 	cp $D4
-	jp c,loc_05A2
+	jp c,Cmd_Sfx_B1
 	cp $E0
-	jp c,loc_0595
+	jp c,Cmd_Sfx_D4
 	cp $F9
 	jp nc,sub_0789
 	sub $E0
 	ld hl,tbl_04CB
 	rst $28
 	xor a
-	ld (var_1C18),a
+	ld (Cmd_Priority),a
 	jp (hl)
 tbl_04CB:
 	defw	sub_071A,sub_0789,sub_07F5,sub_04D3
@@ -765,7 +765,7 @@ sub_04EF:
 	push hl
 	push hl
 	jp sub_0DA8
-loc_04F4:
+Cmd_Music_81:
 	sub $81
 	ret m
 	push af
@@ -833,22 +833,22 @@ loc_055D:
 	djnz loc_055D
 loc_057B:
 	ld a,$80
-	ld (var_1C09),a
+	ld (Cmd_Current),a
 	ret
 dat_0581:
 	defb	$80,$06,$80,$00,$80,$01,$80,$02,$80,$04,$80,$05,$80,$06
 dat_058F:
 	defb	$80
 	defb	$80,$80,$A0,$80,$C0
-loc_0595:
+Cmd_Sfx_D4:
 	sub $DD
 	ex af,af'
 	xor a
-	ld (var_1C18),a
+	ld (Cmd_Priority),a
 	ld a,$80
 	ld c,2
 	jr loc_05A8
-loc_05A2:
+Cmd_Sfx_B1:
 	sub $B1
 	ex af,af'
 	xor a
@@ -1198,31 +1198,31 @@ loc_0820:
 	add hl,de
 	djnz loc_0820
 	ret
-sub_0825:
+Queue_Scan:
 	ld de,$1C0A
-	call sub_082E
-	call sub_082E
-sub_082E:
+	call Queue_Slot
+	call Queue_Slot
+Queue_Slot:
 	ld a,(de)
 	bit 7,a
 	ret z
 	sub $81
-	ld hl,(var_1C02)
+	ld hl,(Priority_Table_Ptr)
 	ld c,0
 	rst $20
 	ld c,a
 	ld b,0
 	add hl,bc
-	ld a,(var_1C18)
+	ld a,(Cmd_Priority)
 	cp (hl)
 	jr z,loc_0846
 	jr nc,loc_0850
 loc_0846:
 	ld a,(de)
-	ld (var_1C09),a
+	ld (Cmd_Current),a
 	ld a,(hl)
 	and $7F
-	ld (var_1C18),a
+	ld (Cmd_Priority),a
 loc_0850:
 	xor a
 	ld (de),a
@@ -1560,7 +1560,7 @@ sub_0BCF:
 	ret
 sub_0BE3:
 	push ix
-	call sub_04A7
+	call Cmd_DispatchA
 	pop ix
 	ret
 	defb	$21,$11,$7F,$36,$9F
@@ -1846,7 +1846,7 @@ sub_0DA8:
 	or a
 	jr z,loc_0E2F
 	xor a
-	ld (var_1C18),a
+	ld (Cmd_Priority),a
 	bit 7,(iy)
 	jr z,loc_0DE2
 	ld a,(ix+1)

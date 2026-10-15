@@ -12700,7 +12700,7 @@ loc_00A09C:
 	rts
 loc_00A09E:
 	jmp	($CA).w
-sub_00A0A2:
+Sound_StopAll:
 	move.w	#$100,(Z80_Bus_Request).l
 loc_00A0AA:
 	btst.b	#$0,(Z80_Bus_Request).l
@@ -12733,7 +12733,7 @@ loc_00A0DE:
 loc_00A0E0:
 	moveq	#$1,d0
 loc_00A0E2:
-	bsr.b	sub_00A0A2
+	bsr.b	Sound_StopAll
 loc_00A0E4:
 	move.b	#$4,(ram_C3D6).w
 loc_00A0EA:
@@ -12757,7 +12757,7 @@ loc_00A10C:
 loc_00A10E:
 	moveq	#-$80,d0
 loc_00A110:
-	bsr.b	sub_00A0A2
+	bsr.b	Sound_StopAll
 loc_00A112:
 	clr.b	(ram_C6C9).w
 loc_00A116:
@@ -23036,7 +23036,7 @@ loc_010254:
 	rts
 	dc.b	$4A,$78,$E7,$6C,$67,$00,$3F,$C4,$4E,$75
 	dc.b	$4A,$38,$C6,$7B,$67,$08,$42,$38,$C6,$7B,$60,$00,$3F,$B4,$4E,$75
-ObjType_11:
+ObjType_11_ScrollTrigger:
 	bset.b	#$0,Obj_Flags(a0)
 loc_010276:
 	bne.b	loc_01027E
@@ -28566,7 +28566,7 @@ ObjectTypeTable:
 	dc.l	ObjType_04,ObjType_05_Crate,ObjType_06,ObjType_07
 	dc.l	ObjType_08,ObjType_09,ObjType_0A,ObjType_0B
 	dc.l	ObjType_0C,ObjType_0D,ObjType_0E,ObjType_0F
-	dc.l	ObjType_10,ObjType_11,ObjType_12,ObjType_13
+	dc.l	ObjType_10,ObjType_11_ScrollTrigger,ObjType_12,ObjType_13
 	dc.l	ObjType_14,ObjType_15,ObjType_16,ObjType_17
 	dc.l	ObjType_18,ObjType_19,ObjType_1A,ObjType_1B
 	dc.l	ObjType_1C,ObjType_1D,ObjType_1E,ObjType_1F
@@ -28596,8 +28596,8 @@ ObjectTypeTable:
 	dc.l	ObjType_00,ObjType_00,ObjType_00,ObjType_00
 	dc.l	ObjType_80_Explosion,ObjType_82_EnemySoldier,ObjType_82_EnemySoldier,ObjType_83_EnemySoldier
 	dc.l	ObjType_84,ObjType_85,ObjType_86,ObjType_87
-	dc.l	ObjType_88,ObjType_89,ObjType_8A_EnemyTroop,ObjType_8B
-	dc.l	ObjType_8C,ObjType_8D,ObjType_8E_EnemySoldier,ObjType_8F_Shadow
+	dc.l	ObjType_88,ObjType_89,ObjType_8A_EnemyTroop,ObjType_8B_EnemyShot
+	dc.l	ObjType_8C_Decoration,ObjType_8D,ObjType_8E_EnemySoldier,ObjType_8F_Shadow
 	dc.l	ObjType_90,ObjType_91,ObjType_92,ObjType_93
 	dc.l	ObjType_94,ObjType_95,ObjType_96,ObjType_97_Explosion
 	dc.l	ObjType_98_BigTank,ObjType_99,ObjType_9A,ObjType_9B
@@ -28606,8 +28606,8 @@ ObjectTypeTable:
 	dc.l	ObjType_A4_EnemySoldier,ObjType_A5_EnemySoldier,ObjType_A6_EnemySoldier,ObjType_A7
 	dc.l	ObjType_A8,ObjType_A9,ObjType_AA,ObjType_AB
 	dc.l	ObjType_AC,ObjType_AD,ObjType_AE,ObjType_AF
-	dc.l	ObjType_B0,ObjType_B1,ObjType_B2,ObjType_B3
-	dc.l	ObjType_B4_BossPlane,ObjType_B5,ObjType_B6,ObjType_B7
+	dc.l	ObjType_B0_BossSetup,ObjType_B1_HarrierBody,ObjType_B2_HarrierPodMount,ObjType_B3_HarrierGunPod
+	dc.l	ObjType_B4_BossHealthBar,ObjType_B5,ObjType_B6,ObjType_B7
 	dc.l	ObjType_B8,ObjType_B9,ObjType_BA,ObjType_BB
 	dc.l	ObjType_BC,ObjType_BD,ObjType_BE,ObjType_BF
 	dc.l	ObjType_C0,ObjType_C1,ObjType_C2,ObjType_C3
@@ -28623,9 +28623,9 @@ ObjectTypeTable:
 	dc.l	ObjType_E8,ObjType_E9,ObjType_EA,ObjType_EB
 	dc.l	ObjType_EC,ObjType_ED,ObjType_EE,ObjType_EF
 	dc.l	ObjType_F0,ObjType_F1,ObjType_F2,ObjType_F3
-	dc.l	ObjType_F4,ObjType_F5,ObjType_F6,ObjType_F7
+	dc.l	ObjType_F4,ObjType_F5_Decoration,ObjType_F6,ObjType_F7
 	dc.l	ObjType_F8,ObjType_F9,ObjType_FA,ObjType_FB
-	dc.l	ObjType_00,ObjType_00,ObjType_FE,ObjType_FF
+	dc.l	ObjType_00,ObjType_00,ObjType_FE_GrenadeThrow,ObjType_FF_EnemyGrenade
 	dc.l	ObjType_100,ObjType_101,ObjType_102,ObjType_103
 	dc.l	ObjType_104,ObjType_105,ObjType_106,ObjType_107
 	dc.l	ObjType_108,ObjType_109,ObjType_10A,ObjType_10B
@@ -33845,7 +33845,7 @@ loc_01AFEA:
 	move.w	Obj_Y(a0),Obj_SortKey(a0)
 loc_01AFF0:
 	rts
-ObjType_8B:
+ObjType_8B_EnemyShot:
 	jsr	(Object_GetHitbox_FromSize).l
 loc_01AFF8:
 	jsr	(Collision_HitPlayer).l
@@ -40398,7 +40398,7 @@ ObjData_021E9E:
 	dc.b	$FF,$FE,$00,$01,$00,$08,$8C,$84,$00,$00,$80,$00,$00,$FF,$FF,$FE
 	dc.b	$00,$01,$00,$08,$8C,$A2,$00,$00,$80,$00,$00,$FF,$FF,$FE,$00,$01
 	dc.b	$00,$08,$8C,$A2,$00,$00,$80,$00,$00,$FF,$FF,$FE
-ObjType_B0:
+ObjType_B0_BossSetup:
 	bset.b	#$0,Obj_Flags(a0)
 loc_021F82:
 	bne.b	loc_021F96
@@ -40472,7 +40472,7 @@ loc_022022:
 loc_02208A:
 	move.l	a1,$54(a0)
 	clr.b	$28(a0)
-ObjType_B4_BossPlane:
+ObjType_B4_BossHealthBar:
 	tst.b	Obj_State(a0)
 loc_022096:
 	bne.b	loc_0220A8
@@ -40579,7 +40579,7 @@ loc_02213C:
 	dc.b	$52,$28
 	dc.b	$FF,$C8,$42,$28,$00,$48,$30,$BC,$02,$C4,$31,$7C,$02,$CC,$00,$60
 	dc.b	$31,$7C,$02,$CC,$00,$C0,$5C,$49,$4E,$FA,$8D,$C0
-ObjType_B1:
+ObjType_B1_HarrierBody:
 	tst.b	$29(a0)
 loc_022160:
 	bne.w	loc_022220
@@ -40792,13 +40792,13 @@ loc_02237C:
 	move.b	#$20,$37(a0)
 	move.b	#$1,Obj_AnimTimer(a0)
 	jmp	LoadColorList(pc)
-ObjType_8C:
+ObjType_8C_Decoration:
 	jsr	ObjType_8F_Shadow(pc)
 loc_022396:
 	move.w	#$1,Obj_SortKey(a0)
 loc_02239C:
 	rts
-ObjType_F5:
+ObjType_F5_Decoration:
 	jsr	ObjType_8F_Shadow(pc)
 loc_0223A2:
 	move.w	#$2,Obj_SortKey(a0)
@@ -40880,7 +40880,7 @@ loc_022446:
 	rts
 	dc.b	$08,$F8
 	dc.b	$00,$02,$C6,$1C,$5C,$49,$4E,$FA,$8A,$C2
-ObjType_B2:
+ObjType_B2_HarrierPodMount:
 	bset.b	#$3,Obj_Flags(a0)
 loc_022460:
 	bne.b	loc_022498
@@ -40934,7 +40934,7 @@ loc_0224C2:
 	move.w	#$1,Obj_SortKey(a0)
 loc_0224C8:
 	rts
-ObjType_B3:
+ObjType_B3_HarrierGunPod:
 	movea.l	Obj_State(a0),a2
 loc_0224CE:
 	move.l	$4(a2),Obj_X(a0)
@@ -46014,7 +46014,7 @@ ObjData_028E1A:
 	dc.b	$00,$08,$FF,$FF,$FF,$FF,$00,$00,$01,$00,$00,$00,$00,$02,$00,$08
 	dc.b	$99,$A6,$00,$90,$00,$05,$43,$31,$00,$00,$00,$00,$00,$00,$00,$01
 	dc.b	$AE,$4A
-ObjType_FE:
+ObjType_FE_GrenadeThrow:
 	moveq	#$3,d0
 loc_028E54:
 	move.w	$18(a0),$20(a0)
@@ -46055,7 +46055,7 @@ loc_028EA0:
 loc_028EA6:
 	clr.l	(a0)
 	rts
-ObjType_FF:
+ObjType_FF_EnemyGrenade:
 	moveq	#$0,d0
 loc_028EAC:
 	move.b	Obj_Direction(a0),d0
@@ -46096,7 +46096,7 @@ loc_028EE6:
 loc_028EE8:
 	move.b	d0,Obj_Direction(a0)
 loc_028EEC:
-	bra.b	ObjType_FF
+	bra.b	ObjType_FF_EnemyGrenade
 	dc.b	$00,$00
 	dc.b	$00,$00,$00,$08,$00,$01,$00,$00,$00,$03,$FF,$F8,$00,$01
 loc_028EFE:

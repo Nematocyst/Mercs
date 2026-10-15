@@ -236,6 +236,26 @@ list has saturated. The other ~200 handlers are not created in Arcade play: prob
 handlers of those types, Original-mode content or unused. New names from this pass: `ObjType_26/38_EnterDoor`
 (building entrances with an ENTER sign, Mission 5), `ObjType_98_BigTank` (Mission 6), `ObjType_A4/A5_EnemySoldier`.
 
+### Sound interface (68k -> Z80)
+
+`PlaySound` (`$A068`, d0 = id) is the only way the game talks to the sound driver. It takes the Z80 bus, and for ids with
+bit 7 set (written as negative bytes, e.g. `moveq #-$63,d0`) stores the id in the first free slot of a 3-byte queue in Z80
+RAM at `$1C0A..$1C0C` (it is dropped if all three are taken); ids with bit 7 clear jump to `$CA`, which is never used.
+`Sound_StopAll` (`$A0A2`) writes d0 to `$1C10`; the Z80 main loop silences everything and clears the queue when that
+byte is nonzero. On the Z80 side (`z80/driver.asm`) `Queue_Scan` runs every loop: each queue entry is looked up in a
+priority table (pointer in `Priority_Table_Ptr`, `$1C02`) and moved to `Cmd_Current` (`$1C09`) when its priority is >= the
+priority of the sound already playing (`Cmd_Priority`, `$1C18`). `Cmd_Dispatch` then splits the id space:
+
+| id | handler | what |
+|---|---|---|
+| `$81..$B0` | `Cmd_Music_81` | music tracks (the game uses `$81 $89 $8A $8B $8C $8D $8F $91 $9B $9C $9D $9E $9F $A0 $A1`) |
+| `$B1..$D3` | `Cmd_Sfx_B1` | sound effects (most used: `$B4` 19 call sites, `$BC` 17, `$BD` 15, `$B2` 12) |
+| `$D4..$DF` | `Cmd_Sfx_D4` | extra effects on the second channel set (`$D1..$D3`, `$DD..$DF` are used) |
+| `$E0..$F8` | table `tbl_04CB` | commands such as `$E0` (stop; 7 call sites: title, intro, options, demo, ending) |
+
+The ids were collected from every `moveq/move.b #id,d0 ; jsr PlaySound` pair in the ROM; the sound test (`SoundTest_BGM`
+`$C667`, `SoundTest_SE` `$C669`) plays them from the options screen.
+
 ### Original mode
 
 `watch_spawns.py ... god original` chooses ORIGINAL MODE in the menu and keeps playing across screens
@@ -275,3 +295,11 @@ shop panels are drawn from per-merc tables (`dat_00CA6E`, `CA2A`, `CCFA`, `CD0E`
 A separate patch (the disassembly and ROM stay untouched) that adds a menu line, ORIGINAL RANDOMIZED MERCS, which plays
 Original mode with the party order shuffled each new game: random starting merc and random join order at the tents. See `tools/mod/README.md`; `tools/mod/check.py` is its
 regression check and `tools/mod/mercs_randomized.ips` the prebuilt patch.
+
+### More object types named (Original Mission 1 survey)
+
+`ObjType_8B_EnemyShot` (hitbox + `Collision_HitPlayer`, no AI), `ObjType_B0_BossSetup`, `ObjType_B1_HarrierBody` (the
+Harrier's movement/attack AI), `ObjType_B2_HarrierPodMount`, `ObjType_B3_HarrierGunPod` (spawns the shots),
+`ObjType_B4_BossHealthBar` (renamed from `BossPlane`: it draws the five boxes from the boss HP), `ObjType_11_ScrollTrigger`,
+`ObjType_8C/F5_Decoration`, `ObjType_FE_GrenadeThrow` and `ObjType_FF_EnemyGrenade`. Confidence per name is in
+`tools/names.json`.

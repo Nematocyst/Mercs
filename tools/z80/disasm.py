@@ -186,6 +186,11 @@ for a, nm in {0x0008: 'WaitYM', 0x0028: 'WordTableIndex', 0x0030: 'LoadWord', 0x
               0x0AF8: 'CoordFlag_Dispatch', 0x0B0F: 'CoordFlag_Table'}.items():
     if a in labels:
         labels[a] = nm
+# the 68k->Z80 sound mailbox (see PlaySound in mercs.asm): sound ids with bit 7 set go into a 3-byte queue at $1C0A..$1C0C
+for a, nm in {0x0825: 'Queue_Scan', 0x082E: 'Queue_Slot', 0x04A4: 'Cmd_Dispatch', 0x04A7: 'Cmd_DispatchA',
+              0x04F4: 'Cmd_Music_81', 0x05A2: 'Cmd_Sfx_B1', 0x0595: 'Cmd_Sfx_D4'}.items():
+    if a in labels:
+        labels[a] = nm
 for w in seg2_ptrs:
     labels.setdefault(w, 'seq_%04X' % w)
 inside = set()
@@ -195,9 +200,11 @@ overlaps = sorted(t for t in labels if t in inside)
 for t in overlaps:                      # a label inside an instruction cannot be placed
     del labels[t]
 SYM = dict(HW)
+VARNAMES = {0x1C02: 'Priority_Table_Ptr', 0x1C09: 'Cmd_Current', 0x1C0A: 'Cmd_Queue0', 0x1C0B: 'Cmd_Queue1', 0x1C0C: 'Cmd_Queue2',
+            0x1C10: 'Cmd_StopAll', 0x1C18: 'Cmd_Priority'}
 for m in sorted(memref):
     if m not in SYM and m >= 0x1000:
-        SYM[m] = 'var_%04X' % m
+        SYM[m] = VARNAMES.get(m, 'var_%04X' % m)
 
 
 def render(i):
