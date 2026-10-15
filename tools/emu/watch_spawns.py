@@ -89,7 +89,7 @@ def gap_sweep():
     return False
 
 
-best_cam = 0xFFFF; best_at = 0
+best_cam = 0xFFFF; best_at = 0; last_stt = None; shot_at = []
 for fr in range(frames):
     if explore and fr % 90 == 0 and g.w(0xFFFE04) == 0x0C:
         if g.w(0xFFC516) < best_cam: best_cam, best_at = g.w(0xFFC516), fr
@@ -105,6 +105,12 @@ for fr in range(frames):
     if god:                                   # never hit: a nonzero Player_Invuln_Timer suppresses Collision_HitPlayer
         g.env._ram[0xC5C2 ^ 1] = 0x40; g.env._ram[0xC5C3 ^ 1] = 0
     stt = g.w(0xFFFE04)
+    if os.environ.get('LOG_STATES'):                  # STATE_LOG: print every Game_State change, screenshot 90 frames after it
+        if stt != last_stt:
+            print('frame %d: state %02X -> %02X (stage %d)' % (fr, last_stt if last_stt is not None else 0xFF, stt, g.w(0xFFC328)), flush=True)
+            last_stt = stt; shot_at.append((fr + 90, stt))
+        for q in [q for q in shot_at if q[0] == fr]:
+            g.save_png(os.path.join(out, 'state_%02X_f%d.png' % (q[1], fr)))
     if os.environ.get('RAM_RANGE'):               # RAM_RANGE=from,to,step: dump RAM + screenshot (for diffing around events)
         lo, hi, stp = map(int, os.environ['RAM_RANGE'].split(','))
         if lo <= fr < hi and fr % stp == 0:
