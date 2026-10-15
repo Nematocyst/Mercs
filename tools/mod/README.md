@@ -58,6 +58,9 @@ emulator: without it the first merc dies after ~2,850 frames of random play in r
   moved it to the merc's original row. Removed.
 * Wrong stat caps (upgrade slots) for joined mercs: stat records and the party-screen bar scripts are now per merc (above).
 
+* Playtested on a real build by the project owner with the invulnerable build through the missions they reached: the shuffle,
+  menu entry, joins, party screen, stats and the "X JOINED YOUR PARTY" line all worked.
+
 ## Known gaps
 * Parked, not reproduced: a playtest report that the Mission 1 Harrier never attacks if the player hides in a corner while
   it appears (started as Homing). A/B in the emulator (state saved when `ObjType_B4` spawns; idle / corner / corner+fire,
