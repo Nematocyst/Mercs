@@ -844,9 +844,9 @@ loc_0003FE:
 GameStateTable:
 	dc.l	GameState_SegaLogo,GameState_Transition,GameState_Gameplay,GameState_RoundStart
 	dc.l	GameState_Title,GameState_Demo,GameState_Options,GameState_MissionComplete
-	dc.l	GameState_NextMission,GameState_Intro,GameState_Ending_A,GameState_Ending_B
-	dc.l	GameState_MissionMap,GameState_ModeSelect,GameState_HighScores,GameState_Ending2_A
-	dc.l	GameState_Ending2_B,GameState_OriginalIntro,GameState_GameOver
+	dc.l	GameState_NextMission,GameState_Intro,GameState_Ending_Plane,GameState_Ending_Sunset
+	dc.l	GameState_MissionMap,GameState_ModeSelect,GameState_HighScores,GameState_Credits_Intro
+	dc.l	GameState_Credits_Page,GameState_OriginalIntro,GameState_GameOver
 dat_00044C:
 	dc.b	$00,$20,$00,$00
 	dc.b	$00,$10,$00,$00,$00,$05,$00,$00,$00,$04,$00,$00,$00,$03,$00,$00
@@ -6202,7 +6202,7 @@ dat_005046:
 	dc.b	$FF,$85,$86,$1F,$87,$07,$25,$FE,$16,$0D,$05,$13,$90,$1B,$88,$1B
 	dc.b	$14,$89,$8A,$8B,$8C,$FF,$28,$34,$30,$45,$30,$39,$3D,$2C,$14,$5C
 	dc.b	$8D,$1F,$8E,$8F,$FF,$0A,$0E,$26,$FE,$00,$00,$FE
-GameState_Ending_A:
+GameState_Ending_Plane:
 	move.w	#$2700,sr
 loc_005100:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -6737,7 +6737,7 @@ loc_005650:
 	dc.b	$0A,$25,$FE,$00,$28,$34,$30,$45,$30,$39,$3D,$2C,$13,$19,$FF,$1C
 	dc.b	$08,$14,$5F,$60,$15,$25,$61,$62,$63,$FF,$64,$13,$15,$65,$66,$AE
 	dc.b	$09,$1D,$12,$02,$FF,$23,$01,$1E,$03,$26,$FE,$00
-GameState_Ending_B:
+GameState_Ending_Sunset:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0
@@ -8406,7 +8406,7 @@ dat_006BBE:
 	dc.b	$00,$00
 	dc.b	$05,$86,$00,$00,$00,$00,$88,$78,$00,$00,$6B,$CE,$A1,$0E,$54,$52
 	dc.b	$59,$00
-GameState_Ending2_A:
+GameState_Credits_Intro:
 	move.w	#$2700,sr
 loc_006BD6:
 	move.w	(VDP_Reg1_Shadow).w,d0
@@ -8818,7 +8818,7 @@ loc_006FD4:
 	move.w	#$0,(Z80_Bus_Request).l
 loc_006FDC:
 	rts
-GameState_Ending2_B:
+GameState_Credits_Page:
 	move.w	#$2700,sr
 	move.w	(VDP_Reg1_Shadow).w,d0
 	andi.b	#$BF,d0

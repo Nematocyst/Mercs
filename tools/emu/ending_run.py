@@ -20,7 +20,7 @@ for fr in range(frames):
     if st == 0x0C:
         for j in range(52):                                      # the boss controller: shrink its HP
             a = 0xE000 + j * 0x40
-            if g.w(a) >> 2 == 0x32 and g.w(a + 0x38) > 2: g.env._ram[(a + 0x38) ^ 1] = 2; g.env._ram[(a + 0x39) ^ 1] = 0
+            if g.w(a) >> 2 == 0x32 and g.w(a + 0x38) > 2: g.env._ram[(a + 0x38) ^ 1] = 0; g.env._ram[(a + 0x39) ^ 1] = 2
         if fr % 20 == 0:
             pad = {'UP': random.random() < .5, 'LEFT': random.random() < .4, 'RIGHT': random.random() < .4, 'B': True, 'C': random.random() < .5}
         g.step(1, **pad)

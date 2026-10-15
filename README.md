@@ -187,7 +187,13 @@ decide dynamically, so they show no edges here):
     40 Ending2_A -> 44 Ending2_B -> 3C HighScores
     4C GameOver -> 04          1C Options -> 38 ModeSelect
 
-The `Ending*` names are medium-low confidence: they rest on the graph, not on a verified screen.
+Verified by playing Arcade round 7 to the end (`tools/emu/ending_run.py`, which shrinks the final boss's HP so the 200 s
+timer does not expire first): gameplay -> `20` MissionComplete ("MISSION ACCOMPLISHED / BONUS POINT n PTS") -> `2C`
+`GameState_Ending_Plane` (cargo plane on the tarmac) -> `30` `GameState_Ending_Sunset` (jeep and motorbike at sunset, about
+8,400 frames) -> `3C` HighScores ("BEST FIGHTERS", with the player's entry) -> `04` Sega logo with the stage reset to 0; every
+hop goes through hub state `08`. The Original ending (`40`, `44`) was not played through (Original Mission 7 is a long level):
+booting into state `40` (`boot_state.py`) shows a red/black fade and then the staff roll (PLANNER KYAMURA, PRODUCER OSSIE),
+and the game bounces `44 -> 08 -> 44` once per credits page, so `GameState_Credits_Intro` / `GameState_Credits_Page`.
 
 ## Main routines (named from behaviour; confidence per name in `tools/names.json`)
 
