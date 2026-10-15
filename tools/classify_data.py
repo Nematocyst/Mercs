@@ -19,7 +19,8 @@ import collections, json, os, struct, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import disasm
 
-CONSUMERS = {'Art': (0xA218, 0xA22A), 'ObjData': (0x1ADB0, 0x1ADF6, 0x1AF0E, 0x1AF1A), 'Map': (0xA11A, 0xA150)}
+CONSUMERS = {'Art': (0xA218, 0xA22A), 'ObjData': (0x1ADB0, 0x1ADF6, 0x1AF0E, 0x1AF1A), 'Map': (0xA11A, 0xA150),
+             'Rle': (0x8524, 0x855A), 'Desc': (0x8C10, 0x8C5C, 0x8CC0)}   # Decompress_RLE/RLE2 inputs; descriptor lists for the sub_008C10 family
 
 here = os.path.dirname(os.path.abspath(__file__))
 r = disasm.Rom(os.path.join(here, '..', 'mercs.bin'))
@@ -89,11 +90,14 @@ while a < r.size - 16:
         a += 2 * run
     else:
         a += 2
+manual = h.get('data_typed_manual', [])                  # hand-confirmed entries survive a re-run
+typed += [m for m in manual if not any(m[2] == t[2] for t in typed)]
 h['data_typed'] = typed
 print('typed:', {k: sum(1 for t in typed if t[0] == k) for k in ('Map', 'Words', 'Longs', 'Pal', 'ColorList')})
 out = {}
 for prefix in CONSUMERS:                                  # Art wins when a blob is used both ways
     out[prefix] = sorted('%X' % a for a in found[prefix] - (found['Art'] if prefix != 'Art' else set()))
+    out[prefix] = sorted(set(out[prefix]) | {x for x in h.get('data_prefix_manual', {}).get(prefix, [])})   # hand-confirmed blobs (the lea is too far from the call)
 h['data_prefix'] = out
 json.dump(h, open(hp, 'w'), indent=2)
 print({k: len(v) for k, v in out.items()})

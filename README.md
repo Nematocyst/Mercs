@@ -312,11 +312,16 @@ Harrier's movement/attack AI), `ObjType_B2_HarrierPodMount`, `ObjType_B3_Harrier
 
 ### Remaining untyped data
 
-About 340 KB of the ROM is still emitted as raw `dc.b` blocks under `dat_` labels (the rest is code, typed art/maps/object data,
-palettes and text). The largest: `$EFFF4` (57 KB, `$FF`-filled records), `$D1418` (40 KB), `$48B70` (37 KB, frame lists with
-long pointers), `$70002` (28 KB), `$5A32C` (22 KB, high entropy: probably compressed), `$34D14` (14 KB), `$45A1C` (12 KB,
-frame table), `$CF50E` (8 KB), `$DB534` (7 KB, pointer list). Their structure needs a reader per format. A scanner for
-unreferenced runs of long pointers was tried and dropped: it matched word-pair data such as `08FFD8` and would have
-produced misleading `dc.l` lists. Tables confirmed by hand while building the mod are typed instead: the merc portrait,
-panel, bar and tent-step tables (`Merc_*`, `TentStep_*`), `Merc_RecordAddrs`, `Words_MercMaxLife` and
-`Words_MessageOffsets`.
+`tools/classify_data.py` now also labels blobs by their consumer: `Rle_XXXXXX` goes to `Decompress_RLE`/`RLE2` (`$8524`/`$855A`,
+11 blobs: tilemaps and graphics), `Desc_XXXXXX` to the descriptor-list drawing routines `sub_008C10/8C5C/8CC0` (9 blobs, three
+of them confirmed by hand because the `lea` sits too far from the call: `$48B70`, `$DB114`, `$DB534`). Hand-confirmed entries live
+in `hints.json` under `data_typed_manual` and `data_prefix_manual` and survive a re-run. New typed tables: `Hitbox_Table`
+(`$2D000`, 4096 bytes of x1,x2,y1,y2 offset words), `Player_FramePtrs` (`$34D14`, 8 pointers), `Shot_FrameTables`
+(`$40712`, a 10-entry root plus six 10-entry tables), plus the merc tables from the mod work.
+
+Raw `dc.b` data still left under `dat_` labels is about 250 KB, of which the large pieces are: the data after `$EFFF4`
+(`$FF` padding followed by script-like records up to the Z80 driver at `$FB75A`; the `dat_0EFFF4` label measures to the driver),
+`$70002` (28 KB, raw 4bpp tile data starting with solid `$44` tiles) and `$5A32C` (22 KB, probably compressed), both loaded by a
+screen load script at `$D38`, the frame data after `Player_FramePtrs` (`$34F5A`, 13 KB), `$44174` (3.8 KB), and a long tail of
+blocks under 3 KB. Their structure needs a reader per format. An automatic scanner for unreferenced runs of long pointers
+was tried and dropped: it matched word-pair data such as `08FFD8`.
