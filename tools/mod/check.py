@@ -19,6 +19,10 @@ ips = open(HERE + '/mercs_randomized.ips', 'rb').read()
 assert ips == randomizer.ips(hunks), 'mercs_randomized.ips is stale: rerun randomizer.py --ips'
 inv, ihunks, _ = randomizer.build(rom, invulnerable=True)
 assert open(HERE + '/mercs_randomized_invulnerable.ips', 'rb').read() == randomizer.ips(ihunks), 'invulnerable IPS is stale'
+import hashlib
+readme = open(HERE + '/README.md').read()
+for f in ('mercs_randomized.ips', 'mercs_randomized_invulnerable.ips'):
+    assert hashlib.sha256(open(HERE + '/' + f, 'rb').read()).hexdigest() in readme, 'README.md has a stale SHA-256 for ' + f
 print('patch ok: %d bytes of code, %d hooks, both IPS files up to date' % (n, len(randomizer.SITES)))
 path = '/tmp/_mr_check.bin'; open(path, 'wb').write(patched)
 

@@ -10,10 +10,12 @@ It is a separate patch: the disassembly (`mercs.asm`) and your ROM file are neve
 
 You need your own copy of the Mercs ROM (the 1,048,576-byte Mega Drive dump, SHA-256 `f56ddf669afe63920bff1df792773ef4b3c4440b3f1655b1a012f17bb2eef379`).
 
-| File | What it is |
-|---|---|
-| `mercs_randomized.ips` | the patch. Apply it to a **clean original ROM** with any IPS patcher (for example Lunar IPS or Floating IPS) |
-| `mercs_randomized_invulnerable.ips` | the same plus invulnerability, **for testing only**. Use it *instead of* the normal patch, never on top of it |
+| File | What it is | SHA-256 |
+|---|---|---|
+| `mercs_randomized.ips` | the patch. Apply it to a **clean original ROM** with any IPS patcher (for example Lunar IPS or Floating IPS) | `e98e1784cd5761218546979a5bb8ebf49581f8ef094956209cded78fe622259b` |
+| `mercs_randomized_invulnerable.ips` | the same plus invulnerability, **for testing only**. Use it *instead of* the normal patch, never on top of it | `ccd7a90a14ef80ef992dde1080b8ad5acefc962f0b62ba5616fad4b9795c8403` |
+
+These are checksums of the `.ips` files, so you can confirm a download is the current version (`check.py` fails if they go stale).
 
 Do not apply either patch to a ROM that is already patched. The patch also fixes the ROM's header checksum (the game verifies it at boot).
 
