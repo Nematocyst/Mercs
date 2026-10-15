@@ -17,7 +17,9 @@ rom = open(sys.argv[1], 'rb').read()
 patched, hunks, n = randomizer.build(rom)
 ips = open(HERE + '/mercs_randomized.ips', 'rb').read()
 assert ips == randomizer.ips(hunks), 'mercs_randomized.ips is stale: rerun randomizer.py --ips'
-print('patch ok: %d bytes of code, %d hooks, IPS up to date' % (n, len(randomizer.SITES)))
+inv, ihunks, _ = randomizer.build(rom, invulnerable=True)
+assert open(HERE + '/mercs_randomized_invulnerable.ips', 'rb').read() == randomizer.ips(ihunks), 'invulnerable IPS is stale'
+print('patch ok: %d bytes of code, %d hooks, both IPS files up to date' % (n, len(randomizer.SITES)))
 path = '/tmp/_mr_check.bin'; open(path, 'wb').write(patched)
 
 

@@ -27,6 +27,12 @@ hand out the next fixed merc (Burner, Launcher, Laser, Homing) hands out the nex
 * New code (~1.4 KB, `stubs.s`) lives in the unused `$FF` padding after the Z80 driver at `$FCFA0`; `randomizer.py`
   lists the 36 hook sites (each asserts the original bytes, so it only applies to the right ROM).
 
+## Invulnerable test build
+`mercs_randomized_invulnerable.ips` (`randomizer.py ... --invulnerable`) is the same patch plus one more hook that keeps the game's
+`Player_Invuln_Timer` at $7FFF every frame (it replaces the head of `sub_00E278`, the per-frame timer handler), so every
+hit check that respects the timer is skipped. Meant for testing only; the normal IPS is never invulnerable. Checked in the
+emulator: without it the first merc dies after ~2,850 frames of random play in round 6, with it none dies in 9,000.
+
 ## Testing
 `check.py mercs.bin` is the regression check (patch builds, IPS up to date, shuffle valid and varied on the new menu line, plain Original and Arcade unaffected).
 `test_start.py` boots a ROM into Original Mission 1 and prints the shuffle (`DELAY=n` varies the menu dwell time);

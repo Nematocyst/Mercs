@@ -15,7 +15,7 @@
 	.equ RANDOM_UPDATE, 0x1ABA6
 
 	.text
-	.globl	NewStart, SiteN1, SiteN2, MenuScript, MenuHilite, SiteP, SiteV, SiteW, SiteU1, SiteU2, SiteT1, SiteT2, SiteT5, Phys2_d0, Phys2_d1, Site3, Site6, SetMode, SiteR, SiteS32, SiteB64, SiteQ, SiteX, MsgPtr
+	.globl	InvulnTick, NewStart, SiteN1, SiteN2, MenuScript, MenuHilite, SiteP, SiteV, SiteW, SiteU1, SiteU2, SiteT1, SiteT2, SiteT5, Phys2_d0, Phys2_d1, Site3, Site6, SetMode, SiteR, SiteS32, SiteB64, SiteQ, SiteX, MsgPtr
 
 | ---- make sure PERM holds a shuffle (Fisher-Yates with the game's RNG); preserves all registers
 EnsurePerm:
@@ -377,6 +377,12 @@ SiteX:
 	movea.l	(%a6)+,%a1
 	move.w	(%a6)+,%d4
 	jmp	(0xBABE).l
+
+| ---- optional test build (--invulnerable): replaces the head of sub_00E278, the per-frame Player_Invuln_Timer handler
+| (tst.w timer ; beq), with "timer = $7FFF" so Collision_HitPlayer and the other damage checks never fire.
+InvulnTick:
+	move.w	#0x7FFF,(0xFFFFC5C2).w
+	jmp	(0xE27E).l
 
 | ---- mode menu: a fourth line "ORIGINAL RANDOMIZED MERCS" (cursor states 0,2,4,6 = Arcade, Original, Randomized, Options)
 MenuScript:                              | text script for sub_0087C6: count-1, tile base (twice), 0, routine, then (text ptr, dest) pairs

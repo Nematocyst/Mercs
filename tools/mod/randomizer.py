@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Randomized Mode patch for Mercs (Mega Drive).  The original ROM is only ever read.
 
-    python3 tools/mod/randomizer.py mercs.bin mercs_randomized.bin [--ips out.ips]
+    python3 tools/mod/randomizer.py mercs.bin mercs_randomized.bin [--ips out.ips] [--invulnerable]
 
 In Original mode (Game_Mode == 3) the party order is shuffled each new game: you start as a random one of
 Rifle/Burner/Launcher/Laser/Homing and the tents hand out the rest in a random order.  Arcade mode is untouched.
@@ -72,14 +72,19 @@ SITES = [
 ]
 
 
-def build(rom):
+INVULN_SITES = [
+    (0xE278, '4a78c5c2673a', lambda s: jmp(s['InvulnTick'])),                      # test build: Player_Invuln_Timer held up
+]
+
+
+def build(rom, invulnerable=False):
     code, syms = assemble()
     d = bytearray(rom)
     assert len(code) <= 4192, 'code does not fit the padding'
     assert len(set(d[CODE_ADDR:CODE_ADDR + len(code)])) == 1 and d[CODE_ADDR] == 0xFF, 'ROM padding at $%X is not free' % CODE_ADDR
     d[CODE_ADDR:CODE_ADDR + len(code)] = code
     hunks = [(CODE_ADDR, code)]
-    for addr, old, rep in SITES:
+    for addr, old, rep in SITES + (INVULN_SITES if invulnerable else []):
         old = bytes.fromhex(old); new = rep(syms)
         assert bytes(d[addr:addr + len(old)]) == old, 'unexpected bytes at $%X: %s' % (addr, d[addr:addr + len(old)].hex())
         new += NOP * ((len(old) - len(new)) // 2)
@@ -100,8 +105,8 @@ def ips(hunks):
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     rom = open(args[0], 'rb').read()
-    out, hunks, n = build(rom)
+    out, hunks, n = build(rom, '--invulnerable' in sys.argv)
     open(args[1], 'wb').write(out)
     if '--ips' in sys.argv:
         open(sys.argv[sys.argv.index('--ips') + 1], 'wb').write(ips(hunks))
-    print('wrote %s: %d bytes of new code at $%X, %d hooks' % (args[1], n, CODE_ADDR, len(SITES)))
+    print('wrote %s: %d bytes of new code at $%X, %d hooks%s' % (args[1], n, CODE_ADDR, len(SITES), ' + invulnerability (test build)' if '--invulnerable' in sys.argv else ''))
